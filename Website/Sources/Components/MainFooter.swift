@@ -1,7 +1,7 @@
 import Foundation
 import Ignite
 
-struct MainFooter: RootHTML {
+struct MainFooter: DocumentElement {
   let language: SupportedLanguage
 
   var body: some HTML {

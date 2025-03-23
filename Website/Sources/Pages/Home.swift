@@ -4,7 +4,7 @@ import Foundation
 import Ignite
 import SharedModels
 
-struct Home: StaticLayout {
+struct Home: StaticPage {
   let language: SupportedLanguage
   var title = ""
 

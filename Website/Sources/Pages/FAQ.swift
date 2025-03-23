@@ -26,7 +26,7 @@ extension FAQSectionType {
   }
 }
 
-struct FAQ: StaticLayout {
+struct FAQ: StaticPage {
   let language: SupportedLanguage
   let title: String
 

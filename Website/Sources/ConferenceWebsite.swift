@@ -5,7 +5,7 @@ import Ignite
 @main
 struct ConferenceWebsite {
   static func main() async {
-    let site = ConferenceSite2025()
+    var site = ConferenceSite2025()
 
     do {
       try copyAssets()
@@ -77,7 +77,7 @@ struct ConferenceSite2025: Site {
   var darkTheme: (any Theme)? = nil
   var favicon = URL(string: "/images/favicon.png")
 
-  var staticLayouts: [any StaticLayout] {
+  var staticPages: [any StaticPage] {
     for language in SupportedLanguage.allCases {
       Home(language: language)
       FAQ(language: language)
@@ -88,7 +88,7 @@ struct ConferenceSite2025: Site {
   }
 }
 
-private struct LegacyHome: StaticLayout {
+private struct LegacyHome: StaticPage {
   let title = ""
   var path = "/_en"
 

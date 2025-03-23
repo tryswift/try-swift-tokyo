@@ -27,7 +27,7 @@ struct SpeakerDetailComponent: HTML {
             .foregroundStyle(.dimGray)
         }
         if let links = speaker.links {
-          Row {
+          Section {
             ForEach(links) { link in
               Link(link.name, target: link.url)
                 .target(.newWindow)

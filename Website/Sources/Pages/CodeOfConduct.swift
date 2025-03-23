@@ -22,7 +22,7 @@ extension CodeOfConductSectionType {
   }
 }
 
-struct CodeOfConduct: StaticLayout {
+struct CodeOfConduct: StaticPage {
   let language: SupportedLanguage
   let title: String
 

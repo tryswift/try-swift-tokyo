@@ -26,7 +26,7 @@ extension PrivacyPolicySectionType {
   }
 }
 
-struct PrivacyPolicy: StaticLayout {
+struct PrivacyPolicy: StaticPage {
   let language: SupportedLanguage
   let title: String
 

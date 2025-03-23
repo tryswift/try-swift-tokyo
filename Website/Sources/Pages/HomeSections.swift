@@ -66,7 +66,7 @@ extension HomeSectionType {
       }
 
       Alert {
-        speakers.map { speaker in
+        ForEach(speakers) { speaker in
           SpeakerModal(speaker: speaker, language: language)
         }
       }
@@ -123,7 +123,7 @@ extension HomeSectionType {
       }
 
       Alert {
-        organizers.map { organizer in
+        ForEach(organizers) { organizer in
           OrganizerModel(organizer: organizer, language: language)
         }
       }

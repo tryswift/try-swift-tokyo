@@ -16,7 +16,8 @@ struct TicketsComponent: HTML {
         title: String("Tickets", language: language),
         url: "https://lu.ma/embed/event/evt-iaERdyhafeQdV5f/simple"
       )
-      .aspectRatio(.square)
+      .aspectRatio(0.75)
+      .frame(height: .px(1_800))
       .margin(.bottom, .px(120))
       Text(String("The latest information is announced on X", language: language))
         .font(.title3)
