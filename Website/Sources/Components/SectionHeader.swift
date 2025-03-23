@@ -6,7 +6,6 @@ struct SectionHeader: HTML {
 
   var body: some HTML {
     ZStack(alignment: .center) {
-      Border(hex: "#6f42c1")
       Text(String(type.rawValue, language: language))
         .horizontalAlignment(.center)
         .font(.title1)
@@ -14,7 +13,9 @@ struct SectionHeader: HTML {
         .foregroundStyle(.bootstrapPurple)
     }
     .padding(.top, .px(80))
-    .padding(.bottom, .px(16))
+    .padding(.bottom, .px(32))
+    .margin(.bottom, .px(32))
+    .border(.bootstrapPurple, width: 2, edges: .bottom)
     .id(type.htmlId)
   }
 }

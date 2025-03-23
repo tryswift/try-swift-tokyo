@@ -1,6 +1,6 @@
 import Ignite
 
-struct AccessComponent: RootHTML {
+struct AccessComponent: DocumentElement {
   let language: SupportedLanguage
   private let venueMapUrl = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12959.484415464616!2d139.4122493!3d35.7047894!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018e16a387013a3%3A0xcd9c50e33a16ff6b!2sTachikawa%20Stage%20Garden!5e0!3m2!1sen!2sjp!4v1720059016768!5m2!1sen!2sjp"
   private let accommodationMapUrl = "https://www.google.com/maps/d/u/0/embed?mid=1mBsqxzE2L_guJrg7nE96dJBlJUrZVoA&ehbc=2E312F&noprof=1"

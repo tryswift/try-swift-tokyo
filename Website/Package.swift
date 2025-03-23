@@ -8,7 +8,7 @@ let package = Package(
   defaultLocalization: "en",
   platforms: [.macOS(.v14)],
   dependencies: [
-    .package(url: "https://github.com/twostraws/Ignite", revision: "3080060aca91fe431b31d4a9b2bba2a99d81b25a"),
+    .package(url: "https://github.com/twostraws/Ignite", revision: "df775025a896a7adb26c46563201cc0c6d36d91d"),
     .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.2.0"),
     .package(path: "../MyLibrary")
   ],
