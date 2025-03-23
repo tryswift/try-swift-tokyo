@@ -11,13 +11,13 @@
         }
       }
     },
-    "<br>- iOS and Flutter engineer in Japan<br>- Working in DeNA Co., Ltd.<br>- Often participate in [Japan-(region).swift](https://japan-region-swift.github.io/Japan-region-swift/) events in Japan.<br>- Spoke at conferences in Japan such as [iOSDC](https://iosdc.jp/2024/) from 2022 to 2024 and [FlutterKaigi2024](https://youtu.be/UwDqyVawLtA?si=E0kN98o9CdM_p8e6).<br>- I like cooking, fish, Japanese food, and pineapples." : {
+    "- iOS and Flutter engineer in Japan\n- Working in DeNA Co., Ltd.\n- Often participate in [Japan-\\\\(region).swift](https://japan-region-swift.github.io/Japan-region-swift/) events in Japan.\n- Spoke at conferences in Japan such as [iOSDC](https://iosdc.jp/2024/) from 2022 to 2024 and [FlutterKaigi2024](https://youtu.be/UwDqyVawLtA?si=E0kN98o9CdM_p8e6).\n- I like cooking, fish, Japanese food, and pineapples." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "<br>- 日本でiOSとFlutterのエンジニアをしています。<br>- 株式会社ディー・エヌ・エーに勤務。<br>- 日本で開催される[Japan-(region).swift](https://japan-region-swift.github.io/Japan-region-swift/)のイベントに頻繁に参加。<br>- 2022年から2024年にかけて[iOSDC](https://iosdc.jp/2024/)や[FlutterKaigi2024](https://youtu.be/UwDqyVawLtA?si=E0kN98o9CdM_p8e6)など、日本のカンファレンスで登壇。<br>- 料理、魚、和食、パイナップルが好き。"
+            "value" : "- 日本でiOSとFlutterのエンジニアをしています。\n- 株式会社ディー・エヌ・エーに勤務。\n- 日本で開催される[Japan-\\\\(region).swift](https://japan-region-swift.github.io/Japan-region-swift/)のイベントに頻繁に参加。\n- 2022年から2024年にかけて[iOSDC](https://iosdc.jp/2024/)や[FlutterKaigi2024](https://youtu.be/UwDqyVawLtA?si=E0kN98o9CdM_p8e6)など、日本のカンファレンスで登壇。\n- 料理、魚、和食、パイナップルが好き。"
           }
         }
       }
@@ -39,7 +39,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Garminのアドバンストソフトウェアエンジニアです。<br>大学時代からiOS開発に取り組み、10年以上の経験があります。<br>Swiftを使ってLeetCodeの問題を解くのが好きです。"
+            "value" : "Garminのアドバンストソフトウェアエンジニアです。\n大学時代からiOS開発に取り組み、10年以上の経験があります。\nSwiftを使ってLeetCodeの問題を解くのが好きです。"
           }
         }
       }
@@ -121,13 +121,13 @@
         }
       }
     },
-    "Belongs to Cyber AI Productions. XR Expert at Cyber Agent.<br>Responsible for system development related to XR and studio shooting.<br>Purchased Apple Vision Pro locally on its U.S. release day. Actively engaged in development and research, including the visionOS 30 Days project.<br>Organizer of the visionOS Engineer Meetup. Published a book on visionOS app development.<br>Has spoken at iOSDC for nine consecutive years, as well as at try! Swift Tokyo, XR Kaigi, Let’s visionOS, AWE USA, and more.<br>Mainly shares updates on X, so please follow!" : {
+    "Belongs to Cyber AI Productions. XR Expert at Cyber Agent.\nResponsible for system development related to XR and studio shooting.\nPurchased Apple Vision Pro locally on its U.S. release day. Actively engaged in development and research, including the visionOS 30 Days project.\nOrganizer of the visionOS Engineer Meetup. Published a book on visionOS app development.\nHas spoken at iOSDC for nine consecutive years, as well as at try! Swift Tokyo, XR Kaigi, Let’s visionOS, AWE USA, and more.\nMainly shares updates on X, so please follow!" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cyber AI Productions所属。XR Expert at Cyber Agent。<br>XR関連とスタジオ撮影関連のシステム開発を担当。<br>Apple Vision Proを米国発売日に現地購入。visionOS 30 Days開発など精力的に実装と調査をしています。<br>visionOS Engineer Meetup主催。visionOSアプリ開発の書籍出版。<br>iOSDC9年連続登壇の他、try! Swift Tokyo、XR Kaigi、Let's visionOS、AWE USAなど登壇あり。<br>Xを中心に発信しているのでフォローしてください。"
+            "value" : "Cyber AI Productions所属。XR Expert at Cyber Agent。\nXR関連とスタジオ撮影関連のシステム開発を担当。\nApple Vision Proを米国発売日に現地購入。visionOS 30 Days開発など精力的に実装と調査をしています。\nvisionOS Engineer Meetup主催。visionOSアプリ開発の書籍出版。\niOSDC9年連続登壇の他、try! Swift Tokyo、XR Kaigi、Let's visionOS、AWE USAなど登壇あり。\nXを中心に発信しているのでフォローしてください。"
           }
         }
       }
@@ -253,13 +253,13 @@
         }
       }
     },
-    "Cocoa Developer and Teacher. Love technology and cars. Working in the automotive software industry. Living in Tokyo.<br>Company: Woven by Toyota - This talk is not affiliated with my employer in any way.<br>Github: [@jeffreybergier](https://github.com/jeffreybergier)<br>Mastodon: [@jeff](https://jeffburg.social/@jeff)" : {
+    "Cocoa Developer and Teacher. Love technology and cars. Working in the automotive software industry. Living in Tokyo.\nCompany: Woven by Toyota - This talk is not affiliated with my employer in any way.\nGitHub: [@jeffreybergier](https://github.com/jeffreybergier)\nMastodon: [@jeff](https://jeffburg.social/@jeff)" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cocoa Developer & Teacher として活動しています。<br>テクノロジーと車が大好きで、現在は自動車ソフトウェア業界で働いています（勤務地：東京）。<br><br>所属：Woven by Toyota（本講演は所属企業とは関係ありません）<br>GitHub：[@jeffreybergier](https://github.com/jeffreybergier)<br>Mastodon：[@jeff](https://jeffburg.social/@jeff)"
+            "value" : "Cocoa Developer & Teacher として活動しています。\nテクノロジーと車が大好きで、現在は自動車ソフトウェア業界で働いています（勤務地：東京）。\n\n所属：Woven by Toyota（本講演は所属企業とは関係ありません）\nGitHub：[@jeffreybergier](https://github.com/jeffreybergier)\nMastodon：[@jeff](https://jeffburg.social/@jeff)"
           }
         }
       }
@@ -552,7 +552,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOSとvisionOSを専門とするエンジニア・開発者です。個人で多数のアプリを開発しており、iOS向けの「Large Contacts」やvisionOS向けの「Good Sleeper 360」などをリリースしています。<br>また、技術書の執筆も手がけており、「Slack & Zoom & Trello 基本+活用術（できるfitシリーズ）」や「Alexaに聞きたかったこと」、最近では「visionOS開発者への道」などを出版しています。<br>受賞歴も多数あり、Mashup Awardや総務省主催のコンテストでの最優秀賞、SPAJAMをはじめとするハッカソンでの受賞経験があります。<br>また、JAWS FestaやAlexa Dayなどのイベンで登壇経験があり、現在はvisionOSに関する知見をSNSで発信しています。"
+            "value" : "iOSとvisionOSを専門とするエンジニア・開発者です。個人で多数のアプリを開発しており、iOS向けの「Large Contacts」やvisionOS向けの「Good Sleeper 360」などをリリースしています。\nまた、技術書の執筆も手がけており、「Slack & Zoom & Trello 基本+活用術（できるfitシリーズ）」や「Alexaに聞きたかったこと」、最近では「visionOS開発者への道」などを出版しています。\n受賞歴も多数あり、Mashup Awardや総務省主催のコンテストでの最優秀賞、SPAJAMをはじめとするハッカソンでの受賞経験があります。\nまた、JAWS FestaやAlexa Dayなどのイベンで登壇経験があり、現在はvisionOSに関する知見をSNSで発信しています。"
           }
         }
       }
@@ -568,13 +568,13 @@
         }
       }
     },
-    "I have completed more than a decade long experience in the field of futuristic developments and managed to gain a  portfolio of local and international clientele while working with prominent corporate entities in Sri Lanka.<br><br>Currently serving as the Chief Technology Officer for Fixel Digital which is a development house specifically for Mobile application developments . it's a pleasure that I am well known for my Punctuality, Attention to detail, and innovative mindset among the clients and the industry that I am being with<br><br>I have started iOS Development in its early development stage in 2011. I have been in the apple ecosystem for more than a decade now, also Delivered more than 55+ Apps, including iOS, macOS, tvOS, and watchOS. At the same time, I am serving my knowledge to Students in the IT industry and providing consultation services to my clients from overseas." : {
+    "I have completed more than a decade long experience in the field of futuristic developments and managed to gain a  portfolio of local and international clientele while working with prominent corporate entities in Sri Lanka.\n\nCurrently serving as the Chief Technology Officer for Fixel Digital which is a development house specifically for Mobile application developments . it's a pleasure that I am well known for my Punctuality, Attention to detail, and innovative mindset among the clients and the industry that I am being with\n\nI have started iOS Development in its early development stage in 2011. I have been in the apple ecosystem for more than a decade now, also Delivered more than 55+ Apps, including iOS, macOS, tvOS, and watchOS. At the same time, I am serving my knowledge to Students in the IT industry and providing consultation services to my clients from overseas." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未来志向の開発に10年以上携わり、国内外の企業と協力しながら幅広いクライアントのポートフォリオを築いてきました。<br><br>現在はFixel Digitalの最高技術責任者（CTO）として、モバイルアプリ開発を専門とする開発チームを率いています。業界内では「時間厳守」「細部へのこだわり」「革新的な発想」で知られています。<br><br>iOS開発には2011年の初期の段階から携わっており、Appleのエコシステムで10年以上の経験を積んできました。これまでにiOS、macOS、tvOS、watchOS向けに55本以上のアプリを開発・リリースしてきました。また、IT業界の学生に知識を共有したり、海外クライアントへのコンサルティング業務も行っています。"
+            "value" : "未来志向の開発に10年以上携わり、国内外の企業と協力しながら幅広いクライアントのポートフォリオを築いてきました。\n\n現在はFixel Digitalの最高技術責任者（CTO）として、モバイルアプリ開発を専門とする開発チームを率いています。業界内では「時間厳守」「細部へのこだわり」「革新的な発想」で知られています。\n\niOS開発には2011年の初期の段階から携わっており、Appleのエコシステムで10年以上の経験を積んできました。これまでにiOS、macOS、tvOS、watchOS向けに55本以上のアプリを開発・リリースしてきました。また、IT業界の学生に知識を共有したり、海外クライアントへのコンサルティング業務も行っています。"
           }
         }
       }
@@ -618,18 +618,18 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ニュージーランド出身で、日本に住んで10年になります。主に低レベルなリアルタイムのグラフィックスやオーディオを扱っています。<br>今年、新しくkapsy.ioという会社を設立し、現在はリアルタイムで生成される音楽シーケンサーVariations（コードネーム）の開発を進めています。"
+            "value" : "ニュージーランド出身で、日本に住んで10年になります。主に低レベルなリアルタイムのグラフィックスやオーディオを扱っています。\n今年、新しくkapsy.ioという会社を設立し、現在はリアルタイムで生成される音楽シーケンサーVariations（コードネーム）の開発を進めています。"
           }
         }
       }
     },
-    "I’m an Individual developer.<br><br>I’ve released a variety of apps for Apple platforms.<br>iOS & iPadOS: 7 apps<br>visionOS: 5 apps<br>watchOS: 5 apps<br>tvOS: 1 app<br>macOS: 3 apps<br><br>Portfolio link <br>[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)" : {
+    "I’m an Individual developer.\n\nI’ve released a variety of apps for Apple platforms.\niOS & iPadOS: 7 apps\nvisionOS: 5 apps\nwatchOS: 5 apps\ntvOS: 1 app\nmacOS: 3 apps\n\nPortfolio link \n[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "個人開発者として、Appleプラットフォーム向けにさまざまなアプリをリリースしています。<br>iOS & iPadOS アプリ：7<br>visionOS アプリ：5<br>watchOS アプリ：5<br>tvOS アプリ：1<br>macOS アプリ：3<br><br>ポートフォリオ：<br>[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)"
+            "value" : "個人開発者として、Appleプラットフォーム向けにさまざまなアプリをリリースしています。\niOS & iPadOS アプリ：7\nvisionOS アプリ：5\nwatchOS アプリ：5\ntvOS アプリ：1\nmacOS アプリ：3\n\nポートフォリオ：\n[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)"
           }
         }
       }
@@ -645,13 +645,13 @@
         }
       }
     },
-    "I’m Chris, also known as Halordain! I grew up in Dallas, Texas, and attended college at Stanford. I majored in electrical engineering with a specialization in image processing. I started studying Japanese to scout my opponents from Japan at the Pokémon World Championships, where my quarterfinals and semifinals opponents hailed from Yokosuka and Fujisawa, respectively.<br><br>My journey led me to Doshisha University to master Japanese under the Critical Language Scholarship. I abandoned my PhD at MIT CSAIL to pursue software development in Japan. Originally hired at Creatures Japan to process images for Pokémon cards, I ended up learning Objective-C to develop my first iPad app, [Pokédex for iOS (Creatures, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/).<br><br>After Creatures, I contracted with Bandai-Namco Studios to build the graphics engine behind [Super Smash Bros. for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/). I parlayed my rendering knowledge in computer graphics, my image processing background, and my interest in iOS development into developing iOS Photoshop for Adobe, and eventually joined Apple to document their new graphics technologies such as Metal, ARKit, CreateML, and RealityKit.<br><br>I returned to Japan to help spearhead Nintendo of Japan’s smartphone game design, starting with Fire Emblem Heroes and [Pikmin Bloom](https://pikminbloom.com/ja/). These development experiences led me to craft my own path creating educational apps and experiences for teaching Japanese kids about AI and Swift." : {
+    "I’m Chris, also known as Halordain! I grew up in Dallas, Texas, and attended college at Stanford. I majored in electrical engineering with a specialization in image processing. I started studying Japanese to scout my opponents from Japan at the Pokémon World Championships, where my quarterfinals and semifinals opponents hailed from Yokosuka and Fujisawa, respectively.\n\nMy journey led me to Doshisha University to master Japanese under the Critical Language Scholarship. I abandoned my PhD at MIT CSAIL to pursue software development in Japan. Originally hired at Creatures Japan to process images for Pokémon cards, I ended up learning Objective-C to develop my first iPad app, [Pokédex for iOS (Creatures, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/).\n\nAfter Creatures, I contracted with Bandai-Namco Studios to build the graphics engine behind [Super Smash Bros. for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/). I parlayed my rendering knowledge in computer graphics, my image processing background, and my interest in iOS development into developing iOS Photoshop for Adobe, and eventually joined Apple to document their new graphics technologies such as Metal, ARKit, CreateML, and RealityKit.\n\nI returned to Japan to help spearhead Nintendo of Japan’s smartphone game design, starting with Fire Emblem Heroes and [Pikmin Bloom](https://pikminbloom.com/ja/). These development experiences led me to craft my own path creating educational apps and experiences for teaching Japanese kids about AI and Swift." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "こんにちは！Chris（Halordain）です！<br>テキサス州ダラスで育ち、スタンフォード大学で電気工学（画像処理専攻）を学びました。ポケモン世界大会で日本の対戦相手をリサーチするために日本語の勉強を始め、準々決勝・準決勝では横須賀と藤沢出身のプレイヤーと対戦しました。<br><br>その後、Critical Language Scholarshipを活用し、日本語を習得するために同志社大学へ留学。MIT CSAILの博士課程を辞め、日本でソフトウェア開発の道を選びました。<br>最初の仕事はクリーチャーズでポケモンカードの画像処理を担当することでした。そこでは、Objective-Cを学び、初のiPadアプリ [ポケモン図鑑 for iOS (クリーチャーズ, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/) を開発しました。<br><br>その後、バンダイナムコスタジオで [大乱闘スマッシュブラザーズ for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/) のグラフィックスエンジンの開発に携わり、コンピュータグラフィックスと画像処理の知識を活かしてAdobeでiOS向けPhotoshopの開発を担当しました。さらに、AppleではMetal・ARKit・CreateML・RealityKitなどの新しいグラフィック技術のドキュメント作成を担当しました。<br><br>日本に戻った後は任天堂のスマートフォンゲーム開発に携わり、「ファイアーエムブレム ヒーローズ」や [ピクミン ブルーム](https://pikminbloom.com/ja/) の開発を支援。現在は、AIやSwiftを子どもたちに教える教育アプリを開発しています。"
+            "value" : "こんにちは！Chris（Halordain）です！\nテキサス州ダラスで育ち、スタンフォード大学で電気工学（画像処理専攻）を学びました。ポケモン世界大会で日本の対戦相手をリサーチするために日本語の勉強を始め、準々決勝・準決勝では横須賀と藤沢出身のプレイヤーと対戦しました。\n\nその後、Critical Language Scholarshipを活用し、日本語を習得するために同志社大学へ留学。MIT CSAILの博士課程を辞め、日本でソフトウェア開発の道を選びました。\n最初の仕事はクリーチャーズでポケモンカードの画像処理を担当することでした。そこでは、Objective-Cを学び、初のiPadアプリ [ポケモン図鑑 for iOS (クリーチャーズ, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/) を開発しました。\n\nその後、バンダイナムコスタジオで [大乱闘スマッシュブラザーズ for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/) のグラフィックスエンジンの開発に携わり、コンピュータグラフィックスと画像処理の知識を活かしてAdobeでiOS向けPhotoshopの開発を担当しました。さらに、AppleではMetal・ARKit・CreateML・RealityKitなどの新しいグラフィック技術のドキュメント作成を担当しました。\n\n日本に戻った後は任天堂のスマートフォンゲーム開発に携わり、「ファイアーエムブレム ヒーローズ」や [ピクミン ブルーム](https://pikminbloom.com/ja/) の開発を支援。現在は、AIやSwiftを子どもたちに教える教育アプリを開発しています。"
           }
         }
       }
@@ -755,24 +755,24 @@
         }
       }
     },
-    "iOS & visionOS app developer in Japan. Crafting 𝙫𝙚𝙖𝙧 and DAWN for mastodon. Loving #foxes.<br><br>[vear - Anime Avatar Camera](https://apps.apple.com/jp/app/vear-anime-avatar-camera/id1490697369?l=en-US)<br>[DAWN for Mastodon](https://apps.apple.com/jp/app/dawn-for-mastodon/id1668645019?l=en-US)" : {
+    "iOS & visionOS app developer in Japan. Crafting 𝙫𝙚𝙖𝙧 and DAWN for mastodon. Loving #foxes.\n\n[vear - Anime Avatar Camera](https://apps.apple.com/jp/app/vear-anime-avatar-camera/id1490697369?l=en-US)\n[DAWN for Mastodon](https://apps.apple.com/jp/app/dawn-for-mastodon/id1668645019?l=en-US)" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "日本でiOSとvisionOSのアプリを開発しています。<br>Mastodon向けの𝙫𝙚𝙖𝙧やDAWNなどのアプリ開発を手がけています。<br>#foxes（キツネ）が大好きです。<br><br>[vear - Anime Avatar Camera](https://apps.apple.com/jp/app/vear-anime-avatar-camera/id1490697369?l=en-US)<br>[DAWN - Mastodon クライアント](https://apps.apple.com/jp/app/dawn-for-mastodon/id1668645019?l=en-US)"
+            "value" : "日本でiOSとvisionOSのアプリを開発しています。\nMastodon向けの𝙫𝙚𝙖𝙧やDAWNなどのアプリ開発を手がけています。\n#foxes（キツネ）が大好きです。\n\n[vear - Anime Avatar Camera](https://apps.apple.com/jp/app/vear-anime-avatar-camera/id1490697369?l=en-US)\n[DAWN - Mastodon クライアント](https://apps.apple.com/jp/app/dawn-for-mastodon/id1668645019?l=en-US)"
           }
         }
       }
     },
-    "iOS app developer, creating personal projects like #Type, Quiz Match, and more.<br>Living in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.<br>Photography enthusiast, traveling across Japan as a photographer for Japan-(region).swift." : {
+    "iOS app developer, creating personal projects like #Type, Quiz Match, and more.\nLiving in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.\nPhotography enthusiast, traveling across Japan as a photographer for Japan-\\\\(region).swift." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOSアプリを作る仕事をしています。個人アプリとして#Type、Quiz Matchなどを開発しています。<br>埼玉県所沢市で中古マンションを購入。リノベーションして2匹の猫、そして妻と住んでいます。<br>趣味はカメラで、Japan-\\\\(region).swiftではカメラマンとして各地に飛んだりしています。"
+            "value" : "iOSアプリを作る仕事をしています。個人アプリとして#Type、Quiz Matchなどを開発しています。\n埼玉県所沢市で中古マンションを購入。リノベーションして2匹の猫、そして妻と住んでいます。\n趣味はカメラで、Japan-\\\\(region).swiftではカメラマンとして各地に飛んだりしています。"
           }
         }
       }
@@ -1227,13 +1227,13 @@
         }
       }
     },
-    "Si works at Apple, where he helps maintain a number of open-source Swift libraries to support server-side use cases. Before that, he’s worked in a wide range of areas including virtulalization, cloud technologies, privacy-preserving machine learning, and developer tools. <br><br>Si is based in Cambridge, UK, but loves to travel and see new places. He’s hugely passionate about coffee and enjoys playing bass guitar." : {
+    "Si works at Apple, where he helps maintain a number of open-source Swift libraries to support server-side use cases. Before that, he’s worked in a wide range of areas including virtulalization, cloud technologies, privacy-preserving machine learning, and developer tools. \n\nSi is based in Cambridge, UK, but loves to travel and see new places. He’s hugely passionate about coffee and enjoys playing bass guitar." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SiはAppleで働いており、サーバーサイドでの利用を支援するために、複数のオープンソースのSwiftライブラリの維持に携わっています。以前は、仮想化、クラウド技術、プライバシー保護機械学習、開発者向けツールなど、幅広い分野での経験を積んできました。<br><br>現在はイギリスのケンブリッジを拠点に活動していますが、旅行をして新しい場所を訪れるのが大好きです。コーヒーには強い情熱を持っており、ベースギターを弾くのも楽しんでいます。"
+            "value" : "SiはAppleで働いており、サーバーサイドでの利用を支援するために、複数のオープンソースのSwiftライブラリの維持に携わっています。以前は、仮想化、クラウド技術、プライバシー保護機械学習、開発者向けツールなど、幅広い分野での経験を積んできました。\n\n現在はイギリスのケンブリッジを拠点に活動していますが、旅行をして新しい場所を訪れるのが大好きです。コーヒーには強い情熱を持っており、ベースギターを弾くのも楽しんでいます。"
           }
         }
       }
@@ -1255,7 +1255,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "株式会社ディー・エヌ・エーのソフトウェアエンジニアとして、ライブストリーミングアプリのモバイル開発を担当しています。<br>Objective-Cの時代からiOS開発に長年携わり、Swiftの進化を活かして革新的で効率的なアプリ開発に情熱を注いでいます。"
+            "value" : "株式会社ディー・エヌ・エーのソフトウェアエンジニアとして、ライブストリーミングアプリのモバイル開発を担当しています。\nObjective-Cの時代からiOS開発に長年携わり、Swiftの進化を活かして革新的で効率的なアプリ開発に情熱を注いでいます。"
           }
         }
       }
@@ -1491,13 +1491,13 @@
         }
       }
     },
-    "With over 12 years of experience developing for Apple platforms, I am passionate about creating exceptional user experiences. I have a strong background in UIKit, and these days, I primarily focus on coding SwiftUI views for iOS and tvOS apps. I currently work at Rakuten Viki, a video streaming company with over a million active users per day.<br><br>I absolutely love attending conferences and public speaking, sharing my knowledge and learning from the community. Outside of work, you can find me planning my next travel adventure or running around with my 3-year-old." : {
+    "With over 12 years of experience developing for Apple platforms, I am passionate about creating exceptional user experiences. I have a strong background in UIKit, and these days, I primarily focus on coding SwiftUI views for iOS and tvOS apps. I currently work at Rakuten Viki, a video streaming company with over a million active users per day.\n\nI absolutely love attending conferences and public speaking, sharing my knowledge and learning from the community. Outside of work, you can find me planning my next travel adventure or running around with my 3-year-old." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Appleプラットフォーム向けの開発経験が12年以上あり、優れたユーザー体験を生み出すことに情熱を注いでいます。特にUIKitに精通しており、現在は主にSwiftUIを使ってiOSやtvOSアプリのUIを開発しています。<br>現在、1日あたり100万人以上のアクティブユーザーを抱える動画ストリーミング企業Rakuten Vikiに勤務しています。<br><br>カンファレンスへの参加や登壇が大好きで、知識を共有したり、コミュニティから学んだりすることに喜びを感じています。仕事以外では、次の旅行の計画を立てたり、3歳の子どもと遊んだりしています。"
+            "value" : "Appleプラットフォーム向けの開発経験が12年以上あり、優れたユーザー体験を生み出すことに情熱を注いでいます。特にUIKitに精通しており、現在は主にSwiftUIを使ってiOSやtvOSアプリのUIを開発しています。\n現在、1日あたり100万人以上のアクティブユーザーを抱える動画ストリーミング企業Rakuten Vikiに勤務しています。\n\nカンファレンスへの参加や登壇が大好きで、知識を共有したり、コミュニティから学んだりすることに喜びを感じています。仕事以外では、次の旅行の計画を立てたり、3歳の子どもと遊んだりしています。"
           }
         }
       }

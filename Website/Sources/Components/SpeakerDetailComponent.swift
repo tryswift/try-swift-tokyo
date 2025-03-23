@@ -19,7 +19,9 @@ struct SpeakerDetailComponent: HTML {
           .foregroundStyle(.bootstrapPurple)
 
         if let bio = speaker.bio {
-          Text(markdown: String(bio, bundle: .scheduleFeature, language: language))
+          let localizedBio = String(bio, bundle: .scheduleFeature, language: language)
+            .convertNewlines()
+          Text(markdown: localizedBio)
             .font(.body)
             .fontWeight(.regular)
             .foregroundStyle(.dimGray)

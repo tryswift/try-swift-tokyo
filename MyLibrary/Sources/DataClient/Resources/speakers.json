@@ -22,7 +22,7 @@
   {
     "name": "Si Beaumont",
     "image_name": "si_beaumont",
-    "bio": "Si works at Apple, where he helps maintain a number of open-source Swift libraries to support server-side use cases. Before that, he’s worked in a wide range of areas including virtulalization, cloud technologies, privacy-preserving machine learning, and developer tools. <br><br>Si is based in Cambridge, UK, but loves to travel and see new places. He’s hugely passionate about coffee and enjoys playing bass guitar.",
+    "bio": "Si works at Apple, where he helps maintain a number of open-source Swift libraries to support server-side use cases. Before that, he’s worked in a wide range of areas including virtulalization, cloud technologies, privacy-preserving machine learning, and developer tools. \n\nSi is based in Cambridge, UK, but loves to travel and see new places. He’s hugely passionate about coffee and enjoys playing bass guitar.",
     "job_title": "Software Engineer @ Apple",
     "links": [
       {
@@ -221,7 +221,7 @@
   {
     "name": "Pradnya Nikam",
     "image_name": "pradnya_nikam",
-    "bio": "With over 12 years of experience developing for Apple platforms, I am passionate about creating exceptional user experiences. I have a strong background in UIKit, and these days, I primarily focus on coding SwiftUI views for iOS and tvOS apps. I currently work at Rakuten Viki, a video streaming company with over a million active users per day.<br><br>I absolutely love attending conferences and public speaking, sharing my knowledge and learning from the community. Outside of work, you can find me planning my next travel adventure or running around with my 3-year-old.",
+    "bio": "With over 12 years of experience developing for Apple platforms, I am passionate about creating exceptional user experiences. I have a strong background in UIKit, and these days, I primarily focus on coding SwiftUI views for iOS and tvOS apps. I currently work at Rakuten Viki, a video streaming company with over a million active users per day.\n\nI absolutely love attending conferences and public speaking, sharing my knowledge and learning from the community. Outside of work, you can find me planning my next travel adventure or running around with my 3-year-old.",
     "job_title": "Senior iOS Developer at Rakuten Viki",
     "links": [
       {
@@ -240,7 +240,7 @@
   {
     "name": "Ryo Yamashita",
     "image_name": "ryo_yamashita",
-    "bio": "I’m an Individual developer.<br><br>I’ve released a variety of apps for Apple platforms.<br>iOS & iPadOS: 7 apps<br>visionOS: 5 apps<br>watchOS: 5 apps<br>tvOS: 1 app<br>macOS: 3 apps<br><br>Portfolio link <br>[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)",
+    "bio": "I’m an Individual developer.\n\nI’ve released a variety of apps for Apple platforms.\niOS & iPadOS: 7 apps\nvisionOS: 5 apps\nwatchOS: 5 apps\ntvOS: 1 app\nmacOS: 3 apps\n\nPortfolio link \n[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)",
     "job_title": "Solo Developer for iOS, watchOS, macOS, and visionOS",
     "links": [
       {
@@ -264,7 +264,7 @@
   {
     "name": "Kosala Jayasekara",
     "image_name": "kosala_jayasekara",
-    "bio": "I have completed more than a decade long experience in the field of futuristic developments and managed to gain a  portfolio of local and international clientele while working with prominent corporate entities in Sri Lanka.<br><br>Currently serving as the Chief Technology Officer for Fixel Digital which is a development house specifically for Mobile application developments . it's a pleasure that I am well known for my Punctuality, Attention to detail, and innovative mindset among the clients and the industry that I am being with<br><br>I have started iOS Development in its early development stage in 2011. I have been in the apple ecosystem for more than a decade now, also Delivered more than 55+ Apps, including iOS, macOS, tvOS, and watchOS. At the same time, I am serving my knowledge to Students in the IT industry and providing consultation services to my clients from overseas.",
+    "bio": "I have completed more than a decade long experience in the field of futuristic developments and managed to gain a  portfolio of local and international clientele while working with prominent corporate entities in Sri Lanka.\n\nCurrently serving as the Chief Technology Officer for Fixel Digital which is a development house specifically for Mobile application developments . it's a pleasure that I am well known for my Punctuality, Attention to detail, and innovative mindset among the clients and the industry that I am being with\n\nI have started iOS Development in its early development stage in 2011. I have been in the apple ecosystem for more than a decade now, also Delivered more than 55+ Apps, including iOS, macOS, tvOS, and watchOS. At the same time, I am serving my knowledge to Students in the IT industry and providing consultation services to my clients from overseas.",
     "job_title": "Head of Development @ Fixel Digital",
     "links": [
       {
@@ -288,7 +288,7 @@
   {
     "name": "Halordain",
     "image_name": "halordain",
-    "bio": "I’m Chris, also known as Halordain! I grew up in Dallas, Texas, and attended college at Stanford. I majored in electrical engineering with a specialization in image processing. I started studying Japanese to scout my opponents from Japan at the Pokémon World Championships, where my quarterfinals and semifinals opponents hailed from Yokosuka and Fujisawa, respectively.<br><br>My journey led me to Doshisha University to master Japanese under the Critical Language Scholarship. I abandoned my PhD at MIT CSAIL to pursue software development in Japan. Originally hired at Creatures Japan to process images for Pokémon cards, I ended up learning Objective-C to develop my first iPad app, [Pokédex for iOS (Creatures, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/).<br><br>After Creatures, I contracted with Bandai-Namco Studios to build the graphics engine behind [Super Smash Bros. for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/). I parlayed my rendering knowledge in computer graphics, my image processing background, and my interest in iOS development into developing iOS Photoshop for Adobe, and eventually joined Apple to document their new graphics technologies such as Metal, ARKit, CreateML, and RealityKit.<br><br>I returned to Japan to help spearhead Nintendo of Japan’s smartphone game design, starting with Fire Emblem Heroes and [Pikmin Bloom](https://pikminbloom.com/ja/). These development experiences led me to craft my own path creating educational apps and experiences for teaching Japanese kids about AI and Swift.",
+    "bio": "I’m Chris, also known as Halordain! I grew up in Dallas, Texas, and attended college at Stanford. I majored in electrical engineering with a specialization in image processing. I started studying Japanese to scout my opponents from Japan at the Pokémon World Championships, where my quarterfinals and semifinals opponents hailed from Yokosuka and Fujisawa, respectively.\n\nMy journey led me to Doshisha University to master Japanese under the Critical Language Scholarship. I abandoned my PhD at MIT CSAIL to pursue software development in Japan. Originally hired at Creatures Japan to process images for Pokémon cards, I ended up learning Objective-C to develop my first iPad app, [Pokédex for iOS (Creatures, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/).\n\nAfter Creatures, I contracted with Bandai-Namco Studios to build the graphics engine behind [Super Smash Bros. for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/). I parlayed my rendering knowledge in computer graphics, my image processing background, and my interest in iOS development into developing iOS Photoshop for Adobe, and eventually joined Apple to document their new graphics technologies such as Metal, ARKit, CreateML, and RealityKit.\n\nI returned to Japan to help spearhead Nintendo of Japan’s smartphone game design, starting with Fire Emblem Heroes and [Pikmin Bloom](https://pikminbloom.com/ja/). These development experiences led me to craft my own path creating educational apps and experiences for teaching Japanese kids about AI and Swift.",
     "job_title": "CEO @ Honmon",
     "links": [
       {
@@ -300,7 +300,7 @@
   {
     "name": "Jeffrey Bergier",
     "image_name": "jeffrey_bergier",
-    "bio": "Cocoa Developer and Teacher. Love technology and cars. Working in the automotive software industry. Living in Tokyo.<br>Company: Woven by Toyota - This talk is not affiliated with my employer in any way.<br>Github: [@jeffreybergier](https://github.com/jeffreybergier)<br>Mastodon: [@jeff](https://jeffburg.social/@jeff)",
+    "bio": "Cocoa Developer and Teacher. Love technology and cars. Working in the automotive software industry. Living in Tokyo.\nCompany: Woven by Toyota - This talk is not affiliated with my employer in any way.\nGitHub: [@jeffreybergier](https://github.com/jeffreybergier)\nMastodon: [@jeff](https://jeffburg.social/@jeff)",
     "job_title": "Quality Assurance Engineer",
     "links": [
       {
@@ -343,7 +343,7 @@
   {
     "name": "noppe",
     "image_name": "noppe",
-    "bio": "iOS & visionOS app developer in Japan. Crafting 𝙫𝙚𝙖𝙧 and DAWN for mastodon. Loving #foxes.<br><br>[vear - Anime Avatar Camera](https://apps.apple.com/jp/app/vear-anime-avatar-camera/id1490697369?l=en-US)<br>[DAWN for Mastodon](https://apps.apple.com/jp/app/dawn-for-mastodon/id1668645019?l=en-US)",
+    "bio": "iOS & visionOS app developer in Japan. Crafting 𝙫𝙚𝙖𝙧 and DAWN for mastodon. Loving #foxes.\n\n[vear - Anime Avatar Camera](https://apps.apple.com/jp/app/vear-anime-avatar-camera/id1490697369?l=en-US)\n[DAWN for Mastodon](https://apps.apple.com/jp/app/dawn-for-mastodon/id1668645019?l=en-US)",
     "job_title": "iOS Engineer at DeNA Co., Ltd.",
     "links": [
       {
@@ -355,7 +355,7 @@
   {
     "name": "Sugiy",
     "image_name": "sugiy",
-    "bio": "<br>- iOS and Flutter engineer in Japan<br>- Working in DeNA Co., Ltd.<br>- Often participate in [Japan-(region).swift](https://japan-region-swift.github.io/Japan-region-swift/) events in Japan.<br>- Spoke at conferences in Japan such as [iOSDC](https://iosdc.jp/2024/) from 2022 to 2024 and [FlutterKaigi2024](https://youtu.be/UwDqyVawLtA?si=E0kN98o9CdM_p8e6).<br>- I like cooking, fish, Japanese food, and pineapples.",
+    "bio": "- iOS and Flutter engineer in Japan\n- Working in DeNA Co., Ltd.\n- Often participate in [Japan-\\\\(region).swift](https://japan-region-swift.github.io/Japan-region-swift/) events in Japan.\n- Spoke at conferences in Japan such as [iOSDC](https://iosdc.jp/2024/) from 2022 to 2024 and [FlutterKaigi2024](https://youtu.be/UwDqyVawLtA?si=E0kN98o9CdM_p8e6).\n- I like cooking, fish, Japanese food, and pineapples.",
     "job_title": "iOS/Flutter Developer at DeNA Co., Ltd.",
     "links": [
       {
@@ -386,7 +386,7 @@
   {
     "name": "Kazuya Ueoka",
     "image_name": "fromkk",
-    "bio": "iOS app developer, creating personal projects like #Type, Quiz Match, and more.<br>Living in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.<br>Photography enthusiast, traveling across Japan as a photographer for Japan-(region).swift.",
+    "bio": "iOS app developer, creating personal projects like #Type, Quiz Match, and more.\nLiving in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.\nPhotography enthusiast, traveling across Japan as a photographer for Japan-\\\\(region).swift.",
     "job_title": "iOS Developer",
     "links": [
       {
@@ -398,7 +398,7 @@
   {
     "name": "Satoshi Hattori",
     "image_name": "satoshi_hattori",
-    "bio": "Belongs to Cyber AI Productions. XR Expert at Cyber Agent.<br>Responsible for system development related to XR and studio shooting.<br>Purchased Apple Vision Pro locally on its U.S. release day. Actively engaged in development and research, including the visionOS 30 Days project.<br>Organizer of the visionOS Engineer Meetup. Published a book on visionOS app development.<br>Has spoken at iOSDC for nine consecutive years, as well as at try! Swift Tokyo, XR Kaigi, Let’s visionOS, AWE USA, and more.<br>Mainly shares updates on X, so please follow!",
+    "bio": "Belongs to Cyber AI Productions. XR Expert at Cyber Agent.\nResponsible for system development related to XR and studio shooting.\nPurchased Apple Vision Pro locally on its U.S. release day. Actively engaged in development and research, including the visionOS 30 Days project.\nOrganizer of the visionOS Engineer Meetup. Published a book on visionOS app development.\nHas spoken at iOSDC for nine consecutive years, as well as at try! Swift Tokyo, XR Kaigi, Let’s visionOS, AWE USA, and more.\nMainly shares updates on X, so please follow!",
     "job_title": "XR Engineer at Cyber AI Productions",
     "links": [
       {
