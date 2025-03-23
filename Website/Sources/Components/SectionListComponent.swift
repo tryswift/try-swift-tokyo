@@ -35,6 +35,7 @@ struct SectionListComponent: HTML {
           .margin(.bottom, .px(16))
 
         let description = String(sectionType.description, language: language)
+          .convertNewlines()
         Text(markdown: description)
           .horizontalAlignment(description.displayedCharacterCount() > 100 ? .leading : .center)
           .font(.body)
