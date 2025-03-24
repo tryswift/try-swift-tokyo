@@ -33,8 +33,6 @@ public struct ScheduleDetail {
     }
   }
 
-  @Dependency(\.safari) var safari
-
   public init() {}
 
   public var body: some ReducerOf<Self> {
@@ -42,6 +40,7 @@ public struct ScheduleDetail {
     Reduce { state, action in
       switch action {
       case let .view(.snsTapped(url)):
+        @Dependency(\.safari) var safari
         return .run { _ in await safari(url) }
       case .binding:
         return .none

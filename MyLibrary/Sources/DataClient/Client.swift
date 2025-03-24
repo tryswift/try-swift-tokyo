@@ -4,18 +4,18 @@ import Foundation
 import SharedModels
 
 @DependencyClient
-public struct DataClient {
-  public var fetchDay1: @Sendable () throws -> Conference
-  public var fetchDay2: @Sendable () throws -> Conference
-  public var fetchWorkshop: @Sendable () throws -> Conference
-  public var fetchSponsors: @Sendable () throws -> Sponsors
-  public var fetchOrganizers: @Sendable () throws -> [Organizer]
-  public var fetchSpeakers: @Sendable () throws -> [Speaker]
+public struct DataClient: Sendable {
+  public var fetchDay1: @Sendable () async throws -> Conference
+  public var fetchDay2: @Sendable () async throws -> Conference
+  public var fetchWorkshop: @Sendable () async throws -> Conference
+  public var fetchSponsors: @Sendable () async throws -> Sponsors
+  public var fetchOrganizers: @Sendable () async throws -> [Organizer]
+  public var fetchSpeakers: @Sendable () async throws -> [Speaker]
 }
 
 extension DataClient: DependencyKey {
 
-  static public var liveValue: DataClient = .init(
+  static public let liveValue: DataClient = .init(
     fetchDay1: {
       let data = loadDataFromBundle(fileName: "day1")
       let response = try jsonDecoder.decode(Conference.self, from: data)

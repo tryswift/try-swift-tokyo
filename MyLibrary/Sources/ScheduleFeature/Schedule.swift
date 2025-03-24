@@ -57,50 +57,57 @@ public struct Schedule {
   @Reducer(state: .equatable)
   public enum Destination {}
 
-  @Dependency(DataClient.self) var dataClient
-
   public init() {}
 
   public var body: some ReducerOf<Self> {
     BindingReducer()
-    Reduce { state, action in
+    Reduce<State, Action> { state, action in
       switch action {
       case .view(.onAppear):
-        return .send(
-          .fetchResponse(
-            Result {
-              let day1 = try dataClient.fetchDay1()
-              let day2 = try dataClient.fetchDay2()
-              let workshop = try dataClient.fetchWorkshop()
-              return .init(day1: day1, day2: day2, workshop: workshop)
-            }))
-      case let .view(.disclosureTapped(session)):
-        guard let description = session.description, let speakers = session.speakers else {
-          return .none
-        }
-        state.path.append(
-          .detail(
-            .init(
-              title: session.title,
-              description: description,
-              requirements: session.requirements,
-              speakers: speakers
+        return .run { send in
+          @Dependency(DataClient.self) var dataClient
+          let client = dataClient
+          await send(
+            .fetchResponse(
+              Result {
+                async let day1 = try client.fetchDay1()
+                async let day2 = try client.fetchDay2()
+                async let workshop = try client.fetchWorkshop()
+                return try await .init(day1: day1, day2: day2, workshop: workshop)
+              }
             )
           )
-        )
-        return .none
-      case let .fetchResponse(.success(response)):
-        state.day1 = response.day1
-        state.day2 = response.day2
-        state.workshop = response.workshop
-        return .none
-      case let .fetchResponse(.failure(error as DecodingError)):
-        assertionFailure(error.localizedDescription)
-        return .none
-      case let .fetchResponse(.failure(error)):
-        print(error)  // TODO: replace to Logger API
-        return .none
-      case .binding, .path, .destination:
+        }
+        case let .view(.disclosureTapped(session)):
+          guard let description = session.description,
+                let speakers = session.speakers else {
+            return .none
+          }
+          state.path.append(
+            .detail(
+              .init(
+                title: session.title,
+                description: description,
+                requirements: session.requirements,
+                speakers: speakers
+              )
+            )
+          )
+          return .none
+        case let .fetchResponse(.success(response)):
+          state.day1 = response.day1
+          state.day2 = response.day2
+          state.workshop = response.workshop
+          return .none
+        case let .fetchResponse(.failure(error as DecodingError)):
+          assertionFailure(error.localizedDescription)
+          return .none
+        case let .fetchResponse(.failure(error)):
+          print(error)  // TODO: replace to Logger API
+          return .none
+        case .binding,
+            .path,
+            .destination:
         return .none
       }
     }

@@ -1,11 +1,11 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 
 import PackageDescription
 
 let package = Package(
   name: "MyLibrary",
   defaultLocalization: "en",
-  platforms: [.iOS(.v17), .macOS(.v14), .watchOS(.v10), .tvOS(.v17), .visionOS(.v1)],
+  platforms: [.iOS(.v18), .macOS(.v15), .watchOS(.v11), .tvOS(.v18), .visionOS(.v2)],
   products: [
     .library(
       name: "AppFeature",
@@ -27,8 +27,8 @@ let package = Package(
       targets: ["trySwiftFeature"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.9.1"),
-    .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.2.0"),
+    .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.18.0"),
+    .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.8.0"),
     .package(url: "https://github.com/zunda-pixel/LicenseProvider", from: "1.1.1"),
   ],
   targets: [

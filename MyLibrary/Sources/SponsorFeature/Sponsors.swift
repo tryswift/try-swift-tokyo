@@ -18,13 +18,14 @@ public struct SponsorsList {
     public init() {}
   }
 
-  public enum Action: ViewAction, BindableAction {
+  public enum Action: ViewAction {
     case destination(PresentationAction<Destination.Action>)
-    case binding(BindingAction<State>)
     case view(View)
+    case sponsorResponse(Result<Sponsors, Error>)
 
     @CasePathable
-    public enum View {
+    public enum View: BindableAction, Sendable {
+      case binding(BindingAction<State>)
       case onAppear
       case sponsorTapped(Sponsor)
     }
@@ -32,21 +33,29 @@ public struct SponsorsList {
 
   public init() {}
 
-  @Dependency(DataClient.self) var dataClient
-  @Dependency(\.safari) var safari
-
   public var body: some ReducerOf<Self> {
-    BindingReducer()
-    Reduce { state, action in
+    BindingReducer(action: \.view)
+    Reduce<State, Action> { state, action in
       switch action {
       case .view(.onAppear):
-        state.sponsors = try! dataClient.fetchSponsors()
-        return .none
-
+        @Dependency(DataClient.self) var dataClient
+        return .run { send in
+          await send(
+            .sponsorResponse(Result { try await dataClient.fetchSponsors() })
+          )
+        }
       case let .view(.sponsorTapped(sponsor)):
         guard let url = sponsor.link else { return .none }
-        return .run { _ in await safari(url) }
-      case .binding:
+        return .run { _ in
+          @Dependency(\.safari) var safari
+          await safari(url)
+        }
+      case .view(.binding):
+        return .none
+      case let .sponsorResponse(.success(response)):
+        state.sponsors = response
+        return .none
+      case .sponsorResponse(.failure):
         return .none
       case .destination:
         return .none

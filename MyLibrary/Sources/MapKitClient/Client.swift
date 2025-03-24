@@ -6,7 +6,7 @@ import MapKit
 import SharedModels
 
 @DependencyClient
-public struct MapKitClient {
+public struct MapKitClient: Sendable {
   public var mapRoute: @Sendable (MKMapItem, MKMapItem) async throws -> MKRoute?
   public var lookAround: @Sendable (MKMapItem) async throws -> MKLookAroundScene?
   public var reverseGeocodeLocation:
@@ -15,7 +15,7 @@ public struct MapKitClient {
 }
 
 extension MapKitClient: DependencyKey {
-  public static var liveValue: Self = .init(
+  public static let liveValue: Self = .init(
     mapRoute: { starting, ending in
       let directionsRequest = MKDirections.Request()
       directionsRequest.source = starting

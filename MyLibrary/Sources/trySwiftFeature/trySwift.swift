@@ -40,8 +40,6 @@ public struct TrySwift {
     case acknowledgements(Acknowledgements)
   }
 
-  @Dependency(\.safari) var safari
-
   public init() {}
 
   public var body: some ReducerOf<TrySwift> {
@@ -53,19 +51,19 @@ public struct TrySwift {
         return .none
       case .view(.codeOfConductTapped):
         let url = URL(string: String(localized: "Code of Conduct URL", bundle: .module))!
-        return .run { _ in await safari(url) }
+        return sendToSafari(url)
       case .view(.privacyPolicyTapped):
         let url = URL(string: String(localized: "Privacy Policy URL", bundle: .module))!
-        return .run { _ in await safari(url) }
+        return sendToSafari(url)
       case .view(.acknowledgementsTapped):
         state.path.append(.acknowledgements(.init()))
         return .none
       case .view(.eventbriteTapped):
         let url = URL(string: String(localized: "Eventbrite URL", bundle: .module))!
-        return .run { _ in await safari(url) }
+        return sendToSafari(url)
       case .view(.websiteTapped):
         let url = URL(string: String(localized: "Website URL", bundle: .module))!
-        return .run { _ in await safari(url) }
+        return sendToSafari(url)
       case let .path(.element(_, .organizers(.delegate(.organizerTapped(organizer))))):
         state.path.append(.profile(.init(organizer: organizer)))
         return .none
@@ -76,6 +74,13 @@ public struct TrySwift {
       }
     }
     .forEach(\.path, action: \.path)
+  }
+
+  func sendToSafari(_ url: URL) -> Effect<Action> {
+    return .run { _ in
+      @Dependency(\.safari) var safari
+      await safari(url)
+    }
   }
 }
 

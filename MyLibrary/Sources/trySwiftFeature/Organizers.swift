@@ -23,6 +23,7 @@ public struct Organizers {
     case view(View)
     case destination(PresentationAction<Destination.Action>)
     case delegate(Delegate)
+    case organizersResponse(Result<[Organizer], Error>)
 
     public enum View {
       case onAppear
@@ -40,14 +41,21 @@ public struct Organizers {
     case profile(Profile)
   }
 
-  @Dependency(DataClient.self) var dataClient
-
   public var body: some ReducerOf<Organizers> {
     Reduce { state, action in
       switch action {
       case .view(.onAppear):
-        let response = try! dataClient.fetchOrganizers()
+        @Dependency(DataClient.self) var dataClient
+        
+        return .run { send in
+          await send(
+            .organizersResponse(Result { try await  dataClient.fetchOrganizers()})
+          )
+        }
+      case let .organizersResponse(.success(response)):
         state.organizers.append(contentsOf: response)
+        return .none
+      case .organizersResponse(.failure):
         return .none
       case let .view(._organizerTapped(organizer)):
         return .send(.delegate(.organizerTapped(organizer)))

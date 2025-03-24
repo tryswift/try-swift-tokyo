@@ -2,7 +2,7 @@ import ComposableArchitecture
 import CoreLocation
 import DependencyExtra
 import Foundation
-import MapKit
+@preconcurrency import MapKit
 import MapKitClient
 import SwiftUI
 
@@ -10,8 +10,7 @@ import SwiftUI
 public struct Guidance {
 
   @ObservableState
-  public struct State: Equatable {
-    @Presents var destination: Destination.State?
+  public struct State: Equatable, Sendable {
     var lines: Lines = .metroShibuya
     var route: MKRoute?
     var origin: MKMapItem?
@@ -36,7 +35,6 @@ public struct Guidance {
 
   public enum Action: BindableAction, ViewAction {
     case binding(BindingAction<State>)
-    case destination(PresentationAction<Destination.Action>)
     case view(View)
     case initialResponse(Result<(MKMapItem, MKMapItem, MKRoute, MKLookAroundScene?)?, Error>)
     case updateResponse(Result<(MKMapItem, MKRoute, MKLookAroundScene?)?, Error>)
@@ -46,13 +44,6 @@ public struct Guidance {
       case openMapTapped
     }
   }
-
-  @Reducer(state: .equatable)
-  public enum Destination {
-  }
-
-  @Dependency(MapKitClient.self) var mapKitClient
-  @Dependency(\.safari) var safari
 
   public init() {}
 
@@ -118,71 +109,76 @@ public struct Guidance {
         return .run { [state] _ in
           state.destinationItem?.openInMaps()
         }
-      case .destination, .binding:
+      case .binding:
         return .none
       }
     }
-    .ifLet(\.$destination, action: \.destination)
   }
+}
 
-  func onAppear(lines: Lines) async throws -> (MKMapItem, MKMapItem, MKRoute, MKLookAroundScene?)? {
-    let items = try await withThrowingTaskGroup(
-      of: (Int, MKMapItem?).self, returning: (MKMapItem?, MKMapItem?).self
-    ) { group in
-      group.addTask {
-        (0, try await mapKitClient.localSearch(lines.searchQuery, lines.region).first)
-      }
-      group.addTask {
-        (1, try await mapKitClient.localSearch("ベルサール渋谷ファースト", hallLocation).first)
-      }
-      var result: [Int: MKMapItem?] = [:]
-      for try await (index, element) in group {
-        result[index] = element
-      }
-      return (result[0]!, result[1]!)
-    }
-    guard let origin = items.0, let destination = items.1 else { return nil }
-    guard let route = try await mapKitClient.mapRoute(origin, destination) else { return nil }
-    let polylineOrigin = route.polyline.coords.first!
-    guard
-      let geoLocation = try await mapKitClient.reverseGeocodeLocation(
-        .init(latitude: polylineOrigin.latitude, longitude: polylineOrigin.longitude)
-      ).first
-    else {
-      return nil
-    }
-    guard let lookAroundScene = try await mapKitClient.lookAround(.init(placemark: geoLocation))
-    else {
-      return (origin, destination, route, nil)
-    }
-    return (origin, destination, route, lookAroundScene)
-  }
+func onAppear(lines: Lines) async throws -> (MKMapItem, MKMapItem, MKRoute, MKLookAroundScene?)? {
 
-  func update(with lines: Lines, destination: MKMapItem) async throws -> (
-    MKMapItem, MKRoute, MKLookAroundScene?
-  )? {
-    let origin = try await mapKitClient.localSearch(lines.searchQuery, lines.region).first
-    guard let origin = origin else { return nil }
-    guard let route = try await mapKitClient.mapRoute(origin, destination) else {
-      print("[Error] Route Not found", origin, destination)
-      return nil
+  let items = try await withThrowingTaskGroup(
+    of: (Int, MKMapItem?).self, returning: (MKMapItem?, MKMapItem?).self
+  ) { group in
+    group.addTask {
+      @Dependency(MapKitClient.self) var mapKitClient
+      return (0, try await mapKitClient.localSearch(lines.searchQuery, lines.region).first)
     }
-    let polylineOrigin = route.polyline.coords.first!
-    guard
-      let geoLocation = try await mapKitClient.reverseGeocodeLocation(
-        .init(latitude: polylineOrigin.latitude, longitude: polylineOrigin.longitude)
-      ).first
-    else {
-      print("[Error] Reverse Geocode failed", polylineOrigin)
-      return nil
+    group.addTask {
+      @Dependency(MapKitClient.self) var mapKitClient
+      return (1, try await mapKitClient.localSearch("ベルサール渋谷ファースト", hallLocation).first)
     }
-    guard let lookAroundScene = try await mapKitClient.lookAround(.init(placemark: geoLocation))
-    else {
-      print("[Error] Look around scene not found", geoLocation)
-      return (origin, route, nil)
+    var result: [Int: MKMapItem?] = [:]
+    for try await (index, element) in group {
+      result[index] = element
     }
-    return (origin, route, lookAroundScene)
+    return (result[0]!, result[1]!)
   }
+  @Dependency(MapKitClient.self) var mapKitClient
+  guard let origin = items.0, let destination = items.1 else { return nil }
+  guard let route = try await mapKitClient.mapRoute(origin, destination) else { return nil }
+  let polylineOrigin = route.polyline.coords.first!
+  guard
+    let geoLocation = try await mapKitClient.reverseGeocodeLocation(
+      .init(latitude: polylineOrigin.latitude, longitude: polylineOrigin.longitude)
+    ).first
+  else {
+    return nil
+  }
+  guard let lookAroundScene = try await mapKitClient.lookAround(.init(placemark: geoLocation))
+  else {
+    return (origin, destination, route, nil)
+  }
+  return (origin, destination, route, lookAroundScene)
+}
+
+func update(with lines: Lines, destination: MKMapItem) async throws -> (
+  MKMapItem, MKRoute, MKLookAroundScene?
+)? {
+  @Dependency(MapKitClient.self) var mapKitClient
+
+  let origin = try await mapKitClient.localSearch(lines.searchQuery, lines.region).first
+  guard let origin = origin else { return nil }
+  guard let route = try await mapKitClient.mapRoute(origin, destination) else {
+    print("[Error] Route Not found", origin, destination)
+    return nil
+  }
+  let polylineOrigin = route.polyline.coords.first!
+  guard
+    let geoLocation = try await mapKitClient.reverseGeocodeLocation(
+      .init(latitude: polylineOrigin.latitude, longitude: polylineOrigin.longitude)
+    ).first
+  else {
+    print("[Error] Reverse Geocode failed", polylineOrigin)
+    return nil
+  }
+  guard let lookAroundScene = try await mapKitClient.lookAround(.init(placemark: geoLocation))
+  else {
+    print("[Error] Look around scene not found", geoLocation)
+    return (origin, route, nil)
+  }
+  return (origin, route, lookAroundScene)
 }
 
 @ViewAction(for: Guidance.self)
@@ -335,6 +331,8 @@ var hallLocation: MKCoordinateRegion {
     center: .init(latitude: 35.657920, longitude: 139.708854),
     span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01))
 }
+
+extension MapCameraPosition: @unchecked @retroactive Sendable {}
 
 #Preview {
   GuidanceView(

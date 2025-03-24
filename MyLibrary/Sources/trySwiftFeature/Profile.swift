@@ -24,8 +24,6 @@ public struct Profile {
     }
   }
 
-  @Dependency(\.safari) var safari
-
   public init() {}
 
   public var body: some ReducerOf<Self> {
@@ -33,6 +31,7 @@ public struct Profile {
     Reduce { state, action in
       switch action {
       case let .view(.snsTapped(url)):
+        @Dependency(\.safari) var safari
         return .run { _ in await safari(url) }
       case .binding:
         return .none

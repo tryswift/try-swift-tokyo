@@ -15,12 +15,11 @@ public struct Acknowledgements {
     case urlTapped(URL)
   }
 
-  @Dependency(\.safari) var safari
-
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
       case let .urlTapped(url):
+        @Dependency(\.safari) var safari
         return .run { _ in await safari(url) }
       }
     }
