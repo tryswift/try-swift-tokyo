@@ -64,7 +64,7 @@
       "sessions": [
         {
           "id": 7,
-          "title": "⚡️ Let's Try Making Things Move with Swift!",
+          "title": "⚡️ Let’s Try Making Things Move with Swift!",
           "place": "Hall",
           "description": "Ever wondered about simulations of how weather changes or viruses spread in the air? These simulations are built with simple calculations—just addition, subtraction, multiplication, and division! In this talk, we'll use Swift to create a simple simulation and show you how easy it is!",
           "speakers": [
