@@ -278,7 +278,7 @@
               "id": 1,
               "name": "Konrad 'ktoso' Malawski",
               "image_name": "konrad_ktoso_malawski",
-              "bio": "Konrad works in the Swift language team at Apple, where he focuses on concurrency and distributed modules of the language, and server-side focused libraries. He was part of the design and implementation of Swift's structured concurrency and actor model, as well as the distributed actors language feature and cluster library. Currently he's focused on Swift/Java interoperability efforts. Previously, he worked on Akka at Lightbend/Typesafe, where he maintained core pieces of the ecosystem, including the clustering, event sourcing, streaming and HTTP libraries. He also is a Java Champion and made significant contributions to the reactive-streams specification and TCK which later became the foundation of the JDK's java.util.concurrent.Flow types.",
+              "bio": "Konrad works in the Swift language team at Apple, where he focuses on concurrency and distributed modules of the language, and server-side focused libraries. He was part of the design and implementation of Swift’s structured concurrency and actor model, as well as the distributed actors language feature and cluster library. Currently he's focused on Swift/Java interoperability efforts. Previously, he worked on Akka at Lightbend/Typesafe, where he maintained core pieces of the ecosystem, including the clustering, event sourcing, streaming and HTTP libraries. He also is a Java Champion and made significant contributions to the reactive-streams specification and TCK which later became the foundation of the JDK’s java.util.concurrent.Flow types.",
               "job_title": "Swift Language Team",
               "links": [
                 {

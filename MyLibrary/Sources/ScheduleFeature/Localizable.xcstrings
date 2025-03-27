@@ -39,7 +39,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SwiftUIの8番出口"
+            "value" : "⚡️ SwiftUIの8番出口"
           }
         }
       }
@@ -50,7 +50,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Japan Symbol QuizによるSwiftUIのPathアニメーションの探求"
+            "value" : "⚡️ Japan Symbol QuizによるSwiftUIのPathアニメーションの探求"
           }
         }
       }
@@ -61,7 +61,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Charts APIで作るグラフアート – データビジュアライゼーションを超えて\n"
+            "value" : "⚡️ Charts APIで作るグラフアート – データビジュアライゼーションを超えて\n"
           }
         }
       }
@@ -72,18 +72,18 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NeXTSTEP向けアプリを作った話 ― Objective-Cを恐れるのをやめ、愛するようになった理由\n"
+            "value" : "⚡️ NeXTSTEP向けアプリを作った話 ― Objective-Cを恐れるのをやめ、愛するようになった理由\n"
           }
         }
       }
     },
-    "⚡️ Let’s Try Making Things Move with Swift!" : {
+    "⚡️ Let's Try Making Things Move with Swift!" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Swiftで物を動かしてみよう!"
+            "value" : "⚡️ Swiftで物を動かしてみよう!"
           }
         }
       }
@@ -94,7 +94,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "通知に彩りを加えよう"
+            "value" : "⚡️ 通知に彩りを加えよう"
           }
         }
       }
@@ -105,7 +105,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Swift × Android: Skipが切り拓くクロスプラットフォーム開発の未来\n"
+            "value" : "⚡️ Swift × Android: Skipが切り拓くクロスプラットフォーム開発の未来\n"
           }
         }
       }
@@ -116,7 +116,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "40万以上DLされた個人開発アプリをサービス終了するためにしたこと"
+            "value" : "⚡️ 40万以上DLされた個人開発アプリをサービス終了するためにしたこと"
           }
         }
       }
@@ -127,7 +127,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "一度作れば、どんな入力でもプレイ可能なiOSゲーム\n\n"
+            "value" : "⚡️ 一度作れば、どんな入力でもプレイ可能なiOSゲーム\n\n"
           }
         }
       }
