@@ -22,7 +22,7 @@ final class SponsorsTests: XCTestCase {
 
   @MainActor
   func testSponsorTapped() async {
-    let receivedUrl = ActorIsolated<URL?>(nil)
+    let receivedUrl = LockIsolated<URL?>(nil)
 
     let store = TestStore(initialState: SponsorsList.State()) {
       SponsorsList()

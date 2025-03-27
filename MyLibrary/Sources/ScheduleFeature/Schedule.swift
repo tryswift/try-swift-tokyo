@@ -18,7 +18,7 @@ public struct Schedule {
   public struct SchedulesResponse: Equatable {
     var day1: Conference
     var day2: Conference
-    var workshop: Conference
+    var day3: Conference
   }
 
   @ObservableState
@@ -30,7 +30,7 @@ public struct Schedule {
     var isSearchBarPresented: Bool = false
     var day1: Conference?
     var day2: Conference?
-    var workshop: Conference?
+    var day3: Conference?
     @Presents var destination: Destination.State?
 
     public init() {}
@@ -71,8 +71,8 @@ public struct Schedule {
             Result {
               let day1 = try dataClient.fetchDay1()
               let day2 = try dataClient.fetchDay2()
-              let workshop = try dataClient.fetchWorkshop()
-              return .init(day1: day1, day2: day2, workshop: workshop)
+              let day3 = try dataClient.fetchDay3()
+              return .init(day1: day1, day2: day2, day3: day3)
             }))
       case let .view(.disclosureTapped(session)):
         guard let description = session.description, let speakers = session.speakers else {
@@ -92,7 +92,7 @@ public struct Schedule {
       case let .fetchResponse(.success(response)):
         state.day1 = response.day1
         state.day2 = response.day2
-        state.workshop = response.workshop
+        state.day3 = response.day3
         return .none
       case let .fetchResponse(.failure(error as DecodingError)):
         assertionFailure(error.localizedDescription)
@@ -155,8 +155,8 @@ public struct ScheduleView: View {
           Text("")
         }
       case .day3:
-        if let workshop = store.workshop {
-          conferenceList(conference: workshop)
+        if let day3 = store.day3 {
+          conferenceList(conference: day3)
         } else {
           Text("")
         }

@@ -6,17 +6,17 @@ import SwiftUI
 public struct Acknowledgements {
   @ObservableState
   public struct State: Equatable {
-    var packages = LicenseProvider.packages
-
+    var packages = LicensesPlugin.licenses
+    
     public init() {}
   }
-
+  
   public enum Action {
     case urlTapped(URL)
   }
-
+  
   @Dependency(\.safari) var safari
-
+  
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
@@ -28,22 +28,24 @@ public struct Acknowledgements {
 }
 
 public struct AcknowledgementsView: View {
-
+  
   @Bindable public var store: StoreOf<Acknowledgements>
-
+  
   public var body: some View {
     List {
-      ForEach(store.packages, id: \.self) { package in
-        NavigationLink(package.name) {
-          ScrollView {
-            Button(package.location.absoluteString) {
-              store.send(.urlTapped(package.location))
+      ForEach(LicensesPlugin.licenses) { license in
+        NavigationStack {
+          Group {
+            if let licenseText = license.licenseText {
+              ScrollView {
+                Text(licenseText)
+                  .padding()
+              }
+            } else {
+              Text("No License Found")
             }
-            .padding()
-            Text(package.license)
-              .padding()
           }
-          .navigationTitle(package.name)
+          .navigationTitle(license.name)
         }
       }
     }
