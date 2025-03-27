@@ -138,7 +138,7 @@
       "sessions": [
         {
           "id": 13,
-          "title": "Introduction to security research and bounty hunting on Apple's platforms.",
+          "title": "Introduction to security research and bounty hunting on Apple's platforms",
           "place": "Hall",
           "description": "The reason why I'd like to give this talk is because as someone who works as both an iOS/Mac developer and a security researcher, I've learned that there's a lot that the developer community can contribute to security research on Apple's platforms, but most developers think that it's a niche outside their area of expertise. However, most professional security researchers focus at the low level where app developers don't usually have a lot of knowledge.\n\nThrough my work, I've found quite a few security bugs in Mac and iOS that could be found at the higher level, and those bugs have rewarded me with multiple bug bounty payments from Apple as well as helping improve the security of the operating systems. This talk would be a way to introduce more developers to the practice, with some examples of my past experiences, and encourage them to pursue security research as part of their career. You can read about some of my security research work on my blog.\n\nI think this fits well as both an inspirational and technical topic that's not usually covered in developer conferences.",
           "speakers": [
@@ -394,7 +394,7 @@
           "id": 31,
           "title": "⚡️ EXIT 8 for SwiftUI",
           "place": "Hall",
-          "description": "\"Hmm, something looks off...\"\n\"Hmm, this interaction is broken...\"\n\nIf you've built UI with SwiftUI, you've probably encountered these issues more often than you'd like. In many cases, the solution involves wrapping UIKit to work around the problem.\n\nIn this lightning talk, I'll discuss when to use SwiftUI and when to rely on UIKit, breaking it down into eight common patterns.\"",
+          "description": "\"Hmm, something looks off...\"\n\"Hmm, this interaction is broken...\"\n\nIf you've built UI with SwiftUI, you've probably encountered these issues more often than you'd like. In many cases, the solution involves wrapping UIKit to work around the problem.\n\nIn this lightning talk, I'll discuss when to use SwiftUI and when to rely on UIKit, breaking it down into eight common patterns.",
           "speakers": [
             {
               "id": 99,
