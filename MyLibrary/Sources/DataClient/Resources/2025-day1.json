@@ -441,33 +441,6 @@
       ]
     },
     {
-      "id": 15,
-      "time": "2025-04-09T17:45:00+09:00",
-      "sessions": [
-        {
-          "id": 41,
-          "title": "Office hour",
-          "place": "Ask the Speaker",
-          "summary": "Meet Benjamin Sandofsky and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
-          "speakers": [
-            {
-              "id": 27,
-              "name": "Benjamin Sandofsky",
-              "image_name": "benjamin_sandofsky",
-              "bio": "Escaped big-tech to build photography and video apps. Credits: Halide, Kino and Spectre.",
-              "job_title": "Co-founder / engineer at Lux Optics",
-              "links": [
-                {
-                  "url": "https://sandofsky.com",
-                  "name": "sandofsky.com"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": 16,
       "time": "2025-04-09T18:00:00+09:00",
       "sessions": [
@@ -487,6 +460,27 @@
                 {
                   "url": "https://fromkk.me/",
                   "name": "fromkk.me"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 41,
+          "title": "Office hour",
+          "place": "Ask the Speaker",
+          "summary": "Meet Benjamin and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "speakers": [
+            {
+              "id": 27,
+              "name": "Benjamin Sandofsky",
+              "image_name": "benjamin_sandofsky",
+              "bio": "Escaped big-tech to build photography and video apps. Credits: Halide, Kino and Spectre.",
+              "job_title": "Co-founder / engineer at Lux Optics",
+              "links": [
+                {
+                  "url": "https://sandofsky.com",
+                  "name": "sandofsky.com"
                 }
               ]
             }
@@ -537,7 +531,7 @@
           "id": 47,
           "title": "Office hour",
           "place": "Ask the Speaker",
-          "summary": "Meet Noah Martin and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary": "Meet Noah and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
           "speakers": [
             {
               "id": 31,
