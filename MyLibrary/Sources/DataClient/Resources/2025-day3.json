@@ -71,7 +71,10 @@
             {
               "id": 75,
               "name": "Ryota Motonishi",
-              "image_name": "ryota_motonishi"
+              "image_name": "ryota_motonishi",
+              "bio": "Ryota Motonishi is an iOS engineer at LY Corporation. He is working on the development of the LINE chat app. In his free time, he enjoys singing karaoke.",
+              "job_title": "iOS Developer at LY Corporation",
+              "links": []
             }
           ]
         },
