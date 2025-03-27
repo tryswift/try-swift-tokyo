@@ -766,7 +766,7 @@
         }
       }
     },
-    "Hi, I’m Andrew coming from San Francisco! and I like making apps. This is my second time in Japan, excited to be here. よろしくお願いします！" : {
+    "Hi, I'm Andrew coming from San Francisco! and I like making apps. This is my second time in Japan, excited to be here. よろしくお願いします！" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -909,7 +909,7 @@
         }
       }
     },
-    "I’m an Individual developer.\n\nI’ve released a variety of apps for Apple platforms.\niOS & iPadOS: 7 apps\nvisionOS: 5 apps\nwatchOS: 5 apps\ntvOS: 1 app\nmacOS: 3 apps\n\nPortfolio link \n[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)" : {
+    "I'm an Individual developer.\n\nI've released a variety of apps for Apple platforms.\niOS & iPadOS: 7 apps\nvisionOS: 5 apps\nwatchOS: 5 apps\ntvOS: 1 app\nmacOS: 3 apps\n\nPortfolio link \n[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -931,7 +931,7 @@
         }
       }
     },
-    "I’m Chris, also known as Halordain! I grew up in Dallas, Texas, and attended college at Stanford. I majored in electrical engineering with a specialization in image processing. I started studying Japanese to scout my opponents from Japan at the Pokémon World Championships, where my quarterfinals and semifinals opponents hailed from Yokosuka and Fujisawa, respectively.\n\nMy journey led me to Doshisha University to master Japanese under the Critical Language Scholarship. I abandoned my PhD at MIT CSAIL to pursue software development in Japan. Originally hired at Creatures Japan to process images for Pokémon cards, I ended up learning Objective-C to develop my first iPad app, [Pokédex for iOS (Creatures, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/).\n\nAfter Creatures, I contracted with Bandai-Namco Studios to build the graphics engine behind [Super Smash Bros. for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/). I parlayed my rendering knowledge in computer graphics, my image processing background, and my interest in iOS development into developing iOS Photoshop for Adobe, and eventually joined Apple to document their new graphics technologies such as Metal, ARKit, CreateML, and RealityKit.\n\nI returned to Japan to help spearhead Nintendo of Japan’s smartphone game design, starting with Fire Emblem Heroes and [Pikmin Bloom](https://pikminbloom.com/ja/). These development experiences led me to craft my own path creating educational apps and experiences for teaching Japanese kids about AI and Swift." : {
+    "I'm Chris, also known as Halordain! I grew up in Dallas, Texas, and attended college at Stanford. I majored in electrical engineering with a specialization in image processing. I started studying Japanese to scout my opponents from Japan at the Pokémon World Championships, where my quarterfinals and semifinals opponents hailed from Yokosuka and Fujisawa, respectively.\n\nMy journey led me to Doshisha University to master Japanese under the Critical Language Scholarship. I abandoned my PhD at MIT CSAIL to pursue software development in Japan. Originally hired at Creatures Japan to process images for Pokémon cards, I ended up learning Objective-C to develop my first iPad app, [Pokédex for iOS (Creatures, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/).\n\nAfter Creatures, I contracted with Bandai-Namco Studios to build the graphics engine behind [Super Smash Bros. for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/). I parlayed my rendering knowledge in computer graphics, my image processing background, and my interest in iOS development into developing iOS Photoshop for Adobe, and eventually joined Apple to document their new graphics technologies such as Metal, ARKit, CreateML, and RealityKit.\n\nI returned to Japan to help spearhead Nintendo of Japan's smartphone game design, starting with Fire Emblem Heroes and [Pikmin Bloom](https://pikminbloom.com/ja/). These development experiences led me to craft my own path creating educational apps and experiences for teaching Japanese kids about AI and Swift." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -1107,7 +1107,7 @@
         }
       }
     },
-    "iOS app developer, creating personal projects like #Type, Quiz Match, and more.\nLiving in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.\nPhotography enthusiast, traveling across Japan as a photographer for Japan-\\\\(region).swift." : {
+    "iOS app developer, creating personal projects like #Type, Quiz Match, and more.\nLiving in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.\nPhotography enthusiast, traveling across Japan as a photographer for Japan-\\(region).swift." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -1393,7 +1393,7 @@
         }
       }
     },
-    "Mikaela Caron is an independent iOS Engineer who actively shares her expertise on social media, focusing on iOS development, building apps in public, and freelancing. She’s continuing to work on her indie app Fruitful, which helps people connect with others at conferences, while also traveling as much as she can. She’s also an organizer for iOSDevHappyHour and loves giving back to the community." : {
+    "Mikaela Caron is an independent iOS Engineer who actively shares her expertise on social media, focusing on iOS development, building apps in public, and freelancing. She's continuing to work on her indie app Fruitful, which helps people connect with others at conferences, while also traveling as much as she can. She's also an organizer for iOSDevHappyHour and loves giving back to the community." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -1733,7 +1733,7 @@
         }
       }
     },
-    "Software Engineer at DeNA Inc., specializing in mobile development for live streaming applications. With extensive experience in iOS development since the Objective-C era, I am passionate about leveraging Swift’s evolution to create innovative and efficient applications." : {
+    "Software Engineer at DeNA Inc., specializing in mobile development for live streaming applications. With extensive experience in iOS development since the Objective-C era, I am passionate about leveraging Swift's evolution to create innovative and efficient applications." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -1766,7 +1766,7 @@
         }
       }
     },
-    "Sometimes Swift developers make fun of languages such as JavaScript that have vague concepts like “truthy” and “falsy”, but Swift is packed with its own surprises and has plenty sharp edges of its own.\n\nIn this talk I want to show some of the surprising behaviors of Swift – things that behave weirdly, traps you can easily fall into, and fixes to help you write better code. There will be lots of hands-on code samples everyone can try, and it will be a fun journey through the quirks of a language we all think we know." : {
+    "Sometimes Swift developers make fun of languages such as JavaScript that have vague concepts like \"truthy\" and \"falsy\", but Swift is packed with its own surprises and has plenty sharp edges of its own.\n\nIn this talk I want to show some of the surprising behaviors of Swift – things that behave weirdly, traps you can easily fall into, and fixes to help you write better code. There will be lots of hands-on code samples everyone can try, and it will be a fun journey through the quirks of a language we all think we know." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -1981,7 +1981,7 @@
         }
       }
     },
-    "The Drake Equation, used by astrophysicists to estimate the number of alien civilizations we can communicate with, has many unexpected lessons for our work of building apps. A takeaway from this equation is the huge number of stars in the universe, which implies a high probability that some of them harbor life. This talk will dive into the details of the equation and then apply it to iOS. Just as the number of stars provide a powerful scale factor, there are technical factors of your app that can multiply your impact. We’ll derive a new equation to calculate the carbon footprint of an app, look at iOS memory management to speed up every CPU instruction, and calculate how to reduce bugs all using lessons from the Drake Equation. I will also discuss my own experience building a startup and how I think about the implications of these scale factors when designing developer tools that many large apps will use." : {
+    "The Drake Equation, used by astrophysicists to estimate the number of alien civilizations we can communicate with, has many unexpected lessons for our work of building apps. A takeaway from this equation is the huge number of stars in the universe, which implies a high probability that some of them harbor life. This talk will dive into the details of the equation and then apply it to iOS. Just as the number of stars provide a powerful scale factor, there are technical factors of your app that can multiply your impact. We'll derive a new equation to calculate the carbon footprint of an app, look at iOS memory management to speed up every CPU instruction, and calculate how to reduce bugs all using lessons from the Drake Equation. I will also discuss my own experience building a startup and how I think about the implications of these scale factors when designing developer tools that many large apps will use." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -2212,7 +2212,7 @@
         }
       }
     },
-    "What makes an app truly exceptional? How do the best designers create interfaces that feel intuitive, delightful, and, most importantly, human? In this talk, Sebastiaan de With pulls back the curtain on Apple’s design principles and the craftsmanship behind Halide, an Apple Design Award-winning app. From refining tiny details to making tough design decisions, he’ll share real-world insights on creating products that aren’t just great—they’re loved. Whether you’re an aspiring designer or a seasoned developer, jump into a no-nonsense crash course in shipping beautiful, functional apps without getting lost in perfectionism." : {
+    "What makes an app truly exceptional? How do the best designers create interfaces that feel intuitive, delightful, and, most importantly, human? In this talk, Sebastiaan de With pulls back the curtain on Apple's design principles and the craftsmanship behind Halide, an Apple Design Award-winning app. From refining tiny details to making tough design decisions, he'll share real-world insights on creating products that aren't just great—they're loved. Whether you're an aspiring designer or a seasoned developer, jump into a no-nonsense crash course in shipping beautiful, functional apps without getting lost in perfectionism." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
