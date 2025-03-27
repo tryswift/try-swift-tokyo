@@ -15,7 +15,7 @@ public struct DataClient {
 }
 
 extension DataClient: DependencyKey {
-  
+
   static public var liveValue: DataClient = .init(
     fetchDay1: {
       Logger().log(level: .info, "loading day 1")
@@ -51,7 +51,7 @@ extension DataClient: DependencyKey {
       return response
     }
   )
-  
+
   static func loadDataFromBundle(fileName: String) -> Data {
     
     let filePath = Bundle.module.path(forResource: fileName, ofType: "json")!
