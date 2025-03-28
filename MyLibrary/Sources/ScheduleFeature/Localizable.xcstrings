@@ -1107,7 +1107,7 @@
         }
       }
     },
-    "iOS app developer, creating personal projects like #Type, Quiz Match, and more.\nLiving in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.\nPhotography enthusiast, traveling across Japan as a photographer for Japan-\\(region).swift." : {
+    "iOS app developer, creating personal projects like #Type, Quiz Match, and more.\nLiving in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.\nPhotography enthusiast, traveling across Japan as a photographer for Japan-\\\\(region).swift." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {

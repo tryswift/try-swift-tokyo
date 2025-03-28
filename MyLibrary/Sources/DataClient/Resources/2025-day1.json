@@ -67,7 +67,7 @@
             {
               "id": 7,
               "name": "Sugiy",
-              "image_name": "Sugiy",
+              "image_name": "sugiy",
               "bio": "- iOS and Flutter engineer in Japan\n- Working in DeNA Co., Ltd.\n- Often participate in [Japan-\\\\(region).swift](https://japan-region-swift.github.io/Japan-region-swift/) events in Japan.\n- Spoke at conferences in Japan such as [iOSDC](https://iosdc.jp/2024/) from 2022 to 2024 and [FlutterKaigi2024](https://youtu.be/UwDqyVawLtA?si=E0kN98o9CdM_p8e6).\n- I like cooking, fish, Japanese food, and pineapples.",
               "job_title": "iOS/Flutter Developer at DeNA Co., Ltd.",
               "links": [
@@ -454,7 +454,7 @@
               "id": 29,
               "name": "Kazuya Ueoka",
               "image_name": "fromkk",
-              "bio": "iOS app developer, creating personal projects like #Type, Quiz Match, and more.\nLiving in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.\nPhotography enthusiast, traveling across Japan as a photographer for Japan-\\(region).swift.",
+              "bio": "iOS app developer, creating personal projects like #Type, Quiz Match, and more.\nLiving in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.\nPhotography enthusiast, traveling across Japan as a photographer for Japan-\\\\(region).swift.",
               "job_title": "iOS Developer",
               "links": [
                 {
