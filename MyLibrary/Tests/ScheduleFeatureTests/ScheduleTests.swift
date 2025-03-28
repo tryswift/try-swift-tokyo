@@ -18,7 +18,7 @@ final class ScheduleTests: XCTestCase {
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
       $0.day2 = .mock2
-      $0.workshop = .mock3
+      $0.day3 = .mock3
     }
   }
 
