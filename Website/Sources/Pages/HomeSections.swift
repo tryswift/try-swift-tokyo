@@ -74,7 +74,7 @@ extension HomeSectionType {
       SectionHeader(type: self, language: language)
 
       let hosts = try! dataClient.fetchOrganizers()
-        .filter { [8, 13].contains($0.id) }
+        .filter { [6, 11].contains($0.id) }
       CenterAlignedGrid(hosts, columns: hosts.count) { organizer in
         OrganizerComponent(organizer: organizer)
           .margin(.bottom, .px(32))
@@ -85,11 +85,36 @@ extension HomeSectionType {
     case .timetable:
       SectionHeader(type: self, language: language)
 
-      Text("Coming soon...!")
-        .horizontalAlignment(.center)
-        .font(.title3)
-        .foregroundStyle(.dimGray)
-        .margin(.top, .px(32))
+      let day1 = try! dataClient.fetchDay1()
+      let day2 = try! dataClient.fetchDay2()
+      let day3 = try! dataClient.fetchDay3()
+
+      Accordion {
+        Item(day1.date.formattedDateString(language: language), startsOpen: true) {
+          Section {
+            TimetableComponent(conference: day1, language: language)
+          }
+        }
+        Item(day2.date.formattedDateString(language: language), startsOpen: false) {
+          Section {
+            TimetableComponent(conference: day2, language: language)
+          }
+        }
+        Item(day3.date.formattedDateString(language: language), startsOpen: false) {
+          Section {
+            TimetableComponent(conference: day3, language: language)
+          }
+        }
+      }
+
+      Alert {
+        let sessions = [day1, day2, day3]
+          .flatMap { $0.schedules.flatMap(\.sessions) }
+          .filter(\.hasDescription)
+        ForEach(sessions) { session in
+          SessionDetailModal(session: session, language: language)
+        }
+      }
     case .sponsor:
       SectionHeader(type: self, language: language)
 

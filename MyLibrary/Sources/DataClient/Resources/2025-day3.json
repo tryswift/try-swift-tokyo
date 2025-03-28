@@ -1,0 +1,491 @@
+{
+  "id": 3,
+  "title": "Day 3",
+  "date": "2025-04-11T09:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2025-04-11T09:00:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Registration",
+          "place": "Hall",
+          "summary": "Download Luma app and show QR code of your ticket at the reception. You will receive a name tag and a goodie bag."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2025-04-11T09:45:00+09:00",
+      "sessions": [
+        {
+          "id": 2,
+          "title": "Opening Remarks",
+          "place": "Hall",
+          "summary": "Let's start!"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2025-04-11T10:00:00+09:00",
+      "sessions": [
+        {
+          "id": 3,
+          "title": "SwiftSyntax: for good and evil",
+          "place": "Hall",
+          "description": "SwiftSyntax is Apple's library for parsing and manipulating Swift code. It can be use for anything from formatting source code (as in swift-format) to generating it (as in Swift Macros). In this talk I'll explain how the SwiftSyntax library works - the range and limitations of its capabilities, and demonstrate some cool use cases that you might not have considered.",
+          "speakers": [
+            {
+              "id": 73,
+              "name": "Nick Lockwood",
+              "image_name": "nick_lockwood",
+              "bio": "Nick is a veteran developer, author and open source aficionado, and has been developing iOS apps since the dark ages of manual memory management back in 2009. He is known for various open source projects such as SwiftFormat, Euclid, Expression and iCarousel. When Nick isn't writing parsers in (and for) Swift, he likes to tinker with 3D graphics and even sometimes fancies himself as a games developer.",
+              "job_title": "iOS Developer at Bloomberg",
+              "links": [
+                {
+                  "url": "https://github.com/nicklockwood",
+                  "name": "@nicklockwood"
+                },
+                {
+                  "url": "https://mastodon.social/@nicklockwood",
+                  "name": "@nicklockwood"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2025-04-11T10:25:00+09:00",
+      "sessions": [
+        {
+          "id": 7,
+          "title": "⚡️ Let’s Try Making Things Move with Swift!",
+          "place": "Hall",
+          "description": "Ever wondered about simulations of how weather changes or viruses spread in the air? These simulations are built with simple calculations—just addition, subtraction, multiplication, and division! In this talk, we'll use Swift to create a simple simulation and show you how easy it is!",
+          "speakers": [
+            {
+              "id": 75,
+              "name": "Ryota Motonishi",
+              "image_name": "ryota_motonishi",
+              "bio": "Ryota Motonishi is an iOS engineer at LY Corporation. He is working on the development of the LINE chat app. In his free time, he enjoys singing karaoke.",
+              "job_title": "iOS Developer at LY Corporation",
+              "links": []
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "title": "Office hour",
+          "place": "Ask the Speaker",
+          "summary": "Meet Nick Lockwood and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "speakers": [
+            {
+              "id": 73,
+              "name": "Nick Lockwood",
+              "image_name": "nick_lockwood"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2025-04-11T10:35:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "SwiftUI API Design Lessons: Bridging Procedural APIs with the Declarative World",
+          "place": "Hall",
+          "description": "SwiftUI APIs are inherently declarative, yet many existing Apple platform APIs are designed to be used in a procedural manner. In this session, we'll explore how to design and implement SwiftUI-friendly declarative APIs that integrate with procedural frameworks. Using AVFoundation as an example, we will build a photo and video capture app while uncovering best practices for adapting procedural APIs to the declarative paradigm of SwiftUI.",
+          "speakers": [
+            {
+              "id": 77,
+              "name": "Yoshimasa Niwa",
+              "image_name": "yoshimasa_niwa",
+              "bio": "As a software engineer, I divide my time between working on client applications, backend services, and occasionally indulging in watching cat videos and photos. I have led engineering teams and cats to deliver user-facing products with a special focus on usability, customer satisfaction, and meowing.",
+              "job_title": "Software Engineer",
+              "links": [
+                {
+                  "name": "@niw",
+                  "url": "https://x.com/niw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2025-04-11T11:00:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "Break",
+          "place": "Hall",
+          "summary": "Take a break and meet other attendees or sponsors"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2025-04-11T11:30:00+09:00",
+      "sessions": [
+        {
+          "id": 13,
+          "title": "Introduction to security research and bounty hunting on Apple's platforms",
+          "place": "Hall",
+          "description": "The reason why I'd like to give this talk is because as someone who works as both an iOS/Mac developer and a security researcher, I've learned that there's a lot that the developer community can contribute to security research on Apple's platforms, but most developers think that it's a niche outside their area of expertise. However, most professional security researchers focus at the low level where app developers don't usually have a lot of knowledge.\n\nThrough my work, I've found quite a few security bugs in Mac and iOS that could be found at the higher level, and those bugs have rewarded me with multiple bug bounty payments from Apple as well as helping improve the security of the operating systems. This talk would be a way to introduce more developers to the practice, with some examples of my past experiences, and encourage them to pursue security research as part of their career. You can read about some of my security research work on my blog.\n\nI think this fits well as both an inspirational and technical topic that's not usually covered in developer conferences.",
+          "speakers": [
+            {
+              "id": 8,
+              "name": "Gui Rambo",
+              "image_name": "gui_rambo",
+              "bio": "Gui Rambo is a Mac developer and security researcher from Brazil, known for apps such as AirBuddy and VirtualBuddy.",
+              "job_title": "Mac Developer / Security Researcher at Best Buddy Apps",
+              "links": [
+                {
+                  "name": "@insidegui",
+                  "url": "https://github.com/insidegui"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "title": "Office hour",
+          "place": "Ask the Speaker",
+          "summary": "Meet Yoshimasa Niwa and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "speakers": [
+            {
+              "id": 77,
+              "name": "Yoshimasa Niwa",
+              "image_name": "yoshimasa_niwa"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2025-04-11T11:55:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "⚡️ Spice up your notifications",
+          "place": "Hall",
+          "description": "In short, this is a story about hacking Genmoji.\nGenmoji can now be displayed in notifications from iOS18. In this talk, we will reverse engineer Genmoji and display custom emojis in notifications.\nI'm a third-party app developer for Mastodon. \nThis talk is perfect for me.",
+          "speakers": [
+            {
+              "id": 83,
+              "name": "noppe",
+              "image_name": "noppe",
+              "bio": "iOS & visionOS app developer in Japan. Crafting 𝙫𝙚𝙖𝙧 and DAWN for mastodon. Loving #foxes.\n\n[vear - Anime Avatar Camera](https://apps.apple.com/jp/app/vear-anime-avatar-camera/id1490697369?l=en-US)\n[DAWN for Mastodon](https://apps.apple.com/jp/app/dawn-for-mastodon/id1668645019?l=en-US)",
+              "job_title": "iOS Engineer at DeNA Co., Ltd.",
+              "links": [
+                {
+                  "url": "https://github.com/noppefoxwolf",
+                  "name": "@noppefoxwolf"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "title": "Office hour",
+          "place": "Ask the Speaker",
+          "summary": "Meet Gui Rambo and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "speakers": [
+            {
+              "id": 8,
+              "name": "Gui Rambo",
+              "image_name": "gui_rambo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2025-04-11T12:05:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "Learn by Building: A Gentle Introduction to Swift Regex",
+          "place": "Hall",
+          "description": "Swift's regex engine is an ambitious project aiming to be a superset that encompasses all existing regular expressions. However, as of now, many features, such as lookbehind, remain unimplemented.\n\nContributing to this project can be challenging due to the complexity of the existing codebase.\n\nIn this talk, we will implement a small regex engine in Swift, focusing on the three fundamental operations: concatenation, alternation, and repetition. We will also explore how to implement a backtracking (VM-based) approach similar to Swift's official regex engine.\n\nBy understanding this implementation, you'll take the first step toward deciphering Swift's official regex engine and contributing to its development.",
+          "speakers": [
+            {
+              "id": 15,
+              "name": "kishikawa katsumi",
+              "image_name": "kishikawa_katsumi",
+              "bio": "Katsumi has been developing software for the Apple platform for over 10 years and currently works for a company that develops low-code platforms. He works on automating all kinds of tasks. In his spare time, he builds and maintains various open source projects that improve developer productivity.",
+              "job_title": "Software Engineer",
+              "links": [
+                {
+                  "name": "kishikawakatsumi.com",
+                  "url": "https://kishikawakatsumi.com/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2025-04-11T12:30:00+09:00",
+      "sessions": [
+        {
+          "id": 19,
+          "title": "Lunch",
+          "place": "Hall",
+          "summary": "Take a lunch box and meet other attendees or sponsors."
+        },
+        {
+          "id": 18,
+          "title": "Office hour",
+          "place": "Ask the Speaker",
+          "summary": "Meet Kishikawa Katsumi and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "speakers": [
+            {
+              "id": 85,
+              "name": "Kishikawa Katsumi",
+              "image_name": "kishikawa_katsumi"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2025-04-11T14:00:00+09:00",
+      "sessions": [
+        {
+          "id": 23,
+          "title": "Foreign Function and Memory APIs and Swift/Java interoperability",
+          "place": "Hall",
+          "description": "Swift is a fantastic general purpose language, which can and has been successfully used beyond its mobile origins, from embedded through server-side systems. One of Swift's unique strengths is its powerful native language interoperability with C and C++. Recently, the Swift project started work on integrating improved Swift/Java interoperability with the use of both JNI and the new Foreign Function and Memory APIs introduced in JDK22. In this talk we'll deep dive into the deep integration approach taken between the language runtimes using the FMM APIs and their unique strengths but also challenges.",
+          "speakers": [
+            {
+              "id": 1,
+              "name": "Konrad 'ktoso' Malawski",
+              "image_name": "konrad_ktoso_malawski",
+              "bio": "Konrad works in the Swift language team at Apple, where he focuses on concurrency and distributed modules of the language, and server-side focused libraries. He was part of the design and implementation of Swift’s structured concurrency and actor model, as well as the distributed actors language feature and cluster library. Currently he's focused on Swift/Java interoperability efforts. Previously, he worked on Akka at Lightbend/Typesafe, where he maintained core pieces of the ecosystem, including the clustering, event sourcing, streaming and HTTP libraries. He also is a Java Champion and made significant contributions to the reactive-streams specification and TCK which later became the foundation of the JDK’s java.util.concurrent.Flow types.",
+              "job_title": "Swift Language Team",
+              "links": [
+                {
+                  "name": "@kto.so",
+                  "url": "https://bsky.app/profile/kto.so"
+                },
+                {
+                  "name": "@ktosopl",
+                  "url": "https://x.com/ktosopl"
+                },
+                {
+                  "name": "@ktoso",
+                  "url": "https://mastodon.social/@ktoso"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2025-04-11T14:25:00+09:00",
+      "sessions": [
+        {
+          "id": 25,
+          "title": "Unlock the Potential of Swift Code Generation",
+          "place": "Hall",
+          "description": "Java's annotation processing leverages developer productivity by compile-time code generation. Swift can now replicate that innovation with Swift Macros and Swift Syntax. Learn how to express annotation-like features in Swift, automate code, and boost productivity. Let's unlock Swift's potential!",
+          "speakers": [
+            {
+              "id": 93,
+              "name": "rockname",
+              "image_name": "rockname",
+              "bio": "I'm an iOS and Android app developer working on a banking and card payment service at SmartBank.",
+              "job_title": "Mobile Application Developer at SmartBank, Inc.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "id": 24,
+          "title": "Office hour",
+          "place": "Ask the Speaker",
+          "summary": "Meet Konrad Malawski and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "speakers": [
+            {
+              "id": 1,
+              "name": "Konrad 'ktoso' Malawski",
+              "image_name": "konrad_ktoso_malawski"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2025-04-11T14:50:00+09:00",
+      "sessions": [
+        {
+          "id": 27,
+          "title": "Break",
+          "place": "Hall",
+          "summary": "Take a break and meet other attendees or sponsors"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "time": "2025-04-11T15:20:00+09:00",
+      "sessions": [
+        {
+          "id": 29,
+          "title": "Unlocking SwiftUI Performance: Mastering the Render Loop and Offscreen Rendering",
+          "place": "Hall",
+          "description": "Unlock the secrets of SwiftUI performance! Dive into the render loop and discover techniques like offscreen rendering to manipulate it. Gain practical insights into how SwiftUI views are rendered and learn powerful ways to optimize them. Transform your apps with smoother and more efficient UI.",
+          "speakers": [
+            {
+              "id": 97,
+              "name": "Pradnya Nikam",
+              "image_name": "pradnya_nikam",
+              "bio": "With over 12 years of experience developing for Apple platforms, I am passionate about creating exceptional user experiences. I have a strong background in UIKit, and these days, I primarily focus on coding SwiftUI views for iOS and tvOS apps. I currently work at Rakuten Viki, a video streaming company with over a million active users per day.\n\nI absolutely love attending conferences and public speaking, sharing my knowledge and learning from the community. Outside of work, you can find me planning my next travel adventure or running around with my 3-year-old.",
+              "job_title": "Senior iOS Developer at Rakuten Viki",
+              "links": [
+                {
+                  "name": "@pradnya-nikam",
+                  "url": "https://medium.com/@pradnya-nikam"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 26,
+          "title": "Office hour",
+          "place": "Ask the Speaker",
+          "summary": "Meet rockname and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "speakers": [
+            {
+              "id": 93,
+              "name": "rockname",
+              "image_name": "rockname"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2025-04-11T15:45:00+09:00",
+      "sessions": [
+        {
+          "id": 31,
+          "title": "⚡️ EXIT 8 for SwiftUI",
+          "place": "Hall",
+          "description": "\"Hmm, something looks off...\"\n\"Hmm, this interaction is broken...\"\n\nIf you've built UI with SwiftUI, you've probably encountered these issues more often than you'd like. In many cases, the solution involves wrapping UIKit to work around the problem.\n\nIn this lightning talk, I'll discuss when to use SwiftUI and when to rely on UIKit, breaking it down into eight common patterns.",
+          "speakers": [
+            {
+              "id": 99,
+              "name": "ojun",
+              "image_name": "ojun",
+              "bio": "I develop iOS apps at DeNA Co., Ltd. My native language is Swift.",
+              "job_title": "iOS App Developer",
+              "links": []
+            }
+          ]
+        },
+        {
+          "id": 30,
+          "title": "Office hour",
+          "place": "Ask the Speaker",
+          "summary": "Meet Pradnya Nikam and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "speakers": [
+            {
+              "id": 97,
+              "name": "Pradnya Nikam",
+              "image_name": "pradnya_nikam"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2025-04-11T16:15:00+09:00",
+      "sessions": [
+        {
+          "id": 33,
+          "title": "Designing Modular Data Pipeline",
+          "place": "Hall",
+          "description": "In this talk I'll show you how you can design your app data pipeline in a modular way, and integrate my open source tools to enable easy bug reproduction and faster development workflows.",
+          "speakers": [
+            {
+              "id": 3,
+              "name": "Krzysztof Zablocki",
+              "image_name": "krzysztof_zablocki",
+              "bio": "Krzysztof is shaping the future of Apple platforms with tools adopted by 80K+ teams, from Apple to Disney. 🏆 2x Engineering Emmy winner, co-founder of Pixle, and creator of Foldify & Sourcery for Xcode.",
+              "job_title": "Principal Swift Engineer",
+              "links": [
+                {
+                  "name": "@merowing_",
+                  "url": "https://x.com/merowing_"
+                },
+                {
+                  "name": "@krzysztofzablocki",
+                  "url": "https://github.com/krzysztofzablocki"
+                },
+                {
+                  "name": "merowing.info",
+                  "url": "https://merowing.info/about"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "time": "2025-04-11T16:15:00+09:00",
+      "sessions": [
+        {
+          "id": 35,
+          "title": "Closing",
+          "place": "Hall",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "time": "2025-04-11T16:45:00+09:00",
+      "sessions": [
+        {
+          "id": 34,
+          "title": "Office hour",
+          "place": "Ask the Speaker",
+          "summary": "Meet Krzysztof Zabłocki and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "speakers": [
+            {
+              "id": 101,
+              "name": "Krzysztof Zabłocki",
+              "image_name": "krzysztof_zablocki"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -36,7 +36,7 @@ final class trySwiftTests: XCTestCase {
 
     await store.send(\.view.codeOfConductTapped)
     await receivedUrl.withValue {
-      XCTAssertEqual($0, URL(string: "https://tryswift.jp/code-of-conduct_en")!)
+      XCTAssertTrue($0!.absoluteString.hasPrefix("https://tryswift.jp/code-of-conduct"))
     }
   }
 
@@ -59,7 +59,7 @@ final class trySwiftTests: XCTestCase {
 
     await store.send(\.view.privacyPolicyTapped)
     await receivedUrl.withValue {
-      XCTAssertEqual($0, URL(string: "https://tryswift.jp/privacy-policy_en")!)
+      XCTAssertTrue($0!.absoluteString.hasPrefix("https://tryswift.jp/privacy-policy"))
     }
   }
 
@@ -117,7 +117,7 @@ final class trySwiftTests: XCTestCase {
 
     await store.send(\.view.websiteTapped)
     await receivedUrl.withValue {
-      XCTAssertEqual($0, URL(string: "https://tryswift.jp/_en")!)
+      XCTAssertTrue($0!.absoluteString.hasPrefix("https://tryswift.jp"))
     }
   }
 

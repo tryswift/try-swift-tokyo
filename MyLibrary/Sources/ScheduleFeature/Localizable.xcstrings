@@ -22,6 +22,116 @@
         }
       }
     },
+    "\"Hmm, something looks off...\"\n\"Hmm, this interaction is broken...\"\n\nIf you've built UI with SwiftUI, you've probably encountered these issues more often than you'd like. In many cases, the solution involves wrapping UIKit to work around the problem.\n\nIn this lightning talk, I'll discuss when to use SwiftUI and when to rely on UIKit, breaking it down into eight common patterns." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「あれ、なんか表示がおかしいぞ」「あれ、なんかインタラクションが壊れているぞ」\n\nSwiftUIでUIを構築していると上記の課題に遭遇することが稀によくあります。その場合はUIKitをラップして問題を解決することが多いと思います。\nこのLTでは、どういう時にどちらのフレームワークを使うのかについて8つのパターンに分けてお話しします。"
+          }
+        }
+      }
+    },
+    "⚡️ EXIT 8 for SwiftUI" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️ SwiftUIの8番出口"
+          }
+        }
+      }
+    },
+    "⚡️ Exploring SwiftUI Path Animations featuring Japan Symbol Quiz" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️ Japan Symbol QuizによるSwiftUIのPathアニメーションの探求"
+          }
+        }
+      }
+    },
+    "⚡️ Graph Art with Charts API – Beyond Data Visualization" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️ Charts APIで作るグラフアート – データビジュアライゼーションを超えて\n"
+          }
+        }
+      }
+    },
+    "⚡️ I Built an App for NeXTSTEP or: How I Learned to Stop Worrying and Love Objective-C" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️ NeXTSTEP向けアプリを作った話 ― Objective-Cを恐れるのをやめ、愛するようになった理由\n"
+          }
+        }
+      }
+    },
+    "⚡️ Let’s Try Making Things Move with Swift!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️ Swiftで物を動かしてみよう!"
+          }
+        }
+      }
+    },
+    "⚡️ Spice up your notifications" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️ 通知に彩りを加えよう"
+          }
+        }
+      }
+    },
+    "⚡️ Swift × Android: How Skip is Shaping the Future of Cross-Platform Development" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️ Swift × Android: Skipが切り拓くクロスプラットフォーム開発の未来\n"
+          }
+        }
+      }
+    },
+    "⚡️ What I Did to Shut Down a Personally Developed App with Over 400K Downloads" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️ 40万以上DLされた個人開発アプリをサービス終了するためにしたこと"
+          }
+        }
+      }
+    },
+    "⚡️ Write iOS Game Once and Play in Any Way" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️ 一度作れば、どんな入力でもプレイ可能なiOSゲーム\n\n"
+          }
+        }
+      }
+    },
     "A brief overview of how to write modern UI applications on Windows taking advantage of recent technologies. This assumes that the developer is not familiar with Windows development. By drawing parallels between the macOS and Windows worlds, it aims to show how Windows UI application development can be familiar and easy with Swift." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -66,6 +176,17 @@
         }
       }
     },
+    "AI-Assisted Swift in Gamifying an iOS App" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI支援のSwiftによるiOSアプリのゲーミフィケーション\n"
+          }
+        }
+      }
+    },
     "Akimu is an iOS software developer at LY Corporation. He is working on the chat related features of LINE app. In his free time, he is a developer of simutrans OTRP, a Japanese fork of Simutrans, an open source transport simulator written in C++. He is a scholarship winner of WWDC18 from Japan." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -73,6 +194,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "株式会社LINEヤフーのiOS developer。LINEアプリのチャット関連機能を開発中。C++で書かれたオープンソースのトランスポートシミュレータ、Simutransの日本語フォークであるsimutrans OTRPの開発者。WWDC18日本代表。"
+          }
+        }
+      }
+    },
+    "App Art: Great App Design Done Quick" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "素早く実現する優れたアプリデザイン\n\n"
+          }
+        }
+      }
+    },
+    "Apple Vision Pro new interface based on hand tracking" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Vision Pro: ハンドトラッキングを基盤とした新インターフェース\n"
           }
         }
       }
@@ -121,7 +264,7 @@
         }
       }
     },
-    "Belongs to Cyber AI Productions. XR Expert at Cyber Agent.\nResponsible for system development related to XR and studio shooting.\nPurchased Apple Vision Pro locally on its U.S. release day. Actively engaged in development and research, including the visionOS 30 Days project.\nOrganizer of the visionOS Engineer Meetup. Published a book on visionOS app development.\nHas spoken at iOSDC for nine consecutive years, as well as at try! Swift Tokyo, XR Kaigi, Let’s visionOS, AWE USA, and more.\nMainly shares updates on X, so please follow!" : {
+    "Belongs to Cyber AI Productions. XR Expert at Cyber Agent.\nResponsible for system development related to XR and studio shooting.\nPurchased Apple Vision Pro locally on its U.S. release day. Actively engaged in development and research, including the visionOS 30 Days project.\nOrganizer of the visionOS Engineer Meetup. Published a book on visionOS app development.\nHas spoken at iOSDC for nine consecutive years, as well as at try! Swift Tokyo, XR Kaigi, Let's visionOS, AWE USA, and more.\nMainly shares updates on X, so please follow!" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -187,6 +330,17 @@
         }
       }
     },
+    "Bring life to your iOS Application with 3D content using RealityKit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RealityKitでiOSアプリに命を吹き込む\n"
+          }
+        }
+      }
+    },
     "Bring your breakfast and meet other attendees or sponsors." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -231,6 +385,17 @@
         }
       }
     },
+    "Capturing Immersive Videos of J1 Pro Soccer Team FC Machida Zelvia: Building a Swift Viewer and Hosting a Hands-On Session" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "J1プロサッカーチームFC町田ゼルビアのImmersive動画を撮影しSwiftでViewerを実装し体験会実施した"
+          }
+        }
+      }
+    },
     "Chris is an independent iOS app developer based out of Nara, Japan (originally from USA). Before going indie in 2018, he was a software engineer at various tech companies for about 10 years, mostly in the security space.\nChris is best known for his two apps in the area of Japanese language learning, Nihongo and Nihongo Lessons. Nihongo is a Japanese dictionary and study tool that’s made for learning from the words you’re encountering in real life. Nihongo Lessons is a companion app for learning Japanese, based on the work of Adam Shapiro and his Japanese Level Up learning program.\nChris loves learning languages, and loves helping people to learn languages. He’s also an avid gamer, hiker, and dad to an amazing 7 year old." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -271,6 +436,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "コード署名を楽しく乗り切る方法"
+          }
+        }
+      }
+    },
+    "Combine Vision Pro (visionOS) with Generative AI to instantly transform text prompts into 3D objects in real-time. Discover how Swift and cutting-edge AI come together to create immersive user experiences beyond the boundaries of traditional apps." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vision Pro (visionOS) と生成型AIを組み合わせることで、テキストプロンプトをリアルタイムで瞬時に3Dオブジェクトへ変換します。\nSwiftと最先端のAI技術が融合し、従来のアプリケーションの枠を超えた没入型ユーザー体験を実現する方法をご紹介します。"
           }
         }
       }
@@ -337,6 +513,17 @@
         }
       }
     },
+    "Designing Modular Data Pipeline" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "モジュラーなデータパイプライン設計"
+          }
+        }
+      }
+    },
     "Download Eventbrite app and show QR code of your ticket at the reception. You will receive a name tag and a goodie bag." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -344,6 +531,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Eventbriteアプリをダウンロードして、受付でQRコードを見せてください。ネームプレートやカンファレンスバッグを受け取りましょう！"
+          }
+        }
+      }
+    },
+    "Download Luma app and show QR code of your ticket at the reception. You will receive a name tag and a goodie bag." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lumaアプリをダウンロードし、受付でチケットのQRコードを提示してください。ネームタグとお楽​​しみ袋がプレゼントされます。"
           }
         }
       }
@@ -392,6 +590,50 @@
         }
       }
     },
+    "Ever wondered about simulations of how weather changes or viruses spread in the air? These simulations are built with simple calculations—just addition, subtraction, multiplication, and division! In this talk, we'll use Swift to create a simple simulation and show you how easy it is!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "天候の変化やウイルスが空気中に広がる様子のシミュレーションを想像したことはありますか？\nこれらのシミュレーションは、足し算、引き算、掛け算、割り算といったシンプルな計算で構築されています！\n本セッションでは、Swiftを使ってシンプルなシミュレーションを実際に作成し、その簡単さを実演します。"
+          }
+        }
+      }
+    },
+    "Every year at WWDC Apple introduces lots of cool new APIs! But most of these new APIs also come with quite a gatekeeper: they can only be used on the latest version of iOS...\n\nBecause of that, a lot of useful APIs fail to reach a strong adoption, and by the time their version of iOS has become mainstream they've been completely overlooked.\n\nSo how about we fix that?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WWDCで毎年、Appleは数多くの魅力的な新APIを発表しています！\nしかし、これらの新APIの多くは、実は大きなハードルが伴っており、最新のiOSでのみ利用可能なのです……\n\nその結果、有用なAPIが十分に普及する前に、対象となるiOSのバージョンが一般に広まる頃には、すでに完全に見過ごされてしまっています。\n\nでは、これを改善してみませんか？"
+          }
+        }
+      }
+    },
+    "Everyone knows that animations are an easy way to add a touch of surprise and delight to your apps, but with SwiftUI we can add fine-grained effects to individual characters – we can literally animate letters one by one to bring our UI to life in ways that were impossible before iOS 18.\n\nIn this talk I'll demonstrate how to use SwiftUI's TextRenderer protocol to build a range of effects that help bring your UI to life in fun, engaging ways." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "誰もがアニメーションがアプリに驚きと喜びを加える簡単な方法だと知っていますが、SwiftUIでは個々の文字に細かな効果を付与することが可能です。\n実際、iOS 18以前では不可能だった、文字を一つずつアニメーションさせることでUIに命を吹き込む表現が実現できます。\n\nこのトークでは、SwiftUIのTextRendererプロトコルを活用して、UIを楽しく魅力的に演出する多彩なエフェクトの作り方をご紹介します。"
+          }
+        }
+      }
+    },
+    "Foreign Function and Memory APIs and Swift/Java interoperability" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foreign FunctionとMemory APIとSwift/Java相互運用性"
+          }
+        }
+      }
+    },
     "Getting started with controlling LEGO using Swift" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -432,6 +674,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LINEヤフー社でLINEのデベロッパーエクスペリエンス向上に従事。また、fastlane, Carthage, XcodeGenなどのオープンソース開発ツールにも貢献している。"
+          }
+        }
+      }
+    },
+    "Group Photo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写真撮影"
           }
         }
       }
@@ -513,7 +766,7 @@
         }
       }
     },
-    "Hi, I’m Andrew coming from San Francisco! and I like making apps. This is my second time in Japan, excited to be here. よろしくお願いします！" : {
+    "Hi, I'm Andrew coming from San Francisco! and I like making apps. This is my second time in Japan, excited to be here. よろしくお願いします！" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -546,13 +799,24 @@
         }
       }
     },
-    "I am an engineer/developer specializing in iOS and visionOS. I have created numerous personal apps, including “Large Contacts” for iOS and “Good Sleeper 360” for visionOS. I’ve authored several technical books, such as Slack & Zoom & Trello Basics + Tips for Telework (in the できるfit series) and What We Wanted to Know About Alexa, and more recently, The Path to Becoming a visionOS Developer. I have received many accolades, including the Mashup Award and top honors in contests organized by Japan’s Ministry of Internal Affairs and Communications, as well as multiple awards in SPAJAM and other hackathons. I have spoken at various events like JAWS Festa and Alexa Day, and I currently share insights on visionOS through social media." : {
+    "I am an engineer/developer specializing in iOS and visionOS. I have created numerous personal apps, including \"Large Contacts\" for iOS and \"Good Sleeper 360\" for visionOS. I've authored several technical books, such as Slack & Zoom & Trello Basics + Tips for Telework (in the できるfit series) and What We Wanted to Know About Alexa, and more recently, The Path to Becoming a visionOS Developer. I have received many accolades, including the Mashup Award and top honors in contests organized by Japan's Ministry of Internal Affairs and Communications, as well as multiple awards in SPAJAM and other hackathons. I have spoken at various events like JAWS Festa and Alexa Day, and I currently share insights on visionOS through social media." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "iOSとvisionOSを専門とするエンジニア・開発者です。個人で多数のアプリを開発しており、iOS向けの「Large Contacts」やvisionOS向けの「Good Sleeper 360」などをリリースしています。\nまた、技術書の執筆も手がけており、「Slack & Zoom & Trello 基本+活用術（できるfitシリーズ）」や「Alexaに聞きたかったこと」、最近では「visionOS開発者への道」などを出版しています。\n受賞歴も多数あり、Mashup Awardや総務省主催のコンテストでの最優秀賞、SPAJAMをはじめとするハッカソンでの受賞経験があります。\nまた、JAWS FestaやAlexa Dayなどのイベンで登壇経験があり、現在はvisionOSに関する知見をSNSで発信しています。"
+          }
+        }
+      }
+    },
+    "I decided to shut down my personally developed app, WebCollector, which had over 400K downloads. In this talk, I'll share the steps I took to ensure a smooth closure.\n\nRather than simply shutting down the service, I took measures to help users properly save their data, provided clear announcements, and disclosed the process to close the app gradually.\n\nI'll also reflect on the importance of planning for app closure when running a Firebase-powered personal project." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "40万以上DLされた個人開発アプリ「WebCollector」を終了すると決めたので、そのために実施したことについてお話しします。\n単にサービスを停止するのではなく、ユーザーがデータを適切に保存できるよう配慮したり、お知らせを掲載し、プロセスを開示することで段階的にクローズするように配慮しました。\nFirebaseを活用した個人開発アプリの運営において、クローズを意識する重要性を考えさせられた経験についてもお話しします。"
           }
         }
       }
@@ -612,6 +876,28 @@
         }
       }
     },
+    "I will be presenting a fast, real time, infinite canvas user interface implementation using Metal, and will be exploring the use of Multi-channel Signed Distance Fields (MSDFs), for rendering text that looks beautiful and sharp at any zoom level or orientation." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metalを活用した高速かつリアルタイムの無限キャンバス型ユーザーインターフェースの実装例を発表します。\nまた、どのズームレベルや向きでも美しくシャープに表示されるテキストをレンダリングするために、Multi-channel Signed Distance Fields（MSDF）の利用法について探求します。"
+          }
+        }
+      }
+    },
+    "I write a simple iOS game app which only has the \"left\" and \"right\" action. But the exciting is that the user input can be in many way. You can choose slider, button, accelerometer, keyboard, and the new feature in iOS 18: eye tracking. So you also can use it to test any IO functionality you find." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "私は、\"左\"と\"右\"のアクションだけを持つシンプルなiOSゲームアプリを作りました。しかし、興味深いのはユーザー入力の方法が多様である点です。\nスライダー、ボタン、加速度センサー、キーボード、そしてiOS 18で新たに登場したアイ・トラッキングなど、様々な入力手段を選択できます。\nさらに、この仕組みを活用して、あらゆる入出力機能のテストにも利用することが可能です。"
+          }
+        }
+      }
+    },
     "I'm a New Zealander who has been living in Japan for the past 10 years. I primarily work with low level, real time graphics and audio. This year, I founded a company called kapsy.io, and am currently working on a real time generative music sequencer with the code named _Variations_." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -623,7 +909,7 @@
         }
       }
     },
-    "I’m an Individual developer.\n\nI’ve released a variety of apps for Apple platforms.\niOS & iPadOS: 7 apps\nvisionOS: 5 apps\nwatchOS: 5 apps\ntvOS: 1 app\nmacOS: 3 apps\n\nPortfolio link \n[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)" : {
+    "I'm an Individual developer.\n\nI've released a variety of apps for Apple platforms.\niOS & iPadOS: 7 apps\nvisionOS: 5 apps\nwatchOS: 5 apps\ntvOS: 1 app\nmacOS: 3 apps\n\nPortfolio link \n[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -645,7 +931,7 @@
         }
       }
     },
-    "I’m Chris, also known as Halordain! I grew up in Dallas, Texas, and attended college at Stanford. I majored in electrical engineering with a specialization in image processing. I started studying Japanese to scout my opponents from Japan at the Pokémon World Championships, where my quarterfinals and semifinals opponents hailed from Yokosuka and Fujisawa, respectively.\n\nMy journey led me to Doshisha University to master Japanese under the Critical Language Scholarship. I abandoned my PhD at MIT CSAIL to pursue software development in Japan. Originally hired at Creatures Japan to process images for Pokémon cards, I ended up learning Objective-C to develop my first iPad app, [Pokédex for iOS (Creatures, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/).\n\nAfter Creatures, I contracted with Bandai-Namco Studios to build the graphics engine behind [Super Smash Bros. for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/). I parlayed my rendering knowledge in computer graphics, my image processing background, and my interest in iOS development into developing iOS Photoshop for Adobe, and eventually joined Apple to document their new graphics technologies such as Metal, ARKit, CreateML, and RealityKit.\n\nI returned to Japan to help spearhead Nintendo of Japan’s smartphone game design, starting with Fire Emblem Heroes and [Pikmin Bloom](https://pikminbloom.com/ja/). These development experiences led me to craft my own path creating educational apps and experiences for teaching Japanese kids about AI and Swift." : {
+    "I'm Chris, also known as Halordain! I grew up in Dallas, Texas, and attended college at Stanford. I majored in electrical engineering with a specialization in image processing. I started studying Japanese to scout my opponents from Japan at the Pokémon World Championships, where my quarterfinals and semifinals opponents hailed from Yokosuka and Fujisawa, respectively.\n\nMy journey led me to Doshisha University to master Japanese under the Critical Language Scholarship. I abandoned my PhD at MIT CSAIL to pursue software development in Japan. Originally hired at Creatures Japan to process images for Pokémon cards, I ended up learning Objective-C to develop my first iPad app, [Pokédex for iOS (Creatures, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/).\n\nAfter Creatures, I contracted with Bandai-Namco Studios to build the graphics engine behind [Super Smash Bros. for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/). I parlayed my rendering knowledge in computer graphics, my image processing background, and my interest in iOS development into developing iOS Photoshop for Adobe, and eventually joined Apple to document their new graphics technologies such as Metal, ARKit, CreateML, and RealityKit.\n\nI returned to Japan to help spearhead Nintendo of Japan's smartphone game design, starting with Fire Emblem Heroes and [Pikmin Bloom](https://pikminbloom.com/ja/). These development experiences led me to craft my own path creating educational apps and experiences for teaching Japanese kids about AI and Swift." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -667,6 +953,17 @@
         }
       }
     },
+    "Immersive Video is a 180-degree video that appears three-dimensional. My team and I, along with several collaborators, captured an Immersive Video of FC Machida Zelvia—a professional soccer team in Japan's J1 League—and hosted a hands-on session exclusively for special members. This project was made possible through the club's support and cooperation. The event was a great success, and we encountered many challenges and learned a great deal through trial and error in the processes of filming, video editing, developing the Swift-based Viewer, and running the session. I'm especially eager to share the in-depth insights we gained from building the Viewer in Swift and the overall experience. It's rare to see professional sports filming projects and Immersive Video technology being showcased at developer conferences, and there are many fascinating insights to be shared from both the video capturing process and the Viewer application development." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Immersive Videoは立体的に見える180度動画です。\n私と複数人のチームで、サッカーJ1リーグ所属のFC町田ゼルビアのImmersive Videoを撮影し特別会員向けに体験会を実施しました。クラブ協力のもと実現できました。体験会は大成功。撮影、動画編集、Viewer実装、体験会、どれも試行錯誤があり多くの知見を得られました。特にSwiftで実装したViewerの作り込みと体験についての深掘りした知見を共有したいです。\nプロスポーツの撮影自体が開発者向けのカンファレンスで共有される事例が少ないですし、Immersive Video撮影、Viewerアプリも面白い知見が多数です。"
+          }
+        }
+      }
+    },
     "In a world increasingly dominated by Artificial Intelligence (AI), this presentation challenges the audience to consider an alternate future: one where AI is not the centrepiece of technological advancement. We delve into the implications of a future less reliant on AI, discussing the potential benefits and drawbacks. \n\nThe talk focuses on three key areas: human creativity and innovation, the preservation of traditional skills and knowledge, and the ethical considerations of a non-AI-centric world.\n\nFirstly, we explore how a reduced emphasis on AI could foster greater human creativity and innovation. Without AI's influence, there might be a resurgence in traditional problem-solving approaches and a renewed emphasis on human ingenuity.\n\nSecondly, the talk addresses the preservation of traditional skills and knowledge. In a world less dependent on AI, these skills might not only survive but thrive, leading to a more diverse technological landscape.\n\nFinally, we discuss the ethical implications of a world without pervasive AI. This includes considerations of privacy, employment, and societal structure, and how these might differ from a future where AI plays a central role." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -674,6 +971,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "AIが支配する世界では、技術の未来をAI中心ではないものとして想像することは、一種の挑戦です。このプレゼンテーションでは、AIに頼らない未来がもたらすかもしれないメリットとデメリットを探ります。\n\n話は大きく三つの部分に分かれています。一つ目は、AIに頼らないことで人間の創造性やイノベーションがどう促進されるか。AIがなければ、昔ながらの問題解決法が復活し、人間のひらめきが再び重要視されるかもしれません。\n\n二つ目は、伝統的な技術や知識の保存について。AIに依存しない世界では、これらの技術がただ生き残るだけでなく、繁栄することで、技術の多様性が広がる可能性があります。\n\n最後に、あらゆる場所にAIがあるわけではない世界の倫理的な問題について考えます。プライバシー、雇用、社会構造に関する考え方が、AIが中心の未来とどう違うのかを見ていきます。"
+          }
+        }
+      }
+    },
+    "In short, this is a story about hacking Genmoji.\nGenmoji can now be displayed in notifications from iOS18. In this talk, we will reverse engineer Genmoji and display custom emojis in notifications.\nI'm a third-party app developer for Mastodon. \nThis talk is perfect for me." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "簡単に言えば、これはジェン文字をハックする物語です。\niOS 18から、通知にジェン文字が表示されるようになりました。\nこのトークでは、ジェン文字のリバースエンジニアリングを行い、カスタム絵文字を通知に表示する方法をご紹介します。\n私はMastodon向けのサードパーティアプリ開発者ですが、この内容は私にとってまさに理想的なテーマです。"
           }
         }
       }
@@ -689,6 +997,17 @@
         }
       }
     },
+    "In Swift, you can define identifiers not only in English but also in various natural languages.\n\nRecently, I released a Shogi app for all Apple platforms, including Apple Vision Pro. In this app, I wrote almost all identifiers in Japanese—except for reserved words and imported frameworks.\n\nIn this talk, I'll share insights from my experience with Swift programming using Japanese identifiers." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swiftでは英語だけでなく様々な自然言語で識別子を定義することができます。\n私は最近、日本の伝統的ボードゲーム「将棋」のアプリをApple Vision Pro含む全てのAppleプラットフォーム向けにリリースしました。\nこのアプリでは「予約語」や「インポートしたフレームワーク」を除いたほぼ全ての識別子を日本語で書きました。\n今回は「日本語識別子Swiftプログラミング」の知見を紹介します。"
+          }
+        }
+      }
+    },
     "In this session, I'll share insights gained from a project to rewrite the game \"Simutrans\" in Swift, focusing on the practicality of C++ interoperability and the anticipated developments in the future. You'll learn how to leverage these insights to potentially challenge yourself with porting C++ projects to Swift." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -696,6 +1015,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "本セッションでは、SimutransというゲームをSwiftで書き換えるプロジェクトを通じて得た知見をもとに、C++ interoperabilityの実用性と今後期待される発展についてお話しします。皆さんも、このトークで学べることを活かして、C++プロジェクトのSwift書き換えにチャレンジしてみませんか？"
+          }
+        }
+      }
+    },
+    "In this talk I'll show you how you can design your app data pipeline in a modular way, and integrate my open source tools to enable easy bug reproduction and faster development workflows." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本セッションでは、アプリのデータパイプラインをモジュラーな方法で設計する手法を紹介します。さらに、私のオープンソースツールを統合することで、簡単なバグ再現と迅速な開発ワークフローを実現する方法を解説します。"
           }
         }
       }
@@ -755,6 +1085,17 @@
         }
       }
     },
+    "Introduction to security research and bounty hunting on Apple's platforms" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appleプラットフォームにおけるセキュリティリサーチとバウンティハンティング入門"
+          }
+        }
+      }
+    },
     "iOS & visionOS app developer in Japan. Crafting 𝙫𝙚𝙖𝙧 and DAWN for mastodon. Loving #foxes.\n\n[vear - Anime Avatar Camera](https://apps.apple.com/jp/app/vear-anime-avatar-camera/id1490697369?l=en-US)\n[DAWN for Mastodon](https://apps.apple.com/jp/app/dawn-for-mastodon/id1668645019?l=en-US)" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -766,13 +1107,46 @@
         }
       }
     },
-    "iOS app developer, creating personal projects like #Type, Quiz Match, and more.\nLiving in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.\nPhotography enthusiast, traveling across Japan as a photographer for Japan-\\\\(region).swift." : {
+    "iOS app developer, creating personal projects like #Type, Quiz Match, and more.\nLiving in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.\nPhotography enthusiast, traveling across Japan as a photographer for Japan-\\(region).swift." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "iOSアプリを作る仕事をしています。個人アプリとして#Type、Quiz Matchなどを開発しています。\n埼玉県所沢市で中古マンションを購入。リノベーションして2匹の猫、そして妻と住んでいます。\n趣味はカメラで、Japan-\\\\(region).swiftではカメラマンとして各地に飛んだりしています。"
+          }
+        }
+      }
+    },
+    "Java's annotation processing leverages developer productivity by compile-time code generation. Swift can now replicate that innovation with Swift Macros and Swift Syntax. Learn how to express annotation-like features in Swift, automate code, and boost productivity. Let's unlock Swift's potential!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Javaのアノテーションプロセッシングは、コンパイル時のコード生成によって開発者の生産性を大きく向上させています。\nSwiftも、Swift MacrosとSwift Syntaxを活用することで、この革新的な手法を再現できるようになりました。\nSwiftにおいて、アノテーションに似た機能をどのように表現し、コード自動生成で生産性を向上させるかを学び、Swiftの潜在能力を解き放ちましょう！"
+          }
+        }
+      }
+    },
+    "Join us as we build a ChatGPT client, from scratch, using Swift OpenAPI Generator. We'll take advantage of Swift OpenAPI's pluggable HTTP transports to reuse the same generated client to make upstream calls from a Linux server, providing end-to-end streaming, backed by async sequences, without buffering upstream responses.\n\nIn this session you'll learn how to:\n\nGenerate a type-safe ChatGPT macOS client and use URLSession OpenAPI transport.\nStream LLM responses using Server Sent Events (SSE).\nBootstrap a Linux proxy server using the Vapor OpenAPI transport.\nUse the same generated ChatGPT client within the proxy by switching to the AsyncHTTPClient transport.\nEfficiently transform responses from SSE to JSON Lines, maintaining end-to-end streaming." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swift OpenAPI Generatorを使って、ゼロからChatGPTクライアントを構築するライブコーディングに参加してください。\nSwift OpenAPIのプラガブルなHTTPトランスポート機能を活用し、生成された同一クライアントを再利用してLinuxサーバーから上流呼び出しを行います。これにより、非同期シーケンスに支えられたエンドツーエンドのストリーミングが、上流レスポンスをバッファリングすることなく実現できます。\n\nこのセッションでは、以下の内容を学びます:\n\n・タイプセーフなChatGPT macOSクライアントを生成し、URLSession OpenAPIトランスポートを使用する方法\n・サーバー送信イベント（SSE）を利用して、LLMのレスポンスをストリーミングする方法\n・Vapor OpenAPIトランスポートを用いて、Linuxプロキシサーバーをブートストラップする方法\n・AsyncHTTPClientトランスポートに切り替えることで、プロキシ内で同じ生成済みChatGPTクライアントを利用する方法\n・SSEからJSON Linesへのレスポンス変換を効率的に行い、エンドツーエンドのストリーミングを維持するテクニック"
+          }
+        }
+      }
+    },
+    "Join us for a live recording of the popular podcast \"Swift over Coffee,\" where the latest Swift news and practical techniques are discussed. Hosted by Paul Hudson and Mikaela Caron, the show dives into new Swift features, community trends, and coding tips that prove invaluable in everyday development. In addition to the standard recording session, the event features a Q&A with the audience—offering a unique chance to hear exclusive behind-the-scenes stories and up-to-the-minute development insights. This is an ideal opportunity for Swift developers to catch up on cutting-edge trends and strengthen their ties within the community." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最新の Swift ニュースや実用的なテクニックについて議論する人気のポッドキャスト「Swift over Coffee」のライブ録画に参加してください。ポール ハドソンとミカエラ キャロンが司会を務めるこの番組では、Swift の新しい機能、コミュニティのトレンド、日常の開発で非常に役立つコーディングのヒントについて詳しく説明します。このイベントでは、通常のレコーディング セッションに加えて、聴衆との Q&A も行われ、特別な舞台裏の話や開発に関する最新の洞察を聞くユニークな機会が提供されます。これは、Swift 開発者にとって最先端のトレンドを把握し、コミュニティ内の絆を強化する理想的な機会です。"
           }
         }
       }
@@ -865,6 +1239,17 @@
         }
       }
     },
+    "Learn by Building: A Gentle Introduction to Swift Regex" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作って学ぶ正規表現 -やさしいSwift Regex入門-"
+          }
+        }
+      }
+    },
     "Learning Swift's Type Inference" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -876,6 +1261,17 @@
         }
       }
     },
+    "Let's learn about Apple's newest framework TabletopKit for visionOS! You will learn what is TabletopKit and how you can get started using it to build games for visionOS. We'll review the basics of the framework and what it gives you, as opposed to building a game without it. We'll then explore how we would build Monopoly using TabletopKit. No visionOS experience is necessary for getting started! By the end of the talk you'll be able to begin building your own tabletop games." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appleの最新フレームワーク、visionOS向けTabletopKitについて学びましょう！\nこのセッションでは、TabletopKitとは何か、そしてそれを使ってvisionOS向けのゲームをどのように構築できるかを理解します。\nフレームワークの基本機能と、それを活用することで得られるメリット（従来の方法でゲームを作る場合との違い）についても解説します。\nさらに、TabletopKitを使用してモノポリーをどのように構築するかについて探求します。\nvisionOSの経験がなくてもすぐに始められる内容です！\nトークの最後には、自分自身のテーブルトップゲームを作り始めるための基礎が身につくでしょう。"
+          }
+        }
+      }
+    },
     "Let's start!" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -883,6 +1279,39 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "いよいよ始まりますよ！"
+          }
+        }
+      }
+    },
+    "Let's Table That: Creating Games with TabletopKit for visionOS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "visionOS向けTabletopKitでゲームを作ろう\n"
+          }
+        }
+      }
+    },
+    "Leverage hand tracking in Apple Vision Pro to build a SwiftUI window that operates like the native visionOS SystemOverlay. Invoke and manipulate windows intuitively in 3D space, creating a touch-like UI. We present a new interface for spatial computing." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Vision Pro のハンドトラッキング機能を活用して、ネイティブの visionOS SystemOverlay のように動作する SwiftUI ウィンドウを構築します。\n3D空間で直感的にウィンドウを呼び出し、操作することで、タッチ操作に近いユーザーインターフェースを実現します。\nこれにより、空間コンピューティング向けの全く新しいインターフェースを提案します。"
+          }
+        }
+      }
+    },
+    "Live coding a streaming ChatGPT proxy with Swift OpenAPI—from scratch!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swift OpenAPIを使ったライブコーディング ― ゼロから構築するストリーミングChatGPTプロキシ\n"
           }
         }
       }
@@ -905,6 +1334,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "昼食"
+          }
+        }
+      }
+    },
+    "Lux Optics builds popular, award-winning photography and video apps, such as Halide, Kino, and Spectre. Let's dive into engineering principles that guide development, such as short feedback loops, avoiding technical sink-holes, and approach problems from a scientific perspective." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lux Opticsは、Halide、Kino、Spectreなどの人気かつ受賞歴のある写真・動画アプリを開発しています。\nこのトークでは、短いフィードバックループの確立、技術的な落とし穴の回避、そして科学的視点から問題に取り組むといった、開発を支えるエンジニアリング原則について探求します。"
           }
         }
       }
@@ -953,7 +1393,7 @@
         }
       }
     },
-    "Mikaela Caron is an independent iOS Engineer who actively shares her expertise on social media, focusing on iOS development, building apps in public, and freelancing. She’s continuing to work on her indie app Fruitful, which helps people connect with others at conferences, while also traveling as much as she can. She’s also an organizer for iOSDevHappyHour and loves giving back to the community." : {
+    "Mikaela Caron is an independent iOS Engineer who actively shares her expertise on social media, focusing on iOS development, building apps in public, and freelancing. She's continuing to work on her indie app Fruitful, which helps people connect with others at conferences, while also traveling as much as she can. She's also an organizer for iOSDevHappyHour and loves giving back to the community." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -1037,7 +1477,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "オープニング"
+            "value" : "開会の挨拶"
           }
         }
       }
@@ -1119,6 +1559,17 @@
         }
       }
     },
+    "Raymarching Shaders with SwiftUI" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUIでレイマーチングシェーダー\n\n"
+          }
+        }
+      }
+    },
     "Registration" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1126,6 +1577,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "受付"
+          }
+        }
+      }
+    },
+    "Rendering beautiful text using MSDFs and Metal." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MSDFとMetalを用いた美しいテキストレンダリング"
           }
         }
       }
@@ -1194,6 +1656,17 @@
         }
       }
     },
+    "Searching for Aliens" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宇宙人を探して"
+          }
+        }
+      }
+    },
     "Sebastiaan is an ex-Apple designer now making camera apps like Halide, Kino and Spectre at Lux" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1227,7 +1700,7 @@
         }
       }
     },
-    "Si works at Apple, where he helps maintain a number of open-source Swift libraries to support server-side use cases. Before that, he’s worked in a wide range of areas including virtulalization, cloud technologies, privacy-preserving machine learning, and developer tools. \n\nSi is based in Cambridge, UK, but loves to travel and see new places. He’s hugely passionate about coffee and enjoys playing bass guitar." : {
+    "Si works at Apple, where he helps maintain a number of open-source Swift libraries to support server-side use cases. Before that, he's worked in a wide range of areas including virtulalization, cloud technologies, privacy-preserving machine learning, and developer tools. \n\nSi is based in Cambridge, UK, but loves to travel and see new places. He's hugely passionate about coffee and enjoys playing bass guitar." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -1249,7 +1722,18 @@
         }
       }
     },
-    "Software Engineer at DeNA Inc., specializing in mobile development for live streaming applications. With extensive experience in iOS development since the Objective-C era, I am passionate about leveraging Swift’s evolution to create innovative and efficient applications." : {
+    "Skip is an innovative tool that transforms Swift code for Android with native performance. Evolving from transpiling Swift to Kotlin, it now runs compiled native Swift on Android. In 5 minutes, discover Skip's fundamentals, architecture, and its advantages over React Native and Flutter!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skipは、SwiftコードをAndroid向けに変換し、ネイティブパフォーマンスを実現する革新的なツールです。\n元々はSwiftからKotlinへのトランスパイルとして進化してきましたが、現在はAndroid上でコンパイルされたネイティブSwiftを実行します。\n5分間のセッションで、Skipの基本原理、アーキテクチャ、そしてReact NativeやFlutterに対する優位性についてご紹介します。"
+          }
+        }
+      }
+    },
+    "Software Engineer at DeNA Inc., specializing in mobile development for live streaming applications. With extensive experience in iOS development since the Objective-C era, I am passionate about leveraging Swift's evolution to create innovative and efficient applications." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -1282,6 +1766,28 @@
         }
       }
     },
+    "Sometimes Swift developers make fun of languages such as JavaScript that have vague concepts like \"truthy\" and \"falsy\", but Swift is packed with its own surprises and has plenty sharp edges of its own.\n\nIn this talk I want to show some of the surprising behaviors of Swift – things that behave weirdly, traps you can easily fall into, and fixes to help you write better code. There will be lots of hands-on code samples everyone can try, and it will be a fun journey through the quirks of a language we all think we know." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swift開発者の中には、JavaScriptの「truthy」や「falsy」といった曖昧な概念を冗談交じりに笑う人もいますが、実はSwiftにも独自の驚きが満載で、予想外の鋭い側面が存在します。\n\nこのトークでは、Swiftの驚くべき挙動―奇妙な動作、簡単に陥ってしまう落とし穴、そしてより良いコードを書くための修正策―を紹介します。多数のハンズオンコードサンプルを用意しており、参加者全員が実際に試しながら、普段は馴染みのあるはずのこの言語の意外な一面を楽しく探求する旅に出かけましょう。"
+          }
+        }
+      }
+    },
+    "Special effects with SwiftUI Text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUI Textを使った特殊効果\n"
+          }
+        }
+      }
+    },
     "Stephen entered tech by way of a liberal arts degree. He now works on Point-Free with Brandon Williams, where he tries to spread the word of testable, composable app development." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1304,6 +1810,17 @@
         }
       }
     },
+    "Swift is a fantastic general purpose language, which can and has been successfully used beyond its mobile origins, from embedded through server-side systems. One of Swift's unique strengths is its powerful native language interoperability with C and C++. Recently, the Swift project started work on integrating improved Swift/Java interoperability with the use of both JNI and the new Foreign Function and Memory APIs introduced in JDK22. In this talk we'll deep dive into the deep integration approach taken between the language runtimes using the FMM APIs and their unique strengths but also challenges." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swiftは、モバイル発祥に留まらず、組み込みシステムからサーバーサイドに至るまで幅広く活用される素晴らしい汎用言語です。\nその独自の強みのひとつとして、CやC++との強力なネイティブな言語相互運用性が挙げられます。\n最近、Swiftプロジェクトでは、JNIとJDK22で導入された新しいForeign Function and Memory APIsを活用し、SwiftとJava間の相互運用性の向上に取り組み始めました。\nこのトークでは、FMM APIを利用した言語ランタイム間の深い統合アプローチに迫り、そのユニークな強みと同時に直面する課題について詳しく解説します。"
+          }
+        }
+      }
+    },
     "Swift is cool but... do you know what's cooler? Successfully code signing your Swift apps. Code signing issues can certainly be scary but they can be really fun to solve! This talk will teach you how to take a step back from scary code signing errors to calmly and quickly code sign your apps." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1315,13 +1832,118 @@
         }
       }
     },
+    "Swift Programming in Japanese" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日本語でのSwiftプログラミング"
+          }
+        }
+      }
+    },
+    "Swift WTF: Weirdness, traps, and fixes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swift WTF: 奇妙な挙動、落とし穴、そして修正策"
+          }
+        }
+      }
+    },
+    "Swift's regex engine is an ambitious project aiming to be a superset that encompasses all existing regular expressions. However, as of now, many features, such as lookbehind, remain unimplemented.\n\nContributing to this project can be challenging due to the complexity of the existing codebase.\n\nIn this talk, we will implement a small regex engine in Swift, focusing on the three fundamental operations: concatenation, alternation, and repetition. We will also explore how to implement a backtracking (VM-based) approach similar to Swift's official regex engine.\n\nBy understanding this implementation, you'll take the first step toward deciphering Swift's official regex engine and contributing to its development." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swift's regex engine is an ambitious project aiming to be a superset that encompasses all existing regular expressions. However, as of now, many features, such as lookbehind, remain unimplemented.\n\nContributing to this project can be challenging due to the complexity of the existing codebase.\n\nIn this talk, we will implement a small regex engine in Swift, focusing on the three fundamental operations: concatenation, alternation, and repetition. We will also explore how to implement a backtracking (VM-based) approach similar to Swift's official regex engine.\n\nBy understanding this implementation, you'll take the first step toward deciphering Swift's official regex engine and contributing to its development."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swiftの正規表現は、既存のあらゆる正規表現を包含するスーパーセットを目指す壮大なプロジェクトです。\nしかし、現時点では「後読み」など未実装の機能も多く存在します。そこで自分でプロジェクトに貢献しようと思っても既存のコードベースの理解は容易ではありません。\n本講演では、「連接」「選択」「繰り返し」の基本三演算に限定した小さな正規表現エンジンをSwiftで実装し、Swiftの正規表現エンジンと同様のバックトラック方式（VM型）の実装方法を解説します。\nこれにより公式の実装を読み解いたり、機能の拡張へ貢献するための第一歩を踏み出せるようになります。"
+          }
+        }
+      }
+    },
+    "SwiftSyntax is Apple's library for parsing and manipulating Swift code. It can be use for anything from formatting source code (as in swift-format) to generating it (as in Swift Macros). In this talk I'll explain how the SwiftSyntax library works - the range and limitations of its capabilities, and demonstrate some cool use cases that you might not have considered." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftSyntaxは、Swiftコードの解析や操作を行うためのApple純正ライブラリです。\nこのライブラリは、ソースコードのフォーマット（swift-formatの場合）から、コード生成（Swift Macrosの場合）に至るまで、幅広い用途で活用できます。\n本セッションでは、SwiftSyntaxライブラリの動作原理、その機能範囲や制約について解説し、思いもよらなかったクールな活用事例をいくつかご紹介します。"
+          }
+        }
+      }
+    },
+    "SwiftSyntax: for good and evil" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftSyntax: evalの力、善にも悪にも"
+          }
+        }
+      }
+    },
+    "SwiftUI API Design Lessons: Bridging Procedural APIs with the Declarative World" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUI APIデザインの教訓: 手続き型APIと宣言型世界の橋渡し"
+          }
+        }
+      }
+    },
+    "SwiftUI APIs are inherently declarative, yet many existing Apple platform APIs are designed to be used in a procedural manner. In this session, we'll explore how to design and implement SwiftUI-friendly declarative APIs that integrate with procedural frameworks. Using AVFoundation as an example, we will build a photo and video capture app while uncovering best practices for adapting procedural APIs to the declarative paradigm of SwiftUI." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUIのAPIは本質的に宣言型ですが、多くの既存のAppleプラットフォームAPIは手続き型として設計されています。\n本セッションでは、手続き型フレームワークと統合可能なSwiftUIフレンドリーな宣言型APIをどのように設計・実装するかを探求します。\n例としてAVFoundationを用い、写真・ビデオキャプチャアプリを構築しながら、手続き型APIをSwiftUIの宣言型パラダイムに適応させるためのベストプラクティスを明らかにしていきます。"
+          }
+        }
+      }
+    },
+    "SwiftUI's syntax is great for UI, but it can also be used for 3D graphics. We'll combine SwiftUI's elegant syntax with raymarching and signed distance functions to make cool shaders." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUIの文法は主にUI作成に優れていますが、実は3Dグラフィックスにも応用可能です。\nこのセッションでは、SwiftUIの洗練されたシンタックスとレイマーチング、さらにはSigned Distance Functionsを組み合わせることで、クールなシェーダーを作成する方法を探求します。"
+          }
+        }
+      }
+    },
     "Take a break and meet other attendees or sponsors" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "休憩をとりながら他の参加者やスポンサーと交流しましょう。"
+            "value" : "休憩して他の参加者やスポンサーと交流しましょう"
+          }
+        }
+      }
+    },
+    "Take a group photo with all attendees and speakers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "参加者全員と講演者と一緒に集合写真を撮ります"
           }
         }
       }
@@ -1332,7 +1954,40 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "お弁当を食べながら他の参加者やスポンサーと交流しましょう。"
+            "value" : "お弁当を持って、他の参加者やスポンサーと交流しましょう。"
+          }
+        }
+      }
+    },
+    "Take your iOS app to the next level by integrating 3D content with SwiftUI. Go beyond static models and learn how to add animations, dynamic content ,performance enhancements and interactive elements using RealityKit, creating immersive experiences that set your app apart." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUIと連携して3Dコンテンツを取り入れることで、あなたのiOSアプリを次のレベルへと引き上げましょう。\n静的なモデルに留まらず、RealityKitを活用してアニメーション、動的コンテンツ、パフォーマンス向上、そしてインタラクティブな要素を加えることで、他にはない没入型体験を実現する方法を学びます。"
+          }
+        }
+      }
+    },
+    "Ten Principles of Lux Development" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lux開発の10原則\n"
+          }
+        }
+      }
+    },
+    "The Drake Equation, used by astrophysicists to estimate the number of alien civilizations we can communicate with, has many unexpected lessons for our work of building apps. A takeaway from this equation is the huge number of stars in the universe, which implies a high probability that some of them harbor life. This talk will dive into the details of the equation and then apply it to iOS. Just as the number of stars provide a powerful scale factor, there are technical factors of your app that can multiply your impact. We'll derive a new equation to calculate the carbon footprint of an app, look at iOS memory management to speed up every CPU instruction, and calculate how to reduce bugs all using lessons from the Drake Equation. I will also discuss my own experience building a startup and how I think about the implications of these scale factors when designing developer tools that many large apps will use." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "天体物理学者が我々と通信可能なエイリアン文明の数を推定するために用いるドレイク方程式は、アプリ開発においても予想外の教訓を提供してくれます。\nこの方程式が示す一つのポイントは、宇宙に存在する膨大な数の星々が、いずれかに生命を宿している可能性を示唆していることです。\n\nこのトークでは、まず方程式の詳細に踏み込み、その後iOSへの応用方法について解説します。\n星の数が強力なスケールファクターを提供するのと同様に、あなたのアプリにも影響力を増幅させる技術的要因が存在します。\nドレイク方程式の教訓を応用して、アプリのカーボンフットプリントを計算する新たな方程式を導出し、iOSのメモリ管理を見直すことでCPU命令の実行速度を向上させ、さらにはバグを削減する方法についても検討します。\nさらに、私自身のスタートアップ構築の経験を踏まえ、多くの大規模アプリが利用する開発者向けツールを設計する際に、これらのスケール要因が持つ意味についてもお話しします。"
           }
         }
       }
@@ -1355,6 +2010,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ゲームのSwift移植から見えたC++ interoperabilityの展望"
+          }
+        }
+      }
+    },
+    "The reason why I'd like to give this talk is because as someone who works as both an iOS/Mac developer and a security researcher, I've learned that there's a lot that the developer community can contribute to security research on Apple's platforms, but most developers think that it's a niche outside their area of expertise. However, most professional security researchers focus at the low level where app developers don't usually have a lot of knowledge.\n\nThrough my work, I've found quite a few security bugs in Mac and iOS that could be found at the higher level, and those bugs have rewarded me with multiple bug bounty payments from Apple as well as helping improve the security of the operating systems. This talk would be a way to introduce more developers to the practice, with some examples of my past experiences, and encourage them to pursue security research as part of their career. You can read about some of my security research work on my blog.\n\nI think this fits well as both an inspirational and technical topic that's not usually covered in developer conferences." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "私自身、iOS/Macの開発者でありながらセキュリティリサーチャーとしても活動してきた経験から、Appleプラットフォームにおけるセキュリティリサーチに、開発者コミュニティが大いに貢献できることを学びました。しかし、多くの開発者はこの分野を自分の専門外のニッチなものと捉えがちです。一方で、プロのセキュリティリサーチャーは、アプリ開発者があまり触れない低レベルの部分に注力する傾向にあります。\n\n私のこれまでの活動では、MacやiOSの上位レベルで発見可能なセキュリティ脆弱性をいくつか見つけ、その結果としてAppleから複数のバグバウンティ報奨金を得るとともに、OSのセキュリティ向上にも寄与してきました。このトークでは、私の過去の経験を交えながら、より多くの開発者がセキュリティリサーチの実践に触れるきっかけを提供し、キャリアの一環として挑戦することを後押しします。詳しい事例は私のブログでも紹介しています。\n\nこの内容は、技術的な側面とインスピレーショナルな視点の両方を兼ね備え、開発者カンファレンスではあまり取り上げられない貴重なトピックだと考えています。"
           }
         }
       }
@@ -1403,6 +2069,39 @@
         }
       }
     },
+    "Unlock the Potential of Swift Code Generation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swiftコード生成の可能性を解き放て\n"
+          }
+        }
+      }
+    },
+    "Unlock the secrets of SwiftUI performance! Dive into the render loop and discover techniques like offscreen rendering to manipulate it. Gain practical insights into how SwiftUI views are rendered and learn powerful ways to optimize them. Transform your apps with smoother and more efficient UI." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUIのパフォーマンス向上の秘密を解き明かしましょう！\nレンダーループに深く切り込み、オフスクリーンレンダリングなどのテクニックを駆使して、ビューのレンダリングプロセスを自在に操作する方法を探ります。\nSwiftUIビューがどのように描画されるのか、実践的な洞察を得るとともに、最適化のための強力な手法を学び、より滑らかで効率的なUIへとアプリを変革するヒントを提供します。"
+          }
+        }
+      }
+    },
+    "Unlocking SwiftUI Performance: Mastering the Render Loop and Offscreen Rendering" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUIパフォーマンスを解き放つ: レンダーループとオフスクリーンレンダリングの極意\n"
+          }
+        }
+      }
+    },
     "Unlocking the Boundless Potential of SF Symbols, \"The Artistic World of SF Symbols\"" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1447,6 +2146,17 @@
         }
       }
     },
+    "Vision Pro × Text to 3D Model: How Swift and Generative AI Unlock a New Era of Spatial Computing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vision Pro × Text to 3D Model: Swiftと生成型AIが切り拓く新時代の空間コンピューティング\n"
+          }
+        }
+      }
+    },
     "visionOS represents a new paradigm known as Spatial Computing, which is expected to significantly increase the number of experiences available on headset devices. This talk will introduce the basic concepts of visionOS and provide explanations on implementing sample apps using Swift. Given that many may not have developed for visionOS or have experience with SwiftUI or RealityKit, understanding every aspect is not necessary. By learning the basic architecture, you can start implementing spatial applications. The session will cover the process from project creation to operation, with spatial expressions explained through demos and videos. Let's create experiences in Spatial Computing together!" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1469,6 +2179,17 @@
         }
       }
     },
+    "We all know that the NS prefix on the Apple platforms comes NextStep. However, until I built an app for NextStep, I did not realize just how much was already there. In this quick talk, I encourage attendees to deepen their knowledge of Objective C and Apple Platforms by stepping back in time to 1996" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AppleプラットフォームにおけるNSプレフィックスがNextStepに由来することは、誰もが知っています。しかし、私がNextStep向けのアプリを作るまでは、その技術がどれほど充実しているかに全く気づいていませんでした。この短いトークでは、1996年にタイムスリップすることで、Objective-CとAppleプラットフォームに対する理解をさらに深めることを皆さんに提案します。"
+          }
+        }
+      }
+    },
     "What Can We Do Without AI in the Future?" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1476,6 +2197,50 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "AIがない未来を考える"
+          }
+        }
+      }
+    },
+    "What can you do with Path animations in SwiftUI? With some creativity, we can animate text, draw shapes, and more—it's a surprisingly versatile technique. \nIn this talk, I'll showcase innovative ways to use Path animations in development and entertainment, helping you dive into this exciting world." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUIのPathアニメーションで、どんなことができるのでしょうか？\n少しの創意工夫で、テキストをアニメーションさせたり、図形を描いたりと、驚くほど多彩な表現が可能です。\nこのトークでは、開発やエンターテインメントの分野においてPathアニメーションを活用する革新的な方法をご紹介し、皆さんをこの刺激的な世界へと誘います。"
+          }
+        }
+      }
+    },
+    "What makes an app truly exceptional? How do the best designers create interfaces that feel intuitive, delightful, and, most importantly, human? In this talk, Sebastiaan de With pulls back the curtain on Apple's design principles and the craftsmanship behind Halide, an Apple Design Award-winning app. From refining tiny details to making tough design decisions, he'll share real-world insights on creating products that aren't just great—they're loved. Whether you're an aspiring designer or a seasoned developer, jump into a no-nonsense crash course in shipping beautiful, functional apps without getting lost in perfectionism." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリを真に卓越させる要素は何でしょうか？\n最良のデザイナーたちは、どのようにして直感的で魅力的、そして何よりも人間味あふれるインターフェースを生み出しているのでしょうか？\n\nこのトークでは、Seebastiaan de WithがAppleのデザイン原則と、Apple Design Awardを受賞したHalideの背後にある職人技に迫ります。\n細部の洗練から、難しいデザイン判断に至るまで、単に優れているだけでなく、人々に愛される製品を生み出すための実践的な知見を共有します。\n\n新進のデザイナーであれ、経験豊富な開発者であれ、完璧主義にとらわれることなく、美しく機能的なアプリを世に送り出すための、実践的なクラッシュコースにぜひ飛び込んでみましょう。"
+          }
+        }
+      }
+    },
+    "What's new in iOS 17, 16, 15, etc." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS 17, 16, 15などの新機能"
+          }
+        }
+      }
+    },
+    "When you have more app or game ideas than time to implement them, AI can help accelerate your workflow, generating code, assets, tests, and documentation. Let's explore the tactics and tooling I used at Nintendo and beyond to prototype game proof-of-concepts and iterate quickly in Swift & SwiftUI!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリやゲームのアイデアが実装する時間を上回る場合、AIはコード、アセット、テスト、ドキュメントの自動生成を通じて、ワークフローを大幅に加速させます。\n本セッションでは、Nintendoなどで実践したSwiftおよびSwiftUIを活用し、ゲームの概念実証プロトタイプを迅速に構築・反復開発するための戦略とツールについて探求します。"
           }
         }
       }
@@ -1498,6 +2263,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Appleプラットフォーム向けの開発経験が12年以上あり、優れたユーザー体験を生み出すことに情熱を注いでいます。特にUIKitに精通しており、現在は主にSwiftUIを使ってiOSやtvOSアプリのUIを開発しています。\n現在、1日あたり100万人以上のアクティブユーザーを抱える動画ストリーミング企業Rakuten Vikiに勤務しています。\n\nカンファレンスへの参加や登壇が大好きで、知識を共有したり、コミュニティから学んだりすることに喜びを感じています。仕事以外では、次の旅行の計画を立てたり、3歳の子どもと遊んだりしています。"
+          }
+        }
+      }
+    },
+    "WWDC24 introduced exciting updates to the Charts API, enabling more creative graph representations. This talk explores how to turn data into art using advanced customization, animations, and interactions. Elevate your data visualization skills and become a graph art designer with Charts API!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WWDC24では、Charts APIに画期的なアップデートが導入され、より創造的なグラフ表現が可能になりました。\nこのトークでは、先進的なカスタマイズ、アニメーション、そしてインタラクションを駆使して、データをアートに変える方法をご紹介します。\nデータビジュアライゼーションのスキルを一段と向上させ、Charts APIを使ったグラフアートのデザイナーになりましょう！"
           }
         }
       }
