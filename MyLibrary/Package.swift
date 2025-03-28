@@ -53,7 +53,7 @@ let package = Package(
     .target(
       name: "DependencyExtra",
       dependencies: [
-        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
       ]
     ),
     .target(
@@ -96,7 +96,7 @@ let package = Package(
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
       ],
       plugins: [
-        .plugin(name: "LicensesPlugin", package: "LicensesPlugin"),
+        .plugin(name: "LicensesPlugin", package: "LicensesPlugin")
       ]
     ),
     .testTarget(

@@ -1,8 +1,8 @@
 import Dependencies
 import DependenciesMacros
 import Foundation
-import os.log
 import SharedModels
+import os.log
 
 @DependencyClient
 public struct DataClient {
@@ -53,7 +53,7 @@ extension DataClient: DependencyKey {
   )
 
   static func loadDataFromBundle(fileName: String) -> Data {
-    
+
     let filePath = Bundle.module.path(forResource: fileName, ofType: "json")!
     let fileURL = URL(fileURLWithPath: filePath)
     let data = try! Data(contentsOf: fileURL)
