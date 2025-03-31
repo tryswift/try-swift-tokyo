@@ -86,15 +86,15 @@ enum Lines: Equatable, Identifiable, CaseIterable {
     switch self {
     case .tachikawa:
       return [
-        .init(order: 1, description: "tachikawa-1", imageName: "")
+        .init(order: 1, description: "tachikawa-1")
       ]
     case .haneda:
       return [
-        .init(order: 1, description: "haneda-1", imageName: "")
+        .init(order: 1, description: "haneda-1")
       ]
     case .tokyo:
       return [
-        .init(order: 1, description: "tokyo-1", imageName: "")
+        .init(order: 1, description: "tokyo-1")
       ]
     }
   }
@@ -114,6 +114,6 @@ enum Lines: Equatable, Identifiable, CaseIterable {
     var id: UUID { .init() }
     var order: Int
     var description: LocalizedStringKey
-    var imageName: String
+    var imageName: String?
   }
 }

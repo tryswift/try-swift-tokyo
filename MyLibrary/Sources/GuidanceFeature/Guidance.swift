@@ -202,7 +202,7 @@ public struct GuidanceView: View {
         }
         .buttonStyle(.borderedProminent)
         .padding(.horizontal)
-        //        directions
+        directions
         venueInfo
           .padding()
       }
@@ -283,10 +283,12 @@ public struct GuidanceView: View {
             Text(direction.description, bundle: .module)
           }
           .frame(maxWidth: .infinity, alignment: .leading)
-          Image(direction.imageName, bundle: .module)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(maxWidth: 400)
+          if let imageName = direction.imageName {
+            Image(imageName, bundle: .module)
+              .resizable()
+              .aspectRatio(contentMode: .fit)
+              .frame(maxWidth: 400)
+          }
         }
         .padding()
       }
