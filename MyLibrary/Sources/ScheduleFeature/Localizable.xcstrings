@@ -766,6 +766,17 @@
         }
       }
     },
+    "High Dynamic Range imaging has the potential to change way we look at images in a way comparable to the move from HDTV change how we viewed television. This talk dives into the concept of dynamic range, how it is supported on Apple platforms, and quirks you'll run into that aren't covered in the documentation." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ハイダイナミックレンジ（HDR）イメージングは、テレビの視聴方法を変えたHDTVへの移行に匹敵するほど、私たちの画像の見方を一変させる可能性を秘めています。本トークでは、ダイナミックレンジの概念、Appleプラットフォームにおけるサポート方法、そしてドキュメントでは触れられていない特有の問題点について掘り下げます。"
+          }
+        }
+      }
+    },
     "Hiromu is a member of Rakuten Group, Inc. and is involved in the development of Rakuten Rakuma as an iOS engineer and tech lead." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2043,6 +2054,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "AIによる言語学習の変革：DuolingoのAIチューターを深掘る"
+          }
+        }
+      }
+    },
+    "Understanding HDR" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HDRを理解する"
           }
         }
       }

@@ -398,9 +398,9 @@
       "sessions": [
         {
           "id": 39,
-          "title": "Ten Principles of Lux Development",
+          "title": "Understanding HDR",
           "place": "Hall",
-          "description": "Lux Optics builds popular, award-winning photography and video apps, such as Halide, Kino, and Spectre. Let's dive into engineering principles that guide development, such as short feedback loops, avoiding technical sink-holes, and approach problems from a scientific perspective.",
+          "description": "High Dynamic Range imaging has the potential to change way we look at images in a way comparable to the move from HDTV change how we viewed television. This talk dives into the concept of dynamic range, how it is supported on Apple platforms, and quirks you'll run into that aren't covered in the documentation.",
           "speakers": [
             {
               "id": 27,
