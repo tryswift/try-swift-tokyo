@@ -20,10 +20,11 @@ extension MapKitClient: DependencyKey {
       let directionsRequest = MKDirections.Request()
       directionsRequest.source = starting
       directionsRequest.destination = ending
-      directionsRequest.transportType = .walking
+      directionsRequest.transportType = [.transit, .walking]
 
       let directionsService = MKDirections(request: directionsRequest)
       let response = try await directionsService.calculate()
+      print(response.routes)
       let route = response.routes.first
       return route
     },

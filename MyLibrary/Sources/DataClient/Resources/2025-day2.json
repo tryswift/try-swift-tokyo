@@ -270,6 +270,50 @@
     },
     {
       "id": 11,
+      "time": "2025-04-11T13:10:00+09:00",
+      "sessions": [
+        {
+          "id": 21,
+          "title": "Swift over Coffee Live",
+          "place": "Hall",
+          "description": "Join us for a live recording of the popular podcast \"Swift over Coffee,\" where the latest Swift news and practical techniques are discussed. Hosted by Paul Hudson and Mikaela Caron, the show dives into new Swift features, community trends, and coding tips that prove invaluable in everyday development. In addition to the standard recording session, the event features a Q&A with the audience—offering a unique chance to hear exclusive behind-the-scenes stories and up-to-the-minute development insights. This is an ideal opportunity for Swift developers to catch up on cutting-edge trends and strengthen their ties within the community.",
+          "speakers": [
+            {
+              "id": 89,
+              "name": "Paul Hudson",
+              "image_name": "paul_hudson",
+              "bio": "Paul is the author of Hacking with Swift, Pro Swift, Swift Design Patterns, Testing Swift, Swift Interview Challenges, and more. Suffice it to say, he quite likes Swift. And coffee. (But mostly Swift.) (And coffee.)",
+              "job_title": "Creator at Hacking with Swift",
+              "links": [
+                {
+                  "name": "@twostraws",
+                  "url": "https://x.com/twostraws"
+                },
+                {
+                  "name": "@twostraws",
+                  "url": "https://github.com/twostraws"
+                }
+              ]
+            },
+            {
+              "id": 90,
+              "name": "Mikaela Caron",
+              "image_name": "mikaela_caron",
+              "bio": "Mikaela Caron is an independent iOS Engineer who actively shares her expertise on social media, focusing on iOS development, building apps in public, and freelancing. She's continuing to work on her indie app Fruitful, which helps people connect with others at conferences, while also traveling as much as she can. She's also an organizer for iOSDevHappyHour and loves giving back to the community.",
+              "job_title": "Indie iOS Developer",
+              "links": [
+                {
+                  "url": "https://mikaelacaron.com",
+                  "name": "mikaelacaron.com"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
       "time": "2025-04-10T14:00:00+09:00",
       "sessions": [
         {

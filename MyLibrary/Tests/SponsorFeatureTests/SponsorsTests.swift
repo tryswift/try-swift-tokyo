@@ -29,7 +29,7 @@ final class SponsorsTests: XCTestCase {
     } withDependencies: {
       $0.safari = { @Sendable in
         SafariEffect { url in
-          await receivedUrl.withValue {
+          receivedUrl.withValue {
             $0 = url
             return true
           }
@@ -38,7 +38,7 @@ final class SponsorsTests: XCTestCase {
     }
 
     await store.send(\.view.sponsorTapped, .platinumMock)
-    await receivedUrl.withValue {
+    receivedUrl.withValue {
       XCTAssertEqual($0, Sponsor.platinumMock.link)
     }
   }

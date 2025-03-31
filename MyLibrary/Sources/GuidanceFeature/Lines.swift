@@ -6,32 +6,32 @@ import SwiftUI
 enum Lines: Equatable, Identifiable, CaseIterable {
   var id: Self { self }
 
-  case metroShibuya
-  case jrShibuya
-  case metroOmotesando
+  case tachikawa
+  case haneda
+  case tokyo
 
   var localizedKey: LocalizedStringKey {
     switch self {
-    case .metroShibuya:
-      return "Metro Shibuya"
-    case .jrShibuya:
-      return "JR Shibuya"
-    case .metroOmotesando:
-      return "Omote-sando"
+    case .tachikawa:
+      return "Tachikawa St."
+    case .haneda:
+      return "Haneda Airport"
+    case .tokyo:
+      return "Tokyo St."
     }
   }
 
   var region: MKCoordinateRegion {
     switch self {
-    case .metroShibuya:
+    case .tachikawa:
       return .init(
         center: .init(latitude: 35.657892, longitude: 139.703748),
         span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01))
-    case .jrShibuya:
+    case .haneda:
       return .init(
         center: .init(latitude: 35.658575, longitude: 139.701499),
         span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01))
-    case .metroOmotesando:
+    case .tokyo:
       return .init(
         center: .init(latitude: 35.665222, longitude: 139.712543),
         span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01))
@@ -40,86 +40,73 @@ enum Lines: Equatable, Identifiable, CaseIterable {
 
   var searchQuery: String {
     switch self {
-    case .jrShibuya:
-      return "JR Shibuya Station"
-    case .metroOmotesando:
-      return "表参道駅 B1"
-    case .metroShibuya:
-      return "渋谷駅 C1"
+    case .tachikawa:
+      return "JR 立川駅"
+    case .haneda:
+      return "羽田空港"
+    case .tokyo:
+      return "東京駅"
     }
   }
 
   var exitName: LocalizedStringKey {
     switch self {
-    case .metroShibuya:
-      return "Exit C1"
-    case .jrShibuya:
-      return "JR Shibuya Station East Exit"
-    case .metroOmotesando:
-      return "Exit B1"
+    case .tachikawa:
+      return "North Exit"
+    case .haneda:
+      return "Arrival Erea"
+    case .tokyo:
+      return "Chuo line"
     }
   }
 
   var originTitle: LocalizedStringKey {
     switch self {
-    case .metroShibuya:
-      return "Shibuya Station C1 Exit"
-    case .jrShibuya:
-      return "Shibuya Station East Exit"
-    case .metroOmotesando:
-      return "Omote-sando Station B1 Exit"
+    case .tachikawa:
+      return "Tachikawa Station"
+    case .haneda:
+      return "Haneda Airport"
+    case .tokyo:
+      return "Tokyo Station"
     }
   }
 
   var itemColor: Color {
     switch self {
-    case .metroShibuya:
+    case .tachikawa:
       return Color.red
-    case .jrShibuya:
+    case .haneda:
       return Color.green
-    case .metroOmotesando:
+    case .tokyo:
       return Color.purple
     }
   }
 
   var directions: IdentifiedArrayOf<Direction> {
     switch self {
-    case .metroShibuya:
+    case .tachikawa:
       return [
-        .init(order: 1, description: "metro-1", imageName: "metro-1"),
-        .init(order: 2, description: "jr-9", imageName: "jr-9"),
-        .init(order: 3, description: "jr-10", imageName: "jr-10"),
-        .init(order: 4, description: "jr-11", imageName: "jr-11"),
+        .init(order: 1, description: "tachikawa-1", imageName: "")
       ]
-    case .jrShibuya:
+    case .haneda:
       return [
-        .init(order: 1, description: "jr-1", imageName: "jr-1"),
-        .init(order: 2, description: "jr-2", imageName: "jr-2"),
-        .init(order: 3, description: "jr-3", imageName: "jr-3"),
-        .init(order: 4, description: "jr-4", imageName: "jr-4"),
-        .init(order: 5, description: "jr-5", imageName: "jr-5"),
-        .init(order: 6, description: "jr-6", imageName: "jr-6"),
-        .init(order: 7, description: "jr-7", imageName: "jr-7"),
-        .init(order: 8, description: "jr-8", imageName: "jr-8"),
-        .init(order: 9, description: "jr-9", imageName: "jr-9"),
-        .init(order: 10, description: "jr-10", imageName: "jr-10"),
-        .init(order: 11, description: "jr-11", imageName: "jr-11"),
+        .init(order: 1, description: "haneda-1", imageName: "")
       ]
-    case .metroOmotesando:
+    case .tokyo:
       return [
-        .init(order: 1, description: "omotesando-1", imageName: "jr-11")
+        .init(order: 1, description: "tokyo-1", imageName: "")
       ]
     }
   }
 
   var duration: Duration {
     switch self {
-    case .metroShibuya:
-      return .seconds(6 * 60)
-    case .jrShibuya:
-      return .seconds(8 * 60)
-    case .metroOmotesando:
-      return .seconds(10 * 60)
+    case .tachikawa:
+      return .seconds(11 * 60)
+    case .haneda:
+      return .seconds(140 * 60)
+    case .tokyo:
+      return .seconds(42 * 60)
     }
   }
 

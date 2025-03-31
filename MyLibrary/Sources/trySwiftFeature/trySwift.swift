@@ -28,7 +28,7 @@ public struct TrySwift {
       case codeOfConductTapped
       case acknowledgementsTapped
       case privacyPolicyTapped
-      case eventbriteTapped
+      case ticketTapped
       case websiteTapped
     }
   }
@@ -60,8 +60,8 @@ public struct TrySwift {
       case .view(.acknowledgementsTapped):
         state.path.append(.acknowledgements(.init()))
         return .none
-      case .view(.eventbriteTapped):
-        let url = URL(string: String(localized: "Eventbrite URL", bundle: .module))!
+      case .view(.ticketTapped):
+        let url = URL(string: String(localized: "Luma URL", bundle: .module))!
         return .run { _ in await safari(url) }
       case .view(.websiteTapped):
         let url = URL(string: String(localized: "Website URL", bundle: .module))!
@@ -149,9 +149,9 @@ public struct TrySwiftView: View {
       }
       Section {
         Button {
-          send(.eventbriteTapped)
+          send(.ticketTapped)
         } label: {
-          Text("Eventbrite", bundle: .module)
+          Text("Luma", bundle: .module)
         }
         Button {
           send(.websiteTapped)

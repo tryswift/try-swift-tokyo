@@ -59,32 +59,6 @@
         }
       }
     },
-    "Eventbrite" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eventbrite"
-          }
-        }
-      }
-    },
-    "Eventbrite URL" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "https://www.eventbrite.com/e/try-swift-tokyo-2024-tickets-712565200697"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "https://www.eventbrite.com/e/try-swift-tokyo-2024-tickets-712565200697"
-          }
-        }
-      }
-    },
     "Hideyuki is a Swift lover and focusing to enjoy learning and playing with Swift more. He organizes Swift Fun Club which is the group where Swift lovers gather in Japan. He is also the most famous Kanpai-er(person who make a toast). He is expanding the circle of Swift lovers with Kanpai🍻" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -118,17 +92,6 @@
         }
       }
     },
-    "I'm an iOS Developer working at ROLLCAKE Inc, and I have a passion for automation technologies such as test automation and CI." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ROLLCAKE株式会社で働くiOS Developer、テスト自動化やCIなどの自動化技術が好きです"
-          }
-        }
-      }
-    },
     "kazu is a SWE at U-NEXT. He loves Computer Science. Especially low-layers" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -136,6 +99,43 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "株式会社U-NEXTで働くSWE、低レイヤーが好きです。"
+          }
+        }
+      }
+    },
+    "Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Key"
+          }
+        }
+      }
+    },
+    "Luma" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luma"
+          }
+        }
+      }
+    },
+    "Luma URL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://lu.ma/z6j3c1bd"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://lu.ma/z6j3c1bd"
           }
         }
       }
@@ -217,7 +217,14 @@
       }
     },
     "No License Found" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No License Found"
+          }
+        }
+      }
     },
     "Organizers" : {
       "localizations" : {
@@ -262,6 +269,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "iOS Developerとして働いています。try! Swiftは2019年に当日スタッフとして参加したのがきっかけで、2020年からOrganizerとしてjoinしました。\nSwiftコミュニティが好きで、たまに勉強会や開発合宿を企画することも。\nビール・ウイスキーや珍しいデザインの服に興味があり、アプリ作りのほか、アクセサリー作りも趣味。\nラッキナンバーは6️⃣。"
+          }
+        }
+      }
+    },
+    "Shingo is a freelance iOS Developer based in Okinawa! In addition to driving automation technologies such as test automation and CI, I have recently developed a strong interest in app development using AI and creating applications for visionOS." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "沖縄に住むフリーランスのiOS Developerです！\nテスト自動化やCIなどの自動化技術の推進のほか、最近はAIを活用したアプリ開発やvisonOS向けのアプリ開発に強い関心があります！"
           }
         }
       }
@@ -379,7 +397,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "https://tryswift.jp/_en"
+            "value" : "https://tryswift.jp/en"
           }
         },
         "ja" : {

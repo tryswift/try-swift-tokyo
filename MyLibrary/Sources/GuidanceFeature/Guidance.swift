@@ -11,8 +11,7 @@ public struct Guidance {
 
   @ObservableState
   public struct State: Equatable {
-    @Presents var destination: Destination.State?
-    var lines: Lines = .metroShibuya
+    var lines: Lines = .tachikawa
     var route: MKRoute?
     var origin: MKMapItem?
     var originTitle: LocalizedStringKey { lines.originTitle }
@@ -36,7 +35,6 @@ public struct Guidance {
 
   public enum Action: BindableAction, ViewAction {
     case binding(BindingAction<State>)
-    case destination(PresentationAction<Destination.Action>)
     case view(View)
     case initialResponse(Result<(MKMapItem, MKMapItem, MKRoute, MKLookAroundScene?)?, Error>)
     case updateResponse(Result<(MKMapItem, MKRoute, MKLookAroundScene?)?, Error>)
@@ -45,10 +43,6 @@ public struct Guidance {
       case onAppear
       case openMapTapped
     }
-  }
-
-  @Reducer(state: .equatable)
-  public enum Destination {
   }
 
   @Dependency(MapKitClient.self) var mapKitClient
@@ -118,11 +112,10 @@ public struct Guidance {
         return .run { [state] _ in
           state.destinationItem?.openInMaps()
         }
-      case .destination, .binding:
+      case .binding:
         return .none
       }
     }
-    .ifLet(\.$destination, action: \.destination)
   }
 
   func onAppear(lines: Lines) async throws -> (MKMapItem, MKMapItem, MKRoute, MKLookAroundScene?)? {
@@ -133,7 +126,7 @@ public struct Guidance {
         (0, try await mapKitClient.localSearch(lines.searchQuery, lines.region).first)
       }
       group.addTask {
-        (1, try await mapKitClient.localSearch("ベルサール渋谷ファースト", hallLocation).first)
+        (1, try await mapKitClient.localSearch("立川ステージガーデン", hallLocation).first)
       }
       var result: [Int: MKMapItem?] = [:]
       for try await (index, element) in group {
@@ -197,9 +190,8 @@ public struct GuidanceView: View {
   public var body: some View {
     NavigationStack {
       ScrollView {
-        warning
-          .padding()
         picker
+          .padding(.vertical)
         map
           .padding()
 
@@ -210,7 +202,7 @@ public struct GuidanceView: View {
         }
         .buttonStyle(.borderedProminent)
         .padding(.horizontal)
-        directions
+//        directions
         venueInfo
           .padding()
       }
@@ -225,9 +217,9 @@ public struct GuidanceView: View {
   @ViewBuilder
   var venueInfo: some View {
     VStack(alignment: .leading) {
-      Text("Belle Salle Shibuya First", bundle: .module)
+      Text("Tachikawa Stage Garden", bundle: .module)
         .font(.title.bold())
-      Text("Belle Salle Shibuya First address", bundle: .module)
+      Text("Tachikawa Stage Garden address", bundle: .module)
     }
   }
 
@@ -300,39 +292,12 @@ public struct GuidanceView: View {
       }
     }
     .padding()
-
-  }
-
-  @ViewBuilder
-  var warning: some View {
-    VStack(alignment: .leading) {
-      Label.init {
-        VStack(alignment: .leading) {
-          Text("Warning", bundle: .module)
-            .font(.subheadline.bold())
-            .foregroundStyle(Color.accentColor)
-          Text(
-            "Our venue is Belle Salle Shibuya FIRST, not garden. Make sure there are two belle salle hall in Shibuya.",
-            bundle: .module
-          )
-          .font(.callout)
-        }
-      } icon: {
-        Image(systemName: "exclamationmark.triangle.fill")
-          .foregroundStyle(Color.accentColor)
-      }
-    }
-    .padding()
-    .overlay {
-      RoundedRectangle(cornerRadius: 16)
-        .stroke(Color.accentColor, lineWidth: 1)
-    }
   }
 }
 
 var hallLocation: MKCoordinateRegion {
   .init(
-    center: .init(latitude: 35.657920, longitude: 139.708854),
+    center: .init(latitude: 35.704748, longitude: 139.411955),
     span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01))
 }
 

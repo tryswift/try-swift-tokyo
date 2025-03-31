@@ -61,7 +61,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚡️ Charts APIで作るグラフアート – データビジュアライゼーションを超えて\n"
+            "value" : "⚡️ Charts APIで作るグラフアート – データビジュアライゼーションを超えて"
           }
         }
       }
@@ -72,7 +72,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚡️ NeXTSTEP向けアプリを作った話 ― Objective-Cを恐れるのをやめ、愛するようになった理由\n"
+            "value" : "⚡️ NeXTSTEP向けアプリを作った話 ― Objective-Cを恐れるのをやめ、愛するようになった理由"
           }
         }
       }
@@ -105,7 +105,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚡️ Swift × Android: Skipが切り拓くクロスプラットフォーム開発の未来\n"
+            "value" : "⚡️ Swift × Android: Skipが切り拓くクロスプラットフォーム開発の未来"
           }
         }
       }
@@ -127,7 +127,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚡️ 一度作れば、どんな入力でもプレイ可能なiOSゲーム\n\n"
+            "value" : "⚡️ 一度作れば、どんな入力でもプレイ可能なiOSゲーム"
           }
         }
       }
@@ -182,7 +182,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AI支援のSwiftによるiOSアプリのゲーミフィケーション\n"
+            "value" : "AI支援のSwiftによるiOSアプリのゲーミフィケーション"
           }
         }
       }
@@ -204,7 +204,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "素早く実現する優れたアプリデザイン\n\n"
+            "value" : "素早く実現する優れたアプリデザイン"
           }
         }
       }
@@ -215,7 +215,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple Vision Pro: ハンドトラッキングを基盤とした新インターフェース\n"
+            "value" : "Apple Vision Pro: ハンドトラッキングを基盤とした新インターフェース"
           }
         }
       }
@@ -336,7 +336,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RealityKitでiOSアプリに命を吹き込む\n"
+            "value" : "RealityKitでiOSアプリに命を吹き込む"
           }
         }
       }
@@ -520,17 +520,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "モジュラーなデータパイプライン設計"
-          }
-        }
-      }
-    },
-    "Download Eventbrite app and show QR code of your ticket at the reception. You will receive a name tag and a goodie bag." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eventbriteアプリをダウンロードして、受付でQRコードを見せてください。ネームプレートやカンファレンスバッグを受け取りましょう！"
           }
         }
       }
@@ -783,7 +772,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "楽天グループ株式会社に所属。iOSエンジニア、テックリードとして楽天ラクマの開発に携わる。\n"
+            "value" : "楽天グループ株式会社に所属。iOSエンジニア、テックリードとして楽天ラクマの開発に携わる。"
           }
         }
       }
@@ -1289,7 +1278,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "visionOS向けTabletopKitでゲームを作ろう\n"
+            "value" : "visionOS向けTabletopKitでゲームを作ろう"
           }
         }
       }
@@ -1311,7 +1300,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Swift OpenAPIを使ったライブコーディング ― ゼロから構築するストリーミングChatGPTプロキシ\n"
+            "value" : "Swift OpenAPIを使ったライブコーディング ― ゼロから構築するストリーミングChatGPTプロキシ"
           }
         }
       }
@@ -1510,7 +1499,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ポールは『Hacking with Swift』、『Pro Swift』、『Swift Design Patterns』、『Testing Swift』、『Swift Coding Challenges』などの著者です。言うまでもなく、彼はSwiftとコーヒーが大好きです。"
+            "value" : "Paulは『Hacking with Swift』、『Pro Swift』、『Swift Design Patterns』、『Testing Swift』、『Swift Coding Challenges』などの著者です。言うまでもなく、彼はSwiftとコーヒーが大好きです。"
           }
         }
       }
@@ -1565,7 +1554,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SwiftUIでレイマーチングシェーダー\n\n"
+            "value" : "SwiftUIでレイマーチングシェーダー"
           }
         }
       }
@@ -1783,7 +1772,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SwiftUI Textを使った特殊効果\n"
+            "value" : "SwiftUI Textを使った特殊効果"
           }
         }
       }
@@ -1976,7 +1965,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lux開発の10原則\n"
+            "value" : "Lux開発の10原則"
           }
         }
       }
@@ -2075,7 +2064,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Swiftコード生成の可能性を解き放て\n"
+            "value" : "Swiftコード生成の可能性を解き放て"
           }
         }
       }
@@ -2097,7 +2086,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SwiftUIパフォーマンスを解き放つ: レンダーループとオフスクリーンレンダリングの極意\n"
+            "value" : "SwiftUIパフォーマンスを解き放つ: レンダーループとオフスクリーンレンダリングの極意"
           }
         }
       }
@@ -2152,7 +2141,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vision Pro × Text to 3D Model: Swiftと生成型AIが切り拓く新時代の空間コンピューティング\n"
+            "value" : "Vision Pro × Text to 3D Model: Swiftと生成型AIが切り拓く新時代の空間コンピューティング"
           }
         }
       }

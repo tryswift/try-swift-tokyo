@@ -4,254 +4,52 @@
     "%lld" : {
 
     },
-    "Belle Salle Shibuya First" : {
+    "Arrival Erea" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ベルサール渋谷ファースト"
+            "value" : "到着"
           }
         }
       }
     },
-    "Belle Salle Shibuya First address" : {
+    "Chuo line" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "〒150-0011\nBelle Calle Shibuya First Tower B1 / 2F\n1-2-20, Higashi, Shibuya city, Tokyo, Japan"
-          }
-        },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "〒150-0011\n東京都渋谷区東1-2-20 住友不動産渋谷ファーストタワーB1・2F ベルサール渋谷ファースト"
+            "state" : "translated",
+            "value" : "中央線"
           }
         }
       }
     },
     "Directions" : {
+
+    },
+    "Haneda Airport" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "道順"
+            "value" : "羽田空港"
           }
         }
       }
     },
-    "Exit B1" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "B1出口"
-          }
-        }
-      }
-    },
-    "Exit C1" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CI出口"
-          }
-        }
-      }
-    },
-    "JR Shibuya" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "JR渋谷駅"
-          }
-        }
-      }
-    },
-    "JR Shibuya Station East Exit" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "JR渋谷駅東口"
-          }
-        }
-      }
-    },
-    "jr-1" : {
+    "haneda-1" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "After get off train, exit from Shibuya station South gate on 1st floor (Downstair), then go to East exit."
+            "value" : "How to Board the Bus\n\nIf you are traveling from Haneda Airport by bus, please follow these steps to ensure a smooth journey:\n\nPurchase Your Ticket in Advance\n\nFor the \"From Haneda Airport\" ride, you need to buy your ticket before boarding.\n\nIf you plan to use a transportation IC card instead, please let the bus ticket handling counter at Terminal 3 or the staff at your bus stop know the time of the bus you will be taking.\n\nLocate Your Boarding Point\nDepending on the terminal where you arrive, the boarding platforms are as follows:\n\nTerminal 3: Go to Platform 4.\n\nTerminal 1: Head to the 1st Floor Arrival Lobby and proceed to Platform 9.\n\nTerminal 2: Head to the 1st Floor Arrival Lobby and proceed to Platform 10.\n\nBoarding the Bus\n\nOnce you are at the correct boarding point, please use your pre-purchased ticket or transportation IC card.\n\nPay your fare in the fare box when boarding the bus."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "電車を降りたら、階段を降りて南改札から出てください。そのあと東口から出ます。"
-          }
-        }
-      }
-    },
-    "jr-2" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "After exit from East Exit, pass through left side of downstairs."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "東口を出たら、エスカレータの左側を抜けます。"
-          }
-        }
-      }
-    },
-    "jr-3" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Then, turn right at behind of pillar."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "柱の後ろで右折します。"
-          }
-        }
-      }
-    },
-    "jr-4" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Go straight along with bus stops."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "バス停の横を直進します。"
-          }
-        }
-      }
-    },
-    "jr-5" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Go upstairs on the left hand."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "左手の階段を登ります。"
-          }
-        }
-      }
-    },
-    "jr-6" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Go diagonally right, then turn left."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "斜め右方向へ進み、そのあと左折します。"
-          }
-        }
-      }
-    },
-    "jr-7" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Go downstairs left of police office."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "渋谷警察署横の階段を降ります。"
-          }
-        }
-      }
-    },
-    "jr-8" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Go straight."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "直進します。"
-          }
-        }
-      }
-    },
-    "jr-9" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keep going. You can get something to eat and drink at convenience store."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "そのまま直進します。途中コンビニがあるので食料を調達しても良いでしょう。"
-          }
-        }
-      }
-    },
-    "jr-10" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Almost there!"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "もうすぐ到着です！"
-          }
-        }
-      }
-    },
-    "jr-11" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You arrived and enter to entrance."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "到着しました。入り口からお入りください。"
+            "value" : "羽田空港発立川行き京急バスの乗車ガイド\n\nチケットの購入について\n\n「From Haneda Airport」バスをご利用の場合、事前にチケットを購入してください。\n\n交通系ICカードを利用される方は、ターミナル3の到着ロビー内のバスチケット取扱カウンター、またはバス乗り場のスタッフに、乗車するバスの時刻をお知らせください。\n\n乗車場所のご案内\nターミナルごとの乗車場所は以下の通りです：\n\nターミナル3：\n\nプラットフォーム4\n\nターミナル1：\n\n1階到着ロビー内、プラットフォーム9\n\nターミナル2：\n\n1階到着ロビー内、プラットフォーム10\n\n乗車時の手続き\n\n乗車の際は、事前に購入したチケットまたは交通系ICカードを使用し、運賃箱に料金をお支払いください。"
           }
         }
       }
@@ -266,64 +64,12 @@
         }
       }
     },
-    "Metro Shibuya" : {
+    "North Exit" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "東京メトロ渋谷"
-          }
-        }
-      }
-    },
-    "metro-1" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "After getting off Tokyo Metro, head to C1 Exit. Then turn left"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "地下鉄を降りたらC1出口に向かいます。地上に出たら左折します。"
-          }
-        }
-      }
-    },
-    "Omote-sando" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "表参道駅"
-          }
-        }
-      }
-    },
-    "Omote-sando Station B1 Exit" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "表参道駅B1出口"
-          }
-        }
-      }
-    },
-    "omotesando-1" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Highly recommend using map with button above."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "上のボタンからマップを開くことをお勧めします。"
+            "value" : "北口"
           }
         }
       }
@@ -338,32 +84,102 @@
         }
       }
     },
-    "Our venue is Belle Salle Shibuya FIRST, not garden. Make sure there are two belle salle hall in Shibuya." : {
+    "Tachikawa St." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "会場はベルサール渋谷ファーストです。渋谷ガーデンもあるのでお間違えないようにしてください。"
+            "value" : "立川駅"
           }
         }
       }
     },
-    "Shibuya Station C1 Exit" : {
+    "Tachikawa Stage Garden" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "渋谷駅C1出口"
+            "value" : "立川ステージガーデン"
           }
         }
       }
     },
-    "Shibuya Station East Exit" : {
+    "Tachikawa Stage Garden address" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "〒190-0014 N1, 3-3, Midori-cho, Tachikawa, Tokyo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "〒190-0014 東京都立川市緑町3-3 N1"
+          }
+        }
+      }
+    },
+    "Tachikawa Station" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "渋谷駅東口"
+            "value" : "立川駅"
+          }
+        }
+      }
+    },
+    "tachikawa-1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exit through the north ticket gate of Tachikawa Station and head to the right. Go under the monorail station, then continue straight ahead. Walk along the monorail tracks and descend via the escalator. Keep following the monorail, and you will see the venue on your left."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "立川駅北改札から出て右方向に進み、モノレールの駅の下をくぐります。そのまま直進し、モノレールの線路に沿って歩き、エスカレータを降ります。引き続きモノレールに沿って歩くと左手に会場が見えます。"
+          }
+        }
+      }
+    },
+    "Tokyo St." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "東京駅"
+          }
+        }
+      }
+    },
+    "Tokyo Station" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "東京駅"
+          }
+        }
+      }
+    },
+    "tokyo-1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It takes about 40 minutes on the Chuo line from Tokyo Station’s platforms 1 and 2. We strongly recommend using the Chuo Special Rapid, the Ome Special Rapid, or the Limited Express Azusa/Kaiji instead of the regular rapid service."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "東京駅の1番・2番ホームから中央線で40分程度で到着します。\n快速ではなく、中央特快・青梅特快・特急あずさ・特急かいじの利用を強く推奨します。"
           }
         }
       }
@@ -374,16 +190,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "会場"
-          }
-        }
-      }
-    },
-    "Warning" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "注意"
           }
         }
       }

@@ -16,8 +16,6 @@ public struct AppReducer {
     var sponsors = SponsorsList.State()
     var trySwift = TrySwift.State()
 
-    let mapTip: MapTip = .init()
-
     public init() {
       try? Tips.configure([.displayFrequency(.immediate)])
     }
@@ -65,7 +63,6 @@ public struct AppView: View {
         .tabItem {
           Label(String(localized: "Venue", bundle: .module), systemImage: "map")
         }
-        .popoverTip(store.mapTip)
       SponsorsListView(store: store.scope(state: \.sponsors, action: \.sponsors))
         .tabItem {
           Label(String(localized: "Sponsors", bundle: .module), systemImage: "building.2")
@@ -77,14 +74,6 @@ public struct AppView: View {
         }
     }
   }
-}
-
-struct MapTip: Tip, Equatable {
-  var title: Text = Text("Go Shibuya First, NOT Garden", bundle: .module)
-  var message: Text? = Text(
-    "There are two kinds of Bellesalle in Shibuya. Learn how to get from Shibuya Station to \"Bellesalle Shibuya FIRST\". ",
-    bundle: .module)
-  var image: Image? = .init(systemName: "map.circle.fill")
 }
 
 #Preview {
