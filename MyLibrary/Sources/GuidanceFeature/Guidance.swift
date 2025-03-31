@@ -202,7 +202,7 @@ public struct GuidanceView: View {
         }
         .buttonStyle(.borderedProminent)
         .padding(.horizontal)
-//        directions
+        //        directions
         venueInfo
           .padding()
       }
