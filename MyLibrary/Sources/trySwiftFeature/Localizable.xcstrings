@@ -306,6 +306,28 @@
         }
       }
     },
+    "Souya works as a server-side engineer at Yumemi. He is passionate about tech conferences, both attending and organizing them. In his free time, he enjoys traveling and photography, exploring various places." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ゆめみでサーバーサイドエンジニアとして働いています。技術カンファレンスが好きで、運営や参加をしています。旅行とカメラが趣味で、さまざまな場所に行っています。"
+          }
+        }
+      }
+    },
+    "sya-ri / Souya Ichikawa" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sya-ri / 市川創也"
+          }
+        }
+      }
+    },
     "Takuya has been an iOS developer for three years, after working in sales and testing. Now, I'm working on developing iOS apps with SwiftUI and GraphQL for my job. I love how iOS development is always changing. This is my first time at try! Swift Tokyo, and surprisingly, I'm part of the team too! What's more, try! Swift Tokyo happens to be on the same day my second child is expected, which has me really excited! Outside of work, my partner and I are big into Pokémon cards and hope to meet new friends this way. I can't wait to meet people from all over through Swift and have some great times together!" : {
       "extractionState" : "manual",
       "localizations" : {

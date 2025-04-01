@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "sya-ri.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
