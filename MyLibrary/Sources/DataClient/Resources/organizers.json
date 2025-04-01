@@ -218,5 +218,21 @@
         "url": "https://github.com/marunomi"
       }
     ]
+  },
+  {
+    "id": 18,
+    "name": "sya-ri / Souya Ichikawa",
+    "image_name": "sya-ri",
+    "bio": "Souya works as a server-side engineer at Yumemi. He is passionate about tech conferences, both attending and organizing them. In his free time, he enjoys traveling and photography, exploring various places.",
+    "links": [
+      {
+        "name": "@sya_ri_dayo",
+        "url": "https://x.com/sya_ri_dayo"
+      },
+      {
+        "name": "@sya-ri",
+        "url": "https://github.com/sya-ri"
+      }
+    ]
   }
 ]
