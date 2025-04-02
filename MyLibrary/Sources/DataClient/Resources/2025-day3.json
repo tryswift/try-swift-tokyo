@@ -218,7 +218,7 @@
       "sessions": [
         {
           "id": 17,
-          "title": "Learn by Building: A Gentle Introduction to Swift Regex",
+          "title": "Build your own Swift Regex: A Gentle Introduction to Swift Regex",
           "place": "Hall",
           "description": "Swift's regex engine is an ambitious project aiming to be a superset that encompasses all existing regular expressions. However, as of now, many features, such as lookbehind, remain unimplemented.\n\nContributing to this project can be challenging due to the complexity of the existing codebase.\n\nIn this talk, we will implement a small regex engine in Swift, focusing on the three fundamental operations: concatenation, alternation, and repetition. We will also explore how to implement a backtracking (VM-based) approach similar to Swift's official regex engine.\n\nBy understanding this implementation, you'll take the first step toward deciphering Swift's official regex engine and contributing to its development.",
           "speakers": [
