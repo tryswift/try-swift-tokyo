@@ -1,0 +1,39 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Live translation" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リアルタイム通訳"
+          }
+        }
+      }
+    },
+    "Not started yet" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通訳はまだ開始していません"
+          }
+        }
+      }
+    },
+    "Powered by" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Powered by"
+          }
+        }
+      }
+    },
+    "Room is unavailable" : {
+
+    }
+  },
+  "version" : "1.0"
+}

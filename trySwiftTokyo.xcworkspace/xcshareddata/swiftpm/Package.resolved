@@ -27,6 +27,15 @@
       }
     },
     {
+      "identity" : "rtt_sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/flitto/rtt_sdk",
+      "state" : {
+        "revision" : "11f9ca2905c7120f3479fed52bf5485c1f8e07fd",
+        "version" : "0.0.7"
+      }
+    },
+    {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser.git",

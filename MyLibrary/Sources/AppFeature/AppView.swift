@@ -1,6 +1,7 @@
 import ComposableArchitecture
 import Foundation
 import GuidanceFeature
+import LiveTranslationFeature
 import ScheduleFeature
 import SponsorFeature
 import SwiftUI
@@ -58,6 +59,10 @@ public struct AppView: View {
       ScheduleView(store: store.scope(state: \.schedule, action: \.schedule))
         .tabItem {
           Label(String(localized: "Schedule", bundle: .module), systemImage: "calendar")
+        }
+      LiveTranslationView()
+        .tabItem {
+          Label(String(localized: "Translation", bundle: .module), systemImage: "text.bubble")
         }
       GuidanceView(store: store.scope(state: \.guidance, action: \.guidance))
         .tabItem {

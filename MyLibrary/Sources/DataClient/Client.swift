@@ -2,7 +2,6 @@ import Dependencies
 import DependenciesMacros
 import Foundation
 import SharedModels
-import os.log
 
 @DependencyClient
 public struct DataClient {
@@ -18,19 +17,16 @@ extension DataClient: DependencyKey {
 
   static public var liveValue: DataClient = .init(
     fetchDay1: {
-      Logger().log(level: .info, "loading day 1")
       let data = loadDataFromBundle(fileName: "2025-day1")
       let response = try jsonDecoder.decode(Conference.self, from: data)
       return response
     },
     fetchDay2: {
-      Logger().log(level: .info, "loading day 2")
       let data = loadDataFromBundle(fileName: "2025-day2")
       let response = try jsonDecoder.decode(Conference.self, from: data)
       return response
     },
     fetchDay3: {
-      Logger().log(level: .info, "loading day 3")
       let data = loadDataFromBundle(fileName: "2025-day3")
       let response = try jsonDecoder.decode(Conference.self, from: data)
       return response
