@@ -29,12 +29,14 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.18.0"),
     .package(url: "https://github.com/maiyama18/LicensesPlugin", from: "0.2.0"),
+    .package(url: "https://github.com/flitto/rtt_sdk", from: "0.0.7")
   ],
   targets: [
     .target(
       name: "AppFeature",
       dependencies: [
         "GuidanceFeature",
+        "LiveTranslationFeature",
         "ScheduleFeature",
         "SponsorFeature",
         "trySwiftFeature",
@@ -62,6 +64,13 @@ let package = Package(
         "DependencyExtra",
         "MapKitClient",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+      ]
+    ),
+    .target(
+      name: "LiveTranslationFeature",
+      dependencies: [
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "rtt-sdk", package: "rtt_sdk")
       ]
     ),
     .target(

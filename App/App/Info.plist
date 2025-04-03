@@ -7,8 +7,8 @@
 		<string>en</string>
 		<string>ja</string>
 	</array>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
+	<key>Live translation room number</key>
+	<string>$(LIVE_TRANSLATION_KEY)</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
