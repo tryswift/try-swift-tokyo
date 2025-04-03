@@ -1,3 +1,4 @@
+#if canImport(LiveTranslationSDK_iOS)
 import LiveTranslationSDK_iOS
 import SwiftUI
 
@@ -81,3 +82,4 @@ public struct LiveTranslationView: View {
 #Preview {
   LiveTranslationView(roomNumber: "490294")
 }
+#endif

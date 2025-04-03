@@ -70,7 +70,7 @@ let package = Package(
       name: "LiveTranslationFeature",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        .product(name: "rtt-sdk", package: "rtt_sdk"),
+        .product(name: "rtt-sdk", package: "rtt_sdk", condition: .when(platforms: [.iOS])),
       ]
     ),
     .target(

@@ -1,3 +1,4 @@
+#if canImport(LiveTranslationSDK_iOS)
 import LiveTranslationSDK_iOS
 import SwiftUI
 
@@ -52,3 +53,4 @@ extension SelectLanguageSheet {
     }
   }
 }
+#endif
