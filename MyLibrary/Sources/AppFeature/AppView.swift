@@ -1,14 +1,15 @@
 import ComposableArchitecture
 import Foundation
 import GuidanceFeature
-#if canImport(LiveTranslationSDK_iOS)
-import LiveTranslationFeature
-#endif
 import ScheduleFeature
 import SponsorFeature
 import SwiftUI
 import TipKit
 import trySwiftFeature
+
+#if canImport(LiveTranslationSDK_iOS)
+  import LiveTranslationFeature
+#endif
 
 @Reducer
 public struct AppReducer {
@@ -63,10 +64,10 @@ public struct AppView: View {
           Label(String(localized: "Schedule", bundle: .module), systemImage: "calendar")
         }
       #if canImport(LiveTranslationSDK_iOS)
-      LiveTranslationView()
-        .tabItem {
-          Label(String(localized: "Translation", bundle: .module), systemImage: "text.bubble")
-        }
+        LiveTranslationView()
+          .tabItem {
+            Label(String(localized: "Translation", bundle: .module), systemImage: "text.bubble")
+          }
       #endif
       GuidanceView(store: store.scope(state: \.guidance, action: \.guidance))
         .tabItem {
