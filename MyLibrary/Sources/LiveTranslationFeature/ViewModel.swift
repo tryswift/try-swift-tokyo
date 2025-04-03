@@ -1,3 +1,4 @@
+#if canImport(LiveTranslationSDK_iOS)
 import Foundation
 import LiveTranslationSDK_iOS
 
@@ -346,3 +347,4 @@ extension Array {
     }
   }
 }
+#endif
