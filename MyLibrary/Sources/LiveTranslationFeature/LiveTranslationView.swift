@@ -1,11 +1,14 @@
-import SwiftUI
 import LiveTranslationSDK_iOS
+import SwiftUI
 
 public struct LiveTranslationView: View {
   let viewModel: ViewModel
   @State var isSelectedLanguageSheet: Bool = false
 
-  public init(roomNumber: String = ProcessInfo.processInfo.environment["LIVE_TRANSLATION_KEY"] ?? (Bundle.main.infoDictionary?["Live translation room number"] as? String) ?? "") {
+  public init(
+    roomNumber: String = ProcessInfo.processInfo.environment["LIVE_TRANSLATION_KEY"]
+      ?? (Bundle.main.infoDictionary?["Live translation room number"] as? String) ?? ""
+  ) {
     print(roomNumber)
     self.viewModel = ViewModel(roomNumber: roomNumber)
   }
@@ -53,7 +56,8 @@ public struct LiveTranslationView: View {
           Button {
             isSelectedLanguageSheet.toggle()
           } label: {
-            let selectedLanguage = viewModel.langSet?.langCodingKey(viewModel.selectedLangCode) ?? ""
+            let selectedLanguage =
+              viewModel.langSet?.langCodingKey(viewModel.selectedLangCode) ?? ""
             Text(selectedLanguage)
             Image(systemName: "globe")
           }

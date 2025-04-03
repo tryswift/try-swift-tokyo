@@ -13,7 +13,8 @@ public final class ViewModel {
   var langSet: LanguageEntity.Response.LangSet? = .none
   var langList: [LanguageEntity.Response.LanguageItem] = []
   var roomInfo: ChatRoomEntity.Make.Response? = .none
-  var selectedLangCode: String = Locale.autoupdatingCurrent.language.languageCode?.identifier ?? "en"
+  var selectedLangCode: String =
+    Locale.autoupdatingCurrent.language.languageCode?.identifier ?? "en"
 
   let service: LiveTranslationService = .init()
 
@@ -99,7 +100,9 @@ extension ViewModel {
     }
   }
 
-  package func loadTranslation(chatList: [TranslationEntity.CompositeChatItem], _ dstLangCode: String) async {
+  package func loadTranslation(
+    chatList: [TranslationEntity.CompositeChatItem], _ dstLangCode: String
+  ) async {
     await withTaskGroup(of: Void.self) { [weak self] group in
       let chunkedArray = chatList.chunked(into: 20)
       for array in chunkedArray {
@@ -140,8 +143,12 @@ extension ViewModel {
 
     switch chatItem.contentData.listType {
     case .update:
-      let updateTargetList = chatItem.contentData.chatList.reduce([TranslationEntity.CompositeChatItem]()) { current, next in
-        guard let firstIndex = newChatList.firstIndex(where: { $0.id == next.id }) else { return current }
+      let updateTargetList = chatItem.contentData.chatList.reduce(
+        [TranslationEntity.CompositeChatItem]()
+      ) { current, next in
+        guard let firstIndex = newChatList.firstIndex(where: { $0.id == next.id }) else {
+          return current
+        }
         return current + [newChatList[firstIndex]]
       }
       await loadTranslation(chatList: updateTargetList, selectedLangCode)
@@ -188,7 +195,9 @@ extension ViewModel {
 }
 
 extension [TranslationEntity.CompositeChatItem] {
-  fileprivate func merge(item: RealTimeEntity.Chat.Response, dstLangCode: String) async -> [TranslationEntity.CompositeChatItem] {
+  fileprivate func merge(item: RealTimeEntity.Chat.Response, dstLangCode: String) async
+    -> [TranslationEntity.CompositeChatItem]
+  {
     await withCheckedContinuation { continuation in
       switch item.contentData.listType {
       case .append:
@@ -199,7 +208,8 @@ extension [TranslationEntity.CompositeChatItem] {
           }
 
           guard !(newItem.textForTR.isEmpty || newItem.text.isEmpty) else { continue }
-          mutableSelf.append(.init(item: newItem, trItem: .none, ttsData: .none, dstLangCode: dstLangCode))
+          mutableSelf.append(
+            .init(item: newItem, trItem: .none, ttsData: .none, dstLangCode: dstLangCode))
         }
 
         return continuation.resume(returning: mutableSelf.suffix(100))
@@ -211,15 +221,20 @@ extension [TranslationEntity.CompositeChatItem] {
             mutableSelf.remove(at: lastIdx)
           }
 
-          mutableSelf.append(.init(item: newItem, trItem: .none, ttsData: .none, dstLangCode: dstLangCode))
+          mutableSelf.append(
+            .init(item: newItem, trItem: .none, ttsData: .none, dstLangCode: dstLangCode))
         }
         return continuation.resume(returning: mutableSelf)
 
       case .renew:
-        let newArr: [TranslationEntity.CompositeChatItem] = item.contentData.chatList.reduce([]) { current, next in
-          guard !next.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return current }
+        let newArr: [TranslationEntity.CompositeChatItem] = item.contentData.chatList.reduce([]) {
+          current, next in
+          guard !next.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return current
+          }
           let first = self.first(where: { $0.item.id == next.id })
-          let new: TranslationEntity.CompositeChatItem = .init(item: next, trItem: first?.trItem, ttsData: first?.ttsData, dstLangCode: dstLangCode)
+          let new: TranslationEntity.CompositeChatItem = .init(
+            item: next, trItem: first?.trItem, ttsData: first?.ttsData, dstLangCode: dstLangCode)
 
           return current + [new]
         }
@@ -245,8 +260,12 @@ extension [TranslationEntity.CompositeChatItem] {
               return variableCurrent
             }
             // If the update target is not included in the current chat list (when modifying an empty chat)
-          } else if let willAppendIndex = current.firstIndex(where: { $0.item.timestamp > next.timestamp }) {
-            guard !next.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return current }
+          } else if let willAppendIndex = current.firstIndex(where: {
+            $0.item.timestamp > next.timestamp
+          }) {
+            guard !next.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+              return current
+            }
             var variableCurrent = current
             variableCurrent.insert(
               .init(item: next, trItem: .none, ttsData: .none, dstLangCode: dstLangCode),
@@ -265,13 +284,18 @@ extension [TranslationEntity.CompositeChatItem] {
     }
   }
 
-  fileprivate func updateTranslation(item: RealTimeEntity.Translation.Response) async -> [TranslationEntity.CompositeChatItem] {
+  fileprivate func updateTranslation(item: RealTimeEntity.Translation.Response) async
+    -> [TranslationEntity.CompositeChatItem]
+  {
     await withCheckedContinuation { continuation in
-      guard let firstIndex = self.firstIndex(where: { $0.id == item.contentData.chatList.first?.chatID }) else {
+      guard
+        let firstIndex = self.firstIndex(where: { $0.id == item.contentData.chatList.first?.chatID }
+        )
+      else {
         return continuation.resume(returning: self)
       }
 
-      let range = firstIndex ..< (firstIndex + item.contentData.chatList.count)
+      let range = firstIndex..<(firstIndex + item.contentData.chatList.count)
       var mutatedArray: [TranslationEntity.CompositeChatItem] = []
 
       for index in range {
