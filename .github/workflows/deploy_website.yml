@@ -5,6 +5,7 @@ on:
     branches:
       - "main"
     paths:
+      - "Website/.well-known/**"
       - "Website/Sources/**"
       - "Website/Assets/**"
       - "trySwiftTokyo.xcworkspace/xcshareddata/swiftpm/Package.resolved"
