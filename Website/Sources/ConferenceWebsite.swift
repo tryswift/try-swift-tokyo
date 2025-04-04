@@ -67,7 +67,7 @@ struct ConferenceWebsite {
     let fileManager = FileManager.default
 
     let websiteDirectory = try URL.selectDirectories(from: #file).source
-    let websiteWellKnownDirectory = websiteDirectory.appending(path: ".well-known")
+    let websiteWellKnownDirectory = websiteDirectory.appending(path: "Assets/.well-known")
     let aasaFile = websiteWellKnownDirectory.appending(path: "apple-app-site-association")
 
     if !fileManager.fileExists(atPath: websiteWellKnownDirectory.path) {
