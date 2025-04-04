@@ -85,7 +85,7 @@ struct ConferenceWebsite {
     let aasaContent = """
     {
         "appclips": {
-            "apps": ["jp.tryswift.Clip"]
+            "apps": ["9PC9DZ9559.jp.tryswift.tokyo.App.Clip"]
         }
     }
     """
