@@ -6,10 +6,7 @@ import SponsorFeature
 import SwiftUI
 import TipKit
 import trySwiftFeature
-
-#if canImport(LiveTranslationSDK_iOS)
-  import LiveTranslationFeature
-#endif
+import LiveTranslationFeature
 
 @Reducer
 public struct AppReducer {
@@ -63,12 +60,10 @@ public struct AppView: View {
         .tabItem {
           Label(String(localized: "Schedule", bundle: .module), systemImage: "calendar")
         }
-      #if canImport(LiveTranslationSDK_iOS)
-        LiveTranslationView()
-          .tabItem {
-            Label(String(localized: "Translation", bundle: .module), systemImage: "text.bubble")
-          }
-      #endif
+      LiveTranslationView()
+        .tabItem {
+          Label(String(localized: "Translation", bundle: .module), systemImage: "text.bubble")
+        }
       GuidanceView(store: store.scope(state: \.guidance, action: \.guidance))
         .tabItem {
           Label(String(localized: "Venue", bundle: .module), systemImage: "map")
