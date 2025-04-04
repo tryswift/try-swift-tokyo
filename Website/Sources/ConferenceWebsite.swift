@@ -117,13 +117,6 @@ struct ConferenceSite2025: Site {
     }
     LegacyHome()
   }
-
-  var mimeTypes: [String: String] {
-    [
-      ".json": "application/json",
-      ".well-known/apple-app-site-association": "application/json"
-    ]
-  }
 }
 
 private struct LegacyHome: StaticPage {
