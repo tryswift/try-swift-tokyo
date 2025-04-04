@@ -30,27 +30,27 @@ public struct Acknowledgements {
 public struct AcknowledgementsView: View {
 
   @Bindable public var store: StoreOf<Acknowledgements>
-    public var body: some View {
-        List {
-            ForEach(LicensesPlugin.licenses) { license in
-                NavigationLink(license.name) {
-                  VStack {
-                    if let licenseText = license.licenseText {
-                      ScrollView {
-                        Text(licenseText)
-                          .padding()
-                      }
-                    } else {
-                      Text("No License Found")
-                    }
-                  }
-                  .navigationTitle(license.name)
-                }
-
+  public var body: some View {
+    List {
+      ForEach(LicensesPlugin.licenses) { license in
+        NavigationLink(license.name) {
+          VStack {
+            if let licenseText = license.licenseText {
+              ScrollView {
+                Text(licenseText)
+                  .padding()
+              }
+            } else {
+              Text("No License Found")
             }
+          }
+          .navigationTitle(license.name)
         }
-        .navigationTitle(Text("Acknowledgements", bundle: .module))
+
+      }
     }
+    .navigationTitle(Text("Acknowledgements", bundle: .module))
+  }
 }
 
 #Preview {
