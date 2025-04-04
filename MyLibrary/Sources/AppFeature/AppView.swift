@@ -1,12 +1,12 @@
 import ComposableArchitecture
 import Foundation
 import GuidanceFeature
+import LiveTranslationFeature
 import ScheduleFeature
 import SponsorFeature
 import SwiftUI
 import TipKit
 import trySwiftFeature
-import LiveTranslationFeature
 
 @Reducer
 public struct AppReducer {

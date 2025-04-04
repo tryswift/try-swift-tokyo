@@ -7,7 +7,7 @@ public struct LiveTranslationView: View {
 
   public init(
     roomNumber: String = ProcessInfo.processInfo.environment["LIVE_TRANSLATION_KEY"]
-    ?? (Bundle.main.infoDictionary?["Live translation room number"] as? String) ?? ""
+      ?? (Bundle.main.infoDictionary?["Live translation room number"] as? String) ?? ""
   ) {
     print(roomNumber)
     self.viewModel = ViewModel(roomNumber: roomNumber)
@@ -57,7 +57,7 @@ public struct LiveTranslationView: View {
             isSelectedLanguageSheet.toggle()
           } label: {
             let selectedLanguage =
-            viewModel.langSet?.langCodingKey(viewModel.selectedLangCode) ?? ""
+              viewModel.langSet?.langCodingKey(viewModel.selectedLangCode) ?? ""
             Text(selectedLanguage)
             Image(systemName: "globe")
           }

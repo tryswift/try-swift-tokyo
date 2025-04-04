@@ -14,7 +14,7 @@ public final class ViewModel {
   var langList: [LanguageEntity.Response.LanguageItem] = []
   var roomInfo: ChatRoomEntity.Make.Response? = .none
   var selectedLangCode: String =
-  Locale.autoupdatingCurrent.language.languageCode?.identifier ?? "en"
+    Locale.autoupdatingCurrent.language.languageCode?.identifier ?? "en"
 
   let service: LiveTranslationService = .init()
 
@@ -196,122 +196,122 @@ extension ViewModel {
 
 extension [TranslationEntity.CompositeChatItem] {
   fileprivate func merge(item: RealTimeEntity.Chat.Response, dstLangCode: String) async
-  -> [TranslationEntity.CompositeChatItem]
+    -> [TranslationEntity.CompositeChatItem]
   {
-  await withCheckedContinuation { continuation in
-    switch item.contentData.listType {
-    case .append:
-      var mutableSelf = self
-      for newItem in item.contentData.chatList {
-        if let lastIdx = mutableSelf.lastIndex(where: { $0.id == newItem.id }) {
-          mutableSelf.remove(at: lastIdx)
-        }
-
-        guard !(newItem.textForTR.isEmpty || newItem.text.isEmpty) else { continue }
-        mutableSelf.append(
-          .init(item: newItem, trItem: .none, ttsData: .none, dstLangCode: dstLangCode))
-      }
-
-      return continuation.resume(returning: mutableSelf.suffix(100))
-
-    case .realtime:
-      var mutableSelf = self
-      for newItem in item.contentData.chatList {
-        if let lastIdx = mutableSelf.lastIndex(where: { $0.id == newItem.id }) {
-          mutableSelf.remove(at: lastIdx)
-        }
-
-        mutableSelf.append(
-          .init(item: newItem, trItem: .none, ttsData: .none, dstLangCode: dstLangCode))
-      }
-      return continuation.resume(returning: mutableSelf)
-
-    case .renew:
-      let newArr: [TranslationEntity.CompositeChatItem] = item.contentData.chatList.reduce([]) {
-        current, next in
-        guard !next.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-          return current
-        }
-        let first = self.first(where: { $0.item.id == next.id })
-        let new: TranslationEntity.CompositeChatItem = .init(
-          item: next, trItem: first?.trItem, ttsData: first?.ttsData, dstLangCode: dstLangCode)
-
-        return current + [new]
-      }
-
-      return continuation.resume(returning: newArr.suffix(100))
-
-    case .update:
-      let newArr = item.contentData.chatList.reduce(self) { current, next in
-        // If the update target is included in the current chat list (when modifying a chat with non-empty value)
-        if let idx = current.firstIndex(where: { $0.item.chatID == next.chatID }) {
-          var variableCurrent = current
-
-          // If modified to empty value, delete the chat from the chat list
-          if next.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            variableCurrent.remove(at: idx)
-            return variableCurrent
-          } else {
-            variableCurrent[idx] = .init(
-              item: next,
-              trItem: variableCurrent[idx].trItem,
-              ttsData: .none,
-              dstLangCode: dstLangCode)
-            return variableCurrent
+    await withCheckedContinuation { continuation in
+      switch item.contentData.listType {
+      case .append:
+        var mutableSelf = self
+        for newItem in item.contentData.chatList {
+          if let lastIdx = mutableSelf.lastIndex(where: { $0.id == newItem.id }) {
+            mutableSelf.remove(at: lastIdx)
           }
-          // If the update target is not included in the current chat list (when modifying an empty chat)
-        } else if let willAppendIndex = current.firstIndex(where: {
-          $0.item.timestamp > next.timestamp
-        }) {
+
+          guard !(newItem.textForTR.isEmpty || newItem.text.isEmpty) else { continue }
+          mutableSelf.append(
+            .init(item: newItem, trItem: .none, ttsData: .none, dstLangCode: dstLangCode))
+        }
+
+        return continuation.resume(returning: mutableSelf.suffix(100))
+
+      case .realtime:
+        var mutableSelf = self
+        for newItem in item.contentData.chatList {
+          if let lastIdx = mutableSelf.lastIndex(where: { $0.id == newItem.id }) {
+            mutableSelf.remove(at: lastIdx)
+          }
+
+          mutableSelf.append(
+            .init(item: newItem, trItem: .none, ttsData: .none, dstLangCode: dstLangCode))
+        }
+        return continuation.resume(returning: mutableSelf)
+
+      case .renew:
+        let newArr: [TranslationEntity.CompositeChatItem] = item.contentData.chatList.reduce([]) {
+          current, next in
           guard !next.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return current
           }
-          var variableCurrent = current
-          variableCurrent.insert(
-            .init(item: next, trItem: .none, ttsData: .none, dstLangCode: dstLangCode),
-            at: willAppendIndex)
-          return variableCurrent
-        } else {
-          return current
+          let first = self.first(where: { $0.item.id == next.id })
+          let new: TranslationEntity.CompositeChatItem = .init(
+            item: next, trItem: first?.trItem, ttsData: first?.ttsData, dstLangCode: dstLangCode)
+
+          return current + [new]
         }
+
+        return continuation.resume(returning: newArr.suffix(100))
+
+      case .update:
+        let newArr = item.contentData.chatList.reduce(self) { current, next in
+          // If the update target is included in the current chat list (when modifying a chat with non-empty value)
+          if let idx = current.firstIndex(where: { $0.item.chatID == next.chatID }) {
+            var variableCurrent = current
+
+            // If modified to empty value, delete the chat from the chat list
+            if next.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+              variableCurrent.remove(at: idx)
+              return variableCurrent
+            } else {
+              variableCurrent[idx] = .init(
+                item: next,
+                trItem: variableCurrent[idx].trItem,
+                ttsData: .none,
+                dstLangCode: dstLangCode)
+              return variableCurrent
+            }
+            // If the update target is not included in the current chat list (when modifying an empty chat)
+          } else if let willAppendIndex = current.firstIndex(where: {
+            $0.item.timestamp > next.timestamp
+          }) {
+            guard !next.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+              return current
+            }
+            var variableCurrent = current
+            variableCurrent.insert(
+              .init(item: next, trItem: .none, ttsData: .none, dstLangCode: dstLangCode),
+              at: willAppendIndex)
+            return variableCurrent
+          } else {
+            return current
+          }
+        }
+
+        return continuation.resume(returning: newArr.suffix(100))
+
+      default:
+        return continuation.resume(returning: self)
       }
-
-      return continuation.resume(returning: newArr.suffix(100))
-
-    default:
-      return continuation.resume(returning: self)
     }
-  }
   }
 
   fileprivate func updateTranslation(item: RealTimeEntity.Translation.Response) async
-  -> [TranslationEntity.CompositeChatItem]
+    -> [TranslationEntity.CompositeChatItem]
   {
-  await withCheckedContinuation { continuation in
-    guard
-      let firstIndex = self.firstIndex(where: {
-        $0.id == item.contentData.chatList.first?.chatID
+    await withCheckedContinuation { continuation in
+      guard
+        let firstIndex = self.firstIndex(where: {
+          $0.id == item.contentData.chatList.first?.chatID
+        }
+        )
+      else {
+        return continuation.resume(returning: self)
       }
-      )
-    else {
-      return continuation.resume(returning: self)
+
+      let range = firstIndex..<(firstIndex + item.contentData.chatList.count)
+      var mutatedArray: [TranslationEntity.CompositeChatItem] = []
+
+      for index in range {
+        guard let trItem = item.contentData.chatList[safe: mutatedArray.count] else { break }
+        guard let newItem = self[safe: index]?.setTranslation(trItem: trItem) else { break }
+
+        mutatedArray.append(newItem)
+      }
+
+      var mutateSelf = self
+      mutateSelf.replaceSubrange(range, with: mutatedArray)
+
+      return continuation.resume(returning: mutateSelf)
     }
-
-    let range = firstIndex..<(firstIndex + item.contentData.chatList.count)
-    var mutatedArray: [TranslationEntity.CompositeChatItem] = []
-
-    for index in range {
-      guard let trItem = item.contentData.chatList[safe: mutatedArray.count] else { break }
-      guard let newItem = self[safe: index]?.setTranslation(trItem: trItem) else { break }
-
-      mutatedArray.append(newItem)
-    }
-
-    var mutateSelf = self
-    mutateSelf.replaceSubrange(range, with: mutatedArray)
-
-    return continuation.resume(returning: mutateSelf)
-  }
   }
 }
 
