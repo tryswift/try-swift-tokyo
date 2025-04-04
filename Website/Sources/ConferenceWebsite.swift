@@ -9,6 +9,7 @@ struct ConferenceWebsite {
 
     do {
       try copyAssets()
+      try copyAASAFile()
 
       try await site.publish()
     } catch {
@@ -61,6 +62,36 @@ struct ConferenceWebsite {
       }
     }
   }
+
+  private static func copyAASAFile() throws {
+    let fileManager = FileManager.default
+
+    let websiteDirectory = try URL.selectDirectories(from: #file).source
+    let websiteWellKnownDirectory = websiteDirectory.appending(path: ".well-known")
+    let aasaFile = websiteWellKnownDirectory.appending(path: "apple-app-site-association")
+
+    if !fileManager.fileExists(atPath: websiteWellKnownDirectory.path) {
+      try fileManager.createDirectory(
+        at: websiteWellKnownDirectory,
+        withIntermediateDirectories: true,
+        attributes: nil
+      )
+    }
+
+    if fileManager.fileExists(atPath: aasaFile.path) {
+      try fileManager.removeItem(at: aasaFile)
+    }
+
+    let aasaContent = """
+    {
+        "appclips": {
+            "apps": ["jp.tryswift.Clip"]
+        }
+    }
+    """
+
+    try aasaContent.write(to: aasaFile, atomically: true, encoding: .utf8)
+  }
 }
 
 struct ConferenceSite2025: Site {
@@ -85,6 +116,13 @@ struct ConferenceSite2025: Site {
       PrivacyPolicy(language: language)
     }
     LegacyHome()
+  }
+
+  var mimeTypes: [String: String] {
+    [
+      ".json": "application/json",
+      ".well-known/apple-app-site-association": "application/json"
+    ]
   }
 }
 
