@@ -1,12 +1,25 @@
 {
   "images" : [
     {
-      "filename" : "COMMUNITY_Flitto.png",
+      "filename" : "Flitto_W.png",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Flitto_D.png",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }
