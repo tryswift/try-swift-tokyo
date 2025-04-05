@@ -29,7 +29,7 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.18.0"),
     .package(url: "https://github.com/maiyama18/LicensesPlugin", from: "0.2.0"),
-    .package(url: "https://github.com/flitto/rtt_sdk", from: "0.1.2"),
+    .package(url: "https://github.com/flitto/rtt_sdk", branch: "0.1.4"),
   ],
   targets: [
     .target(

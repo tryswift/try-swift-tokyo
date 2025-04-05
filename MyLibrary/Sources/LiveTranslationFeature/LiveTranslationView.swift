@@ -40,10 +40,12 @@ public struct LiveTranslationView: View {
               .foregroundStyle(Color(.secondaryLabel))
             Image(.flitto)
               .resizable()
+              .offset(x: -10)
               .aspectRatio(contentMode: .fit)
               .frame(maxHeight: 30)
             Spacer()
           }
+          .padding(.bottom, 16)
         }
       }
       .task {
