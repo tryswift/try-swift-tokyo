@@ -116,11 +116,7 @@ extension ViewModel {
               timestamp: $0.item.timestamp,
               text: $0.item.textForTR)
           }
-          do {
-            try await self?.service.requestBatchTranslation(.init(data: mutatedArray))
-          } catch {
-            print(error.serialized().displayMessage)
-          }
+          await self?.service.requestBatchTranslation(.init(data: mutatedArray))
         }
       }
     }
