@@ -4,6 +4,9 @@ import SwiftUI
 public struct LiveTranslationView: View {
   let viewModel: ViewModel
   @State var isSelectedLanguageSheet: Bool = false
+  @State var isShowingLastChat: Bool = false
+
+  private let scrollContentBottomID: String = "atBottom"
 
   public init(
     roomNumber: String = ProcessInfo.processInfo.environment["LIVE_TRANSLATION_KEY"]
@@ -16,36 +19,61 @@ public struct LiveTranslationView: View {
   public var body: some View {
     NavigationStack {
       VStack {
-        ScrollView {
-          if self.viewModel.roomNumber.isEmpty {
-            ContentUnavailableView("Room is unavailable", systemImage: "text.page.slash.fill")
-            Spacer()
-          } else if viewModel.chatList.isEmpty {
-            ContentUnavailableView("Not started yet", systemImage: "text.page.slash.fill")
-            Spacer()
-          } else {
-            LazyVStack {
-              ForEach(viewModel.chatList) { item in
-                Text(item.trItem?.content ?? item.item.text)
-                  .frame(maxWidth: .infinity, alignment: .leading)
-                  .multilineTextAlignment(.leading)
-                  .padding()
+        ScrollViewReader { reader in
+          ScrollView {
+            if self.viewModel.roomNumber.isEmpty {
+              ContentUnavailableView("Room is unavailable", systemImage: "text.page.slash.fill")
+              Spacer()
+            } else if viewModel.chatList.isEmpty {
+              ContentUnavailableView("Not started yet", systemImage: "text.page.slash.fill")
+              Spacer()
+            } else {
+              LazyVStack {
+                ForEach(viewModel.chatList) { item in
+                  Text(item.trItem?.content ?? item.item.text)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .multilineTextAlignment(.leading)
+                    .padding()
+                    .onAppear {
+                      guard item == viewModel.chatList.last else { return }
+                      isShowingLastChat = true
+                    }
+                    .onDisappear {
+                      guard item == viewModel.chatList.last else { return }
+                      isShowingLastChat = false
+                    }
+                }
               }
             }
+
+            HStack {
+              Spacer()
+              Text("Powered by", bundle: .module)
+                .font(.caption)
+                .foregroundStyle(Color(.secondaryLabel))
+              Image(.flitto)
+                .resizable()
+                .offset(x: -10)
+                .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: 30)
+              Spacer()
+            }
+            .id(scrollContentBottomID)
+            .padding(.bottom, 16)
           }
-          HStack {
-            Spacer()
-            Text("Powered by", bundle: .module)
-              .font(.caption)
-              .foregroundStyle(Color(.secondaryLabel))
-            Image(.flitto)
-              .resizable()
-              .offset(x: -10)
-              .aspectRatio(contentMode: .fit)
-              .frame(maxHeight: 30)
-            Spacer()
+          .onChange(of: viewModel.chatList.last) { old, new in
+            guard old != .none else {
+              reader.scrollTo(scrollContentBottomID, anchor: .bottom)
+              return
+            }
+
+            guard isShowingLastChat else { return }
+
+            guard new != .none else { return }
+            withAnimation(.interactiveSpring) {
+              reader.scrollTo(scrollContentBottomID, anchor: .center)
+            }
           }
-          .padding(.bottom, 16)
         }
       }
       .task {
