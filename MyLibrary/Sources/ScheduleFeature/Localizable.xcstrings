@@ -363,6 +363,17 @@
         }
       }
     },
+    "Build your own Swift Regex: A Gentle Introduction to Swift Regex" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作って学ぶ正規表現 -やさしいSwift Regex入門-"
+          }
+        }
+      }
+    },
     "Building a Smaller App Binary" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -469,6 +480,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "良いアプリケーションをデザインするための感覚の持ち方"
+          }
+        }
+      }
+    },
+    "Curious about how SwiftUI really works under the hood? Join me as we explore the render loop and its impact on performance! We’ll break down the rendering process and uncover techniques to optimise your views and eliminate lag. You’ll walk away with a solid understanding of rendering mechanics that will elevate your interface development skills." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUI の内部動作に興味がありますか？このセッションでは、レンダーループの仕組みとパフォーマンスへの影響について一緒に探っていきます。レンダリングのプロセスを分解し、ビューを最適化してラグをなくすためのテクニックを明らかにしていきます。セッション終了後には、レンダリングの仕組みに対する確かな理解が得られ、インターフェイス開発のスキルが一段と向上していることでしょう。"
           }
         }
       }
@@ -596,7 +618,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WWDCで毎年、Appleは数多くの魅力的な新APIを発表しています！\nしかし、これらの新APIの多くは、実は大きなハードルが伴っており、最新のiOSでのみ利用可能なのです……\n\nその結果、有用なAPIが十分に普及する前に、対象となるiOSのバージョンが一般に広まる頃には、すでに完全に見過ごされてしまっています。\n\nでは、これを改善してみませんか？"
+            "value" : "毎年 WWDC では、Apple からたくさんのクールな新しい API が発表されます！\nでも、そうした新APIの多くには「ある壁」が立ちはだかります。それは、「最新の iOS バージョンでしか使えない」ということです…。\n\nそのせいで、本当に便利な API であっても広く使われることがなく、対応する iOS バージョンが主流になる頃には、すっかり見過ごされてしまっていることも少なくありません。\n\nそれって、ちょっともったいないと思いませんか？"
           }
         }
       }
@@ -607,7 +629,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "誰もがアニメーションがアプリに驚きと喜びを加える簡単な方法だと知っていますが、SwiftUIでは個々の文字に細かな効果を付与することが可能です。\n実際、iOS 18以前では不可能だった、文字を一つずつアニメーションさせることでUIに命を吹き込む表現が実現できます。\n\nこのトークでは、SwiftUIのTextRendererプロトコルを活用して、UIを楽しく魅力的に演出する多彩なエフェクトの作り方をご紹介します。"
+            "value" : "アニメーションは、アプリにちょっとした驚きや楽しさを加える簡単な方法だということは、誰もが知っていることです。\nでも SwiftUI を使えば、もっと細かく、文字単位でエフェクトを加えることができます。iOS 18 以降では、なんと文字を一つひとつアニメーションさせることができるのです - これまで実現できなかった、新しい表現が可能になります。\n\nこのトークでは、SwiftUI の TextRenderer プロトコルを使って、UI をより楽しく魅力的に演出するさまざまなエフェクトの作り方をご紹介します。"
           }
         }
       }
@@ -981,7 +1003,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "簡単に言えば、これはジェン文字をハックする物語です。\niOS 18から、通知にジェン文字が表示されるようになりました。\nこのトークでは、ジェン文字のリバースエンジニアリングを行い、カスタム絵文字を通知に表示する方法をご紹介します。\n私はMastodon向けのサードパーティアプリ開発者ですが、この内容は私にとってまさに理想的なテーマです。"
+            "value" : "簡単に言えば、これはGenmojiをハックする物語です。\niOS 18から、通知にGenmojiが表示されるようになりました。\nこのトークでは、Genmojiのリバースエンジニアリングを行い、カスタム絵文字を通知に表示する方法をご紹介します。\n私はMastodon向けのサードパーティアプリ開発者ですが、この内容は私にとってまさに理想的なテーマです。"
           }
         }
       }
@@ -1239,17 +1261,6 @@
         }
       }
     },
-    "Build your own Swift Regex: A Gentle Introduction to Swift Regex" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "作って学ぶ正規表現 -やさしいSwift Regex入門-"
-          }
-        }
-      }
-    },
     "Learning Swift's Type Inference" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1478,6 +1489,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "開会の挨拶"
+          }
+        }
+      }
+    },
+    "Optimising SwiftUI and understanding Render Loop" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUIの最適化とレンダーループの理解"
           }
         }
       }
@@ -2087,28 +2109,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Swiftコード生成の可能性を解き放て"
-          }
-        }
-      }
-    },
-    "Unlock the secrets of SwiftUI performance! Dive into the render loop and discover techniques like offscreen rendering to manipulate it. Gain practical insights into how SwiftUI views are rendered and learn powerful ways to optimize them. Transform your apps with smoother and more efficient UI." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SwiftUIのパフォーマンス向上の秘密を解き明かしましょう！\nレンダーループに深く切り込み、オフスクリーンレンダリングなどのテクニックを駆使して、ビューのレンダリングプロセスを自在に操作する方法を探ります。\nSwiftUIビューがどのように描画されるのか、実践的な洞察を得るとともに、最適化のための強力な手法を学び、より滑らかで効率的なUIへとアプリを変革するヒントを提供します。"
-          }
-        }
-      }
-    },
-    "Unlocking SwiftUI Performance: Mastering the Render Loop and Offscreen Rendering" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SwiftUIパフォーマンスを解き放つ: レンダーループとオフスクリーンレンダリングの極意"
           }
         }
       }

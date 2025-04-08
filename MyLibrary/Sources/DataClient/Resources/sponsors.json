@@ -297,6 +297,11 @@
       "link": "https://github.com/banjun"
     },
     {
+      "id": 8,
+      "imageName": "individual_lihsuan_chen",
+      "link": "https://x.com/vince78718"
+    },
+    {
       "id": 9,
       "imageName": "individual_hcrane",
       "link": "https://x.com/hcrane14"
@@ -310,6 +315,11 @@
       "id": 12,
       "imageName": "individual_giginet",
       "link": "https://x.com/giginet"
+    },
+    {
+      "id": 14,
+      "imageName": "individual_steven_hiroyuki_aoki",
+      "link": "https://my.prairie.cards/u/steve.aoki"
     },
     {
       "id": 15,
@@ -355,6 +365,11 @@
       "id": 25,
       "imageName": "individual_justin",
       "link": "https://littlebobert.github.io/"
+    },
+    {
+      "id": 26,
+      "imageName": "individual_jollyjoester",
+      "link": "https://x.com/jollyjoester"
     }
   ]
 }

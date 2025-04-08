@@ -16,13 +16,15 @@ struct TimetableComponent: DocumentElement {
     ForEach(conference.schedules) { schedule in
       Card {
         ForEach(schedule.sessions) { session in
-          ZStack(alignment: .topLeading) {
+          ZStack(alignment: .leading) {
             if let speakers = session.speakers {
-              ForEach(speakers) { speaker in
-                Image(speaker.imageFilename, description: speaker.name)
-                  .resizable()
-                  .frame(maxWidth: imageSize, maxHeight: imageSize)
-                  .cornerRadius(imageSize / 2)
+              VStack(alignment: .leading, spacing: 8) {
+                ForEach(speakers) { speaker in
+                  Image(speaker.imageFilename, description: speaker.name)
+                    .resizable()
+                    .frame(maxWidth: imageSize, maxHeight: imageSize)
+                    .cornerRadius(imageSize / 2)
+                }
               }
             } else {
               Image.defaultImage
@@ -74,7 +76,7 @@ struct SessionDetailModal: HTML {
       id: session.modalId,
       body: {
         if let description = session.description, !description.isEmpty {
-          Text(String(description, bundle: .scheduleFeature, language: language))
+          Text(String(description, bundle: .scheduleFeature, language: language).convertNewlines())
             .font(.lead)
             .foregroundStyle(.dimGray)
             .margin(.horizontal, .px(16))
