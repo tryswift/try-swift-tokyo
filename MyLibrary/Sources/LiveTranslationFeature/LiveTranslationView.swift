@@ -56,6 +56,7 @@ public struct LiveTranslationView: View {
                 .offset(x: -10)
                 .aspectRatio(contentMode: .fit)
                 .frame(maxHeight: 30)
+                .accessibilityIgnoresInvertColors()
               Spacer()
             }
             .id(scrollContentBottomID)

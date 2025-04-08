@@ -100,6 +100,7 @@ public struct SponsorsListView: View {
                   send(.sponsorTapped(sponsor))
                 }
                 .accessibilityAddTraits(.isLink)
+                .accessibilityIgnoresInvertColors()
             }
           }
           .background(Color.white)

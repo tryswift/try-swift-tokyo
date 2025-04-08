@@ -102,6 +102,7 @@ public struct ScheduleDetailView: View {
               .aspectRatio(1.0, contentMode: .fit)
               .frame(width: 60)
               .clipShape(Circle())
+              .accessibilityIgnoresInvertColors()
             VStack {
               Text(LocalizedStringKey(speaker.name), bundle: .module)
                 .font(.title3.bold())
