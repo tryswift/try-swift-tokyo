@@ -352,9 +352,9 @@
       "sessions": [
         {
           "id": 29,
-          "title": "Unlocking SwiftUI Performance: Mastering the Render Loop and Offscreen Rendering",
+          "title": "Optimising SwiftUI and understanding Render Loop",
           "place": "Hall",
-          "description": "Unlock the secrets of SwiftUI performance! Dive into the render loop and discover techniques like offscreen rendering to manipulate it. Gain practical insights into how SwiftUI views are rendered and learn powerful ways to optimize them. Transform your apps with smoother and more efficient UI.",
+          "description": "Curious about how SwiftUI really works under the hood? Join me as we explore the render loop and its impact on performance! We’ll break down the rendering process and uncover techniques to optimise your views and eliminate lag. You’ll walk away with a solid understanding of rendering mechanics that will elevate your interface development skills.",
           "speakers": [
             {
               "id": 97,
