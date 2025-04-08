@@ -222,6 +222,8 @@ public struct ScheduleView: View {
                   .clipShape(Circle())
               )
               .frame(width: 60)
+              .accessibilityElement(children: .ignore)
+              .accessibilityIgnoresInvertColors()
           }
         } else {
           Image(.tokyo)
@@ -229,6 +231,8 @@ public struct ScheduleView: View {
             .aspectRatio(contentMode: .fit)
             .clipShape(Circle())
             .frame(width: 60)
+            .accessibilityElement(children: .ignore)
+            .accessibilityIgnoresInvertColors()
         }
       }
       VStack(alignment: .leading) {
@@ -259,6 +263,7 @@ public struct ScheduleView: View {
         }
       }
       .frame(maxWidth: .infinity, alignment: .leading)
+      .accessibilityElement(children: .combine)
     }
   }
 
