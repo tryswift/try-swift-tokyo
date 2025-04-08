@@ -174,10 +174,12 @@ public struct ScheduleView: View {
     VStack(alignment: .leading, spacing: 8) {
       Text(conference.date, style: .date)
         .font(.title2)
+        .accessibilityAddTraits(.isHeader)
       ForEach(conference.schedules, id: \.self) { schedule in
         VStack(alignment: .leading, spacing: 4) {
           Text(schedule.time, style: .time)
             .font(.subheadline.bold())
+            .accessibilityAddTraits(.isHeader)
           ForEach(schedule.sessions, id: \.self) { session in
             if session.description != nil {
               Button {

@@ -64,6 +64,7 @@ public struct ScheduleDetailView: View {
       VStack(alignment: .leading, spacing: 16) {
         Text(LocalizedStringKey(store.title), bundle: .module)
           .font(.title.bold())
+          .accessibilityAddTraits(.isHeader)
         Text(LocalizedStringKey(store.description), bundle: .module)
           .font(.callout)
         if let requirements = store.requirements {
@@ -111,6 +112,7 @@ public struct ScheduleDetailView: View {
                     Button(link.name) {
                       send(.snsTapped(link.url))
                     }
+                    .accessibilityAddTraits(.isLink)
                   }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
