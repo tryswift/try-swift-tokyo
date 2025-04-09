@@ -336,7 +336,7 @@ extension Collection {
 }
 
 extension Array {
-  func chunked(into size: Int) -> [[Element]] {
+  fileprivate func chunked(into size: Int) -> [[Element]] {
     guard size > .zero else { return [self] }
     return stride(from: 0, to: count, by: size).map { startIndex in
       let endIndex = index(startIndex, offsetBy: size, limitedBy: count) ?? endIndex
