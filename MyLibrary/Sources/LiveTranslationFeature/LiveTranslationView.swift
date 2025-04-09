@@ -5,17 +5,17 @@ public struct LiveTranslationView: View {
   let viewModel: ViewModel
   @State var isSelectedLanguageSheet: Bool = false
   @State var isShowingLastChat: Bool = false
-
+  
   private let scrollContentBottomID: String = "atBottom"
-
+  
   public init(
     roomNumber: String = ProcessInfo.processInfo.environment["LIVE_TRANSLATION_KEY"]
-      ?? (Bundle.main.infoDictionary?["Live translation room number"] as? String) ?? ""
+    ?? (Bundle.main.infoDictionary?["Live translation room number"] as? String) ?? ""
   ) {
     print(roomNumber)
     self.viewModel = ViewModel(roomNumber: roomNumber)
   }
-
+  
   public var body: some View {
     NavigationStack {
       VStack {
@@ -45,7 +45,7 @@ public struct LiveTranslationView: View {
                 }
               }
             }
-
+            
             HStack {
               Spacer()
               Text("Powered by", bundle: .module)
@@ -66,9 +66,9 @@ public struct LiveTranslationView: View {
               reader.scrollTo(scrollContentBottomID, anchor: .bottom)
               return
             }
-
+            
             guard isShowingLastChat else { return }
-
+            
             guard new != .none else { return }
             withAnimation(.interactiveSpring) {
               reader.scrollTo(scrollContentBottomID, anchor: .center)
@@ -82,12 +82,21 @@ public struct LiveTranslationView: View {
       }
       .navigationTitle(Text("Live translation", bundle: .module))
       .toolbar {
-        ToolbarItem(placement: .navigationBarTrailing) {
+        if !viewModel.isConnected {
+          ToolbarItem(placement: .topBarLeading) {
+            Button {
+              viewModel.send(.connectChatStream)
+            } label: {
+              Image(systemName: "arrow.trianglehead.2.clockwise")
+            }
+          }
+        }
+        ToolbarItem(placement: .topBarTrailing) {
           Button {
             isSelectedLanguageSheet.toggle()
           } label: {
             let selectedLanguage =
-              viewModel.langSet?.langCodingKey(viewModel.selectedLangCode) ?? ""
+            viewModel.langSet?.langCodingKey(viewModel.selectedLangCode) ?? ""
             Text(selectedLanguage)
             Image(systemName: "globe")
           }

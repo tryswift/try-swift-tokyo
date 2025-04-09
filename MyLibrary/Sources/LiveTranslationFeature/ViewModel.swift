@@ -23,6 +23,10 @@ public final class ViewModel {
   var updateChatWaitingQueue: [RealTimeEntity.Chat.Response] = []
   var updateTrWaitingQueue: [RealTimeEntity.Translation.Response] = []
   var latestListType: RealTimeEntity.ListType? = .none
+  
+  /// # isConnected
+  ///  connecting state with LiveTranslationService
+  var isConnected: Bool = false
 }
 
 extension ViewModel {
@@ -84,8 +88,12 @@ extension ViewModel {
       let stream = service.chatConnection(.init(interactionKey: roomNumber))
       for try await action in stream {
         switch action {
-        case .connect: break
-        case .disconnect: break
+        case .connect:
+          self.isConnected = true
+          break
+        case .disconnect:
+          self.isConnected = false
+          break
         case .peerClosed:
           send(.connectChatStream)
         case .responseChat(let chatItem):
