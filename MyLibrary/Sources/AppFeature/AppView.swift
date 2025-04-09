@@ -60,7 +60,7 @@ public struct AppView: View {
         .tabItem {
           Label(String(localized: "Schedule", bundle: .module), systemImage: "calendar")
         }
-      LiveTranslationView()
+      OldLiveTranslationView()
         .tabItem {
           Label(String(localized: "Translation", bundle: .module), systemImage: "text.bubble")
         }
