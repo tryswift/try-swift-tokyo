@@ -360,7 +360,16 @@ public struct LiveTranslationView: View {
       }
       .navigationTitle(Text("Live translation", bundle: .module))
       .toolbar {
-        ToolbarItem(placement: .navigationBarTrailing) {
+        if !store.isConnected {
+          ToolbarItem(placement: .topBarLeading) {
+            Button {
+              send(.connectStream)
+            } label: {
+              Image(systemName: "arrow.trianglehead.2.clockwise")
+            }
+          }
+        }
+        ToolbarItem(placement: .topBarTrailing) {
           Button {
             send(.setSelectedLanguageSheet(!store.isSelectedLanguageSheet))
           } label: {
