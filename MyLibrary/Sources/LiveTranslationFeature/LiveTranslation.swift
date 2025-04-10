@@ -7,19 +7,35 @@ import LiveTranslationSDK_iOS
 public struct LiveTranslation {
   @ObservableState
   public struct State: Equatable {
+    /// Live Translation Room Number
     var roomNumber: String
+    /// Current visible translation items
     var chatList: [TranslationEntity.CompositeChatItem] = []
+    /// Current language set
     var langSet: LanguageEntity.Response.LangSet? = .none
+    /// Available language list
     var langList: [LanguageEntity.Response.LanguageItem] = []
+    /// Live Translation Room Info
     var roomInfo: ChatRoomEntity.Make.Response? = .none
+    /// Current language code which user selected
     var selectedLangCode: String =
     Locale.autoupdatingCurrent.language.languageCode?.identifier ?? "en"
     
+    /// While updating chat
     var isUpdatingChat: Bool = false
+    /// While updating translation response
     var isUpdatingTR: Bool = false
+    /// Chat updating request queue
     var updateChatWaitingQueue: [RealTimeEntity.Chat.Response] = []
+    /// Translation response request queue
     var updateTrWaitingQueue: [RealTimeEntity.Translation.Response] = []
+    /// Latest item's list type
     var latestListType: RealTimeEntity.ListType? = .none
+    
+    /// Streaming is connected
+    var isConnected: Bool = false
+    /// The task of connecting stream
+    var chatStreamTask: Task<Void, Never>? = nil
     
     public init(roomNumber: String) {
       self.roomNumber = roomNumber
@@ -29,12 +45,9 @@ public struct LiveTranslation {
   public enum Action: BindableAction, ViewAction {
     case binding(BindingAction<State>)
     case connectChatStream
+    case disconnectChatStream
     case changeLangCode(String)
     case view(View)
-    
-    case setLangSet(LanguageEntity.Response.LangSet)
-    case setLangList([LanguageEntity.Response.LanguageItem])
-    case setRoomInfo(ChatRoomEntity.Make.Response)
     
     case handleResponseChat(RealTimeEntity.Chat.Response)
     case handleResponseTranslation(RealTimeEntity.Translation.Response)
@@ -62,21 +75,28 @@ public struct LiveTranslation {
               do {
                 let langList = try await liveTranslationServiceClient.langList()
                 await send(
-                  .setLangList(langList)
+                  .set(\.langList, langList)
                 )
               } catch {
                 print(error)
               }
             }
             group.addTask {
-              do {
-                let roomInfo = try await liveTranslationServiceClient.chatRoomInfo(state.roomNumber)
-                await send(
-                  .setRoomInfo(roomInfo)
+              await send(
+                .set(
+                  \.chatStreamTask,
+                   Task {
+                     do {
+                       let roomInfo = try await liveTranslationServiceClient.chatRoomInfo(state.roomNumber)
+                       await send(
+                        .set(\.roomInfo, roomInfo)
+                       )
+                     } catch {
+                       print(error)
+                     }
+                   }
                 )
-              } catch {
-                print(error)
-              }
+              )
             }
           }
         }
@@ -86,8 +106,12 @@ public struct LiveTranslation {
             let stream = liveTranslationServiceClient.chatConnection(state.roomNumber)
             for try await action in stream {
               switch action {
-              case .connect: break
-              case .disconnect: break
+              case .connect:
+                await send(.set(\.isConnected, true))
+                break
+              case .disconnect:
+                await send(.set(\.isConnected, false))
+                break
               case .peerClosed:
                 await send(.connectChatStream)
               case .responseChat(let chatItem):
@@ -101,25 +125,23 @@ public struct LiveTranslation {
             print(error)
           }
         }
+      case .disconnectChatStream:
+        state.chatStreamTask?.cancel()
+        return .none
       case .changeLangCode(let newLangCode):
         state.selectedLangCode = newLangCode
         return .run { [state] send in
           await loadLangSet(langCode: newLangCode, send: send)
           await loadTranslation(chatList: state.chatList, newLangCode)
         }
-      case .setLangSet(let langSet):
-        state.langSet = langSet
-        return .none
-      case .setLangList(let langList):
-        state.langList = langList
-        return .none
-      case .setRoomInfo(let roomInfo):
-        state.roomInfo = roomInfo
-        return .none
       case .handleResponseChat(let chatItem):
-        return .none
+        return .run { [state] send in
+          await handleResponseChat(chatItem, state: state, send: send)
+        }
       case .handleResponseTranslation(let trItem):
-        return .none
+        return .run { [state] send in
+          await handleResponseTranslation(trItem, state: state, send: send)
+        }
       case .binding:
         return .none
       }
@@ -132,7 +154,7 @@ extension LiveTranslation {
     do {
       let langSet = try await liveTranslationServiceClient.langSet(langCode)
       await send(
-        .setLangSet(langSet)
+        .set(\.langSet, langSet)
       )
     } catch {
       print(error)
@@ -160,6 +182,74 @@ extension LiveTranslation {
       }
     }
   }
+  
+  /// Handle chat item response
+  private func handleResponseChat(_ chatItem: RealTimeEntity.Chat.Response, state: State, send: Send<Action>) async {
+    guard !state.isUpdatingChat else {
+      await send(
+        .set(\.updateChatWaitingQueue, state.updateChatWaitingQueue + [chatItem])
+      )
+      return
+    }
+    // NOTE: Updating chat list
+    await send(.set(\.isUpdatingChat, true))
+    await send(.set(\.latestListType, chatItem.contentData.listType))
+    let newChatList = await state.chatList.merge(item: chatItem, dstLangCode: state.selectedLangCode)
+    await send(.set(\.chatList, newChatList))
+    await send(.set(\.isUpdatingChat, false))
+    
+    switch chatItem.contentData.listType {
+    case .update:
+      let updateTargetList = chatItem.contentData.chatList.reduce(
+        [TranslationEntity.CompositeChatItem]()
+      ) { current, next in
+        guard let firstIndex = newChatList.firstIndex(where: { $0.id == next.id }) else {
+          return current
+        }
+        return current + [newChatList[firstIndex]]
+      }
+      await loadTranslation(chatList: updateTargetList, state.selectedLangCode)
+      
+    case .append:
+      guard let lastItem = newChatList.last else { return }
+      await loadTranslation(chatList: [lastItem], state.selectedLangCode)
+      
+    case .realtime: break
+      
+    default:
+      await loadTranslation(chatList: state.chatList, state.selectedLangCode)
+    }
+    
+    await checkUpdateChatWaitingQueue(state: state, send: send)
+  }
+  
+  /// Check chat item wating queue
+  private func checkUpdateChatWaitingQueue(state: State, send: Send<Action>) async {
+    guard let task = state.updateChatWaitingQueue.first else { return }
+    await send(.set(\.updateChatWaitingQueue, state.updateChatWaitingQueue.dropFirst().map { $0 }))
+    await handleResponseChat(task, state: state, send: send)
+  }
+  
+  private func handleResponseTranslation(_ trItem: RealTimeEntity.Translation.Response, state: State, send: Send<Action>) async {
+    guard !state.isUpdatingTR else {
+      await send(.set(\.updateTrWaitingQueue, state.updateTrWaitingQueue + [trItem]))
+      return
+    }
+    
+    await send(.set(\.isUpdatingTR, true))
+    await send(.set(\.latestListType, trItem.contentData.listType))
+    let newChatList = await state.chatList.updateTranslation(item: trItem)
+    await send(.set(\.chatList, newChatList))
+    await send(.set(\.isUpdatingTR, false))
+    
+    await checkUpdateTRWaitingQueue(state: state, send: send)
+  }
+  
+  private func checkUpdateTRWaitingQueue(state: State, send: Send<Action>) async {
+    guard let task = state.updateTrWaitingQueue.first else { return }
+    await send(.set(\.updateTrWaitingQueue, state.updateTrWaitingQueue.dropFirst().map { $0 }))
+    await handleResponseTranslation(task, state: state, send: send)
+  }
 }
 
 @ViewAction(for: LiveTranslation.self)
@@ -186,7 +276,7 @@ public struct LiveTranslationView: View {
 
 extension [TranslationEntity.CompositeChatItem] {
   fileprivate func merge(item: RealTimeEntity.Chat.Response, dstLangCode: String) async
-    -> [TranslationEntity.CompositeChatItem]
+  -> [TranslationEntity.CompositeChatItem]
   {
     await withCheckedContinuation { continuation in
       switch item.contentData.listType {
@@ -196,26 +286,26 @@ extension [TranslationEntity.CompositeChatItem] {
           if let lastIdx = mutableSelf.lastIndex(where: { $0.id == newItem.id }) {
             mutableSelf.remove(at: lastIdx)
           }
-
+          
           guard !(newItem.textForTR.isEmpty || newItem.text.isEmpty) else { continue }
           mutableSelf.append(
             .init(item: newItem, trItem: .none, ttsData: .none, dstLangCode: dstLangCode))
         }
-
+        
         return continuation.resume(returning: mutableSelf.suffix(100))
-
+        
       case .realtime:
         var mutableSelf = self
         for newItem in item.contentData.chatList {
           if let lastIdx = mutableSelf.lastIndex(where: { $0.id == newItem.id }) {
             mutableSelf.remove(at: lastIdx)
           }
-
+          
           mutableSelf.append(
             .init(item: newItem, trItem: .none, ttsData: .none, dstLangCode: dstLangCode))
         }
         return continuation.resume(returning: mutableSelf)
-
+        
       case .renew:
         let newArr: [TranslationEntity.CompositeChatItem] = item.contentData.chatList.reduce([]) {
           current, next in
@@ -225,18 +315,18 @@ extension [TranslationEntity.CompositeChatItem] {
           let first = self.first(where: { $0.item.id == next.id })
           let new: TranslationEntity.CompositeChatItem = .init(
             item: next, trItem: first?.trItem, ttsData: first?.ttsData, dstLangCode: dstLangCode)
-
+          
           return current + [new]
         }
-
+        
         return continuation.resume(returning: newArr.suffix(100))
-
+        
       case .update:
         let newArr = item.contentData.chatList.reduce(self) { current, next in
           // If the update target is included in the current chat list (when modifying a chat with non-empty value)
           if let idx = current.firstIndex(where: { $0.item.chatID == next.chatID }) {
             var variableCurrent = current
-
+            
             // If modified to empty value, delete the chat from the chat list
             if next.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
               variableCurrent.remove(at: idx)
@@ -265,17 +355,17 @@ extension [TranslationEntity.CompositeChatItem] {
             return current
           }
         }
-
+        
         return continuation.resume(returning: newArr.suffix(100))
-
+        
       default:
         return continuation.resume(returning: self)
       }
     }
   }
-
+  
   fileprivate func updateTranslation(item: RealTimeEntity.Translation.Response) async
-    -> [TranslationEntity.CompositeChatItem]
+  -> [TranslationEntity.CompositeChatItem]
   {
     await withCheckedContinuation { continuation in
       guard
@@ -286,20 +376,20 @@ extension [TranslationEntity.CompositeChatItem] {
       else {
         return continuation.resume(returning: self)
       }
-
+      
       let range = firstIndex..<(firstIndex + item.contentData.chatList.count)
       var mutatedArray: [TranslationEntity.CompositeChatItem] = []
-
+      
       for index in range {
         guard let trItem = item.contentData.chatList[safe: mutatedArray.count] else { break }
         guard let newItem = self[safe: index]?.setTranslation(trItem: trItem) else { break }
-
+        
         mutatedArray.append(newItem)
       }
-
+      
       var mutateSelf = self
       mutateSelf.replaceSubrange(range, with: mutatedArray)
-
+      
       return continuation.resume(returning: mutateSelf)
     }
   }
