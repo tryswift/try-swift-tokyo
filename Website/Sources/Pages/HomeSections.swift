@@ -90,12 +90,12 @@ extension HomeSectionType {
       let day3 = try! dataClient.fetchDay3()
 
       Accordion {
-        Item(day1.date.formattedDateString(language: language), startsOpen: true) {
+        Item(day1.date.formattedDateString(language: language), startsOpen: false) {
           Section {
             TimetableComponent(conference: day1, language: language)
           }
         }
-        Item(day2.date.formattedDateString(language: language), startsOpen: false) {
+        Item(day2.date.formattedDateString(language: language), startsOpen: true) {
           Section {
             TimetableComponent(conference: day2, language: language)
           }
