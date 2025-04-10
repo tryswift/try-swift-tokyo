@@ -276,6 +276,7 @@ public struct GuidanceView: View {
     VStack(alignment: .leading) {
       Text("Directions", bundle: .module)
         .font(.headline)
+        .accessibilityAddTraits(.isHeader)
       ForEach(store.lines.directions) { direction in
         VStack {
           HStack {

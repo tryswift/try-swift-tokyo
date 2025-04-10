@@ -56,10 +56,13 @@ public struct LiveTranslationView: View {
                 .offset(x: -10)
                 .aspectRatio(contentMode: .fit)
                 .frame(maxHeight: 30)
+                .accessibilityIgnoresInvertColors()
               Spacer()
             }
             .id(scrollContentBottomID)
             .padding(.bottom, 16)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text(verbatim: "Powered by Flitto"))
           }
           .onChange(of: viewModel.chatList.last) { old, new in
             guard old != .none else {

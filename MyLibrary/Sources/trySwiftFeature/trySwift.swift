@@ -119,6 +119,7 @@ public struct TrySwiftView: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(maxWidth: 400, alignment: .center)
+            .accessibilityIgnoresInvertColors()
           Spacer()
         }
         Text("try! Swift Description", bundle: .module)

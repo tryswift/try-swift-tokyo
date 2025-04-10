@@ -58,6 +58,7 @@ public struct ProfileView: View {
             .resizable()
             .aspectRatio(1.0, contentMode: .fill)
             .frame(maxWidth: 400)
+            .accessibilityIgnoresInvertColors()
           VStack {
             if let links = store.organizer.links {
               HStack {
