@@ -95,12 +95,12 @@ extension HomeSectionType {
             TimetableComponent(conference: day1, language: language)
           }
         }
-        Item(day2.date.formattedDateString(language: language), startsOpen: true) {
+        Item(day2.date.formattedDateString(language: language), startsOpen: false) {
           Section {
             TimetableComponent(conference: day2, language: language)
           }
         }
-        Item(day3.date.formattedDateString(language: language), startsOpen: false) {
+        Item(day3.date.formattedDateString(language: language), startsOpen: true) {
           Section {
             TimetableComponent(conference: day3, language: language)
           }
