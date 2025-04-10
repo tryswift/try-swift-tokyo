@@ -91,23 +91,17 @@ public struct LiveTranslation {
               }
             }
             group.addTask {
-              await send(
-                .set(
-                  \.chatStreamTask,
-                   Task {
-                     do {
-                       let roomInfo = try await liveTranslationServiceClient.chatRoomInfo(state.roomNumber)
-                       await send(
-                        .set(\.roomInfo, roomInfo)
-                       )
-                     } catch {
-                       print(error)
-                     }
-                   }
+              do {
+                let roomInfo = try await liveTranslationServiceClient.chatRoomInfo(state.roomNumber)
+                await send(
+                  .set(\.roomInfo, roomInfo)
                 )
-              )
+              } catch {
+                print(error)
+              }
             }
           }
+          await send(.connectChatStream)
         }
       case .view(.connectStream):
         return .run { send in
@@ -125,28 +119,36 @@ public struct LiveTranslation {
         return .none
       case .connectChatStream:
         return .run { [state] send in
-          do {
-            let stream = liveTranslationServiceClient.chatConnection(state.roomNumber)
-            for try await action in stream {
-              switch action {
-              case .connect:
-                await send(.set(\.isConnected, true))
-                break
-              case .disconnect:
-                await send(.set(\.isConnected, false))
-                break
-              case .peerClosed:
-                await send(.connectChatStream)
-              case .responseChat(let chatItem):
-                await send(.handleResponseChat(chatItem))
-              case .responseBatchTranslation(let trItem):
-                await send(.handleResponseTranslation(trItem))
-              default: break
+          let task = Task {
+            do {
+              let stream = liveTranslationServiceClient.chatConnection(state.roomNumber)
+              for try await action in stream {
+                switch action {
+                case .connect:
+                  await send(.set(\.isConnected, true))
+                  break
+                case .disconnect:
+                  await send(.set(\.isConnected, false))
+                  break
+                case .peerClosed:
+                  await send(.connectChatStream)
+                case .responseChat(let chatItem):
+                  await send(.handleResponseChat(chatItem))
+                case .responseBatchTranslation(let trItem):
+                  await send(.handleResponseTranslation(trItem))
+                default: break
+                }
               }
+            } catch {
+              print(error)
             }
-          } catch {
-            print(error)
           }
+          await send(
+            .set(
+              \.chatStreamTask,
+               task
+            )
+          )
         }
       case .disconnectChatStream:
         state.chatStreamTask?.cancel()
@@ -323,7 +325,6 @@ public struct LiveTranslationView: View {
       }
       .task {
         send(.onAppear)
-        send(.connectStream)
       }
       .navigationTitle(Text("Live translation", bundle: .module))
       .toolbar {
@@ -332,7 +333,7 @@ public struct LiveTranslationView: View {
             send(.setSelectedLanguageSheet(!store.isSelectedLanguageSheet))
           } label: {
             let selectedLanguage =
-              store.langSet?.langCodingKey(store.selectedLangCode) ?? ""
+            store.langSet?.langCodingKey(store.selectedLangCode) ?? ""
             Text(selectedLanguage)
             Image(systemName: "globe")
           }
