@@ -55,11 +55,14 @@ public struct LiveTranslation {
     case view(View)
     
     case handleResponseChat(RealTimeEntity.Chat.Response)
+    case checkUpdateChatWaitingQueue
     case handleResponseTranslation(RealTimeEntity.Translation.Response)
+    case checkUpdateTRWaitingQueue
     
     public enum View {
       case onAppear
       case connectStream
+      case disconnectStream
       case selectLangCode(String)
       case setSelectedLanguageSheet(Bool)
       case setShowingLastChat(Bool)
@@ -81,31 +84,20 @@ public struct LiveTranslation {
               await loadLangSet(send: send)
             }
             group.addTask {
-              do {
-                let langList = try await liveTranslationServiceClient.langList()
-                await send(
-                  .set(\.langList, langList)
-                )
-              } catch {
-                print(error)
-              }
+              await loadChatRoomInfo(state: state, send: send)
             }
             group.addTask {
-              do {
-                let roomInfo = try await liveTranslationServiceClient.chatRoomInfo(state.roomNumber)
-                await send(
-                  .set(\.roomInfo, roomInfo)
-                )
-              } catch {
-                print(error)
-              }
+              await loadLangList(send: send)
             }
           }
-          await send(.connectChatStream)
         }
       case .view(.connectStream):
         return .run { send in
           await send(.connectChatStream)
+        }
+      case .view(.disconnectStream):
+        return .run { send in
+          await send(.disconnectChatStream)
         }
       case .view(.selectLangCode(let langCode)):
         return .run { send in
@@ -119,40 +111,10 @@ public struct LiveTranslation {
         return .none
       case .connectChatStream:
         return .run { [state] send in
-          let task = Task {
-            do {
-              let stream = liveTranslationServiceClient.chatConnection(state.roomNumber)
-              for try await action in stream {
-                switch action {
-                case .connect:
-                  await send(.set(\.isConnected, true))
-                  break
-                case .disconnect:
-                  await send(.set(\.isConnected, false))
-                  break
-                case .peerClosed:
-                  await send(.connectChatStream)
-                case .responseChat(let chatItem):
-                  await send(.handleResponseChat(chatItem))
-                case .responseBatchTranslation(let trItem):
-                  await send(.handleResponseTranslation(trItem))
-                default: break
-                }
-              }
-            } catch {
-              print(error)
-            }
-          }
-          await send(
-            .set(
-              \.chatStreamTask,
-               task
-            )
-          )
-        }
+          await connectChatRoom(state: state, send: send)
+        }.cancellable(id: "connectChatRoom")
       case .disconnectChatStream:
-        state.chatStreamTask?.cancel()
-        return .none
+        return .cancel(id: "connectChatRoom")
       case .changeLangCode(let newLangCode):
         state.selectedLangCode = newLangCode
         return .run { [state] send in
@@ -163,9 +125,17 @@ public struct LiveTranslation {
         return .run { [state] send in
           await handleResponseChat(chatItem, state: state, send: send)
         }
+      case .checkUpdateChatWaitingQueue:
+        return .run { [state] send in
+          await checkUpdateChatWaitingQueue(state: state, send: send)
+        }
       case .handleResponseTranslation(let trItem):
         return .run { [state] send in
           await handleResponseTranslation(trItem, state: state, send: send)
+        }
+      case .checkUpdateTRWaitingQueue:
+        return .run { [state] send in
+          await checkUpdateTRWaitingQueue(state: state, send: send)
         }
       case .binding:
         return .none
@@ -175,6 +145,33 @@ public struct LiveTranslation {
 }
 
 extension LiveTranslation {
+  private func connectChatRoom(state: State, send: Send<Action>) async {
+    if state.isConnected { return }
+    
+    do {
+      let stream = liveTranslationServiceClient.chatConnection(state.roomNumber)
+      for try await action in stream {
+        switch action {
+        case .connect:
+          await send(.set(\.isConnected, true))
+          break
+        case .disconnect:
+          await send(.set(\.isConnected, false))
+          break
+        case .peerClosed:
+          await send(.connectChatStream)
+        case .responseChat(let chatItem):
+          await send(.handleResponseChat(chatItem))
+        case .responseBatchTranslation(let trItem):
+          await send(.handleResponseTranslation(trItem))
+        default: break
+        }
+      }
+    } catch {
+      print("\(#function): \(error.serialized().displayMessage)")
+    }
+  }
+  
   private func loadLangSet(langCode: String? = nil, send: Send<Action>) async {
     do {
       let langSet = try await liveTranslationServiceClient.langSet(langCode)
@@ -182,13 +179,36 @@ extension LiveTranslation {
         .set(\.langSet, langSet)
       )
     } catch {
-      print(error)
+      print("\(#function): \(error.serialized().displayMessage)")
+    }
+  }
+  
+  private func loadLangList(send: Send<Action>) async {
+    do {
+      let langList = try await liveTranslationServiceClient.langList()
+      await send(
+        .set(\.langList, langList)
+      )
+    } catch {
+      print("\(#function): \(error.serialized().displayMessage)")
+    }
+  }
+  
+  private func loadChatRoomInfo(state: State, send: Send<Action>) async {
+    do {
+      let roomInfo = try await liveTranslationServiceClient.chatRoomInfo(state.roomNumber)
+      await send(
+        .set(\.roomInfo, roomInfo)
+      )
+    } catch {
+      print("\(#function): \(error.serialized().displayMessage)")
     }
   }
   
   private func loadTranslation(
     chatList: [TranslationEntity.CompositeChatItem], _ dstLangCode: String
   ) async {
+    
     await withTaskGroup(of: Void.self) { group in
       let chunkedArray = chatList.chunked(into: 20)
       for array in chunkedArray {
@@ -200,7 +220,8 @@ extension LiveTranslation {
               srcLangCode: $0.item.srcLangCode,
               dstLangCode: dstLangCode,
               timestamp: $0.item.timestamp,
-              text: $0.item.textForTR)
+              text: $0.item.textForTR
+            )
           }
           await liveTranslationServiceClient.requestBatchTranslation(mutatedArray)
         }
@@ -242,17 +263,16 @@ extension LiveTranslation {
     case .realtime: break
       
     default:
-      await loadTranslation(chatList: state.chatList, state.selectedLangCode)
+      await loadTranslation(chatList: newChatList, state.selectedLangCode)
     }
-    
-    await checkUpdateChatWaitingQueue(state: state, send: send)
+    await send(.checkUpdateChatWaitingQueue)
   }
   
   /// Check chat item wating queue
   private func checkUpdateChatWaitingQueue(state: State, send: Send<Action>) async {
     guard let task = state.updateChatWaitingQueue.first else { return }
     await send(.set(\.updateChatWaitingQueue, state.updateChatWaitingQueue.dropFirst().map { $0 }))
-    await handleResponseChat(task, state: state, send: send)
+    await send(.handleResponseChat(task))
   }
   
   /// Handle translation item response
@@ -268,14 +288,14 @@ extension LiveTranslation {
     await send(.set(\.chatList, newChatList))
     await send(.set(\.isUpdatingTR, false))
     
-    await checkUpdateTRWaitingQueue(state: state, send: send)
+    await send(.checkUpdateTRWaitingQueue)
   }
   
   /// Check translation item waiting queue
   private func checkUpdateTRWaitingQueue(state: State, send: Send<Action>) async {
     guard let task = state.updateTrWaitingQueue.first else { return }
     await send(.set(\.updateTrWaitingQueue, state.updateTrWaitingQueue.dropFirst().map { $0 }))
-    await handleResponseTranslation(task, state: state, send: send)
+    await send(.handleResponseTranslation(task))
   }
 }
 
@@ -283,6 +303,7 @@ extension LiveTranslation {
 public struct LiveTranslationView: View {
   
   @Bindable public var store: StoreOf<LiveTranslation>
+  @Environment(\.scenePhase) var scenePhase
   
   private let scrollContentBottomID: String = "atBottom"
   
@@ -321,10 +342,21 @@ public struct LiveTranslationView: View {
               proxy.scrollTo(scrollContentBottomID, anchor: .center)
             }
           }
+          .onChange(of: scenePhase) {
+            switch scenePhase {
+            case .inactive: break
+            case .active:
+              send(.connectStream)
+            case .background:
+              send(.disconnectStream)
+            @unknown default: break
+            }
+          }
         }
       }
       .task {
         send(.onAppear)
+        send(.connectStream)
       }
       .navigationTitle(Text("Live translation", bundle: .module))
       .toolbar {
