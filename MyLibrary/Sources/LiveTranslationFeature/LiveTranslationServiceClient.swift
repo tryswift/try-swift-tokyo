@@ -19,8 +19,11 @@ public struct LiveTranslationServiceClient {
   public var langSet: @Sendable (String?) async throws -> LanguageEntity.Response.LangSet
   public var langList: @Sendable () async throws -> [LanguageEntity.Response.LanguageItem]
   public var chatRoomInfo: @Sendable (String) async throws -> ChatRoomEntity.Make.Response
-  public var chatConnection: @Sendable (String) -> AsyncThrowingStream<RealTimeEntity.ChatStream, any Error> = { _ in .never }
-  public var requestBatchTranslation: @Sendable ([RealTimeEntity.Translation.Request.ContentData]) async -> Void
+  public var chatConnection:
+    @Sendable (String) -> AsyncThrowingStream<RealTimeEntity.ChatStream, any Error> = { _ in .never
+    }
+  public var requestBatchTranslation:
+    @Sendable ([RealTimeEntity.Translation.Request.ContentData]) async -> Void
 }
 
 extension LiveTranslationServiceClient: DependencyKey {
@@ -44,6 +47,6 @@ extension LiveTranslationServiceClient: DependencyKey {
       }
     )
   }
-  
+
   public static var liveValue: Self = .live()
 }

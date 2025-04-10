@@ -15,17 +15,17 @@ public struct AppReducer {
     var schedule = Schedule.State()
     var liveTranslation = LiveTranslation.State(
       roomNumber: ProcessInfo.processInfo.environment["LIVE_TRANSLATION_KEY"]
-      ?? (Bundle.main.infoDictionary?["Live translation room number"] as? String) ?? ""
+        ?? (Bundle.main.infoDictionary?["Live translation room number"] as? String) ?? ""
     )
     var guidance = Guidance.State()
     var sponsors = SponsorsList.State()
     var trySwift = TrySwift.State()
-    
+
     public init() {
       try? Tips.configure([.displayFrequency(.immediate)])
     }
   }
-  
+
   public enum Action {
     case schedule(Schedule.Action)
     case liveTranslation(LiveTranslation.Action)
@@ -33,9 +33,9 @@ public struct AppReducer {
     case sponsors(SponsorsList.Action)
     case trySwift(TrySwift.Action)
   }
-  
+
   public init() {}
-  
+
   public var body: some ReducerOf<Self> {
     Scope(state: \.schedule, action: \.schedule) {
       Schedule()
@@ -57,11 +57,11 @@ public struct AppReducer {
 
 public struct AppView: View {
   var store: StoreOf<AppReducer>
-  
+
   public init(store: StoreOf<AppReducer>) {
     self.store = store
   }
-  
+
   public var body: some View {
     TabView {
       ScheduleView(store: store.scope(state: \.schedule, action: \.schedule))
