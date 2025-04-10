@@ -1493,17 +1493,6 @@
         }
       }
     },
-    "Optimising SwiftUI and understanding Render Loop" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SwiftUIの最適化とレンダーループの理解"
-          }
-        }
-      }
-    },
     "Osama is an iOS engineer at Classmethod in Japan, and He’s also a breakdancer who came in second place at the World Breakdancing Championship in Germany in 2007. In the world, He often go by the name ‘Lil Ossa’. He has a passion for both beer and dance, as well as creating iOS apps. He loves sharing his unique iOS development experiences at conferences, including Swiftable 2023 and iOSDC Japan 2022." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2087,6 +2076,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "HDRを理解する"
+          }
+        }
+      }
+    },
+    "Understanding Render Loop to optimise SwiftUI" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUI を最適化するためのレンダーループの理解"
           }
         }
       }

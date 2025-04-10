@@ -352,7 +352,7 @@
       "sessions": [
         {
           "id": 29,
-          "title": "Optimising SwiftUI and understanding Render Loop",
+          "title": "Understanding Render Loop to optimise SwiftUI",
           "place": "Hall",
           "description": "Curious about how SwiftUI really works under the hood? Join me as we explore the render loop and its impact on performance! We’ll break down the rendering process and uncover techniques to optimise your views and eliminate lag. You’ll walk away with a solid understanding of rendering mechanics that will elevate your interface development skills.",
           "speakers": [
@@ -364,8 +364,8 @@
               "job_title": "Senior iOS Developer at Rakuten Viki",
               "links": [
                 {
-                  "name": "@pradnya-nikam",
-                  "url": "https://medium.com/@pradnya-nikam"
+                  "name": "@pradnya_nikam",
+                  "url": "https://x.com/pradnya_nikam"
                 }
               ]
             }
