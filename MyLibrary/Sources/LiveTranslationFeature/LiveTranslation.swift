@@ -37,6 +37,11 @@ public struct LiveTranslation {
     /// The task of connecting stream
     var chatStreamTask: Task<Void, Never>? = nil
     
+    /// selected language sheet
+    var isSelectedLanguageSheet: Bool = false
+    /// showing last chat
+    var isShowingLastChat: Bool = false
+    
     public init(roomNumber: String) {
       self.roomNumber = roomNumber
     }
@@ -54,6 +59,10 @@ public struct LiveTranslation {
     
     public enum View {
       case onAppear
+      case connectStream
+      case selectLangCode(String)
+      case setSelectedLanguageSheet(Bool)
+      case setShowingLastChat(Bool)
     }
   }
   
@@ -100,6 +109,20 @@ public struct LiveTranslation {
             }
           }
         }
+      case .view(.connectStream):
+        return .run { send in
+          await send(.connectChatStream)
+        }
+      case .view(.selectLangCode(let langCode)):
+        return .run { send in
+          await send(.changeLangCode(langCode))
+        }
+      case .view(.setSelectedLanguageSheet(let flag)):
+        state.isSelectedLanguageSheet = flag
+        return .none
+      case .view(.setShowingLastChat(let flag)):
+        state.isShowingLastChat = flag
+        return .none
       case .connectChatStream:
         return .run { [state] send in
           do {
@@ -230,6 +253,7 @@ extension LiveTranslation {
     await handleResponseChat(task, state: state, send: send)
   }
   
+  /// Handle translation item response
   private func handleResponseTranslation(_ trItem: RealTimeEntity.Translation.Response, state: State, send: Send<Action>) async {
     guard !state.isUpdatingTR else {
       await send(.set(\.updateTrWaitingQueue, state.updateTrWaitingQueue + [trItem]))
@@ -245,6 +269,7 @@ extension LiveTranslation {
     await checkUpdateTRWaitingQueue(state: state, send: send)
   }
   
+  /// Check translation item waiting queue
   private func checkUpdateTRWaitingQueue(state: State, send: Send<Action>) async {
     guard let task = state.updateTrWaitingQueue.first else { return }
     await send(.set(\.updateTrWaitingQueue, state.updateTrWaitingQueue.dropFirst().map { $0 }))
@@ -257,6 +282,8 @@ public struct LiveTranslationView: View {
   
   @Bindable public var store: StoreOf<LiveTranslation>
   
+  private let scrollContentBottomID: String = "atBottom"
+  
   public init(store: StoreOf<LiveTranslation>) {
     self.store = store
   }
@@ -266,10 +293,98 @@ public struct LiveTranslationView: View {
       VStack {
         ScrollViewReader { proxy in
           ScrollView {
+            if store.roomNumber.isEmpty {
+              ContentUnavailableView("Room is unavailable", systemImage: "text.page.slash.fill")
+              Spacer()
+            } else if store.chatList.isEmpty {
+              ContentUnavailableView("Not started yet", systemImage: "text.page.slash.fill")
+              Spacer()
+            } else {
+              translationContents
+            }
             
+            flittoLogo
+              .id(scrollContentBottomID)
+              .padding(.bottom, 16)
+          }
+          .onChange(of: store.chatList.last) { old, new in
+            guard old != .none else {
+              proxy.scrollTo(scrollContentBottomID, anchor: .bottom)
+              return
+            }
+            
+            guard store.isShowingLastChat else { return }
+            
+            withAnimation(.interactiveSpring) {
+              proxy.scrollTo(scrollContentBottomID, anchor: .center)
+            }
           }
         }
       }
+      .task {
+        send(.onAppear)
+        send(.connectStream)
+      }
+      .navigationTitle(Text("Live translation", bundle: .module))
+      .toolbar {
+        ToolbarItem(placement: .navigationBarTrailing) {
+          Button {
+            send(.setSelectedLanguageSheet(!store.isSelectedLanguageSheet))
+          } label: {
+            let selectedLanguage =
+              store.langSet?.langCodingKey(store.selectedLangCode) ?? ""
+            Text(selectedLanguage)
+            Image(systemName: "globe")
+          }
+          .sheet(isPresented: $store.isSelectedLanguageSheet) {
+            SelectLanguageSheet(
+              languageList: store.langList,
+              langSet: store.langSet,
+              selectedLanguageAction: { langCode in
+                send(.selectLangCode(langCode))
+                send(.setSelectedLanguageSheet(false))
+              }
+            )
+            .presentationDetents([.medium, .large])
+          }
+        }
+      }
+    }
+  }
+  
+  @ViewBuilder
+  var translationContents: some View {
+    LazyVStack {
+      ForEach(store.chatList) { item in
+        Text(item.trItem?.content ?? item.item.text)
+          .frame(maxWidth: .infinity, alignment: .leading)
+          .multilineTextAlignment(.leading)
+          .padding()
+          .onAppear {
+            guard item == store.chatList.last else { return }
+            send(.setShowingLastChat(true))
+          }
+          .onDisappear {
+            guard item == store.chatList.last else { return }
+            send(.setShowingLastChat(false))
+          }
+      }
+    }
+  }
+  
+  @ViewBuilder
+  var flittoLogo: some View {
+    HStack {
+      Spacer()
+      Text("Powered by", bundle: .module)
+        .font(.caption)
+        .foregroundStyle(Color(.secondaryLabel))
+      Image(.flitto)
+        .resizable()
+        .offset(x: -10)
+        .aspectRatio(contentMode: .fit)
+        .frame(maxHeight: 30)
+      Spacer()
     }
   }
 }
@@ -419,4 +534,10 @@ extension Array {
       return Array(self[startIndex..<endIndex])
     }
   }
+}
+
+#Preview {
+  LiveTranslationView(store: .init(initialState: .init(roomNumber: "490294")) {
+    LiveTranslation()
+  })
 }
