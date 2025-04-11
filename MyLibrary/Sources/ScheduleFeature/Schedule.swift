@@ -174,10 +174,12 @@ public struct ScheduleView: View {
     VStack(alignment: .leading, spacing: 8) {
       Text(conference.date, style: .date)
         .font(.title2)
+        .accessibilityAddTraits(.isHeader)
       ForEach(conference.schedules, id: \.self) { schedule in
         VStack(alignment: .leading, spacing: 4) {
           Text(schedule.time, style: .time)
             .font(.subheadline.bold())
+            .accessibilityAddTraits(.isHeader)
           ForEach(schedule.sessions, id: \.self) { session in
             if session.description != nil {
               Button {
@@ -220,6 +222,8 @@ public struct ScheduleView: View {
                   .clipShape(Circle())
               )
               .frame(width: 60)
+              .accessibilityElement(children: .ignore)
+              .accessibilityIgnoresInvertColors()
           }
         } else {
           Image(.tokyo)
@@ -227,6 +231,8 @@ public struct ScheduleView: View {
             .aspectRatio(contentMode: .fit)
             .clipShape(Circle())
             .frame(width: 60)
+            .accessibilityElement(children: .ignore)
+            .accessibilityIgnoresInvertColors()
         }
       }
       VStack(alignment: .leading) {
@@ -257,6 +263,7 @@ public struct ScheduleView: View {
         }
       }
       .frame(maxWidth: .infinity, alignment: .leading)
+      .accessibilityElement(children: .combine)
     }
   }
 

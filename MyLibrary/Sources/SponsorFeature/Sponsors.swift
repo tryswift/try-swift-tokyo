@@ -86,6 +86,7 @@ public struct SponsorsListView: View {
             .font(.title.bold())
             .padding(.top, 64)
             .foregroundStyle(Color.black)
+            .accessibilityAddTraits(.isHeader)
           LazyVGrid(
             columns: Array(repeating: plan.gridItem, count: plan.columnCount),
             spacing: 64
@@ -98,6 +99,8 @@ public struct SponsorsListView: View {
                 .onTapGesture {
                   send(.sponsorTapped(sponsor))
                 }
+                .accessibilityAddTraits(.isLink)
+                .accessibilityIgnoresInvertColors()
             }
           }
           .background(Color.white)

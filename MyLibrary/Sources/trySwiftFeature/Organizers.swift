@@ -78,6 +78,7 @@ public struct OrganizersView: View {
               .resizable()
               .aspectRatio(contentMode: .fit)
               .clipShape(Circle())
+              .accessibilityIgnoresInvertColors()
           }
         }
       }
