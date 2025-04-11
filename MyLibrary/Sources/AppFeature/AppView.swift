@@ -13,6 +13,10 @@ public struct AppReducer {
   @ObservableState
   public struct State: Equatable {
     var schedule = Schedule.State()
+    var liveTranslation = LiveTranslation.State(
+      roomNumber: ProcessInfo.processInfo.environment["LIVE_TRANSLATION_KEY"]
+        ?? (Bundle.main.infoDictionary?["Live translation room number"] as? String) ?? ""
+    )
     var guidance = Guidance.State()
     var sponsors = SponsorsList.State()
     var trySwift = TrySwift.State()
@@ -24,6 +28,7 @@ public struct AppReducer {
 
   public enum Action {
     case schedule(Schedule.Action)
+    case liveTranslation(LiveTranslation.Action)
     case guidance(Guidance.Action)
     case sponsors(SponsorsList.Action)
     case trySwift(TrySwift.Action)
@@ -34,6 +39,9 @@ public struct AppReducer {
   public var body: some ReducerOf<Self> {
     Scope(state: \.schedule, action: \.schedule) {
       Schedule()
+    }
+    Scope(state: \.liveTranslation, action: \.liveTranslation) {
+      LiveTranslation()
     }
     Scope(state: \.guidance, action: \.guidance) {
       Guidance()
@@ -60,7 +68,7 @@ public struct AppView: View {
         .tabItem {
           Label(String(localized: "Schedule", bundle: .module), systemImage: "calendar")
         }
-      LiveTranslationView()
+      LiveTranslationView(store: store.scope(state: \.liveTranslation, action: \.liveTranslation))
         .tabItem {
           Label(String(localized: "Translation", bundle: .module), systemImage: "text.bubble")
         }
