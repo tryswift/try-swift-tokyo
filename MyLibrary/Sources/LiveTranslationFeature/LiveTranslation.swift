@@ -70,6 +70,8 @@ public struct LiveTranslation {
   }
 
   @Dependency(\.liveTranslationServiceClient) var liveTranslationServiceClient
+  
+  private let connectChatRoomTaskId: String = "connectChatRoomTask"
 
   public init() {}
 
@@ -92,13 +94,11 @@ public struct LiveTranslation {
           }
         }
       case .view(.connectStream):
-        return .run { send in
-          await send(.connectChatStream)
-        }
+        return .run { [state] send in
+          await connectChatRoom(state: state, send: send)
+        }.cancellable(id: connectChatRoomTaskId)
       case .view(.disconnectStream):
-        return .run { send in
-          await send(.disconnectChatStream)
-        }
+        return .cancel(id: connectChatRoomTaskId)
       case .view(.selectLangCode(let langCode)):
         return .run { send in
           await send(.changeLangCode(langCode))
@@ -112,9 +112,9 @@ public struct LiveTranslation {
       case .connectChatStream:
         return .run { [state] send in
           await connectChatRoom(state: state, send: send)
-        }.cancellable(id: "connectChatRoom")
+        }.cancellable(id: connectChatRoomTaskId)
       case .disconnectChatStream:
-        return .cancel(id: "connectChatRoom")
+        return .cancel(id: connectChatRoomTaskId)
       case .changeLangCode(let newLangCode):
         state.selectedLangCode = newLangCode
         return .run { [state] send in
