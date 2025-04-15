@@ -27,7 +27,7 @@ public struct LiveTranslationServiceClient {
 }
 
 extension LiveTranslationServiceClient: DependencyKey {
-  static func live() -> Self {
+  public static var liveValue: Self = {
     let service = LiveTranslationService()
     return Self(
       langSet: { langCode in
@@ -46,7 +46,5 @@ extension LiveTranslationServiceClient: DependencyKey {
         await service.requestBatchTranslation(.init(data: array))
       }
     )
-  }
-
-  public static var liveValue: Self = .live()
+  }()
 }
