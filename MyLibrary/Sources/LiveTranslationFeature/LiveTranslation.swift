@@ -2,13 +2,14 @@ import ComposableArchitecture
 import Foundation
 import LiveTranslationSDK_iOS
 import SwiftUI
+import BuildConfig
 
 @Reducer
 public struct LiveTranslation {
   @ObservableState
   public struct State: Equatable {
     /// Live Translation Room Number
-    var roomNumber: String
+    var roomNumber: String = ""
     /// Current visible translation items
     var chatList: [TranslationEntity.CompositeChatItem] = []
     /// Current language set
@@ -42,9 +43,7 @@ public struct LiveTranslation {
     /// showing last chat
     var isShowingLastChat: Bool = false
 
-    public init(roomNumber: String) {
-      self.roomNumber = roomNumber
-    }
+    public init() {}
   }
 
   public enum Action: BindableAction, ViewAction {
@@ -70,6 +69,7 @@ public struct LiveTranslation {
   }
 
   @Dependency(\.liveTranslationServiceClient) var liveTranslationServiceClient
+  @Dependency(\.buildConfig) var buildConfig
   
   private let connectChatRoomTaskId: String = "connectChatRoomTask"
 
@@ -80,6 +80,7 @@ public struct LiveTranslation {
     Reduce { state, action in
       switch action {
       case .view(.onAppear):
+        state.roomNumber = buildConfig.liveTranslationRoomNumber()
         return .run { [state] send in
           await withTaskGroup(of: Void.self) { group in
             group.addTask {
@@ -588,7 +589,7 @@ extension Array {
 
 #Preview {
   LiveTranslationView(
-    store: .init(initialState: .init(roomNumber: "490294")) {
+    store: .init(initialState: .init()) {
       LiveTranslation()
     })
 }

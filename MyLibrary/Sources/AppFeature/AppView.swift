@@ -13,10 +13,7 @@ public struct AppReducer {
   @ObservableState
   public struct State: Equatable {
     var schedule = Schedule.State()
-    var liveTranslation = LiveTranslation.State(
-      roomNumber: ProcessInfo.processInfo.environment["LIVE_TRANSLATION_KEY"]
-        ?? (Bundle.main.infoDictionary?["Live translation room number"] as? String) ?? ""
-    )
+    var liveTranslation = LiveTranslation.State()
     var guidance = Guidance.State()
     var sponsors = SponsorsList.State()
     var trySwift = TrySwift.State()
