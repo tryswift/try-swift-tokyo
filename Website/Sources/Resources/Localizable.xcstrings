@@ -938,6 +938,23 @@
         }
       }
     },
+    "Tickets" : {
+      "extractionState" : "migrated",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tickets"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "チケットの購入"
+          }
+        }
+      }
+    },
     "Timetable" : {
       "extractionState" : "manual",
       "localizations" : {
