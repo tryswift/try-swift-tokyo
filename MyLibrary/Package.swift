@@ -43,6 +43,12 @@ let package = Package(
       ]
     ),
     .target(
+      name: "BuildConfig",
+      dependencies: [
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+      ]
+    ),
+    .target(
       name: "DataClient",
       dependencies: [
         "SharedModels",
@@ -69,6 +75,7 @@ let package = Package(
     .target(
       name: "LiveTranslationFeature",
       dependencies: [
+        "BuildConfig",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         .product(name: "rtt-sdk", package: "rtt_sdk"),
       ]
