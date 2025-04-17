@@ -6,7 +6,6 @@ import SharedModels
 enum HomeSectionType: String, CaseIterable {
   case about = "About"
   case outline = "Outline"
-  case tickets = "Tickets"
   case speaker = "Speaker"
   case meetTheHosts = "Meet the Hosts"
   case timetable = "Timetable"
@@ -50,9 +49,6 @@ extension HomeSectionType {
     case .outline:
       SectionHeader(type: self, language: language)
       OutlineComponent(language: language)
-    case .tickets:
-      SectionHeader(type: self, language: language)
-      TicketsComponent(language: language)
     case .speaker:
       SectionHeader(type: self, language: language)
 
@@ -100,7 +96,7 @@ extension HomeSectionType {
             TimetableComponent(conference: day2, language: language)
           }
         }
-        Item(day3.date.formattedDateString(language: language), startsOpen: true) {
+        Item(day3.date.formattedDateString(language: language), startsOpen: false) {
           Section {
             TimetableComponent(conference: day3, language: language)
           }

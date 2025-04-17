@@ -756,23 +756,6 @@
         }
       }
     },
-    "Suggested Nearby Accommodation" : {
-      "extractionState" : "migrated",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Suggested Nearby Accommodation"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "会場周辺の宿泊施設情報"
-          }
-        }
-      }
-    },
     "TACHIKAWA STAGE GARDEN" : {
       "extractionState" : "manual",
       "localizations" : {
