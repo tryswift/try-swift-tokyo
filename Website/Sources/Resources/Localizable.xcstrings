@@ -756,23 +756,6 @@
         }
       }
     },
-    "Suggested Nearby Accommodation" : {
-      "extractionState" : "migrated",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Suggested Nearby Accommodation"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "会場周辺の宿泊施設情報"
-          }
-        }
-      }
-    },
     "TACHIKAWA STAGE GARDEN" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -951,23 +934,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "チケットのキャンセルは、開催30日前の3/11 (火) まで受け付けます。Lumaでキャンセル後、運営に問い合わせを行ってください。期日以降、キャンセルは一切応じられません。ノベルティの事前配送を選択した場合、発送後のキャンセルはできません。<br><br>チケット種別によらず、金額の10%を手数料として差し引いて、返金します。返金されるまでの期間は、決済サービスの規定に準じます。"
-          }
-        }
-      }
-    },
-    "Tickets" : {
-      "extractionState" : "migrated",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tickets"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "チケットの購入"
           }
         }
       }
