@@ -23,6 +23,7 @@ public final class ViewModel {
   var updateChatWaitingQueue: [RealTimeEntity.Chat.Response] = []
   var updateTrWaitingQueue: [RealTimeEntity.Translation.Response] = []
   var latestListType: RealTimeEntity.ListType? = .none
+  var chatStreamTask: Task<Void, Never>? = nil
 }
 
 extension ViewModel {
@@ -37,9 +38,13 @@ extension ViewModel {
         }
       }
     case .connectChatStream:
-      Task {
+      chatStreamTask = Task {
         await connectChatStream(roomNumber)
       }
+
+    case .disconnectChatStream:
+      chatStreamTask?.cancel()
+
     case .changeLangCode(let newLangCode):
       selectedLangCode = newLangCode
       Task {
@@ -315,6 +320,7 @@ extension ViewModel {
   public enum InputAction {
     case onAppearedPage
     case connectChatStream
+    case disconnectChatStream
     case changeLangCode(String)
   }
 }
