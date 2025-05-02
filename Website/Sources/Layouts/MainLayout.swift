@@ -5,7 +5,7 @@ struct MainLayout: Layout {
   let title: String
   let ogpLink: String
 
-  var body: some HTML {
+  var body: Document {
     Head {
       MetaTag(.openGraphTitle, content: title)
       MetaTag(.openGraphImage, content: ogpLink)
@@ -14,7 +14,7 @@ struct MainLayout: Layout {
 
       if currentPage.url.pathComponents.last == "_en" {
         let redirectUrl = URL(string: currentPage.url.absoluteString.replacingOccurrences(of: "_", with: ""))!
-        RedirectMetaTag(to: redirectUrl)
+        MetaTag(httpEquivalent: "refresh", content: "0;url=\(redirectUrl.absoluteString)")
       }
     }
 

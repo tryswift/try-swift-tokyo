@@ -20,7 +20,6 @@ struct MainNavigationBar: HTML {
     } logo: {
       LanguageSelector(path: path, currentLanguage: language)
     }
-    .navigationItemAlignment(.center)
     .navigationBarStyle(.dark)
     .background(.darkBlue.opacity(0.7))
     .position(.fixedTop)
