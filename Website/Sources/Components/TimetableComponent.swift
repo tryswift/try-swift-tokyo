@@ -2,7 +2,7 @@ import Foundation
 import Ignite
 import SharedModels
 
-struct TimetableComponent: DocumentElement {
+struct TimetableComponent: HTML {
   let conference: Conference
   let language: SupportedLanguage
   private let imageSize = 50
@@ -55,7 +55,7 @@ private struct SessionTitleComponent: HTML {
   let language: SupportedLanguage
 
   var body: some HTML {
-    let titleHTML = Text(String(session.title, bundle: .scheduleFeature, language: language))
+    let titleHTML = Span(String(session.title, bundle: .scheduleFeature, language: language))
       .font(.lead)
       .fontWeight(.bold)
 
