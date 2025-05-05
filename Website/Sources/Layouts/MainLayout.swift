@@ -5,7 +5,7 @@ struct MainLayout: Layout {
   let title: String
   let ogpLink: String
 
-  var body: Document {
+  var body: some Document {
     Head {
       MetaTag(.openGraphTitle, content: title)
       MetaTag(.openGraphImage, content: ogpLink)
