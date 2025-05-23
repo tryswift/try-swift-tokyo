@@ -1,6 +1,6 @@
 import Ignite
 
-struct HeaderComponent: DocumentElement {
+struct HeaderComponent: HTML {
   let language: SupportedLanguage
 
   var body: some HTML {
