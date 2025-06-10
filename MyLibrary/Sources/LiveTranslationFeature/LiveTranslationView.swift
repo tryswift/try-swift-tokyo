@@ -6,6 +6,8 @@ public struct LiveTranslationView: View {
   @State var isSelectedLanguageSheet: Bool = false
   @State var isShowingLastChat: Bool = false
 
+  @Environment(\.scenePhase) var scenePhase
+
   private let scrollContentBottomID: String = "atBottom"
 
   public init(
@@ -82,6 +84,16 @@ public struct LiveTranslationView: View {
       .task {
         viewModel.send(.onAppearedPage)
         viewModel.send(.connectChatStream)
+      }
+      .onChange(of: scenePhase) {
+        switch scenePhase {
+        case .inactive: break
+        case .active:
+          viewModel.send(.connectChatStream)
+        case .background:
+          viewModel.send(.disconnectChatStream)
+        @unknown default: break
+        }
       }
       .navigationTitle(Text("Live translation", bundle: .module))
       .toolbar {
