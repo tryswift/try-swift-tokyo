@@ -1,8 +1,8 @@
+import BuildConfig
 import ComposableArchitecture
 import Foundation
 import LiveTranslationSDK_iOS
 import SwiftUI
-import BuildConfig
 
 @Reducer
 public struct LiveTranslation {
@@ -70,7 +70,7 @@ public struct LiveTranslation {
 
   @Dependency(\.liveTranslationServiceClient) var liveTranslationServiceClient
   @Dependency(\.buildConfig) var buildConfig
-  
+
   private let connectChatRoomTaskId: String = "connectChatRoomTask"
 
   public init() {}

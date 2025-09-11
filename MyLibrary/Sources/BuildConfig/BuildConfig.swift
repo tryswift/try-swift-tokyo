@@ -1,6 +1,6 @@
 import Dependencies
-import Foundation
 import DependenciesMacros
+import Foundation
 
 @DependencyClient
 public struct BuildConfig {
@@ -18,7 +18,7 @@ extension BuildConfig: DependencyKey {
   public static let liveValue: Self = Self(
     liveTranslationRoomNumber: {
       ProcessInfo.processInfo.environment["LIVE_TRANSLATION_KEY"]
-       ?? (Bundle.main.infoDictionary?["Live translation room number"] as? String) ?? ""
+        ?? (Bundle.main.infoDictionary?["Live translation room number"] as? String) ?? ""
     }
   )
 }
