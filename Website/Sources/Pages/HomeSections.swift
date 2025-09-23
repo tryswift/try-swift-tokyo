@@ -21,15 +21,25 @@ extension HomeSectionType {
       .replacingOccurrences(of: " ", with: "-")
   }
 
-  static var navigationItems: [Self] {
-    Self.allCases.filter { ![.meetTheHosts, .meetTheOrganizers].contains($0) }
+  func isAvailable(for year: ConferenceYear) -> Bool {
+    switch year {
+    case .year2025: true
+    case .year2026: [.about, .outline, .access].contains(self)
+    }
+  }
+
+  static func navigationItems(for year: ConferenceYear) -> [Self] {
+    allCases.filter {
+      $0.isAvailable(for: year)
+        && ![.meetTheHosts, .meetTheOrganizers].contains($0)
+    }
   }
 }
 
 extension HomeSectionType {
   @MainActor
   @HTMLBuilder
-  func generateContents(language: SupportedLanguage, dataClient: DataClient) -> some HTML {
+  func generateContents(for year: ConferenceYear, language: SupportedLanguage, dataClient: DataClient) -> some HTML {
     switch self {
     case .about:
       HeaderComponent(language: language)
