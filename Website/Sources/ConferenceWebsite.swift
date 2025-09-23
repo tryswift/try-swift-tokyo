@@ -98,19 +98,21 @@ struct ConferenceSite2025: Site {
   var titleSuffix = " try! Swift Tokyo"
   var name = "try! Swift Tokyo"
   var description: String? = String(
-    "Developers from all over the world will gather for tips and tricks and the latest examples of development using Swift. The event will be held for three days from April 9 - 11, 2025, with the aim of sharing our Swift knowledge and skills and collaborating with each other!",
+    "Developers from all over the world will gather for tips and tricks and the latest examples of development using Swift. The event will be held for three days from April 12 - 14, 2026, with the aim of sharing our Swift knowledge and skills and collaborating with each other!",
     language: .ja
   )
   var language: Language = .japanese
   var url = URL(string: "https://tryswift.jp")!
-  var homePage = Home(language: .ja)
+  var homePage = Home(year: .latest, language: .ja)
   var layout = MainLayout(title: "try! Swift Tokyo", ogpLink: "https://tryswift.jp/images/ogp.jpg")
   var darkTheme: (any Theme)? = nil
   var favicon = URL(string: "/images/favicon.png")
 
   var staticPages: [any StaticPage] {
     for language in SupportedLanguage.allCases {
-      Home(language: language)
+      for year in ConferenceYear.allCases {
+        Home(year: year, language: language)
+      }
       FAQ(language: language)
       CodeOfConduct(language: language)
       PrivacyPolicy(language: language)

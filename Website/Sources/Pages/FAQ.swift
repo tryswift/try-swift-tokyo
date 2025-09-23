@@ -41,8 +41,9 @@ struct FAQ: StaticPage {
 
   var body: some HTML {
     MainNavigationBar(
-      path: generatePath(language:),
-      sections: HomeSectionType.navigationItems,
+      path: { generatePath(language: $1) },
+      sections: HomeSectionType.navigationItems(for: .latest),
+      year: .latest,
       language: language
     )
 

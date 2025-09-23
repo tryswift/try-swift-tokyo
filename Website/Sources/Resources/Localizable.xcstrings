@@ -86,6 +86,40 @@
         }
       }
     },
+    "Apr. 12th, 2026 (JST)<br><br>Venue:<br>Tokyo, Japan" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apr. 12th, 2026 (JST)<br><br>Venue:<br>Tokyo, Japan"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2026年4月12日（日）<br><br>場所：<br>東京都内"
+          }
+        }
+      }
+    },
+    "Apr. 13th – 14th, 2026 (JST)<br><br>Venue:<br>TACHIKAWA STAGE GARDEN<br>N1, 3-3, Midori-cho, Tachikawa, Tokyo 190-0014" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apr. 13th – 14th, 2026 (JST)<br><br>Venue:<br>TACHIKAWA STAGE GARDEN<br>N1, 3-3, Midori-cho, Tachikawa, Tokyo 190-0014"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2026年4月13日（月）〜 14日（火）<br><br>場所：<br>立川ステージガーデン<br>〒190-0014 東京都立川市緑町3-3 N1"
+          }
+        }
+      }
+    },
     "Changes" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -150,6 +184,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "行動規範"
+          }
+        }
+      }
+    },
+    "Conference" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conference"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カンファレンス"
           }
         }
       }
@@ -222,19 +273,36 @@
         }
       }
     },
-    "Developers from all over the world will gather for tips and tricks and the latest examples of development using Swift. The event will be held for three days from April 9 - 11, 2025, with the aim of sharing our Swift knowledge and skills and collaborating with each other!" : {
-      "extractionState" : "migrated",
+    "Developers from all over the world gather<br>for tips and tricks and the latest case studies of development using Swift.<br>Developers from all over the world will gather here.<br>Swift and to showcase our Swift knowledge and skills, and to collaborate with each other,<br>The event will be held for three days from April 12 - 14, 2026!" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Developers from all over the world will gather for tips and tricks and the latest examples of development using Swift. The event will be held for three days from April 9 - 11, 2025, with the aim of sharing our Swift knowledge and skills and collaborating with each other!"
+            "value" : "Developers from all over the world gather<br>for tips and tricks and the latest case studies of development using Swift.<br>Developers from all over the world will gather here.<br>Swift and to showcase our Swift knowledge and skills, and to collaborate with each other,<br>The event will be held for three days from April 12 - 14, 2026!"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Swiftを使った開発のコツや最新の事例を求めて 世界中から開発者が集います。 日頃のSwiftの知識やスキルを披露し、協力しあうことを目的に、 2025年4月9日 - 11日の３日間開催します！"
+            "value" : "Swiftを使った開発のコツや最新の事例を求めて<br>世界中から開発者が集います。<br>日頃のSwiftの知識やスキルを披露し、協力しあうことを目的に、<br>2026年4月12日 - 14日の３日間開催します！"
+          }
+        }
+      }
+    },
+    "Developers from all over the world will gather for tips and tricks and the latest examples of development using Swift. The event will be held for three days from April 12 - 14, 2026, with the aim of sharing our Swift knowledge and skills and collaborating with each other!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Developers from all over the world will gather for tips and tricks and the latest examples of development using Swift. The event will be held for three days from April 12 - 14, 2026, with the aim of sharing our Swift knowledge and skills and collaborating with each other!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swiftを使った開発のコツや最新の事例を求めて 世界中から開発者が集います。 日頃のSwiftの知識やスキルを披露し、協力しあうことを目的に、 2026年4月12日 - 14日の３日間開催します！"
           }
         }
       }
@@ -1070,6 +1138,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "本法人は、個人情報の提供者から自己に関する個人情報の開示の請求があったときは、原則として遅滞なく開示します。また、自己に関する個人情報の訂正等の申し出があったときは、原則として遅滞なく訂正等を行います。"
+          }
+        }
+      }
+    },
+    "Workshop" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workshop"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ワークショップ"
           }
         }
       }
