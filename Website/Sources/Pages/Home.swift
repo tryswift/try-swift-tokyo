@@ -15,7 +15,7 @@ struct Home: StaticPage {
 
   var description: String {
     String(
-        "Developers from all over the world will gather for tips and tricks and the latest examples of development using Swift. The event will be held for three days from April 9 - 11, 2025, with the aim of sharing our Swift knowledge and skills and collaborating with each other!",
+        "Developers from all over the world will gather for tips and tricks and the latest examples of development using Swift. The event will be held for three days from April 12 - 14, 2026, with the aim of sharing our Swift knowledge and skills and collaborating with each other!",
         language: language
     )
   }

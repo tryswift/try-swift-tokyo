@@ -46,10 +46,15 @@ extension HomeSectionType {
         .ignorePageGutters()
         .id(htmlId)
 
-      let text = String(
+      let text = switch year {
+      case .year2025: String(
         "Developers from all over the world gather<br>for tips and tricks and the latest case studies of development using Swift.<br>Developers from all over the world will gather here.<br>Swift and to showcase our Swift knowledge and skills, and to collaborate with each other,<br>The event will be held for three days from April 9 - 11, 2025!",
         language: language
       )
+      case .year2026: String(
+        "Developers from all over the world gather<br>for tips and tricks and the latest case studies of development using Swift.<br>Developers from all over the world will gather here.<br>Swift and to showcase our Swift knowledge and skills, and to collaborate with each other,<br>The event will be held for three days from April 12 - 14, 2026!",
+        language: language
+      )}
       Text(text)
         .horizontalAlignment(.center)
         .font(.lead)
@@ -58,7 +63,8 @@ extension HomeSectionType {
         .margin(.horizontal, .px(50))
     case .outline:
       SectionHeader(type: self, language: language)
-      OutlineComponent(language: language)
+      OutlineComponent(year: year, language: language)
+        .padding(.bottom, .px(32))
     case .speaker:
       SectionHeader(type: self, language: language)
 
