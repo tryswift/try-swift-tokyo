@@ -14,24 +14,28 @@ struct OutlineComponent: HTML {
       Row {
         Column {
           String(data.firstLabel, language: language)
+            .foregroundStyle(.dimGray)
         }
+        .font(.lead)
         .fontWeight(.bold)
-        .foregroundStyle(.dimGray)
         Column {
           String(data.firstValue, language: language)
+            .foregroundStyle(.dimGray)
         }
-        .foregroundStyle(.dimGray)
+        .font(.lead)
       }
       Row {
         Column {
           String(data.secondLabel, language: language)
+            .foregroundStyle(.dimGray)
         }
+        .font(.lead)
         .fontWeight(.bold)
-        .foregroundStyle(.dimGray)
         Column {
           String(data.secondValue, language: language)
+            .foregroundStyle(.dimGray)
         }
-        .foregroundStyle(.dimGray)
+        .font(.lead)
       }
     }
   }
