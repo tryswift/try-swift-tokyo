@@ -86,36 +86,36 @@
         }
       }
     },
-    "Apr. 12th, 2026 (JST)<br><br>Venue:<br>Tokyo, Japan" : {
+    "Apr. 12: Tachikawa City, Tokyo, Japan<br>Apr. 13 - 14: <a href=\"#access\">TACHIKAWA STAGE GARDEN</a>" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apr. 12th, 2026 (JST)<br><br>Venue:<br>Tokyo, Japan"
+            "value" : "Apr. 12: Tachikawa City, Tokyo, Japan<br>Apr. 13 - 14: <a href=\"#access\">TACHIKAWA STAGE GARDEN</a>"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "2026年4月12日（日）<br><br>場所：<br>東京都内"
+            "value" : "4/12：東京都立川市内<br>4/13〜14：<a href=\"#access\">立川ステージガーデン</a>"
           }
         }
       }
     },
-    "Apr. 13th – 14th, 2026 (JST)<br><br>Venue:<br>TACHIKAWA STAGE GARDEN<br>N1, 3-3, Midori-cho, Tachikawa, Tokyo 190-0014" : {
+    "Apr. 12th – 14th, 2026 (JST)<br><br>Apr. 12: Workshop & TBD<br>Apr. 13 - 14: Conference" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apr. 13th – 14th, 2026 (JST)<br><br>Venue:<br>TACHIKAWA STAGE GARDEN<br>N1, 3-3, Midori-cho, Tachikawa, Tokyo 190-0014"
+            "value" : "Apr. 12th – 14th, 2026 (JST)<br><br>Apr. 12: Workshop & TBD<br>Apr. 13 - 14: Conference"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "2026年4月13日（月）〜 14日（火）<br><br>場所：<br>立川ステージガーデン<br>〒190-0014 東京都立川市緑町3-3 N1"
+            "value" : "2026年4月12日（日）〜 14日（火）<br><br>4/12：ワークショップ & TBD<br>4/13〜14：カンファレンス"
           }
         }
       }
@@ -184,23 +184,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "行動規範"
-          }
-        }
-      }
-    },
-    "Conference" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Conference"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "カンファレンス"
           }
         }
       }
@@ -1138,23 +1121,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "本法人は、個人情報の提供者から自己に関する個人情報の開示の請求があったときは、原則として遅滞なく開示します。また、自己に関する個人情報の訂正等の申し出があったときは、原則として遅滞なく訂正等を行います。"
-          }
-        }
-      }
-    },
-    "Workshop" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Workshop"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ワークショップ"
           }
         }
       }
