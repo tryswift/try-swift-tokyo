@@ -48,9 +48,9 @@ private struct OutlineData {
   )
 
   static let year2026 = OutlineData(
-    firstLabel: "Workshop",
-    firstValue: "Apr. 12th, 2026 (JST)<br><br>Venue:<br>Tokyo, Japan",
-    secondLabel: "Conference",
-    secondValue: "Apr. 13th – 14th, 2026 (JST)<br><br>Venue:<br>TACHIKAWA STAGE GARDEN<br>N1, 3-3, Midori-cho, Tachikawa, Tokyo 190-0014"
+    firstLabel: "Date and time",
+    firstValue: "Apr. 12th – 14th, 2026 (JST)<br><br>Apr. 12: Workshop & TBD<br>Apr. 13 - 14: Conference",
+    secondLabel: "Venue",
+    secondValue: "Apr. 12: Tachikawa City, Tokyo, Japan<br>Apr. 13 - 14: <a href=\"#access\">TACHIKAWA STAGE GARDEN</a>"
   )
 }
