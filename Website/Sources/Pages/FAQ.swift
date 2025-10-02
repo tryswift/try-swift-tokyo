@@ -56,7 +56,7 @@ struct FAQ: StaticPage {
     SectionListComponent(title: title, dataSource: sectionTypes, language: language)
       .margin(.top, .px(140))
 
-    MainFooterWithBackground(language: language)
+    MainFooterWithBackground(year: .latest, language: language)
       .margin(.top, .px(160))
   }
 
