@@ -74,7 +74,7 @@ public struct Schedule {
               let day3 = try dataClient.fetchDay3()
               return .init(day1: day1, day2: day2, day3: day3)
             }))
-      case let .view(.disclosureTapped(session)):
+      case .view(.disclosureTapped(let session)):
         guard let description = session.description, let speakers = session.speakers else {
           return .none
         }
@@ -89,15 +89,15 @@ public struct Schedule {
           )
         )
         return .none
-      case let .fetchResponse(.success(response)):
+      case .fetchResponse(.success(let response)):
         state.day1 = response.day1
         state.day2 = response.day2
         state.day3 = response.day3
         return .none
-      case let .fetchResponse(.failure(error as DecodingError)):
+      case .fetchResponse(.failure(let error as DecodingError)):
         assertionFailure(error.localizedDescription)
         return .none
-      case let .fetchResponse(.failure(error)):
+      case .fetchResponse(.failure(let error)):
         print(error)  // TODO: replace to Logger API
         return .none
       case .binding, .path, .destination:

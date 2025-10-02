@@ -32,7 +32,7 @@ public struct Profile {
     BindingReducer()
     Reduce { state, action in
       switch action {
-      case let .view(.snsTapped(url)):
+      case .view(.snsTapped(let url)):
         return .run { _ in await safari(url) }
       case .binding:
         return .none

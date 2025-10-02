@@ -64,7 +64,7 @@ public struct Guidance {
             )
           )
         }
-      case let .initialResponse(.success(response)):
+      case .initialResponse(.success(let response)):
         guard let response = response else { return .none }
         let route = response.2
 
@@ -77,11 +77,11 @@ public struct Guidance {
           .init(centerCoordinate: route.polyline.coordinate, distance: route.distance * 2))
         return .none
 
-      case let .initialResponse(.failure(error)):
+      case .initialResponse(.failure(let error)):
         print(error)
         return .none
 
-      case let .updateResponse(.success(response)):
+      case .updateResponse(.success(let response)):
         guard let response = response else { return .none }
         let route = response.1
         state.origin = response.0
@@ -92,7 +92,7 @@ public struct Guidance {
           .init(centerCoordinate: route.polyline.coordinate, distance: route.distance * 2))
         return .none
 
-      case let .updateResponse(.failure(error)):
+      case .updateResponse(.failure(let error)):
         print(error)
         return .none
 

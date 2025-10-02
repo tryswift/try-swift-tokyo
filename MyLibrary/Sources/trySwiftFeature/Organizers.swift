@@ -49,7 +49,7 @@ public struct Organizers {
         let response = try! dataClient.fetchOrganizers()
         state.organizers.append(contentsOf: response)
         return .none
-      case let .view(._organizerTapped(organizer)):
+      case .view(._organizerTapped(let organizer)):
         return .send(.delegate(.organizerTapped(organizer)))
       case .delegate:
         return .none

@@ -20,7 +20,7 @@ public struct Acknowledgements {
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
-      case let .urlTapped(url):
+      case .urlTapped(let url):
         return .run { _ in await safari(url) }
       }
     }

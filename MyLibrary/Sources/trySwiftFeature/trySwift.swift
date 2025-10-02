@@ -66,7 +66,7 @@ public struct TrySwift {
       case .view(.websiteTapped):
         let url = URL(string: String(localized: "Website URL", bundle: .module))!
         return .run { _ in await safari(url) }
-      case let .path(.element(_, .organizers(.delegate(.organizerTapped(organizer))))):
+      case .path(.element(_, .organizers(.delegate(.organizerTapped(let organizer))))):
         state.path.append(.profile(.init(organizer: organizer)))
         return .none
       case .binding:
