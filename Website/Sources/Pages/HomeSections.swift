@@ -165,7 +165,7 @@ extension HomeSectionType {
         }
       }
     case .access:
-      AccessComponent(language: language)
+      AccessComponent(year: year, language: language)
         .ignorePageGutters()
         .id(htmlId)
     }

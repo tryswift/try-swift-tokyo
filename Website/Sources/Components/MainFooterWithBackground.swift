@@ -1,6 +1,7 @@
 import Ignite
 
 struct MainFooterWithBackground: HTML {
+  let year: ConferenceYear
   let language: SupportedLanguage
 
   var body: some HTML {
@@ -12,13 +13,14 @@ struct MainFooterWithBackground: HTML {
           .frame(width: .percent(100%))
       }
       Section {
-        MainFooter(language: language)
+        MainFooter(year: year, language: language)
           .foregroundStyle(.white)
         IgniteFooter()
           .foregroundStyle(.white)
       }
       .horizontalAlignment(.center)
       .margin(.top, .px(160))
+      .frame(width: .percent(100%))
     }
     .ignorePageGutters()
     .background(

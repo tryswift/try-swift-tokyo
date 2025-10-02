@@ -62,7 +62,7 @@ struct PrivacyPolicy: StaticPage {
     SectionListComponent(title: title, dataSource: sectionTypes, language: language)
       .margin(.top, .px(40))
 
-    MainFooterWithBackground(language: language)
+    MainFooterWithBackground(year: .latest, language: language)
       .margin(.top, .px(160))
   }
 
