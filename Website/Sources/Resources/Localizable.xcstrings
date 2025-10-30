@@ -120,6 +120,40 @@
         }
       }
     },
+    "Call for Speakers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call for Speakers"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スピーカー応募"
+          }
+        }
+      }
+    },
+    "Call for Sponsors" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call for Sponsors"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スポンサー募集"
+          }
+        }
+      }
+    },
     "Changes" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -790,6 +824,23 @@
         }
       }
     },
+    "Speaker Submission Form" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speaker Submission Form"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スピーカー応募フォーム"
+          }
+        }
+      }
+    },
     "Sponsor" : {
       "extractionState" : "migrated",
       "localizations" : {
@@ -803,6 +854,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "スポンサー"
+          }
+        }
+      }
+    },
+    "Sponsor Inquiry Form" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sponsor Inquiry Form"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スポンサー応募フォーム"
           }
         }
       }
@@ -1104,6 +1172,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "場所"
+          }
+        }
+      }
+    },
+    "We are looking for speakers to showcase their valuable experiences and captivating skills! Would you like to share your favorite technologies with the world? We look forward to receiving your applications here." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We are looking for speakers to showcase their valuable experiences and captivating skills! Would you like to share your favorite technologies with the world? We look forward to receiving your applications here."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "みなさんの貴重な経験と魅力的なスキルを披露してくださるスピーカーを募集しています！<br>あなたの“推し技術”を世界中に広めてみませんか？こちらから応募をお待ちしています。"
+          }
+        }
+      }
+    },
+    "We are seeking sponsors to help make try! Swift Tokyo a success!<br>If you are interested, please contact us here. We will send you the relevant materials in due course." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We are seeking sponsors to help make try! Swift Tokyo a success!<br>If you are interested, please contact us here. We will send you the relevant materials in due course."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "try! Swift Tokyo を一緒に盛り上げていただけるスポンサーを募集しています！<br>ご検討いただける方はこちらからご連絡ください。順次、資料をお届けいたします。"
           }
         }
       }
