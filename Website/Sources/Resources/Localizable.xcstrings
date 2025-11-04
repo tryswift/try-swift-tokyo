@@ -69,6 +69,23 @@
         }
       }
     },
+    "Apply or Recommend a Speaker" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply or Recommend a Speaker"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スピーカー応募・推薦"
+          }
+        }
+      }
+    },
     "Apr. 9th - 11th, 2025" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -116,6 +133,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "2026年4月12日（日）〜 14日（火）<br><br>4/12：ワークショップ & TBD<br>4/13〜14：カンファレンス"
+          }
+        }
+      }
+    },
+    "Call for Sponsors" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call for Sponsors"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スポンサー募集"
           }
         }
       }
@@ -790,6 +824,23 @@
         }
       }
     },
+    "Speaker Application Form" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speaker Application Form"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スピーカー応募フォーム"
+          }
+        }
+      }
+    },
     "Sponsor" : {
       "extractionState" : "migrated",
       "localizations" : {
@@ -803,6 +854,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "スポンサー"
+          }
+        }
+      }
+    },
+    "Sponsor Inquiry Form" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sponsor Inquiry Form"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スポンサー応募フォーム"
           }
         }
       }
@@ -1057,6 +1125,23 @@
         }
       }
     },
+    "try! Swift Tokyo is looking for speakers who can share new discoveries and learnings with developers around the world! You can apply for your own talk or recommend someone you’d love to hear on stage." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "try! Swift Tokyo is looking for speakers who can share new discoveries and learnings with developers around the world! You can apply for your own talk or recommend someone you’d love to hear on stage."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "世界中の開発者に新しい発見や学びを届けるスピーカーを募集しています！あなた自身の応募はもちろん、「この人の話を聞いてほしい！」という推薦も大歓迎です。"
+          }
+        }
+      }
+    },
     "Unfortunately, ticket transfers are not permitted due to system limitations." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1104,6 +1189,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "場所"
+          }
+        }
+      }
+    },
+    "We are seeking sponsors to help make try! Swift Tokyo a success!<br>If you are interested, please contact us here.<br>We will send you the relevant materials in due course." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We are seeking sponsors to help make try! Swift Tokyo a success!<br>If you are interested, please contact us here.<br>We will send you the relevant materials in due course."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "try! Swift Tokyo を一緒に盛り上げていただけるスポンサーを募集しています！ご検討いただける方はこちらからご連絡ください。順次、資料をお届けいたします。"
           }
         }
       }
