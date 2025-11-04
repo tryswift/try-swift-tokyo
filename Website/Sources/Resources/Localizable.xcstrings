@@ -69,6 +69,23 @@
         }
       }
     },
+    "Apply or Recommend a Speaker" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply or Recommend a Speaker"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スピーカー応募・推薦"
+          }
+        }
+      }
+    },
     "Apr. 9th - 11th, 2025" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -116,23 +133,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "2026年4月12日（日）〜 14日（火）<br><br>4/12：ワークショップ & TBD<br>4/13〜14：カンファレンス"
-          }
-        }
-      }
-    },
-    "Call for Speakers" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Call for Speakers"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "スピーカー応募"
           }
         }
       }
@@ -824,13 +824,13 @@
         }
       }
     },
-    "Speaker Submission Form" : {
+    "Speaker Application Form" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speaker Submission Form"
+            "value" : "Speaker Application Form"
           }
         },
         "ja" : {
@@ -1125,6 +1125,23 @@
         }
       }
     },
+    "try! Swift Tokyo is looking for speakers who can share new discoveries and learnings with developers around the world! You can apply for your own talk or recommend someone you’d love to hear on stage." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "try! Swift Tokyo is looking for speakers who can share new discoveries and learnings with developers around the world! You can apply for your own talk or recommend someone you’d love to hear on stage."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "try! Swift Tokyo では、世界中の開発者に新しい発見や学びを届けるスピーカーを募集しています！あなた自身の登壇はもちろん、「この人の話を聞いてほしい！」という推薦も大歓迎です。"
+          }
+        }
+      }
+    },
     "Unfortunately, ticket transfers are not permitted due to system limitations." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1176,36 +1193,19 @@
         }
       }
     },
-    "We are looking for speakers to showcase their valuable experiences and captivating skills! Would you like to share your favorite technologies with the world? We look forward to receiving your applications here." : {
+    "We are seeking sponsors to help make try! Swift Tokyo a success!<br>If you are interested, please contact us here.<br>We will send you the relevant materials in due course." : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We are looking for speakers to showcase their valuable experiences and captivating skills! Would you like to share your favorite technologies with the world? We look forward to receiving your applications here."
+            "value" : "We are seeking sponsors to help make try! Swift Tokyo a success!<br>If you are interested, please contact us here.<br>We will send you the relevant materials in due course."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "みなさんの貴重な経験と魅力的なスキルを披露してくださるスピーカーを募集しています！<br>あなたの“推し技術”を世界中に広めてみませんか？こちらから応募をお待ちしています。"
-          }
-        }
-      }
-    },
-    "We are seeking sponsors to help make try! Swift Tokyo a success!<br>If you are interested, please contact us here. We will send you the relevant materials in due course." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "We are seeking sponsors to help make try! Swift Tokyo a success!<br>If you are interested, please contact us here. We will send you the relevant materials in due course."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "try! Swift Tokyo を一緒に盛り上げていただけるスポンサーを募集しています！<br>ご検討いただける方はこちらからご連絡ください。順次、資料をお届けいたします。"
+            "value" : "try! Swift Tokyo を一緒に盛り上げていただけるスポンサーを募集しています！<br>ご検討いただける方はこちらからご連絡ください。<br>順次、資料をお届けいたします。"
           }
         }
       }

@@ -7,7 +7,7 @@ struct ApplicationFormsComponent: HTML {
     Grid {
       Card {
         Text {
-          String("We are seeking sponsors to help make try! Swift Tokyo a success!<br>If you are interested, please contact us here. We will send you the relevant materials in due course.", language: language)
+          String("We are seeking sponsors to help make try! Swift Tokyo a success!<br>If you are interested, please contact us here.<br>We will send you the relevant materials in due course.", language: language)
             .foregroundStyle(.dimGray)
         }
         Text {
@@ -28,12 +28,12 @@ struct ApplicationFormsComponent: HTML {
 
       Card {
         Text {
-          String("We are looking for speakers to showcase their valuable experiences and captivating skills! Would you like to share your favorite technologies with the world? We look forward to receiving your applications here.", language: language)
+          String("try! Swift Tokyo is looking for speakers who can share new discoveries and learnings with developers around the world! You can apply for your own talk or recommend someone you’d love to hear on stage.", language: language)
             .foregroundStyle(.dimGray)
         }
         Text {
           Link(
-            String("Speaker Submission Form", language: language),
+            String("Speaker Application Form", language: language),
             target: "https://forms.gle/FH8EWnPBBF7ziUGDA"
           )
           .target(.newWindow)
@@ -41,7 +41,7 @@ struct ApplicationFormsComponent: HTML {
           .role(.primary)
         }
       } header: {
-        Text(String("Call for Speakers", language: language))
+        Text(String("Apply or Recommend a Speaker", language: language))
           .font(.title4)
           .fontWeight(.bold)
           .foregroundStyle(.bootstrapPurple)
