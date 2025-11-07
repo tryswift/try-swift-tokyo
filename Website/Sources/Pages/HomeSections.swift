@@ -7,6 +7,7 @@ enum HomeSectionType: String, CaseIterable {
   case about = "About"
   case outline = "Outline"
   case speaker = "Speaker"
+  case tickets = "Tickets"
   case meetTheHosts = "Meet the Hosts"
   case timetable = "Timetable"
   case sponsor = "Sponsor"
@@ -65,6 +66,9 @@ extension HomeSectionType {
       SectionHeader(type: self, language: language)
       OutlineComponent(year: year, language: language)
         .padding(.bottom, .px(32))
+    case .tickets:
+      SectionHeader(type: self, language: language)
+      TicketsComponent(language: language)
     case .speaker:
       SectionHeader(type: self, language: language)
 
