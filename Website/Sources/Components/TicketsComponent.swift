@@ -14,7 +14,7 @@ struct TicketsComponent: HTML {
         .margin(.bottom, .px(20))
       Embed(
         title: String("Tickets", language: language),
-        url: "https://lu.ma/embed/event/evt-iaERdyhafeQdV5f/simple"
+        url: "https://luma.com/embed/event/evt-WHT17EaVs2of1Gs/simple"
       )
       .aspectRatio(0.75)
       .frame(height: .px(1_800))
