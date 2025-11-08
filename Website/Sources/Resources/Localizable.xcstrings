@@ -1108,23 +1108,6 @@
         }
       }
     },
-    "try! Swift Tokyo is available in both Japanese and English, and all talks are supported by simultaneous interpretation. During office hours, interpreters are also present, so you can ask questions in either English or Japanese as needed." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "try! Swift Tokyo is available in both Japanese and English, and all talks are supported by simultaneous interpretation. During office hours, interpreters are also present, so you can ask questions in either English or Japanese as needed."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "try! Swift Tokyo は日本語と英語に対応しており、すべてのトークで同時通訳がサポートされています。オフィスアワーでは、通訳者も同席するので、必要に応じて英語でも日本語でも質問することができます。"
-          }
-        }
-      }
-    },
     "try! Swift Tokyo is looking for speakers who can share new discoveries and learnings with developers around the world! You can apply for your own talk or recommend someone you’d love to hear on stage." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1138,6 +1121,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "世界中の開発者に新しい発見や学びを届けるスピーカーを募集しています！あなた自身の応募はもちろん、「この人の話を聞いてほしい！」という推薦も大歓迎です。"
+          }
+        }
+      }
+    },
+    "try! Swift Tokyo operates primarily in Japanese and English, with all venue announcements made in both languages. We also provide AI-powered translation tools, allowing participants to follow sessions in their native language." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "try! Swift Tokyo operates primarily in Japanese and English, with all venue announcements made in both languages. We also provide AI-powered translation tools, allowing participants to follow sessions in their native language."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "try! Swift Tokyo は日本語と英語を主要言語としており、会場内のアナウンスは日本語と英語の両方で行われます。また、AIによる翻訳ツールを導入しているため、参加者は母国語でセッション内容を理解することができます。"
           }
         }
       }
