@@ -1261,36 +1261,36 @@
         }
       }
     },
-    "You can create a receipt by opening the <a href=\"https://lu.ma/settings/payment\" target=\"_blank\">Luma payment history page</a> and selecting the menu icon (three dots) displayed on the right side of the payment history. If you want to customize the name on the receipt, you can temporarily change your account name in the <a href=\"https://lu.ma/settings\" target=\"_blank\">Luma settings</a>." : {
+    "You can create a receipt by opening the <a href=\"https://luma.com/settings/payment\" target=\"_blank\">Luma payment history page</a> and selecting the menu icon (three dots) displayed on the right side of the payment history. If you want to customize the name on the receipt, you can temporarily change your account name in the <a href=\"https://luma.com/settings\" target=\"_blank\">Luma settings</a>." : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You can create a receipt by opening the <a href=\"https://lu.ma/settings/payment\" target=\"_blank\">Luma payment history page</a> and selecting the menu icon (three dots) displayed on the right side of the payment history. If you want to customize the name on the receipt, you can temporarily change your account name in the <a href=\"https://lu.ma/settings\" target=\"_blank\">Luma settings</a>."
+            "value" : "You can create a receipt by opening the <a href=\"https://luma.com/settings/payment\" target=\"_blank\">Luma payment history page</a> and selecting the menu icon (three dots) displayed on the right side of the payment history. If you want to customize the name on the receipt, you can temporarily change your account name in the <a href=\"https://luma.com/settings\" target=\"_blank\">Luma settings</a>."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "<a href=\"https://lu.ma/settings/payment\" target=\"_blank\">Lumaの決済履歴画面</a>を開き、決済履歴の右側に表示される3点リーダから領収書を作成することができます。領収書の宛名をカスタマイズしたい場合は、<a href=\"https://lu.ma/settings\" target=\"_blank\">Lumaの設定</a>からアカウント名を一時的に変更することで対応可能です。"
+            "value" : "<a href=\"https://luma.com/settings/payment\" target=\"_blank\">Lumaの決済履歴画面</a>を開き、決済履歴の右側に表示される3点リーダから領収書を作成することができます。領収書の宛名をカスタマイズしたい場合は、<a href=\"https://luma.com/settings\" target=\"_blank\">Lumaの設定</a>からアカウント名を一時的に変更することで対応可能です。"
           }
         }
       }
     },
-    "You can get ticket from <a href=\"https://lu.ma/qydkgwtf\" target=\"_blank\">Luma</a> or get from below.<br>Before getting ticket please read [FAQ](/faq_en)." : {
+    "You can get ticket from <a href=\"https://luma.com/qydkgwtf\" target=\"_blank\">Luma</a> or get from below.<br>Before getting ticket please read [FAQ](/faq_en)." : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You can get ticket from <a href=\"https://lu.ma/qydkgwtf\" target=\"_blank\">Luma</a> or get from below.<br>Before getting ticket please read [FAQ](/faq_en)."
+            "value" : "You can get ticket from <a href=\"https://luma.com/qydkgwtf\" target=\"_blank\">Luma</a> or get from below.<br>Before getting ticket please read [FAQ](/faq_en)."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "チケットは<a href=\"https://lu.ma/qydkgwtf\" target=\"_blank\">Luma</a>か下記から購入できます。<br>チケット購入前に、[よくある質問](/faq)をお読みください。"
+            "value" : "チケットは<a href=\"https://luma.com/qydkgwtf\" target=\"_blank\">Luma</a>か下記から購入できます。<br>チケット購入前に、[よくある質問](/faq)をお読みください。"
           }
         }
       }
