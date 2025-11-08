@@ -1040,19 +1040,19 @@
       },
       "shouldTranslate" : false
     },
-    "Ticket cancellations are accepted up until 30 days before the event, specifically by Tuesday, March 11 (JST).<br>After canceling via Luma, please contact the organizers. No cancellations will be accepted after this deadline. If you selected for advance delivery of swags, cancellation is not possible once the items have been shipped.<br><br>Regardless of ticket type, a 10% processing fee will be deducted from the refund amount. The refund processing time will depend on the payment service’s policies." : {
+    "Ticket cancellations are accepted up until 30 days before the event, specifically by Thursday, March 12 (JST).<br>After canceling via Luma, please contact the organizers. No cancellations will be accepted after this deadline.<br><br>Regardless of ticket type, a 10% processing fee will be deducted from the refund amount. The refund processing time will depend on the payment service’s policies." : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ticket cancellations are accepted up until 30 days before the event, specifically by Tuesday, March 11 (JST).<br>After canceling via Luma, please contact the organizers. No cancellations will be accepted after this deadline. If you selected for advance delivery of swags, cancellation is not possible once the items have been shipped.<br><br>Regardless of ticket type, a 10% processing fee will be deducted from the refund amount. The refund processing time will depend on the payment service’s policies."
+            "value" : "Ticket cancellations are accepted up until 30 days before the event, specifically by Thursday, March 12 (JST).<br>After canceling via Luma, please contact the organizers. No cancellations will be accepted after this deadline.<br><br>Regardless of ticket type, a 10% processing fee will be deducted from the refund amount. The refund processing time will depend on the payment service’s policies."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "チケットのキャンセルは、開催30日前の3/11 (火) まで受け付けます。Lumaでキャンセル後、運営に問い合わせを行ってください。期日以降、キャンセルは一切応じられません。ノベルティの事前配送を選択した場合、発送後のキャンセルはできません。<br><br>チケット種別によらず、金額の10%を手数料として差し引いて、返金します。返金されるまでの期間は、決済サービスの規定に準じます。"
+            "value" : "チケットのキャンセルは、開催30日前の3/12 (木) まで受け付けます。Lumaでキャンセル後、運営にお問い合わせください。期日以降、キャンセルは一切応じられません。<br><br>チケット種別によらず、金額の10%を手数料として差し引いて、返金します。返金されるまでの期間は、決済サービスの規定に準じます。"
           }
         }
       }
