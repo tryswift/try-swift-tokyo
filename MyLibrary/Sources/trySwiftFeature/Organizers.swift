@@ -35,7 +35,7 @@ public struct Organizers {
     }
   }
 
-  @Reducer(state: .equatable)
+  @Reducer
   public enum Destination {
     case profile(Profile)
   }
@@ -59,6 +59,8 @@ public struct Organizers {
     }
   }
 }
+
+extension Organizers.Destination.State: Equatable {}
 
 @ViewAction(for: Organizers.self)
 public struct OrganizersView: View {

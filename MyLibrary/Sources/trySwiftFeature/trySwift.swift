@@ -33,7 +33,7 @@ public struct TrySwift {
     }
   }
 
-  @Reducer(state: .equatable)
+  @Reducer
   public enum Path {
     case organizers(Organizers)
     case profile(Profile)
@@ -78,6 +78,8 @@ public struct TrySwift {
     .forEach(\.path, action: \.path)
   }
 }
+
+extension TrySwift.Path.State: Equatable {}
 
 @ViewAction(for: TrySwift.self)
 public struct TrySwiftView: View {
