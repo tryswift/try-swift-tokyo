@@ -94,7 +94,7 @@ final class trySwiftTests: XCTestCase {
     await store.send(\.view.ticketTapped)
     receivedUrl.withValue {
       XCTAssertTrue(
-        $0!.absoluteString.hasPrefix("https://lu.ma")
+        $0!.absoluteString.hasPrefix("https://luma.com")
       )
     }
   }

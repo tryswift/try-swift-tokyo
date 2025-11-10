@@ -6,7 +6,7 @@ struct TicketsComponent: HTML {
   var body: some HTML {
     Section {
         Text(markdown: String(
-            "You can get ticket from <a href=\"https://lu.ma/qydkgwtf\" target=\"_blank\">Luma</a> or get from below.<br>Before getting ticket please read [FAQ](/faq_en).",
+            "You can get ticket from <a href=\"https://luma.com/qydkgwtf\" target=\"_blank\">Luma</a> or get from below.<br>Before getting ticket please read [FAQ](/faq_en).",
             language: language
         ))
         .font(.lead)
