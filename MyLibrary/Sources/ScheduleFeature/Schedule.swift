@@ -49,12 +49,12 @@ public struct Schedule {
     }
   }
 
-  @Reducer(state: .equatable)
+  @Reducer
   public enum Path {
     case detail(ScheduleDetail)
   }
 
-  @Reducer(state: .equatable)
+  @Reducer
   public enum Destination {}
 
   @Dependency(DataClient.self) var dataClient
@@ -108,6 +108,9 @@ public struct Schedule {
     .ifLet(\.$destination, action: \.destination)
   }
 }
+
+extension Schedule.Path.State: Equatable {}
+extension Schedule.Destination.State: Equatable {}
 
 @ViewAction(for: Schedule.self)
 public struct ScheduleView: View {
