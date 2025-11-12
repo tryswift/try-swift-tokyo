@@ -795,6 +795,23 @@
         }
       }
     },
+    "Register" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Register"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "参加登録"
+          }
+        }
+      }
+    },
     "Some countries and regions require an application for a tourist VISA in order to enter Japan.<br>Depending on the country of residence you selected when you purchased your ticket, we will ask you if you need assistance with VISA application documents.<br>To find out if you reside in a country that requires a VISA, please visit the <a href=\"https://www.mofa.go.jp/j_info/visit/visa/index.html\" target=\"_blank\">Ministry of Foreign Affairs website</a>." : {
       "extractionState" : "manual",
       "localizations" : {
