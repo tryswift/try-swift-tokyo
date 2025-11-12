@@ -18,6 +18,18 @@ struct MainNavigationBar: HTML {
       }
       Link(String("FAQ", language: language), target: FAQ(language: language))
         .role(.light)
+
+      Span {
+        Button(String("Register", language: language), systemImage: "ticket-perforated-fill")
+          .buttonSize(.small)
+          .role(.light)
+          .fontWeight(.bold)
+          .foregroundStyle(.bootstrapPurple)
+          .data("luma-action", "checkout")
+          .data("luma-event-id", "evt-WHT17EaVs2of1Gs")
+      }
+      .navigationBarVisibility(.always)
+
     } logo: {
       LanguageSelector(path: { path(year, $0) }, currentLanguage: language)
     }

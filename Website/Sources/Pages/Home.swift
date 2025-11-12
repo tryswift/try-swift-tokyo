@@ -23,6 +23,8 @@ struct Home: StaticPage {
   @Dependency(DataClient.self) var dataClient
 
   var body: some HTML {
+    Script(file: URL(string: "https://embed.lu.ma/checkout-button.js")!).id("luma-checkout")
+
     MainNavigationBar(
       path: Home.generatePath(for:language:),
       sections: HomeSectionType.navigationItems(for: year),
