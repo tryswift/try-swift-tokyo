@@ -30,6 +30,14 @@ Available on the App Store soon, or you can build the app yourself. See the [Get
 2. Open `trySwiftTokyo.xcworkspace` in Xcode
 3. Build and run the app
 
+## Preview the Website
+
+1. Install the Ignite command-line tool by following the instructions at [twostraws/Ignite](https://github.com/twostraws/Ignite)
+2. Open `trySwiftTokyo.xcworkspace` in Xcode
+3. Select the `Website` scheme in Xcode
+4. Run the project (⌘+R) and verify the build succeeds in the console
+5. Run `ignite run --preview` from the command line
+
 ## Contributing
 
 We welcome contributions to the app! Please refer to the [Contributing Guidelines](CONTRIBUTING.md) for more information.
