@@ -40,7 +40,7 @@ public struct SponsorsList {
     Reduce { state, action in
       switch action {
       case .view(.onAppear):
-        state.sponsors = try! dataClient.fetchSponsors()
+        state.sponsors = try! dataClient.fetchSponsors(.year2026)
         return .none
 
       case .view(.sponsorTapped(let sponsor)):

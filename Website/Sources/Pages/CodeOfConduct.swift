@@ -1,4 +1,5 @@
 import Ignite
+import SharedModels
 
 enum CodeOfConductSectionType: String, SectionDefinition {
   case communityParticipation = "Participation in the Community"

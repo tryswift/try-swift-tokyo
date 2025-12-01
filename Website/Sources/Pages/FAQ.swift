@@ -1,4 +1,5 @@
 import Ignite
+import SharedModels
 
 enum FAQSectionType: String, SectionDefinition {
   case aboutTrySwift = "Q. What's try! Swift?"

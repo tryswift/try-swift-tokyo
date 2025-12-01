@@ -1,4 +1,5 @@
 import Ignite
+import SharedModels
 
 struct AccessComponent: HTML {
   let year: ConferenceYear

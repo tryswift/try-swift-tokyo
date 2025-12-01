@@ -1,6 +1,7 @@
 import Cocoa
 import Foundation
 import Ignite
+import SharedModels
 
 @main
 struct ConferenceWebsite {

@@ -1,4 +1,5 @@
 import Ignite
+import SharedModels
 
 struct MainNavigationBar: HTML {
   let path: (ConferenceYear, SupportedLanguage) -> String

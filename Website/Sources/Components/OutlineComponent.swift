@@ -1,4 +1,5 @@
 import Ignite
+import SharedModels
 
 struct OutlineComponent: HTML {
   let year: ConferenceYear
