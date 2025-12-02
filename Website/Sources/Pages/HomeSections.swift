@@ -139,7 +139,7 @@ extension HomeSectionType {
         try! dataClient.fetchSponsors(.year2026)
       }
 
-      if sponsors.allPlans.values.allSatisfy({ !$0.isEmpty }) {
+      if sponsors.allPlans.values.contains(where: { !$0.isEmpty }) {
         SectionHeader(type: self, language: language)
       }
 
