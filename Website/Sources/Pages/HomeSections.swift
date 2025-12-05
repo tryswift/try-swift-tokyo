@@ -132,13 +132,7 @@ extension HomeSectionType {
         }
       }
     case .sponsor:
-      let sponsors = switch year {
-      case .year2025:
-        try! dataClient.fetchSponsors(.year2025)
-      case .year2026:
-        try! dataClient.fetchSponsors(.year2026)
-      }
-
+      let sponsors = try! dataClient.fetchSponsors(year)
       if sponsors.allPlans.values.contains(where: { !$0.isEmpty }) {
         SectionHeader(type: self, language: language)
       }
