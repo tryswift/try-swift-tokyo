@@ -1,4 +1,5 @@
 import Ignite
+import SharedModels
 
 enum PrivacyPolicySectionType: String, SectionDefinition {
   case announcementForUS = "" // Untitled

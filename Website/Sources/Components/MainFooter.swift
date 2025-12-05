@@ -1,5 +1,6 @@
 import Foundation
 import Ignite
+import SharedModels
 
 struct MainFooter: HTML {
   let year: ConferenceYear

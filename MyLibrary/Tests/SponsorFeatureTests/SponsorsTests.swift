@@ -12,7 +12,9 @@ final class SponsorsTests: XCTestCase {
     let store = TestStore(initialState: SponsorsList.State()) {
       SponsorsList()
     } withDependencies: {
-      $0[DataClient.self].fetchSponsors = { @Sendable in .mock }
+      $0[DataClient.self].fetchSponsors = { @Sendable (_: ConferenceYear) throws -> Sponsors in
+        .mock
+      }
     }
 
     await store.send(\.view.onAppear) {

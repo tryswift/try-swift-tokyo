@@ -25,7 +25,7 @@ extension HomeSectionType {
   func isAvailable(for year: ConferenceYear) -> Bool {
     switch year {
     case .year2025: true
-    case .year2026: [.about, .outline, .tickets, .access, .meetTheHosts, .meetTheOrganizers].contains(self)
+    case .year2026: [.about, .outline, .tickets, .access, .meetTheHosts, .sponsor, .meetTheOrganizers].contains(self)
     }
   }
 
@@ -132,9 +132,11 @@ extension HomeSectionType {
         }
       }
     case .sponsor:
-      SectionHeader(type: self, language: language)
+      let sponsors = try! dataClient.fetchSponsors(year)
+      if sponsors.allPlans.values.contains(where: { !$0.isEmpty }) {
+        SectionHeader(type: self, language: language)
+      }
 
-      let sponsors = try! dataClient.fetchSponsors()
       ForEach(Plan.allCases) { plan in
         if let sponsors = sponsors.allPlans[plan], !sponsors.isEmpty {
           Text(plan.rawValue.localizedCapitalized.uppercased())
