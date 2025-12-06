@@ -87,10 +87,10 @@ extension HomeSectionType {
         }
       }
     case .meetTheHosts:
-      SectionHeader(type: self, language: language)
-
-      let hosts = try! dataClient.fetchOrganizers()
+      let hosts = try! dataClient.fetchOrganizers(year: year)
         .filter { [6, 11].contains($0.id) }
+
+      SectionHeader(type: self, language: language)
       CenterAlignedGrid(hosts, columns: hosts.count) { organizer in
         OrganizerComponent(organizer: organizer)
           .margin(.bottom, .px(32))
@@ -154,9 +154,9 @@ extension HomeSectionType {
         }
       }
     case .meetTheOrganizers:
-      SectionHeader(type: self, language: language)
+      let organizers = try! dataClient.fetchOrganizers(year: year)
 
-      let organizers = try! dataClient.fetchOrganizers()
+      SectionHeader(type: self, language: language)
       CenterAlignedGrid(organizers, columns: 4) { organizer in
         OrganizerComponent(organizer: organizer)
           .margin(.bottom, .px(32))
