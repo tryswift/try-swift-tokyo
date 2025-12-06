@@ -8,6 +8,7 @@ enum HomeSectionType: String, CaseIterable {
   case outline = "Outline"
   case speaker = "Speaker"
   case tickets = "Tickets"
+  case cfp = "Call for Proposals"
   case meetTheHosts = "Meet the Hosts"
   case timetable = "Timetable"
   case sponsor = "Sponsor"
@@ -24,8 +25,8 @@ extension HomeSectionType {
 
   func isAvailable(for year: ConferenceYear) -> Bool {
     switch year {
-    case .year2025: true
-    case .year2026: [.about, .outline, .tickets, .access, .meetTheHosts, .sponsor, .meetTheOrganizers].contains(self)
+    case .year2025: [.about, .outline, .speaker, .timetable, .meetTheHosts, .sponsor, .meetTheOrganizers, .access].contains(self)
+    case .year2026: [.about, .outline, .tickets, .cfp, .meetTheHosts, .sponsor, .meetTheOrganizers, .access].contains(self)
     }
   }
 
@@ -86,6 +87,9 @@ extension HomeSectionType {
           SpeakerModal(speaker: speaker, language: language)
         }
       }
+    case .cfp:
+      SectionHeader(type: self, language: language)
+      CallForProposalComponent(language: language)
     case .meetTheHosts:
       SectionHeader(type: self, language: language)
 
@@ -133,15 +137,13 @@ extension HomeSectionType {
       }
     case .sponsor:
       let sponsors = try! dataClient.fetchSponsors(year)
-      if sponsors.allPlans.values.contains(where: { !$0.isEmpty }) {
-        SectionHeader(type: self, language: language)
-      }
+      SectionHeader(type: self, language: language)
 
       ForEach(Plan.allCases) { plan in
         if let sponsors = sponsors.allPlans[plan], !sponsors.isEmpty {
           Text(plan.rawValue.localizedCapitalized.uppercased())
             .horizontalAlignment(.center)
-            .font(.title1)
+            .font(.title2)
             .fontWeight(.bold)
             .foregroundStyle(plan.titleColor)
             .margin(.all, .px(32))
@@ -150,8 +152,13 @@ extension HomeSectionType {
             Section {
               SponsorComponent(sponsor: sponsor, size: plan.maxSize, language: language)
             }
-          }.margin(.bottom, .px(160))
+          }
         }
+      }
+
+      if year == ConferenceYear.latest {
+        CallForSponsorsComponent(language: language)
+          .margin(.top, .px(32))
       }
     case .meetTheOrganizers:
       SectionHeader(type: self, language: language)
@@ -181,29 +188,27 @@ extension HomeSectionType {
 private extension Plan {
   var columnCount: Int {
     switch self {
-    case .platinum, .gold:
-      return 3
-    case .silver:
-      return 4
-    case .bronze, .diversityAndInclusion, .community, .student:
-      return 5
-    case .individual:
-      return 6
+    case .platinum: 1
+    case .gold: 2
+    case .silver: 3
+    case .bronze: 4
+    case .diversityAndInclusion, .community, .student: 5
+    case .individual: 6
     }
   }
 
   var maxSize: CGSize {
     switch self {
     case .platinum:
-      return .init(width: 260, height: 146)
+      return .init(width: 300, height: 169)
     case .gold:
-      return .init(width: 200, height: 112)
+      return .init(width: 270, height: 152)
     case .silver:
-      return .init(width: 160, height: 90)
+      return .init(width: 230, height: 130)
     case .bronze, .diversityAndInclusion, .community, .student:
-      return .init(width: 130, height: 72)
+      return .init(width: 190, height: 107)
     case .individual:
-      return .init(width: 100, height: 100)
+      return .init(width: 130, height: 73)
     }
   }
 

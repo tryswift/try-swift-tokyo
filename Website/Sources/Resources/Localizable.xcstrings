@@ -69,23 +69,6 @@
         }
       }
     },
-    "Apply or Recommend a Speaker" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apply or Recommend a Speaker"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "スピーカー応募・推薦"
-          }
-        }
-      }
-    },
     "Apr. 9th - 11th, 2025" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -137,19 +120,13 @@
         }
       }
     },
-    "Call for Sponsors" : {
+    "Call for Proposals" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Call for Sponsors"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スポンサー募集"
+            "value" : "プロポーザル募集"
           }
         }
       }
@@ -1125,23 +1102,6 @@
         }
       }
     },
-    "try! Swift Tokyo is looking for speakers who can share new discoveries and learnings with developers around the world! You can apply for your own talk or recommend someone you’d love to hear on stage." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "try! Swift Tokyo is looking for speakers who can share new discoveries and learnings with developers around the world! You can apply for your own talk or recommend someone you’d love to hear on stage."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "世界中の開発者に新しい発見や学びを届けるスピーカーを募集しています！あなた自身の応募はもちろん、「この人の話を聞いてほしい！」という推薦も大歓迎です。"
-          }
-        }
-      }
-    },
     "try! Swift Tokyo operates primarily in Japanese and English, with all venue announcements made in both languages. We also provide AI-powered translation tools, allowing participants to follow sessions in their native language." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1210,23 +1170,6 @@
         }
       }
     },
-    "We are seeking sponsors to help make try! Swift Tokyo a success!<br>If you are interested, please contact us here.<br>We will send you the relevant materials in due course." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "We are seeking sponsors to help make try! Swift Tokyo a success!<br>If you are interested, please contact us here.<br>We will send you the relevant materials in due course."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "try! Swift Tokyo を一緒に盛り上げていただけるスポンサーを募集しています！ご検討いただける方はこちらからご連絡ください。順次、資料をお届けいたします。"
-          }
-        }
-      }
-    },
     "When a provider of personal information requests disclosure of their own personal information, the Corporation will, in principle, disclose the information without delay. When a provider of personal information requests correction of their own personal information, the Corporation will, in principle, make such correction without delay." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1240,6 +1183,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "本法人は、個人情報の提供者から自己に関する個人情報の開示の請求があったときは、原則として遅滞なく開示します。また、自己に関する個人情報の訂正等の申し出があったときは、原則として遅滞なく訂正等を行います。"
+          }
+        }
+      }
+    },
+    "Workshop Proposal Form" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ワークショップ応募フォーム"
           }
         }
       }
