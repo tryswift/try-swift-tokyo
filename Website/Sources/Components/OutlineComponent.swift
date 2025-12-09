@@ -39,7 +39,6 @@ struct OutlineComponent: HTML {
         .font(.lead)
       }
     }
-    ApplicationFormsComponent(language: language)
   }
 }
 
