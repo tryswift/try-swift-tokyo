@@ -1,10 +1,44 @@
 {
     "platinum": [],
-    "gold": [],
+    "gold": [
+        {
+            "id": 1,
+            "name": "株式会社U-NEXT",
+            "imageName": "GOLD_u-next",
+            "link": "https://www.unext.co.jp/en",
+            "japanese_link": "https://www.unext.co.jp/"
+        },
+        {
+            "id": 2,
+            "name": "Sentry",
+            "imageName": "GOLD_Sentry",
+            "link": "https://sentry.ichizoku.io/"
+        },
+        {
+            "id": 3,
+            "name": "合同会社DMM.com",
+            "imageName": "GOLD_DMM",
+            "link": "https://dmm-corp.com/"
+        }
+    ],
     "silver": [],
-    "bronze": [],
+    "bronze": [
+        {
+            "id": 1,
+            "name": "ピクシブ株式会社",
+            "imageName": "BRONZE_pixiv",
+            "link": "https://www.pixiv.co.jp/"
+        }
+    ],
     "diversity": [],
-    "student": [],
+    "student": [
+        {
+          "id": 1,
+          "name": "ピクシブ株式会社",
+          "imageName": "BRONZE_pixiv",
+          "link": "https://www.pixiv.co.jp/"
+        }
+    ],
     "community": [],
     "individual": []
 }
