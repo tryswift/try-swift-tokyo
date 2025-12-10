@@ -21,7 +21,15 @@
             "link": "https://dmm-corp.com/"
         }
     ],
-    "silver": [],
+    "silver": [
+        {
+            "id": 1,
+            "name": "株式会社メルカリ",
+            "imageName": "SILVER_mercari",
+            "link": "https://about.mercari.com/en/",
+            "japanese_link": "https://about.mercari.com/"
+        }
+    ],
     "bronze": [
         {
             "id": 1,
