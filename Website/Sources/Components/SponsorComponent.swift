@@ -3,35 +3,40 @@ import Ignite
 import SharedModels
 
 struct SponsorComponent: HTML {
-  let sponsor: Sponsor
-  let size: CGSize
-  let language: SupportedLanguage
+    private let sponsor: Sponsor
+    private let size: CGSize
+    private let language: SupportedLanguage
+    private let image: any InlineElement
 
-  var body: some HTML {
-    var image: any InlineElement {
-      Image(sponsor.imageFilename, description: sponsor.name ?? "sponsor logo")
-        .resizable()
-        .frame(maxWidth: Int(size.width), maxHeight: Int(size.height))
-        .margin(.bottom, .px(16))
+    init(sponsor: Sponsor, size: CGSize, language: SupportedLanguage) {
+        self.sponsor = sponsor
+        self.size = size
+        self.language = language
+
+        self.image = Image(sponsor.imageFilename, description: sponsor.name ?? "sponsor logo")
+            .resizable()
+            .frame(maxWidth: Int(size.width), maxHeight: Int(size.height))
     }
-    if let target = sponsor.getLocalizedLink(language: language)?.absoluteString {
-      Link(image, target: target)
-        .target(.newWindow)
-    } else {
-      image
+
+    var body: some HTML {
+        if let target = sponsor.getLocalizedLink(language: language)?.absoluteString {
+            Link(image, target: target)
+                .target(.newWindow)
+        } else {
+            image
+        }
     }
-  }
 }
 
-private extension Sponsor {
-  func getLocalizedLink(language: SupportedLanguage) -> URL? {
-    switch language {
-    case .ja: japaneseLink ?? link
-    case .en: link
+extension Sponsor {
+    fileprivate func getLocalizedLink(language: SupportedLanguage) -> URL? {
+        switch language {
+        case .ja: japaneseLink ?? link
+        case .en: link
+        }
     }
-  }
 
-  var imageFilename: String {
-    "/images/from_app/\(imageName).png"
-  }
+    fileprivate var imageFilename: String {
+        "/images/from_app/\(imageName).png"
+    }
 }

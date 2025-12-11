@@ -14,7 +14,7 @@ struct SectionHeader: HTML {
     }
     .padding(.top, .px(80))
     .padding(.bottom, .px(32))
-    .margin(.bottom, .px(32))
+    .margin(.bottom, .px(54))
     .border(.bootstrapPurple, width: 2, edges: .bottom)
     .id(type.htmlId)
   }
