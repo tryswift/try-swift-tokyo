@@ -137,8 +137,8 @@ extension HomeSectionType {
       }
     case .sponsor:
       let sponsors = try! dataClient.fetchSponsors(year)
-      SectionHeader(type: self, language: language)
 
+      SectionHeader(type: self, language: language)
       ForEach(Plan.allCases) { plan in
         if let sponsors = sponsors.allPlans[plan], !sponsors.isEmpty {
           Text(plan.rawValue.localizedCapitalized.uppercased())
@@ -146,13 +146,18 @@ extension HomeSectionType {
             .font(.title2)
             .fontWeight(.bold)
             .foregroundStyle(plan.titleColor)
-            .margin(.all, .px(32))
+            .background(plan.titleBackgroundColor)
+            .cornerRadius(.px(16))
+            .margin(.bottom, .px(48))
 
-          CenterAlignedGrid(sponsors, columns: plan.columnCount) { sponsor in
-            Section {
-              SponsorComponent(sponsor: sponsor, size: plan.maxSize, language: language)
+            Grid(alignment: .center, spacing: 48) {
+                ForEach(sponsors) { sponsor in
+                    SponsorComponent(sponsor: sponsor, size: plan.maxSize, language: language)
+                }
             }
-          }
+            .columns(plan.columnCount)
+            .horizontalAlignment(.center)
+            .margin(.bottom, .px(96))
         }
       }
 
@@ -200,13 +205,13 @@ private extension Plan {
   var maxSize: CGSize {
     switch self {
     case .platinum:
-      return .init(width: 300, height: 169)
+      return .init(width: 400, height: 224)
     case .gold:
-      return .init(width: 270, height: 152)
+        return .init(width: 320, height: 179)
     case .silver:
-      return .init(width: 230, height: 130)
-    case .bronze, .diversityAndInclusion, .community, .student:
-      return .init(width: 190, height: 107)
+      return .init(width: 220, height: 124)
+    case .bronze, .diversityAndInclusion, .student, .community:
+      return .init(width: 200, height: 112)
     case .individual:
       return .init(width: 130, height: 73)
     }
@@ -214,11 +219,23 @@ private extension Plan {
 
   var titleColor: Color {
     switch self {
-    case .platinum: .lightSlateGray
-    case .gold: .goldenrod
-    case .silver: .silver
-    case .bronze: .saddleBrown
-    case .diversityAndInclusion, .student, .community, .individual: .steelBlue
+    case .platinum: .init(hex: "#657E8C")
+    case .gold: .init(hex: "#5E532A")
+    case .silver: .init(hex: "#657E8C")
+    case .bronze: .init(hex: "#AD5523")
+    case .diversityAndInclusion, .student: .init(hex: "#1B849B")
+    case .community, .individual: .init(hex: "#6B3EAF")
     }
   }
+
+    var titleBackgroundColor: Color {
+        switch self {
+        case .platinum: .init(hex: "#D0E1EA")
+        case .gold: .init(hex: "#EFE4B9")
+        case .silver: .init(hex: "#E5E5E5")
+        case .bronze: .init(hex: "#F3E0D5")
+        case .diversityAndInclusion, .student: .init(hex: "#C4F0F2")
+        case .community, .individual: .init(hex: "#EBDFFF")
+        }
+    }
 }
