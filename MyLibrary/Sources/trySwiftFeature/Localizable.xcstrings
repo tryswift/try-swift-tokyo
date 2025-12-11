@@ -103,17 +103,6 @@
         }
       }
     },
-    "Key" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Key"
-          }
-        }
-      }
-    },
     "Luma" : {
       "localizations" : {
         "ja" : {
@@ -158,6 +147,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "iOS Developerとして働き始めて４年目になろうとしています。最近はテストについて勉強していて、趣味は編み物やコーヒーです。"
+          }
+        }
+      }
+    },
+    "Mayama is an iOS Developer based in Hokkaido.\nShe enjoys thinking about design and User Experience (UX).\nShe is also a musician in a band. She loves cats. Her recent hobby is dancing." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "北海道在住 iOS Developer です。\nデザインやユーザー体験を考えるのが好き。バンドマンでもあります。\n猫らぶ。最近の趣味はダンス。"
           }
         }
       }
@@ -262,13 +262,13 @@
         }
       }
     },
-    "Roku is an iOS Developer. She joined try! Swift in 2019 as a volunteer staff member, and became an organizer in 2020.\nShe loves Swift community and occasionally organizes study sessions and development camps.\nShe is interested in beer, whiskey, and unique design clothes. In addition to creating apps, She also enjoy making accessories.\nHer lucky number is 6️⃣, which is called \"Roku\" in Japanese." : {
+    "Roku is an iOS Developer. She joined try! Swift in 2019 as a volunteer staff member, and became an organizer in 2020.\nShe loves Swift community and occasionally organizes study sessions and development camps.\nShe is interested in beer, whiskey, and unique design clothes. In addition to creating apps, She also enjoy making accessories.\n\nHer lucky number is 6️⃣, which is called “Roku” in Japanese." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOS Developerとして働いています。try! Swiftは2019年に当日スタッフとして参加したのがきっかけで、2020年からOrganizerとしてjoinしました。\nSwiftコミュニティが好きで、たまに勉強会や開発合宿を企画することも。\nビール・ウイスキーや珍しいデザインの服に興味があり、アプリ作りのほか、アクセサリー作りも趣味。\nラッキナンバーは6️⃣。"
+            "value" : "iOS App Developerとして働いています。try! Swiftは2019年に当日スタッフとして参加したのがきっかけで、2020年からOrganizerとしてjoinしました。\nSwift愛好会というSwift好きのためのコミュニティも運営していて、勉強会や開発合宿の企画をすることも。\nビール・ウイスキーが好きなほか、アクセサリー作りも趣味。\n\nラッキナンバーは6️⃣"
           }
         }
       }
@@ -306,7 +306,7 @@
         }
       }
     },
-    "Souya works as a server-side engineer at Yumemi. He is passionate about tech conferences, both attending and organizing them. In his free time, he enjoys traveling and photography, exploring various places." : {
+    "Souya works as a server-side engineer at Yumemi.\nHe is passionate about tech conferences, both attending and organizing them. In his free time, he enjoys traveling and photography, exploring various places." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -410,6 +410,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "try! Swift Tokyo ウェブサイト"
+          }
+        }
+      }
+    },
+    "uetyo is an iOS Developer for a financial app.\nHe also organizes mobile app study groups and conferences.\nHe loves Swift and has a strong interest in software testing, architecture design, and CI/CD improvements.\n\nHe loves Sushi 🍣" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS Developer\n金融系アプリの開発に携わる傍ら、モバイルアプリ関連の勉強会やカンファレンスの運営にも取り組んでいます！\nSwiftが大好きで、ソフトウェアテスト、アーキテクチャ設計、CI/CDの改善に強い関心があります\n\nI love Sushi 🍣"
           }
         }
       }
