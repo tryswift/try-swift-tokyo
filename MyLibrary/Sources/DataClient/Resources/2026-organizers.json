@@ -206,5 +206,41 @@
         "url": "https://github.com/sya-ri"
       }
     ]
+  },
+  {
+    "id": 14,
+    "name": "uetyo / Yuki Uehara",
+    "image_name": "uetyo",
+    "bio": "uetyo is an iOS Developer for a financial app.\nHe also organizes mobile app study groups and conferences.\nHe loves Swift and has a strong interest in software testing, architecture design, and CI/CD improvements.\n\nHe loves Sushi 🍣",
+    "links": [
+      {
+        "name": "@psnzbss",
+        "url": "https://x.com/psnzbss"
+      },
+      {
+        "name": "@psbss",
+        "url": "https://github.com/psbss"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Maya Yamada",
+    "image_name": "mayama",
+    "bio": "Mayama is an iOS Developer based in Hokkaido.\nShe enjoys thinking about design and User Experience (UX).\nShe is also a musician in a band. She loves cats. Her recent hobby is dancing.",
+    "links": [
+      {
+        "name": "@myammm_",
+        "url": "https://x.com/myammm_"
+      },
+      {
+        "name": "@myammm",
+        "url": "https://github.com/myammm"
+      },
+      {
+        "name": "@myammm_",
+        "url": "https://instagram.com/myammm_"
+      }
+    ]
   }
 ]
