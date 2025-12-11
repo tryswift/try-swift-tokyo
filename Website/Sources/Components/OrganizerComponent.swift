@@ -21,6 +21,7 @@ struct OrganizerComponent: HTML {
 }
 
 struct OrganizerModel: HTML {
+  let year: ConferenceYear
   let organizer: Organizer
   let language: SupportedLanguage
   private let imageSize = 75
@@ -57,8 +58,12 @@ struct OrganizerModel: HTML {
         }.margin(.leading, .px(imageSize + 20))
       }.padding(.all, .px(16))
 
-      ModalFooterComponent(modalId: organizer.modalId, language: language)
-        .padding(.all, .px(16))
+      ModalFooterComponent(
+        year: year,
+        modalId: organizer.modalId,
+        language: language
+      )
+      .padding(.all, .px(16))
     }.size(.large)
   }
 }
