@@ -19,6 +19,19 @@
             "name": "合同会社DMM.com",
             "imageName": "GOLD_DMM",
             "link": "https://dmm-corp.com/"
+        },
+        {
+            "id": 4,
+            "name": "株式会社ディー・エヌ・エー",
+            "imageName": "GOLD_DeNA",
+            "link": "https://dena.com/intl/",
+            "japanese_link": "https://dena.com/"
+        },
+        {
+            "id": 5,
+            "name": "フェンリル株式会社",
+            "imageName": "GOLD_Fenrir",
+            "link": "https://www.fenrir-inc.com"
         }
     ],
     "silver": [
@@ -28,6 +41,12 @@
             "imageName": "SILVER_mercari",
             "link": "https://about.mercari.com/en/",
             "japanese_link": "https://about.mercari.com/"
+        },
+        {
+            "id": 2,
+            "name": "株式会社はてな",
+            "imageName": "SILVER_hatena",
+            "link": "https://hatena.co.jp"
         }
     ],
     "bronze": [
@@ -36,6 +55,12 @@
             "name": "ピクシブ株式会社",
             "imageName": "BRONZE_pixiv",
             "link": "https://www.pixiv.co.jp/"
+        },
+        {
+            "id": 2,
+            "name": "サイボウズ株式会社",
+            "imageName": "BRONZE_cybozu",
+            "link": "https://tech.cybozu.io/"
         }
     ],
     "diversity": [],
