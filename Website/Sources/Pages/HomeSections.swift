@@ -84,17 +84,17 @@ extension HomeSectionType {
 
       Alert {
         ForEach(speakers) { speaker in
-          SpeakerModal(speaker: speaker, language: language)
+          SpeakerModal(year: year, speaker: speaker, language: language)
         }
       }
     case .cfp:
       SectionHeader(type: self, language: language)
       CallForProposalComponent(language: language)
     case .meetTheHosts:
-      SectionHeader(type: self, language: language)
-
-      let hosts = try! dataClient.fetchOrganizers()
+      let hosts = try! dataClient.fetchOrganizers(year: year)
         .filter { [6, 11].contains($0.id) }
+
+      SectionHeader(type: self, language: language)
       CenterAlignedGrid(hosts, columns: hosts.count) { organizer in
         OrganizerComponent(organizer: organizer)
           .margin(.bottom, .px(32))
@@ -132,7 +132,7 @@ extension HomeSectionType {
           .flatMap { $0.schedules.flatMap(\.sessions) }
           .filter(\.hasDescription)
         ForEach(sessions) { session in
-          SessionDetailModal(session: session, language: language)
+          SessionDetailModal(year: year, session: session, language: language)
         }
       }
     case .sponsor:
@@ -166,9 +166,9 @@ extension HomeSectionType {
           .margin(.top, .px(32))
       }
     case .meetTheOrganizers:
-      SectionHeader(type: self, language: language)
+      let organizers = try! dataClient.fetchOrganizers(year: year)
 
-      let organizers = try! dataClient.fetchOrganizers()
+      SectionHeader(type: self, language: language)
       CenterAlignedGrid(organizers, columns: 4) { organizer in
         OrganizerComponent(organizer: organizer)
           .margin(.bottom, .px(32))
@@ -179,7 +179,7 @@ extension HomeSectionType {
 
       Alert {
         ForEach(organizers) { organizer in
-          OrganizerModel(organizer: organizer, language: language)
+          OrganizerModel(year: year, organizer: organizer, language: language)
         }
       }
     case .access:

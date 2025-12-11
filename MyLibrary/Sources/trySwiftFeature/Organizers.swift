@@ -46,7 +46,7 @@ public struct Organizers {
     Reduce { state, action in
       switch action {
       case .view(.onAppear):
-        let response = try! dataClient.fetchOrganizers()
+        let response = try! dataClient.fetchOrganizers(.year2026)
         state.organizers.append(contentsOf: response)
         return .none
       case .view(._organizerTapped(let organizer)):

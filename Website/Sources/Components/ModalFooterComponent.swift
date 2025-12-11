@@ -1,6 +1,8 @@
 import Ignite
+import SharedModels
 
 struct ModalFooterComponent: HTML {
+  let year: ConferenceYear
   let modalId: String
   let language: SupportedLanguage
 
@@ -12,7 +14,7 @@ struct ModalFooterComponent: HTML {
       .role(.light)
       .foregroundStyle(.dimGray)
 
-      Text("try! Swift Tokyo 2025")
+      Text("try! Swift Tokyo \(year.rawValue)")
         .horizontalAlignment(.trailing)
         .font(.body)
         .fontWeight(.bold)

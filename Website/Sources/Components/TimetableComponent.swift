@@ -68,6 +68,7 @@ private struct SessionTitleComponent: HTML {
 }
 
 struct SessionDetailModal: HTML {
+  let year: ConferenceYear
   let session: Session
   let language: SupportedLanguage
 
@@ -89,7 +90,7 @@ struct SessionDetailModal: HTML {
               .margin(.bottom, .px(8))
           }
         }
-        ModalFooterComponent(modalId: session.modalId, language: language)
+        ModalFooterComponent(year: year, modalId: session.modalId, language: language)
           .padding(.all, .px(16))
       },
       header: {

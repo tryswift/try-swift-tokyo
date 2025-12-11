@@ -27,13 +27,14 @@ struct SpeakerComponent: HTML {
 }
 
 struct SpeakerModal: HTML {
+  let year: ConferenceYear
   let speaker: Speaker
   let language: SupportedLanguage
 
   var body: some HTML {
     Modal(id: speaker.modalId) {
       SpeakerDetailComponent(speaker: speaker, language: language)
-      ModalFooterComponent(modalId: speaker.modalId, language: language)
+      ModalFooterComponent(year: year, modalId: speaker.modalId, language: language)
         .padding(.all, .px(16))
     }.size(.large)
   }
