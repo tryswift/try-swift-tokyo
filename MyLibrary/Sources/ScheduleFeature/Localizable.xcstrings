@@ -1482,13 +1482,13 @@
         }
       }
     },
-    "Opening Remarks" : {
+    "Opening" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "開会の挨拶"
+            "value" : "Opening"
           }
         }
       }
