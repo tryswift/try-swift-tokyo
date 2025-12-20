@@ -16,41 +16,43 @@ struct TimetableComponent: HTML {
     Table {
       for schedule in conference.schedules {
         for session in schedule.sessions {
-          Row {
-            Column {
-              Text(schedule.time.formattedTimeString())
-                .foregroundStyle(.dimGray)
-            }
-
-            Column {
-              if let speakers = session.speakers {
-                VStack(alignment: .leading, spacing: 8) {
-                  for speaker in speakers {
-                    Image(speaker.imageFilename, description: speaker.name)
-                      .resizable()
-                      .frame(maxWidth: imageSize, maxHeight: imageSize)
-                      .cornerRadius(imageSize / 2)
-                  }
-                }
-                .padding(.all, .px(8))
-              } else {
-                Image.defaultImage
-                  .resizable()
-                  .frame(maxWidth: imageSize, maxHeight: imageSize)
-                  .cornerRadius(imageSize / 2)
+          if session.shouldShowInTimetable {
+            Row {
+              Column {
+                Text(schedule.time.formattedTimeString())
+                  .foregroundStyle(.dimGray)
               }
-            }
-            .verticalAlignment(.middle)
 
-            Column {
-              SessionTitleComponent(session: session, language: language)
-                .foregroundStyle(.dimGray)
-                .padding(.all, .px(8))
-                .onClick {
-                  ShowModal(id: session.modalId)
+              Column {
+                if let speakers = session.speakers {
+                  VStack(alignment: .leading, spacing: 8) {
+                    for speaker in speakers {
+                      Image(speaker.imageFilename, description: speaker.name)
+                        .resizable()
+                        .frame(maxWidth: imageSize, maxHeight: imageSize)
+                        .cornerRadius(imageSize / 2)
+                    }
+                  }
+                  .padding(.all, .px(8))
+                } else {
+                  Image.defaultImage
+                    .resizable()
+                    .frame(maxWidth: imageSize, maxHeight: imageSize)
+                    .cornerRadius(imageSize / 2)
                 }
+              }
+              .verticalAlignment(.middle)
+
+              Column {
+                SessionTitleComponent(session: session, language: language)
+                  .foregroundStyle(.dimGray)
+                  .padding(.all, .px(8))
+                  .onClick {
+                    ShowModal(id: session.modalId)
+                  }
+              }
+              .verticalAlignment(.middle)
             }
-            .verticalAlignment(.middle)
           }
         }
       }
@@ -119,5 +121,9 @@ extension Session {
 
   var hasDescription: Bool {
     !(description ?? "").isEmpty
+  }
+
+  var shouldShowInTimetable: Bool {
+    title != "Office hour"
   }
 }
