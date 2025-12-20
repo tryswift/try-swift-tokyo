@@ -5,9 +5,9 @@ import SharedModels
 
 @DependencyClient
 public struct DataClient {
-  public var fetchDay1: @Sendable () throws -> Conference
-  public var fetchDay2: @Sendable () throws -> Conference
-  public var fetchDay3: @Sendable () throws -> Conference
+  public var fetchDay1: @Sendable (_ year: ConferenceYear) throws -> Conference
+  public var fetchDay2: @Sendable (_ year: ConferenceYear) throws -> Conference
+  public var fetchDay3: @Sendable (_ year: ConferenceYear) throws -> Conference
   public var fetchSponsors: @Sendable (_ year: ConferenceYear) throws -> Sponsors
   public var fetchOrganizers: @Sendable (_ year: ConferenceYear) throws -> [Organizer]
   public var fetchSpeakers: @Sendable () throws -> [Speaker]
@@ -16,18 +16,18 @@ public struct DataClient {
 extension DataClient: DependencyKey {
 
   static public var liveValue: DataClient = .init(
-    fetchDay1: {
-      let data = loadDataFromBundle(fileName: "2025-day1")
+    fetchDay1: { year in
+      let data = loadDataFromBundle(fileName: "\(year.rawValue)-day1")
       let response = try jsonDecoder.decode(Conference.self, from: data)
       return response
     },
-    fetchDay2: {
-      let data = loadDataFromBundle(fileName: "2025-day2")
+    fetchDay2: { year in
+      let data = loadDataFromBundle(fileName: "\(year.rawValue)-day2")
       let response = try jsonDecoder.decode(Conference.self, from: data)
       return response
     },
-    fetchDay3: {
-      let data = loadDataFromBundle(fileName: "2025-day3")
+    fetchDay3: { year in
+      let data = loadDataFromBundle(fileName: "\(year.rawValue)-day3")
       let response = try jsonDecoder.decode(Conference.self, from: data)
       return response
     },
