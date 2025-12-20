@@ -92,13 +92,13 @@
         }
       }
     },
-    "kazu is a SWE at U-NEXT. He loves Computer Science. Especially low-layers" : {
+    "kazu is engineering generalist covering everything from hardware to compilers, OS, and apps. Specializing in large-scale distributed systems.\nLove good food and travel.\nHe is active tech conference organizer." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "株式会社U-NEXTで働くSWE、低レイヤーが好きです。"
+            "value" : "ハードウェアからコンパイラ基盤やOS、アプリケーションソフトウェアまで、エンジニアリングが大好きな何でも屋。大規模分散処理が得意。\n美味しいご飯と旅行が好き。\nカンファレンス運営を色々している。"
           }
         }
       }
