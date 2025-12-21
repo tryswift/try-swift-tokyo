@@ -306,13 +306,13 @@
         }
       }
     },
-    "Souya works as a server-side engineer at Yumemi.\nHe is passionate about tech conferences, both attending and organizing them. In his free time, he enjoys traveling and photography, exploring various places." : {
+    "Souya is mainly work on server-side development, but He enjoy participating in tech communities.\nHe hope to have fun with it." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ゆめみでサーバーサイドエンジニアとして働いています。技術カンファレンスが好きで、運営や参加をしています。旅行とカメラが趣味で、さまざまな場所に行っています。"
+            "value" : "サーバーサイドをメインに活動していますが、技術コミュニティが好きで参加しています。\n楽しいことができればいいなと思っています。"
           }
         }
       }
@@ -474,13 +474,13 @@
         }
       }
     },
-    "Yutaro is a Software Engineer who loves Swift. He has been contributing to try! Swift Tokyo since 2017.\nCurrently, he lives in the Kansai region and works at Hatena Co., Ltd.\nHis favorite things are beer🍺 and sake🍶. Recently, he has been experimenting with the Apple Vision Pro." : {
+    "Yutaro is a software engineer who loves Swift. He has been contributing to the organization of try! Swift Tokyo since 2017.\nHe currently resides in the Kansai region and is affiliated with Hatena Co., Ltd.\n\nHis hobbies include beer 🍺, Japanese sake 🍶, games 🦑, and cats 🐈.\nHe usually enjoys programming in between taking care of his cats." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ソフトウェアエンジニアで、Swiftが大好き。2017年からtry! Swift Tokyoの開催に貢献しています。\n現在、関西在住で株式会社はてなに所属しています。\n好きなものは、ビール🍺と日本酒🍶。最近はApple Vision Proで遊んでいます。"
+            "value" : "Swiftが大好きなソフトウェアエンジニア。2017年からtry! Swift Tokyoの開催に貢献しています。\n現在、関西在住で株式会社はてなに所属。\n\n趣味はビール🍺、日本酒🍶、ゲーム🦑と猫🐈。\n普段は猫の世話の合間に、プログラミングを嗜んでいます。"
           }
         }
       }
