@@ -47,6 +47,12 @@
             "name": "株式会社はてな",
             "imageName": "SILVER_hatena",
             "link": "https://hatena.co.jp"
+        },
+        {
+            "id": 3,
+            "name": "野村ホールディングス株式会社",
+            "imageName": "SILVER_nomura",
+            "link": "https://www.nomura.co.jp/fic/recruit/"
         }
     ],
     "bronze": [
@@ -63,7 +69,14 @@
             "link": "https://tech.cybozu.io/"
         }
     ],
-    "diversity": [],
+    "diversity": [
+        {
+            "id": 1,
+            "name": "野村ホールディングス株式会社",
+            "imageName": "SILVER_nomura",
+            "link": "https://www.nomura.co.jp/fic/recruit/"
+        }
+    ],
     "student": [
         {
             "id": 1,
