@@ -22,6 +22,17 @@
         }
       }
     },
+    "Akkey is a serves as the CEO of AkkeyLab Co., Ltd., which operates a programming school, and works to spread the appeal of Swift.\nOn his days off, he enjoys aquariums and gardening." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プログラミングスクールを運営するAkkeyLab株式会社のCEOを務めており、Swiftの魅力を伝える仕事をしています。\n休日は、アクアリウムやガーデニングを楽しんでいます。"
+          }
+        }
+      }
+    },
     "Code of Conduct" : {
       "localizations" : {
         "ja" : {
@@ -77,17 +88,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "七島 偉之"
-          }
-        }
-      }
-    },
-    "I am the CEO of AkkeyLab, Inc., where we run a programming school. My main role at AkkeyLab is to promote the benefits of Swift. Lately, I've been enjoying playing tennis and futsal with my colleagues from the company." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "プログラミングスクールを運営する AkkeyLab株式会社 の CEO を務めており、Swift の魅力を伝える仕事をしています。最近はテニスやフットサルを会社の仲間と楽しんでいます。"
           }
         }
       }
@@ -350,13 +350,13 @@
         }
       }
     },
-    "Tim is an iOS developer from Australia and is currently working at Instagram in Tokyo. He presented at try! Swift Tokyo 2016 and has been volunteering at the conference since 2018. In his free time, he loves video games, writing open source software and karaoke." : {
+    "Tim is an iOS developer from Australia and is currently working in Tokyo.\nHe presented at try! Swift Tokyo 2016 and has been volunteering at the conference since 2018. In his free time, he loves video games, writing open source software and karaoke." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Timはオーストラリア出身のiOS Developerで、現在はInstagramの東京オフィスで働いています。彼はtry! Swift Tokyo 2016で登壇し、2018年からOrganizerです。休日はゲームをしたり、オープンソースソフトウェアを書いたり、カラオケに行くのが好きです。"
+            "value" : "Timはオーストラリア出身のiOS Developerで、現在は東京で働いています。\n彼はtry! Swift Tokyo 2016で登壇し、2018年からOrganizerです。休日はゲームをしたり、オープンソースソフトウェアを書いたり、カラオケに行くのが好きです。"
           }
         }
       }
@@ -441,13 +441,13 @@
         }
       }
     },
-    "Yoichiro is an engineer who likes to solve interesting problems. I has been contributing to try! Swift Tokyo since 2017. I love gourmet food and drinks, especially Japanese sake!" : {
+    "Youichiro is an engineer who loves problem-solving. He has been involved in organizing try! Swift Tokyo since 2017.\nHe enjoys delicious food and drinks, and especially loves Japanese sake!" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "問題解決が好きなエンジニア。2017年からtry! Swift Tokyoの開催に携わっています。美味しいご飯とお酒が好きで、特に日本酒が大好きです！"
+            "value" : "問題解決が好きなエンジニア。2017年からtry! Swift Tokyoの開催に携わっています。\n美味しいご飯とお酒が好きで、特に日本酒が大好きです！"
           }
         }
       }
@@ -463,7 +463,7 @@
         }
       }
     },
-    "yucovin is a designer and iOS engineer with over a decade of experience spanning multiple levels of structural designs and interface design/engineering in government and private start-up. yucovin has helped numerous teams improve their product/service quality and processes as a designer who can bridge design and development. And most importantly, she is the creator of Riko, the mascot of try! Swift!" : {
+    "yucovin is a creator of the mascot character \"Riko\" for try! Swift.\nA designer and iOS engineer who works on products for startups and government entities. She excels in UI for products that require information design. As a bridge between design and engineering, she contributes to improving product and service quality and processes in many teams." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
