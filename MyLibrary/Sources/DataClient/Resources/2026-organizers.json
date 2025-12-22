@@ -19,7 +19,7 @@
     "id": 2,
     "name": "Yoichiro Sakurai",
     "image_name": "saku",
-    "bio": "Yoichiro is an engineer who likes to solve interesting problems. I has been contributing to try! Swift Tokyo since 2017. I love gourmet food and drinks, especially Japanese sake!",
+    "bio": "Youichiro is an engineer who loves problem-solving. He has been involved in organizing try! Swift Tokyo since 2017.\nHe enjoys delicious food and drinks, and especially loves Japanese sake!",
     "links": [
       {
         "name": "@saku2saku",
@@ -35,7 +35,7 @@
     "id": 3,
     "name": "yucovin",
     "image_name": "yucovin",
-    "bio": "yucovin is a designer and iOS engineer with over a decade of experience spanning multiple levels of structural designs and interface design/engineering in government and private start-up. yucovin has helped numerous teams improve their product/service quality and processes as a designer who can bridge design and development. And most importantly, she is the creator of Riko, the mascot of try! Swift!",
+    "bio": "yucovin is a creator of the mascot character \"Riko\" for try! Swift.\nA designer and iOS engineer who works on products for startups and government entities. She excels in UI for products that require information design. As a bridge between design and engineering, she contributes to improving product and service quality and processes in many teams.",
     "links": [
       {
         "name": "@yucovin",
@@ -83,7 +83,7 @@
     "id": 6,
     "name": "Akio Itaya",
     "image_name": "akkey",
-    "bio": "I am the CEO of AkkeyLab, Inc., where we run a programming school. My main role at AkkeyLab is to promote the benefits of Swift. Lately, I've been enjoying playing tennis and futsal with my colleagues from the company.",
+    "bio": "Akkey is a serves as the CEO of AkkeyLab Co., Ltd., which operates a programming school, and works to spread the appeal of Swift.\nOn his days off, he enjoys aquariums and gardening.",
     "links": [
       {
         "name": "@AkkeyLab",
@@ -99,7 +99,7 @@
     "id": 7,
     "name": "Yutaro Muta",
     "image_name": "yutailang0119",
-    "bio": "Yutaro is a Software Engineer who loves Swift. He has been contributing to try! Swift Tokyo since 2017.\nCurrently, he lives in the Kansai region and works at Hatena Co., Ltd.\nHis favorite things are beer🍺 and sake🍶. Recently, he has been experimenting with the Apple Vision Pro.",
+    "bio": "Yutaro is a software engineer who loves Swift. He has been contributing to the organization of try! Swift Tokyo since 2017.\nHe currently resides in the Kansai region and is affiliated with Hatena Co., Ltd.\n\nHis hobbies include beer 🍺, Japanese sake 🍶, games 🦑, and cats 🐈.\nHe usually enjoys programming in between taking care of his cats.",
     "links": [
       {
         "name": "@yutailang0119",
@@ -147,7 +147,7 @@
     "id": 10,
     "name": "Kazuhiro Takami",
     "image_name": "kazu42",
-    "bio": "kazu is a SWE at U-NEXT. He loves Computer Science. Especially low-layers",
+    "bio": "kazu is engineering generalist covering everything from hardware to compilers, OS, and apps. Specializing in large-scale distributed systems.\nLove good food and travel.\nHe is active tech conference organizer.",
     "links": [
       {
         "name": "@DevKazu42",
@@ -163,7 +163,7 @@
     "id": 11,
     "name": "Tim Oliver",
     "image_name": "TimOliver",
-    "bio": "Tim is an iOS developer from Australia and is currently working at Instagram in Tokyo. He presented at try! Swift Tokyo 2016 and has been volunteering at the conference since 2018. In his free time, he loves video games, writing open source software and karaoke.",
+    "bio": "Tim is an iOS developer from Australia and is currently working in Tokyo.\nHe presented at try! Swift Tokyo 2016 and has been volunteering at the conference since 2018. In his free time, he loves video games, writing open source software and karaoke.",
     "links": [
       {
         "name": "@TimOliverAU",
@@ -195,7 +195,7 @@
     "id": 13,
     "name": "sya-ri / Souya Ichikawa",
     "image_name": "sya-ri",
-    "bio": "Souya works as a server-side engineer at Yumemi.\nHe is passionate about tech conferences, both attending and organizing them. In his free time, he enjoys traveling and photography, exploring various places.",
+    "bio": "Souya is mainly work on server-side development, but He enjoy participating in tech communities.\nHe hope to have fun with it.",
     "links": [
       {
         "name": "@sya_ri_dayo",

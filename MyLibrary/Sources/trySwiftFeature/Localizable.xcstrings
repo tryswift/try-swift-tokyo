@@ -22,6 +22,17 @@
         }
       }
     },
+    "Akkey is a serves as the CEO of AkkeyLab Co., Ltd., which operates a programming school, and works to spread the appeal of Swift.\nOn his days off, he enjoys aquariums and gardening." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プログラミングスクールを運営するAkkeyLab株式会社のCEOを務めており、Swiftの魅力を伝える仕事をしています。\n休日は、アクアリウムやガーデニングを楽しんでいます。"
+          }
+        }
+      }
+    },
     "Code of Conduct" : {
       "localizations" : {
         "ja" : {
@@ -81,24 +92,13 @@
         }
       }
     },
-    "I am the CEO of AkkeyLab, Inc., where we run a programming school. My main role at AkkeyLab is to promote the benefits of Swift. Lately, I've been enjoying playing tennis and futsal with my colleagues from the company." : {
+    "kazu is engineering generalist covering everything from hardware to compilers, OS, and apps. Specializing in large-scale distributed systems.\nLove good food and travel.\nHe is active tech conference organizer." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "プログラミングスクールを運営する AkkeyLab株式会社 の CEO を務めており、Swift の魅力を伝える仕事をしています。最近はテニスやフットサルを会社の仲間と楽しんでいます。"
-          }
-        }
-      }
-    },
-    "kazu is a SWE at U-NEXT. He loves Computer Science. Especially low-layers" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "株式会社U-NEXTで働くSWE、低レイヤーが好きです。"
+            "value" : "ハードウェアからコンパイラ基盤やOS、アプリケーションソフトウェアまで、エンジニアリングが大好きな何でも屋。大規模分散処理が得意。\n美味しいご飯と旅行が好き。\nカンファレンス運営を色々している。"
           }
         }
       }
@@ -306,13 +306,13 @@
         }
       }
     },
-    "Souya works as a server-side engineer at Yumemi.\nHe is passionate about tech conferences, both attending and organizing them. In his free time, he enjoys traveling and photography, exploring various places." : {
+    "Souya is mainly work on server-side development, but He enjoy participating in tech communities.\nHe hope to have fun with it." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ゆめみでサーバーサイドエンジニアとして働いています。技術カンファレンスが好きで、運営や参加をしています。旅行とカメラが趣味で、さまざまな場所に行っています。"
+            "value" : "サーバーサイドをメインに活動していますが、技術コミュニティが好きで参加しています。\n楽しいことができればいいなと思っています。"
           }
         }
       }
@@ -350,13 +350,13 @@
         }
       }
     },
-    "Tim is an iOS developer from Australia and is currently working at Instagram in Tokyo. He presented at try! Swift Tokyo 2016 and has been volunteering at the conference since 2018. In his free time, he loves video games, writing open source software and karaoke." : {
+    "Tim is an iOS developer from Australia and is currently working in Tokyo.\nHe presented at try! Swift Tokyo 2016 and has been volunteering at the conference since 2018. In his free time, he loves video games, writing open source software and karaoke." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Timはオーストラリア出身のiOS Developerで、現在はInstagramの東京オフィスで働いています。彼はtry! Swift Tokyo 2016で登壇し、2018年からOrganizerです。休日はゲームをしたり、オープンソースソフトウェアを書いたり、カラオケに行くのが好きです。"
+            "value" : "Timはオーストラリア出身のiOS Developerで、現在は東京で働いています。\n彼はtry! Swift Tokyo 2016で登壇し、2018年からOrganizerです。休日はゲームをしたり、オープンソースソフトウェアを書いたり、カラオケに行くのが好きです。"
           }
         }
       }
@@ -441,13 +441,13 @@
         }
       }
     },
-    "Yoichiro is an engineer who likes to solve interesting problems. I has been contributing to try! Swift Tokyo since 2017. I love gourmet food and drinks, especially Japanese sake!" : {
+    "Youichiro is an engineer who loves problem-solving. He has been involved in organizing try! Swift Tokyo since 2017.\nHe enjoys delicious food and drinks, and especially loves Japanese sake!" : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "問題解決が好きなエンジニア。2017年からtry! Swift Tokyoの開催に携わっています。美味しいご飯とお酒が好きで、特に日本酒が大好きです！"
+            "value" : "問題解決が好きなエンジニア。2017年からtry! Swift Tokyoの開催に携わっています。\n美味しいご飯とお酒が好きで、特に日本酒が大好きです！"
           }
         }
       }
@@ -463,7 +463,7 @@
         }
       }
     },
-    "yucovin is a designer and iOS engineer with over a decade of experience spanning multiple levels of structural designs and interface design/engineering in government and private start-up. yucovin has helped numerous teams improve their product/service quality and processes as a designer who can bridge design and development. And most importantly, she is the creator of Riko, the mascot of try! Swift!" : {
+    "yucovin is a creator of the mascot character \"Riko\" for try! Swift.\nA designer and iOS engineer who works on products for startups and government entities. She excels in UI for products that require information design. As a bridge between design and engineering, she contributes to improving product and service quality and processes in many teams." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
@@ -474,13 +474,13 @@
         }
       }
     },
-    "Yutaro is a Software Engineer who loves Swift. He has been contributing to try! Swift Tokyo since 2017.\nCurrently, he lives in the Kansai region and works at Hatena Co., Ltd.\nHis favorite things are beer🍺 and sake🍶. Recently, he has been experimenting with the Apple Vision Pro." : {
+    "Yutaro is a software engineer who loves Swift. He has been contributing to the organization of try! Swift Tokyo since 2017.\nHe currently resides in the Kansai region and is affiliated with Hatena Co., Ltd.\n\nHis hobbies include beer 🍺, Japanese sake 🍶, games 🦑, and cats 🐈.\nHe usually enjoys programming in between taking care of his cats." : {
       "extractionState" : "manual",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ソフトウェアエンジニアで、Swiftが大好き。2017年からtry! Swift Tokyoの開催に貢献しています。\n現在、関西在住で株式会社はてなに所属しています。\n好きなものは、ビール🍺と日本酒🍶。最近はApple Vision Proで遊んでいます。"
+            "value" : "Swiftが大好きなソフトウェアエンジニア。2017年からtry! Swift Tokyoの開催に貢献しています。\n現在、関西在住で株式会社はてなに所属。\n\n趣味はビール🍺、日本酒🍶、ゲーム🦑と猫🐈。\n普段は猫の世話の合間に、プログラミングを嗜んでいます。"
           }
         }
       }
