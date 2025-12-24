@@ -32,6 +32,12 @@
             "name": "フェンリル株式会社",
             "imageName": "GOLD_Fenrir",
             "link": "https://www.fenrir-inc.com"
+        },
+        {
+            "id": 7,
+            "name": "Runway",
+            "imageName": "GOLD_Runway",
+            "link": "https://www.runway.team/"
         }
     ],
     "silver": [
