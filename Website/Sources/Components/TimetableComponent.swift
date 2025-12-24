@@ -13,40 +13,51 @@ struct TimetableComponent: HTML {
       .fontWeight(.bold)
       .foregroundStyle(.bootstrapPurple)
 
-    ForEach(conference.schedules) { schedule in
-      Card {
-        ForEach(schedule.sessions) { session in
-          ZStack(alignment: .leading) {
-            if let speakers = session.speakers {
-              VStack(alignment: .leading, spacing: 8) {
-                ForEach(speakers) { speaker in
-                  Image(speaker.imageFilename, description: speaker.name)
+    Table {
+      for schedule in conference.schedules {
+        for session in schedule.sessions {
+          if session.shouldShowInTimetable {
+            Row {
+              Column {
+                Text(schedule.time.formattedTimeString())
+                  .foregroundStyle(.dimGray)
+              }
+
+              Column {
+                if let speakers = session.speakers {
+                  VStack(alignment: .leading, spacing: 8) {
+                    for speaker in speakers {
+                      Image(speaker.imageFilename, description: speaker.name)
+                        .resizable()
+                        .frame(maxWidth: imageSize, maxHeight: imageSize)
+                        .cornerRadius(imageSize / 2)
+                    }
+                  }
+                  .padding(.all, .px(8))
+                } else {
+                  Image.defaultImage
                     .resizable()
                     .frame(maxWidth: imageSize, maxHeight: imageSize)
                     .cornerRadius(imageSize / 2)
                 }
               }
-            } else {
-              Image.defaultImage
-                .resizable()
-                .frame(maxWidth: imageSize, maxHeight: imageSize)
-                .cornerRadius(imageSize / 2)
-            }
+              .verticalAlignment(.middle)
 
-            SessionTitleComponent(session: session, language: language)
-              .foregroundStyle(.dimGray)
-              .margin(.leading, .px(imageSize + 20))
-              .margin(.vertical, .px(8))
-          }
-          .padding(.all, .px(8))
-          .onClick {
-            ShowModal(id: session.modalId)
+              Column {
+                SessionTitleComponent(session: session, language: language)
+                  .foregroundStyle(.dimGray)
+                  .padding(.all, .px(8))
+                  .onClick {
+                    ShowModal(id: session.modalId)
+                  }
+              }
+              .verticalAlignment(.middle)
+            }
           }
         }
-      } header: {
-        schedule.time.formattedTimeString()
       }
-    }.margin(.bottom, .px(8))
+    }
+    .margin(.bottom, .px(8))
   }
 }
 
@@ -110,5 +121,9 @@ extension Session {
 
   var hasDescription: Bool {
     !(description ?? "").isEmpty
+  }
+
+  var shouldShowInTimetable: Bool {
+    title != "Office hour"
   }
 }

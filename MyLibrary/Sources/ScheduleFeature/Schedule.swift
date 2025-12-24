@@ -69,9 +69,9 @@ public struct Schedule {
         return .send(
           .fetchResponse(
             Result {
-              let day1 = try dataClient.fetchDay1()
-              let day2 = try dataClient.fetchDay2()
-              let day3 = try dataClient.fetchDay3()
+              let day1 = try dataClient.fetchDay1(.year2026)
+              let day2 = try dataClient.fetchDay2(.year2026)
+              let day3 = try dataClient.fetchDay3(.year2026)
               return .init(day1: day1, day2: day2, day3: day3)
             }))
       case .view(.disclosureTapped(let session)):

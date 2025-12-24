@@ -105,27 +105,18 @@ extension HomeSectionType {
     case .timetable:
       SectionHeader(type: self, language: language)
 
-      let day1 = try! dataClient.fetchDay1()
-      let day2 = try! dataClient.fetchDay2()
-      let day3 = try! dataClient.fetchDay3()
+      let day1 = try! dataClient.fetchDay1(year)
+      let day2 = try! dataClient.fetchDay2(year)
+      let day3 = try! dataClient.fetchDay3(year)
 
-      Accordion {
-        Item(day1.date.formattedDateString(language: language), startsOpen: false) {
+      Grid(alignment: .top, spacing: 16) {
+        ForEach([day1, day2, day3]) { data in
           Section {
-            TimetableComponent(conference: day1, language: language)
-          }
-        }
-        Item(day2.date.formattedDateString(language: language), startsOpen: false) {
-          Section {
-            TimetableComponent(conference: day2, language: language)
-          }
-        }
-        Item(day3.date.formattedDateString(language: language), startsOpen: false) {
-          Section {
-            TimetableComponent(conference: day3, language: language)
+            TimetableComponent(conference: data, language: language)
           }
         }
       }
+      .columns(3)
 
       Alert {
         let sessions = [day1, day2, day3]
