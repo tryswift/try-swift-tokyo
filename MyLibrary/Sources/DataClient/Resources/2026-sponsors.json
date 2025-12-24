@@ -32,6 +32,12 @@
             "name": "フェンリル株式会社",
             "imageName": "GOLD_Fenrir",
             "link": "https://www.fenrir-inc.com"
+        },
+        {
+            "id": 7,
+            "name": "Runway",
+            "imageName": "GOLD_Runway",
+            "link": "https://www.runway.team/"
         }
     ],
     "silver": [
@@ -47,6 +53,12 @@
             "name": "株式会社はてな",
             "imageName": "SILVER_hatena",
             "link": "https://hatena.co.jp"
+        },
+        {
+            "id": 3,
+            "name": "野村ホールディングス株式会社",
+            "imageName": "SILVER_nomura",
+            "link": "https://www.nomura.co.jp/fic/recruit/"
         }
     ],
     "bronze": [
@@ -63,7 +75,14 @@
             "link": "https://tech.cybozu.io/"
         }
     ],
-    "diversity": [],
+    "diversity": [
+        {
+            "id": 1,
+            "name": "野村ホールディングス株式会社",
+            "imageName": "SILVER_nomura",
+            "link": "https://www.nomura.co.jp/fic/recruit/"
+        }
+    ],
     "student": [
         {
             "id": 1,
