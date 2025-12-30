@@ -17,28 +17,48 @@ struct TicketsComponent: HTML {
 
       Section {
         // It specifies the optimal size according to the screen size, but since the method to directly specify MediaQuery is unclear, it is being handled by branching.
-        Section {
-          Embed(
-            title: String("Tickets", language: language),
-            url: "https://luma.com/embed/event/evt-WHT17EaVs2of1Gs/simple"
-          )
-          .aspectRatio(1)
-          .frame(height: .px(1300))
-          .margin(.bottom, .px(96))
-        }
-        .hidden(.responsive(small: true))
 
+        // for xLarge, xxLarge
         Section {
           Embed(
             title: String("Tickets", language: language),
             url: "https://luma.com/embed/event/evt-WHT17EaVs2of1Gs/simple"
           )
-          .aspectRatio(1)
-          .frame(height: .px(1000))
-          .margin(.bottom, .px(96))
+          .aspectRatio(1.1)
         }
-        .hidden(.responsive(true, small: false))
+        .hidden(.responsive(true, xLarge: false))
+
+        // for large
+        Section {
+          Embed(
+            title: String("Tickets", language: language),
+            url: "https://luma.com/embed/event/evt-WHT17EaVs2of1Gs/simple"
+          )
+          .aspectRatio(0.95)
+        }
+        .hidden(.responsive(true, large: false, xLarge: true))
+
+        // for medium
+        Section {
+          Embed(
+            title: String("Tickets", language: language),
+            url: "https://luma.com/embed/event/evt-WHT17EaVs2of1Gs/simple"
+          )
+          .aspectRatio(0.65)
+        }
+        .hidden(.responsive(true, medium: false, large: true))
+
+        // for xSmall, small
+        Section {
+          Embed(
+            title: String("Tickets", language: language),
+            url: "https://luma.com/embed/event/evt-WHT17EaVs2of1Gs/simple"
+          )
+          .aspectRatio(0.3)
+        }
+        .hidden(.responsive(false, medium: true))
       }
+      .margin(.bottom, .px(96))
 
       Text(String("The latest information is announced on X", language: language))
         .font(.title3)
