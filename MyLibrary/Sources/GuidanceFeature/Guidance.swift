@@ -2,21 +2,21 @@ import ComposableArchitecture
 import CoreLocation
 import DependencyExtra
 import Foundation
-import MapKit
+@preconcurrency import MapKit
 import MapKitClient
 import SwiftUI
 
 @Reducer
-public struct Guidance {
+public struct Guidance: Sendable{
 
   @ObservableState
-  public struct State: Equatable {
+  public struct State: Sendable, Equatable {
     var lines: Lines = .tachikawa
     var route: MKRoute?
     var origin: MKMapItem?
     var originTitle: LocalizedStringKey { lines.originTitle }
     var destinationItem: MKMapItem?
-    var cameraPosition: MapCameraPosition = .automatic
+    nonisolated(unsafe) var cameraPosition: MapCameraPosition = .automatic
     var isLookAroundPresented: Bool = false
     var lookAround: MKLookAroundScene?
 

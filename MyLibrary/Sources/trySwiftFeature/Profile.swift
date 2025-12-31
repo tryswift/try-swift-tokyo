@@ -5,7 +5,7 @@ import SharedModels
 import SwiftUI
 
 @Reducer
-public struct Profile {
+public struct Profile: Sendable {
   @ObservableState
   public struct State: Equatable {
     var organizer: Organizer

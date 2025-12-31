@@ -5,7 +5,7 @@ import SharedModels
 import SwiftUI
 
 @Reducer
-public struct ScheduleDetail {
+public struct ScheduleDetail: Sendable {
   @ObservableState
   public struct State: Equatable {
 

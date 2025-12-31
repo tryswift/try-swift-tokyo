@@ -5,7 +5,7 @@ import SharedModels
 import SwiftUI
 
 @Reducer
-public struct TrySwift {
+public struct TrySwift: Sendable {
   @ObservableState
   public struct State: Equatable {
     var path = StackState<Path.State>()

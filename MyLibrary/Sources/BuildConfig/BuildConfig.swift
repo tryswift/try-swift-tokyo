@@ -3,8 +3,8 @@ import DependenciesMacros
 import Foundation
 
 @DependencyClient
-public struct BuildConfig {
-  public var liveTranslationRoomNumber: () -> String = { "" }
+public struct BuildConfig: Sendable {
+  public var liveTranslationRoomNumber: @Sendable () -> String = { "" }
 }
 
 extension DependencyValues {

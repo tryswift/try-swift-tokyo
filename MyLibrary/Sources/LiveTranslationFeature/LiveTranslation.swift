@@ -5,9 +5,9 @@ import LiveTranslationSDK_iOS
 import SwiftUI
 
 @Reducer
-public struct LiveTranslation {
+public struct LiveTranslation: Sendable {
   @ObservableState
-  public struct State: Equatable {
+  public struct State: Sendable, Equatable {
     /// Live Translation Room Number
     var roomNumber: String = ""
     /// Current visible translation items

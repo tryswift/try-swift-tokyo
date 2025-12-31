@@ -2,17 +2,20 @@ import ComposableArchitecture
 import DataClient
 import DependencyExtra
 import SharedModels
-import XCTest
+import Testing
+import Foundation
 
 @testable import SponsorFeature
 
-final class SponsorsTests: XCTestCase {
-  @MainActor
-  func testOnAppear() async {
+@Suite
+@MainActor
+struct SponsorsTests {
+  @Test
+  func onAppear() async {
     let store = TestStore(initialState: SponsorsList.State()) {
       SponsorsList()
     } withDependencies: {
-      $0[DataClient.self].fetchSponsors = { @Sendable (_: ConferenceYear) throws -> Sponsors in
+      $0[DataClient.self].fetchSponsors = { @Sendable _ throws -> Sponsors in
         .mock
       }
     }
@@ -22,8 +25,8 @@ final class SponsorsTests: XCTestCase {
     }
   }
 
-  @MainActor
-  func testSponsorTapped() async {
+  @Test
+  func sponsorTapped() async {
     let receivedUrl = LockIsolated<URL?>(nil)
 
     let store = TestStore(initialState: SponsorsList.State()) {
@@ -41,7 +44,12 @@ final class SponsorsTests: XCTestCase {
 
     await store.send(\.view.sponsorTapped, .platinumMock)
     receivedUrl.withValue {
-      XCTAssertEqual($0, Sponsor.platinumMock.link)
+      #expect($0 == Sponsor.platinumMock.link)
+    }
+
+    await store.send(\.view.sponsorTapped, .goldMock)
+    receivedUrl.withValue {
+      #expect($0 == Sponsor.goldMock.link)
     }
   }
 }

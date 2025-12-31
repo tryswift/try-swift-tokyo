@@ -1,7 +1,7 @@
 import Dependencies
 import DependenciesMacros
 import Foundation
-import LiveTranslationSDK_iOS
+@preconcurrency import LiveTranslationSDK_iOS
 
 extension DependencyValues {
   public var liveTranslationServiceClient: LiveTranslationServiceClient {
@@ -15,19 +15,16 @@ extension DependencyValues {
 }
 
 @DependencyClient
-public struct LiveTranslationServiceClient {
+public struct LiveTranslationServiceClient: Sendable {
   public var langSet: @Sendable (String?) async throws -> LanguageEntity.Response.LangSet
   public var langList: @Sendable () async throws -> [LanguageEntity.Response.LanguageItem]
   public var chatRoomInfo: @Sendable (String) async throws -> ChatRoomEntity.Make.Response
-  public var chatConnection:
-    @Sendable (String) -> AsyncThrowingStream<RealTimeEntity.ChatStream, any Error> = { _ in .never
-    }
-  public var requestBatchTranslation:
-    @Sendable ([RealTimeEntity.Translation.Request.ContentData]) async -> Void
+  public var chatConnection: @Sendable (String) -> AsyncThrowingStream<RealTimeEntity.ChatStream, any Error> = { _ in .never }
+  public var requestBatchTranslation: @Sendable ([RealTimeEntity.Translation.Request.ContentData]) async -> Void
 }
 
 extension LiveTranslationServiceClient: DependencyKey {
-  public static var liveValue: Self = {
+  public static let liveValue: Self = {
     let service = LiveTranslationService()
     return Self(
       langSet: { langCode in

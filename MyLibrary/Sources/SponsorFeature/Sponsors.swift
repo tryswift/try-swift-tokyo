@@ -6,7 +6,7 @@ import SharedModels
 import SwiftUI
 
 @Reducer
-public struct SponsorsList {
+public struct SponsorsList: Sendable {
   @ObservableState
   public struct State: Equatable {
 
@@ -55,10 +55,11 @@ public struct SponsorsList {
     .ifLet(\.$destination, action: \.destination)
   }
 
-  @Reducer(state: .equatable)
-  public enum Destination {
-  }
+  @Reducer
+  public enum Destination {}
 }
+
+extension SponsorsList.Destination.State: Equatable {}
 
 @ViewAction(for: SponsorsList.self)
 public struct SponsorsListView: View {

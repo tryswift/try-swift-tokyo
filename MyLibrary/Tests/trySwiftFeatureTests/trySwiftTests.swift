@@ -1,13 +1,16 @@
 import ComposableArchitecture
 import DependencyExtra
 import SharedModels
-import XCTest
+import Testing
+import Foundation
 
 @testable import trySwiftFeature
 
-final class trySwiftTests: XCTestCase {
-  @MainActor
-  func testOrganizerTapped() async {
+@Suite
+@MainActor
+final class trySwiftTests {
+  @Test
+  func organizerTapped() async {
     let store = TestStore(initialState: TrySwift.State()) {
       TrySwift()
     }
@@ -17,8 +20,8 @@ final class trySwiftTests: XCTestCase {
     }
   }
 
-  @MainActor
-  func testCodeOfConductTapped() async {
+  @Test
+  func codeOfConductTapped() async {
     let receivedUrl = LockIsolated<URL?>(nil)
 
     let store = TestStore(initialState: TrySwift.State()) {
@@ -36,12 +39,12 @@ final class trySwiftTests: XCTestCase {
 
     await store.send(\.view.codeOfConductTapped)
     receivedUrl.withValue {
-      XCTAssertTrue($0!.absoluteString.hasPrefix("https://tryswift.jp/code-of-conduct"))
+      #expect($0!.absoluteString.hasPrefix("https://tryswift.jp/code-of-conduct"))
     }
   }
 
-  @MainActor
-  func testPrivacyPolicyTapped() async {
+  @Test
+  func privacyPolicyTapped() async {
     let receivedUrl = LockIsolated<URL?>(nil)
 
     let store = TestStore(initialState: TrySwift.State()) {
@@ -59,12 +62,12 @@ final class trySwiftTests: XCTestCase {
 
     await store.send(\.view.privacyPolicyTapped)
     receivedUrl.withValue {
-      XCTAssertTrue($0!.absoluteString.hasPrefix("https://tryswift.jp/privacy-policy"))
+      #expect($0!.absoluteString.hasPrefix("https://tryswift.jp/privacy-policy"))
     }
   }
 
-  @MainActor
-  func testAcknowledgementsTapped() async {
+  @Test
+  func acknowledgementsTapped() async {
     let store = TestStore(initialState: TrySwift.State()) {
       TrySwift()
     }
@@ -74,8 +77,8 @@ final class trySwiftTests: XCTestCase {
     }
   }
 
-  @MainActor
-  func testLumaTapped() async {
+  @Test
+  func lumaTapped() async {
     let receivedUrl = LockIsolated<URL?>(nil)
 
     let store = TestStore(initialState: TrySwift.State()) {
@@ -93,14 +96,14 @@ final class trySwiftTests: XCTestCase {
 
     await store.send(\.view.ticketTapped)
     receivedUrl.withValue {
-      XCTAssertTrue(
+      #expect(
         $0!.absoluteString.hasPrefix("https://luma.com")
       )
     }
   }
 
-  @MainActor
-  func testWebsiteTapped() async {
+  @Test
+  func websiteTapped() async {
     let receivedUrl = LockIsolated<URL?>(nil)
 
     let store = TestStore(initialState: TrySwift.State()) {
@@ -118,12 +121,12 @@ final class trySwiftTests: XCTestCase {
 
     await store.send(\.view.websiteTapped)
     receivedUrl.withValue {
-      XCTAssertTrue($0!.absoluteString.hasPrefix("https://tryswift.jp"))
+      #expect($0!.absoluteString.hasPrefix("https://tryswift.jp"))
     }
   }
 
-  @MainActor
-  func testProfileNavigation() async {
+  @Test
+  func profileNavigation() async {
     let store = TestStore(
       initialState: TrySwift.State(
         path: StackState([
