@@ -4,7 +4,7 @@ import Foundation
 import SharedModels
 
 @DependencyClient
-public struct DataClient {
+public struct DataClient: Sendable {
   public var fetchDay1: @Sendable (_ year: ConferenceYear) throws -> Conference
   public var fetchDay2: @Sendable (_ year: ConferenceYear) throws -> Conference
   public var fetchDay3: @Sendable (_ year: ConferenceYear) throws -> Conference
@@ -14,8 +14,7 @@ public struct DataClient {
 }
 
 extension DataClient: DependencyKey {
-
-  static public var liveValue: DataClient = .init(
+  static public let liveValue: DataClient = .init(
     fetchDay1: { year in
       let data = loadDataFromBundle(fileName: "\(year.rawValue)-day1")
       let response = try jsonDecoder.decode(Conference.self, from: data)
@@ -49,7 +48,6 @@ extension DataClient: DependencyKey {
   )
 
   static func loadDataFromBundle(fileName: String) -> Data {
-
     let filePath = Bundle.module.path(forResource: fileName, ofType: "json")!
     let fileURL = URL(fileURLWithPath: filePath)
     let data = try! Data(contentsOf: fileURL)

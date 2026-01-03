@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.2
 
 import PackageDescription
 
@@ -95,7 +95,9 @@ let package = Package(
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
       ]
     ),
-    .target(name: "SharedModels"),
+    .target(
+      name: "SharedModels"
+    ),
     .target(
       name: "SponsorFeature",
       dependencies: [

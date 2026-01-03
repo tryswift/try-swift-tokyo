@@ -3,7 +3,7 @@ import DependencyExtra
 import SwiftUI
 
 @Reducer
-public struct Acknowledgements {
+public struct Acknowledgements: Sendable {
   @ObservableState
   public struct State: Equatable {
     var packages = LicensesPlugin.licenses
