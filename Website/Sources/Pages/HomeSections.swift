@@ -6,9 +6,9 @@ import SharedModels
 enum HomeSectionType: String, CaseIterable {
   case about = "About"
   case outline = "Outline"
-  case speaker = "Speaker"
   case tickets = "Tickets"
   case cfp = "Call for Proposals"
+  case speaker = "Speaker"
   case timetable = "Timetable"
   case sponsor = "Sponsor"
   case meetTheHosts = "Meet the Hosts"
@@ -26,7 +26,7 @@ extension HomeSectionType {
   func isAvailable(for year: ConferenceYear) -> Bool {
     switch year {
     case .year2025: [.about, .outline, .speaker, .timetable, .sponsor, .meetTheHosts, .meetTheOrganizers, .access].contains(self)
-    case .year2026: [.about, .outline, .tickets, .cfp, .sponsor, .meetTheHosts, .meetTheOrganizers, .access].contains(self)
+    case .year2026: [.about, .outline, .tickets, .cfp, .speaker, .sponsor, .meetTheHosts, .meetTheOrganizers, .access].contains(self)
     }
   }
 
