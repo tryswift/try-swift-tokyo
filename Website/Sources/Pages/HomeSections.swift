@@ -73,7 +73,7 @@ extension HomeSectionType {
     case .speaker:
       SectionHeader(type: self, language: language)
 
-      let speakers = try! dataClient.fetchSpeakers()
+      let speakers = try! dataClient.fetchSpeakers(year: year)
       CenterAlignedGrid(speakers, columns: 4) { speaker in
         SpeakerComponent(speaker: speaker)
           .margin(.bottom, .px(32))
