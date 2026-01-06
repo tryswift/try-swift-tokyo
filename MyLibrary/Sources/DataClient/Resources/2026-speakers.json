@@ -1,1 +1,50 @@
-[]
+[
+  {
+    "name": "Klemens Strasser",
+    "image_name": "klemens_strasser",
+    "bio": "Klemens is a indie developer dedicated to crafting delightful apps with a strong focus on accessibility. He won an Apple Design Award as a Student in 2015 for his very first project, Elementary Minute. In 2025, his latest app, Art of Fauna, received both an Apple Design Award and an App Store Award. His work centers on creating thoughtful, high-quality experiences that are welcoming and usable for as many people as possible.",
+    "job_title": "Indie Developer",
+    "links": [
+      {
+        "url": "https://x.com/klemensstrasser",
+        "name": "@klemensstrasser"
+      },
+      {
+        "url": "https://www.instagram.com/autrach",
+        "name": "@autrach"
+      },
+      {
+        "url": "https://bsky.app/profile/strasser.bsky.social",
+        "name": "@strasser.bsky.social"
+      }
+    ]
+  },
+  {
+    "name": "Yasuhiro Inami",
+    "image_name": "yasuhiro_inami",
+    "bio": "Inamiy is an iOS developer at Goodnotes, focusing on mobile app development and AI-powered features.\nHe is a big fan of functional programming including Swift, Haskell, and any statically typed languages that can check his bad code.\nNowadays, he has shifted toward compiler-like work that helps detect and correct poor code produced by AI.",
+    "job_title": "Software Engineer at Goodnotes",
+    "links": [
+      {
+        "url": "https://github.com/inamiy",
+        "name": "@inamiy"
+      }
+    ]
+  },
+  {
+    "name": "Yuta Koshizawa",
+    "image_name": "yuta_koshizawa",
+    "bio": "Yuta is a software engineer specializing in iOS, Swift, and real-time image recognition. He is the author of “Heart of Swift,” a widely read online Swift book in Japan. He also regularly hosts an online study group called “Swift Zoomin’”.",
+    "job_title": "Chief Engineer",
+    "links": [
+      {
+        "url": "https://x.com/koher",
+        "name": "@koher"
+      },
+      {
+        "url": "https://github.com/koher",
+        "name": "@koher"
+      }
+    ]
+  }
+]

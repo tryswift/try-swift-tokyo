@@ -1107,6 +1107,17 @@
         }
       }
     },
+    "Inamiy is an iOS developer at Goodnotes, focusing on mobile app development and AI-powered features.\nHe is a big fan of functional programming including Swift, Haskell, and any statically typed languages that can check his bad code.\nNowadays, he has shifted toward compiler-like work that helps detect and correct poor code produced by AI." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inamiy は Goodnotes の iOS デベロッパーとして、モバイルアプリ開発および AI を活用した機能の開発に取り組んでいます。\n彼は、Swift や Haskell、そして自分のコードの品質をチェックできる静的型付け言語を含む、関数型プログラミングの大ファンです。\n最近は、AI が生成してしまう品質の低いコードを検出・修正する、いわばコンパイラのような仕事に取り組んでいます。"
+          }
+        }
+      }
+    },
     "Introduction to security research and bounty hunting on Apple's platforms" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1213,6 +1224,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "もくもく会"
+          }
+        }
+      }
+    },
+    "Klemens is a indie developer dedicated to crafting delightful apps with a strong focus on accessibility. He won an Apple Design Award as a Student in 2015 for his very first project, Elementary Minute. In 2025, his latest app, Art of Fauna, received both an Apple Design Award and an App Store Award. His work centers on creating thoughtful, high-quality experiences that are welcoming and usable for as many people as possible." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klemens は、アクセシビリティに重点を置いた魅力的なアプリの開発に尽力するインディー開発者です。2015年、初めてのプロジェクトである「Elementary Minute」で、学生として Apple Design Award を受賞しました。そして2025年には、最新作「Art of Fauna」が Apple Design Award と App Store Award の両方を受賞しています。彼の活動は、できるだけ多くの人にとって歓迎され、使いやすく、高品質で思慮深い体験を生み出すことを軸としています。"
           }
         }
       }
@@ -2318,6 +2340,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Goodnotesのソフトウェアエンジニア、オープンソース開発者、CS大学院生。WebAssemblyをサポートするためにSwift / Ruby / LLVMに貢献している。"
+          }
+        }
+      }
+    },
+    "Yuta is a software engineer specializing in iOS, Swift, and real-time image recognition. He is the author of “Heart of Swift,” a widely read online Swift book in Japan. He also regularly hosts an online study group called “Swift Zoomin’”." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yuta は、iOS や Swift、そしてリアルタイム画像認識を専門とするソフトウェアエンジニアです。日本で広く読まれているオンライン Swift 書籍「Heart of Swift」の著者でもあります。また、「Swift Zoomin’」というオンライン勉強会を定期的に主催しています。"
           }
         }
       }
