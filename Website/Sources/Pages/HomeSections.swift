@@ -82,6 +82,14 @@ extension HomeSectionType {
           }
       }
 
+      if year == .year2026 {
+        Text("And more...!")
+          .horizontalAlignment(.center)
+          .font(.title3)
+          .foregroundStyle(.dimGray)
+          .margin(.top, .px(32))
+      }
+
       Alert {
         ForEach(speakers) { speaker in
           SpeakerModal(year: year, speaker: speaker, language: language)
