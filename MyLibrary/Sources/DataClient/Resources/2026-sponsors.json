@@ -1,5 +1,12 @@
 {
-    "platinum": [],
+    "platinum": [
+        {
+            "id": 1,
+            "name": "RevenueCat",
+            "imageName": "PLATINUM_RevenueCat",
+            "link": "http://rev.cat/"
+        }
+    ],
     "gold": [
         {
             "id": 1,
@@ -29,6 +36,13 @@
         },
         {
             "id": 5,
+            "name": "LINEヤフー株式会社",
+            "imageName": "GOLD_LINEヤフー",
+            "link": "https://www.lycorp.co.jp/en/",
+            "japanese_link": "https://www.lycorp.co.jp/ja/"
+        },
+        {
+            "id": 6,
             "name": "フェンリル株式会社",
             "imageName": "GOLD_Fenrir",
             "link": "https://www.fenrir-inc.com"
