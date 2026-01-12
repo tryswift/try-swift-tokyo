@@ -16,6 +16,7 @@ struct SponsorComponent: HTML {
         self.image = Image(sponsor.imageFilename, description: sponsor.name ?? "sponsor logo")
             .resizable()
             .frame(maxWidth: Int(size.width), maxHeight: Int(size.height))
+            .frame(width: .percent(.init(100)))
     }
 
     var body: some HTML {

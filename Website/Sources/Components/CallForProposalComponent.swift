@@ -12,6 +12,7 @@ struct CallForProposalComponent: HTML {
       .target(.newWindow)
       .linkStyle(.button)
       .role(.primary)
+      .margin(.vertical, .px(8))
 
       Link(
         String("Workshop Proposal Form", language: language),
@@ -20,6 +21,8 @@ struct CallForProposalComponent: HTML {
       .target(.newWindow)
       .linkStyle(.button)
       .role(.primary)
-    }.horizontalAlignment(.center)
+      .margin(.vertical, .px(8))
+    }
+    .horizontalAlignment(.center)
   }
 }
