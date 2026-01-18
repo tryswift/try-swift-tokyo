@@ -32,6 +32,22 @@
     ]
   },
   {
+    "name": "Joannis Orlandos",
+    "image_name": "joannis_orlandos",
+    "bio": "Joannis Orlandos is a cross-platform Swift developer and member of both the Swift Server Workgroup and Swift Android Workgroup. He announced the official Swift SDK for Android on Swift.org and co-founded Wendy Labs, creators of WendyOS—a Swift-first Linux distribution for embedded devices. Joannis maintains Hummingbird 2, created MongoKitten and Citadel, and co-runs SwiftOnServer.com",
+    "job_title": "OpenSource Maintainer / Co-Founder",
+    "links": [
+      {
+        "url": "https://x.com/joannisorlandos",
+        "name": "@joannisorlandos"
+      },
+      {
+        "url": "https://github.com/joannis",
+        "name": "@joannis"
+      }
+    ]
+  },
+  {
     "name": "Yuta Koshizawa",
     "image_name": "yuta_koshizawa",
     "bio": "Yuta is a software engineer specializing in iOS, Swift, and real-time image recognition. He is the author of “Heart of Swift,” a widely read online Swift book in Japan. He also regularly hosts an online study group called “Swift Zoomin’”.",
