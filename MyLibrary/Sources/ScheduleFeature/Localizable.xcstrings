@@ -1162,6 +1162,17 @@
         }
       }
     },
+    "Joannis Orlandos is a cross-platform Swift developer and member of both the Swift Server Workgroup and Swift Android Workgroup. He announced the official Swift SDK for Android on Swift.org and co-founded Wendy Labs, creators of WendyOS—a Swift-first Linux distribution for embedded devices. Joannis maintains Hummingbird 2, created MongoKitten and Citadel, and co-runs SwiftOnServer.com" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Joannis Orlandos は、クロスプラットフォームの Swift デベロッパーであり、Swift Server Workgroup および Swift Android Workgroup のメンバーです。Swift.org にて Android 向け公式 Swift SDK を発表しました。また、組み込みデバイス向けで Swift-first な Linux ディストリビューションである WendyOS を開発する Wendy Labs の共同創業者でもあります。さらに、Hummingbird 2 のメンテナーであり、MongoKitten や Citadel を開発し、SwiftOnServer.com を共同で運営しています。"
+          }
+        }
+      }
+    },
     "Join us as we build a ChatGPT client, from scratch, using Swift OpenAPI Generator. We'll take advantage of Swift OpenAPI's pluggable HTTP transports to reuse the same generated client to make upstream calls from a Linux server, providing end-to-end streaming, backed by async sequences, without buffering upstream responses.\n\nIn this session you'll learn how to:\n\nGenerate a type-safe ChatGPT macOS client and use URLSession OpenAPI transport.\nStream LLM responses using Server Sent Events (SSE).\nBootstrap a Linux proxy server using the Vapor OpenAPI transport.\nUse the same generated ChatGPT client within the proxy by switching to the AsyncHTTPClient transport.\nEfficiently transform responses from SSE to JSON Lines, maintaining end-to-end streaming." : {
       "extractionState" : "manual",
       "localizations" : {
