@@ -1,3 +1,4 @@
+import CfPFeature
 import ComposableArchitecture
 import Foundation
 import GuidanceFeature
@@ -17,6 +18,7 @@ public struct AppReducer {
     var guidance = Guidance.State()
     var sponsors = SponsorsList.State()
     var trySwift = TrySwift.State()
+    var cfp = CfP.State()
 
     public init() {
       try? Tips.configure([.displayFrequency(.immediate)])
@@ -29,6 +31,7 @@ public struct AppReducer {
     case guidance(Guidance.Action)
     case sponsors(SponsorsList.Action)
     case trySwift(TrySwift.Action)
+    case cfp(CfP.Action)
   }
 
   public init() {}
@@ -48,6 +51,9 @@ public struct AppReducer {
     }
     Scope(state: \.trySwift, action: \.trySwift) {
       TrySwift()
+    }
+    Scope(state: \.cfp, action: \.cfp) {
+      CfP()
     }
   }
 }
@@ -76,6 +82,10 @@ public struct AppView: View {
       SponsorsListView(store: store.scope(state: \.sponsors, action: \.sponsors))
         .tabItem {
           Label(String(localized: "Sponsors", bundle: .module), systemImage: "building.2")
+        }
+      CfPView(store: store.scope(state: \.cfp, action: \.cfp))
+        .tabItem {
+          Label(String(localized: "CfP", bundle: .module), systemImage: "doc.text")
         }
       TrySwiftView(store: store.scope(state: \.trySwift, action: \.trySwift))
         .tabItem {

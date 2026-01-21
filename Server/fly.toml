@@ -1,0 +1,47 @@
+# fly.toml - Fly.io configuration for trySwiftCfP Server
+# See https://fly.io/docs/reference/configuration/ for information about this file.
+
+app = 'tryswift-cfp-api'
+primary_region = 'nrt'  # Tokyo region
+
+[build]
+  dockerfile = 'Dockerfile'
+  # Build context needs to be the parent directory to access MyLibrary
+  [build.args]
+
+[env]
+  LOG_LEVEL = 'info'
+  # Database URL will be set via secrets
+  # JWT_SECRET will be set via secrets
+  # GITHUB_CLIENT_ID will be set via secrets
+  # GITHUB_CLIENT_SECRET will be set via secrets
+  # GITHUB_CALLBACK_URL will be set after deployment
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+  [http_service.concurrency]
+    type = 'connections'
+    hard_limit = 250
+    soft_limit = 200
+
+[[vm]]
+  memory = '512mb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+# Health check
+[checks]
+  [checks.health]
+    grace_period = "30s"
+    interval = "30s"
+    method = "GET"
+    path = "/health"
+    port = 8080
+    timeout = "5s"
+    type = "http"

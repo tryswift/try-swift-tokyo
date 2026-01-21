@@ -11,6 +11,12 @@ let package = Package(
       name: "AppFeature",
       targets: ["AppFeature"]),
     .library(
+      name: "CfPAPIClient",
+      targets: ["CfPAPIClient"]),
+    .library(
+      name: "CfPFeature",
+      targets: ["CfPFeature"]),
+    .library(
       name: "GuidanceFeature",
       targets: ["GuidanceFeature"]),
     .library(
@@ -35,11 +41,27 @@ let package = Package(
     .target(
       name: "AppFeature",
       dependencies: [
+        "CfPFeature",
         "GuidanceFeature",
         "LiveTranslationFeature",
         "ScheduleFeature",
         "SponsorFeature",
         "trySwiftFeature",
+      ]
+    ),
+    .target(
+      name: "CfPAPIClient",
+      dependencies: [
+        "SharedModels",
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+      ]
+    ),
+    .target(
+      name: "CfPFeature",
+      dependencies: [
+        "CfPAPIClient",
+        "SharedModels",
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
       ]
     ),
     .target(
@@ -96,7 +118,19 @@ let package = Package(
       ]
     ),
     .target(
-      name: "SharedModels"
+      name: "SharedModels",
+      sources: [
+        "CfP/ConferenceDTO.swift",
+        "CfP/ProposalDTO.swift",
+        "CfP/UserDTO.swift",
+        "CfP/UserRole.swift",
+        "CfPExports.swift",
+        "Conference.swift",
+        "ConferenceYear.swift",
+        "Organizer.swift",
+        "Speaker.swift",
+        "Sponsors.swift",
+      ]
     ),
     .target(
       name: "SponsorFeature",

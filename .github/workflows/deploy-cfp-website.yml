@@ -1,0 +1,35 @@
+name: Deploy CfP Website
+
+on:
+  push:
+    branches: [main, cfp]
+    paths:
+      - 'CfPWebsite/**'
+      - 'MyLibrary/Sources/SharedModels/**'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: macos-14
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: '6.0'
+      
+      - name: Build Website
+        run: |
+          cd CfPWebsite
+          swift run
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./CfPWebsite/Build
+          cname: cfp.tryswift.jp
+          destination_dir: cfp
