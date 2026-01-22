@@ -54,6 +54,9 @@ struct UpdateUserProfileRequestContent: Content {
 
 /// Controller for authentication endpoints
 struct AuthController: RouteCollection {
+  /// The frontend URL to redirect to after authentication
+  static let frontendURL = Environment.get("FRONTEND_URL") ?? "https://tryswift-cfp-website.fly.dev"
+  
   func boot(routes: RoutesBuilder) throws {
     let auth = routes.grouped("auth")
     auth.get("github", use: githubLogin)
@@ -68,7 +71,7 @@ struct AuthController: RouteCollection {
   @Sendable
   func githubLogin(req: Request) async throws -> Response {
     let config = try GitHubOAuth.Config()
-    let callbackURL = Environment.get("GITHUB_CALLBACK_URL") ?? "http://localhost:8080/auth/github/callback"
+    let callbackURL = Environment.get("GITHUB_CALLBACK_URL") ?? "http://localhost:8080/api/v1/auth/github/callback"
 
     let githubAuthURL = "https://github.com/login/oauth/authorize"
     let scope = "read:org"
@@ -79,10 +82,11 @@ struct AuthController: RouteCollection {
 
   /// Handle GitHub OAuth callback
   @Sendable
-  func githubCallback(req: Request) async throws -> AuthResponseContent {
+  func githubCallback(req: Request) async throws -> Response {
     // Get authorization code from query params
     guard let code = req.query[String.self, at: "code"] else {
-      throw Abort(.badRequest, reason: "Missing authorization code")
+      // Redirect to frontend with error
+      return req.redirect(to: "\(Self.frontendURL)/login?error=missing_code")
     }
 
     req.logger.info("GitHub callback received with code")
@@ -155,11 +159,12 @@ struct AuthController: RouteCollection {
         avatarURL: githubUser.avatarUrl
       )
       try await user.save(on: req.db)
+      req.logger.info("Created new user: \(user.username)")
     }
 
     // Generate JWT token
     guard let userID = user.id else {
-      throw Abort(.internalServerError, reason: "User ID is missing")
+      return req.redirect(to: "\(Self.frontendURL)/login?error=user_creation_failed")
     }
 
     let payload = UserJWTPayload(
@@ -169,9 +174,12 @@ struct AuthController: RouteCollection {
     )
 
     let token = try await req.jwt.sign(payload)
-    let userDTO = try user.toDTO()
-
-    return AuthResponseContent(from: AuthResponse(token: token, user: userDTO))
+    
+    // Redirect to frontend with token
+    // The frontend will store the token in localStorage
+    let redirectURL = "\(Self.frontendURL)/login?token=\(token)&username=\(user.username)"
+    req.logger.info("Redirecting to frontend with token")
+    return req.redirect(to: redirectURL)
   }
 
   /// Get current authenticated user
