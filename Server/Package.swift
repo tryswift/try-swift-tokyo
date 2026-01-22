@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
   name: "Server",
-  platforms: [.macOS(.v14)],
+  platforms: [.macOS(.v14), .linux],
   products: [
     .executable(name: "Server", targets: ["Server"])
   ],
@@ -13,17 +13,31 @@ let package = Package(
     .package(url: "https://github.com/vapor/fluent.git", from: "4.12.0"),
     .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.10.0"),
     .package(url: "https://github.com/vapor/jwt.git", from: "5.1.0"),
-    .package(path: "../MyLibrary"),
   ],
   targets: [
+    // SharedModels - embedded directly to avoid iOS-only dependencies in MyLibrary
+    .target(
+      name: "SharedModels",
+      path: "../MyLibrary/Sources/SharedModels",
+      sources: [
+        "CfP/ConferenceDTO.swift",
+        "CfP/ProposalDTO.swift",
+        "CfP/UserDTO.swift",
+        "CfP/UserRole.swift",
+        "CfPExports.swift",
+      ],
+      swiftSettings: [
+        .swiftLanguageMode(.v6)
+      ]
+    ),
     .executableTarget(
       name: "Server",
       dependencies: [
+        "SharedModels",
         .product(name: "Vapor", package: "vapor"),
         .product(name: "Fluent", package: "fluent"),
         .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
         .product(name: "JWT", package: "jwt"),
-        .product(name: "SharedModels", package: "MyLibrary"),
       ],
       swiftSettings: [
         .swiftLanguageMode(.v6)
