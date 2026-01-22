@@ -1,5 +1,5 @@
 # Stage 1: Build the Ignite website on macOS-compatible Swift
-FROM swift:6.0-noble AS builder
+FROM swift:6.2-jammy AS builder
 
 WORKDIR /build
 
