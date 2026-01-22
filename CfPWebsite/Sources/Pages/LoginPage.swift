@@ -36,7 +36,7 @@ struct LoginPage: StaticPage {
     }
     .id("login-form")
     .padding(.vertical, .large)
-    
+
     // Success message (hidden by default, shown after login)
     Section {
       Card {
@@ -44,28 +44,28 @@ struct LoginPage: StaticPage {
           Text("✅")
             .font(.title1)
             .margin(.bottom, .medium)
-          
+
           Text("Welcome!")
             .font(.title2)
             .fontWeight(.bold)
             .margin(.bottom, .small)
             .id("welcome-message")
-          
+
           Text("You are now signed in. You can submit and manage your talk proposals.")
             .foregroundStyle(.secondary)
             .margin(.bottom, .large)
-          
+
           Text {
             Link("Submit a Proposal", target: SubmitPage())
               .linkStyle(.button)
               .role(.primary)
               .margin(.trailing, .medium)
-            
+
             Link("My Proposals", target: MyProposalsPage())
               .linkStyle(.button)
               .role(.secondary)
           }
-          
+
           Text {
             Link("Logout", target: "#")
               .id("logout-link")
@@ -79,7 +79,7 @@ struct LoginPage: StaticPage {
     }
     .id("logged-in-view")
     .padding(.vertical, .large)
-    
+
     // JavaScript for handling auth callback and localStorage
     Script(code: """
       document.addEventListener('DOMContentLoaded', function() {
@@ -87,20 +87,20 @@ struct LoginPage: StaticPage {
         const loggedInView = document.getElementById('logged-in-view');
         const welcomeMessage = document.getElementById('welcome-message');
         const logoutLink = document.getElementById('logout-link');
-        
+
         // Check URL params for token (from OAuth callback)
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
         const username = urlParams.get('username');
         const error = urlParams.get('error');
-        
+
         if (error) {
           alert('Login failed: ' + error);
           loginForm.style.display = 'block';
           loggedInView.style.display = 'none';
           return;
         }
-        
+
         if (token) {
           // Store token from callback
           localStorage.setItem('cfp_token', token);
@@ -110,11 +110,11 @@ struct LoginPage: StaticPage {
           // Clean URL
           window.history.replaceState({}, document.title, window.location.pathname);
         }
-        
+
         // Check if user is logged in
         const storedToken = localStorage.getItem('cfp_token');
         const storedUsername = localStorage.getItem('cfp_username');
-        
+
         if (storedToken) {
           loginForm.style.display = 'none';
           loggedInView.style.display = 'block';
@@ -125,7 +125,7 @@ struct LoginPage: StaticPage {
           loginForm.style.display = 'block';
           loggedInView.style.display = 'none';
         }
-        
+
         // Logout handler
         if (logoutLink) {
           logoutLink.addEventListener('click', function(e) {

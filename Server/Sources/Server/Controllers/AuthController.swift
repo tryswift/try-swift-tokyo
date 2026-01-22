@@ -56,7 +56,7 @@ struct UpdateUserProfileRequestContent: Content {
 struct AuthController: RouteCollection {
   /// The frontend URL to redirect to after authentication
   static let frontendURL = Environment.get("FRONTEND_URL") ?? "https://tryswift-cfp-website.fly.dev"
-  
+
   func boot(routes: RoutesBuilder) throws {
     let auth = routes.grouped("auth")
     auth.get("github", use: githubLogin)
@@ -174,7 +174,7 @@ struct AuthController: RouteCollection {
     )
 
     let token = try await req.jwt.sign(payload)
-    
+
     // Redirect to frontend with token
     // The frontend will store the token in localStorage
     let redirectURL = "\(Self.frontendURL)/login?token=\(token)&username=\(user.username)"
