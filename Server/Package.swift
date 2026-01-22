@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
   name: "Server",
-  platforms: [.macOS(.v14), .linux],
+  platforms: [.macOS(.v14)],
   products: [
     .executable(name: "Server", targets: ["Server"])
   ],
