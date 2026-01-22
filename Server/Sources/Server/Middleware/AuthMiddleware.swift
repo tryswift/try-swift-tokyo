@@ -7,7 +7,7 @@ struct AuthMiddleware: AsyncMiddleware {
   func respond(to request: Request, chainingTo next: AsyncResponder) async throws -> Response {
     // Verify JWT token
     _ = try await request.jwt.verify(as: UserJWTPayload.self)
-    
+
     // Continue to next handler
     return try await next.respond(to: request)
   }

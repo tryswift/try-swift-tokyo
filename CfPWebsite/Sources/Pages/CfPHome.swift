@@ -2,32 +2,32 @@ import Ignite
 
 struct CfPHome: StaticPage {
   var title = "Call for Proposals"
-  
+
   var body: some HTML {
     // Hero Section
     Section {
       Text("try! Swift Tokyo 2026")
         .font(.title3)
         .foregroundStyle(.white.opacity(0.9))
-      
+
       Text("Call for Proposals")
         .font(.title1)
         .fontWeight(.bold)
         .foregroundStyle(.white)
         .margin(.bottom, .medium)
-      
+
       Text("Share your Swift expertise with developers from around the world. Submit your talk proposal for try! Swift Tokyo 2026!")
         .font(.lead)
         .foregroundStyle(.white.opacity(0.9))
         .margin(.bottom, .large)
-      
+
       Text {
         Link("Submit Your Proposal", target: SubmitPage())
           .linkStyle(.button)
           .role(.light)
           .fontWeight(.bold)
           .margin(.trailing, .medium)
-        
+
         Link("View Guidelines", target: GuidelinesPage())
           .linkStyle(.button)
           .role(.secondary)
@@ -36,7 +36,7 @@ struct CfPHome: StaticPage {
     .padding(.vertical, 100)
     .background(.darkBlue)
     .horizontalAlignment(.center)
-    
+
     // Key Dates Section
     Section {
       Text("Important Dates")
@@ -45,7 +45,7 @@ struct CfPHome: StaticPage {
         .horizontalAlignment(.center)
         .foregroundStyle(.bootstrapPurple)
         .margin(.bottom, .large)
-      
+
       Grid {
         Card {
           Text("📅")
@@ -56,7 +56,7 @@ struct CfPHome: StaticPage {
           Text("January 15, 2026")
             .foregroundStyle(.secondary)
         }
-        
+
         Card {
           Text("⏰")
             .font(.title1)
@@ -66,7 +66,7 @@ struct CfPHome: StaticPage {
           Text("February 28, 2026")
             .foregroundStyle(.secondary)
         }
-        
+
         Card {
           Text("📣")
             .font(.title1)
@@ -76,7 +76,7 @@ struct CfPHome: StaticPage {
           Text("March 15, 2026")
             .foregroundStyle(.secondary)
         }
-        
+
         Card {
           Text("🎤")
             .font(.title1)
@@ -90,7 +90,7 @@ struct CfPHome: StaticPage {
       .columns(4)
     }
     .padding(.vertical, .large)
-    
+
     // Talk Formats Section
     Section {
       Text("Talk Formats")
@@ -99,7 +99,7 @@ struct CfPHome: StaticPage {
         .horizontalAlignment(.center)
         .foregroundStyle(.bootstrapPurple)
         .margin(.bottom, .large)
-      
+
       Grid {
         Card {
           Text("🎯 Regular Talk")
@@ -111,7 +111,7 @@ struct CfPHome: StaticPage {
           Text("Deep dive into a specific topic with detailed examples and live demos. Perfect for sharing comprehensive knowledge about Swift development.")
             .margin(.top, .medium)
         }
-        
+
         Card {
           Text("⚡ Lightning Talk")
             .font(.title3)
@@ -127,7 +127,7 @@ struct CfPHome: StaticPage {
     }
     .padding(.vertical, .large)
     .background(.white)
-    
+
     // Topics Section
     Section {
       Text("Topics We're Looking For")
@@ -136,7 +136,7 @@ struct CfPHome: StaticPage {
         .horizontalAlignment(.center)
         .foregroundStyle(.bootstrapPurple)
         .margin(.bottom, .large)
-      
+
       Grid {
         Card {
           Text("Swift Language")
@@ -145,7 +145,7 @@ struct CfPHome: StaticPage {
           Text("New features, best practices, and language evolution")
             .foregroundStyle(.secondary)
         }
-        
+
         Card {
           Text("SwiftUI")
             .font(.title3)
@@ -153,7 +153,7 @@ struct CfPHome: StaticPage {
           Text("Modern UI development, animations, and architecture")
             .foregroundStyle(.secondary)
         }
-        
+
         Card {
           Text("iOS/macOS/visionOS")
             .font(.title3)
@@ -161,7 +161,7 @@ struct CfPHome: StaticPage {
           Text("Platform-specific development and APIs")
             .foregroundStyle(.secondary)
         }
-        
+
         Card {
           Text("Server-Side Swift")
             .font(.title3)
@@ -169,7 +169,7 @@ struct CfPHome: StaticPage {
           Text("Vapor, backend development, and cloud deployment")
             .foregroundStyle(.secondary)
         }
-        
+
         Card {
           Text("Testing & Quality")
             .font(.title3)
@@ -177,7 +177,7 @@ struct CfPHome: StaticPage {
           Text("Unit testing, UI testing, and code quality")
             .foregroundStyle(.secondary)
         }
-        
+
         Card {
           Text("Tools & Productivity")
             .font(.title3)
@@ -189,7 +189,7 @@ struct CfPHome: StaticPage {
       .columns(3)
     }
     .padding(.vertical, .large)
-    
+
     // CTA Section
     Section {
       Text("Ready to Share Your Knowledge?")
@@ -197,12 +197,12 @@ struct CfPHome: StaticPage {
         .fontWeight(.bold)
         .foregroundStyle(.white)
         .margin(.bottom, .medium)
-      
+
       Text("We welcome speakers of all experience levels. First-time speakers are encouraged to apply!")
         .font(.lead)
         .foregroundStyle(.white.opacity(0.9))
         .margin(.bottom, .large)
-      
+
       Link("Submit Your Proposal", target: SubmitPage())
         .linkStyle(.button)
         .role(.light)

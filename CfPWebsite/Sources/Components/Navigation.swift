@@ -9,7 +9,7 @@ struct CfPNavigation: HTML {
         .role(.light)
       Link("Submit", target: SubmitPage())
         .role(.light)
-      
+
       Span {
         Link("Login with GitHub", target: "https://tryswift-cfp-api.fly.dev/api/v1/auth/github")
           .linkStyle(.button)
@@ -46,17 +46,17 @@ struct CfPFooter: HTML {
       .font(.body)
       .fontWeight(.semibold)
       .margin(.bottom, .medium)
-      
+
       Section {
         Link("Twitter", target: "https://twitter.com/tryswiftconf")
           .role(.light)
           .margin(.trailing, .medium)
-        
+
         Link("GitHub", target: "https://github.com/tryswift")
           .role(.light)
       }
       .margin(.bottom, .medium)
-      
+
       Text("© 2026 try! Swift Tokyo. All rights reserved.")
         .font(.body)
         .foregroundStyle(.white.opacity(0.7))

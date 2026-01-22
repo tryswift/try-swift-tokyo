@@ -20,7 +20,7 @@ struct ProposalDTOContent: Content {
   let speakerUsername: String
   let createdAt: Date?
   let updatedAt: Date?
-  
+
   init(from dto: ProposalDTO) {
     self.id = dto.id
     self.conferenceId = dto.conferenceId
@@ -50,7 +50,7 @@ struct CreateProposalRequestContent: Content {
   let bio: String
   let iconURL: String?
   let notes: String?
-  
+
   func toRequest(defaultConferencePath: String) throws -> CreateProposalRequest {
     guard let duration = TalkDuration(rawValue: talkDuration) else {
       throw Abort(.badRequest, reason: "Invalid talk duration. Use '20min' or 'LT'")
@@ -72,13 +72,13 @@ struct CreateProposalRequestContent: Content {
 struct ProposalController: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
     let proposals = routes.grouped("proposals")
-    
+
     // Authenticated routes
     let authenticated = proposals.grouped(AuthMiddleware())
     authenticated.post(use: createProposal)
     authenticated.get("mine", use: getMyProposals)
     authenticated.get("mine", ":conferencePath", use: getMyProposalsByConference)
-    
+
     // Admin-only routes (Organizer access)
     let adminOnly = proposals.grouped(AuthMiddleware()).grouped(OrganizerMiddleware())
     adminOnly.get(use: getAllProposals)
@@ -86,23 +86,23 @@ struct ProposalController: RouteCollection {
     adminOnly.get(":proposalID", use: getProposal)
     adminOnly.delete(":proposalID", use: deleteProposal)
   }
-  
+
   /// Create a new proposal (authenticated users)
   /// POST /proposals
   @Sendable
   func createProposal(req: Request) async throws -> ProposalDTOContent {
     let payload = try await req.jwt.verify(as: UserJWTPayload.self)
-    
+
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
     }
-    
+
     let contentRequest = try req.content.decode(CreateProposalRequestContent.self)
-    
+
     // Find the current open conference or use the specified one
     let conferencePath = contentRequest.conferencePath
     let conference: Conference
-    
+
     if let path = conferencePath {
       guard let found = try await Conference.query(on: req.db)
         .filter(\.$path == path)
@@ -120,17 +120,17 @@ struct ProposalController: RouteCollection {
       }
       conference = current
     }
-    
+
     guard conference.isOpen else {
       throw Abort(.badRequest, reason: "CfP is closed for \(conference.displayName)")
     }
-    
+
     guard let conferenceID = conference.id else {
       throw Abort(.internalServerError, reason: "Conference ID is missing")
     }
-    
+
     let createRequest = try contentRequest.toRequest(defaultConferencePath: conference.path)
-    
+
     // Validate input
     guard !createRequest.title.isEmpty else {
       throw Abort(.badRequest, reason: "Title is required")
@@ -144,7 +144,7 @@ struct ProposalController: RouteCollection {
     guard !createRequest.bio.isEmpty else {
       throw Abort(.badRequest, reason: "Bio is required")
     }
-    
+
     // Create proposal
     let proposal = Proposal(
       conferenceID: conferenceID,
@@ -157,12 +157,12 @@ struct ProposalController: RouteCollection {
       notes: createRequest.notes,
       speakerID: userID
     )
-    
+
     try await proposal.save(on: req.db)
-    
+
     return ProposalDTOContent(from: try proposal.toDTO(speakerUsername: payload.username, conference: conference))
   }
-  
+
   /// Get all proposals (admin only)
   /// GET /proposals
   @Sendable
@@ -171,12 +171,12 @@ struct ProposalController: RouteCollection {
       .with(\.$speaker)
       .with(\.$conference)
       .all()
-    
+
     return try proposals.map { proposal in
       ProposalDTOContent(from: try proposal.toDTO(speakerUsername: proposal.speaker.username, conference: proposal.conference))
     }
   }
-  
+
   /// Get proposals by conference (admin only)
   /// GET /proposals/conference/:conferencePath
   @Sendable
@@ -184,75 +184,75 @@ struct ProposalController: RouteCollection {
     guard let conferencePath = req.parameters.get("conferencePath") else {
       throw Abort(.badRequest, reason: "Conference path is required")
     }
-    
+
     guard let conference = try await Conference.query(on: req.db)
       .filter(\.$path == conferencePath)
       .first() else {
       throw Abort(.notFound, reason: "Conference not found")
     }
-    
+
     let proposals = try await Proposal.query(on: req.db)
       .filter(\.$conference.$id == conference.id!)
       .with(\.$speaker)
       .with(\.$conference)
       .all()
-    
+
     return try proposals.map { proposal in
       ProposalDTOContent(from: try proposal.toDTO(speakerUsername: proposal.speaker.username, conference: proposal.conference))
     }
   }
-  
+
   /// Get proposals submitted by the current user
   /// GET /proposals/mine
   @Sendable
   func getMyProposals(req: Request) async throws -> [ProposalDTOContent] {
     let payload = try await req.jwt.verify(as: UserJWTPayload.self)
-    
+
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
     }
-    
+
     let proposals = try await Proposal.query(on: req.db)
       .filter(\.$speaker.$id == userID)
       .with(\.$conference)
       .all()
-    
+
     return try proposals.map { proposal in
       ProposalDTOContent(from: try proposal.toDTO(speakerUsername: payload.username, conference: proposal.conference))
     }
   }
-  
+
   /// Get proposals submitted by the current user for a specific conference
   /// GET /proposals/mine/:conferencePath
   @Sendable
   func getMyProposalsByConference(req: Request) async throws -> [ProposalDTOContent] {
     let payload = try await req.jwt.verify(as: UserJWTPayload.self)
-    
+
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
     }
-    
+
     guard let conferencePath = req.parameters.get("conferencePath") else {
       throw Abort(.badRequest, reason: "Conference path is required")
     }
-    
+
     guard let conference = try await Conference.query(on: req.db)
       .filter(\.$path == conferencePath)
       .first() else {
       throw Abort(.notFound, reason: "Conference not found")
     }
-    
+
     let proposals = try await Proposal.query(on: req.db)
       .filter(\.$speaker.$id == userID)
       .filter(\.$conference.$id == conference.id!)
       .with(\.$conference)
       .all()
-    
+
     return try proposals.map { proposal in
       ProposalDTOContent(from: try proposal.toDTO(speakerUsername: payload.username, conference: proposal.conference))
     }
   }
-  
+
   /// Get a specific proposal (admin only)
   /// GET /proposals/:proposalID
   @Sendable
@@ -260,7 +260,7 @@ struct ProposalController: RouteCollection {
     guard let proposalID = req.parameters.get("proposalID", as: UUID.self) else {
       throw Abort(.badRequest, reason: "Invalid proposal ID")
     }
-    
+
     guard let proposal = try await Proposal.query(on: req.db)
       .filter(\.$id == proposalID)
       .with(\.$speaker)
@@ -268,10 +268,10 @@ struct ProposalController: RouteCollection {
       .first() else {
       throw Abort(.notFound, reason: "Proposal not found")
     }
-    
+
     return ProposalDTOContent(from: try proposal.toDTO(speakerUsername: proposal.speaker.username, conference: proposal.conference))
   }
-  
+
   /// Delete a proposal (admin only)
   /// DELETE /proposals/:proposalID
   @Sendable
@@ -279,13 +279,13 @@ struct ProposalController: RouteCollection {
     guard let proposalID = req.parameters.get("proposalID", as: UUID.self) else {
       throw Abort(.badRequest, reason: "Invalid proposal ID")
     }
-    
+
     guard let proposal = try await Proposal.find(proposalID, on: req.db) else {
       throw Abort(.notFound, reason: "Proposal not found")
     }
-    
+
     try await proposal.delete(on: req.db)
-    
+
     return .noContent
   }
 }

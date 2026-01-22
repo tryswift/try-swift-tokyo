@@ -7,7 +7,7 @@ enum AppConfiguration {
   /// Configure the Vapor application
   static func configure(_ app: Application) async throws {
     // MARK: - Database Configuration
-    
+
     // Configure PostgreSQL
     if let databaseURL = Environment.get("DATABASE_URL") {
       // Production: Use DATABASE_URL
@@ -28,30 +28,30 @@ enum AppConfiguration {
         as: .psql
       )
     }
-    
+
     // MARK: - Migrations
-    
+
     app.migrations.add(CreateUser())
     app.migrations.add(CreateConference())
     app.migrations.add(CreateProposal())
-    
+
     // Auto-migrate in development
     if app.environment == .development {
       try await app.autoMigrate()
     }
-    
+
     // MARK: - JWT Configuration
-    
+
     // Get JWT secret from environment
     guard let jwtSecret = Environment.get("JWT_SECRET") else {
       fatalError("JWT_SECRET environment variable is required")
     }
-    
+
     // Configure JWT with HS256 algorithm
     await app.jwt.keys.add(hmac: HMACKey(from: jwtSecret), digestAlgorithm: .sha256)
-    
+
     // MARK: - Middleware
-    
+
     // Enable CORS for iOS client
     let corsConfiguration = CORSMiddleware.Configuration(
       allowedOrigin: .all,
@@ -59,9 +59,9 @@ enum AppConfiguration {
       allowedHeaders: [.accept, .authorization, .contentType, .origin]
     )
     app.middleware.use(CORSMiddleware(configuration: corsConfiguration))
-    
+
     // MARK: - Routes
-    
+
     try AppRoutes.register(app)
   }
 }

@@ -18,7 +18,7 @@ struct CreateProposal: AsyncMigration {
       .field("updated_at", .datetime)
       .create()
   }
-  
+
   func revert(on database: Database) async throws {
     try await database.schema(Proposal.schema).delete()
   }

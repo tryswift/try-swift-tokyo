@@ -19,7 +19,7 @@ struct CreateUser: AsyncMigration {
       .unique(on: "github_id")
       .create()
   }
-  
+
   func revert(on database: Database) async throws {
     try await database.schema(User.schema).delete()
   }

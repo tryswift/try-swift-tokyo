@@ -14,12 +14,12 @@ struct CfPLayout: Layout {
 
     Body {
       CfPNavigation()
-      
+
       Section {
         content
       }
       .padding(.top, .px(60))
-      
+
       CfPFooter()
     }
   }

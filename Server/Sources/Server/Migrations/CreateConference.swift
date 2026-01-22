@@ -21,7 +21,7 @@ struct CreateConference: AsyncMigration {
       .unique(on: "path")
       .create()
   }
-  
+
   func revert(on database: Database) async throws {
     try await database.schema(Conference.schema).delete()
   }

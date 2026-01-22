@@ -5,11 +5,13 @@
 ### Prerequisites
 
 1. Install Fly CLI:
+
    ```bash
    brew install flyctl
    ```
 
 2. Login to Fly.io:
+
    ```bash
    fly auth login
    ```
@@ -17,35 +19,40 @@
 ### Initial Setup
 
 1. **Create the app** (from the Server directory):
+
    ```bash
    cd Server
    fly apps create tryswift-cfp-api
    ```
 
 2. **Create a PostgreSQL database**:
+
    ```bash
    fly postgres create --name tryswift-cfp-db --region nrt
    ```
 
 3. **Attach the database to the app**:
+
    ```bash
    fly postgres attach tryswift-cfp-db --app tryswift-cfp-api
    ```
+
    This will automatically set the `DATABASE_URL` secret.
 
 4. **Set required secrets**:
+
    ```bash
    # JWT Secret (generate a secure random string)
    fly secrets set JWT_SECRET="$(openssl rand -base64 32)" --app tryswift-cfp-api
-   
+
    # GitHub OAuth credentials
    fly secrets set GITHUB_CLIENT_ID="your-github-client-id" --app tryswift-cfp-api
    fly secrets set GITHUB_CLIENT_SECRET="your-github-client-secret" --app tryswift-cfp-api
-   
+
    # GitHub Organization and Team for admin access
    fly secrets set GITHUB_ORG_NAME="tryswift" --app tryswift-cfp-api
    fly secrets set GITHUB_TEAM_SLUG="tokyo" --app tryswift-cfp-api
-   
+
    # Callback URL (update after deployment)
    fly secrets set GITHUB_CALLBACK_URL="https://tryswift-cfp-api.fly.dev/api/v1/auth/github/callback" --app tryswift-cfp-api
    ```
@@ -94,8 +101,8 @@ fly ssh console --app tryswift-cfp-api
 1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
 2. Create a new OAuth App:
    - **Application name**: trySwift CfP
-   - **Homepage URL**: https://cfp.tryswift.jp
-   - **Authorization callback URL**: https://tryswift-cfp-api.fly.dev/api/v1/auth/github/callback
+   - **Homepage URL**: <https://cfp.tryswift.jp>
+   - **Authorization callback URL**: <https://tryswift-cfp-api.fly.dev/api/v1/auth/github/callback>
 3. Copy the Client ID and Client Secret to Fly.io secrets
 
 ## Environment Variables

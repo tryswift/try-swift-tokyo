@@ -7,7 +7,7 @@ import SharedModels
 struct LocalizedStringContent: Content {
   let en: String
   let ja: String
-  
+
   init(from ls: LocalizedString) {
     self.en = ls.en
     self.ja = ls.ja
@@ -29,7 +29,7 @@ struct ConferenceDTOContent: Content {
   let websiteURL: String?
   let createdAt: Date?
   let updatedAt: Date?
-  
+
   init(from dto: ConferenceDTO) {
     self.id = dto.id
     self.path = dto.path
@@ -66,19 +66,19 @@ struct CreateConferenceRequestContent: Content {
 struct ConferenceController: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
     let conferences = routes.grouped("conferences")
-    
+
     // Public routes
     conferences.get(use: getAllConferences)
     conferences.get("open", use: getOpenConferences)
     conferences.get(":path", use: getConference)
-    
+
     // Admin-only routes (Organizer access)
     let adminOnly = conferences.grouped(AuthMiddleware()).grouped(OrganizerMiddleware())
     adminOnly.post(use: createConference)
     adminOnly.put(":path", use: updateConference)
     adminOnly.delete(":path", use: deleteConference)
   }
-  
+
   /// Get all conferences
   /// GET /conferences
   @Sendable
@@ -86,12 +86,12 @@ struct ConferenceController: RouteCollection {
     let conferences = try await Conference.query(on: req.db)
       .sort(\.$year, .descending)
       .all()
-    
+
     return try conferences.map { conference in
       ConferenceDTOContent(from: try conference.toDTO())
     }
   }
-  
+
   /// Get open conferences (CfP is active)
   /// GET /conferences/open
   @Sendable
@@ -100,12 +100,12 @@ struct ConferenceController: RouteCollection {
       .filter(\.$isOpen == true)
       .sort(\.$year, .descending)
       .all()
-    
+
     return try conferences.map { conference in
       ConferenceDTOContent(from: try conference.toDTO())
     }
   }
-  
+
   /// Get a specific conference by path
   /// GET /conferences/:path
   @Sendable
@@ -113,31 +113,31 @@ struct ConferenceController: RouteCollection {
     guard let path = req.parameters.get("path") else {
       throw Abort(.badRequest, reason: "Conference path is required")
     }
-    
+
     guard let conference = try await Conference.query(on: req.db)
       .filter(\.$path == path)
       .first() else {
       throw Abort(.notFound, reason: "Conference not found")
     }
-    
+
     return ConferenceDTOContent(from: try conference.toDTO())
   }
-  
+
   /// Create a new conference (admin only)
   /// POST /conferences
   @Sendable
   func createConference(req: Request) async throws -> ConferenceDTOContent {
     let request = try req.content.decode(CreateConferenceRequestContent.self)
-    
+
     // Check if path already exists
     let existing = try await Conference.query(on: req.db)
       .filter(\.$path == request.path)
       .first()
-    
+
     if existing != nil {
       throw Abort(.conflict, reason: "Conference with path '\(request.path)' already exists")
     }
-    
+
     let conference = Conference(
       path: request.path,
       displayName: request.displayName,
@@ -151,12 +151,12 @@ struct ConferenceController: RouteCollection {
       location: request.location,
       websiteURL: request.websiteURL
     )
-    
+
     try await conference.save(on: req.db)
-    
+
     return ConferenceDTOContent(from: try conference.toDTO())
   }
-  
+
   /// Update a conference (admin only)
   /// PUT /conferences/:path
   @Sendable
@@ -164,15 +164,15 @@ struct ConferenceController: RouteCollection {
     guard let path = req.parameters.get("path") else {
       throw Abort(.badRequest, reason: "Conference path is required")
     }
-    
+
     guard let conference = try await Conference.query(on: req.db)
       .filter(\.$path == path)
       .first() else {
       throw Abort(.notFound, reason: "Conference not found")
     }
-    
+
     let request = try req.content.decode(CreateConferenceRequestContent.self)
-    
+
     conference.path = request.path
     conference.displayName = request.displayName
     conference.descriptionEn = request.descriptionEn
@@ -184,12 +184,12 @@ struct ConferenceController: RouteCollection {
     conference.endDate = request.endDate
     conference.location = request.location
     conference.websiteURL = request.websiteURL
-    
+
     try await conference.save(on: req.db)
-    
+
     return ConferenceDTOContent(from: try conference.toDTO())
   }
-  
+
   /// Delete a conference (admin only)
   /// DELETE /conferences/:path
   @Sendable
@@ -197,15 +197,15 @@ struct ConferenceController: RouteCollection {
     guard let path = req.parameters.get("path") else {
       throw Abort(.badRequest, reason: "Conference path is required")
     }
-    
+
     guard let conference = try await Conference.query(on: req.db)
       .filter(\.$path == path)
       .first() else {
       throw Abort(.notFound, reason: "Conference not found")
     }
-    
+
     try await conference.delete(on: req.db)
-    
+
     return .noContent
   }
 }

@@ -2,19 +2,19 @@ import Ignite
 
 struct MyProposalsPage: StaticPage {
   var title = "My Proposals"
-  
+
   var body: some HTML {
     Section {
       Text("My Proposals")
         .font(.title1)
         .fontWeight(.bold)
         .margin(.bottom, .medium)
-      
+
       Text("View and manage your submitted talk proposals.")
         .font(.lead)
         .foregroundStyle(.secondary)
         .margin(.bottom, .large)
-      
+
       // User info section (populated by JS)
       Card {
         Section {
@@ -26,14 +26,14 @@ struct MyProposalsPage: StaticPage {
       }
       .id("user-info")
       .margin(.bottom, .large)
-      
+
       // Proposals list (populated by JS)
       Section {
         Text("Your Submissions")
           .font(.title3)
           .fontWeight(.bold)
           .margin(.bottom, .medium)
-        
+
         Card {
           Section {
             Text("No proposals yet")
@@ -42,7 +42,7 @@ struct MyProposalsPage: StaticPage {
               .font(.body)
               .foregroundStyle(.secondary)
               .margin(.top, .small)
-            
+
             Link("Submit a Proposal", target: SubmitPage())
               .linkStyle(.button)
               .role(.primary)
@@ -52,14 +52,14 @@ struct MyProposalsPage: StaticPage {
           .padding(.vertical, .large)
         }
         .id("proposals-empty")
-        
+
         Section {
           // Proposals will be rendered here by JavaScript
         }
         .id("proposals-list")
       }
       .margin(.bottom, .large)
-      
+
       // Actions
       Section {
         Link("Submit New Proposal", target: SubmitPage())
@@ -69,17 +69,17 @@ struct MyProposalsPage: StaticPage {
       .horizontalAlignment(.center)
     }
     .padding(.vertical, .large)
-    
+
     // JavaScript for loading proposals
     Script(code: """
       document.addEventListener('DOMContentLoaded', async function() {
         const token = localStorage.getItem('cfp_token');
-        
+
         if (!token) {
           window.location.href = '/login';
           return;
         }
-        
+
         try {
           // Fetch user info
           const userResponse = await fetch('/api/v1/auth/me', {
@@ -87,20 +87,20 @@ struct MyProposalsPage: StaticPage {
               'Authorization': `Bearer ${token}`
             }
           });
-          
+
           if (!userResponse.ok) {
             localStorage.removeItem('cfp_token');
             window.location.href = '/login';
             return;
           }
-          
+
           const user = await userResponse.json();
           document.getElementById('user-info').innerHTML = `
             <div class="d-flex align-items-center justify-content-between">
               <div class="d-flex align-items-center">
-                <img src="${user.avatarURL || 'https://github.com/identicons/' + user.username + '.png'}" 
-                     alt="${user.username}" 
-                     class="rounded-circle me-3" 
+                <img src="${user.avatarURL || 'https://github.com/identicons/' + user.username + '.png'}"
+                     alt="${user.username}"
+                     class="rounded-circle me-3"
                      style="width: 50px; height: 50px;">
                 <div>
                   <strong>${user.username}</strong>
@@ -110,17 +110,17 @@ struct MyProposalsPage: StaticPage {
               <button onclick="logout()" class="btn btn-outline-danger btn-sm">Logout</button>
             </div>
           `;
-          
+
           // Fetch proposals
           const proposalsResponse = await fetch('/api/v1/proposals/mine', {
             headers: {
               'Authorization': `Bearer ${token}`
             }
           });
-          
+
           if (proposalsResponse.ok) {
             const proposals = await proposalsResponse.json();
-            
+
             if (proposals.length > 0) {
               document.getElementById('proposals-empty').style.display = 'none';
               document.getElementById('proposals-list').innerHTML = proposals.map(p => `
@@ -143,7 +143,7 @@ struct MyProposalsPage: StaticPage {
           console.error('Error loading proposals:', error);
         }
       });
-      
+
       function logout() {
         localStorage.removeItem('cfp_token');
         window.location.href = '/';

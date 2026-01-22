@@ -7,7 +7,7 @@ import SharedModels
 struct AuthResponseContent: Content {
   let token: String
   let user: UserDTOContent
-  
+
   init(from response: AuthResponse) {
     self.token = response.token
     self.user = UserDTOContent(from: response.user)
@@ -27,7 +27,7 @@ struct UserDTOContent: Content {
   let avatarURL: String?
   let createdAt: Date?
   let updatedAt: Date?
-  
+
   init(from dto: UserDTO) {
     self.id = dto.id
     self.githubID = dto.githubID
@@ -58,25 +58,25 @@ struct AuthController: RouteCollection {
     let auth = routes.grouped("auth")
     auth.get("github", use: githubLogin)
     auth.get("github", "callback", use: githubCallback)
-    
+
     let authenticated = auth.grouped(AuthMiddleware())
     authenticated.get("me", use: getCurrentUser)
     authenticated.put("me", use: updateProfile)
   }
-  
+
   /// Redirect to GitHub OAuth login page
   @Sendable
   func githubLogin(req: Request) async throws -> Response {
     let config = try GitHubOAuth.Config()
     let callbackURL = Environment.get("GITHUB_CALLBACK_URL") ?? "http://localhost:8080/auth/github/callback"
-    
+
     let githubAuthURL = "https://github.com/login/oauth/authorize"
     let scope = "read:org"
     let url = "\(githubAuthURL)?client_id=\(config.clientID)&redirect_uri=\(callbackURL)&scope=\(scope)"
-    
+
     return req.redirect(to: url)
   }
-  
+
   /// Handle GitHub OAuth callback
   @Sendable
   func githubCallback(req: Request) async throws -> AuthResponseContent {
@@ -84,34 +84,57 @@ struct AuthController: RouteCollection {
     guard let code = req.query[String.self, at: "code"] else {
       throw Abort(.badRequest, reason: "Missing authorization code")
     }
-    
+
+    req.logger.info("GitHub callback received with code")
+
     let config = try GitHubOAuth.Config()
-    
+
     // Exchange code for access token
-    let accessToken = try await GitHubOAuth.exchangeCodeForToken(
-      code: code,
-      config: config,
-      client: req.client
-    )
-    
+    let accessToken: String
+    do {
+      accessToken = try await GitHubOAuth.exchangeCodeForToken(
+        code: code,
+        config: config,
+        client: req.client
+      )
+      req.logger.info("Access token obtained successfully")
+    } catch {
+      req.logger.error("Failed to exchange code for token: \(error)")
+      throw Abort(.internalServerError, reason: "Failed to exchange code for access token: \(error)")
+    }
+
     // Get user info from GitHub
-    let githubUser = try await GitHubOAuth.getUser(
-      accessToken: accessToken,
-      client: req.client
-    )
-    
+    let githubUser: GitHubOAuth.GitHubUser
+    do {
+      githubUser = try await GitHubOAuth.getUser(
+        accessToken: accessToken,
+        client: req.client
+      )
+      req.logger.info("GitHub user obtained: \(githubUser.login)")
+    } catch {
+      req.logger.error("Failed to get GitHub user: \(error)")
+      throw Abort(.internalServerError, reason: "Failed to get GitHub user info: \(error)")
+    }
+
     // Check if user is a member of the tryswift/tokyo team
-    let isTeamMember = try await GitHubOAuth.isTeamMember(
-      accessToken: accessToken,
-      username: githubUser.login,
-      organization: config.organizationName,
-      teamSlug: config.teamSlug,
-      client: req.client
-    )
-    
+    var isTeamMember = false
+    do {
+      isTeamMember = try await GitHubOAuth.isTeamMember(
+        accessToken: accessToken,
+        username: githubUser.login,
+        organization: config.organizationName,
+        teamSlug: config.teamSlug,
+        client: req.client
+      )
+      req.logger.info("Team membership check: \(isTeamMember)")
+    } catch {
+      req.logger.warning("Team membership check failed (defaulting to speaker): \(error)")
+      // Don't fail if team check fails, just default to speaker
+    }
+
     // Determine user role based on team membership
     let role: UserRole = isTeamMember ? .admin : .speaker
-    
+
     // Find or create user
     let user: User
     if let existingUser = try await User.query(on: req.db)
@@ -133,56 +156,56 @@ struct AuthController: RouteCollection {
       )
       try await user.save(on: req.db)
     }
-    
+
     // Generate JWT token
     guard let userID = user.id else {
       throw Abort(.internalServerError, reason: "User ID is missing")
     }
-    
+
     let payload = UserJWTPayload(
       userID: userID,
       role: user.role,
       username: user.username
     )
-    
+
     let token = try await req.jwt.sign(payload)
     let userDTO = try user.toDTO()
-    
+
     return AuthResponseContent(from: AuthResponse(token: token, user: userDTO))
   }
-  
+
   /// Get current authenticated user
   @Sendable
   func getCurrentUser(req: Request) async throws -> UserDTOContent {
     let payload = try await req.jwt.verify(as: UserJWTPayload.self)
-    
+
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
     }
-    
+
     guard let user = try await User.find(userID, on: req.db) else {
       throw Abort(.notFound, reason: "User not found")
     }
-    
+
     return UserDTOContent(from: try user.toDTO())
   }
-  
+
   /// Update current user's profile
   /// PUT /auth/me
   @Sendable
   func updateProfile(req: Request) async throws -> UserDTOContent {
     let payload = try await req.jwt.verify(as: UserJWTPayload.self)
-    
+
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
     }
-    
+
     guard let user = try await User.find(userID, on: req.db) else {
       throw Abort(.notFound, reason: "User not found")
     }
-    
+
     let request = try req.content.decode(UpdateUserProfileRequestContent.self)
-    
+
     // Update user profile fields
     if let displayName = request.displayName {
       user.displayName = displayName
@@ -199,9 +222,9 @@ struct AuthController: RouteCollection {
     if let avatarURL = request.avatarURL {
       user.avatarURL = avatarURL
     }
-    
+
     try await user.save(on: req.db)
-    
+
     return UserDTOContent(from: try user.toDTO())
   }
 }
