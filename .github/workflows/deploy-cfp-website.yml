@@ -16,11 +16,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Fly.io
-        uses: superfly/flyctl-action/setup-flyctl@master
+      - name: Install Fly.io CLI
+        run: curl -L https://fly.io/install.sh | sh
 
       - name: Deploy to Fly.io
         run: |
+          export PATH="$HOME/.fly/bin:$PATH"
           cd CfPWebsite
           flyctl deploy --remote-only
         env:
