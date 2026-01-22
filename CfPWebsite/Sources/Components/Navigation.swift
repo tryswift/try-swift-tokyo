@@ -1,6 +1,8 @@
 import Ignite
 
 struct CfPNavigation: HTML {
+  static let apiBaseURL = "https://tryswift-cfp-api.fly.dev"
+  
   var body: some HTML {
     NavigationBar {
       Link("Home", target: CfPHome())
@@ -9,15 +11,24 @@ struct CfPNavigation: HTML {
         .role(.light)
       Link("Submit", target: SubmitPage())
         .role(.light)
-      Link("Login with GitHub", target: LoginPage())
-        .role(.light)
+      
+      Span {
+        Link("Login with GitHub", target: URL(string: "\(Self.apiBaseURL)/auth/github")!)
+          .linkStyle(.button)
+          .buttonSize(.small)
+          .role(.light)
+          .fontWeight(.bold)
+      }
+      .navigationBarVisibility(.always)
     } logo: {
-      Link("try! Swift Tokyo CfP", target: "/")
-        .fontWeight(.bold)
-        .foregroundStyle(.white)
+      Link(target: "/") {
+        Text("try! Swift Tokyo CfP")
+          .fontWeight(.bold)
+          .foregroundStyle(.white)
+      }
     }
     .navigationBarStyle(.dark)
-    .background(.darkSlateGray)
+    .background(.darkBlue.opacity(0.9))
     .position(.fixedTop)
   }
 }
@@ -25,32 +36,41 @@ struct CfPNavigation: HTML {
 struct CfPFooter: HTML {
   var body: some HTML {
     Section {
-      Text("try! Swift Tokyo CfP")
-        .font(.title3)
-        .fontWeight(.bold)
-        .foregroundStyle(.white)
-        .margin(.bottom, .medium)
-      
-      Text("Submit your talk proposal for try! Swift Tokyo 2026")
-        .foregroundStyle(.white)
-      
-      Section {
-        Link("Website", target: URL(string: "https://tryswift.jp")!)
+      Text {
+        Link("Main Website", target: URL(string: "https://tryswift.jp")!)
           .role(.light)
-        Link("Twitter", target: URL(string: "https://twitter.com/tryswift")!)
+          .margin(.trailing, .small)
+        Link("Code of Conduct", target: URL(string: "https://tryswift.jp/code-of-conduct")!)
           .role(.light)
-        Link("GitHub", target: URL(string: "https://github.com/tryswift")!)
+          .margin(.trailing, .small)
+        Link("Privacy Policy", target: URL(string: "https://tryswift.jp/privacy-policy")!)
           .role(.light)
       }
-      .margin(.top, .medium)
+      .horizontalAlignment(.center)
+      .font(.body)
+      .fontWeight(.semibold)
+      .margin(.bottom, .medium)
+      
+      Text {
+        Link(target: URL(string: "https://twitter.com/tryabortokyoswift")!) {
+          Image(systemName: "twitter")
+        }
+        .role(.light)
+        .margin(.trailing, .medium)
+        
+        Link(target: URL(string: "https://github.com/tryswift")!) {
+          Image(systemName: "github")
+        }
+        .role(.light)
+      }
+      .margin(.bottom, .medium)
       
       Text("© 2026 try! Swift Tokyo. All rights reserved.")
         .font(.body)
-        .foregroundStyle(.white)
-        .margin(.top, .large)
+        .foregroundStyle(.white.opacity(0.7))
     }
     .padding(.vertical, .large)
-    .background(.darkSlateGray)
+    .background(.darkBlue)
     .horizontalAlignment(.center)
   }
 }

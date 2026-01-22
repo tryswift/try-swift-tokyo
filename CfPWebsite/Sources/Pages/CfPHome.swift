@@ -8,7 +8,7 @@ struct CfPHome: StaticPage {
     Section {
       Text("try! Swift Tokyo 2026")
         .font(.title3)
-        .foregroundStyle(.white)
+        .foregroundStyle(.white.opacity(0.9))
       
       Text("Call for Proposals")
         .font(.title1)
@@ -18,22 +18,23 @@ struct CfPHome: StaticPage {
       
       Text("Share your Swift expertise with developers from around the world. Submit your talk proposal for try! Swift Tokyo 2026!")
         .font(.lead)
-        .foregroundStyle(.white)
+        .foregroundStyle(.white.opacity(0.9))
         .margin(.bottom, .large)
       
       Text {
         Link("Submit Your Proposal", target: SubmitPage())
           .linkStyle(.button)
-          .role(.primary)
+          .role(.light)
+          .fontWeight(.bold)
           .margin(.trailing, .medium)
         
         Link("View Guidelines", target: GuidelinesPage())
           .linkStyle(.button)
-          .role(.light)
+          .role(.secondary)
       }
     }
-    .padding(.vertical, 80)
-    .background(.darkSlateGray)
+    .padding(.vertical, 100)
+    .background(.darkBlue)
     .horizontalAlignment(.center)
     
     // Key Dates Section
@@ -42,6 +43,7 @@ struct CfPHome: StaticPage {
         .font(.title2)
         .fontWeight(.bold)
         .horizontalAlignment(.center)
+        .foregroundStyle(.bootstrapPurple)
         .margin(.bottom, .large)
       
       Grid {
@@ -95,6 +97,7 @@ struct CfPHome: StaticPage {
         .font(.title2)
         .fontWeight(.bold)
         .horizontalAlignment(.center)
+        .foregroundStyle(.bootstrapPurple)
         .margin(.bottom, .large)
       
       Grid {
@@ -131,6 +134,7 @@ struct CfPHome: StaticPage {
         .font(.title2)
         .fontWeight(.bold)
         .horizontalAlignment(.center)
+        .foregroundStyle(.bootstrapPurple)
         .margin(.bottom, .large)
       
       Grid {
@@ -196,15 +200,16 @@ struct CfPHome: StaticPage {
       
       Text("We welcome speakers of all experience levels. First-time speakers are encouraged to apply!")
         .font(.lead)
-        .foregroundStyle(.white)
+        .foregroundStyle(.white.opacity(0.9))
         .margin(.bottom, .large)
       
       Link("Submit Your Proposal", target: SubmitPage())
         .linkStyle(.button)
         .role(.light)
+        .fontWeight(.bold)
     }
     .padding(.vertical, .large)
-    .background(.darkSlateGray)
+    .background(.bootstrapPurple)
     .horizontalAlignment(.center)
   }
 }
