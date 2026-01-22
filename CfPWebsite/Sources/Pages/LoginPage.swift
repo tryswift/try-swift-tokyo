@@ -3,8 +3,6 @@ import Ignite
 struct LoginPage: StaticPage {
   var title = "Login"
   
-  static let apiBaseURL = "https://tryswift-cfp-api.fly.dev"
-  
   var body: some HTML {
     Section {
       Card {
@@ -22,7 +20,7 @@ struct LoginPage: StaticPage {
             .foregroundStyle(.secondary)
             .margin(.bottom, .large)
           
-          Link("Sign in with GitHub", target: URL(string: "\(Self.apiBaseURL)/auth/github")!)
+          Link("Sign in with GitHub", target: "https://tryswift-cfp-api.fly.dev/api/v1/auth/github")
             .linkStyle(.button)
             .role(.dark)
           

@@ -31,7 +31,7 @@ struct SubmitPage: StaticPage {
             .foregroundStyle(.secondary)
             .margin(.bottom, .large)
           
-          Link("Sign in with GitHub", target: "/api/v1/auth/github")
+          Link("Sign in with GitHub", target: "https://tryswift-cfp-api.fly.dev/api/v1/auth/github")
             .linkStyle(.button)
             .role(.dark)
         }
