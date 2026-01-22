@@ -23,5 +23,4 @@ jobs:
         run: |
           export PATH="$HOME/.fly/bin:$PATH"
           export FLY_API_TOKEN=$(echo "${{ secrets.FLY_API_TOKEN }}" | tr -d '\n\r ')
-          cd CfPWebsite
-          flyctl deploy --remote-only
+          flyctl deploy --remote-only --config fly.cfp-website.toml

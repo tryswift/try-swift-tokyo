@@ -2,6 +2,7 @@ app = 'tryswift-cfp-website'
 primary_region = 'nrt'
 
 [build]
+  dockerfile = "CfPWebsite/Dockerfile"
 
 [http_service]
   internal_port = 80
