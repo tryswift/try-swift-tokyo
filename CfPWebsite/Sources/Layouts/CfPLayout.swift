@@ -22,6 +22,5 @@ struct CfPLayout: Layout {
       
       CfPFooter()
     }
-    .class("cfp-body")
   }
 }

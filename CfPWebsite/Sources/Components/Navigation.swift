@@ -21,11 +21,9 @@ struct CfPNavigation: HTML {
       }
       .navigationBarVisibility(.always)
     } logo: {
-      Link(target: "/") {
-        Text("try! Swift Tokyo CfP")
-          .fontWeight(.bold)
-          .foregroundStyle(.white)
-      }
+      Link("try! Swift Tokyo CfP", target: "/")
+        .fontWeight(.bold)
+        .foregroundStyle(.white)
     }
     .navigationBarStyle(.dark)
     .background(.darkBlue.opacity(0.9))
@@ -36,14 +34,14 @@ struct CfPNavigation: HTML {
 struct CfPFooter: HTML {
   var body: some HTML {
     Section {
-      Text {
-        Link("Main Website", target: URL(string: "https://tryswift.jp")!)
+      Section {
+        Link("Main Website", target: "https://tryswift.jp")
           .role(.light)
           .margin(.trailing, .small)
-        Link("Code of Conduct", target: URL(string: "https://tryswift.jp/code-of-conduct")!)
+        Link("Code of Conduct", target: "https://tryswift.jp/code-of-conduct")
           .role(.light)
           .margin(.trailing, .small)
-        Link("Privacy Policy", target: URL(string: "https://tryswift.jp/privacy-policy")!)
+        Link("Privacy Policy", target: "https://tryswift.jp/privacy-policy")
           .role(.light)
       }
       .horizontalAlignment(.center)
@@ -51,17 +49,13 @@ struct CfPFooter: HTML {
       .fontWeight(.semibold)
       .margin(.bottom, .medium)
       
-      Text {
-        Link(target: URL(string: "https://twitter.com/tryabortokyoswift")!) {
-          Image(systemName: "twitter")
-        }
-        .role(.light)
-        .margin(.trailing, .medium)
+      Section {
+        Link("Twitter", target: "https://twitter.com/tryswiftconf")
+          .role(.light)
+          .margin(.trailing, .medium)
         
-        Link(target: URL(string: "https://github.com/tryswift")!) {
-          Image(systemName: "github")
-        }
-        .role(.light)
+        Link("GitHub", target: "https://github.com/tryswift")
+          .role(.light)
       }
       .margin(.bottom, .medium)
       
