@@ -23,7 +23,7 @@ struct ConferenceWebsite {
 
     let websiteDirectory = try URL.selectDirectories(from: #file).source
     let websiteAssetsDirectory = websiteDirectory.appending(path: "Assets")
-    let iosAppDirectory = websiteDirectory.deletingLastPathComponent().appending(path: "MyLibrary")
+    let iosAppDirectory = websiteDirectory.deletingLastPathComponent().appending(path: "iOS")
 
     let sponsorMediaDirectory = iosAppDirectory.appending(path: "Sources/SponsorFeature/Media.xcassets")
     let sponsorMediaEnumerator = fileManager.enumerator(at: sponsorMediaDirectory, includingPropertiesForKeys: nil)

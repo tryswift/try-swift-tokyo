@@ -8,14 +8,14 @@ let package = Package(
   platforms: [.macOS(.v14)],
   dependencies: [
     .package(url: "https://github.com/twostraws/Ignite", from: "0.6.0"),
-    .package(path: "../MyLibrary")
+    .package(path: "../SharedModels")
   ],
   targets: [
     .executableTarget(
       name: "CfPWebsite",
       dependencies: [
         "Ignite",
-        .product(name: "SharedModels", package: "MyLibrary"),
+        .product(name: "SharedModels", package: "SharedModels"),
       ]
     ),
   ]

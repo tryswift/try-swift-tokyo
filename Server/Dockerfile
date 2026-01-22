@@ -9,14 +9,13 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
 
 WORKDIR /build
 
-# Copy Server package manifest (no MyLibrary dependency now)
+# Copy SharedModels package (CfP types shared with iOS)
+COPY ./SharedModels ./SharedModels
+
+# Copy Server package manifest
 COPY ./Server/Package.swift ./Server/Package.swift
 
-# Copy only SharedModels sources that Server needs (avoid iOS dependencies)
-COPY ./MyLibrary/Sources/SharedModels/CfP ./MyLibrary/Sources/SharedModels/CfP
-COPY ./MyLibrary/Sources/SharedModels/CfPExports.swift ./MyLibrary/Sources/SharedModels/CfPExports.swift
-
-# Create minimal source structure to resolve dependencies
+# Create minimal Server source to resolve dependencies
 RUN mkdir -p Server/Sources/Server && \
     echo "@main struct App { static func main() {} }" > Server/Sources/Server/main.swift
 
@@ -24,13 +23,11 @@ RUN mkdir -p Server/Sources/Server && \
 WORKDIR /build/Server
 RUN swift package resolve
 
-# Now copy actual Server source code
-WORKDIR /build
-COPY ./Server/Sources ./Server/Sources
-COPY ./Server/Tests ./Server/Tests
+# Now copy actual Server source code (overwrites placeholder)
+COPY ./Server/Sources ./Sources
+COPY ./Server/Tests ./Tests
 
 # Build Server with release configuration
-WORKDIR /build/Server
 RUN swift build -c release --static-swift-stdlib \
     -Xlinker -ljemalloc
 
