@@ -5,31 +5,23 @@ on:
     branches: [main, cfp]
     paths:
       - "CfPWebsite/**"
-      - "MyLibrary/Sources/SharedModels/**"
+      - "SharedModels/**"
   workflow_dispatch:
 
 jobs:
   build-and-deploy:
-    runs-on: macos-14
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Swift
-        uses: swift-actions/setup-swift@v2
-        with:
-          swift-version: "6.2"
+      - name: Setup Fly.io
+        uses: superfly/flyctl-action/setup-flyctl@master
 
-      - name: Build Website
+      - name: Deploy to Fly.io
         run: |
           cd CfPWebsite
-          swift run
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./CfPWebsite/Build
-          cname: cfp.tryswift.jp
-          destination_dir: cfp
+          flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
