@@ -8,9 +8,18 @@
       location = "group:App/App.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:MyLibrary">
+      location = "group:iOS">
    </FileRef>
    <FileRef
       location = "group:Website">
+   </FileRef>
+   <FileRef
+      location = "group:CfPWebsite">
+   </FileRef>
+   <FileRef
+      location = "group:Server">
+   </FileRef>
+   <FileRef
+      location = "group:SharedModels">
    </FileRef>
 </Workspace>

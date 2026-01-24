@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-  name: "MyLibrary",
+  name: "iOS",
   defaultLocalization: "en",
   platforms: [.iOS(.v17), .macOS(.v14), .watchOS(.v10), .tvOS(.v17), .visionOS(.v1)],
   products: [
@@ -17,9 +17,6 @@ let package = Package(
       name: "DataClient",
       targets: ["DataClient"]),
     .library(
-      name: "SharedModels",
-      targets: ["SharedModels"]),
-    .library(
       name: "ScheduleFeature",
       targets: ["ScheduleFeature"]),
     .library(
@@ -30,6 +27,7 @@ let package = Package(
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.18.0"),
     .package(url: "https://github.com/maiyama18/LicensesPlugin", from: "0.2.0"),
     .package(url: "https://github.com/flitto/rtt_sdk", branch: "0.1.5"),
+    .package(name: "SharedModels", path: "../SharedModels"),
   ],
   targets: [
     .target(
@@ -51,8 +49,8 @@ let package = Package(
     .target(
       name: "DataClient",
       dependencies: [
-        "SharedModels",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "SharedModels", package: "SharedModels"),
       ],
       resources: [
         .process("Resources")
@@ -83,8 +81,8 @@ let package = Package(
     .target(
       name: "MapKitClient",
       dependencies: [
-        "SharedModels",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "SharedModels", package: "SharedModels")
       ]
     ),
     .target(
@@ -94,9 +92,6 @@ let package = Package(
         "DependencyExtra",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
       ]
-    ),
-    .target(
-      name: "SharedModels"
     ),
     .target(
       name: "SponsorFeature",
@@ -128,16 +123,16 @@ let package = Package(
       name: "SponsorFeatureTests",
       dependencies: [
         "SponsorFeature",
-        "SharedModels",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "SharedModels", package: "SharedModels")
       ]
     ),
     .testTarget(
       name: "trySwiftFeatureTests",
       dependencies: [
         "trySwiftFeature",
-        "SharedModels",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "SharedModels", package: "SharedModels")
       ]
     ),
   ]

@@ -10,7 +10,7 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/twostraws/Ignite", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.2.0"),
-    .package(path: "../MyLibrary")
+    .package(path: "../iOS")
   ],
   targets: [
     .executableTarget(
@@ -18,9 +18,9 @@ let package = Package(
       dependencies: [
         "Ignite",
         .product(name: "Dependencies", package: "swift-dependencies"),
-        .product(name: "DataClient", package: "MyLibrary"),
-        .product(name: "ScheduleFeature", package: "MyLibrary"),
-        .product(name: "trySwiftFeature", package: "MyLibrary"),
+        .product(name: "DataClient", package: "iOS"),
+        .product(name: "ScheduleFeature", package: "iOS"),
+        .product(name: "trySwiftFeature", package: "iOS"),
       ],
       resources: [
         .process("Resources")

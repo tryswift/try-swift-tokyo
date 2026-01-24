@@ -7,6 +7,9 @@ on:
     paths:
       - "Website/Sources/**"
       - "Website/Assets/**"
+      - "CfPWebsite/Sources/**"
+      - "CfPWebsite/Assets/**"
+      - "SharedModels/**"
       - "trySwiftTokyo.xcworkspace/xcshareddata/swiftpm/Package.resolved"
       - ".github/workflows/deploy_website.yml"
       - "MyLibrary/Sources/SponsorFeature/Media.xcassets/**"
@@ -35,6 +38,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Test CfP Website
+        run: |
+          cd CfPWebsite
+          swift test
+          node Tests/verify-login-logic.js
+
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v4
         with:
@@ -60,13 +69,23 @@ jobs:
       - name: Run Website App
         run: ~/DerivedData/Build/Products/Release/Website
 
+      - name: Build CfP Website
+        run: |
+          cd CfPWebsite
+          ./prepare-for-github-pages.sh
+
+      - name: Copy CfP Website to /cfp path
+        run: |
+          mkdir -p Website/Build/cfp
+          cp -r CfPWebsite/Build/* Website/Build/cfp/
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './Website/Build'
+          path: "./Website/Build"
 
       - name: Deploy to GitHub Pages
         id: deployment
