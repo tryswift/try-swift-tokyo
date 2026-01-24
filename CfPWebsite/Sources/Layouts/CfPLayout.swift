@@ -27,18 +27,51 @@ struct CfPLayout: Layout {
         document.addEventListener('DOMContentLoaded', function() {
           const token = localStorage.getItem('cfp_token');
           const username = localStorage.getItem('cfp_username');
-          const loginButton = document.getElementById('login-button');
-          const myProposalsButton = document.getElementById('my-proposals-button');
 
-          if (token && username) {
-            // User is logged in - show "My Proposals" button
-            if (loginButton) {
-              loginButton.textContent = username;
-              loginButton.href = '/my-proposals';
+          // Find the login button by its text
+          const navLinks = document.querySelectorAll('.navbar-nav a');
+          let loginButton = null;
+          navLinks.forEach(link => {
+            if (link.textContent.trim() === 'Login with GitHub') {
+              loginButton = link;
             }
-            if (myProposalsButton) {
-              myProposalsButton.classList.remove('d-none');
-            }
+          });
+
+          if (token && username && loginButton) {
+            // User is logged in - replace login button with user info
+            const navContainer = loginButton.parentElement;
+
+            // Update login button to show username
+            loginButton.textContent = '👤 ' + username;
+            loginButton.href = '/my-proposals';
+            loginButton.classList.remove('btn', 'btn-sm', 'btn-light');
+            loginButton.classList.add('text-white', 'fw-bold');
+
+            // Add My Proposals link
+            const myProposalsLink = document.createElement('a');
+            myProposalsLink.href = '/my-proposals';
+            myProposalsLink.textContent = 'My Proposals';
+            myProposalsLink.className = 'nav-link text-white';
+            const myProposalsLi = document.createElement('li');
+            myProposalsLi.className = 'nav-item';
+            myProposalsLi.appendChild(myProposalsLink);
+            navContainer.appendChild(myProposalsLi);
+
+            // Add Sign Out button
+            const signOutLink = document.createElement('a');
+            signOutLink.href = '#';
+            signOutLink.textContent = 'Sign Out';
+            signOutLink.className = 'btn btn-sm btn-danger';
+            signOutLink.addEventListener('click', function(e) {
+              e.preventDefault();
+              localStorage.removeItem('cfp_token');
+              localStorage.removeItem('cfp_username');
+              window.location.href = '/';
+            });
+            const signOutLi = document.createElement('li');
+            signOutLi.className = 'nav-item';
+            signOutLi.appendChild(signOutLink);
+            navContainer.appendChild(signOutLi);
           }
         });
       """)

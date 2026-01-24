@@ -10,24 +10,10 @@ struct CfPNavigation: HTML {
       Link("Submit", target: SubmitPage())
         .role(.light)
 
-      Span {
-        Link("Login", target: LoginPage())
-          .linkStyle(.button)
-          .buttonSize(.small)
-          .role(.light)
-          .fontWeight(.bold)
-          .id("login-button")
-
-        Link("My Proposals", target: MyProposalsPage())
-          .linkStyle(.button)
-          .buttonSize(.small)
-          .role(.light)
-          .fontWeight(.bold)
-          .id("my-proposals-button")
-          .class("d-none")
-      }
-      .navigationBarVisibility(.always)
-      .id("nav-auth")
+      Link("Login with GitHub", target: LoginPage())
+        .linkStyle(.button)
+        .buttonSize(.small)
+        .role(.light)
     } logo: {
       Link("try! Swift Tokyo CfP", target: "/")
         .fontWeight(.bold)
