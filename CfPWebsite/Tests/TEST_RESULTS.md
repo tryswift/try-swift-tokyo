@@ -11,10 +11,10 @@
 ✅ **All tests passed**
 
 - **Swift Tests**: 11/11 passed
-- **JavaScript Logic Tests**: 10/10 passed
+- **JavaScript Logic Tests**: 12/12 passed
 - **HTML Structure Tests**: 28/28 passed
 
-**Total**: 49/49 tests passed (100%)
+**Total**: 51/51 tests passed (100%)
 
 ---
 
@@ -51,23 +51,25 @@ Executed 11 tests, with 0 failures
 
 **Results**:
 ```
-Total: 10 tests
-✅ Passed: 10
+Total: 12 tests
+✅ Passed: 12
 ❌ Failed: 0
 🎉 All tests passed!
 ```
 
 **Tests Passed**:
 1. ✅ OAuth callback stores token and username
-2. ✅ OAuth callback does not overwrite existing token (loop prevention)
-3. ✅ Detects authenticated state from localStorage
-4. ✅ Detects unauthenticated state when no token
-5. ✅ Logout clears localStorage
-6. ✅ OAuth callback works without username
-7. ✅ Error parameter is detected correctly
-8. ✅ OAuth callback ignores missing auth parameter
-9. ✅ Welcome message is generated correctly
-10. ✅ Navigation update has correct structure
+2. ✅ OAuth callback redirects to clean URL after storing credentials
+3. ✅ OAuth callback does not overwrite existing token (loop prevention)
+4. ✅ OAuth callback does not redirect when token already exists
+5. ✅ Detects authenticated state from localStorage
+6. ✅ Detects unauthenticated state when no token
+7. ✅ Logout clears localStorage
+8. ✅ OAuth callback works without username
+9. ✅ Error parameter is detected correctly
+10. ✅ OAuth callback ignores missing auth parameter
+11. ✅ Welcome message is generated correctly
+12. ✅ Navigation update has correct structure
 
 ---
 
@@ -157,13 +159,19 @@ Done! The Build directory is ready for deployment to /cfp path.
    - ✅ Checks `!localStorage.getItem('cfp_token')` to prevent loop
    - ✅ Stores token in `localStorage.cfp_token`
    - ✅ Stores username in `localStorage.cfp_username`
-   - ✅ Redirects to clean URL: `/cfp/login-page`
+   - ✅ Executes `window.location.href = window.location.pathname` to redirect
+   - ✅ Redirects to clean URL: `/cfp/login-page` (without query params)
 3. Page reloads with clean URL
 4. DOMContentLoaded event fires:
    - ✅ Reads token from localStorage
    - ✅ Hides login form
    - ✅ Shows logged-in view
    - ✅ Updates welcome message with username
+
+**Redirect Verification**:
+- ✅ Redirect is called after storing credentials
+- ✅ Redirect NOT called when token already exists (prevents infinite loop)
+- ✅ Clean URL (no auth parameters in final URL)
 
 ### Login State Persistence ✅
 

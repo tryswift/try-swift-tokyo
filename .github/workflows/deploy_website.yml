@@ -42,6 +42,7 @@ jobs:
         run: |
           cd CfPWebsite
           swift test
+          node Tests/verify-login-logic.js
 
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v4

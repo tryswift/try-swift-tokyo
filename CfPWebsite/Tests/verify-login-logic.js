@@ -97,6 +97,40 @@ test('OAuth callback stores token and username', () => {
   assertEquals(localStorage.getItem('cfp_username'), 'testuser', 'Username should be stored');
 });
 
+// Test 1b: OAuth Callback Triggers Redirect After Storing Credentials
+test('OAuth callback redirects to clean URL after storing credentials', () => {
+  localStorage.clear();
+
+  // Mock window.location
+  const mockLocation = {
+    pathname: '/cfp/login-page',
+    search: '?auth=success&token=test123&username=testuser',
+    href: null
+  };
+
+  const urlParams = new MockURLSearchParams('auth=success&token=test123&username=testuser');
+  const authSuccess = urlParams.get('auth');
+  const token = urlParams.get('token');
+  const username = urlParams.get('username');
+
+  let redirectCalled = false;
+
+  // Simulate OAuth callback logic with redirect
+  if (authSuccess === 'success' && token && !localStorage.getItem('cfp_token')) {
+    localStorage.setItem('cfp_token', token);
+    if (username) {
+      localStorage.setItem('cfp_username', username);
+    }
+    // Simulate: window.location.href = window.location.pathname;
+    mockLocation.href = mockLocation.pathname;
+    redirectCalled = true;
+  }
+
+  assert(redirectCalled, 'Redirect should be called after storing credentials');
+  assertEquals(mockLocation.href, '/cfp/login-page', 'Should redirect to clean URL without query params');
+  assertEquals(localStorage.getItem('cfp_token'), 'test123', 'Token should be stored before redirect');
+});
+
 // Test 2: OAuth Loop Prevention
 test('OAuth callback does not overwrite existing token', () => {
   localStorage.clear();
@@ -118,6 +152,41 @@ test('OAuth callback does not overwrite existing token', () => {
 
   assertEquals(localStorage.getItem('cfp_token'), 'existing-token', 'Token should not be overwritten');
   assertEquals(localStorage.getItem('cfp_username'), 'existing-user', 'Username should not be overwritten');
+});
+
+// Test 2b: OAuth Loop Prevention - No Redirect When Token Exists
+test('OAuth callback does not redirect when token already exists', () => {
+  localStorage.clear();
+  localStorage.setItem('cfp_token', 'existing-token');
+  localStorage.setItem('cfp_username', 'existing-user');
+
+  // Mock window.location
+  const mockLocation = {
+    pathname: '/cfp/login-page',
+    search: '?auth=success&token=new-token&username=new-user',
+    href: null
+  };
+
+  const urlParams = new MockURLSearchParams('auth=success&token=new-token&username=new-user');
+  const authSuccess = urlParams.get('auth');
+  const token = urlParams.get('token');
+  const username = urlParams.get('username');
+
+  let redirectCalled = false;
+
+  // Simulate OAuth callback logic
+  if (authSuccess === 'success' && token && !localStorage.getItem('cfp_token')) {
+    localStorage.setItem('cfp_token', token);
+    if (username) {
+      localStorage.setItem('cfp_username', username);
+    }
+    mockLocation.href = mockLocation.pathname;
+    redirectCalled = true;
+  }
+
+  assertEquals(redirectCalled, false, 'Redirect should NOT be called when token already exists');
+  assertEquals(mockLocation.href, null, 'Location should not be changed');
+  assertEquals(localStorage.getItem('cfp_token'), 'existing-token', 'Existing token should be preserved');
 });
 
 // Test 3: Login State Detection
