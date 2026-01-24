@@ -38,6 +38,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Test CfP Website
+        run: |
+          cd CfPWebsite
+          swift test
+
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v4
         with:

@@ -16,7 +16,13 @@ let package = Package(
       dependencies: [
         "Ignite",
         .product(name: "SharedModels", package: "SharedModels"),
-      ]
+      ],
+      swiftSettings: [.swiftLanguageMode(.v6)]
+    ),
+    .testTarget(
+      name: "CfPWebsiteTests",
+      dependencies: ["CfPWebsite"],
+      swiftSettings: [.swiftLanguageMode(.v6)]
     ),
   ]
 )
