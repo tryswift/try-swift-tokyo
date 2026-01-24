@@ -39,13 +39,15 @@ struct CfPLayout: Layout {
 
           if (token && username && loginButton) {
             // User is logged in - replace login button with user info
-            const navContainer = loginButton.parentElement;
+            const loginLi = loginButton.parentElement; // This is the <li>
+            const navUl = loginLi.parentElement; // This is the <ul>
 
             // Update login button to show username
             loginButton.textContent = '👤 ' + username;
             loginButton.href = '/my-proposals';
             loginButton.classList.remove('btn', 'btn-sm', 'btn-light');
-            loginButton.classList.add('text-white', 'fw-bold');
+            loginButton.classList.add('text-white', 'fw-bold', 'nav-link');
+            loginButton.style.color = 'white';
 
             // Add My Proposals link
             const myProposalsLink = document.createElement('a');
@@ -55,13 +57,13 @@ struct CfPLayout: Layout {
             const myProposalsLi = document.createElement('li');
             myProposalsLi.className = 'nav-item';
             myProposalsLi.appendChild(myProposalsLink);
-            navContainer.appendChild(myProposalsLi);
+            navUl.appendChild(myProposalsLi);
 
             // Add Sign Out button
             const signOutLink = document.createElement('a');
             signOutLink.href = '#';
             signOutLink.textContent = 'Sign Out';
-            signOutLink.className = 'btn btn-sm btn-danger';
+            signOutLink.className = 'btn btn-sm btn-danger text-nowrap';
             signOutLink.addEventListener('click', function(e) {
               e.preventDefault();
               localStorage.removeItem('cfp_token');
@@ -71,7 +73,7 @@ struct CfPLayout: Layout {
             const signOutLi = document.createElement('li');
             signOutLi.className = 'nav-item';
             signOutLi.appendChild(signOutLink);
-            navContainer.appendChild(signOutLi);
+            navUl.appendChild(signOutLi);
           }
         });
       """)
