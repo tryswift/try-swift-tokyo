@@ -90,15 +90,15 @@ struct LoginPage: StaticPage {
         const token = urlParams.get('token');
         const username = urlParams.get('username');
 
-        if (authSuccess === 'success' && token) {
+        // Only process if we have auth params AND haven't stored token yet (prevent reload loop)
+        if (authSuccess === 'success' && token && !localStorage.getItem('cfp_token')) {
           // Store in localStorage
           localStorage.setItem('cfp_token', token);
           if (username) {
             localStorage.setItem('cfp_username', username);
           }
-          // Clean URL and reload to update navigation
-          window.history.replaceState({}, document.title, window.location.pathname);
-          window.location.reload();
+          // Redirect to clean URL (this will reload the page)
+          window.location.href = window.location.pathname;
         }
       })();
 
