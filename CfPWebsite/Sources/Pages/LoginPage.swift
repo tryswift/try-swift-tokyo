@@ -124,16 +124,16 @@ struct LoginPage: StaticPage {
           username = urlParams.get('username');
         }
 
-        if (authSuccess === 'success' || token) {
+        if (authSuccess === 'success' && token) {
           // Store in localStorage for easier access by other pages
-          if (token) {
-            localStorage.setItem('cfp_token', token);
-          }
+          localStorage.setItem('cfp_token', token);
           if (username) {
             localStorage.setItem('cfp_username', username);
           }
-          // Clean URL to remove sensitive params
+          // Clean URL and reload to update navigation
           window.history.replaceState({}, document.title, window.location.pathname);
+          window.location.reload();
+          return;
         }
 
         // Check if user is logged in
