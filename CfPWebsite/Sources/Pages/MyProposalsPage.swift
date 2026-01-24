@@ -72,6 +72,8 @@ struct MyProposalsPage: StaticPage {
 
     // JavaScript for loading proposals
     Script(code: """
+      const API_BASE = 'https://tryswift-cfp-api.fly.dev/api/v1';
+
       document.addEventListener('DOMContentLoaded', async function() {
         const token = localStorage.getItem('cfp_token');
 
@@ -82,7 +84,7 @@ struct MyProposalsPage: StaticPage {
 
         try {
           // Fetch user info
-          const userResponse = await fetch('/api/v1/auth/me', {
+          const userResponse = await fetch(`${API_BASE}/auth/me`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -90,13 +92,14 @@ struct MyProposalsPage: StaticPage {
 
           if (!userResponse.ok) {
             localStorage.removeItem('cfp_token');
+            localStorage.removeItem('cfp_username');
             window.location.href = '/login';
             return;
           }
 
           const user = await userResponse.json();
           document.getElementById('user-info').innerHTML = `
-            <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center justify-content-between p-3">
               <div class="d-flex align-items-center">
                 <img src="${user.avatarURL || 'https://github.com/identicons/' + user.username + '.png'}"
                      alt="${user.username}"
@@ -112,7 +115,7 @@ struct MyProposalsPage: StaticPage {
           `;
 
           // Fetch proposals
-          const proposalsResponse = await fetch('/api/v1/proposals/mine', {
+          const proposalsResponse = await fetch(`${API_BASE}/proposals/mine`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -129,7 +132,7 @@ struct MyProposalsPage: StaticPage {
                     <div class="d-flex justify-content-between align-items-start">
                       <div>
                         <h5 class="card-title">${p.title}</h5>
-                        <span class="badge ${p.talkDuration === '20min' ? 'bg-primary' : 'bg-warning'}">${p.talkDuration}</span>
+                        <span class="badge ${p.talkDuration === '20min' ? 'bg-primary' : 'bg-warning text-dark'}">${p.talkDuration}</span>
                       </div>
                       <small class="text-muted">${new Date(p.createdAt).toLocaleDateString()}</small>
                     </div>
@@ -141,11 +144,17 @@ struct MyProposalsPage: StaticPage {
           }
         } catch (error) {
           console.error('Error loading proposals:', error);
+          document.getElementById('user-info').innerHTML = `
+            <div class="alert alert-danger">
+              Failed to load data. Please try refreshing the page.
+            </div>
+          `;
         }
       });
 
       function logout() {
         localStorage.removeItem('cfp_token');
+        localStorage.removeItem('cfp_username');
         window.location.href = '/';
       }
     """)

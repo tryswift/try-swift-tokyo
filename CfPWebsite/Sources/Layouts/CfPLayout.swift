@@ -21,6 +21,27 @@ struct CfPLayout: Layout {
       .padding(.top, .px(60))
 
       CfPFooter()
+
+      // Global script to update navigation based on login state
+      Script(code: """
+        document.addEventListener('DOMContentLoaded', function() {
+          const token = localStorage.getItem('cfp_token');
+          const username = localStorage.getItem('cfp_username');
+          const loginButton = document.getElementById('login-button');
+          const myProposalsButton = document.getElementById('my-proposals-button');
+
+          if (token && username) {
+            // User is logged in - show "My Proposals" button
+            if (loginButton) {
+              loginButton.textContent = username;
+              loginButton.href = '/my-proposals';
+            }
+            if (myProposalsButton) {
+              myProposalsButton.classList.remove('d-none');
+            }
+          }
+        });
+      """)
     }
   }
 }

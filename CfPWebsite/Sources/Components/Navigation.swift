@@ -11,13 +11,23 @@ struct CfPNavigation: HTML {
         .role(.light)
 
       Span {
-        Link("Login with GitHub", target: "https://tryswift-cfp-api.fly.dev/api/v1/auth/github")
+        Link("Login", target: LoginPage())
           .linkStyle(.button)
           .buttonSize(.small)
           .role(.light)
           .fontWeight(.bold)
+          .id("login-button")
+
+        Link("My Proposals", target: MyProposalsPage())
+          .linkStyle(.button)
+          .buttonSize(.small)
+          .role(.light)
+          .fontWeight(.bold)
+          .id("my-proposals-button")
+          .class("d-none")
       }
       .navigationBarVisibility(.always)
+      .id("nav-auth")
     } logo: {
       Link("try! Swift Tokyo CfP", target: "/")
         .fontWeight(.bold)
