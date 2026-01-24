@@ -82,6 +82,13 @@ struct LoginPage: StaticPage {
 
     // JavaScript for handling auth callback and localStorage
     Script(code: """
+      // IMPORTANT: Hide logged-in view immediately to prevent flash
+      (function() {
+        const style = document.createElement('style');
+        style.textContent = '#logged-in-view { display: none; }';
+        document.head.appendChild(style);
+      })();
+
       // IMPORTANT: Handle OAuth callback IMMEDIATELY, before DOMContentLoaded
       // This ensures localStorage is populated before the navigation script runs
       (function() {

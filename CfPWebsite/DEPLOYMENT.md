@@ -1,22 +1,26 @@
 # CfP Website Deployment
 
 ## Overview
+
 The CfP website is deployed to GitHub Pages at `tryswift.jp/cfp` alongside the main website. Both sites are built and deployed together using a single GitHub Actions workflow.
 
 ## Changes Made
 
 ### 1. Frontend Changes (CfPWebsite)
+
 - Updated base URL from `https://cfp.tryswift.jp` to `https://tryswift.jp`
 - Added `/cfp` prefix to all internal links and asset paths
 - Created `prepare-for-github-pages.sh` script to post-process build output
 - Updated OGP/Twitter card image URLs to use new path
 
 ### 2. Backend Changes (Server)
+
 - Updated default `FRONTEND_URL` from `https://tryswift-cfp-website.fly.dev` to `https://tryswift.jp/cfp`
 - Updated OAuth redirect paths to use `/login-page` instead of `/login`
 - Updated CORS configuration to use `.originBased` for better security
 
 ### 3. Files Modified
+
 - `CfPWebsite/Sources/CfPWebsite.swift` - Updated site URL and favicon path
 - `CfPWebsite/Sources/Layouts/CfPLayout.swift` - Updated OGP images and internal paths
 - `CfPWebsite/Sources/Components/Navigation.swift` - Updated logo link to `/cfp/`
@@ -36,6 +40,7 @@ The CfP website is automatically deployed with the main website when changes are
 5. Deploys the combined `Website/Build` directory to GitHub Pages
 
 **Triggers:**
+
 - Push to `main` branch with changes to:
   - `Website/Sources/**` or `Website/Assets/**`
   - `CfPWebsite/Sources/**` or `CfPWebsite/Assets/**`
@@ -65,6 +70,7 @@ cp -r Build/* ../Website/Build/cfp/
 ```
 
 ### Backend Deployment (Fly.io)
+
 Update the FRONTEND_URL environment variable on Fly.io:
 
 ```bash
@@ -73,6 +79,7 @@ fly secrets set FRONTEND_URL=https://tryswift.jp/cfp -a tryswift-cfp-api
 ```
 
 Deploy the updated backend:
+
 ```bash
 fly deploy -c fly.toml -a tryswift-cfp-api
 ```

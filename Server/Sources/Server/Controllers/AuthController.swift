@@ -407,7 +407,6 @@ struct AuthController: RouteCollection {
 
     let allowedHosts = [
       "tryswift-cfp-website.fly.dev",
-      "cfp.tryswift.jp",
       "tryswift.jp",
       "localhost"
     ]
