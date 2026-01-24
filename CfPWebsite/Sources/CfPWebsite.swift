@@ -17,10 +17,10 @@ struct CfPWebsite {
 struct CfPSite: Site {
   var name = "try! Swift Tokyo CfP"
   var titleSuffix = " – try! Swift Tokyo"
-  var url = URL(string: "https://cfp.tryswift.jp")!
+  var url = URL(string: "https://tryswift.jp")!
   var builtInIconsEnabled = true
   var author = "try! Swift Tokyo"
-  var favicon = URL(string: "/images/favicon.png")
+  var favicon = URL(string: "/cfp/images/favicon.png")
 
   var homePage = CfPHome()
   var layout = CfPLayout()

@@ -151,7 +151,7 @@ enum OAuthError: AbortError {
 struct AuthController: RouteCollection {
   /// The frontend URL to redirect to after authentication
   static var frontendURL: String {
-    Environment.get("FRONTEND_URL") ?? "https://tryswift-cfp-website.fly.dev"
+    Environment.get("FRONTEND_URL") ?? "https://tryswift.jp/cfp"
   }
 
   /// The callback URL for GitHub OAuth
@@ -259,7 +259,7 @@ struct AuthController: RouteCollection {
       if let error = req.query[String.self, at: "error"] {
         let description = req.query[String.self, at: "error_description"] ?? "Unknown error"
         req.logger.warning("GitHub returned error: \(error) - \(description)")
-        return req.redirect(to: "\(Self.frontendURL)/login?error=\(error)")
+        return req.redirect(to: "\(Self.frontendURL)/login-page?error=\(error)")
       }
       throw OAuthError.missingCode
     }
@@ -343,7 +343,7 @@ struct AuthController: RouteCollection {
 
     // 9. Generate JWT token
     guard let userID = user.id else {
-      return req.redirect(to: "\(Self.frontendURL)/login?error=user_creation_failed")
+      return req.redirect(to: "\(Self.frontendURL)/login-page?error=user_creation_failed")
     }
 
     let payload = UserJWTPayload(
@@ -366,7 +366,7 @@ struct AuthController: RouteCollection {
     // Create response with redirect including token in URL
     // NOTE: We use URL params because the API (fly.dev) cannot set cookies for frontend domain (tryswift.jp)
     // The frontend JavaScript will immediately move these to localStorage and clean the URL
-    let redirectURL = "\(baseRedirect)/login?auth=success&token=\(token)&username=\(user.username)"
+    let redirectURL = "\(baseRedirect)/login-page?auth=success&token=\(token)&username=\(user.username)"
 
     return req.redirect(to: redirectURL)
   }

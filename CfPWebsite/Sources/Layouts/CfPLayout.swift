@@ -6,10 +6,10 @@ struct CfPLayout: Layout {
       Title("try! Swift Tokyo CfP")
       MetaTag(.openGraphTitle, content: "try! Swift Tokyo 2026 - Call for Proposals")
       MetaTag(.openGraphDescription, content: "Submit your talk proposal for try! Swift Tokyo 2026. Share your Swift expertise with developers from around the world.")
-      MetaTag(.openGraphImage, content: "https://cfp.tryswift.jp/images/ogp.png")
+      MetaTag(.openGraphImage, content: "https://tryswift.jp/cfp/images/ogp.png")
       MetaTag(.twitterCard, content: "summary_large_image")
       MetaTag(.twitterTitle, content: "try! Swift Tokyo 2026 - Call for Proposals")
-      MetaTag(.twitterImage, content: "https://cfp.tryswift.jp/images/ogp.png")
+      MetaTag(.twitterImage, content: "https://tryswift.jp/cfp/images/ogp.png")
     }
 
     Body {
@@ -63,14 +63,14 @@ struct CfPLayout: Layout {
 
             // Update login button to show username
             loginButton.textContent = '👤 ' + username;
-            loginButton.href = '/my-proposals';
+            loginButton.href = '/cfp/my-proposals-page';
             loginButton.classList.remove('btn', 'btn-sm', 'btn-light');
             loginButton.classList.add('text-white', 'fw-bold', 'nav-link');
             loginButton.style.color = 'white';
 
             // Add My Proposals link
             const myProposalsLink = document.createElement('a');
-            myProposalsLink.href = '/my-proposals';
+            myProposalsLink.href = '/cfp/my-proposals-page';
             myProposalsLink.textContent = 'My Proposals';
             myProposalsLink.className = 'nav-link text-white';
             const myProposalsLi = document.createElement('li');
@@ -90,7 +90,7 @@ struct CfPLayout: Layout {
               localStorage.removeItem('cfp_username');
               deleteCookie('cfp_token');
               deleteCookie('cfp_username');
-              window.location.href = '/';
+              window.location.href = '/cfp/';
             });
             const signOutLi = document.createElement('li');
             signOutLi.className = 'nav-item';

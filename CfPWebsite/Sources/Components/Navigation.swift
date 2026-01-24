@@ -15,7 +15,7 @@ struct CfPNavigation: HTML {
         .buttonSize(.small)
         .role(.light)
     } logo: {
-      Link("try! Swift Tokyo CfP", target: "/")
+      Link("try! Swift Tokyo CfP", target: "/cfp/")
         .fontWeight(.bold)
         .foregroundStyle(.white)
     }

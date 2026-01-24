@@ -61,11 +61,13 @@ enum AppConfiguration {
 
     // MARK: - Middleware
 
-    // Enable CORS for iOS client
+    // Enable CORS for frontend and iOS client
+    // Allow tryswift.jp (main site + CfP) and localhost for development
     let corsConfiguration = CORSMiddleware.Configuration(
-      allowedOrigin: .all,
+      allowedOrigin: .originBased,
       allowedMethods: [.GET, .POST, .PUT, .DELETE, .OPTIONS],
-      allowedHeaders: [.accept, .authorization, .contentType, .origin]
+      allowedHeaders: [.accept, .authorization, .contentType, .origin, .xRequestedWith],
+      allowCredentials: true
     )
     app.middleware.use(CORSMiddleware(configuration: corsConfiguration))
 
