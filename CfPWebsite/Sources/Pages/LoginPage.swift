@@ -82,6 +82,26 @@ struct LoginPage: StaticPage {
 
     // JavaScript for handling auth callback and localStorage
     Script(code: """
+      // IMPORTANT: Handle OAuth callback IMMEDIATELY, before DOMContentLoaded
+      // This ensures localStorage is populated before the navigation script runs
+      (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const authSuccess = urlParams.get('auth');
+        const token = urlParams.get('token');
+        const username = urlParams.get('username');
+
+        if (authSuccess === 'success' && token) {
+          // Store in localStorage
+          localStorage.setItem('cfp_token', token);
+          if (username) {
+            localStorage.setItem('cfp_username', username);
+          }
+          // Clean URL and reload to update navigation
+          window.history.replaceState({}, document.title, window.location.pathname);
+          window.location.reload();
+        }
+      })();
+
       // Helper function to get cookie value
       function getCookie(name) {
         const value = `; ${document.cookie}`;
@@ -102,37 +122,14 @@ struct LoginPage: StaticPage {
         const welcomeMessage = document.getElementById('welcome-message');
         const logoutLink = document.getElementById('logout-link');
 
-        // Check URL params for auth success (from OAuth callback)
+        // Check URL params for errors
         const urlParams = new URLSearchParams(window.location.search);
-        const authSuccess = urlParams.get('auth');
         const error = urlParams.get('error');
 
         if (error) {
           alert('Login failed: ' + error);
           loginForm.style.display = 'block';
           loggedInView.style.display = 'none';
-          return;
-        }
-
-        // Check for cookies (new secure method)
-        let token = getCookie('cfp_token');
-        let username = getCookie('cfp_username');
-
-        // Fallback: Check URL params for backward compatibility (old method)
-        if (!token && urlParams.get('token')) {
-          token = urlParams.get('token');
-          username = urlParams.get('username');
-        }
-
-        if (authSuccess === 'success' && token) {
-          // Store in localStorage for easier access by other pages
-          localStorage.setItem('cfp_token', token);
-          if (username) {
-            localStorage.setItem('cfp_username', username);
-          }
-          // Clean URL and reload to update navigation
-          window.history.replaceState({}, document.title, window.location.pathname);
-          window.location.reload();
           return;
         }
 
