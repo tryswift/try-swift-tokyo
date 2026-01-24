@@ -34,6 +34,17 @@ struct CfPLayout: Layout {
           const token = localStorage.getItem('cfp_token');
           const username = localStorage.getItem('cfp_username');
 
+          console.log('[Navigation] Debug:', {
+            hasToken: !!token,
+            hasUsername: !!username,
+            username: username,
+            cookies: document.cookie,
+            localStorage: {
+              token: localStorage.getItem('cfp_token')?.substring(0, 20) + '...',
+              username: localStorage.getItem('cfp_username')
+            }
+          });
+
           // Find the login button by its text
           const navLinks = document.querySelectorAll('.navbar-nav a');
           let loginButton = null;
@@ -42,6 +53,8 @@ struct CfPLayout: Layout {
               loginButton = link;
             }
           });
+
+          console.log('[Navigation] Login button found:', !!loginButton);
 
           if (token && username && loginButton) {
             // User is logged in - replace login button with user info
@@ -83,6 +96,14 @@ struct CfPLayout: Layout {
             signOutLi.className = 'nav-item';
             signOutLi.appendChild(signOutLink);
             navUl.appendChild(signOutLi);
+
+            console.log('[Navigation] Successfully updated navigation for user:', username);
+          } else {
+            console.log('[Navigation] Not updating navigation:', {
+              hasToken: !!token,
+              hasUsername: !!username,
+              hasLoginButton: !!loginButton
+            });
           }
         });
       """)
