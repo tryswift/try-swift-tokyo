@@ -153,8 +153,14 @@ struct MyProposalsPage: StaticPage {
       });
 
       function logout() {
+        // Clear both localStorage and cookies
         localStorage.removeItem('cfp_token');
         localStorage.removeItem('cfp_username');
+        // Delete cookies
+        document.cookie = 'cfp_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'cfp_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.tryswift.jp';
+        document.cookie = 'cfp_username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'cfp_username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.tryswift.jp';
         window.location.href = '/';
       }
     """)

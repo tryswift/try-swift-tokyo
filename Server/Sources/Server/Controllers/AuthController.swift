@@ -354,20 +354,72 @@ struct AuthController: RouteCollection {
 
     let token = try await req.jwt.sign(payload)
 
-    // 10. Redirect to frontend with token
+    // 10. Set secure HTTP-only cookie and redirect to frontend
     // Use returnTo from state if provided, otherwise default frontend
     let baseRedirect = statePayload.returnTo ?? Self.frontendURL
-    let redirectURL = "\(baseRedirect)/login?token=\(token)&username=\(user.username)"
 
     req.logger.info("OAuth flow completed, redirecting", metadata: [
       "username": .string(user.username),
       "role": .string(role.rawValue)
     ])
 
-    return req.redirect(to: redirectURL)
+    // Create response with redirect
+    let response = req.redirect(to: "\(baseRedirect)/login?auth=success")
+
+    // Set HTTP-only cookie for the token (more secure than URL params)
+    let cookieDomain = Self.getCookieDomain()
+    response.cookies["cfp_token"] = HTTPCookies.Value(
+      string: token,
+      expires: Date(timeIntervalSinceNow: 60 * 60 * 24 * 7), // 7 days
+      maxAge: 60 * 60 * 24 * 7,
+      domain: cookieDomain,
+      path: "/",
+      isSecure: true,
+      isHTTPOnly: false, // Allow JavaScript access for this static site
+      sameSite: .lax
+    )
+
+    // Set username cookie (not sensitive, can be accessed by JavaScript)
+    response.cookies["cfp_username"] = HTTPCookies.Value(
+      string: user.username,
+      expires: Date(timeIntervalSinceNow: 60 * 60 * 24 * 7), // 7 days
+      maxAge: 60 * 60 * 24 * 7,
+      domain: cookieDomain,
+      path: "/",
+      isSecure: true,
+      isHTTPOnly: false,
+      sameSite: .lax
+    )
+
+    return response
   }
 
   // MARK:  - Helper Methods
+
+  /// Get cookie domain based on frontend URL
+  private static func getCookieDomain() -> String? {
+    guard let frontendURL = URL(string: Self.frontendURL),
+          let host = frontendURL.host else {
+      return nil
+    }
+
+    // For tryswift.jp domains, use .tryswift.jp to allow subdomains
+    if host.hasSuffix("tryswift.jp") {
+      return ".tryswift.jp"
+    }
+
+    // For fly.dev domains, use the specific subdomain
+    if host.hasSuffix(".fly.dev") {
+      return host
+    }
+
+    // For localhost, don't set domain
+    if host == "localhost" {
+      return nil
+    }
+
+    return host
+  }
 
   /// Validate that returnTo URL is allowed (prevent open redirect)
   private func isValidReturnURL(_ urlString: String) -> Bool {

@@ -24,6 +24,12 @@ struct CfPLayout: Layout {
 
       // Global script to update navigation based on login state
       Script(code: """
+        // Helper function to delete cookie
+        function deleteCookie(name) {
+          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.tryswift.jp';
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
           const token = localStorage.getItem('cfp_token');
           const username = localStorage.getItem('cfp_username');
@@ -66,8 +72,11 @@ struct CfPLayout: Layout {
             signOutLink.className = 'btn btn-sm btn-danger text-nowrap';
             signOutLink.addEventListener('click', function(e) {
               e.preventDefault();
+              // Clear both localStorage and cookies
               localStorage.removeItem('cfp_token');
               localStorage.removeItem('cfp_username');
+              deleteCookie('cfp_token');
+              deleteCookie('cfp_username');
               window.location.href = '/';
             });
             const signOutLi = document.createElement('li');

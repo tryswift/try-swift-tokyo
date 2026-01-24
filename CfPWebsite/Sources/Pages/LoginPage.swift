@@ -82,16 +82,29 @@ struct LoginPage: StaticPage {
 
     // JavaScript for handling auth callback and localStorage
     Script(code: """
+      // Helper function to get cookie value
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+      }
+
+      // Helper function to delete cookie
+      function deleteCookie(name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.tryswift.jp';
+      }
+
       document.addEventListener('DOMContentLoaded', function() {
         const loginForm = document.getElementById('login-form');
         const loggedInView = document.getElementById('logged-in-view');
         const welcomeMessage = document.getElementById('welcome-message');
         const logoutLink = document.getElementById('logout-link');
 
-        // Check URL params for token (from OAuth callback)
+        // Check URL params for auth success (from OAuth callback)
         const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-        const username = urlParams.get('username');
+        const authSuccess = urlParams.get('auth');
         const error = urlParams.get('error');
 
         if (error) {
@@ -101,13 +114,25 @@ struct LoginPage: StaticPage {
           return;
         }
 
-        if (token) {
-          // Store token from callback
-          localStorage.setItem('cfp_token', token);
+        // Check for cookies (new secure method)
+        let token = getCookie('cfp_token');
+        let username = getCookie('cfp_username');
+
+        // Fallback: Check URL params for backward compatibility (old method)
+        if (!token && urlParams.get('token')) {
+          token = urlParams.get('token');
+          username = urlParams.get('username');
+        }
+
+        if (authSuccess === 'success' || token) {
+          // Store in localStorage for easier access by other pages
+          if (token) {
+            localStorage.setItem('cfp_token', token);
+          }
           if (username) {
             localStorage.setItem('cfp_username', username);
           }
-          // Clean URL
+          // Clean URL to remove sensitive params
           window.history.replaceState({}, document.title, window.location.pathname);
         }
 
@@ -132,6 +157,8 @@ struct LoginPage: StaticPage {
             e.preventDefault();
             localStorage.removeItem('cfp_token');
             localStorage.removeItem('cfp_username');
+            deleteCookie('cfp_token');
+            deleteCookie('cfp_username');
             window.location.reload();
           });
         }
