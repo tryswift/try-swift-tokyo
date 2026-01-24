@@ -31,12 +31,15 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: macos-26
-    env:
-      DEVELOPER_DIR: /Applications/Xcode.app
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "6.0"
 
       - name: Test CfP Website
         run: |
@@ -47,27 +50,14 @@ jobs:
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v4
         with:
-          key: xcode-${{ runner.os }}-${{ hashFiles('Package.resolved') }}
-          restore-keys: xcode-${{ runner.os }}-
-          path: ~/DerivedData/SourcePackages
+          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: spm-${{ runner.os }}-
+          path: .build
 
-      - name: Skip Package Plugin Fingerprint Validatation
-        run: defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
-
-      - name: Skip Macro Fingerprint Validation
-        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
-
-      - name: Build Website scheme
-        # https://forums.swift.org/t/xcode-and-swift-package-manager/44704/7
+      - name: Build and Run Website
         run: |
-          xcodebuild -scheme Website \
-            -configuration Release \
-            -sdk macosx \
-            -destination 'platform=macOS' \
-            -derivedDataPath ~/DerivedData
-
-      - name: Run Website App
-        run: ~/DerivedData/Build/Products/Release/Website
+          cd Website
+          swift run Website
 
       - name: Build CfP Website
         run: |
