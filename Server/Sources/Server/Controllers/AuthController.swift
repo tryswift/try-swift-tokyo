@@ -363,35 +363,12 @@ struct AuthController: RouteCollection {
       "role": .string(role.rawValue)
     ])
 
-    // Create response with redirect
-    let response = req.redirect(to: "\(baseRedirect)/login?auth=success")
+    // Create response with redirect including token in URL
+    // NOTE: We use URL params because the API (fly.dev) cannot set cookies for frontend domain (tryswift.jp)
+    // The frontend JavaScript will immediately move these to localStorage and clean the URL
+    let redirectURL = "\(baseRedirect)/login?auth=success&token=\(token)&username=\(user.username)"
 
-    // Set HTTP-only cookie for the token (more secure than URL params)
-    let cookieDomain = Self.getCookieDomain()
-    response.cookies["cfp_token"] = HTTPCookies.Value(
-      string: token,
-      expires: Date(timeIntervalSinceNow: 60 * 60 * 24 * 7), // 7 days
-      maxAge: 60 * 60 * 24 * 7,
-      domain: cookieDomain,
-      path: "/",
-      isSecure: true,
-      isHTTPOnly: false, // Allow JavaScript access for this static site
-      sameSite: .lax
-    )
-
-    // Set username cookie (not sensitive, can be accessed by JavaScript)
-    response.cookies["cfp_username"] = HTTPCookies.Value(
-      string: user.username,
-      expires: Date(timeIntervalSinceNow: 60 * 60 * 24 * 7), // 7 days
-      maxAge: 60 * 60 * 24 * 7,
-      domain: cookieDomain,
-      path: "/",
-      isSecure: true,
-      isHTTPOnly: false,
-      sameSite: .lax
-    )
-
-    return response
+    return req.redirect(to: redirectURL)
   }
 
   // MARK:  - Helper Methods
