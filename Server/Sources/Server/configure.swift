@@ -2,16 +2,32 @@ import Vapor
 import Fluent
 import FluentPostgresDriver
 import JWT
+import NIOSSL
 
 enum AppConfiguration {
   /// Configure the Vapor application
   static func configure(_ app: Application) async throws {
     // MARK: - Database Configuration
 
-    // Configure PostgreSQL
+    // Configure PostgreSQL with connection pool settings
     if let databaseURL = Environment.get("DATABASE_URL") {
-      // Production: Use DATABASE_URL
-      try app.databases.use(.postgres(url: databaseURL), as: .psql)
+      // Production: Use DATABASE_URL with connection pool
+      var tlsConfig: TLSConfiguration = .makeClientConfiguration()
+      tlsConfig.certificateVerification = .none
+
+      let nioSSLContext = try NIOSSLContext(configuration: tlsConfig)
+
+      var postgresConfig = try SQLPostgresConfiguration(url: databaseURL)
+      postgresConfig.coreConfiguration.tls = .require(nioSSLContext)
+
+      app.databases.use(
+        .postgres(
+          configuration: postgresConfig,
+          maxConnectionsPerEventLoop: 4,
+          connectionPoolTimeout: .seconds(30)
+        ),
+        as: .psql
+      )
     } else {
       // Development: Use individual environment variables
       app.databases.use(
@@ -23,7 +39,9 @@ enum AppConfiguration {
             password: Environment.get("DB_PASSWORD") ?? "postgres",
             database: Environment.get("DB_NAME") ?? "tryswift_cfp",
             tls: .disable
-          )
+          ),
+          maxConnectionsPerEventLoop: 4,
+          connectionPoolTimeout: .seconds(30)
         ),
         as: .psql
       )
