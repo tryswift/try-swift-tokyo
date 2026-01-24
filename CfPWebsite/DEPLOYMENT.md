@@ -1,7 +1,7 @@
-# CfP Website Deployment to GitHub Pages
+# CfP Website Deployment
 
 ## Overview
-The CfP website has been migrated from Fly.io (`cfp.tryswift.jp`) to GitHub Pages at `tryswift.jp/cfp`.
+The CfP website is deployed to GitHub Pages at `tryswift.jp/cfp` alongside the main website. Both sites are built and deployed together using a single GitHub Actions workflow.
 
 ## Changes Made
 
@@ -23,20 +23,48 @@ The CfP website has been migrated from Fly.io (`cfp.tryswift.jp`) to GitHub Page
 - `Server/Sources/Server/Controllers/AuthController.swift` - Updated redirect URLs
 - `Server/Sources/Server/configure.swift` - Updated CORS configuration
 
-## Deployment Steps
+## Deployment
 
-### Step 1: Build the CfP Website
+### Automatic Deployment (GitHub Actions)
+
+The CfP website is automatically deployed with the main website when changes are pushed to the `main` branch. The workflow:
+
+1. Builds the main Website using Xcode
+2. Builds the CfP website using Swift
+3. Runs `prepare-for-github-pages.sh` to add `/cfp` prefix to all paths
+4. Copies CfP build output to `Website/Build/cfp/`
+5. Deploys the combined `Website/Build` directory to GitHub Pages
+
+**Triggers:**
+- Push to `main` branch with changes to:
+  - `Website/Sources/**` or `Website/Assets/**`
+  - `CfPWebsite/Sources/**` or `CfPWebsite/Assets/**`
+  - `SharedModels/**`
+- Manual workflow dispatch
+
+See [.github/workflows/deploy_website.yml](../.github/workflows/deploy_website.yml) for details.
+
+### Manual Deployment
+
+If you need to deploy manually:
+
 ```bash
-cd CfPWebsite
+# Build main website
+cd Website
+swift run
+
+# Build CfP website
+cd ../CfPWebsite
 ./prepare-for-github-pages.sh
+
+# Copy to main website build
+mkdir -p ../Website/Build/cfp
+cp -r Build/* ../Website/Build/cfp/
+
+# Deploy Website/Build to GitHub Pages
 ```
 
-This script will:
-1. Build the static site
-2. Update all paths to include `/cfp` prefix
-3. Place the output in the `Build` directory
-
-### Step 2: Deploy Backend to Fly.io
+### Backend Deployment (Fly.io)
 Update the FRONTEND_URL environment variable on Fly.io:
 
 ```bash
@@ -49,121 +77,34 @@ Deploy the updated backend:
 fly deploy -c fly.toml -a tryswift-cfp-api
 ```
 
-### Step 3: Update GitHub OAuth Callback URL
-Go to GitHub OAuth App settings and update the callback URL:
-- Old: `https://tryswift-cfp-api.fly.dev/api/v1/auth/github/callback`
-- Keep as is (backend URL doesn't change)
+### Verify Deployment
 
-### Step 4: Deploy to GitHub Pages
-The CfP website needs to be deployed alongside the main website. There are two options:
-
-#### Option A: Manual Copy (for testing)
-```bash
-cd ../CfPWebsite
-# Create cfp directory in main Website Build folder
-mkdir -p ../Website/Build/cfp
-# Copy all built files
-cp -r Build/* ../Website/Build/cfp/
-```
-
-Then deploy the Website to GitHub Pages as usual.
-
-#### Option B: Automated via GitHub Actions
-Create or update `.github/workflows/deploy-pages.yml` to include:
-
-```yaml
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
-jobs:
-  deploy:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Build Main Website
-        run: |
-          cd Website
-          swift run
-
-      - name: Build CfP Website
-        run: |
-          cd CfPWebsite
-          ./prepare-for-github-pages.sh
-
-      - name: Copy CfP to main build
-        run: |
-          mkdir -p Website/Build/cfp
-          cp -r CfPWebsite/Build/* Website/Build/cfp/
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./Website/Build
-```
-
-### Step 5: Verify Deployment
 1. Visit `https://tryswift.jp/cfp/`
 2. Test OAuth login flow
 3. Verify all pages load correctly
 4. Check that assets (CSS, images) load properly
 
-## Post-Deployment
-
-### Remove Fly.io CfP Website App (Optional)
-Once the GitHub Pages deployment is verified and working:
-
-```bash
-# List apps to confirm
-fly apps list
-
-# Destroy the old CfP website app
-fly apps destroy tryswift-cfp-website
-```
-
-### Update DNS (if needed)
-Remove the CNAME record for `cfp.tryswift.jp` if it exists.
-
 ## Testing Locally
 
-To test the CfP website locally with the `/cfp` base path:
+To test the CfP website locally:
 
 ```bash
 cd CfPWebsite
-./prepare-for-github-pages.sh
+swift run
+# Site will be built to Build/ directory
 
-# Serve with a web server that supports the /cfp path
+# Serve locally (paths won't have /cfp prefix in local build)
 python3 -m http.server 8080 -d Build
 # Then visit: http://localhost:8080/
 ```
 
-Note: Local testing won't perfectly replicate the `/cfp` path structure. For accurate testing, deploy to a staging environment or GitHub Pages.
+Note: Local testing uses root paths, not `/cfp` prefix. The `/cfp` prefix is only added by `prepare-for-github-pages.sh` during deployment.
 
-## Rollback Plan
+## Architecture Notes
 
-If issues arise, you can quickly rollback:
-
-1. Revert the backend FRONTEND_URL:
-   ```bash
-   fly secrets set FRONTEND_URL=https://cfp.tryswift.jp -a tryswift-cfp-api
-   ```
-
-2. Redeploy the old backend version:
-   ```bash
-   fly deploy -a tryswift-cfp-api --image <previous-image-id>
-   ```
-
-3. The Fly.io CfP website app at `cfp.tryswift.jp` will still be running if not destroyed.
-
-## Notes
-
-- The backend API remains on Fly.io at `tryswift-cfp-api.fly.dev`
-- OAuth flow works across domains because tokens are passed via URL params
-- CORS is configured to allow requests from `tryswift.jp`
-- All CfP website paths now start with `/cfp/` when deployed to GitHub Pages
+- **Frontend**: CfP website is a static site deployed to GitHub Pages at `/cfp/`
+- **Backend**: API remains on Fly.io at `tryswift-cfp-api.fly.dev`
+- **OAuth**: Tokens are passed via URL params (cross-domain compatible)
+- **CORS**: Backend configured to allow requests from `tryswift.jp`
+- **Paths**: All deployed CfP website paths start with `/cfp/`
+- **Build**: `prepare-for-github-pages.sh` post-processes HTML to add `/cfp` prefix

@@ -7,6 +7,9 @@ on:
     paths:
       - "Website/Sources/**"
       - "Website/Assets/**"
+      - "CfPWebsite/Sources/**"
+      - "CfPWebsite/Assets/**"
+      - "SharedModels/**"
       - "trySwiftTokyo.xcworkspace/xcshareddata/swiftpm/Package.resolved"
       - ".github/workflows/deploy_website.yml"
       - "MyLibrary/Sources/SponsorFeature/Media.xcassets/**"
@@ -59,6 +62,16 @@ jobs:
 
       - name: Run Website App
         run: ~/DerivedData/Build/Products/Release/Website
+
+      - name: Build CfP Website
+        run: |
+          cd CfPWebsite
+          ./prepare-for-github-pages.sh
+
+      - name: Copy CfP Website to /cfp path
+        run: |
+          mkdir -p Website/Build/cfp
+          cp -r CfPWebsite/Build/* Website/Build/cfp/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
