@@ -83,7 +83,7 @@ extension HomeSectionType {
       }
 
       if year == .year2026 {
-        Text("And more...!")
+        Text(String("And more...!", language: language))
           .horizontalAlignment(.center)
           .font(.title3)
           .foregroundStyle(.dimGray)

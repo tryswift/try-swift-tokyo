@@ -1,30 +1,43 @@
-import Foundation
+import LocalizationGenerated
+import SharedModels
 
 enum SupportedLanguage: String, CaseIterable {
   case ja
   case en
 }
 
-extension String {
-  init(_ key: String, bundle: Bundle = .module, language: SupportedLanguage) {
-    // The xcstrings file is converted to an lproj file during the build process.
-    // This code references the converted file.
-    guard let path = bundle.path(forResource: language.rawValue, ofType: "lproj"),
-          let localizedBundle = Bundle(path: path) else {
-      fatalError()
+// Extension to convert LocalizedString → String based on language
+extension LocalizedString {
+  func localized(for language: SupportedLanguage) -> String {
+    switch language {
+    case .ja: return ja
+    case .en: return en
     }
-    self.init(NSLocalizedString(key, bundle: localizedBundle, comment: ""))
   }
 }
 
-extension Bundle {
-  static var scheduleFeature: Bundle {
-    let bundlePath = Bundle.main.resourceURL!.appendingPathComponent("MyLibrary_ScheduleFeature.bundle")
-    return .init(url: bundlePath)!
+// Extension for String literals used in UI
+// Looks up from trySwiftFeature Localizable.xcstrings, falls back to literal if not found
+extension String {
+  init(_ literal: String, language: SupportedLanguage) {
+    if let localized = TrySwiftStrings[literal] {
+      self = localized.localized(for: language)
+    } else {
+      // Fallback to literal if not found in localizations
+      self = literal
+    }
+  }
+}
+
+// Centralized lookup for dynamic localization keys
+enum Localization {
+  /// Lookup session titles, speaker bios, and other content from ScheduleFeature
+  static func schedule(_ key: String, language: SupportedLanguage) -> String {
+    ScheduleStrings[key]?.localized(for: language) ?? key
   }
 
-  static var trySwiftFeature: Bundle {
-    let bundlePath = Bundle.main.resourceURL!.appendingPathComponent("MyLibrary_trySwiftFeature.bundle")
-    return .init(url: bundlePath)!
+  /// Lookup organizer names, bios, and other content from trySwiftFeature
+  static func trySwift(_ key: String, language: SupportedLanguage) -> String {
+    TrySwiftStrings[key]?.localized(for: language) ?? key
   }
 }

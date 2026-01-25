@@ -66,7 +66,7 @@ private struct SessionTitleComponent: HTML {
   let language: SupportedLanguage
 
   var body: some HTML {
-    let titleHTML = Span(String(session.title, bundle: .scheduleFeature, language: language))
+    let titleHTML = Span(Localization.schedule(session.title, language: language))
       .font(.lead)
       .fontWeight(.bold)
 
@@ -88,7 +88,7 @@ struct SessionDetailModal: HTML {
       id: session.modalId,
       body: {
         if let description = session.description, !description.isEmpty {
-          Text(String(description, bundle: .scheduleFeature, language: language).convertNewlines())
+          Text(Localization.schedule(description, language: language).convertNewlines())
             .font(.lead)
             .foregroundStyle(.dimGray)
             .margin(.horizontal, .px(16))
@@ -105,7 +105,7 @@ struct SessionDetailModal: HTML {
           .padding(.all, .px(16))
       },
       header: {
-        Text(String(session.title, bundle: .scheduleFeature, language: language))
+        Text(Localization.schedule(session.title, language: language))
           .font(.title2)
           .fontWeight(.bold)
           .foregroundStyle(.bootstrapPurple)

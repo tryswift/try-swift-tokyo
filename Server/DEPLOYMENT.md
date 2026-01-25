@@ -101,7 +101,7 @@ fly ssh console --app tryswift-cfp-api
 1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
 2. Create a new OAuth App:
    - **Application name**: trySwift CfP
-   - **Homepage URL**: <https://cfp.tryswift.jp>
+   - **Homepage URL**: <https://tryswift.jp/cfp>
    - **Authorization callback URL**: <https://tryswift-cfp-api.fly.dev/api/v1/auth/github/callback>
 3. Copy the Client ID and Client Secret to Fly.io secrets
 
