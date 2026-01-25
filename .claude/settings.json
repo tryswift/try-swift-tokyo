@@ -1,5 +1,10 @@
 {
   "enabledPlugins": {
     "migrating-to-swift-concurrency-skill@the-unofficial-swift-concurrency-migration-skill": true
+  },
+  "permissions": {
+    "additionalDirectories": [
+      "/tmp"
+    ]
   }
 }

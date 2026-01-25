@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Daiki Matsudate",
     "image_name": "Daiki",
-    "bio": "Daiki has worked as an iOS Developer for over 10 years and met as a volunteer staff member at try! Swift Tokyo in 2017. Inspired by the international speakers and sponsors he met then, he attended his first international conference, WWDC 2017.\nIn his work, I work as a software engineer at a ministry, while also serving as a technical advisor at various startups and listed companies, and as a general incorporated association try! Swift Tokyo.\nWhen he is not working, he likes to take podcasts with friends, play RPG games, snowboard in the snowy mountains, and spend time with friends in the neighborhood.　He bought Apple Vision Pro at Honolulu on the day of release.",
+    "bio": "daiki-matsudate-bio",
     "links": [
       {
         "name": "@d_date",
@@ -19,7 +19,7 @@
     "id": 2,
     "name": "Yoichiro Sakurai",
     "image_name": "saku",
-    "bio": "Yoichiro is an engineer who likes to solve interesting problems. I has been contributing to try! Swift Tokyo since 2017. I love gourmet food and drinks, especially Japanese sake!",
+    "bio": "yoichiro-sakurai-bio",
     "links": [
       {
         "name": "@saku2saku",
@@ -35,7 +35,7 @@
     "id": 3,
     "name": "yucovin",
     "image_name": "yucovin",
-    "bio": "yucovin is a designer and iOS engineer with over a decade of experience spanning multiple levels of structural designs and interface design/engineering in government and private start-up. yucovin has helped numerous teams improve their product/service quality and processes as a designer who can bridge design and development. And most importantly, she is the creator of Riko, the mascot of try! Swift!",
+    "bio": "yucovin-bio",
     "links": [
       {
         "name": "@yucovin",
@@ -51,7 +51,7 @@
     "id": 4,
     "name": "Shingo Tamaki",
     "image_name": "tamaki",
-    "bio": "Shingo is a freelance iOS Developer based in Okinawa! In addition to driving automation technologies such as test automation and CI, I have recently developed a strong interest in app development using AI and creating applications for visionOS.",
+    "bio": "shingo-tamaki-bio",
     "links": [
       {
         "name": "@alligator_tama",
@@ -67,7 +67,7 @@
     "id": 5,
     "name": "Roku / Miki Yoshida",
     "image_name": "Roku",
-    "bio": "Roku is an iOS Developer. She joined try! Swift in 2019 as a volunteer staff member, and became an organizer in 2020.\nShe loves Swift community and occasionally organizes study sessions and development camps.\nShe is interested in beer, whiskey, and unique design clothes. In addition to creating apps, She also enjoy making accessories.\nHer lucky number is 6️⃣, which is called \"Roku\" in Japanese.",
+    "bio": "roku-bio",
     "links": [
       {
         "name": "@66nylon_y",
@@ -83,7 +83,7 @@
     "id": 6,
     "name": "Akio Itaya",
     "image_name": "akkey",
-    "bio": "I am the CEO of AkkeyLab, Inc., where we run a programming school. My main role at AkkeyLab is to promote the benefits of Swift. Lately, I've been enjoying playing tennis and futsal with my colleagues from the company.",
+    "bio": "akio-itaya-bio",
     "links": [
       {
         "name": "@AkkeyLab",
@@ -99,7 +99,7 @@
     "id": 7,
     "name": "Yutaro Muta",
     "image_name": "yutailang0119",
-    "bio": "Yutaro is a Software Engineer who loves Swift. He has been contributing to try! Swift Tokyo since 2017.\nCurrently, he lives in the Kansai region and works at Hatena Co., Ltd.\nHis favorite things are beer🍺 and sake🍶. Recently, he has been experimenting with the Apple Vision Pro.",
+    "bio": "yutaro-muta-bio",
     "links": [
       {
         "name": "@yutailang0119",
@@ -115,7 +115,7 @@
     "id": 8,
     "name": "Shoko Sato",
     "image_name": "satoshoco",
-    "bio": "Shoko joined the DevRel team at LINE (now LY Corporation) in September 2019, after working as a front-end engineer at a venture company. There, she was responsible for tech branding, marketing, training, and managing technical conferences for the engineering organization. Subsequently, in March 2024, she founded THE BIGLE Inc., a company that provides support for Developer Relations, including technical PR, technical communities, and technical conferences, and became independent.",
+    "bio": "shoko-sato-bio",
     "links": [
       {
         "name": "@satoshoco",
@@ -131,7 +131,7 @@
     "id": 9,
     "name": "Maru / Marina Arai",
     "image_name": "Maru",
-    "bio": "Maru is about to enter her fourth year as an iOS Developer. Lately, she’s been diving into testing, and in her free time, she enjoys knitting and coffee.",
+    "bio": "maru-bio",
     "links": [
       {
         "name": "@marunomi_",
@@ -147,7 +147,7 @@
     "id": 10,
     "name": "Shota Ebara",
     "image_name": "elmetal",
-    "bio": "Shota works as an iOS developer at Cybozu. His first programming language is Swift, and he loves Swift.",
+    "bio": "shota-ebara-bio",
     "links": [
       {
         "name": "@el_metal_",
@@ -163,7 +163,7 @@
     "id": 11,
     "name": "Tim Oliver",
     "image_name": "TimOliver",
-    "bio": "Tim is an iOS developer from Australia and is currently working at Instagram in Tokyo. He presented at try! Swift Tokyo 2016 and has been volunteering at the conference since 2018. In his free time, he loves video games, writing open source software and karaoke.",
+    "bio": "tim-oliver-bio",
     "links": [
       {
         "name": "@TimOliverAU",
@@ -179,7 +179,7 @@
     "id": 12,
     "name": "kazuhiro takami",
     "image_name": "kazu42",
-    "bio": "kazu is a SWE at U-NEXT. He loves Computer Science. Especially low-layers",
+    "bio": "kazuhiro-takami-bio",
     "links": [
       {
         "name": "@DevKazu42",
@@ -195,7 +195,7 @@
     "id": 13,
     "name": "Naoki Muramoto",
     "image_name": "Naoki",
-    "bio": "Naoki is a 3rd year software engineer working in Tokyo who loves Swift.\nHe loves beer and often drinks it when he's not working.",
+    "bio": "naoki-muramoto-bio",
     "links": [
       {
         "name": "@naoki_mrmt",
@@ -211,7 +211,7 @@
     "id": 18,
     "name": "sya-ri / Souya Ichikawa",
     "image_name": "sya-ri",
-    "bio": "Souya works as a server-side engineer at Yumemi. He is passionate about tech conferences, both attending and organizing them. In his free time, he enjoys traveling and photography, exploring various places.",
+    "bio": "sya-ri-bio",
     "links": [
       {
         "name": "@sya_ri_dayo",
