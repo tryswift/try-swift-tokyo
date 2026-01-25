@@ -212,7 +212,7 @@ private extension Plan {
     case .bronze, .diversityAndInclusion, .student, .community:
       return .init(width: 200, height: 112)
     case .individual:
-      return .init(width: 130, height: 73)
+      return .init(width: 130, height: 130)
     }
   }
 
