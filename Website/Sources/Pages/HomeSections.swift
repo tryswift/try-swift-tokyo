@@ -9,6 +9,7 @@ enum HomeSectionType: String, CaseIterable {
   case tickets = "Tickets"
   case cfp = "Call for Proposals"
   case speaker = "Speaker"
+  case workshop = "Workshop"
   case timetable = "Timetable"
   case sponsor = "Sponsor"
   case meetTheHosts = "Meet the Hosts"
@@ -26,14 +27,14 @@ extension HomeSectionType {
   func isAvailable(for year: ConferenceYear) -> Bool {
     switch year {
     case .year2025: [.about, .outline, .speaker, .timetable, .sponsor, .meetTheHosts, .meetTheOrganizers, .access].contains(self)
-    case .year2026: [.about, .outline, .tickets, .cfp, .speaker, .sponsor, .meetTheHosts, .meetTheOrganizers, .access].contains(self)
+    case .year2026: [.about, .outline, .tickets, .cfp, .speaker, .workshop, .sponsor, .meetTheHosts, .meetTheOrganizers, .access].contains(self)
     }
   }
 
   static func navigationItems(for year: ConferenceYear) -> [Self] {
     allCases.filter {
       $0.isAvailable(for: year)
-        && ![.meetTheHosts, .meetTheOrganizers].contains($0)
+        && ![.tickets, .meetTheHosts, .meetTheOrganizers].contains($0)
     }
   }
 }
@@ -95,6 +96,15 @@ extension HomeSectionType {
           SpeakerModal(year: year, speaker: speaker, language: language)
         }
       }
+    case .workshop:
+      SectionHeader(type: self, language: language)
+
+      let workshops = try! dataClient.fetchDay1(year: .year2026)
+        .schedules
+        .flatMap(\.sessions)
+        .filter { $0.speakers?.isEmpty == false }
+
+      WorkshopComponent(workshops: workshops, year: year, language: language)
     case .cfp:
       SectionHeader(type: self, language: language)
       CallForProposalComponent(language: language)

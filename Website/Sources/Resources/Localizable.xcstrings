@@ -1198,6 +1198,17 @@
         }
       }
     },
+    "Workshop" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ワークショップ"
+          }
+        }
+      }
+    },
     "Workshop Proposal Form" : {
       "extractionState" : "manual",
       "localizations" : {
