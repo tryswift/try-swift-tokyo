@@ -84,6 +84,17 @@
         }
       }
     },
+    "Download Eventbrite app and show QR code of your ticket at the reception. You will receive a name tag and a goodie bag." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eventbriteアプリをダウンロードし、受付でチケットのQRコードを提示してください。ネームタグとお楽しみ袋がプレゼントされます。"
+          }
+        }
+      }
+    },
     "Download Luma app and show QR code of your ticket at the reception. You will receive a name tag and a goodie bag." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -113,6 +124,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "もくもく会"
+          }
+        }
+      }
+    },
+    "Morning Chat" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "モーニングチャット"
           }
         }
       }
@@ -180,6 +202,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "オープニング"
+          }
+        }
+      }
+    },
+    "Party" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パーティー"
           }
         }
       }
