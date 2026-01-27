@@ -10,7 +10,15 @@ struct CfPNavigation: HTML, Sendable {
       .style("background: rgba(0, 32, 63, 0.95);")
     ) {
       div(.class("container")) {
-        a(.class("navbar-brand fw-bold text-white"), .href("/cfp/")) { "try! Swift Tokyo CfP" }
+        a(.class("navbar-brand fw-bold text-white d-flex align-items-center"), .href("/cfp/")) {
+          img(
+            .src("/cfp/images/riko.png"),
+            .alt("Riko"),
+            .class("me-2"),
+            .style("height: 28px; width: 28px;")
+          )
+          "try! Swift Tokyo CfP"
+        }
 
         button(
           .class("navbar-toggler"),
