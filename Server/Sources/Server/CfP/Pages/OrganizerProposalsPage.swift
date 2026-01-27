@@ -20,7 +20,8 @@ struct OrganizerProposalsPageView: HTML, Sendable {
         // Export button
         a(
           .class("btn btn-success"),
-          .href("/cfp/organizer/proposals/export\(conferencePath.map { "?conference=\($0)" } ?? "")")
+          .href(
+            "/cfp/organizer/proposals/export\(conferencePath.map { "?conference=\($0)" } ?? "")")
         ) {
           "Export CSV"
         }

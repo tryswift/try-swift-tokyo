@@ -336,7 +336,8 @@ struct CfPRoutes: RouteCollection {
     let dbProposals = try await query.all()
 
     // Generate CSV
-    var csv = "ID,Title,Speaker Username,Talk Duration,Conference,Abstract,Talk Detail,Bio,Icon URL,Notes,Created At\n"
+    var csv =
+      "ID,Title,Speaker Username,Talk Duration,Conference,Abstract,Talk Detail,Bio,Icon URL,Notes,Created At\n"
 
     let dateFormatter = ISO8601DateFormatter()
 
@@ -353,11 +354,13 @@ struct CfPRoutes: RouteCollection {
       let notes = escapeCSV(proposal.notes ?? "")
       let createdAt = proposal.createdAt.map { dateFormatter.string(from: $0) } ?? ""
 
-      csv += "\(id),\(title),\(speakerUsername),\(talkDuration),\(conference),\(abstract),\(talkDetail),\(bio),\(iconURL),\(notes),\(createdAt)\n"
+      csv +=
+        "\(id),\(title),\(speakerUsername),\(talkDuration),\(conference),\(abstract),\(talkDetail),\(bio),\(iconURL),\(notes),\(createdAt)\n"
     }
 
     let response = Response(status: .ok)
-    response.headers.contentType = HTTPMediaType(type: "text", subType: "csv", parameters: ["charset": "utf-8"])
+    response.headers.contentType = HTTPMediaType(
+      type: "text", subType: "csv", parameters: ["charset": "utf-8"])
     let filename = conferencePath.map { "proposals-\($0).csv" } ?? "proposals-all.csv"
     response.headers.add(name: "Content-Disposition", value: "attachment; filename=\"\(filename)\"")
     response.body = .init(string: csv)
@@ -366,7 +369,8 @@ struct CfPRoutes: RouteCollection {
   }
 
   private func escapeCSV(_ value: String) -> String {
-    let needsQuotes = value.contains(",") || value.contains("\"") || value.contains("\n") || value.contains("\r")
+    let needsQuotes =
+      value.contains(",") || value.contains("\"") || value.contains("\n") || value.contains("\r")
     if needsQuotes {
       let escaped = value.replacingOccurrences(of: "\"", with: "\"\"")
       return "\"\(escaped)\""
