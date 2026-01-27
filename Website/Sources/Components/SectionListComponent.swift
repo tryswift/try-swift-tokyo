@@ -46,15 +46,14 @@ struct SectionListComponent: HTML {
 
 private extension String {
   func displayedCharacterCount() -> Int {
-    guard let data = self.data(using: .utf8) else {
-      return .zero
-    }
-    let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
-      .documentType: NSAttributedString.DocumentType.html,
-      .characterEncoding: String.Encoding.utf8.rawValue
-    ]
-    let attributedString = try? NSAttributedString(data: data, options: options, documentAttributes: nil)
-
-    return attributedString?.string.count ?? .zero
+    // Strip HTML tags to get approximate displayed character count
+    // This is a simple regex-based approach that works on Linux
+    let htmlTagPattern = "<[^>]+>"
+    let strippedString = self.replacingOccurrences(
+      of: htmlTagPattern,
+      with: "",
+      options: .regularExpression
+    )
+    return strippedString.count
   }
 }
