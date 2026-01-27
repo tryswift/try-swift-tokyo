@@ -7,11 +7,21 @@ struct MyProposalsPageView: HTML, Sendable {
   let proposals: [ProposalDTO]
   let language: CfPLanguage
 
+  init(user: UserDTO?, proposals: [ProposalDTO], language: CfPLanguage = .en) {
+    self.user = user
+    self.proposals = proposals
+    self.language = language
+  }
+
   var body: some HTML {
     div(.class("container py-5")) {
-      h1(.class("fw-bold mb-2")) { CfPStrings.MyProposals.title(language) }
+      h1(.class("fw-bold mb-2")) {
+        language == .ja ? "マイプロポーザル" : "My Proposals"
+      }
       p(.class("lead text-muted mb-4")) {
-        CfPStrings.MyProposals.subtitle(language)
+        language == .ja
+          ? "提出したトークプロポーザルを確認・管理できます。"
+          : "View and manage your submitted talk proposals."
       }
 
       if let user {
@@ -29,46 +39,46 @@ struct MyProposalsPageView: HTML, Sendable {
                 div {
                   strong { HTMLText(user.username) }
                   div(.class("text-muted small")) {
-                    HTMLText(
-                      user.role == .admin
-                        ? CfPStrings.MyProposals.organizer(language)
-                        : CfPStrings.MyProposals.speaker(language))
+                    HTMLText(user.role == .admin ? (language == .ja ? "運営者" : "Organizer") : (language == .ja ? "スピーカー" : "Speaker"))
                   }
                 }
               }
-              a(
-                .class("btn btn-outline-danger btn-sm"),
-                .href("/cfp/\(language.urlPrefix)/logout")
-              ) {
-                CfPStrings.MyProposals.logout(language)
+              a(.class("btn btn-outline-danger btn-sm"), .href(language.path(for: "/logout"))) {
+                language == .ja ? "ログアウト" : "Logout"
               }
             }
           }
         }
 
         // Proposals section
-        h3(.class("fw-bold mb-3")) { CfPStrings.MyProposals.yourSubmissions(language) }
+        h3(.class("fw-bold mb-3")) {
+          language == .ja ? "提出済みプロポーザル" : "Your Submissions"
+        }
 
         if proposals.isEmpty {
           div(.class("card")) {
             div(.class("card-body text-center p-5")) {
-              p(.class("text-muted mb-3")) { CfPStrings.MyProposals.noProposalsYet(language) }
-              p(.class("text-muted small mb-4")) {
-                CfPStrings.MyProposals.submitFirstProposal(language)
+              p(.class("text-muted mb-3")) {
+                language == .ja ? "まだプロポーザルがありません" : "No proposals yet"
               }
-              a(.class("btn btn-primary"), .href("/cfp/\(language.urlPrefix)/submit")) {
-                CfPStrings.MyProposals.submitAProposal(language)
+              p(.class("text-muted small mb-4")) {
+                language == .ja
+                  ? "最初のプロポーザルを提出すると、ここに表示されます。"
+                  : "Submit your first proposal to see it here."
+              }
+              a(.class("btn btn-primary"), .href(language.path(for: "/submit"))) {
+                language == .ja ? "プロポーザルを提出" : "Submit a Proposal"
               }
             }
           }
         } else {
           for proposal in proposals {
-            ProposalCard(proposal: proposal)
+            ProposalCard(proposal: proposal, language: language)
           }
 
           div(.class("text-center mt-4")) {
-            a(.class("btn btn-primary"), .href("/cfp/\(language.urlPrefix)/submit")) {
-              CfPStrings.MyProposals.submitAnotherProposal(language)
+            a(.class("btn btn-primary"), .href(language.path(for: "/submit"))) {
+              language == .ja ? "別のプロポーザルを提出" : "Submit Another Proposal"
             }
           }
         }
@@ -77,15 +87,16 @@ struct MyProposalsPageView: HTML, Sendable {
         div(.class("card")) {
           div(.class("card-body text-center p-5")) {
             p(.class("fs-1 mb-3")) { "🔐" }
-            h3(.class("fw-bold mb-2")) { CfPStrings.MyProposals.signInRequired(language) }
-            p(.class("text-muted mb-4")) {
-              CfPStrings.MyProposals.signInDescription(language)
+            h3(.class("fw-bold mb-2")) {
+              language == .ja ? "ログインが必要です" : "Sign In Required"
             }
-            a(
-              .class("btn btn-dark"),
-              .href("/api/v1/auth/github?returnTo=/cfp/\(language.urlPrefix)/my-proposals")
-            ) {
-              CfPStrings.Submit.signInWithGitHub(language)
+            p(.class("text-muted mb-4")) {
+              language == .ja
+                ? "プロポーザルを確認するにはログインしてください。"
+                : "Please sign in to view your proposals."
+            }
+            a(.class("btn btn-dark"), .href("/api/v1/auth/github?returnTo=\(language.path(for: "/my-proposals"))")) {
+              language == .ja ? "GitHubでログイン" : "Sign in with GitHub"
             }
           }
         }
@@ -96,6 +107,12 @@ struct MyProposalsPageView: HTML, Sendable {
 
 struct ProposalCard: HTML, Sendable {
   let proposal: ProposalDTO
+  let language: CfPLanguage
+
+  init(proposal: ProposalDTO, language: CfPLanguage = .en) {
+    self.proposal = proposal
+    self.language = language
+  }
 
   var body: some HTML {
     div(.class("card mb-3")) {
@@ -109,7 +126,7 @@ struct ProposalCard: HTML, Sendable {
                   ? "badge bg-primary" : "badge bg-warning text-dark"
               )
             ) {
-              HTMLText(proposal.talkDuration.rawValue)
+              HTMLText(language == .ja ? (proposal.talkDuration == .regular ? "レギュラートーク" : "ライトニングトーク") : proposal.talkDuration.rawValue)
             }
           }
           if let createdAt = proposal.createdAt {
@@ -128,6 +145,9 @@ struct ProposalCard: HTML, Sendable {
   private func formatDate(_ date: Date) -> String {
     let formatter = DateFormatter()
     formatter.dateStyle = .medium
+    if language == .ja {
+      formatter.locale = Locale(identifier: "ja_JP")
+    }
     return formatter.string(from: date)
   }
 }
