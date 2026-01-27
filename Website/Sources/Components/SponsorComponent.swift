@@ -38,6 +38,6 @@ extension Sponsor {
     }
 
     fileprivate var imageFilename: String {
-        "/images/from_app/\(imageName).png"
+        ImagePath.resolve(imageName)
     }
 }
