@@ -26,7 +26,9 @@ extension HomeSectionType {
 
   func isAvailable(for year: ConferenceYear) -> Bool {
     switch year {
-    case .year2024: [.about, .outline, .speaker, .timetable, .access].contains(self)
+    case .year2024: [
+        .about, .outline, .speaker, .timetable, .access
+      ].contains(self)
     case .year2025:
       [
         .about, .outline, .speaker, .timetable, .sponsor, .meetTheHosts, .meetTheOrganizers,
@@ -35,8 +37,7 @@ extension HomeSectionType {
     case .year2026:
       [
         .about, .outline, .tickets, .cfp, .speaker, .workshop, .sponsor, .meetTheHosts,
-        .meetTheOrganizers,
-        .access,
+        .meetTheOrganizers, .access,
       ].contains(self)
     }
   }
