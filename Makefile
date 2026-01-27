@@ -4,4 +4,10 @@ format:
 		--in-place \
 		--recursive \
 		./App/ \
-		./MyLibrary/
+		./CfPWebsite/ \
+		./DataClient/ \
+		./iOS/ \
+		./LocalizationGenerated/ \
+		./Server/ \
+		./SharedModels/ \
+		./Website/
