@@ -2,5 +2,97 @@
   "id": 1,
   "title": "Workshop",
   "date": "2026-04-12T12:00:00+09:00",
-  "schedules": []
+  "schedules": [
+    {
+      "time": "2026-04-12T13:00:00+09:00",
+      "sessions": [
+        {
+          "title": "High-Performance Swift",
+          "speakers": [
+            {
+              "id": 1,
+              "name": "Paul Hudson",
+              "image_name": "paul_hudson",
+              "bio": "Paul is the author of Hacking with Swift, Pro Swift, Swift Design Patterns, Testing Swift, Swift Interview Challenges, and more. Suffice it to say, he quite likes Swift. And coffee. (But mostly Swift.) (And coffee.)",
+              "job_title": "Creator at Hacking with Swift",
+              "links": [
+                {
+                  "url": "https://x.com/twostraws",
+                  "name": "@twostraws"
+                },
+                {
+                  "url": "https://github.com/twostraws",
+                  "name": "@twostraws"
+                }
+              ]
+            }
+          ],
+          "description": "This workshop will teach a range of techniques to increase the performance of Swift apps. We will follow a simple pattern several times over: identify a performance problem using Instruments, work through code to resolve the issue, then run Instruments again to ensure the problem is resolved.\n\nAs we work through the sample project, students will learn to use different parts of Instruments effectively, what makes Swift and SwiftUI code slow, how to write more efficient code in the future, and also how to write performance tests to ensure performance problems don't return."
+        },
+        {
+          "title": "Designing Visual Effects with Metal and SwiftUI",
+          "speakers": [
+            {
+              "id": 4,
+              "name": "Victor Baro",
+              "image_name": "victor_baro",
+              "bio": "Victor Baro is an iOS developer with ~10 years of experience across startups and large organizations. He is the co-founder and CEO of Panels, a digital comics reading app, and works hands-on as a full stack developer with a strong focus on UI, interaction, and animation.",
+              "job_title": "Co-founder & iOS Developer",
+              "links": [
+                {
+                  "url": "https://x.com/victorbaro",
+                  "name": "@victorbaro"
+                },
+                {
+                  "url": "https://github.com/victorbaro",
+                  "name": "@victorbaro"
+                }
+              ]
+            }
+          ],
+          "description": "Metal shaders unlock a level of visual expression in SwiftUI that goes far beyond built-in modifiers, but they are often perceived as complex, low-level, or hard to approach. This workshop is designed to make Metal shaders accessible, visual, and fun for SwiftUI developers, even for those with no prior graphics or Metal experience.\n\nThe workshop starts with a visual-first approach using MetalGraph, a macOS app created specifically to explore and design Metal shaders through a node-based interface with real-time previews. Participants will experiment with coordinates, color, animation, and interaction visually, without writing Metal code at first. This helps build intuition around how shaders work and how complex effects emerge from simple ideas.\n\nOnce participants are comfortable with the concepts, we transition from visual experimentation to real SwiftUI + Metal code. Participants will learn how to translate what they built visually into Metal shader functions, integrate them into SwiftUI using modern APIs such as colorEffect and distortionEffect, and drive them using SwiftUI state, gestures, and time.\n\nRather than focusing on project setup or boilerplate, the workshop emphasizes how to think in shaders: how to invent new effects, how to iterate quickly, and how to avoid common pitfalls related to performance and coordinate systems.\n\nBy the end of the workshop, participants will have a solid mental model of Metal shaders in SwiftUI, hands-on experience building custom visual effects, and the confidence to continue experimenting in their own projects."
+        },
+        {
+          "title": "iOS Private Playgrounds",
+          "speakers": [
+            {
+              "id": 2,
+              "name": "Vistar",
+              "image_name": "vistar",
+              "bio": "I primarily work on Apple platform app development and research the core APIs of the operating system.",
+              "job_title": "iOS Developer",
+              "links": [
+                {
+                  "url": "https://x.com/Lmssync",
+                  "name": "@Lmssync"
+                },
+                {
+                  "url": "https://github.com/Chronos2500",
+                  "name": "@Chronos2500"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "name": "Kazuki Nakashima",
+              "image_name": "kazuki_nakashima",
+              "bio": "iOS Application Development",
+              "job_title": "iOS Developer",
+              "links": [
+                {
+                  "url": "https://x.com/lynnswap",
+                  "name": "@lynnswap"
+                },
+                {
+                  "url": "https://github.com/lynnswap",
+                  "name": "@lynnswap"
+                }
+              ]
+            }
+          ],
+          "description": "This workshop is an experimental session that deliberately sets aside the App Store Review Guidelines in order to peer inside the \"black box\" of iOS. By intentionally using Private APIs and undocumented behaviors that are normally off-limits in everyday development, the goal is to gain a deeper understanding of how UIKit and SwiftUI actually work under the hood.\n\nThe workshop is run in a hackathon-style format, where all participants share a single SwiftUI-based repository and collaboratively add features to it.\n\nIn the first half, the instructor will perform live coding demonstrations that achieve UI customizations which would normally be impossible, using Private APIs such as the Objective-C runtime and Key-Value Coding (KVC). These changes will be pushed to the shared repository, and participants will pull and run them locally as the starting point.\n\nIn the second half, the workshop shifts to a hands-on format where participants write code themselves. Those who have specific features they want to try to implement can work on their own ideas, while others can choose from several themes proposed by the instructor. Along the way, intermediate results will be shared and discussed so that participants can exchange insights as they develop. At the end, everyone will present the hacks they worked on and the behaviors they discovered.\n\nThis workshop is not about learning techniques intended for App Store releases. However, understanding what happens behind the scenes of the frameworks and being able to reason about their behavior will strengthen your ability to solve difficult bugs and improve your skills in debugging and performance optimization. Step beyond everyday app development and explore the depths of iOS together through the world of the dynamic runtime."
+        }
+      ]
+    }
+  ]
 }
