@@ -129,4 +129,18 @@ final class Conference: Model, Content, @unchecked Sendable {
       updatedAt: updatedAt
     )
   }
+
+  /// Convert to public info for SSR pages
+  func toPublicInfo() -> ConferencePublicInfo {
+    ConferencePublicInfo(
+      displayName: displayName,
+      deadline: deadline
+    )
+  }
+}
+
+/// Public conference info for SSR pages
+struct ConferencePublicInfo: Sendable {
+  let displayName: String
+  let deadline: Date?
 }

@@ -65,9 +65,16 @@ struct CfPRoutes: RouteCollection {
   func submitPage(req: Request) async throws -> HTMLResponse {
     let user = try? await getAuthenticatedUser(req: req)
     let success = req.query[String.self, at: "success"] == "true"
+
+    // Check if there's an open conference
+    let openConference = try await Conference.query(on: req.db)
+      .filter(\.$isOpen == true)
+      .sort(\.$year, .descending)
+      .first()
+
     return HTMLResponse {
       CfPLayout(title: "Submit Proposal", user: user) {
-        SubmitPageView(user: user, success: success, errorMessage: nil)
+        SubmitPageView(user: user, success: success, errorMessage: nil, openConference: openConference?.toPublicInfo())
       }
     }
   }
@@ -152,7 +159,7 @@ struct CfPRoutes: RouteCollection {
         .first()
     else {
       return try await renderSubmitPageWithError(
-        req: req, user: user, error: "No open conference for submissions")
+        req: req, user: user, error: "The Call for Proposals is not currently open. Please check back later for the next conference.")
     }
 
     guard let conferenceID = conference.id else {
