@@ -42,7 +42,7 @@ struct SpeakerModal: HTML {
 
 extension Speaker {
   var imageFilename: String {
-    "/images/from_app/\(imageName).png"
+    ImagePath.resolve(imageName)
   }
 
   var modalId: String {

@@ -1,4 +1,3 @@
-import Cocoa
 import Foundation
 import Ignite
 import SharedModels
@@ -18,6 +17,9 @@ struct ConferenceWebsite {
     }
   }
 
+  /// Supported image extensions for web
+  private static let supportedImageExtensions: Set<String> = ["png", "jpg", "jpeg", "gif", "webp", "svg"]
+
   private static func copyAssets() throws {
     let fileManager = FileManager.default
 
@@ -36,7 +38,15 @@ struct ConferenceWebsite {
 
     try [sponsorMediaEnumerator, scheduleMediaEnumerator, trySwiftMediaEnumerator].forEach {
       while let file = $0?.nextObject() as? URL {
-        let destURL = websiteAssetsDirectory.appendingPathComponent("images/from_app/\(file.deletingPathExtension().lastPathComponent).png")
+        let fileExtension = file.pathExtension.lowercased()
+
+        // Skip non-image files (e.g., Contents.json)
+        guard supportedImageExtensions.contains(fileExtension) else {
+          continue
+        }
+
+        // Keep original extension instead of forcing PNG conversion
+        let destURL = websiteAssetsDirectory.appendingPathComponent("images/from_app/\(file.lastPathComponent)")
 
         let destinationDirectory = destURL.deletingLastPathComponent()
         if !fileManager.fileExists(atPath: destinationDirectory.path) {
@@ -51,15 +61,7 @@ struct ConferenceWebsite {
           try fileManager.removeItem(at: destURL)
         }
 
-        if file.pathExtension == "png" {
-          try fileManager.copyItem(at: file, to: destURL)
-        } else if let image = NSImage(contentsOf: file) {
-          let pngData = NSBitmapImageRep(data: image.tiffRepresentation!)!
-            .representation(using: .png, properties: [:])!
-          try pngData.write(to: destURL)
-        } else {
-          continue
-        }
+        try fileManager.copyItem(at: file, to: destURL)
       }
     }
   }
