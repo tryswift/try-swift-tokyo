@@ -25,6 +25,7 @@ extension HomeSectionType {
 
   func isAvailable(for year: ConferenceYear) -> Bool {
     switch year {
+    case .year2024: [.about, .outline, .speaker, .timetable, .access].contains(self)
     case .year2025: [.about, .outline, .speaker, .timetable, .sponsor, .meetTheHosts, .meetTheOrganizers, .access].contains(self)
     case .year2026: [.about, .outline, .tickets, .cfp, .speaker, .sponsor, .meetTheHosts, .meetTheOrganizers, .access].contains(self)
     }
@@ -49,14 +50,13 @@ extension HomeSectionType {
         .id(htmlId)
 
       let text = switch year {
-      case .year2025: String(
-        "Developers from all over the world gather<br>for tips and tricks and the latest case studies of development using Swift.<br>Developers from all over the world will gather here.<br>Swift and to showcase our Swift knowledge and skills, and to collaborate with each other,<br>The event will be held for three days from April 9 - 11, 2025!",
-        language: language
-      )
-      case .year2026: String(
-        "Developers from all over the world gather<br>for tips and tricks and the latest case studies of development using Swift.<br>Developers from all over the world will gather here.<br>Swift and to showcase our Swift knowledge and skills, and to collaborate with each other,<br>The event will be held for three days from April 12 - 14, 2026!",
-        language: language
-      )}
+      case .year2024:
+        String("hero-text-2024", language: language)
+      case .year2025:
+        String("hero-text-2025", language: language)
+      case .year2026:
+        String("hero-text-2026", language: language)
+      }
       Text(text)
         .horizontalAlignment(.center)
         .font(.lead)
@@ -115,7 +115,12 @@ extension HomeSectionType {
 
       let day1 = try! dataClient.fetchDay1(year)
       let day2 = try! dataClient.fetchDay2(year)
-      let day3 = try! dataClient.fetchDay3(year)
+      let day3: Conference = switch year {
+      case .year2024:
+        try! dataClient.fetchWorkshop(year)
+      case .year2025, .year2026:
+        try! dataClient.fetchDay3(year)
+      }
 
       Grid(alignment: .top, spacing: 16) {
         ForEach([day1, day2, day3]) { data in

@@ -18,10 +18,8 @@ struct SpeakerDetailComponent: HTML {
           .font(.title2)
           .foregroundStyle(.bootstrapPurple)
 
-        if let bio = speaker.bio {
-          let localizedBio = Localization.schedule(bio, language: language)
-            .convertNewlines()
-          Text(markdown: localizedBio)
+        if let bio = speaker.localizedBio(for: language) {
+          Text(markdown: bio.convertNewlines())
             .font(.body)
             .fontWeight(.regular)
             .foregroundStyle(.dimGray)

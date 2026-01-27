@@ -39,8 +39,7 @@ struct OrganizerModel: HTML {
             .font(.title2)
             .foregroundStyle(.bootstrapPurple)
 
-          let bio = Localization.trySwift(organizer.bio, language: language)
-            .convertNewlines()
+          let bio = organizer.localizedBio(for: language).convertNewlines()
           Text(markdown: bio)
             .font(.body)
             .fontWeight(.regular)

@@ -1,0 +1,449 @@
+[
+  {
+    "name": "Konrad 'ktoso' Malawski",
+    "image_name": "konrad_ktoso_malawski",
+    "bio": "Konrad works in the Swift language team at Apple, where he focuses on concurrency and distributed modules of the language, and server-side focused libraries. He was part of the design and implementation of Swift's structured concurrency and actor model, as well as the distributed actors language feature and cluster library. Currently he's focused on Swift/Java interoperability efforts. Previously, he worked on Akka at Lightbend/Typesafe, where he maintained core pieces of the ecosystem, including the clustering, event sourcing, streaming and HTTP libraries. He also is a Java Champion and made significant contributions to the reactive-streams specification and TCK which later became the foundation of the JDK's java.util.concurrent.Flow types.",
+    "bio_ja": "KonradはAppleのSwift言語チームで、並行処理や分散モジュール、サーバーサイド向けライブラリの開発に取り組んでいます。Swiftの構造化並行処理やアクターモデル、分散アクターの言語機能やクラスタライブラリの設計・実装に携わりました。現在はSwiftとJavaの相互運用性の向上に注力しています。以前はLightbend/TypesafeでAkkaの開発に従事し、クラスタリング、イベントソーシング、ストリーミング、HTTPライブラリなどの中核部分を担当していました。また、Java Championとして、後にJDKの java.util.concurrent.Flow 型の基盤となったリアクティブストリーム仕様とTCKにも大きく貢献しました。",
+    "job_title": "Swift Language Team",
+    "links": [
+      {
+        "url": "https://bsky.app/profile/kto.so",
+        "name": "@kto.so"
+      },
+      {
+        "url": "https://x.com/ktosopl",
+        "name": "@ktosopl"
+      },
+      {
+        "url": "https://mastodon.social/@ktoso",
+        "name": "@ktoso"
+      }
+    ]
+  },
+  {
+    "name": "Si Beaumont",
+    "image_name": "si_beaumont",
+    "bio": "Si works at Apple, where he helps maintain a number of open-source Swift libraries to support server-side use cases. Before that, he's worked in a wide range of areas including virtulalization, cloud technologies, privacy-preserving machine learning, and developer tools. \n\nSi is based in Cambridge, UK, but loves to travel and see new places. He's hugely passionate about coffee and enjoys playing bass guitar.",
+    "job_title": "Software Engineer @ Apple",
+    "links": [
+      {
+        "url": "https://github.com/simonjbeaumont",
+        "name": "@simonjbeaumont"
+      }
+    ]
+  },
+  {
+    "name": "Krzysztof Zablocki",
+    "image_name": "krzysztof_zablocki",
+    "bio": "Krzysztof is shaping the future of Apple platforms with tools adopted by 80K+ teams, from Apple to Disney. 🏆 2x Engineering Emmy winner, co-founder of Pixle, and creator of Foldify & Sourcery for Xcode.",
+    "bio_ja": "KrzysztofはAppleプラットフォームの未来を形作るツールを開発しており、これまでにAppleやDisneyを含む8万以上のチームに採用されています。🏆 エンジニアリング・エミー賞を2度受賞しており、Pixleの共同創設者でもあります。また、Xcode用のFoldifyやSourceryのクリエイターでもあります。",
+    "job_title": "Principal Swift Engineer",
+    "links": [
+      {
+        "url": "https://x.com/merowing_",
+        "name": "@merowing_"
+      },
+      {
+        "url": "https://github.com/krzysztofzablocki",
+        "name": "@krzysztofzablocki"
+      },
+      {
+        "url": "https://merowing.info/about",
+        "name": "merowing.info"
+      }
+    ]
+  },
+  {
+    "name": "Sebastiaan de With",
+    "image_name": "sebastiaan_de_with",
+    "bio": "Sebastiaan is an ex-Apple designer now making camera apps like Halide, Kino and Spectre at Lux",
+    "bio_ja": "Sebastiaanは元Appleデザイナーで、現在はLuxでHalide、Kino、Spectreなどのカメラアプリを開発しています。",
+    "job_title": "Co-founder / designer at Lux Optics",
+    "links": [
+      {
+        "url": "https://x.com/sdw",
+        "name": "@sdw"
+      }
+    ]
+  },
+  {
+    "name": "Benjamin Sandofsky",
+    "image_name": "benjamin_sandofsky",
+    "bio": "Escaped big-tech to build photography and video apps. Credits: Halide, Kino and Spectre.",
+    "bio_ja": "大手テック企業を離れ、写真や動画アプリの開発に専念。代表作：Halide、Kino、Spectre。",
+    "job_title": "Co-founder / engineer at Lux Optics",
+    "links": [
+      {
+        "url": "https://sandofsky.com",
+        "name": "sandofsky.com"
+      }
+    ]
+  },
+  {
+    "name": "Paul Hudson",
+    "image_name": "paul_hudson",
+    "bio": "Paul is the author of Hacking with Swift, Pro Swift, Swift Design Patterns, Testing Swift, Swift Interview Challenges, and more. Suffice it to say, he quite likes Swift. And coffee. (But mostly Swift.) (And coffee.)",
+    "bio_ja": "Paulは「Hacking with Swift」「Pro Swift」「Swift Design Patterns」「Testing Swift」「Swift Interview Challenges」などの著者です。簡単に言うと、Swiftが大好きです。そしてコーヒーも。（でも主にSwiftが。）（いや、コーヒーも同じくらい。）",
+    "job_title": "Creator at Hacking with Swift",
+    "links": [
+      {
+        "url": "https://x.com/twostraws",
+        "name": "@twostraws"
+      },
+      {
+        "url": "https://github.com/twostraws",
+        "name": "@twostraws"
+      }
+    ]
+  },
+  {
+    "name": "Yoshimasa Niwa",
+    "image_name": "yoshimasa_niwa",
+    "bio": "As a software engineer, I divide my time between working on client applications, backend services, and occasionally indulging in watching cat videos and photos. I have led engineering teams and cats to deliver user-facing products with a special focus on usability, customer satisfaction, and meowing.",
+    "bio_ja": "ソフトウェアエンジニアとして、クライアントアプリやバックエンドサービスの開発に携わる一方で、時々猫の動画や写真を観て楽しんでいます。エンジニアチームと猫を率いて、ユーザー向けプロダクトの開発をリードしてきました。特に、使いやすさ、顧客満足、そして「ニャー」を大切にしています。",
+    "job_title": "Software Engineer",
+    "links": [
+      {
+        "url": "https://x.com/niw",
+        "name": "@niw"
+      }
+    ]
+  },
+  {
+    "name": "Gui Rambo",
+    "image_name": "gui_rambo",
+    "bio": "Gui Rambo is a Mac developer and security researcher from Brazil, known for apps such as AirBuddy and VirtualBuddy.",
+    "bio_ja": "Gui Ramboはブラジル出身のMac開発者兼セキュリティ研究者で、AirBuddyやVirtualBuddyといったアプリで知られています。",
+    "job_title": "Mac Developer / Security Researcher at Best Buddy Apps",
+    "links": [
+      {
+        "url": "https://github.com/insidegui",
+        "name": "@insidegui"
+      }
+    ]
+  },
+  {
+    "name": "Andrew Zheng",
+    "image_name": "andrew_zheng",
+    "bio": "Hi, I'm Andrew coming from San Francisco! and I like making apps. This is my second time in Japan, excited to be here. よろしくお願いします！",
+    "bio_ja": "こんにちは！サンフランシスコ出身のAndrewです。アプリを作るのが好きです。今回で日本に来るのは2回目ですが、また来られてとても嬉しいです。よろしくお願いします！",
+    "job_title": "iOS Developer at xAI",
+    "links": [
+      {
+        "url": "https://x.com/aheze0",
+        "name": "@aheze0"
+      }
+    ]
+  },
+  {
+    "name": "Sophie Hudson",
+    "image_name": "sophie_hudson",
+    "bio": "Most people know my dad, Paul, but I've been building apps with SwiftUI for three years now and want to share what I've learned. I like manga, go karting, and coding, but I spend most of my time looking after my dogs.",
+    "bio_ja": "多くの人は私の父、Paulを知っていると思いますが、私はSwiftUIを使ったアプリ開発を3年間続けていて、学んだことを皆さんと共有したいと思っています。漫画やゴーカート、コーディングが好きですが、ほとんどの時間は愛犬のお世話をしています。",
+    "job_title": "Hudson Heavy Industries",
+    "links": [
+      {
+        "url": "https://x.com/pinkerstraws",
+        "name": "@pinkerstraws"
+      }
+    ]
+  },
+  {
+    "name": "Mikaela Caron",
+    "image_name": "mikaela_caron",
+    "bio": "Mikaela Caron is an independent iOS Engineer who actively shares her expertise on social media, focusing on iOS development, building apps in public, and freelancing. She's continuing to work on her indie app Fruitful, which helps people connect with others at conferences, while also traveling as much as she can. She's also an organizer for iOSDevHappyHour and loves giving back to the community.",
+    "bio_ja": "Mikaela Caronは、iOS開発、アプリの公開開発、フリーランスに関する知識をSNSで積極的に発信している独立系iOSエンジニアです。現在は、カンファレンスでの交流をサポートするインディーアプリ『Fruitful』の開発を続けながら、できる限り多くの場所を旅しています。また、iOSDevHappyHourのオーガナイザーを務めるなど、コミュニティへの貢献も大切にしています。",
+    "job_title": "Indie iOS Developer",
+    "links": [
+      {
+        "url": "https://mikaelacaron.com",
+        "name": "mikaelacaron.com"
+      }
+    ]
+  },
+  {
+    "name": "Noah Martin",
+    "image_name": "noah_martin",
+    "bio": "Noah is a software engineer from Los Angeles. He co-founded Emerge Tools in 2020 after spending 5 years working on Airbnb's iOS app and backend. He's passionate about mobile developer tools that reduce the complexity of apps and make them faster. Outside of building dev tools, he researches systems for machine learning as a PhD student. When he's not staring at a screen, Noah can be found in the water perfecting his strokes or on the trail working through a list of mountain peaks.",
+    "bio_ja": "Noahはロサンゼルス出身のソフトウェアエンジニアです。AirbnbでiOSアプリとバックエンドの開発に5年間携わった後、2020年にEmerge Toolsを共同設立しました。モバイルアプリの複雑さを軽減し、高速化する開発ツールに情熱を注いでいます。開発ツール作り以外では、機械学習システムの研究に取り組む博士課程の学生でもあります。画面に向かっていないときは、水中で泳ぎの技術を磨いたり、山頂リストを達成するためにトレイルを歩いたりしていることが多いです。",
+    "job_title": "Co-founder of Emerge Tools",
+    "links": [
+      {
+        "url": "https://x.com/sond813",
+        "name": "@sond813"
+      },
+      {
+        "url": "https://github.com/noahsmartin",
+        "name": "@noahsmartin"
+      },
+      {
+        "url": "https://mastodon.social/@sond813",
+        "name": "@sond813"
+      }
+    ]
+  },
+  {
+    "name": "Nick Lockwood",
+    "image_name": "nick_lockwood",
+    "bio": "Nick is a veteran developer, author and open source aficionado, and has been developing iOS apps since the dark ages of manual memory management back in 2009. He is known for various open source projects such as SwiftFormat, Euclid, Expression and iCarousel. When Nick isn't writing parsers in (and for) Swift, he likes to tinker with 3D graphics and even sometimes fancies himself as a games developer.",
+    "bio_ja": "NickはiOSアプリ開発に2009年のメモリ管理が手動だった時代から携わるベテラン開発者であり、著者でもあります。SwiftFormat、Euclid、Expression、iCarouselといったオープンソースプロジェクトで知られています。Swiftでパーサーを書いていないときには、3Dグラフィックスに取り組んだり、ゲーム開発者気分を楽しんだりしています。",
+    "job_title": "iOS Developer at Bloomberg",
+    "links": [
+      {
+        "url": "https://github.com/nicklockwood",
+        "name": "@nicklockwood"
+      },
+      {
+        "url": "https://mastodon.social/@nicklockwood",
+        "name": "@nicklockwood"
+      }
+    ]
+  },
+  {
+    "name": "Vincent Pradeilles",
+    "image_name": "vincent_pradeilles",
+    "bio": "Vincent works at Photoroom and contributes to building great consumer apps. He also enjoys sharing about Swift and iOS on his YouTube channel.",
+    "bio_ja": "VincentはPhotoroomで働き、素晴らしいコンシューマーアプリの開発に貢献しています。また、YouTubeチャンネルでSwiftやiOSについて情報発信することも楽しんでいます。",
+    "job_title": "Software Engineer at Photoroom",
+    "links": [
+      {
+        "url": "https://www.swiftwithvincent.com",
+        "name": "swiftwithvincent.com"
+      }
+    ]
+  },
+  {
+    "name": "kishikawa katsumi",
+    "image_name": "kishikawa_katsumi",
+    "bio": "Katsumi has been developing software for the Apple platform for over 10 years and currently works for a company that develops low-code platforms. He works on automating all kinds of tasks. In his spare time, he builds and maintains various open source projects that improve developer productivity.",
+    "bio_ja": "Apple Platformのソフトウェアを専門に開発しているソフトウェアエンジニアです。現在はローコードでアプリ開発するサービスを提供する会社で働いていて、あらゆる作業を自動化する仕事をしています。空いた時間には、デベロッパーの生産性を向上するさまざまなオープンソースプロジェクトをメンテナンスしています。",
+    "job_title": "Software Engineer",
+    "links": [
+      {
+        "url": "https://kishikawakatsumi.com/",
+        "name": "kishikawakatsumi.com"
+      }
+    ]
+  },
+  {
+    "name": "Ryo Igarashi",
+    "image_name": "ryo_igarashi",
+    "bio": "Software Engineer at newmo, Inc.",
+    "job_title": "Engineer@newmo, Inc.",
+    "links": []
+  },
+  {
+    "name": "Pradnya Nikam",
+    "image_name": "pradnya_nikam",
+    "bio": "With over 12 years of experience developing for Apple platforms, I am passionate about creating exceptional user experiences. I have a strong background in UIKit, and these days, I primarily focus on coding SwiftUI views for iOS and tvOS apps. I currently work at Rakuten Viki, a video streaming company with over a million active users per day.\n\nI absolutely love attending conferences and public speaking, sharing my knowledge and learning from the community. Outside of work, you can find me planning my next travel adventure or running around with my 3-year-old.",
+    "job_title": "Senior iOS Developer at Rakuten Viki",
+    "links": [
+      {
+        "url": "https://x.com/pradnya_nikam",
+        "name": "@pradnya_nikam"
+      }
+    ]
+  },
+  {
+    "name": "rockname",
+    "image_name": "rockname",
+    "bio": "I'm an iOS and Android app developer working on a banking and card payment service at SmartBank.",
+    "bio_ja": "iOSおよびAndroidアプリ開発者として、SmartBankで銀行およびカード決済サービスの開発に携わっています。",
+    "job_title": "Mobile Application Developer at SmartBank, Inc.",
+    "links": []
+  },
+  {
+    "name": "Ryo Yamashita",
+    "image_name": "ryo_yamashita",
+    "bio": "I'm an Individual developer.\n\nI've released a variety of apps for Apple platforms.\niOS & iPadOS: 7 apps\nvisionOS: 5 apps\nwatchOS: 5 apps\ntvOS: 1 app\nmacOS: 3 apps\n\nPortfolio link \n[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)",
+    "bio_ja": "個人開発者として、Appleプラットフォーム向けにさまざまなアプリをリリースしています。\niOS & iPadOS アプリ：7\nvisionOS アプリ：5\nwatchOS アプリ：5\ntvOS アプリ：1\nmacOS アプリ：3\n\nポートフォリオ：\n[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)",
+    "job_title": "Solo Developer for iOS, watchOS, macOS, and visionOS",
+    "links": [
+      {
+        "url": "https://github.com/FlipByBlink",
+        "name": "@FlipByBlink"
+      }
+    ]
+  },
+  {
+    "name": "Mike 'Kapsy' Petrie",
+    "image_name": "michael_petrie",
+    "bio": "I'm a New Zealander who has been living in Japan for the past 10 years. I primarily work with low level, real time graphics and audio. This year, I founded a company called kapsy.io, and am currently working on a real time generative music sequencer with the code named _Variations_.",
+    "bio_ja": "ニュージーランド出身で、日本に住んで10年になります。主に低レベルなリアルタイムのグラフィックスやオーディオを扱っています。\n今年、新しくkapsy.ioという会社を設立し、現在はリアルタイムで生成される音楽シーケンサーVariations（コードネーム）の開発を進めています。",
+    "job_title": "Programmer at ZOZO, Inc",
+    "links": [
+      {
+        "url": "https://github.com/Kapsy",
+        "name": "@Kapsy"
+      }
+    ]
+  },
+  {
+    "name": "Kosala Jayasekara",
+    "image_name": "kosala_jayasekara",
+    "bio": "I have completed more than a decade long experience in the field of futuristic developments and managed to gain a  portfolio of local and international clientele while working with prominent corporate entities in Sri Lanka.\n\nCurrently serving as the Chief Technology Officer for Fixel Digital which is a development house specifically for Mobile application developments . it's a pleasure that I am well known for my Punctuality, Attention to detail, and innovative mindset among the clients and the industry that I am being with\n\nI have started iOS Development in its early development stage in 2011. I have been in the apple ecosystem for more than a decade now, also Delivered more than 55+ Apps, including iOS, macOS, tvOS, and watchOS. At the same time, I am serving my knowledge to Students in the IT industry and providing consultation services to my clients from overseas.",
+    "bio_ja": "未来志向の開発に10年以上携わり、国内外の企業と協力しながら幅広いクライアントのポートフォリオを築いてきました。\n\n現在はFixel Digitalの最高技術責任者（CTO）として、モバイルアプリ開発を専門とする開発チームを率いています。業界内では「時間厳守」「細部へのこだわり」「革新的な発想」で知られています。\n\niOS開発には2011年の初期の段階から携わっており、Appleのエコシステムで10年以上の経験を積んできました。これまでにiOS、macOS、tvOS、watchOS向けに55本以上のアプリを開発・リリースしてきました。また、IT業界の学生に知識を共有したり、海外クライアントへのコンサルティング業務も行っています。",
+    "job_title": "Head of Development @ Fixel Digital",
+    "links": [
+      {
+        "url": "https://kosalajayasekara.com",
+        "name": "kosalajayasekara.com"
+      }
+    ]
+  },
+  {
+    "name": "tochi",
+    "image_name": "tochi",
+    "bio": "I am an engineer/developer specializing in iOS and visionOS. I have created numerous personal apps, including 'Large Contacts' for iOS and 'Good Sleeper 360' for visionOS. I've authored several technical books, such as Slack & Zoom & Trello Basics + Tips for Telework (in the できるfit series) and What We Wanted to Know About Alexa, and more recently, The Path to Becoming a visionOS Developer. I have received many accolades, including the Mashup Award and top honors in contests organized by Japan's Ministry of Internal Affairs and Communications, as well as multiple awards in SPAJAM and other hackathons. I have spoken at various events like JAWS Festa and Alexa Day, and I currently share insights on visionOS through social media.",
+    "bio_ja": "iOSとvisionOSを専門とするエンジニア・開発者です。個人で多数のアプリを開発しており、iOS向けの「Large Contacts」やvisionOS向けの「Good Sleeper 360」などをリリースしています。\nまた、技術書の執筆も手がけており、「Slack & Zoom & Trello 基本+活用術（できるfitシリーズ）」や「Alexaに聞きたかったこと」、最近では「visionOS開発者への道」などを出版しています。\n受賞歴も多数あり、Mashup Awardや総務省主催のコンテストでの最優秀賞、SPAJAMをはじめとするハッカソンでの受賞経験があります。\nまた、JAWS FestaやAlexa Dayなどのイベンで登壇経験があり、現在はvisionOSに関する知見をSNSで発信しています。",
+    "job_title": "Software engineer",
+    "links": [
+      {
+        "url": "https://tochi.github.io/profile/",
+        "name": "tochi.github.io"
+      }
+    ]
+  },
+  {
+    "name": "Halordain",
+    "image_name": "halordain",
+    "bio": "I'm Chris, also known as Halordain! I grew up in Dallas, Texas, and attended college at Stanford. I majored in electrical engineering with a specialization in image processing. I started studying Japanese to scout my opponents from Japan at the Pokémon World Championships, where my quarterfinals and semifinals opponents hailed from Yokosuka and Fujisawa, respectively.\n\nMy journey led me to Doshisha University to master Japanese under the Critical Language Scholarship. I abandoned my PhD at MIT CSAIL to pursue software development in Japan. Originally hired at Creatures Japan to process images for Pokémon cards, I ended up learning Objective-C to develop my first iPad app, [Pokédex for iOS (Creatures, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/).\n\nAfter Creatures, I contracted with Bandai-Namco Studios to build the graphics engine behind [Super Smash Bros. for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/). I parlayed my rendering knowledge in computer graphics, my image processing background, and my interest in iOS development into developing iOS Photoshop for Adobe, and eventually joined Apple to document their new graphics technologies such as Metal, ARKit, CreateML, and RealityKit.\n\nI returned to Japan to help spearhead Nintendo of Japan's smartphone game design, starting with Fire Emblem Heroes and [Pikmin Bloom](https://pikminbloom.com/ja/). These development experiences led me to craft my own path creating educational apps and experiences for teaching Japanese kids about AI and Swift.",
+    "bio_ja": "こんにちは！Chris（Halordain）です！\nテキサス州ダラスで育ち、スタンフォード大学で電気工学（画像処理専攻）を学びました。ポケモン世界大会で日本の対戦相手をリサーチするために日本語の勉強を始め、準々決勝・準決勝では横須賀と藤沢出身のプレイヤーと対戦しました。\n\nその後、Critical Language Scholarshipを活用し、日本語を習得するために同志社大学へ留学。MIT CSAILの博士課程を辞め、日本でソフトウェア開発の道を選びました。\n最初の仕事はクリーチャーズでポケモンカードの画像処理を担当することでした。そこでは、Objective-Cを学び、初のiPadアプリ [ポケモン図鑑 for iOS (クリーチャーズ, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/) を開発しました。\n\nその後、バンダイナムコスタジオで [大乱闘スマッシュブラザーズ for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/) のグラフィックスエンジンの開発に携わり、コンピュータグラフィックスと画像処理の知識を活かしてAdobeでiOS向けPhotoshopの開発を担当しました。さらに、AppleではMetal・ARKit・CreateML・RealityKitなどの新しいグラフィック技術のドキュメント作成を担当しました。\n\n日本に戻った後は任天堂のスマートフォンゲーム開発に携わり、「ファイアーエムブレム ヒーローズ」や [ピクミン ブルーム](https://pikminbloom.com/ja/) の開発を支援。現在は、AIやSwiftを子どもたちに教える教育アプリを開発しています。",
+    "job_title": "CEO @ Honmon",
+    "links": [
+      {
+        "url": "https://www.halordain.com",
+        "name": "halordain.com"
+      }
+    ]
+  },
+  {
+    "name": "Jeffrey Bergier",
+    "image_name": "jeffrey_bergier",
+    "bio": "Cocoa Developer and Teacher. Love technology and cars. Working in the automotive software industry. Living in Tokyo.\nCompany: Woven by Toyota - This talk is not affiliated with my employer in any way.\nGitHub: [@jeffreybergier](https://github.com/jeffreybergier)\nMastodon: [@jeff](https://jeffburg.social/@jeff)",
+    "bio_ja": "Cocoa Developer & Teacher として活動しています。\nテクノロジーと車が大好きで、現在は自動車ソフトウェア業界で働いています（勤務地：東京）。\n\n所属：Woven by Toyota（本講演は所属企業とは関係ありません）\nGitHub：[@jeffreybergier](https://github.com/jeffreybergier)\nMastodon：[@jeff](https://jeffburg.social/@jeff)",
+    "job_title": "Quality Assurance Engineer",
+    "links": [
+      {
+        "url": "https://www.jeffburg.com",
+        "name": "jeffburg.com"
+      }
+    ]
+  },
+  {
+    "name": "Ryota Motonishi",
+    "image_name": "ryota_motonishi",
+    "bio": "Ryota Motonishi is an iOS engineer at LY Corporation. He is working on the development of the LINE chat app. In his free time, he enjoys singing karaoke.",
+    "bio_ja": "Ryota Motonishiは、LY CorporationのiOSエンジニアです。現在、LINEチャットアプリの開発に携わっています。余暇にはカラオケを楽しんでいます。",
+    "job_title": "iOS Developer at LY Corporation",
+    "links": []
+  },
+  {
+    "name": "yamaken",
+    "image_name": "yamaken",
+    "bio": "I usually develop iOS apps at LY Corporation and actively output through blogging and speaking engagements. Last year, I spoke 13 times.",
+    "bio_ja": "LY CorporationでiOSアプリを開発しています。ブログや登壇などのアウトプットにも積極的に取り組んでおり、昨年は13回の登壇を行いました。",
+    "job_title": "iOS Developer at LY Corporation",
+    "links": [
+      {
+        "url": "https://x.com/yamakentoc",
+        "name": "@yamakentoc"
+      }
+    ]
+  },
+  {
+    "name": "UJ Cheng",
+    "image_name": "yj_cheng",
+    "bio": "Advanced Software Engineer at Garmin. 10 years of iOS development experience since college. Love solving the LeetCode problems with Swift.",
+    "job_title": "Advanced Software Engineer at Garmin",
+    "links": [
+      {
+        "url": "https://www.linkedin.com/in/iamhands0me",
+        "name": "@iamhands0me"
+      }
+    ]
+  },
+  {
+    "name": "noppe",
+    "image_name": "noppe",
+    "bio": "iOS & visionOS app developer in Japan. Crafting 𝙫𝙚𝙖𝙧 and DAWN for mastodon. Loving #foxes.\n\n[vear - Anime Avatar Camera](https://apps.apple.com/jp/app/vear-anime-avatar-camera/id1490697369?l=en-US)\n[DAWN for Mastodon](https://apps.apple.com/jp/app/dawn-for-mastodon/id1668645019?l=en-US)",
+    "bio_ja": "日本でiOSとvisionOSのアプリを開発しています。\nMastodon向けの𝙫𝙚𝙖𝙧やDAWNなどのアプリ開発を手がけています。\n#foxes（キツネ）が大好きです。\n\n[vear - Anime Avatar Camera](https://apps.apple.com/jp/app/vear-anime-avatar-camera/id1490697369?l=en-US)\n[DAWN - Mastodon クライアント](https://apps.apple.com/jp/app/dawn-for-mastodon/id1668645019?l=en-US)",
+    "job_title": "iOS Engineer at DeNA Co., Ltd.",
+    "links": [
+      {
+        "url": "https://github.com/noppefoxwolf",
+        "name": "@noppefoxwolf"
+      }
+    ]
+  },
+  {
+    "name": "Sugiy",
+    "image_name": "sugiy",
+    "bio": "- iOS and Flutter engineer in Japan\n- Working in DeNA Co., Ltd.\n- Often participate in [Japan-\\\\(region).swift](https://japan-region-swift.github.io/Japan-region-swift/) events in Japan.\n- Spoke at conferences in Japan such as [iOSDC](https://iosdc.jp/2024/) from 2022 to 2024 and [FlutterKaigi2024](https://youtu.be/UwDqyVawLtA?si=E0kN98o9CdM_p8e6).\n- I like cooking, fish, Japanese food, and pineapples.",
+    "job_title": "iOS/Flutter Developer at DeNA Co., Ltd.",
+    "links": [
+      {
+        "url": "https://ulog.sugiy.com/en/",
+        "name": "ulog.sugiy.com"
+      }
+    ]
+  },
+  {
+    "name": "ojun",
+    "image_name": "ojun",
+    "bio": "I develop iOS apps at DeNA Co., Ltd. My native language is Swift.",
+    "bio_ja": "株式会社ディー・エヌ・エーで iOS アプリを開発しています。Swiftが母国語です。",
+    "job_title": "iOS App Developer at DeNA Co., Ltd.",
+    "links": []
+  },
+  {
+    "name": "Akihiko Sato",
+    "image_name": "akihiko_sato",
+    "bio": "Software Engineer at DeNA Inc., specializing in mobile development for live streaming applications. With extensive experience in iOS development since the Objective-C era, I am passionate about leveraging Swift's evolution to create innovative and efficient applications.",
+    "job_title": "Software Engineer at DeNA Co., Ltd.",
+    "links": [
+      {
+        "url": "https://x.com/akkiee76",
+        "name": "@akkiee76"
+      }
+    ]
+  },
+  {
+    "name": "Kazuya Ueoka",
+    "image_name": "fromkk",
+    "bio": "iOS app developer, creating personal projects like #Type, Quiz Match, and more.\nLiving in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.\nPhotography enthusiast, traveling across Japan as a photographer for Japan-\\\\(region).swift.",
+    "bio_ja": "iOSアプリを作る仕事をしています。個人アプリとして#Type、Quiz Matchなどを開発しています。\n埼玉県所沢市で中古マンションを購入。リノベーションして2匹の猫、そして妻と住んでいます。\n趣味はカメラで、Japan-\\\\(region).swiftではカメラマンとして各地に飛んだりしています。",
+    "job_title": "iOS Developer",
+    "links": [
+      {
+        "url": "https://fromkk.me/",
+        "name": "fromkk.me"
+      }
+    ]
+  },
+  {
+    "name": "Satoshi Hattori",
+    "image_name": "satoshi_hattori",
+    "bio": "Belongs to Cyber AI Productions. XR Expert at Cyber Agent.\nResponsible for system development related to XR and studio shooting.\nPurchased Apple Vision Pro locally on its U.S. release day. Actively engaged in development and research, including the visionOS 30 Days project.\nOrganizer of the visionOS Engineer Meetup. Published a book on visionOS app development.\nHas spoken at iOSDC for nine consecutive years, as well as at try! Swift Tokyo, XR Kaigi, Let's visionOS, AWE USA, and more.\nMainly shares updates on X, so please follow!",
+    "bio_ja": "Cyber AI Productions所属。XR Expert at Cyber Agent。\nXR関連とスタジオ撮影関連のシステム開発を担当。\nApple Vision Proを米国発売日に現地購入。visionOS 30 Days開発など精力的に実装と調査をしています。\nvisionOS Engineer Meetup主催。visionOSアプリ開発の書籍出版。\niOSDC9年連続登壇の他、try! Swift Tokyo、XR Kaigi、Let's visionOS、AWE USAなど登壇あり。\nXを中心に発信しているのでフォローしてください。",
+    "job_title": "XR Engineer at Cyber AI Productions",
+    "links": [
+      {
+        "url": "https://x.com/shmdevelop",
+        "name": "@shmdevelop"
+      },
+      {
+        "url": "https://github.com/satoshi0212",
+        "name": "@satoshi0212"
+      },
+      {
+        "url": "https://www.linkedin.com/in/satoshi-hattori/",
+        "name": "linkedin.com/in/satoshi-hattori"
+      },
+      {
+        "url": "https://www.amazon.co.jp/dp/4297143119/",
+        "name": "amazon.co.jp/dp/4297143119"
+      }
+    ]
+  }
+]

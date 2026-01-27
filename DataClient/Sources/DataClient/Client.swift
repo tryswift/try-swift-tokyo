@@ -8,6 +8,7 @@ public struct DataClient: Sendable {
   public var fetchDay1: @Sendable (_ year: ConferenceYear) throws -> Conference
   public var fetchDay2: @Sendable (_ year: ConferenceYear) throws -> Conference
   public var fetchDay3: @Sendable (_ year: ConferenceYear) throws -> Conference
+  public var fetchWorkshop: @Sendable (_ year: ConferenceYear) throws -> Conference
   public var fetchSponsors: @Sendable (_ year: ConferenceYear) throws -> Sponsors
   public var fetchOrganizers: @Sendable (_ year: ConferenceYear) throws -> [Organizer]
   public var fetchSpeakers: @Sendable (_ year: ConferenceYear) throws -> [Speaker]
@@ -27,6 +28,11 @@ extension DataClient: DependencyKey {
     },
     fetchDay3: { year in
       let data = loadDataFromBundle(fileName: "\(year.rawValue)-day3")
+      let response = try jsonDecoder.decode(Conference.self, from: data)
+      return response
+    },
+    fetchWorkshop: { year in
+      let data = loadDataFromBundle(fileName: "\(year.rawValue)-workshop")
       let response = try jsonDecoder.decode(Conference.self, from: data)
       return response
     },

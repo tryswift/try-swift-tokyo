@@ -1,0 +1,654 @@
+{
+  "id": 1,
+  "title": "Day 1",
+  "title_ja": "１日目",
+  "date": "2025-04-09T12:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2025-04-09T12:00:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Registration",
+          "title_ja": "受付",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "summary": "Download Luma app and show QR code of your ticket at the reception. You will receive a name tag and a goodie bag.",
+          "summary_ja": "Lumaアプリをダウンロードし、受付でチケットのQRコードを提示してください。ネームタグとお楽しみ袋がプレゼントされます。"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2025-04-09T13:00:00+09:00",
+      "sessions": [
+        {
+          "id": 3,
+          "title": "Opening",
+          "title_ja": "オープニング",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "summary": "Let's start!",
+          "summary_ja": "いよいよ始まりますよ！"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2025-04-09T13:15:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "What's new in iOS 17, 16, 15, etc.",
+          "title_ja": "iOS 17, 16, 15などの新機能",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "Every year at WWDC Apple introduces lots of cool new APIs! But most of these new APIs also come with quite a gatekeeper: they can only be used on the latest version of iOS...\n\nBecause of that, a lot of useful APIs fail to reach a strong adoption, and by the time their version of iOS has become mainstream they've been completely overlooked.\n\nSo how about we fix that?",
+          "description_ja": "毎年 WWDC では、Apple からたくさんのクールな新しい API が発表されます！\nでも、そうした新APIの多くには「ある壁」が立ちはだかります。それは、「最新の iOS バージョンでしか使えない」ということです…。\n\nそのせいで、本当に便利な API であっても広く使われることがなく、対応する iOS バージョンが主流になる頃には、すっかり見過ごされてしまっていることも少なくありません。\n\nそれって、ちょっともったいないと思いませんか？",
+          "speakers": [
+            {
+              "id": 5,
+              "name": "Vincent Pradeilles",
+              "image_name": "vincent_pradeilles",
+              "bio": "Vincent works at Photoroom and contributes to building great consumer apps. He also enjoys sharing about Swift and iOS on his YouTube channel.",
+              "bio_ja": "VincentはPhotoroomで働きながら、優れたコンシューマー向けアプリの開発に携わっています。また、SwiftやiOSに関する情報をYouTubeチャンネルで発信することも楽しんでいます。",
+              "job_title": "Software Engineer at Photoroom",
+              "links": [
+                {
+                  "url": "https://www.swiftwithvincent.com",
+                  "name": "swiftwithvincent.com"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2025-04-09T13:40:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "⚡️ Exploring SwiftUI Path Animations featuring Japan Symbol Quiz",
+          "title_ja": "⚡️ Japan Symbol QuizによるSwiftUIのPathアニメーションの探求",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "What can you do with Path animations in SwiftUI? With some creativity, we can animate text, draw shapes, and more—it's a surprisingly versatile technique. \nIn this talk, I'll showcase innovative ways to use Path animations in development and entertainment, helping you dive into this exciting world.",
+          "description_ja": "SwiftUIのPathアニメーションで、どんなことができるのでしょうか？\n少しの創意工夫で、テキストをアニメーションさせたり、図形を描いたりと、驚くほど多彩な表現が可能です。\nこのトークでは、開発やエンターテインメントの分野においてPathアニメーションを活用する革新的な方法をご紹介し、皆さんをこの刺激的な世界へと誘います。",
+          "speakers": [
+            {
+              "id": 7,
+              "name": "Sugiy",
+              "image_name": "sugiy",
+              "bio": "- iOS and Flutter engineer in Japan\n- Working in DeNA Co., Ltd.\n- Often participate in [Japan-\\\\(region).swift](https://japan-region-swift.github.io/Japan-region-swift/) events in Japan.\n- Spoke at conferences in Japan such as [iOSDC](https://iosdc.jp/2024/) from 2022 to 2024 and [FlutterKaigi2024](https://youtu.be/UwDqyVawLtA?si=E0kN98o9CdM_p8e6).\n- I like cooking, fish, Japanese food, and pineapples.",
+              "bio_ja": "- 日本でiOSとFlutterのエンジニアをしています。\n- 株式会社ディー・エヌ・エーに勤務。\n- 日本で開催される[Japan-\\\\(region).swift](https://japan-region-swift.github.io/Japan-region-swift/)のイベントに頻繁に参加。\n- 2022年から2024年にかけて[iOSDC](https://iosdc.jp/2024/)や[FlutterKaigi2024](https://youtu.be/UwDqyVawLtA?si=E0kN98o9CdM_p8e6)など、日本のカンファレンスで登壇。\n- 料理、魚、和食、パイナップルが好き。",
+              "job_title": "iOS/Flutter Developer at DeNA Co., Ltd.",
+              "links": [
+                {
+                  "url": "https://ulog.sugiy.com/en/",
+                  "name": "ulog.sugiy.com"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Vincent Pradeilles and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Vincent Pradeillesさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 5,
+              "name": "Vincent Pradeilles",
+              "image_name": "vincent_pradeilles",
+              "bio": "Vincent works at Photoroom and contributes to building great consumer apps. He also enjoys sharing about Swift and iOS on his YouTube channel.",
+              "bio_ja": "VincentはPhotoroomで働きながら、優れたコンシューマー向けアプリの開発に携わっています。また、SwiftやiOSに関する情報をYouTubeチャンネルで発信することも楽しんでいます。",
+              "job_title": "Software Engineer at Photoroom",
+              "links": [
+                {
+                  "url": "https://www.swiftwithvincent.com",
+                  "name": "swiftwithvincent.com"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2025-04-09T13:50:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "Swift WTF: Weirdness, traps, and fixes",
+          "title_ja": "Swift WTF: 奇妙な挙動、落とし穴、そして修正策",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "Sometimes Swift developers make fun of languages such as JavaScript that have vague concepts like \"truthy\" and \"falsy\", but Swift is packed with its own surprises and has plenty sharp edges of its own.\n\nIn this talk I want to show some of the surprising behaviors of Swift – things that behave weirdly, traps you can easily fall into, and fixes to help you write better code. There will be lots of hands-on code samples everyone can try, and it will be a fun journey through the quirks of a language we all think we know.",
+          "description_ja": "Swift開発者の中には、JavaScriptの「truthy」や「falsy」といった曖昧な概念を冗談交じりに笑う人もいますが、実はSwiftにも独自の驚きが満載で、予想外の鋭い側面が存在します。\n\nこのトークでは、Swiftの驚くべき挙動―奇妙な動作、簡単に陥ってしまう落とし穴、そしてより良いコードを書くための修正策―を紹介します。多数のハンズオンコードサンプルを用意しており、参加者全員が実際に試しながら、普段は馴染みのあるはずのこの言語の意外な一面を楽しく探求する旅に出かけましょう。",
+          "speakers": [
+            {
+              "id": 9,
+              "name": "Sophie Hudson",
+              "image_name": "sophie_hudson",
+              "bio": "Most people know my dad, Paul, but I've been building apps with SwiftUI for three years now and want to share what I've learned. I like manga, go karting, and coding, but I spend most of my time looking after my dogs.",
+              "bio_ja": "多くの人は私の父、Paulを知っていると思いますが、私はSwiftUIを使ったアプリ開発を3年間続けていて、学んだことを皆さんと共有したいと思っています。漫画やゴーカート、コーディングが好きですが、ほとんどの時間は愛犬のお世話をしています。",
+              "job_title": "Hudson Heavy Industries",
+              "links": [
+                {
+                  "url": "https://x.com/pinkerstraws",
+                  "name": "@pinkerstraws"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2025-04-09T14:15:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "Break",
+          "title_ja": "休憩",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "summary": "Take a break and meet other attendees or sponsors",
+          "summary_ja": "休憩して他の参加者やスポンサーと交流しましょう"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2025-04-09T14:45:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "App Art: Great App Design Done Quick",
+          "title_ja": "素早く実現する優れたアプリデザイン",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "What makes an app truly exceptional? How do the best designers create interfaces that feel intuitive, delightful, and, most importantly, human? In this talk, Sebastiaan de With pulls back the curtain on Apple's design principles and the craftsmanship behind Halide, an Apple Design Award-winning app. From refining tiny details to making tough design decisions, he'll share real-world insights on creating products that aren't just great—they're loved. Whether you're an aspiring designer or a seasoned developer, jump into a no-nonsense crash course in shipping beautiful, functional apps without getting lost in perfectionism.",
+          "description_ja": "アプリを真に卓越させる要素は何でしょうか？\n最良のデザイナーたちは、どのようにして直感的で魅力的、そして何よりも人間味あふれるインターフェースを生み出しているのでしょうか？\n\nこのトークでは、Seebastiaan de WithがAppleのデザイン原則と、Apple Design Awardを受賞したHalideの背後にある職人技に迫ります。\n細部の洗練から、難しいデザイン判断に至るまで、単に優れているだけでなく、人々に愛される製品を生み出すための実践的な知見を共有します。\n\n新進のデザイナーであれ、経験豊富な開発者であれ、完璧主義にとらわれることなく、美しく機能的なアプリを世に送り出すための、実践的なクラッシュコースにぜひ飛び込んでみましょう。",
+          "speakers": [
+            {
+              "id": 13,
+              "name": "Sebastiaan de With",
+              "image_name": "sebastiaan_de_with",
+              "bio": "Sebastiaan is an ex-Apple designer now making camera apps like Halide, Kino and Spectre at Lux",
+              "bio_ja": "Sebastiaanは元Appleのデザイナーで、現在はLuxでHalide、Kino、Spectreといったカメラアプリを開発しています。",
+              "job_title": "Co-founder / designer at Lux Optics",
+              "links": [
+                {
+                  "url": "https://x.com/sdw",
+                  "name": "@sdw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Sophie Hudson and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Sophie Hudsonさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 9,
+              "name": "Sophie Hudson",
+              "image_name": "sophie_hudson",
+              "bio": "Most people know my dad, Paul, but I've been building apps with SwiftUI for three years now and want to share what I've learned. I like manga, go karting, and coding, but I spend most of my time looking after my dogs.",
+              "bio_ja": "多くの人は私の父、Paulを知っていると思いますが、私はSwiftUIを使ったアプリ開発を3年間続けていて、学んだことを皆さんと共有したいと思っています。漫画やゴーカート、コーディングが好きですが、ほとんどの時間は愛犬のお世話をしています。",
+              "job_title": "Hudson Heavy Industries",
+              "links": [
+                {
+                  "url": "https://x.com/pinkerstraws",
+                  "name": "@pinkerstraws"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2025-04-09T15:10:00+09:00",
+      "sessions": [
+        {
+          "id": 21,
+          "title": "⚡️ Graph Art with Charts API – Beyond Data Visualization",
+          "title_ja": "⚡️ Charts APIで作るグラフアート – データビジュアライゼーションを超えて",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "WWDC24 introduced exciting updates to the Charts API, enabling more creative graph representations. This talk explores how to turn data into art using advanced customization, animations, and interactions. Elevate your data visualization skills and become a graph art designer with Charts API!",
+          "description_ja": "WWDC24では、Charts APIに画期的なアップデートが導入され、より創造的なグラフ表現が可能になりました。\nこのトークでは、先進的なカスタマイズ、アニメーション、そしてインタラクションを駆使して、データをアートに変える方法をご紹介します。\nデータビジュアライゼーションのスキルを一段と向上させ、Charts APIを使ったグラフアートのデザイナーになりましょう！",
+          "speakers": [
+            {
+              "id": 15,
+              "name": "Akihiko Sato",
+              "image_name": "akihiko_sato",
+              "bio": "Software Engineer at DeNA Inc., specializing in mobile development for live streaming applications. With extensive experience in iOS development since the Objective-C era, I am passionate about leveraging Swift's evolution to create innovative and efficient applications.",
+              "bio_ja": "株式会社ディー・エヌ・エーのソフトウェアエンジニアとして、ライブストリーミングアプリのモバイル開発を担当しています。\nObjective-Cの時代からiOS開発に長年携わり、Swiftの進化を活かして革新的で効率的なアプリ開発に情熱を注いでいます。",
+              "job_title": "Software Engineer at DeNA Co., Ltd.",
+              "links": [
+                {
+                  "url": "https://x.com/akkiee76",
+                  "name": "@akkiee76"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 19,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Sebastiaan de With and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Sebastiaan de Withさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 13,
+              "name": "Sebastiaan de With",
+              "image_name": "sebastiaan_de_with",
+              "bio": "Sebastiaan is an ex-Apple designer now making camera apps like Halide, Kino and Spectre at Lux",
+              "bio_ja": "Sebastiaanは元Appleのデザイナーで、現在はLuxでHalide、Kino、Spectreといったカメラアプリを開発しています。",
+              "job_title": "Co-founder / designer at Lux Optics",
+              "links": [
+                {
+                  "url": "https://x.com/sdw",
+                  "name": "@sdw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2025-04-09T15:20:00+09:00",
+      "sessions": [
+        {
+          "id": 23,
+          "title": "AI-Assisted Swift in Gamifying an iOS App",
+          "title_ja": "AI支援のSwiftによるiOSアプリのゲーミフィケーション",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "When you have more app or game ideas than time to implement them, AI can help accelerate your workflow, generating code, assets, tests, and documentation. Let's explore the tactics and tooling I used at Nintendo and beyond to prototype game proof-of-concepts and iterate quickly in Swift & SwiftUI!",
+          "description_ja": "アプリやゲームのアイデアが実装する時間を上回る場合、AIはコード、アセット、テスト、ドキュメントの自動生成を通じて、ワークフローを大幅に加速させます。\n本セッションでは、Nintendoなどで実践したSwiftおよびSwiftUIを活用し、ゲームの概念実証プロトタイプを迅速に構築・反復開発するための戦略とツールについて探求します。",
+          "speakers": [
+            {
+              "id": 17,
+              "name": "Halordain",
+              "image_name": "halordain",
+              "bio": "I'm Chris, also known as Halordain! I grew up in Dallas, Texas, and attended college at Stanford. I majored in electrical engineering with a specialization in image processing. I started studying Japanese to scout my opponents from Japan at the Pokémon World Championships, where my quarterfinals and semifinals opponents hailed from Yokosuka and Fujisawa, respectively.\n\nMy journey led me to Doshisha University to master Japanese under the Critical Language Scholarship. I abandoned my PhD at MIT CSAIL to pursue software development in Japan. Originally hired at Creatures Japan to process images for Pokémon cards, I ended up learning Objective-C to develop my first iPad app, [Pokédex for iOS (Creatures, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/).\n\nAfter Creatures, I contracted with Bandai-Namco Studios to build the graphics engine behind [Super Smash Bros. for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/). I parlayed my rendering knowledge in computer graphics, my image processing background, and my interest in iOS development into developing iOS Photoshop for Adobe, and eventually joined Apple to document their new graphics technologies such as Metal, ARKit, CreateML, and RealityKit.\n\nI returned to Japan to help spearhead Nintendo of Japan's smartphone game design, starting with Fire Emblem Heroes and [Pikmin Bloom](https://pikminbloom.com/ja/). These development experiences led me to craft my own path creating educational apps and experiences for teaching Japanese kids about AI and Swift.",
+              "bio_ja": "こんにちは！Chris（Halordain）です！\nテキサス州ダラスで育ち、スタンフォード大学で電気工学（画像処理専攻）を学びました。ポケモン世界大会で日本の対戦相手をリサーチするために日本語の勉強を始め、準々決勝・準決勝では横須賀と藤沢出身のプレイヤーと対戦しました。\n\nその後、Critical Language Scholarshipを活用し、日本語を習得するために同志社大学へ留学。MIT CSAILの博士課程を辞め、日本でソフトウェア開発の道を選びました。\n最初の仕事はクリーチャーズでポケモンカードの画像処理を担当することでした。そこでは、Objective-Cを学び、初のiPadアプリ [ポケモン図鑑 for iOS (クリーチャーズ, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/) を開発しました。\n\nその後、バンダイナムコスタジオで [大乱闘スマッシュブラザーズ for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/) のグラフィックスエンジンの開発に携わり、コンピュータグラフィックスと画像処理の知識を活かしてAdobeでiOS向けPhotoshopの開発を担当しました。さらに、AppleではMetal・ARKit・CreateML・RealityKitなどの新しいグラフィック技術のドキュメント作成を担当しました。\n\n日本に戻った後は任天堂のスマートフォンゲーム開発に携わり、「ファイアーエムブレム ヒーローズ」や [ピクミン ブルーム](https://pikminbloom.com/ja/) の開発を支援。現在は、AIやSwiftを子どもたちに教える教育アプリを開発しています。",
+              "job_title": "CEO @ Honmon",
+              "links": [
+                {
+                  "url": "https://www.halordain.com",
+                  "name": "halordain.com"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2025-04-09T15:45:00+09:00",
+      "sessions": [
+        {
+          "id": 27,
+          "title": "Break",
+          "title_ja": "休憩",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "summary": "Take a break and meet other attendees or sponsors",
+          "summary_ja": "休憩して他の参加者やスポンサーと交流しましょう"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2025-04-09T16:15:00+09:00",
+      "sessions": [
+        {
+          "id": 29,
+          "title": "Special effects with SwiftUI Text",
+          "title_ja": "SwiftUI Textを使った特殊効果",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "Everyone knows that animations are an easy way to add a touch of surprise and delight to your apps, but with SwiftUI we can add fine-grained effects to individual characters – we can literally animate letters one by one to bring our UI to life in ways that were impossible before iOS 18.\n\nIn this talk I'll demonstrate how to use SwiftUI's TextRenderer protocol to build a range of effects that help bring your UI to life in fun, engaging ways.",
+          "description_ja": "アニメーションは、アプリにちょっとした驚きや楽しさを加える簡単な方法だということは、誰もが知っていることです。\nでも SwiftUI を使えば、もっと細かく、文字単位でエフェクトを加えることができます。iOS 18 以降では、なんと文字を一つひとつアニメーションさせることができるのです - これまで実現できなかった、新しい表現が可能になります。\n\nこのトークでは、SwiftUI の TextRenderer プロトコルを使って、UI をより楽しく魅力的に演出するさまざまなエフェクトの作り方をご紹介します。",
+          "speakers": [
+            {
+              "id": 21,
+              "name": "Paul Hudson",
+              "image_name": "paul_hudson",
+              "bio": "Paul is the author of Hacking with Swift, Pro Swift, Swift Design Patterns, Testing Swift, Swift Interview Challenges, and more. Suffice it to say, he quite likes Swift. And coffee. (But mostly Swift.) (And coffee.)",
+              "bio_ja": "Paulは「Hacking with Swift」「Pro Swift」「Swift Design Patterns」「Testing Swift」「Swift Interview Challenges」などの著者です。簡単に言うと、Swiftが大好きです。そしてコーヒーも。（でも主にSwiftが。）（いや、コーヒーも同じくらい。）",
+              "job_title": "Creator at Hacking with Swift",
+              "links": [
+                {
+                  "url": "https://x.com/twostraws",
+                  "name": "@twostraws"
+                },
+                {
+                  "url": "https://github.com/twostraws",
+                  "name": "@twostraws"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 25,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Halordain and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Halordainさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 17,
+              "name": "Halordain",
+              "image_name": "halordain",
+              "bio": "I'm Chris, also known as Halordain! I grew up in Dallas, Texas, and attended college at Stanford. I majored in electrical engineering with a specialization in image processing. I started studying Japanese to scout my opponents from Japan at the Pokémon World Championships, where my quarterfinals and semifinals opponents hailed from Yokosuka and Fujisawa, respectively.\n\nMy journey led me to Doshisha University to master Japanese under the Critical Language Scholarship. I abandoned my PhD at MIT CSAIL to pursue software development in Japan. Originally hired at Creatures Japan to process images for Pokémon cards, I ended up learning Objective-C to develop my first iPad app, [Pokédex for iOS (Creatures, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/).\n\nAfter Creatures, I contracted with Bandai-Namco Studios to build the graphics engine behind [Super Smash Bros. for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/). I parlayed my rendering knowledge in computer graphics, my image processing background, and my interest in iOS development into developing iOS Photoshop for Adobe, and eventually joined Apple to document their new graphics technologies such as Metal, ARKit, CreateML, and RealityKit.\n\nI returned to Japan to help spearhead Nintendo of Japan's smartphone game design, starting with Fire Emblem Heroes and [Pikmin Bloom](https://pikminbloom.com/ja/). These development experiences led me to craft my own path creating educational apps and experiences for teaching Japanese kids about AI and Swift.",
+              "bio_ja": "こんにちは！Chris（Halordain）です！\nテキサス州ダラスで育ち、スタンフォード大学で電気工学（画像処理専攻）を学びました。ポケモン世界大会で日本の対戦相手をリサーチするために日本語の勉強を始め、準々決勝・準決勝では横須賀と藤沢出身のプレイヤーと対戦しました。\n\nその後、Critical Language Scholarshipを活用し、日本語を習得するために同志社大学へ留学。MIT CSAILの博士課程を辞め、日本でソフトウェア開発の道を選びました。\n最初の仕事はクリーチャーズでポケモンカードの画像処理を担当することでした。そこでは、Objective-Cを学び、初のiPadアプリ [ポケモン図鑑 for iOS (クリーチャーズ, 2012)](https://www.pokemon.co.jp/ex/pokedex/ja/) を開発しました。\n\nその後、バンダイナムコスタジオで [大乱闘スマッシュブラザーズ for 3DS](https://www.smashbros.com/wiiu-3ds/us/3ds/) のグラフィックスエンジンの開発に携わり、コンピュータグラフィックスと画像処理の知識を活かしてAdobeでiOS向けPhotoshopの開発を担当しました。さらに、AppleではMetal・ARKit・CreateML・RealityKitなどの新しいグラフィック技術のドキュメント作成を担当しました。\n\n日本に戻った後は任天堂のスマートフォンゲーム開発に携わり、「ファイアーエムブレム ヒーローズ」や [ピクミン ブルーム](https://pikminbloom.com/ja/) の開発を支援。現在は、AIやSwiftを子どもたちに教える教育アプリを開発しています。",
+              "job_title": "CEO @ Honmon",
+              "links": [
+                {
+                  "url": "https://www.halordain.com",
+                  "name": "halordain.com"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2025-04-09T16:40:00+09:00",
+      "sessions": [
+        {
+          "id": 33,
+          "title": "Swift Programming in Japanese",
+          "title_ja": "日本語でのSwiftプログラミング",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "In Swift, you can define identifiers not only in English but also in various natural languages.\n\nRecently, I released a Shogi app for all Apple platforms, including Apple Vision Pro. In this app, I wrote almost all identifiers in Japanese—except for reserved words and imported frameworks.\n\nIn this talk, I'll share insights from my experience with Swift programming using Japanese identifiers.",
+          "description_ja": "Swiftでは英語だけでなく様々な自然言語で識別子を定義することができます。\n私は最近、日本の伝統的ボードゲーム「将棋」のアプリをApple Vision Pro含む全てのAppleプラットフォーム向けにリリースしました。\nこのアプリでは「予約語」や「インポートしたフレームワーク」を除いたほぼ全ての識別子を日本語で書きました。\n今回は「日本語識別子Swiftプログラミング」の知見を紹介します。",
+          "speakers": [
+            {
+              "id": 23,
+              "name": "Ryo Yamashita",
+              "image_name": "ryo_yamashita",
+              "bio": "I'm an Individual developer.\n\nI've released a variety of apps for Apple platforms.\niOS & iPadOS: 7 apps\nvisionOS: 5 apps\nwatchOS: 5 apps\ntvOS: 1 app\nmacOS: 3 apps\n\nPortfolio link \n[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)",
+              "bio_ja": "個人開発者として、Appleプラットフォーム向けにさまざまなアプリをリリースしています。\niOS & iPadOS アプリ：7\nvisionOS アプリ：5\nwatchOS アプリ：5\ntvOS アプリ：1\nmacOS アプリ：3\n\nポートフォリオ：\n[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)",
+              "job_title": "Solo Developer for iOS, watchOS, macOS, and visionOS",
+              "links": [
+                {
+                  "url": "https://github.com/FlipByBlink",
+                  "name": "@FlipByBlink"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 31,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Paul Hudson and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Paul Hudsonさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 21,
+              "name": "Paul Hudson",
+              "image_name": "paul_hudson",
+              "bio": "Paul is the author of Hacking with Swift, Pro Swift, Swift Design Patterns, Testing Swift, Swift Interview Challenges, and more. Suffice it to say, he quite likes Swift. And coffee. (But mostly Swift.) (And coffee.)",
+              "bio_ja": "Paulは「Hacking with Swift」「Pro Swift」「Swift Design Patterns」「Testing Swift」「Swift Interview Challenges」などの著者です。簡単に言うと、Swiftが大好きです。そしてコーヒーも。（でも主にSwiftが。）（いや、コーヒーも同じくらい。）",
+              "job_title": "Creator at Hacking with Swift",
+              "links": [
+                {
+                  "url": "https://x.com/twostraws",
+                  "name": "@twostraws"
+                },
+                {
+                  "url": "https://github.com/twostraws",
+                  "name": "@twostraws"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2025-04-09T17:05:00+09:00",
+      "sessions": [
+        {
+          "id": 37,
+          "title": "Break",
+          "title_ja": "休憩",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "summary": "Take a break and meet other attendees or sponsors",
+          "summary_ja": "休憩して他の参加者やスポンサーと交流しましょう"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2025-04-09T17:35:00+09:00",
+      "sessions": [
+        {
+          "id": 39,
+          "title": "Understanding HDR",
+          "title_ja": "HDRを理解する",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "High Dynamic Range imaging has the potential to change way we look at images in a way comparable to the move from HDTV change how we viewed television. This talk dives into the concept of dynamic range, how it is supported on Apple platforms, and quirks you'll run into that aren't covered in the documentation.",
+          "description_ja": "ハイダイナミックレンジ（HDR）イメージングは、テレビの視聴方法を変えたHDTVへの移行に匹敵するほど、私たちの画像の見方を一変させる可能性を秘めています。本トークでは、ダイナミックレンジの概念、Appleプラットフォームにおけるサポート方法、そしてドキュメントでは触れられていない特有の問題点について掘り下げます。",
+          "speakers": [
+            {
+              "id": 27,
+              "name": "Benjamin Sandofsky",
+              "image_name": "benjamin_sandofsky",
+              "bio": "Escaped big-tech to build photography and video apps. Credits: Halide, Kino and Spectre.",
+              "bio_ja": "大手テック企業を離れ、写真や動画アプリの開発に専念。代表作：Halide、Kino、Spectre。",
+              "job_title": "Co-founder / engineer at Lux Optics",
+              "links": [
+                {
+                  "url": "https://sandofsky.com",
+                  "name": "sandofsky.com"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 35,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Ryo Yamashita and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Ryo Yamashitaさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 23,
+              "name": "Ryo Yamashita",
+              "image_name": "ryo_yamashita",
+              "bio": "I'm an Individual developer.\n\nI've released a variety of apps for Apple platforms.\niOS & iPadOS: 7 apps\nvisionOS: 5 apps\nwatchOS: 5 apps\ntvOS: 1 app\nmacOS: 3 apps\n\nPortfolio link \n[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)",
+              "bio_ja": "個人開発者として、Appleプラットフォーム向けにさまざまなアプリをリリースしています。\niOS & iPadOS アプリ：7\nvisionOS アプリ：5\nwatchOS アプリ：5\ntvOS アプリ：1\nmacOS アプリ：3\n\nポートフォリオ：\n[flipbyblink.github.io/Portfolio](https://flipbyblink.github.io/Portfolio/)",
+              "job_title": "Solo Developer for iOS, watchOS, macOS, and visionOS",
+              "links": [
+                {
+                  "url": "https://github.com/FlipByBlink",
+                  "name": "@FlipByBlink"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2025-04-09T18:00:00+09:00",
+      "sessions": [
+        {
+          "id": 43,
+          "title": "⚡️ What I Did to Shut Down a Personally Developed App with Over 400K Downloads",
+          "title_ja": "⚡️ 40万以上DLされた個人開発アプリをサービス終了するためにしたこと",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "I decided to shut down my personally developed app, WebCollector, which had over 400K downloads. In this talk, I'll share the steps I took to ensure a smooth closure.\n\nRather than simply shutting down the service, I took measures to help users properly save their data, provided clear announcements, and disclosed the process to close the app gradually.\n\nI'll also reflect on the importance of planning for app closure when running a Firebase-powered personal project.",
+          "description_ja": "40万以上DLされた個人開発アプリ「WebCollector」を終了すると決めたので、そのために実施したことについてお話しします。\n単にサービスを停止するのではなく、ユーザーがデータを適切に保存できるよう配慮したり、お知らせを掲載し、プロセスを開示することで段階的にクローズするように配慮しました。\nFirebaseを活用した個人開発アプリの運営において、クローズを意識する重要性を考えさせられた経験についてもお話しします。",
+          "speakers": [
+            {
+              "id": 29,
+              "name": "Kazuya Ueoka",
+              "image_name": "fromkk",
+              "bio": "iOS app developer, creating personal projects like #Type, Quiz Match, and more.\nLiving in Tokorozawa, Saitama, in a renovated pre-owned apartment with my wife and two cats.\nPhotography enthusiast, traveling across Japan as a photographer for Japan-\\\\(region).swift.",
+              "bio_ja": "iOSアプリを作る仕事をしています。個人アプリとして#Type、Quiz Matchなどを開発しています。\n埼玉県所沢市で中古マンションを購入。リノベーションして2匹の猫、そして妻と住んでいます。\n趣味はカメラで、Japan-\\\\(region).swiftではカメラマンとして各地に飛んだりしています。",
+              "job_title": "iOS Developer",
+              "links": [
+                {
+                  "url": "https://fromkk.me/",
+                  "name": "fromkk.me"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 41,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Benjamin and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Benjaminさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 27,
+              "name": "Benjamin Sandofsky",
+              "image_name": "benjamin_sandofsky",
+              "bio": "Escaped big-tech to build photography and video apps. Credits: Halide, Kino and Spectre.",
+              "bio_ja": "大手テック企業を離れ、写真や動画アプリの開発に専念。代表作：Halide、Kino、Spectre。",
+              "job_title": "Co-founder / engineer at Lux Optics",
+              "links": [
+                {
+                  "url": "https://sandofsky.com",
+                  "name": "sandofsky.com"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2025-04-09T18:10:00+09:00",
+      "sessions": [
+        {
+          "id": 45,
+          "title": "Searching for Aliens",
+          "title_ja": "宇宙人を探して",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "The Drake Equation, used by astrophysicists to estimate the number of alien civilizations we can communicate with, has many unexpected lessons for our work of building apps. A takeaway from this equation is the huge number of stars in the universe, which implies a high probability that some of them harbor life. This talk will dive into the details of the equation and then apply it to iOS. Just as the number of stars provide a powerful scale factor, there are technical factors of your app that can multiply your impact. We'll derive a new equation to calculate the carbon footprint of an app, look at iOS memory management to speed up every CPU instruction, and calculate how to reduce bugs all using lessons from the Drake Equation. I will also discuss my own experience building a startup and how I think about the implications of these scale factors when designing developer tools that many large apps will use.",
+          "description_ja": "天体物理学者が我々と通信可能なエイリアン文明の数を推定するために用いるドレイク方程式は、アプリ開発においても予想外の教訓を提供してくれます。\nこの方程式が示す一つのポイントは、宇宙に存在する膨大な数の星々が、いずれかに生命を宿している可能性を示唆していることです。\n\nこのトークでは、まず方程式の詳細に踏み込み、その後iOSへの応用方法について解説します。\n星の数が強力なスケールファクターを提供するのと同様に、あなたのアプリにも影響力を増幅させる技術的要因が存在します。\nドレイク方程式の教訓を応用して、アプリのカーボンフットプリントを計算する新たな方程式を導出し、iOSのメモリ管理を見直すことでCPU命令の実行速度を向上させ、さらにはバグを削減する方法についても検討します。\nさらに、私自身のスタートアップ構築の経験を踏まえ、多くの大規模アプリが利用する開発者向けツールを設計する際に、これらのスケール要因が持つ意味についてもお話しします。",
+          "speakers": [
+            {
+              "id": 31,
+              "name": "Noah Martin",
+              "image_name": "noah_martin",
+              "bio": "Noah is a software engineer from Los Angeles. He co-founded Emerge Tools in 2020 after spending 5 years working on Airbnb's iOS app and backend. He's passionate about mobile developer tools that reduce the complexity of apps and make them faster. Outside of building dev tools, he researches systems for machine learning as a PhD student. When he's not staring at a screen, Noah can be found in the water perfecting his strokes or on the trail working through a list of mountain peaks.",
+              "bio_ja": "Noahはロサンゼルス出身のソフトウェアエンジニアです。AirbnbでiOSアプリとバックエンドの開発に5年間携わった後、2020年にEmerge Toolsを共同設立しました。モバイルアプリの複雑さを軽減し、高速化する開発ツールに情熱を注いでいます。開発ツール作り以外では、機械学習システムの研究に取り組む博士課程の学生でもあります。画面に向かっていないときは、水中で泳ぎの技術を磨いたり、山頂リストを達成するためにトレイルを歩いたりしていることが多いです。",
+              "job_title": "Co-founder of Emerge Tools",
+              "links": [
+                {
+                  "url": "https://x.com/sond813",
+                  "name": "@sond813"
+                },
+                {
+                  "url": "https://github.com/noahsmartin",
+                  "name": "@noahsmartin"
+                },
+                {
+                  "url": "https://mastodon.social/@sond813",
+                  "name": "@sond813"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "time": "2025-04-09T18:35:00+09:00",
+      "sessions": [
+        {
+          "id": 47,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Noah and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Noahさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 31,
+              "name": "Noah Martin",
+              "image_name": "noah_martin",
+              "bio": "Noah is a software engineer from Los Angeles. He co-founded Emerge Tools in 2020 after spending 5 years working on Airbnb's iOS app and backend. He's passionate about mobile developer tools that reduce the complexity of apps and make them faster. Outside of building dev tools, he researches systems for machine learning as a PhD student. When he's not staring at a screen, Noah can be found in the water perfecting his strokes or on the trail working through a list of mountain peaks.",
+              "bio_ja": "Noahはロサンゼルス出身のソフトウェアエンジニアです。AirbnbでiOSアプリとバックエンドの開発に5年間携わった後、2020年にEmerge Toolsを共同設立しました。モバイルアプリの複雑さを軽減し、高速化する開発ツールに情熱を注いでいます。開発ツール作り以外では、機械学習システムの研究に取り組む博士課程の学生でもあります。画面に向かっていないときは、水中で泳ぎの技術を磨いたり、山頂リストを達成するためにトレイルを歩いたりしていることが多いです。",
+              "job_title": "Co-founder of Emerge Tools",
+              "links": [
+                {
+                  "url": "https://x.com/sond813",
+                  "name": "@sond813"
+                },
+                {
+                  "url": "https://github.com/noahsmartin",
+                  "name": "@noahsmartin"
+                },
+                {
+                  "url": "https://mastodon.social/@sond813",
+                  "name": "@sond813"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

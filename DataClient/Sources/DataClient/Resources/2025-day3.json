@@ -1,6 +1,7 @@
 {
   "id": 3,
   "title": "Day 3",
+  "title_ja": "３日目",
   "date": "2025-04-11T09:00:00+09:00",
   "schedules": [
     {
@@ -10,8 +11,11 @@
         {
           "id": 1,
           "title": "Registration",
+          "title_ja": "受付",
           "place": "Hall",
-          "summary": "Download Luma app and show QR code of your ticket at the reception. You will receive a name tag and a goodie bag."
+          "place_ja": "ホール",
+          "summary": "Download Luma app and show QR code of your ticket at the reception. You will receive a name tag and a goodie bag.",
+          "summary_ja": "Lumaアプリをダウンロードし、受付でチケットのQRコードを提示してください。ネームタグとお楽しみ袋がプレゼントされます。"
         }
       ]
     },
@@ -22,8 +26,11 @@
         {
           "id": 2,
           "title": "Opening",
+          "title_ja": "オープニング",
           "place": "Hall",
-          "summary": "Let's start!"
+          "place_ja": "ホール",
+          "summary": "Let's start!",
+          "summary_ja": "いよいよ始まりますよ！"
         }
       ]
     },
@@ -34,14 +41,18 @@
         {
           "id": 3,
           "title": "SwiftSyntax: for good and evil",
+          "title_ja": "SwiftSyntax: evalの力、善にも悪にも",
           "place": "Hall",
+          "place_ja": "ホール",
           "description": "SwiftSyntax is Apple's library for parsing and manipulating Swift code. It can be use for anything from formatting source code (as in swift-format) to generating it (as in Swift Macros). In this talk I'll explain how the SwiftSyntax library works - the range and limitations of its capabilities, and demonstrate some cool use cases that you might not have considered.",
+          "description_ja": "SwiftSyntaxはSwiftコードの解析と操作を行うAppleのライブラリです。ソースコードのフォーマット（swift-formatなど）から、コード生成（Swift Macrosなど）まで、様々な用途に使うことができます。このトークでは、SwiftSyntaxライブラリの仕組み、その能力の範囲と制約、そして皆さんが考えたことがないかもしれないクールなユースケースをお見せします。",
           "speakers": [
             {
               "id": 73,
               "name": "Nick Lockwood",
               "image_name": "nick_lockwood",
               "bio": "Nick is a veteran developer, author and open source aficionado, and has been developing iOS apps since the dark ages of manual memory management back in 2009. He is known for various open source projects such as SwiftFormat, Euclid, Expression and iCarousel. When Nick isn't writing parsers in (and for) Swift, he likes to tinker with 3D graphics and even sometimes fancies himself as a games developer.",
+              "bio_ja": "Nickはベテラン開発者、著者、そしてオープンソース愛好家であり、2009年の手動メモリ管理の時代からiOSアプリを開発しています。SwiftFormat、Euclid、Expression、iCarouselなど、様々なオープンソースプロジェクトで知られています。Swiftでパーサーを書いていないときは、3Dグラフィックスをいじったり、時にはゲーム開発者を気取ったりしています。",
               "job_title": "iOS Developer at Bloomberg",
               "links": [
                 {
@@ -64,15 +75,19 @@
       "sessions": [
         {
           "id": 7,
-          "title": "⚡️ Let’s Try Making Things Move with Swift!",
+          "title": "⚡️ Let's Try Making Things Move with Swift!",
+          "title_ja": "⚡️ Swiftで物を動かしてみよう!",
           "place": "Hall",
+          "place_ja": "ホール",
           "description": "Ever wondered about simulations of how weather changes or viruses spread in the air? These simulations are built with simple calculations—just addition, subtraction, multiplication, and division! In this talk, we'll use Swift to create a simple simulation and show you how easy it is!",
+          "description_ja": "天気の変化やウイルスが空気中を広がるシミュレーションについて考えたことはありますか？これらのシミュレーションは、足し算、引き算、掛け算、割り算だけのシンプルな計算で構築されています！このトークでは、Swiftを使ってシンプルなシミュレーションを作成し、いかに簡単かをお見せします！",
           "speakers": [
             {
               "id": 75,
               "name": "Ryota Motonishi",
               "image_name": "ryota_motonishi",
               "bio": "Ryota Motonishi is an iOS engineer at LY Corporation. He is working on the development of the LINE chat app. In his free time, he enjoys singing karaoke.",
+              "bio_ja": "LY CorporationのiOSエンジニアです。LINEチャットアプリの開発に携わっています。趣味はカラオケで歌うことです。",
               "job_title": "iOS Developer at LY Corporation",
               "links": []
             }
@@ -81,8 +96,11 @@
         {
           "id": 6,
           "title": "Office hour",
+          "title_ja": "Q&A",
           "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
           "summary": "Meet Nick Lockwood and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Nick Lockwoodさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
           "speakers": [
             {
               "id": 73,
@@ -100,14 +118,18 @@
         {
           "id": 9,
           "title": "SwiftUI API Design Lessons: Bridging Procedural APIs with the Declarative World",
+          "title_ja": "SwiftUI APIデザインの教訓: 手続き型APIと宣言型世界の橋渡し",
           "place": "Hall",
+          "place_ja": "ホール",
           "description": "SwiftUI APIs are inherently declarative, yet many existing Apple platform APIs are designed to be used in a procedural manner. In this session, we'll explore how to design and implement SwiftUI-friendly declarative APIs that integrate with procedural frameworks. Using AVFoundation as an example, we will build a photo and video capture app while uncovering best practices for adapting procedural APIs to the declarative paradigm of SwiftUI.",
+          "description_ja": "SwiftUI APIは本質的に宣言的ですが、既存のAppleプラットフォームAPIの多くは手続き的に使用するよう設計されています。このセッションでは、手続き型フレームワークと統合するSwiftUIフレンドリーな宣言的APIを設計・実装する方法を探ります。AVFoundationを例に、写真と動画のキャプチャアプリを構築しながら、手続き型APIをSwiftUIの宣言型パラダイムに適応させるためのベストプラクティスを明らかにします。",
           "speakers": [
             {
               "id": 77,
               "name": "Yoshimasa Niwa",
               "image_name": "yoshimasa_niwa",
               "bio": "As a software engineer, I divide my time between working on client applications, backend services, and occasionally indulging in watching cat videos and photos. I have led engineering teams and cats to deliver user-facing products with a special focus on usability, customer satisfaction, and meowing.",
+              "bio_ja": "ソフトウェアエンジニアとして、クライアントアプリケーション、バックエンドサービスの開発に従事し、時折猫の動画や写真を楽しんでいます。エンジニアリングチームと猫をリードし、ユーザビリティ、顧客満足度、そしてニャーに特に焦点を当てたユーザー向け製品を提供してきました。",
               "job_title": "Software Engineer",
               "links": [
                 {
@@ -127,8 +149,11 @@
         {
           "id": 11,
           "title": "Break",
+          "title_ja": "休憩",
           "place": "Hall",
-          "summary": "Take a break and meet other attendees or sponsors"
+          "place_ja": "ホール",
+          "summary": "Take a break and meet other attendees or sponsors",
+          "summary_ja": "休憩して他の参加者やスポンサーと交流しましょう"
         }
       ]
     },
@@ -139,14 +164,18 @@
         {
           "id": 13,
           "title": "Introduction to security research and bounty hunting on Apple's platforms",
+          "title_ja": "Appleプラットフォームにおけるセキュリティリサーチとバウンティハンティング入門",
           "place": "Hall",
+          "place_ja": "ホール",
           "description": "The reason why I'd like to give this talk is because as someone who works as both an iOS/Mac developer and a security researcher, I've learned that there's a lot that the developer community can contribute to security research on Apple's platforms, but most developers think that it's a niche outside their area of expertise. However, most professional security researchers focus at the low level where app developers don't usually have a lot of knowledge.\n\nThrough my work, I've found quite a few security bugs in Mac and iOS that could be found at the higher level, and those bugs have rewarded me with multiple bug bounty payments from Apple as well as helping improve the security of the operating systems. This talk would be a way to introduce more developers to the practice, with some examples of my past experiences, and encourage them to pursue security research as part of their career. You can read about some of my security research work on my blog.\n\nI think this fits well as both an inspirational and technical topic that's not usually covered in developer conferences.",
+          "description_ja": "私自身、iOS/Macの開発者でありながらセキュリティリサーチャーとしても活動してきた経験から、Appleプラットフォームにおけるセキュリティリサーチに、開発者コミュニティが大いに貢献できることを学びました。しかし、多くの開発者はこの分野を自分の専門外のニッチなものと捉えがちです。一方で、プロのセキュリティリサーチャーは、アプリ開発者があまり触れない低レベルの部分に注力する傾向にあります。\n\n私のこれまでの活動では、MacやiOSの上位レベルで発見可能なセキュリティ脆弱性をいくつか見つけ、その結果としてAppleから複数のバグバウンティ報奨金を得るとともに、OSのセキュリティ向上にも寄与してきました。このトークでは、私の過去の経験を交えながら、より多くの開発者がセキュリティリサーチの実践に触れるきっかけを提供し、キャリアの一環として挑戦することを後押しします。詳しい事例は私のブログでも紹介しています。\n\nこの内容は、技術的な側面とインスピレーショナルな視点の両方を兼ね備え、開発者カンファレンスではあまり取り上げられない貴重なトピックだと考えています。",
           "speakers": [
             {
               "id": 8,
               "name": "Gui Rambo",
               "image_name": "gui_rambo",
               "bio": "Gui Rambo is a Mac developer and security researcher from Brazil, known for apps such as AirBuddy and VirtualBuddy.",
+              "bio_ja": "Gui Ramboはブラジル出身のMac開発者兼セキュリティリサーチャーで、AirBuddyやVirtualBuddyなどのアプリで知られています。",
               "job_title": "Mac Developer / Security Researcher at Best Buddy Apps",
               "links": [
                 {
@@ -160,8 +189,11 @@
         {
           "id": 10,
           "title": "Office hour",
+          "title_ja": "Q&A",
           "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
           "summary": "Meet Yoshimasa Niwa and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Yoshimasa Niwaさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
           "speakers": [
             {
               "id": 77,
@@ -179,14 +211,18 @@
         {
           "id": 15,
           "title": "⚡️ Spice up your notifications",
+          "title_ja": "⚡️ 通知に彩りを加えよう",
           "place": "Hall",
+          "place_ja": "ホール",
           "description": "In short, this is a story about hacking Genmoji.\nGenmoji can now be displayed in notifications from iOS18. In this talk, we will reverse engineer Genmoji and display custom emojis in notifications.\nI'm a third-party app developer for Mastodon. \nThis talk is perfect for me.",
+          "description_ja": "簡単に言うと、これはGenmojiをハックする話です。\niOS18からGenmojiは通知に表示できるようになりました。このトークでは、Genmojiをリバースエンジニアリングし、通知にカスタム絵文字を表示する方法を紹介します。\n私はMastodonのサードパーティアプリ開発者です。\nこのトークは私にぴったりです。",
           "speakers": [
             {
               "id": 83,
               "name": "noppe",
               "image_name": "noppe",
               "bio": "iOS & visionOS app developer in Japan. Crafting 𝙫𝙚𝙖𝙧 and DAWN for mastodon. Loving #foxes.\n\n[vear - Anime Avatar Camera](https://apps.apple.com/jp/app/vear-anime-avatar-camera/id1490697369?l=en-US)\n[DAWN for Mastodon](https://apps.apple.com/jp/app/dawn-for-mastodon/id1668645019?l=en-US)",
+              "bio_ja": "日本でiOS & visionOSアプリを開発しています。Mastodon向けのvearとDAWNを作っています。キツネが大好き🦊\n\n[vear - Anime Avatar Camera](https://apps.apple.com/jp/app/vear-anime-avatar-camera/id1490697369?l=en-US)\n[DAWN for Mastodon](https://apps.apple.com/jp/app/dawn-for-mastodon/id1668645019?l=en-US)",
               "job_title": "iOS Engineer at DeNA Co., Ltd.",
               "links": [
                 {
@@ -200,8 +236,11 @@
         {
           "id": 14,
           "title": "Office hour",
+          "title_ja": "Q&A",
           "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
           "summary": "Meet Gui Rambo and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Gui Ramboさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
           "speakers": [
             {
               "id": 8,
@@ -219,14 +258,18 @@
         {
           "id": 17,
           "title": "Build your own Swift Regex: A Gentle Introduction to Swift Regex",
+          "title_ja": "作って学ぶ正規表現 -やさしいSwift Regex入門-",
           "place": "Hall",
+          "place_ja": "ホール",
           "description": "Swift's regex engine is an ambitious project aiming to be a superset that encompasses all existing regular expressions. However, as of now, many features, such as lookbehind, remain unimplemented.\n\nContributing to this project can be challenging due to the complexity of the existing codebase.\n\nIn this talk, we will implement a small regex engine in Swift, focusing on the three fundamental operations: concatenation, alternation, and repetition. We will also explore how to implement a backtracking (VM-based) approach similar to Swift's official regex engine.\n\nBy understanding this implementation, you'll take the first step toward deciphering Swift's official regex engine and contributing to its development.",
+          "description_ja": "Swiftの正規表現エンジンは、既存のすべての正規表現を包含するスーパーセットを目指す野心的なプロジェクトです。しかし現時点では、後読みなど多くの機能が未実装のままです。\n\n既存コードベースの複雑さから、このプロジェクトへの貢献は難しい場合があります。\n\nこのトークでは、連結、選択、繰り返しの3つの基本操作に焦点を当て、Swiftで小さな正規表現エンジンを実装します。また、Swiftの公式正規表現エンジンと同様のバックトラッキング（VMベース）アプローチを実装する方法も探ります。\n\nこの実装を理解することで、Swiftの公式正規表現エンジンを解読し、その開発に貢献するための第一歩を踏み出すことができるでしょう。",
           "speakers": [
             {
               "id": 15,
               "name": "kishikawa katsumi",
               "image_name": "kishikawa_katsumi",
               "bio": "Katsumi has been developing software for the Apple platform for over 10 years and currently works for a company that develops low-code platforms. He works on automating all kinds of tasks. In his spare time, he builds and maintains various open source projects that improve developer productivity.",
+              "bio_ja": "Appleプラットフォーム向けソフトウェア開発を10年以上続けており、現在はローコードプラットフォームを開発する会社で働いています。あらゆる種類のタスクの自動化に取り組んでいます。余暇には、開発者の生産性を向上させるさまざまなオープンソースプロジェクトを構築・メンテナンスしています。",
               "job_title": "Software Engineer",
               "links": [
                 {
@@ -246,14 +289,20 @@
         {
           "id": 19,
           "title": "Lunch",
+          "title_ja": "昼食",
           "place": "Hall",
-          "summary": "Take a lunch box and meet other attendees or sponsors."
+          "place_ja": "ホール",
+          "summary": "Take a lunch box and meet other attendees or sponsors.",
+          "summary_ja": "お弁当を持って、他の参加者やスポンサーと交流しましょう。"
         },
         {
           "id": 18,
           "title": "Office hour",
+          "title_ja": "Q&A",
           "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
           "summary": "Meet Kishikawa Katsumi and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Kishikawa Katsumiさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
           "speakers": [
             {
               "id": 85,
@@ -271,14 +320,18 @@
         {
           "id": 23,
           "title": "Foreign Function and Memory APIs and Swift/Java interoperability",
+          "title_ja": "Foreign FunctionとMemory APIとSwift/Java相互運用性",
           "place": "Hall",
+          "place_ja": "ホール",
           "description": "Swift is a fantastic general purpose language, which can and has been successfully used beyond its mobile origins, from embedded through server-side systems. One of Swift's unique strengths is its powerful native language interoperability with C and C++. Recently, the Swift project started work on integrating improved Swift/Java interoperability with the use of both JNI and the new Foreign Function and Memory APIs introduced in JDK22. In this talk we'll deep dive into the deep integration approach taken between the language runtimes using the FMM APIs and their unique strengths but also challenges.",
+          "description_ja": "Swiftは素晴らしい汎用言語であり、モバイルの起源を超えて、組み込みからサーバーサイドシステムまで幅広く成功裏に使用されています。Swiftのユニークな強みの一つは、CおよびC++との強力なネイティブ言語相互運用性です。最近、SwiftプロジェクトはJNIとJDK22で導入された新しいForeign Function and Memory APIの両方を使用して、Swift/Java相互運用性の改善に取り組み始めました。このトークでは、FMM APIを使用した言語ランタイム間の深い統合アプローチと、そのユニークな強みと課題について深く掘り下げます。",
           "speakers": [
             {
               "id": 1,
               "name": "Konrad 'ktoso' Malawski",
               "image_name": "konrad_ktoso_malawski",
-              "bio": "Konrad works in the Swift language team at Apple, where he focuses on concurrency and distributed modules of the language, and server-side focused libraries. He was part of the design and implementation of Swift’s structured concurrency and actor model, as well as the distributed actors language feature and cluster library. Currently he's focused on Swift/Java interoperability efforts. Previously, he worked on Akka at Lightbend/Typesafe, where he maintained core pieces of the ecosystem, including the clustering, event sourcing, streaming and HTTP libraries. He also is a Java Champion and made significant contributions to the reactive-streams specification and TCK which later became the foundation of the JDK’s java.util.concurrent.Flow types.",
+              "bio": "Konrad works in the Swift language team at Apple, where he focuses on concurrency and distributed modules of the language, and server-side focused libraries. He was part of the design and implementation of Swift's structured concurrency and actor model, as well as the distributed actors language feature and cluster library. Currently he's focused on Swift/Java interoperability efforts. Previously, he worked on Akka at Lightbend/Typesafe, where he maintained core pieces of the ecosystem, including the clustering, event sourcing, streaming and HTTP libraries. He also is a Java Champion and made significant contributions to the reactive-streams specification and TCK which later became the foundation of the JDK's java.util.concurrent.Flow types.",
+              "bio_ja": "KonradはAppleのSwift言語チームで働いており、言語の並行処理モジュール、分散モジュール、およびサーバーサイド向けライブラリに注力しています。Swiftの構造化並行処理とアクターモデルの設計と実装、そして分散アクターの言語機能とクラスターライブラリに携わりました。現在はSwift/Java相互運用性の取り組みに集中しています。以前はLightbend/TypesafeでAkkaに取り組み、クラスタリング、イベントソーシング、ストリーミング、HTTPライブラリなどのエコシステムのコア部分をメンテナンスしていました。また、Java Championであり、後にJDKのjava.util.concurrent.Flowタイプの基盤となったreactive-streams仕様とTCKに大きく貢献しました。",
               "job_title": "Swift Language Team",
               "links": [
                 {
@@ -306,14 +359,18 @@
         {
           "id": 25,
           "title": "Unlock the Potential of Swift Code Generation",
+          "title_ja": "Swiftコード生成の可能性を解き放て",
           "place": "Hall",
+          "place_ja": "ホール",
           "description": "Java's annotation processing leverages developer productivity by compile-time code generation. Swift can now replicate that innovation with Swift Macros and Swift Syntax. Learn how to express annotation-like features in Swift, automate code, and boost productivity. Let's unlock Swift's potential!",
+          "description_ja": "Javaのアノテーション処理は、コンパイル時のコード生成によって開発者の生産性を向上させます。Swiftも今やSwift MacrosとSwift Syntaxでその革新を再現できるようになりました。Swiftでアノテーションのような機能を表現し、コードを自動化し、生産性を向上させる方法を学びましょう。Swiftの可能性を解き放ちましょう！",
           "speakers": [
             {
               "id": 93,
               "name": "rockname",
               "image_name": "rockname",
               "bio": "I'm an iOS and Android app developer working on a banking and card payment service at SmartBank.",
+              "bio_ja": "SmartBankで銀行・カード決済サービスのiOS/Androidアプリ開発をしています。",
               "job_title": "Mobile Application Developer at SmartBank, Inc.",
               "links": []
             }
@@ -322,8 +379,11 @@
         {
           "id": 24,
           "title": "Office hour",
+          "title_ja": "Q&A",
           "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
           "summary": "Meet Konrad Malawski and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Konrad Malawskiさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
           "speakers": [
             {
               "id": 1,
@@ -341,8 +401,11 @@
         {
           "id": 27,
           "title": "Break",
+          "title_ja": "休憩",
           "place": "Hall",
-          "summary": "Take a break and meet other attendees or sponsors"
+          "place_ja": "ホール",
+          "summary": "Take a break and meet other attendees or sponsors",
+          "summary_ja": "休憩して他の参加者やスポンサーと交流しましょう"
         }
       ]
     },
@@ -353,14 +416,18 @@
         {
           "id": 29,
           "title": "Understanding Render Loop to optimise SwiftUI",
+          "title_ja": "SwiftUI を最適化するためのレンダーループの理解",
           "place": "Hall",
-          "description": "Curious about how SwiftUI really works under the hood? Join me as we explore the render loop and its impact on performance! We’ll break down the rendering process and uncover techniques to optimise your views and eliminate lag. You’ll walk away with a solid understanding of rendering mechanics that will elevate your interface development skills.",
+          "place_ja": "ホール",
+          "description": "Curious about how SwiftUI really works under the hood? Join me as we explore the render loop and its impact on performance! We'll break down the rendering process and uncover techniques to optimise your views and eliminate lag. You'll walk away with a solid understanding of rendering mechanics that will elevate your interface development skills.",
+          "description_ja": "SwiftUIが内部でどのように動作しているか気になりませんか？レンダーループとそのパフォーマンスへの影響を一緒に探りましょう！レンダリングプロセスを分解し、ビューを最適化してラグを解消するテクニックを明らかにします。インターフェース開発スキルを向上させる、レンダリングメカニズムの確かな理解を得ることができるでしょう。",
           "speakers": [
             {
               "id": 97,
               "name": "Pradnya Nikam",
               "image_name": "pradnya_nikam",
               "bio": "With over 12 years of experience developing for Apple platforms, I am passionate about creating exceptional user experiences. I have a strong background in UIKit, and these days, I primarily focus on coding SwiftUI views for iOS and tvOS apps. I currently work at Rakuten Viki, a video streaming company with over a million active users per day.\n\nI absolutely love attending conferences and public speaking, sharing my knowledge and learning from the community. Outside of work, you can find me planning my next travel adventure or running around with my 3-year-old.",
+              "bio_ja": "Appleプラットフォーム向けの開発経験が12年以上あり、優れたユーザー体験を生み出すことに情熱を注いでいます。特にUIKitに精通しており、現在は主にSwiftUIを使ってiOSやtvOSアプリのUIを開発しています。\n現在、1日あたり100万人以上のアクティブユーザーを抱える動画ストリーミング企業Rakuten Vikiに勤務しています。\n\nカンファレンスへの参加や登壇が大好きで、知識を共有したり、コミュニティから学んだりすることに喜びを感じています。仕事以外では、次の旅行の計画を立てたり、3歳の子どもと遊んだりしています。",
               "job_title": "Senior iOS Developer at Rakuten Viki",
               "links": [
                 {
@@ -374,8 +441,11 @@
         {
           "id": 26,
           "title": "Office hour",
+          "title_ja": "Q&A",
           "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
           "summary": "Meet rockname and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "rocknameさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
           "speakers": [
             {
               "id": 93,
@@ -393,14 +463,18 @@
         {
           "id": 31,
           "title": "⚡️ EXIT 8 for SwiftUI",
+          "title_ja": "⚡️ SwiftUIの8番出口",
           "place": "Hall",
+          "place_ja": "ホール",
           "description": "\"Hmm, something looks off...\"\n\"Hmm, this interaction is broken...\"\n\nIf you've built UI with SwiftUI, you've probably encountered these issues more often than you'd like. In many cases, the solution involves wrapping UIKit to work around the problem.\n\nIn this lightning talk, I'll discuss when to use SwiftUI and when to rely on UIKit, breaking it down into eight common patterns.",
+          "description_ja": "「うーん、なんかおかしいな…」\n「うーん、このインタラクション壊れてるな…」\n\nSwiftUIでUIを構築したことがあるなら、これらの問題に何度も遭遇したことがあるでしょう。多くの場合、解決策はUIKitをラップして問題を回避することです。\n\nこのライトニングトークでは、SwiftUIを使うべき時とUIKitに頼るべき時を8つの一般的なパターンに分けて解説します。",
           "speakers": [
             {
               "id": 99,
               "name": "ojun",
               "image_name": "ojun",
               "bio": "I develop iOS apps at DeNA Co., Ltd. My native language is Swift.",
+              "bio_ja": "株式会社ディー・エヌ・エーでiOSアプリを開発しています。母国語はSwiftです。",
               "job_title": "iOS App Developer at DeNA Co., Ltd.",
               "links": []
             }
@@ -409,8 +483,11 @@
         {
           "id": 30,
           "title": "Office hour",
+          "title_ja": "Q&A",
           "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
           "summary": "Meet Pradnya Nikam and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Pradnya Nikamさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
           "speakers": [
             {
               "id": 97,
@@ -428,14 +505,18 @@
         {
           "id": 33,
           "title": "Designing Modular Data Pipeline",
+          "title_ja": "モジュラーなデータパイプライン設計",
           "place": "Hall",
+          "place_ja": "ホール",
           "description": "In this talk I'll show you how you can design your app data pipeline in a modular way, and integrate my open source tools to enable easy bug reproduction and faster development workflows.",
+          "description_ja": "このトークでは、アプリのデータパイプラインをモジュラーな方法で設計する方法と、バグの再現を容易にし、開発ワークフローを高速化するための私のオープンソースツールの統合方法を紹介します。",
           "speakers": [
             {
               "id": 3,
               "name": "Krzysztof Zablocki",
               "image_name": "krzysztof_zablocki",
               "bio": "Krzysztof is shaping the future of Apple platforms with tools adopted by 80K+ teams, from Apple to Disney. 🏆 2x Engineering Emmy winner, co-founder of Pixle, and creator of Foldify & Sourcery for Xcode.",
+              "bio_ja": "Krzysztofは、AppleからDisneyまで80K以上のチームに採用されているツールでAppleプラットフォームの未来を形作っています。🏆 エンジニアリングエミー賞を2度受賞、Pixleの共同創設者、FoldifyとSourcery for Xcodeの作者です。",
               "job_title": "Principal Swift Engineer",
               "links": [
                 {
@@ -463,7 +544,9 @@
         {
           "id": 35,
           "title": "Closing",
+          "title_ja": "クロージング",
           "place": "Hall",
+          "place_ja": "ホール",
           "summary": ""
         }
       ]
@@ -475,8 +558,11 @@
         {
           "id": 34,
           "title": "Office hour",
+          "title_ja": "Q&A",
           "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
           "summary": "Meet Krzysztof Zabłocki and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Krzysztof Zabłockiさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
           "speakers": [
             {
               "id": 101,

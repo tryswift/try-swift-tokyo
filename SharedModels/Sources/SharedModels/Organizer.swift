@@ -5,6 +5,7 @@ public struct Organizer: Codable, Equatable, Hashable, Sendable, Identifiable {
   public var name: String
   public var imageName: String
   public var bio: String
+  public var bioJa: String?
   public var links: [Link]?
 
   public struct Link: Codable, Equatable, Hashable, Sendable {
@@ -17,11 +18,19 @@ public struct Organizer: Codable, Equatable, Hashable, Sendable, Identifiable {
     }
   }
 
-  public init(id: Int, name: String, imageName: String, bio: String, links: [Link]? = nil) {
+  public init(
+    id: Int,
+    name: String,
+    imageName: String,
+    bio: String,
+    bioJa: String? = nil,
+    links: [Link]? = nil
+  ) {
     self.id = id
     self.name = name
     self.imageName = imageName
     self.bio = bio
+    self.bioJa = bioJa
     self.links = links
   }
 }

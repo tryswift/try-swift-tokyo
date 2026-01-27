@@ -14,9 +14,6 @@ let package = Package(
       name: "GuidanceFeature",
       targets: ["GuidanceFeature"]),
     .library(
-      name: "DataClient",
-      targets: ["DataClient"]),
-    .library(
       name: "ScheduleFeature",
       targets: ["ScheduleFeature"]),
     .library(
@@ -28,6 +25,7 @@ let package = Package(
     .package(url: "https://github.com/maiyama18/LicensesPlugin", from: "0.2.0"),
     .package(url: "https://github.com/flitto/rtt_sdk", branch: "0.1.5"),
     .package(name: "SharedModels", path: "../SharedModels"),
+    .package(name: "DataClient", path: "../DataClient"),
   ],
   targets: [
     .target(
@@ -44,16 +42,6 @@ let package = Package(
       name: "BuildConfig",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
-      ]
-    ),
-    .target(
-      name: "DataClient",
-      dependencies: [
-        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        .product(name: "SharedModels", package: "SharedModels"),
-      ],
-      resources: [
-        .process("Resources")
       ]
     ),
     .target(
@@ -88,7 +76,7 @@ let package = Package(
     .target(
       name: "ScheduleFeature",
       dependencies: [
-        "DataClient",
+        .product(name: "DataClient", package: "DataClient"),
         "DependencyExtra",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
       ]
@@ -96,7 +84,7 @@ let package = Package(
     .target(
       name: "SponsorFeature",
       dependencies: [
-        "DataClient",
+        .product(name: "DataClient", package: "DataClient"),
         "DependencyExtra",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
       ]
@@ -104,7 +92,7 @@ let package = Package(
     .target(
       name: "trySwiftFeature",
       dependencies: [
-        "DataClient",
+        .product(name: "DataClient", package: "DataClient"),
         "DependencyExtra",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
       ],

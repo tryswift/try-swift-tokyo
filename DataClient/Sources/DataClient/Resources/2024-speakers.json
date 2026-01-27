@@ -1,0 +1,255 @@
+[
+  {
+    "name": "usagimaru",
+    "image_name": "usagimaru",
+    "bio": "He was fascinated by the smooth and beautiful UI of Mac OS X and started working with Cocoa to create it by himself. After working as a commercial iOS developer, he now works as a software designer and architect, aiming to create beautiful software with smooth UI. He is also a member of 'macOS native' community organizers.",
+    "links": [
+      {
+        "url": "https://twitter.com/usagimaruma",
+        "name": "@usagimaruma"
+      }
+    ]
+  },
+  {
+    "name": "Xingyu Wang",
+    "image_name": "Xingyu Wang",
+    "bio": "Xiangyu works at Duolingo and belongs to Max Immersion team, which develops the GPT-based subscription feature called Roleplay. She develops new improvements and features for Roleplay, mostly on iOS.\nApart from being a full-stack software developer, She enjoys most of my time playing the piano and reading.\nShe loves learning languages. She speaks Chinese and English fluently and is learning French.",
+    "links": [
+      {
+        "url": "https://twitter.com/rubyxw3",
+        "name": "@rubyxy3"
+      }
+    ]
+  },
+  {
+    "name": "S_Shimotori",
+    "image_name": "SHIMOTORI Shigure",
+    "bio": "S_Shimotori is an iOS application engineer. After work, I prepare for conferences, and on my days off, I enjoy playing games and eating out.",
+    "links": [
+      {
+        "url": "https://twitter.com/S_Shimotori_pub",
+        "name": "@S_Shimotori_pub"
+      }
+    ]
+  },
+  {
+    "name": "Saleem Abdulrasool",
+    "image_name": "Saleem Abdulrasool",
+    "bio": "Saleem is currently a Software Engineer at The Browser Company and a member of the Swift core team. He has worked at Google, Facebook, and Microsoft in the past. His interests lie in systems, and has worked on compilers and programming languages for over a decade, with some embedded systems thrown in. While currently focused on cross-platform Swift, primarily on Windows, he has ported Swift to Android and Windows amongst other environments.",
+    "links": [
+      {
+        "url": "https://twitter.com/compnerd",
+        "name": "@compnerd"
+      }
+    ]
+  },
+  {
+    "name": "Lil Ossa",
+    "image_name": "Lil Ossa",
+    "bio": "Osama is an iOS engineer at Classmethod in Japan, and He's also a breakdancer who came in second place at the World Breakdancing Championship in Germany in 2007. In the world, He often go by the name 'Lil Ossa'. He has a passion for both beer and dance, as well as creating iOS apps. He loves sharing his unique iOS development experiences at conferences, including Swiftable 2023 and iOSDC Japan 2022.",
+    "links": [
+      {
+        "url": "https://twitter.com/littleossa",
+        "name": "@littleossa"
+      }
+    ]
+  },
+  {
+    "name": "Satoshi Hattori",
+    "image_name": "satoshi_hattori",
+    "bio": "Satoshi is a software engineer living in Tokyo, Japan.\nHe works for CyberAgent in a photography studio that enables virtual production.\nHe is also working on 'the visionOS 30 Days Development Challenge' and a virtual camera implementation, and uploading the results to GitHub.\nHe loves ARKit and has recently pursued visionOS development and looks forward to a society where Vision Pro is widely used.",
+    "links": [
+      {
+        "url": "https://twitter.com/shmdevelop",
+        "name": "@shmdevelop"
+      }
+    ]
+  },
+  {
+    "name": "Paul Hudson",
+    "image_name": "paul_hudson",
+    "bio": "Paul is the author of Hacking with Swift, Pro Swift, Swift Design Patterns, Testing Swift, Swift Coding Challenges, and more. Suffice it to say, he quite likes Swift. And coffee. (But mostly Swift.) (And coffee.)",
+    "links": [
+      {
+        "url": "https://twitter.com/twostraws",
+        "name": "@twostraws"
+      }
+    ]
+  },
+  {
+    "name": "Kazuhiro Kamakura",
+    "image_name": "Kazuhiro Kamakura",
+    "bio": "Kazuhiro Kamakura works at LY corporation. He loves not only programming but also making things in general. In his spare time, he remodels houses.",
+    "links": [
+      {
+        "url": "https://twitter.com/yoyokkTT",
+        "name": "@yoyokkTT"
+      }
+    ]
+  },
+  {
+    "name": "Tim Condon",
+    "image_name": "Tim Condon",
+    "bio": "Tim is a Swift developer from Manchester, UK and part of the Vapor Core Team. He's part of the server-side Swift team at Kodeco and has written the unofficial-official book on Vapor with the founders of the framework. He founded Broken Hands a few years ago and delivers talks and workshops on Vapor and server-side Swift around the world. He also co-organises the ServerSide.swift conference - the world's first and only conference focused on server-side Swift.",
+    "links": [
+      {
+        "url": "https://hachyderm.io/@0xTim",
+        "name": "@0xTim"
+      }
+    ]
+  },
+  {
+    "name": "Brandon Williams",
+    "image_name": "Brandon Williams",
+    "bio": "Brandon spent a long time doing mathematics, but now likes to teach programming with a nod towards math. He co-hosts a video series called Point-Free, which focuses on the Swift language and how to best make use of its type system and features.",
+    "links": [
+      {
+        "url": "https://twitter.com/mbrandonw",
+        "name": "@mbrandonw"
+      }
+    ]
+  },
+  {
+    "name": "Stephen Celis",
+    "image_name": "Stephen Celis",
+    "bio": "Stephen entered tech by way of a liberal arts degree. He now works on Point-Free with Brandon Williams, where he tries to spread the word of testable, composable app development.",
+    "links": [
+      {
+        "url": "https://github.com/stephencelis",
+        "name": "@stephencelis"
+      }
+    ]
+  },
+  {
+    "name": "Akimu Hirai",
+    "image_name": "Akimu Hirai",
+    "bio": "Akimu is an iOS software developer at LY Corporation. He is working on the chat related features of LINE app. In his free time, he is a developer of simutrans OTRP, a Japanese fork of Simutrans, an open source transport simulator written in C++. He is a scholarship winner of WWDC18 from Japan.",
+    "links": [
+      {
+        "url": "https://twitter.com/himeshi_tech",
+        "name": "@himeshi_tech"
+      }
+    ]
+  },
+  {
+    "name": "Emad Ghorbaninia",
+    "image_name": "Emad",
+    "bio": "Emad is a Mobile Lead and Solution Architect at Visma Acubiz in Denmark and he is always eager to learn new topics. When he's not in front of a computer he is usually playing board games",
+    "links": [
+      {
+        "url": "https://twitter.com/emadgnia",
+        "name": "@emadgnia"
+      }
+    ]
+  },
+  {
+    "name": "Marcin Krzyżanowski",
+    "image_name": "Marcin Kryzyzanowski",
+    "bio": "Marcin is a developer with extensive experience. He currently works at Judo.app, where he is building an interface builder for SwiftUI. Marcin has published numerous iOS/macOS libraries and tools, including CryptoSwift, ObjectivePGP, and the Online Swift Playground, which allows for interactive Swift code execution from a web browser. He is currently on a mission to ship SwiftStudio.app, an independent third-party IDE for Swift.",
+    "links": [
+      {
+        "url": "https://x.com/krzyzanowskim",
+        "name": "@krzyzanowskim"
+      }
+    ]
+  },
+  {
+    "name": "Audrey Zebaze",
+    "image_name": "Audrey",
+    "bio": "Audrey discovered iOS when she first bought an iPhone Edge in 2008. Since then, she is working passionately on Apple platforms, enjoying SwiftUI and even CoreData while building the macOS Proton Drive app. When she is not coding, watching/playing basketball and football are her favorite activities.\nAs a huge movie addict, Audrey is avoiding trailers as much as possible.",
+    "links": [
+      {
+        "url": "https://twitter.com/Mvpohhhdrey",
+        "name": "@Mvpohhhdrey"
+      }
+    ]
+  },
+  {
+    "name": "Kishikawa katsumi",
+    "image_name": "kishikawa_katsumi",
+    "bio": "Katsumi has been developing software for the Apple platform for over 10 years and currently works for a company that develops low-code platforms. He works on automating all kinds of tasks. In his spare time, he builds and maintains various open source projects that improve developer productivity.",
+    "links": [
+      {
+        "url": "https://x.com/k_katsumi",
+        "name": "@k_katsumi"
+      }
+    ]
+  },
+  {
+    "name": "Yunosuke Sakai",
+    "image_name": "Yunosuke Sakai",
+    "bio": "I love beautiful movies, novels, photography and mobile apps!",
+    "links": [
+      {
+        "url": "https://twitter.com/_ski_u",
+        "name": "@_ski_u"
+      }
+    ]
+  },
+  {
+    "name": "omochimetaru",
+    "image_name": "omochimetaru",
+    "bio": "He has been passionate about programming since his childhood and has experience in various programming languages. Ever since discovering Swift, he has been extremely enthusiastic about it. He particularly enjoys writing code that utilizes type systems.\nAs he believes Swift has applications beyond just iOS apps, he also uses Swift on the server side for his regular work. He considers the major appeal of server-side work to be the ability to utilize the latest language features without having to wait for end-users to upgrade their devices.\nHe is deeply interested in Swift as a language and has read almost all of the Swift Evolution proposals from the draft stage. He is also interested in compiler code, and regularly monitors the pull requests to the repository. For his past contributions, he has been recognized as a committer.\nHe runs a study group about the Swift compiler and presents about various topics. Additionally, he's managing a Discord server for discussions about Swift.",
+    "links": [
+      {
+        "url": "https://x.com/omochimetaru",
+        "name": "@omochimetaru"
+      }
+    ]
+  },
+  {
+    "name": "Chris Vasselli",
+    "image_name": "Chris Vasselli",
+    "bio": "Chris is an independent iOS app developer based out of Nara, Japan (originally from USA). Before going indie in 2018, he was a software engineer at various tech companies for about 10 years, mostly in the security space.\nChris is best known for his two apps in the area of Japanese language learning, Nihongo and Nihongo Lessons. Nihongo is a Japanese dictionary and study tool that's made for learning from the words you're encountering in real life. Nihongo Lessons is a companion app for learning Japanese, based on the work of Adam Shapiro and his Japanese Level Up learning program.\nChris loves learning languages, and loves helping people to learn languages. He's also an avid gamer, hiker, and dad to an amazing 7 year old.",
+    "links": [
+      {
+        "url": "https://twitter.com/chrisvasselli",
+        "name": "@chrisvasselli"
+      }
+    ]
+  },
+  {
+    "name": "Shogo Yoshida",
+    "image_name": "Shogo Yoshida",
+    "bio": "I like ramen.",
+    "links": [
+      {
+        "url": "https://twitter.com/shzero5",
+        "name": "@shzero5"
+      }
+    ]
+  },
+  {
+    "name": "Josh Holtz",
+    "image_name": "Josh Holtz",
+    "bio": "Software superstar. Stuttering stud. Lead maintainer of fastlane tools.",
+    "links": [
+      {
+        "url": "https://twitter.com/joshdholtz",
+        "name": "@joshdholtz"
+      }
+    ]
+  },
+  {
+    "name": "Yuta Saito",
+    "image_name": "katei",
+    "bio": "Yuta is a software engineer at Goodnotes, an open-source developer, and a graduate CS student. He has been contributing to Swift / Ruby / LLVM for WebAssembly support.",
+    "links": [
+      {
+        "url": "https://twitter.com/kateinoigakukun",
+        "name": "@kateinoigakukun"
+      }
+    ]
+  },
+  {
+    "name": "Zamzam Farzamipooya",
+    "image_name": "Zamzam",
+    "bio": "Zamzam is a tech lead with deep knowledge in AI and mobile technology, currently advancing her expertise at Veo Technologies in Copenhagen. A movie enthusiast post-work",
+    "links": [
+      {
+        "url": "https://twitter.com/zamzampooya",
+        "name": "@zamzampooya"
+      }
+    ]
+  }
+]

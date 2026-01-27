@@ -1,1146 +1,585 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "Acknowledgements": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "謝辞"
+  "sourceLanguage" : "en",
+  "strings" : {
+    "About" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "イベントについて"
           }
         }
       }
     },
-    "Akio Itaya": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "板谷 晃良"
+    "Access" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アクセス"
           }
         }
       }
     },
-    "Akkey is a serves as the CEO of AkkeyLab Co., Ltd., which operates a programming school, and works to spread the appeal of Swift.\nOn his days off, he enjoys aquariums and gardening.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "プログラミングスクールを運営するAkkeyLab株式会社のCEOを務めており、Swiftの魅力を伝える仕事をしています。\n休日は、アクアリウムやガーデニングを楽しんでいます。"
+    "Acknowledgements" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "謝辞"
           }
         }
       }
     },
-    "Code of Conduct": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "行動規範"
+    "And more...!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "さらに...!"
           }
         }
       }
     },
-    "Code of Conduct URL": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "https://tryswift.jp/code-of-conduct_en"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "https://tryswift.jp/code-of-conduct"
+    "Apr. 9th - 11th, 2025" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2025年4月9日（水） 〜 11（金）"
           }
         }
       }
     },
-    "Daiki has worked as an iOS Developer for over 10 years and met as a volunteer staff member at try! Swift Tokyo in 2017. Inspired by the international speakers and sponsors he met then, he attended his first international conference, WWDC 2017.\nIn his work, I work as a software engineer at a ministry, while also serving as a technical advisor at various startups and listed companies, and as a general incorporated association try! Swift Tokyo.\nWhen he is not working, he likes to take podcasts with friends, play RPG games, snowboard in the snowy mountains, and spend time with friends in the neighborhood.　He bought Apple Vision Pro at Honolulu on the day of release.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "iOS Developerとして10年以上働いています。ボランティアスタッフとして出会ったtry! Swift Tokyo 2017に参加したのが初めてでした。仕事では、ソフトウェアエンジニア国家公務員として働く傍ら、様々なスタートアップや上場企業の技術顧問や一般社団法人try! Swift Tokyoの理事として活動しています。仕事以外の時間は、友人とポッドキャストをしたり、RPGゲームをしたり、雪山でスノーボードをしたり、近所の友人と過ごすのが好き。Apple Vision Proを発売日にハワイで購入してきました。"
+    "Apr. 12: Tachikawa City, Tokyo, Japan<br>Apr. 13 - 14: <a href=\"#access\">TACHIKAWA STAGE GARDEN</a>" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "4/12：東京都立川市内<br>4/13〜14：<a href=\"#access\">立川ステージガーデン</a>"
           }
         }
       }
     },
-    "Hideyuki is a Swift lover and focusing to enjoy learning and playing with Swift more. He organizes Swift Fun Club which is the group where Swift lovers gather in Japan. He is also the most famous Kanpai-er(person who make a toast). He is expanding the circle of Swift lovers with Kanpai🍻": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Swift愛好会会長です。みんなでもっとSwiftを楽しめるようなネタを探してます。かんぱいやー（勉強会で乾杯をする人）としても知られていて、乾杯の力でSwift好きの輪を広めています🍻"
+    "Apr. 12th – 14th, 2026 (JST)<br><br>Apr. 12: Workshop & TBD<br>Apr. 13 - 14: Conference" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2026年4月12日（日）〜 14日（火）<br><br>4/12：ワークショップ & TBD<br>4/13〜14：カンファレンス"
           }
         }
       }
     },
-    "Hideyuki Nanashima": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "七島 偉之"
+    "Call for Proposals" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登壇募集"
           }
         }
       }
     },
-    "kazu is engineering generalist covering everything from hardware to compilers, OS, and apps. Specializing in large-scale distributed systems.\nLove good food and travel.\nHe is active tech conference organizer.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ハードウェアからコンパイラ基盤やOS、アプリケーションソフトウェアまで、エンジニアリングが大好きな何でも屋。大規模分散処理が得意。\n美味しいご飯と旅行が好き。\nカンファレンス運営を色々している。"
+    "Check updates on X" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "公式Xはこちら"
           }
         }
       }
     },
-    "Luma": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Luma"
+    "Close" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "閉じる"
           }
         }
       }
     },
-    "Luma URL": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "https://luma.com/qydkgwtf"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "https://luma.com/qydkgwtf"
+    "Code of Conduct" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "行動規範"
           }
         }
       }
     },
-    "Maru / Marina Arai": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Maru / 新井 茉里奈"
-          }
-        }
-      }
-    },
-    "Maru is about to enter her fourth year as an iOS Developer. Lately, she’s been diving into testing, and in her free time, she enjoys knitting and coffee.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "iOS Developerとして働き始めて４年目になろうとしています。最近はテストについて勉強していて、趣味は編み物やコーヒーです。"
-          }
-        }
-      }
-    },
-    "Mayama is an iOS Developer based in Hokkaido.\nShe enjoys thinking about design and User Experience (UX).\nShe is also a musician in a band. She loves cats. Her recent hobby is dancing.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "北海道在住 iOS Developer です。\nデザインやユーザー体験を考えるのが好き。バンドマンでもあります。\n猫らぶ。最近の趣味はダンス。"
-          }
-        }
-      }
-    },
-    "Meet Organizers": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "主催者のご紹介"
-          }
-        }
-      }
-    },
-    "Miharu is an iOS Developer. After graduating from the faculty of agriculture at university, she somehow started developing iOS apps.\nHer hobby is watching old movies. This year, she wants to learn English and go on a trip abroad!": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "iOS Developerです。なぜか畑違いの農学部出身です。\n趣味は古い映画を観ることです。今年は英語を学んだり、海外旅行をしたいです。"
-          }
-        }
-      }
-    },
-    "Miharu Naruse": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "成瀬 未春"
-          }
-        }
-      }
-    },
-    "Naoki is a 3rd year software engineer working in Tokyo who loves Swift.\nHe loves beer and often drinks it when he's not working.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Swiftが好きな東京で働いている3年目のソフトウェアエンジニアです。\nビールが大好きで、仕事以外でもよく飲んでいます。"
-          }
-        }
-      }
-    },
-    "Natasha is an iOS developer by day and a robot by night. She organizes the try! Swift Conference around the world (including this one!). She's currently living the digital nomad life as her alter identity: @NatashaTheNomad.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Natashaは昼はiOS開発者、夜はロボットです。彼女はtry！Swiftのファウンダーで、世界中で開催しています。現在はNatashaTheNomadとしてデジタルノマド生活を送っています。"
-          }
-        }
-      }
-    },
-    "No License Found": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No License Found"
-          }
-        }
-      }
-    },
-    "Organizers": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "主催者"
-          }
-        }
-      }
-    },
-    "Privacy Policy": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "プライバシーポリシー"
-          }
-        }
-      }
-    },
-    "Privacy Policy URL": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "https://tryswift.jp/privacy-policy_en"
+    "Code of Conduct URL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://tryswift.jp/code-of-conduct_en"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "https://tryswift.jp/privacy-policy"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://tryswift.jp/code-of-conduct"
           }
         }
       }
     },
-    "Roku is an iOS Developer. She joined try! Swift in 2019 as a volunteer staff member, and became an organizer in 2020.\nShe loves Swift community and occasionally organizes study sessions and development camps.\nShe is interested in beer, whiskey, and unique design clothes. In addition to creating apps, She also enjoy making accessories.\n\nHer lucky number is 6️⃣, which is called “Roku” in Japanese.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "iOS App Developerとして働いています。try! Swiftは2019年に当日スタッフとして参加したのがきっかけで、2020年からOrganizerとしてjoinしました。\nSwift愛好会というSwift好きのためのコミュニティも運営していて、勉強会や開発合宿の企画をすることも。\nビール・ウイスキーが好きなほか、アクセサリー作りも趣味。\n\nラッキナンバーは6️⃣"
+    "Date and time" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開催日時"
           }
         }
       }
     },
-    "Shingo is a freelance iOS Developer based in Okinawa! In addition to driving automation technologies such as test automation and CI, I have recently developed a strong interest in app development using AI and creating applications for visionOS.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "沖縄に住むフリーランスのiOS Developerです！\nテスト自動化やCIなどの自動化技術の推進のほか、最近はAIを活用したアプリ開発やvisonOS向けのアプリ開発に強い関心があります！"
+    "FAQ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "よくある質問"
           }
         }
       }
     },
-    "Shoko joined the DevRel team at LINE (now LY Corporation) in September 2019, after working as a front-end engineer at a venture company. There, she was responsible for tech branding, marketing, training, and managing technical conferences for the engineering organization. Subsequently, in March 2024, she founded THE BIGLE Inc., a company that provides support for Developer Relations, including technical PR, technical communities, and technical conferences, and became independent.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ベンチャー企業のフロントエンドエンジニアを経て、2019年9月よりLINE（現・LINEヤフー）のDevRelチームにてエンジニア組織のTech Branding、Trainingや技術カンファレンスの運営を担当。イベントやブログ、動画などを中心に社内外の技術コミュニティの盛り上げや機会づくりなど各組織のサポートに従事。その後、2024年3月よりDeveloper Relationsのサポート事業（技術広報・技術コミュニティ・技術カンファレンスの支援）を行うTHE BIGLE株式会社を立ち上げ、独立。"
-          }
-        }
-      }
-    },
-    "Shota works as an iOS developer at Cybozu. His first programming language is Swift, and he loves Swift.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "サイボウズでiOS Developerとして働いています。初めてのプログラミング言語はSwiftで、Swiftが大好きです。"
-          }
-        }
-      }
-    },
-    "Souya is mainly work on server-side development, but He enjoy participating in tech communities.\nHe hope to have fun with it.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "サーバーサイドをメインに活動していますが、技術コミュニティが好きで参加しています。\n楽しいことができればいいなと思っています。"
-          }
-        }
-      }
-    },
-    "sya-ri / Souya Ichikawa": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "sya-ri / 市川創也"
-          }
-        }
-      }
-    },
-    "Takuya has been an iOS developer for three years, after working in sales and testing. Now, I'm working on developing iOS apps with SwiftUI and GraphQL for my job. I love how iOS development is always changing. This is my first time at try! Swift Tokyo, and surprisingly, I'm part of the team too! What's more, try! Swift Tokyo happens to be on the same day my second child is expected, which has me really excited! Outside of work, my partner and I are big into Pokémon cards and hope to meet new friends this way. I can't wait to meet people from all over through Swift and have some great times together!": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "iOS Developerとしては3年目になります。前職では営業やテスターを経験し、現在ではSwiftUIとGraphQLを活用したiOSアプリ開発に携わっております。日々進化するiOS開発の世界に夢中になっています。try! Swift Tokyoは初参加で、まさかスタッフとしても携われるなんて思ってもみませんでした。今回のtry! Swift Tokyoの開催日は実は二人目の子供の出産予定日で色んな意味でドキドキしています！プライベートでは夫婦でポケモンカードゲームに熱中していて、この趣味を通じて新しい友達を作れればと思っています！Swiftを通して、世界中の人と繋がり、共有できることを楽しみにしています！！"
-          }
-        }
-      }
-    },
-    "Takuya Tominaga": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "冨永 拓弥"
-          }
-        }
-      }
-    },
-    "Tim is an iOS developer from Australia and is currently working in Tokyo.\nHe presented at try! Swift Tokyo 2016 and has been volunteering at the conference since 2018. In his free time, he loves video games, writing open source software and karaoke.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Timはオーストラリア出身のiOS Developerで、現在は東京で働いています。\n彼はtry! Swift Tokyo 2016で登壇し、2018年からOrganizerです。休日はゲームをしたり、オープンソースソフトウェアを書いたり、カラオケに行くのが好きです。"
-          }
-        }
-      }
-    },
-    "Tim Oliver": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tim Oliver"
-          }
-        }
-      }
-    },
-    "try! Swift": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "try! Swift"
-          }
-        }
-      }
-    },
-    "try! Swift Description": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "try! Swift is an international community gathering about the latest advancements in Swift Development. The event is bout bringing together talent for all around the world to collaborate and share advanced knowledge and techniques to improve Swift craftsmanship."
+    "hero-text-2024" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Developers from all over the world gather<br>for tips and tricks and the latest case studies of development using Swift.<br>Developers from all over the world will gather here.<br>Swift and to showcase our Swift knowledge and skills, and to collaborate with each other,<br>The event was held for three days from March 22 - 24, 2024!"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "try! Swiftは、Swift開発における最新の進歩に関する国際的なコミュニティです。このイベントは、Swiftの技術向上のための高度な知識や技術を共有し、コラボレーションするために、世界中の才能を集めています。"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swiftを使った開発のコツや最新の事例を求めて<br>世界中から開発者が集いました。<br>日頃のSwiftの知識やスキルを披露し、協力しあうことを目的に、<br>2024年3月22日 - 24日の３日間開催しました！"
           }
         }
       }
     },
-    "try! Swift Website": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "try! Swift Tokyo Website"
+    "hero-text-2025" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Developers from all over the world gather<br>for tips and tricks and the latest case studies of development using Swift.<br>Developers from all over the world will gather here.<br>Swift and to showcase our Swift knowledge and skills, and to collaborate with each other,<br>The event will be held for three days from April 9 - 11, 2025!"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "try! Swift Tokyo ウェブサイト"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Swiftを使った開発のコツや最新の事例を求めて<br>世界中から開発者が集います。<br>日頃のSwiftの知識やスキルを披露し、協力しあうことを目的に、<br>2025年4月9日 - 11日の３日間開催します！"
           }
         }
       }
     },
-    "uetyo is an iOS Developer for a financial app.\nHe also organizes mobile app study groups and conferences.\nHe loves Swift and has a strong interest in software testing, architecture design, and CI/CD improvements.\n\nHe loves Sushi 🍣": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "iOS Developer\n金融系アプリの開発に携わる傍ら、モバイルアプリ関連の勉強会やカンファレンスの運営にも取り組んでいます！\nSwiftが大好きで、ソフトウェアテスト、アーキテクチャ設計、CI/CDの改善に強い関心があります\n\nI love Sushi 🍣"
-          }
-        }
-      }
-    },
-    "Website URL": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "https://tryswift.jp/en"
+    "hero-text-2026" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Developers from all over the world gather<br>for tips and tricks and the latest case studies of development using Swift.<br>Developers from all over the world will gather here.<br>Swift and to showcase our Swift knowledge and skills, and to collaborate with each other,<br>The event will be held for three days from April 12 - 14, 2026!"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "https://tryswift.jp"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swiftを使った開発のコツや最新の事例を求めて<br>世界中から開発者が集います。<br>日頃のSwiftの知識やスキルを披露し、協力しあうことを目的に、<br>2026年4月12日 - 14日の３日間開催します！"
           }
         }
       }
     },
-    "Youichiro is an engineer who loves problem-solving. He has been involved in organizing try! Swift Tokyo since 2017.\nHe enjoys delicious food and drinks, and especially loves Japanese sake!": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "問題解決が好きなエンジニア。2017年からtry! Swift Tokyoの開催に携わっています。\n美味しいご飯とお酒が好きで、特に日本酒が大好きです！"
+    "Luma" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luma"
           }
         }
       }
     },
-    "yucovin": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ゆこびん"
-          }
-        }
-      }
-    },
-    "yucovin is a creator of the mascot character \"Riko\" for try! Swift.\nA designer and iOS engineer who works on products for startups and government entities. She excels in UI for products that require information design. As a bridge between design and engineering, she contributes to improving product and service quality and processes in many teams.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "try! Swiftのマスコットキャラクター「Riko」の生みの親。\nスタートアップや行政のプロダクトなどを手掛けるデザイナー、iOSエンジニア。情報設計が必要なプロダクトのUIが得意。デザインとエンジニアリングを繋げるポジションとして、多くのチームでプロダクトやサービスのクオリティー向上とプロセス改善に寄与している。"
-          }
-        }
-      }
-    },
-    "Yutaro is a software engineer who loves Swift. He has been contributing to the organization of try! Swift Tokyo since 2017.\nHe currently resides in the Kansai region and is affiliated with Hatena Co., Ltd.\n\nHis hobbies include beer 🍺, Japanese sake 🍶, games 🦑, and cats 🐈.\nHe usually enjoys programming in between taking care of his cats.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Swiftが大好きなソフトウェアエンジニア。2017年からtry! Swift Tokyoの開催に貢献しています。\n現在、関西在住で株式会社はてなに所属。\n\n趣味はビール🍺、日本酒🍶、ゲーム🦑と猫🐈。\n普段は猫の世話の合間に、プログラミングを嗜んでいます。"
-          }
-        }
-      }
-    },
-    "daiki-matsudate-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "iOS Developerとして10年以上働いています。ボランティアスタッフとして出会ったtry! Swift Tokyo 2017に参加したのが初めてでした。仕事では、ソフトウェアエンジニア国家公務員として働く傍ら、様々なスタートアップや上場企業の技術顧問や一般社団法人try! Swift Tokyoの理事として活動しています。仕事以外の時間は、友人とポッドキャストをしたり、RPGゲームをしたり、雪山でスノーボードをしたり、近所の友人と過ごすのが好き。Apple Vision Proを発売日にハワイで購入してきました。"
+    "Luma URL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://luma.com/qydkgwtf"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Daiki has worked as an iOS Developer for over 10 years and met as a volunteer staff member at try! Swift Tokyo in 2017. Inspired by the international speakers and sponsors he met then, he attended his first international conference, WWDC 2017.\nIn his work, I work as a software engineer at a ministry, while also serving as a technical advisor at various startups and listed companies, and as a general incorporated association try! Swift Tokyo.\nWhen he is not working, he likes to take podcasts with friends, play RPG games, snowboard in the snowy mountains, and spend time with friends in the neighborhood.　He bought Apple Vision Pro at Honolulu on the day of release."
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://luma.com/qydkgwtf"
           }
         }
       }
     },
-    "yoichiro-sakurai-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "興味深い問題を解決することが好きなエンジニアです。2017年からtry! Swift Tokyoに貢献しています。美味しい食事とお酒、特に日本酒が大好きです！"
+    "Meet Organizers" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主催者のご紹介"
+          }
+        }
+      }
+    },
+    "Meet the Hosts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "司会"
+          }
+        }
+      }
+    },
+    "Meet the Organizers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主催"
+          }
+        }
+      }
+    },
+    "N1, 3-3, Midori-cho, Tachikawa, Tokyo<br>190-0014" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "〒190-0014<br>東京都立川市緑町3-3 N1"
+          }
+        }
+      }
+    },
+    "No License Found" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No License Found"
+          }
+        }
+      }
+    },
+    "Organizers" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主催者"
+          }
+        }
+      }
+    },
+    "Outline" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "概要"
+          }
+        }
+      }
+    },
+    "Privacy Policy" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プライバシーポリシー"
+          }
+        }
+      }
+    },
+    "Privacy Policy URL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://tryswift.jp/privacy-policy_en"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Yoichiro is an engineer who likes to solve interesting problems. I has been contributing to try! Swift Tokyo since 2017. I love gourmet food and drinks, especially Japanese sake!"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://tryswift.jp/privacy-policy"
           }
         }
       }
     },
-    "yucovin-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "try! Swiftのマスコットキャラクター「Riko」の生みの親。\nスタートアップや行政のプロダクトなどを手掛けるデザイナー、iOSエンジニア。情報設計が必要なプロダクトのUIが得意。デザインとエンジニアリングを繋げるポジションとして、多くのチームでプロダクトやサービスのクオリティー向上とプロセス改善に寄与している。"
+    "Register" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登録"
+          }
+        }
+      }
+    },
+    "Speaker" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登壇者"
+          }
+        }
+      }
+    },
+    "Speaker Application Form" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スピーカー応募フォーム"
+          }
+        }
+      }
+    },
+    "Sponsor" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スポンサー"
+          }
+        }
+      }
+    },
+    "Suggested Nearby Accommodation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会場周辺の宿泊施設情報"
+          }
+        }
+      }
+    },
+    "3-21-3 Shibuya, Shibuya-ku, Tokyo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "東京都渋谷区渋谷3-21-3"
+          }
+        }
+      }
+    },
+    "Mar. 22nd - 24th, 2024" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2024年3月22日（金） 〜 24日（日）"
+          }
+        }
+      }
+    },
+    "Shibuya Stream Hall" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "渋谷ストリームホール"
+          }
+        }
+      }
+    },
+    "Shibuya Stream Hall<br>3-21-3 Shibuya, Shibuya-ku, Tokyo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "渋谷ストリームホール<br>東京都渋谷区渋谷3-21-3"
+          }
+        }
+      }
+    },
+    "TACHIKAWA STAGE GARDEN" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "立川ステージガーデン"
+          }
+        }
+      }
+    },
+    "TACHIKAWA STAGE GARDEN<br>N1, 3-3, Midori-cho, Tachikawa, Tokyo 190-0014" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "立川ステージガーデン<br>〒190-0014 東京都立川市緑町3-3 N1"
+          }
+        }
+      }
+    },
+    "The latest information is announced on X" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最新情報はXでお知らせしています"
+          }
+        }
+      }
+    },
+    "Tickets" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "チケット"
+          }
+        }
+      }
+    },
+    "Timetable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タイムテーブル"
+          }
+        }
+      }
+    },
+    "try! Swift" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "try! Swift"
+          }
+        }
+      }
+    },
+    "try! Swift Description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "try! Swift is an international community gathering about the latest advancements in Swift Development. The event is bout bringing together talent for all around the world to collaborate and share advanced knowledge and techniques to improve Swift craftsmanship."
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "yucovin is a designer and iOS engineer with over a decade of experience spanning multiple levels of structural designs and interface design/engineering in government and private start-up. yucovin has helped numerous teams improve their product/service quality and processes as a designer who can bridge design and development. And most importantly, she is the creator of Riko, the mascot of try! Swift!"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "try! Swiftは、Swift開発における最新の進歩に関する国際的なコミュニティです。このイベントは、Swiftの技術向上のための高度な知識や技術を共有し、コラボレーションするために、世界中の才能を集めています。"
           }
         }
       }
     },
-    "shingo-tamaki-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "沖縄に住むフリーランスのiOS Developerです！\nテスト自動化やCIなどの自動化技術の推進のほか、最近はAIを活用したアプリ開発やvisonOS向けのアプリ開発に強い関心があります！"
+    "try! Swift Website" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "try! Swift Tokyo Website"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Shingo is a freelance iOS Developer based in Okinawa! In addition to driving automation technologies such as test automation and CI, I have recently developed a strong interest in app development using AI and creating applications for visionOS."
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "try! Swift Tokyo ウェブサイト"
           }
         }
       }
     },
-    "roku-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "iOS Developerです。2019年にtry! Swiftにボランティアスタッフとして参加し、2020年にオーガナイザーになりました。\nSwiftコミュニティが大好きで、時々勉強会や開発合宿を開催しています。\nビール、ウイスキー、ユニークなデザインの服が好きです。アプリを作るだけでなく、アクセサリーを作ることも楽しんでいます。\nラッキーナンバーは6️⃣で、日本語では「ろく」と呼ばれます。"
+    "Venue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会場"
+          }
+        }
+      }
+    },
+    "Website URL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://tryswift.jp/en"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Roku is an iOS Developer. She joined try! Swift in 2019 as a volunteer staff member, and became an organizer in 2020.\nShe loves Swift community and occasionally organizes study sessions and development camps.\nShe is interested in beer, whiskey, and unique design clothes. In addition to creating apps, She also enjoy making accessories.\nHer lucky number is 6️⃣, which is called \"Roku\" in Japanese."
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://tryswift.jp"
           }
         }
       }
     },
-    "akio-itaya-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "プログラミングスクールを運営するAkkeyLab株式会社のCEOを務めており、Swiftの魅力を伝える仕事をしています。\n休日は、アクアリウムやガーデニングを楽しんでいます。"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "I am the CEO of AkkeyLab, Inc., where we run a programming school. My main role at AkkeyLab is to promote the benefits of Swift. Lately, I've been enjoying playing tennis and futsal with my colleagues from the company."
+    "Workshop Proposal Form" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ワークショップ応募フォーム"
           }
         }
       }
     },
-    "yutaro-muta-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "Swiftが大好きなソフトウェアエンジニアです。2017年からtry! Swift Tokyoに貢献しています。\n現在、関西在住で株式会社はてなに所属。\n\n趣味はビール🍺、日本酒🍶、ゲーム🦑と猫🐈。\n普段は猫の世話の合間に、プログラミングを嗜んでいます。"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Yutaro is a Software Engineer who loves Swift. He has been contributing to try! Swift Tokyo since 2017.\nCurrently, he lives in the Kansai region and works at Hatena Co., Ltd.\nHis favorite things are beer🍺 and sake🍶. Recently, he has been experimenting with the Apple Vision Pro."
-          }
-        }
-      }
-    },
-    "shoko-sato-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "ベンチャー企業のフロントエンドエンジニアを経て、2019年9月よりLINE（現・LINEヤフー）のDevRelチームにてエンジニア組織のTech Branding、Trainingや技術カンファレンスの運営を担当。イベントやブログ、動画などを中心に社内外の技術コミュニティの盛り上げや機会づくりなど各組織のサポートに従事。その後、2024年3月よりDeveloper Relationsのサポート事業（技術広報・技術コミュニティ・技術カンファレンスの支援）を行うTHE BIGLE株式会社を立ち上げ、独立。"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Shoko joined the DevRel team at LINE (now LY Corporation) in September 2019, after working as a front-end engineer at a venture company. There, she was responsible for tech branding, marketing, training, and managing technical conferences for the engineering organization. Subsequently, in March 2024, she founded THE BIGLE Inc., a company that provides support for Developer Relations, including technical PR, technical communities, and technical conferences, and became independent."
-          }
-        }
-      }
-    },
-    "maru-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "iOS Developerとして働き始めて４年目になろうとしています。最近はテストについて勉強していて、趣味は編み物やコーヒーです。"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Maru is about to enter her fourth year as an iOS Developer. Lately, she’s been diving into testing, and in her free time, she enjoys knitting and coffee."
-          }
-        }
-      }
-    },
-    "shota-ebara-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "サイボウズでiOS Developerとして働いています。初めてのプログラミング言語はSwiftで、Swiftが大好きです。"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Shota works as an iOS developer at Cybozu. His first programming language is Swift, and he loves Swift."
-          }
-        }
-      }
-    },
-    "tim-oliver-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "Timはオーストラリア出身のiOS開発者で、現在東京のInstagramで働いています。try! Swift Tokyo 2016で発表し、2018年からカンファレンスでボランティアをしています。暇な時は、ビデオゲーム、オープンソースソフトウェアの執筆、カラオケが大好きです。"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tim is an iOS developer from Australia and is currently working at Instagram in Tokyo. He presented at try! Swift Tokyo 2016 and has been volunteering at the conference since 2018. In his free time, he loves video games, writing open source software and karaoke."
-          }
-        }
-      }
-    },
-    "kazuhiro-takami-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "ハードウェアからコンパイラ基盤やOS、アプリケーションソフトウェアまで、エンジニアリングが大好きな何でも屋。大規模分散処理が得意。\n美味しいご飯と旅行が好き。\nカンファレンス運営を色々している。"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "kazu is a SWE at U-NEXT. He loves Computer Science. Especially low-layers"
-          }
-        }
-      }
-    },
-    "naoki-muramoto-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "Swiftが好きな東京で働いている3年目のソフトウェアエンジニアです。\nビールが大好きで、仕事以外でもよく飲んでいます。"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Naoki is a 3rd year software engineer working in Tokyo who loves Swift.\nHe loves beer and often drinks it when he's not working."
-          }
-        }
-      }
-    },
-    "sya-ri-bio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": "夢見株式会社でサーバーサイドエンジニアとして働いています。技術カンファレンスに参加したり、運営したりすることに情熱を持っています。自由な時間には、旅行や写真を楽しみ、さまざまな場所を探索しています。"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Souya works as a server-side engineer at Yumemi. He is passionate about tech conferences, both attending and organizing them. In his free time, he enjoys traveling and photography, exploring various places."
-          }
-        }
-      }
-    },
-    "Yoichiro is an engineer who likes to solve interesting problems. I has been contributing to try! Swift Tokyo since 2017. I love gourmet food and drinks, especially Japanese sake!": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": ""
-          }
-        }
-      }
-    },
-    "yucovin is a designer and iOS engineer with over a decade of experience spanning multiple levels of structural designs and interface design/engineering in government and private start-up. yucovin has helped numerous teams improve their product/service quality and processes as a designer who can bridge design and development. And most importantly, she is the creator of Riko, the mascot of try! Swift!": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": ""
-          }
-        }
-      }
-    },
-    "Roku is an iOS Developer. She joined try! Swift in 2019 as a volunteer staff member, and became an organizer in 2020.\nShe loves Swift community and occasionally organizes study sessions and development camps.\nShe is interested in beer, whiskey, and unique design clothes. In addition to creating apps, She also enjoy making accessories.\nHer lucky number is 6️⃣, which is called \"Roku\" in Japanese.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": ""
-          }
-        }
-      }
-    },
-    "I am the CEO of AkkeyLab, Inc., where we run a programming school. My main role at AkkeyLab is to promote the benefits of Swift. Lately, I've been enjoying playing tennis and futsal with my colleagues from the company.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": ""
-          }
-        }
-      }
-    },
-    "Yutaro is a Software Engineer who loves Swift. He has been contributing to try! Swift Tokyo since 2017.\nCurrently, he lives in the Kansai region and works at Hatena Co., Ltd.\nHis favorite things are beer🍺 and sake🍶. Recently, he has been experimenting with the Apple Vision Pro.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": ""
-          }
-        }
-      }
-    },
-    "Tim is an iOS developer from Australia and is currently working at Instagram in Tokyo. He presented at try! Swift Tokyo 2016 and has been volunteering at the conference since 2018. In his free time, he loves video games, writing open source software and karaoke.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": ""
-          }
-        }
-      }
-    },
-    "kazu is a SWE at U-NEXT. He loves Computer Science. Especially low-layers": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": ""
-          }
-        }
-      }
-    },
-    "Souya works as a server-side engineer at Yumemi. He is passionate about tech conferences, both attending and organizing them. In his free time, he enjoys traveling and photography, exploring various places.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "needs_review",
-            "value": ""
-          }
-        }
-      }
-    },
-    "About": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "イベントについて"
-          }
-        }
-      }
-    },
-    "Close": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "閉じる"
-          }
-        }
-      }
-    },
-    "FAQ": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "よくある質問"
-          }
-        }
-      }
-    },
-    "Outline": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "概要"
-          }
-        }
-      }
-    },
-    "Tickets": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "チケット"
-          }
-        }
-      }
-    },
-    "Call for Proposals": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "登壇募集"
-          }
-        }
-      }
-    },
-    "Speaker": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "登壇者"
-          }
-        }
-      }
-    },
-    "Timetable": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タイムテーブル"
-          }
-        }
-      }
-    },
-    "Sponsor": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "スポンサー"
-          }
-        }
-      }
-    },
-    "Meet the Hosts": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "司会"
-          }
-        }
-      }
-    },
-    "Meet the Organizers": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "主催"
-          }
-        }
-      }
-    },
-    "Access": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アクセス"
-          }
-        }
-      }
-    },
-    "Register": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "登録"
-          }
-        }
-      }
-    },
-    "Venue": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "会場"
-          }
-        }
-      }
-    },
-    "Speaker Application Form": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "スピーカー応募フォーム"
-          }
-        }
-      }
-    },
-    "Workshop Proposal Form": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ワークショップ応募フォーム"
-          }
-        }
-      }
-    },
-    "The latest information is announced on X": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "最新情報はXでお知らせしています"
-          }
-        }
-      }
-    },
-    "Check updates on X": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "公式Xはこちら"
-          }
-        }
-      }
-    },
-    "And more...!": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "さらに...!"
-          }
-        }
-      }
-    },
-    "You can get ticket from <a href=\"https://luma.com/qydkgwtf\" target=\"_blank\">Luma</a> or get from below.<br>Before getting ticket please read [FAQ](/faq_en).": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "チケットは<a href=\"https://luma.com/qydkgwtf\" target=\"_blank\">Luma</a>か下記から購入できます。<br>チケット購入前に、[よくある質問](/faq)をお読みください。"
-          }
-        }
-      }
-    },
-    "Date and time": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "開催日時"
-          }
-        }
-      }
-    },
-    "Apr. 12th – 14th, 2026 (JST)<br><br>Apr. 12: Workshop & TBD<br>Apr. 13 - 14: Conference": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "2026年4月12日（日）〜 14日（火）<br><br>4/12：ワークショップ & TBD<br>4/13〜14：カンファレンス"
-          }
-        }
-      }
-    },
-    "Apr. 12: Tachikawa City, Tokyo, Japan<br>Apr. 13 - 14: <a href=\"#access\">TACHIKAWA STAGE GARDEN</a>": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "4/12：東京都立川市内<br>4/13〜14：<a href=\"#access\">立川ステージガーデン</a>"
-          }
-        }
-      }
-    },
-    "Developers from all over the world gather<br>for tips and tricks and the latest case studies of development using Swift.<br>Developers from all over the world will gather here.<br>Swift and to showcase our Swift knowledge and skills, and to collaborate with each other,<br>The event will be held for three days from April 9 - 11, 2025!": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Swiftを使った開発のコツや最新の事例を求めて<br>世界中から開発者が集います。<br>日頃のSwiftの知識やスキルを披露し、協力しあうことを目的に、<br>2025年4月9日 - 11日の３日間開催します！"
-          }
-        }
-      }
-    },
-    "Developers from all over the world gather<br>for tips and tricks and the latest case studies of development using Swift.<br>Developers from all over the world will gather here.<br>Swift and to showcase our Swift knowledge and skills, and to collaborate with each other,<br>The event will be held for three days from April 12 - 14, 2026!": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Swiftを使った開発のコツや最新の事例を求めて<br>世界中から開発者が集います。<br>日頃のSwiftの知識やスキルを披露し、協力しあうことを目的に、<br>2026年4月12日 - 14日の３日間開催します！"
-          }
-        }
-      }
-    },
-    "Apr. 9th - 11th, 2025": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "2025年4月9日（水） 〜 11（金）"
-          }
-        }
-      }
-    },
-    "TACHIKAWA STAGE GARDEN<br>N1, 3-3, Midori-cho, Tachikawa, Tokyo 190-0014": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "立川ステージガーデン<br>〒190-0014 東京都立川市緑町3-3 N1"
-          }
-        }
-      }
-    },
-    "N1, 3-3, Midori-cho, Tachikawa, Tokyo<br>190-0014": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "〒190-0014<br>東京都立川市緑町3-3 N1"
-          }
-        }
-      }
-    },
-    "Suggested Nearby Accommodation": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "会場周辺の宿泊施設情報"
-          }
-        }
-      }
-    },
-    "TACHIKAWA STAGE GARDEN": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "立川ステージガーデン"
+    "You can get ticket from <a href=\"https://luma.com/qydkgwtf\" target=\"_blank\">Luma</a> or get from below.<br>Before getting ticket please read [FAQ](/faq_en)." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "チケットは<a href=\"https://luma.com/qydkgwtf\" target=\"_blank\">Luma</a>か下記から購入できます。<br>チケット購入前に、[よくある質問](/faq)をお読みください。"
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }

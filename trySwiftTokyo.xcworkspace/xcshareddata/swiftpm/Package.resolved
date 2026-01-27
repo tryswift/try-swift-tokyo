@@ -1,5 +1,10 @@
 {
+<<<<<<< Updated upstream
   "originHash" : "b4c510c0f637c40814bfe2651bab707877eb78116586b2416518811a178f925c",
+||||||| Stash base
+=======
+  "originHash" : "023e2866d063dda705f3d0ba53822c9511e04e11a69b6cf6270c2927283a6776",
+>>>>>>> Stashed changes
   "pins" : [
     {
       "identity" : "async-http-client",
