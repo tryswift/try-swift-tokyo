@@ -26,6 +26,12 @@ struct CfPRoutes: RouteCollection {
 
     // Logout
     cfp.get("logout", use: logout)
+
+    // Organizer pages (admin only)
+    let organizer = cfp.grouped("organizer")
+    organizer.get("proposals", use: organizerProposalsPage)
+    organizer.get("proposals", "export", use: exportProposalsCSV)
+    organizer.get("proposals", ":proposalID", use: organizerProposalDetailPage)
   }
 
   // MARK: - Page Handlers
@@ -225,6 +231,151 @@ struct CfPRoutes: RouteCollection {
     )
 
     return response
+  }
+
+  // MARK: - Organizer Pages
+
+  @Sendable
+  func organizerProposalsPage(req: Request) async throws -> HTMLResponse {
+    let user = try? await getAuthenticatedUser(req: req)
+
+    // Check if user is admin
+    guard let user, user.role == .admin else {
+      return HTMLResponse {
+        CfPLayout(title: "All Proposals", user: user) {
+          OrganizerProposalsPageView(user: user, proposals: [], conferencePath: nil)
+        }
+      }
+    }
+
+    // Get optional conference filter
+    let conferencePath = req.query[String.self, at: "conference"]
+
+    // Fetch proposals
+    var query = Proposal.query(on: req.db)
+      .with(\.$conference)
+      .with(\.$speaker)
+      .sort(\.$createdAt, .descending)
+
+    if let conferencePath {
+      query = query.join(Conference.self, on: \Proposal.$conference.$id == \Conference.$id)
+        .filter(Conference.self, \.$path == conferencePath)
+    }
+
+    let dbProposals = try await query.all()
+    let proposals = try dbProposals.map {
+      try $0.toDTO(speakerUsername: $0.speaker.username, conference: $0.conference)
+    }
+
+    return HTMLResponse {
+      CfPLayout(title: "All Proposals", user: user) {
+        OrganizerProposalsPageView(user: user, proposals: proposals, conferencePath: conferencePath)
+      }
+    }
+  }
+
+  @Sendable
+  func organizerProposalDetailPage(req: Request) async throws -> HTMLResponse {
+    let user = try? await getAuthenticatedUser(req: req)
+
+    // Check if user is admin
+    guard let user, user.role == .admin else {
+      return HTMLResponse {
+        CfPLayout(title: "Proposal Detail", user: user) {
+          OrganizerProposalDetailPageView(user: user, proposal: nil)
+        }
+      }
+    }
+
+    guard let proposalID = req.parameters.get("proposalID", as: UUID.self) else {
+      return HTMLResponse {
+        CfPLayout(title: "Proposal Detail", user: user) {
+          OrganizerProposalDetailPageView(user: user, proposal: nil)
+        }
+      }
+    }
+
+    let dbProposal = try await Proposal.query(on: req.db)
+      .filter(\.$id == proposalID)
+      .with(\.$conference)
+      .with(\.$speaker)
+      .first()
+
+    let proposal = try dbProposal.map {
+      try $0.toDTO(speakerUsername: $0.speaker.username, conference: $0.conference)
+    }
+
+    return HTMLResponse {
+      CfPLayout(title: proposal?.title ?? "Proposal Detail", user: user) {
+        OrganizerProposalDetailPageView(user: user, proposal: proposal)
+      }
+    }
+  }
+
+  @Sendable
+  func exportProposalsCSV(req: Request) async throws -> Response {
+    // Check if user is admin
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.forbidden, reason: "Organizer access required")
+    }
+
+    // Get optional conference filter
+    let conferencePath = req.query[String.self, at: "conference"]
+
+    // Fetch proposals
+    var query = Proposal.query(on: req.db)
+      .with(\.$conference)
+      .with(\.$speaker)
+      .sort(\.$createdAt, .descending)
+
+    if let conferencePath {
+      query = query.join(Conference.self, on: \Proposal.$conference.$id == \Conference.$id)
+        .filter(Conference.self, \.$path == conferencePath)
+    }
+
+    let dbProposals = try await query.all()
+
+    // Generate CSV
+    var csv =
+      "ID,Title,Speaker Username,Talk Duration,Conference,Abstract,Talk Detail,Bio,Icon URL,Notes,Created At\n"
+
+    let dateFormatter = ISO8601DateFormatter()
+
+    for proposal in dbProposals {
+      let id = proposal.id?.uuidString ?? ""
+      let title = escapeCSV(proposal.title)
+      let speakerUsername = escapeCSV(proposal.speaker.username)
+      let talkDuration = proposal.talkDuration.rawValue
+      let conference = escapeCSV(proposal.conference.displayName)
+      let abstract = escapeCSV(proposal.abstract)
+      let talkDetail = escapeCSV(proposal.talkDetail)
+      let bio = escapeCSV(proposal.bio)
+      let iconURL = proposal.iconURL ?? ""
+      let notes = escapeCSV(proposal.notes ?? "")
+      let createdAt = proposal.createdAt.map { dateFormatter.string(from: $0) } ?? ""
+
+      csv +=
+        "\(id),\(title),\(speakerUsername),\(talkDuration),\(conference),\(abstract),\(talkDetail),\(bio),\(iconURL),\(notes),\(createdAt)\n"
+    }
+
+    let response = Response(status: .ok)
+    response.headers.contentType = HTTPMediaType(
+      type: "text", subType: "csv", parameters: ["charset": "utf-8"])
+    let filename = conferencePath.map { "proposals-\($0).csv" } ?? "proposals-all.csv"
+    response.headers.add(name: "Content-Disposition", value: "attachment; filename=\"\(filename)\"")
+    response.body = .init(string: csv)
+
+    return response
+  }
+
+  private func escapeCSV(_ value: String) -> String {
+    let needsQuotes =
+      value.contains(",") || value.contains("\"") || value.contains("\n") || value.contains("\r")
+    if needsQuotes {
+      let escaped = value.replacingOccurrences(of: "\"", with: "\"\"")
+      return "\"\(escaped)\""
+    }
+    return value
   }
 
   // MARK: - Helper Methods
