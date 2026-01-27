@@ -11,7 +11,7 @@ enum ImagePath {
     guard let sourceDir = try? URL.selectDirectories(from: #file).source else {
       return nil
     }
-    return sourceDir.deletingLastPathComponent().appending(path: "Assets/images/from_app")
+    return sourceDir.appending(path: "Assets/images/from_app")
   }()
 
   /// Resolve image path for a given image name (without extension)
