@@ -6,11 +6,12 @@ struct OutlineComponent: HTML {
   let language: SupportedLanguage
 
   var body: some HTML {
-    let data: OutlineData = switch year {
-    case .year2024: .year2024
-    case .year2025: .year2025
-    case .year2026: .year2026
-    }
+    let data: OutlineData =
+      switch year {
+      case .year2024: .year2024
+      case .year2025: .year2025
+      case .year2026: .year2026
+      }
 
     Table {
       Row {
@@ -62,8 +63,10 @@ private struct OutlineData {
 
   static let year2026 = OutlineData(
     firstLabel: "Date and time",
-    firstValue: "Apr. 12th – 14th, 2026 (JST)<br><br>Apr. 12: Workshop & TBD<br>Apr. 13 - 14: Conference",
+    firstValue:
+      "Apr. 12th – 14th, 2026 (JST)<br><br>Apr. 12: Workshop & TBD<br>Apr. 13 - 14: Conference",
     secondLabel: "Venue",
-    secondValue: "Apr. 12: Tachikawa City, Tokyo, Japan<br>Apr. 13 - 14: <a href=\"#access\">TACHIKAWA STAGE GARDEN</a>"
+    secondValue:
+      "Apr. 12: Tachikawa City, Tokyo, Japan<br>Apr. 13 - 14: <a href=\"#access\">TACHIKAWA STAGE GARDEN</a>"
   )
 }

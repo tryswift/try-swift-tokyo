@@ -1,6 +1,7 @@
-@testable import Server
-import XCTVapor
 import Testing
+import XCTVapor
+
+@testable import Server
 
 @Suite("Server Tests")
 struct ServerTests {

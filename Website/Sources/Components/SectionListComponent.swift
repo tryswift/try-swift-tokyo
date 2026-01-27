@@ -44,8 +44,8 @@ struct SectionListComponent: HTML {
   }
 }
 
-private extension String {
-  func displayedCharacterCount() -> Int {
+extension String {
+  fileprivate func displayedCharacterCount() -> Int {
     // Strip HTML tags to get approximate displayed character count
     // This is a simple regex-based approach that works on Linux
     let htmlTagPattern = "<[^>]+>"

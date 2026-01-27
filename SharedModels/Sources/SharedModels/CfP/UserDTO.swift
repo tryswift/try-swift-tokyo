@@ -16,10 +16,10 @@ public struct UserDTO: Codable, Sendable, Equatable, Identifiable {
   public let organization: String?
   /// User's avatar/icon URL (from GitHub or custom)
   public let avatarURL: String?
-  
+
   public let createdAt: Date?
   public let updatedAt: Date?
-  
+
   public init(
     id: UUID,
     githubID: Int,
@@ -54,7 +54,7 @@ public struct UpdateUserProfileRequest: Codable, Sendable {
   public let url: String?
   public let organization: String?
   public let avatarURL: String?
-  
+
   public init(
     displayName: String? = nil,
     bio: String? = nil,
@@ -74,7 +74,7 @@ public struct UpdateUserProfileRequest: Codable, Sendable {
 public struct AuthResponse: Codable, Sendable {
   public let token: String
   public let user: UserDTO
-  
+
   public init(token: String, user: UserDTO) {
     self.token = token
     self.user = user

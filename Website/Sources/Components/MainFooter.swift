@@ -9,11 +9,15 @@ struct MainFooter: HTML {
   var body: some HTML {
     Column {
       Text {
-        Link(String("Code of Conduct", language: language), target: CodeOfConduct(language: language))
-          .role(.light)
-          .margin(.trailing, .small)
-        Link(String("Privacy Policy", language: language), target: PrivacyPolicy(language: language))
-          .role(.light)
+        Link(
+          String("Code of Conduct", language: language), target: CodeOfConduct(language: language)
+        )
+        .role(.light)
+        .margin(.trailing, .small)
+        Link(
+          String("Privacy Policy", language: language), target: PrivacyPolicy(language: language)
+        )
+        .role(.light)
       }
       .horizontalAlignment(.center)
       .font(.body)

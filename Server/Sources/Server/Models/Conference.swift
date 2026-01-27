@@ -1,6 +1,6 @@
 import Fluent
-import Vapor
 import SharedModels
+import Vapor
 
 /// Conference model for CfP
 final class Conference: Model, Content, @unchecked Sendable {

@@ -1,7 +1,7 @@
-import Vapor
 import Fluent
 import JWT
 import SharedModels
+import Vapor
 
 /// Vapor Content wrapper for ProposalDTO
 struct ProposalDTOContent: Content {
@@ -104,19 +104,27 @@ struct ProposalController: RouteCollection {
     let conference: Conference
 
     if let path = conferencePath {
-      guard let found = try await Conference.query(on: req.db)
-        .filter(\.$path == path)
-        .first() else {
+      guard
+        let found = try await Conference.query(on: req.db)
+          .filter(\.$path == path)
+          .first()
+      else {
         throw Abort(.notFound, reason: "Conference not found: \(path)")
       }
       conference = found
     } else {
       // Get the current open conference
-      guard let current = try await Conference.query(on: req.db)
-        .filter(\.$isOpen == true)
-        .sort(\.$year, .descending)
-        .first() else {
-        throw Abort(.badRequest, reason: "The Call for Proposals is not currently open. Please check back later for the next conference.")
+      guard
+        let current = try await Conference.query(on: req.db)
+          .filter(\.$isOpen == true)
+          .sort(\.$year, .descending)
+          .first()
+      else {
+        throw Abort(
+          .badRequest,
+          reason:
+            "The Call for Proposals is not currently open. Please check back later for the next conference."
+        )
       }
       conference = current
     }
@@ -160,7 +168,8 @@ struct ProposalController: RouteCollection {
 
     try await proposal.save(on: req.db)
 
-    return ProposalDTOContent(from: try proposal.toDTO(speakerUsername: payload.username, conference: conference))
+    return ProposalDTOContent(
+      from: try proposal.toDTO(speakerUsername: payload.username, conference: conference))
   }
 
   /// Get all proposals (admin only)
@@ -173,7 +182,9 @@ struct ProposalController: RouteCollection {
       .all()
 
     return try proposals.map { proposal in
-      ProposalDTOContent(from: try proposal.toDTO(speakerUsername: proposal.speaker.username, conference: proposal.conference))
+      ProposalDTOContent(
+        from: try proposal.toDTO(
+          speakerUsername: proposal.speaker.username, conference: proposal.conference))
     }
   }
 
@@ -185,9 +196,11 @@ struct ProposalController: RouteCollection {
       throw Abort(.badRequest, reason: "Conference path is required")
     }
 
-    guard let conference = try await Conference.query(on: req.db)
-      .filter(\.$path == conferencePath)
-      .first() else {
+    guard
+      let conference = try await Conference.query(on: req.db)
+        .filter(\.$path == conferencePath)
+        .first()
+    else {
       throw Abort(.notFound, reason: "Conference not found")
     }
 
@@ -198,7 +211,9 @@ struct ProposalController: RouteCollection {
       .all()
 
     return try proposals.map { proposal in
-      ProposalDTOContent(from: try proposal.toDTO(speakerUsername: proposal.speaker.username, conference: proposal.conference))
+      ProposalDTOContent(
+        from: try proposal.toDTO(
+          speakerUsername: proposal.speaker.username, conference: proposal.conference))
     }
   }
 
@@ -218,7 +233,9 @@ struct ProposalController: RouteCollection {
       .all()
 
     return try proposals.map { proposal in
-      ProposalDTOContent(from: try proposal.toDTO(speakerUsername: payload.username, conference: proposal.conference))
+      ProposalDTOContent(
+        from: try proposal.toDTO(speakerUsername: payload.username, conference: proposal.conference)
+      )
     }
   }
 
@@ -236,9 +253,11 @@ struct ProposalController: RouteCollection {
       throw Abort(.badRequest, reason: "Conference path is required")
     }
 
-    guard let conference = try await Conference.query(on: req.db)
-      .filter(\.$path == conferencePath)
-      .first() else {
+    guard
+      let conference = try await Conference.query(on: req.db)
+        .filter(\.$path == conferencePath)
+        .first()
+    else {
       throw Abort(.notFound, reason: "Conference not found")
     }
 
@@ -249,7 +268,9 @@ struct ProposalController: RouteCollection {
       .all()
 
     return try proposals.map { proposal in
-      ProposalDTOContent(from: try proposal.toDTO(speakerUsername: payload.username, conference: proposal.conference))
+      ProposalDTOContent(
+        from: try proposal.toDTO(speakerUsername: payload.username, conference: proposal.conference)
+      )
     }
   }
 
@@ -261,15 +282,19 @@ struct ProposalController: RouteCollection {
       throw Abort(.badRequest, reason: "Invalid proposal ID")
     }
 
-    guard let proposal = try await Proposal.query(on: req.db)
-      .filter(\.$id == proposalID)
-      .with(\.$speaker)
-      .with(\.$conference)
-      .first() else {
+    guard
+      let proposal = try await Proposal.query(on: req.db)
+        .filter(\.$id == proposalID)
+        .with(\.$speaker)
+        .with(\.$conference)
+        .first()
+    else {
       throw Abort(.notFound, reason: "Proposal not found")
     }
 
-    return ProposalDTOContent(from: try proposal.toDTO(speakerUsername: proposal.speaker.username, conference: proposal.conference))
+    return ProposalDTOContent(
+      from: try proposal.toDTO(
+        speakerUsername: proposal.speaker.username, conference: proposal.conference))
   }
 
   /// Delete a proposal (admin only)

@@ -1,7 +1,7 @@
-import Vapor
 import Fluent
 import JWT
 import SharedModels
+import Vapor
 
 /// Vapor Content wrapper for AuthResponse
 struct AuthResponseContent: Content {
@@ -15,7 +15,7 @@ struct AuthResponseContent: Content {
 }
 
 /// Vapor Content wrapper for UserDTO
-struct UserDTOContent:  Content {
+struct UserDTOContent: Content {
   let id: UUID
   let githubID: Int
   let username: String
@@ -46,7 +46,7 @@ struct UserDTOContent:  Content {
 /// Vapor Content wrapper for UpdateUserProfileRequest
 struct UpdateUserProfileRequestContent: Content {
   let displayName: String?
-  let bio:  String?
+  let bio: String?
   let url: String?
   let organization: String?
   let avatarURL: String?
@@ -55,7 +55,7 @@ struct UpdateUserProfileRequestContent: Content {
 // MARK: - OAuth State Payload (Stateless - survives multi-instance)
 
 /// JWT payload for OAuth state parameter - replaces in-memory session storage
-struct OAuthStatePayload:  JWTPayload, Equatable {
+struct OAuthStatePayload: JWTPayload, Equatable {
   /// Unique nonce to prevent replay attacks
   let nonce: String
 
@@ -75,7 +75,7 @@ struct OAuthStatePayload:  JWTPayload, Equatable {
     self.iat = .init(value: Date())
   }
 
-  func verify(using algorithm:  some JWTAlgorithm) async throws {
+  func verify(using algorithm: some JWTAlgorithm) async throws {
     try exp.verifyNotExpired()
   }
 }
@@ -118,7 +118,8 @@ enum OAuthError: AbortError {
     // In development, return detailed errors
     switch self {
     case .missingState:
-      return "Missing 'state' parameter in OAuth callback.  Ensure the OAuth flow starts from /api/v1/auth/github"
+      return
+        "Missing 'state' parameter in OAuth callback.  Ensure the OAuth flow starts from /api/v1/auth/github"
     case .invalidState(let detail):
       return "Invalid OAuth state:  \(detail)"
     case .expiredState:
@@ -137,7 +138,7 @@ enum OAuthError: AbortError {
   var identifier: String {
     switch self {
     case .missingState: return "oauth_missing_state"
-    case .invalidState:  return "oauth_invalid_state"
+    case .invalidState: return "oauth_invalid_state"
     case .expiredState: return "oauth_expired_state"
     case .missingCode: return "oauth_missing_code"
     case .tokenExchangeFailed: return "oauth_token_failed"
@@ -156,7 +157,8 @@ struct AuthController: RouteCollection {
 
   /// The callback URL for GitHub OAuth
   static var callbackURL: String {
-    Environment.get("GITHUB_CALLBACK_URL") ?? "https://tryswift-cfp-api.fly.dev/api/v1/auth/github/callback"
+    Environment.get("GITHUB_CALLBACK_URL")
+      ?? "https://tryswift-cfp-api.fly.dev/api/v1/auth/github/callback"
   }
 
   func boot(routes: RoutesBuilder) throws {
@@ -175,7 +177,7 @@ struct AuthController: RouteCollection {
   /// GET /api/v1/auth/github? returnTo=<optional-url>
   @Sendable
   func githubLogin(req: Request) async throws -> Response {
-    let config:  GitHubOAuth.Config
+    let config: GitHubOAuth.Config
     do {
       config = try GitHubOAuth.Config()
     } catch {
@@ -184,7 +186,7 @@ struct AuthController: RouteCollection {
     }
 
     // Get optional returnTo parameter
-    let returnTo = try?  req.query.get(String.self, at: "returnTo")
+    let returnTo = try? req.query.get(String.self, at: "returnTo")
 
     // Validate returnTo URL if provided (prevent open redirect)
     if let returnTo = returnTo, !isValidReturnURL(returnTo) {
@@ -196,18 +198,20 @@ struct AuthController: RouteCollection {
     let statePayload = OAuthStatePayload(returnTo: returnTo)
     let stateToken = try await req.jwt.sign(statePayload)
 
-    req.logger.info("Starting GitHub OAuth", metadata: [
-      "returnTo": .string(returnTo ?? "default"),
-      "stateNonce": .string(statePayload.nonce)
-    ])
+    req.logger.info(
+      "Starting GitHub OAuth",
+      metadata: [
+        "returnTo": .string(returnTo ?? "default"),
+        "stateNonce": .string(statePayload.nonce),
+      ])
 
     // Build GitHub authorization URL with proper encoding
     var components = URLComponents(string: "https://github.com/login/oauth/authorize")!
     components.queryItems = [
       URLQueryItem(name: "client_id", value: config.clientID),
-      URLQueryItem(name: "redirect_uri", value:  Self.callbackURL),
+      URLQueryItem(name: "redirect_uri", value: Self.callbackURL),
       URLQueryItem(name: "scope", value: "read:user read:org"),
-      URLQueryItem(name: "state", value: stateToken)
+      URLQueryItem(name: "state", value: stateToken),
     ]
 
     guard let authURL = components.url?.absoluteString else {
@@ -225,15 +229,17 @@ struct AuthController: RouteCollection {
   func githubCallback(req: Request) async throws -> Response {
     // 1. Validate state parameter exists
     guard let stateToken = req.query[String.self, at: "state"] else {
-      req.logger.warning("OAuth callback missing state parameter", metadata: [
-        "query": .string(req.url.query ?? "none"),
-        "referer": .string(req.headers.first(name: .referer) ?? "none")
-      ])
+      req.logger.warning(
+        "OAuth callback missing state parameter",
+        metadata: [
+          "query": .string(req.url.query ?? "none"),
+          "referer": .string(req.headers.first(name: .referer) ?? "none"),
+        ])
       throw OAuthError.missingState
     }
 
     // 2.Validate and decode state token
-    let statePayload:  OAuthStatePayload
+    let statePayload: OAuthStatePayload
     do {
       statePayload = try await req.jwt.verify(stateToken, as: OAuthStatePayload.self)
     } catch let error as JWTError {
@@ -248,10 +254,12 @@ struct AuthController: RouteCollection {
       throw OAuthError.invalidState("Could not decode state token")
     }
 
-    req.logger.info("OAuth state validated", metadata: [
-      "nonce": .string(statePayload.nonce),
-      "returnTo": .string(statePayload.returnTo ?? "default")
-    ])
+    req.logger.info(
+      "OAuth state validated",
+      metadata: [
+        "nonce": .string(statePayload.nonce),
+        "returnTo": .string(statePayload.returnTo ?? "default"),
+      ])
 
     // 3. Validate authorization code exists
     guard let code = req.query[String.self, at: "code"] else {
@@ -275,7 +283,7 @@ struct AuthController: RouteCollection {
     }
 
     // 4. Exchange code for access token
-    let accessToken:  String
+    let accessToken: String
     do {
       accessToken = try await GitHubOAuth.exchangeCodeForToken(
         code: code,
@@ -286,7 +294,7 @@ struct AuthController: RouteCollection {
       req.logger.info("Access token obtained successfully")
     } catch {
       req.logger.error("Token exchange failed: \(error)")
-      throw OAuthError.tokenExchangeFailed(String(describing:  error))
+      throw OAuthError.tokenExchangeFailed(String(describing: error))
     }
 
     // 5. Get user info from GitHub
@@ -299,7 +307,7 @@ struct AuthController: RouteCollection {
       req.logger.info("GitHub user obtained:  \(githubUser.login)")
     } catch {
       req.logger.error("Failed to get GitHub user: \(error)")
-      throw OAuthError.userFetchFailed(String(describing:  error))
+      throw OAuthError.userFetchFailed(String(describing: error))
     }
 
     // 6. Check if user is a member of the tryswift/tokyo team
@@ -321,10 +329,11 @@ struct AuthController: RouteCollection {
     let role: UserRole = isTeamMember ? .admin : .speaker
 
     // 8. Find or create user
-    let user:  User
+    let user: User
     if let existingUser = try await User.query(on: req.db)
       .filter(\.$githubID == githubUser.id)
-      .first() {
+      .first()
+    {
       existingUser.username = githubUser.login
       existingUser.role = role
       existingUser.avatarURL = githubUser.avatarUrl
@@ -358,11 +367,13 @@ struct AuthController: RouteCollection {
     // Use returnTo from state if provided, otherwise default to login page
     let returnTo = statePayload.returnTo ?? "/cfp/login"
 
-    req.logger.info("OAuth flow completed, redirecting", metadata: [
-      "username": .string(user.username),
-      "role": .string(role.rawValue),
-      "returnTo": .string(returnTo)
-    ])
+    req.logger.info(
+      "OAuth flow completed, redirecting",
+      metadata: [
+        "username": .string(user.username),
+        "role": .string(role.rawValue),
+        "returnTo": .string(returnTo),
+      ])
 
     // Create response with redirect and set HTTP-only cookie
     // Since CfP pages are now served from the same Vapor server, we can set cookies directly
@@ -399,7 +410,8 @@ struct AuthController: RouteCollection {
   /// Get cookie domain based on frontend URL
   private static func getCookieDomain() -> String? {
     guard let frontendURL = URL(string: Self.frontendURL),
-          let host = frontendURL.host else {
+      let host = frontendURL.host
+    else {
       return nil
     }
 
@@ -424,14 +436,15 @@ struct AuthController: RouteCollection {
   /// Validate that returnTo URL is allowed (prevent open redirect)
   private func isValidReturnURL(_ urlString: String) -> Bool {
     guard let url = URL(string: urlString),
-          let host = url.host?.lowercased() else {
+      let host = url.host?.lowercased()
+    else {
       return false
     }
 
     let allowedHosts = [
       "tryswift-cfp-website.fly.dev",
       "tryswift.jp",
-      "localhost"
+      "localhost",
     ]
 
     return allowedHosts.contains { host == $0 || host.hasSuffix(".\($0)") }
@@ -488,6 +501,6 @@ struct AuthController: RouteCollection {
 
     try await user.save(on: req.db)
 
-    return UserDTOContent(from:  try user.toDTO())
+    return UserDTOContent(from: try user.toDTO())
   }
 }

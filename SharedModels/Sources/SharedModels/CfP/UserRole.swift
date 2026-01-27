@@ -6,11 +6,11 @@ import Foundation
 public enum UserRole: String, Codable, Sendable, Equatable, CaseIterable {
   case admin
   case speaker
-  
+
   public var isAdmin: Bool {
     self == .admin
   }
-  
+
   public var displayName: String {
     switch self {
     case .admin:

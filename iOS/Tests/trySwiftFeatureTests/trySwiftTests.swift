@@ -1,8 +1,8 @@
 import ComposableArchitecture
 import DependencyExtra
+import Foundation
 import SharedModels
 import Testing
-import Foundation
 
 @testable import trySwiftFeature
 

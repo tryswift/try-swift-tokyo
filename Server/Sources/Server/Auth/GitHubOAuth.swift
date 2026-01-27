@@ -57,8 +57,8 @@ enum GitHubOAuth {
   private struct TokenRequest: Content {
     let client_id: String
     let client_secret: String
-    let code:  String
-    let redirect_uri:  String
+    let code: String
+    let redirect_uri: String
   }
 
   /// Token exchange response
@@ -88,12 +88,13 @@ enum GitHubOAuth {
       req.headers.add(name: .accept, value: "application/json")
       req.headers.add(name: .contentType, value: "application/json")
 
-      try req.content.encode(TokenRequest(
-        client_id: config.clientID,
-        client_secret: config.clientSecret,
-        code: code,
-        redirect_uri: redirectURI
-      ))
+      try req.content.encode(
+        TokenRequest(
+          client_id: config.clientID,
+          client_secret: config.clientSecret,
+          code: code,
+          redirect_uri: redirectURI
+        ))
     }
 
     guard response.status == .ok else {
@@ -106,7 +107,7 @@ enum GitHubOAuth {
     // GitHub returns 200 even for errors, check the response body
     if let error = tokenResponse.error {
       let description = tokenResponse.error_description ?? "No description"
-      throw TokenError.githubError(error:  error, description: description)
+      throw TokenError.githubError(error: error, description: description)
     }
 
     guard let accessToken = tokenResponse.access_token else {
@@ -137,11 +138,12 @@ enum GitHubOAuth {
   static func isTeamMember(
     accessToken: String,
     username: String,
-    organization:  String,
-    teamSlug:  String,
+    organization: String,
+    teamSlug: String,
     client: Client
   ) async throws -> Bool {
-    let url = "https://api.github.com/orgs/\(organization)/teams/\(teamSlug)/memberships/\(username)"
+    let url =
+      "https://api.github.com/orgs/\(organization)/teams/\(teamSlug)/memberships/\(username)"
 
     let response = try await client.get(URI(string: url)) { req in
       req.headers.add(name: .authorization, value: "Bearer \(accessToken)")

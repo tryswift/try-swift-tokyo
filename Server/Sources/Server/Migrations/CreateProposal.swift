@@ -5,7 +5,9 @@ struct CreateProposal: AsyncMigration {
   func prepare(on database: Database) async throws {
     try await database.schema(Proposal.schema)
       .id()
-      .field("conference_id", .uuid, .required, .references(Conference.schema, "id", onDelete: .cascade))
+      .field(
+        "conference_id", .uuid, .required, .references(Conference.schema, "id", onDelete: .cascade)
+      )
       .field("title", .string, .required)
       .field("abstract", .string, .required)
       .field("talk_detail", .string, .required)

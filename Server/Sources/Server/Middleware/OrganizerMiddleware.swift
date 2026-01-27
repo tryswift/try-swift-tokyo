@@ -1,6 +1,6 @@
-import Vapor
 import JWT
 import SharedModels
+import Vapor
 
 /// Middleware that requires the user to be an admin (organizer)
 /// Returns 403 Forbidden if the user's role is not admin

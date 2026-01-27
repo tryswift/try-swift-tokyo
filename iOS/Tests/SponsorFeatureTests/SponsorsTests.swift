@@ -1,9 +1,9 @@
 import ComposableArchitecture
 import DataClient
 import DependencyExtra
+import Foundation
 import SharedModels
 import Testing
-import Foundation
 
 @testable import SponsorFeature
 

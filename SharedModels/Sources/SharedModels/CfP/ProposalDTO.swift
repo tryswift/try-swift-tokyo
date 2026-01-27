@@ -4,7 +4,7 @@ import Foundation
 public enum TalkDuration: String, Codable, Sendable, Equatable, CaseIterable {
   case regular = "20min"
   case lightning = "LT"
-  
+
   public var displayName: String {
     switch self {
     case .regular:
@@ -36,7 +36,7 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
   public let speakerUsername: String
   public let createdAt: Date?
   public let updatedAt: Date?
-  
+
   public init(
     id: UUID,
     conferenceId: UUID,
@@ -83,7 +83,7 @@ public struct CreateProposalRequest: Codable, Sendable {
   public let bio: String
   public let iconURL: String?
   public let notes: String?
-  
+
   public init(
     conferencePath: String,
     title: String,
@@ -114,7 +114,7 @@ public struct UpdateProposalRequest: Codable, Sendable {
   public let bio: String?
   public let iconURL: String?
   public let notes: String?
-  
+
   public init(
     title: String? = nil,
     abstract: String? = nil,

@@ -1,7 +1,7 @@
-import Vapor
 import Fluent
 import FluentPostgresDriver
 import JWT
+import Vapor
 
 enum AppConfiguration {
   /// Configure the Vapor application

@@ -70,7 +70,7 @@ let package = Package(
       name: "MapKitClient",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        .product(name: "SharedModels", package: "SharedModels")
+        .product(name: "SharedModels", package: "SharedModels"),
       ]
     ),
     .target(
@@ -112,7 +112,7 @@ let package = Package(
       dependencies: [
         "SponsorFeature",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        .product(name: "SharedModels", package: "SharedModels")
+        .product(name: "SharedModels", package: "SharedModels"),
       ]
     ),
     .testTarget(
@@ -120,7 +120,7 @@ let package = Package(
       dependencies: [
         "trySwiftFeature",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        .product(name: "SharedModels", package: "SharedModels")
+        .product(name: "SharedModels", package: "SharedModels"),
       ]
     ),
   ]

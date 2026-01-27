@@ -1,5 +1,5 @@
-import Vapor
 import JWT
+import Vapor
 
 /// Middleware that requires a valid JWT token
 /// Extracts user information from JWT and stores in request

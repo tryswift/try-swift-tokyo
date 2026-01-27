@@ -1,5 +1,5 @@
-import JWT
 import Foundation
+import JWT
 import SharedModels
 
 /// JWT Payload for authenticated users
@@ -23,7 +23,7 @@ struct UserJWTPayload: JWTPayload, Sendable {
     self.subject = SubjectClaim(value: userID.uuidString)
     self.role = role
     self.username = username
-    self.expiration = ExpirationClaim(value: Date().addingTimeInterval(86400 * 7)) // 7 days
+    self.expiration = ExpirationClaim(value: Date().addingTimeInterval(86400 * 7))  // 7 days
     self.issuedAt = IssuedAtClaim(value: Date())
   }
 
