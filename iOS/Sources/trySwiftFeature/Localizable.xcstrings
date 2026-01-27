@@ -379,6 +379,23 @@
         }
       }
     },
+    "Sponsor Inquiry Form" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sponsor Inquiry Form"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スポンサー応募フォーム"
+          }
+        }
+      }
+    },
     "Suggested Nearby Accommodation" : {
       "extractionState" : "manual",
       "localizations" : {
