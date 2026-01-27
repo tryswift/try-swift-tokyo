@@ -72,6 +72,9 @@ enum AppConfiguration {
     )
     app.middleware.use(CORSMiddleware(configuration: corsConfiguration))
 
+    // Serve static files from Public directory
+    app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+
     // MARK: - Routes
 
     try AppRoutes.register(app)
