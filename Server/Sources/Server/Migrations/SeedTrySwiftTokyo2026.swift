@@ -41,7 +41,7 @@ struct SeedTrySwiftTokyo2026: AsyncMigration {
         """,
       year: 2026,
       isOpen: true,
-      deadline: ISO8601DateFormatter().date(from: "2026-02-28T23:59:59Z"),
+      deadline: ISO8601DateFormatter().date(from: "2026-02-01T23:59:59Z"),
       startDate: ISO8601DateFormatter().date(from: "2026-04-12T00:00:00+09:00"),
       endDate: ISO8601DateFormatter().date(from: "2026-04-14T23:59:59+09:00"),
       location: "Tokyo, Japan",

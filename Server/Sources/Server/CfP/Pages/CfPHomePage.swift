@@ -26,8 +26,8 @@ struct CfPHomePage: HTML, Sendable {
         h2(.class("text-center fw-bold purple-text mb-5")) { "Important Dates" }
         div(.class("row g-4")) {
           dateCard(emoji: "📅", title: "CfP Opens", date: "January 15, 2026")
-          dateCard(emoji: "⏰", title: "Submission Deadline", date: "February 28, 2026")
-          dateCard(emoji: "📣", title: "Notifications", date: "March 15, 2026")
+          dateCard(emoji: "⏰", title: "Submission Deadline", date: "February 1, 2026")
+          dateCard(emoji: "📣", title: "Notifications", date: "February 8, 2026")
           dateCard(emoji: "🎤", title: "Conference", date: "April 12-14, 2026")
         }
       }
