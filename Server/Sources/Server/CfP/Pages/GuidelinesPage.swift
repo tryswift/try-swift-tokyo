@@ -160,10 +160,12 @@ struct GuidelinesPageView: HTML, Sendable {
               language == .ja ? "プロポーザルと学習成果の明確さ" : "Clarity of proposal and learning outcomes"
             }
             li {
-              language == .ja ? "スピーカーの専門知識とプレゼンテーション能力" : "Speaker's expertise and presentation ability"
+              language == .ja
+                ? "スピーカーの専門知識とプレゼンテーション能力" : "Speaker's expertise and presentation ability"
             }
             li {
-              language == .ja ? "カンファレンスプログラム全体でのトピックの多様性" : "Diversity of topics across the conference program"
+              language == .ja
+                ? "カンファレンスプログラム全体でのトピックの多様性" : "Diversity of topics across the conference program"
             }
           }
         }
@@ -192,7 +194,8 @@ struct GuidelinesPageView: HTML, Sendable {
               language == .ja ? "提出前によく校正する" : "Proofread your submission carefully"
             }
             li {
-              language == .ja ? "複数のプロポーザルを提出することをためらわない！" : "Don't be afraid to submit multiple proposals!"
+              language == .ja
+                ? "複数のプロポーザルを提出することをためらわない！" : "Don't be afraid to submit multiple proposals!"
             }
           }
         }
@@ -209,16 +212,20 @@ struct GuidelinesPageView: HTML, Sendable {
               language == .ja ? "カンファレンスチケット無料" : "Free conference ticket"
             }
             li {
-              language == .ja ? "他のスピーカーや主催者とのスピーカーディナー" : "Speaker dinner with other speakers and organizers"
+              language == .ja
+                ? "他のスピーカーや主催者とのスピーカーディナー" : "Speaker dinner with other speakers and organizers"
             }
             li {
-              language == .ja ? "海外からのスピーカーには渡航サポートあり" : "Travel support available for international speakers"
+              language == .ja
+                ? "海外からのスピーカーには渡航サポートあり" : "Travel support available for international speakers"
             }
             li {
               language == .ja ? "トークのプロフェッショナルなビデオ撮影" : "Professional video recording of your talk"
             }
             li {
-              language == .ja ? "世界中のSwift開発者とのネットワーキングの機会" : "Networking opportunities with Swift developers worldwide"
+              language == .ja
+                ? "世界中のSwift開発者とのネットワーキングの機会"
+                : "Networking opportunities with Swift developers worldwide"
             }
           }
         }

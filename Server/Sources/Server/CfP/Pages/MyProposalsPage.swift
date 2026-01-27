@@ -39,7 +39,10 @@ struct MyProposalsPageView: HTML, Sendable {
                 div {
                   strong { HTMLText(user.username) }
                   div(.class("text-muted small")) {
-                    HTMLText(user.role == .admin ? (language == .ja ? "運営者" : "Organizer") : (language == .ja ? "スピーカー" : "Speaker"))
+                    HTMLText(
+                      user.role == .admin
+                        ? (language == .ja ? "運営者" : "Organizer")
+                        : (language == .ja ? "スピーカー" : "Speaker"))
                   }
                 }
               }
@@ -95,7 +98,10 @@ struct MyProposalsPageView: HTML, Sendable {
                 ? "プロポーザルを確認するにはログインしてください。"
                 : "Please sign in to view your proposals."
             }
-            a(.class("btn btn-dark"), .href("/api/v1/auth/github?returnTo=\(language.path(for: "/my-proposals"))")) {
+            a(
+              .class("btn btn-dark"),
+              .href("/api/v1/auth/github?returnTo=\(language.path(for: "/my-proposals"))")
+            ) {
               language == .ja ? "GitHubでログイン" : "Sign in with GitHub"
             }
           }
@@ -126,7 +132,10 @@ struct ProposalCard: HTML, Sendable {
                   ? "badge bg-primary" : "badge bg-warning text-dark"
               )
             ) {
-              HTMLText(language == .ja ? (proposal.talkDuration == .regular ? "レギュラートーク" : "ライトニングトーク") : proposal.talkDuration.rawValue)
+              HTMLText(
+                language == .ja
+                  ? (proposal.talkDuration == .regular ? "レギュラートーク" : "ライトニングトーク")
+                  : proposal.talkDuration.rawValue)
             }
           }
           if let createdAt = proposal.createdAt {

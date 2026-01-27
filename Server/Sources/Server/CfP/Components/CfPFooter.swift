@@ -14,17 +14,26 @@ struct CfPFooter: HTML, Sendable {
           a(.class("text-white text-decoration-none me-3"), .href("https://tryswift.jp")) {
             language == .ja ? "メインサイト" : "Main Website"
           }
-          a(.class("text-white text-decoration-none me-3"), .href("https://tryswift.jp/code-of-conduct")) {
+          a(
+            .class("text-white text-decoration-none me-3"),
+            .href("https://tryswift.jp/code-of-conduct")
+          ) {
             language == .ja ? "行動規範" : "Code of Conduct"
           }
-          a(.class("text-white text-decoration-none"), .href("https://tryswift.jp/privacy-policy")) {
+          a(.class("text-white text-decoration-none"), .href("https://tryswift.jp/privacy-policy"))
+          {
             language == .ja ? "プライバシーポリシー" : "Privacy Policy"
           }
         }
 
         div(.class("mb-3")) {
-          a(.class("text-white text-decoration-none me-3"), .href("https://twitter.com/tryswiftconf")) { "Twitter" }
-          a(.class("text-white text-decoration-none"), .href("https://github.com/tryswift")) { "GitHub" }
+          a(
+            .class("text-white text-decoration-none me-3"),
+            .href("https://twitter.com/tryswiftconf")
+          ) { "Twitter" }
+          a(.class("text-white text-decoration-none"), .href("https://github.com/tryswift")) {
+            "GitHub"
+          }
         }
 
         p(.class("text-white-50 mb-0")) {

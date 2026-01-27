@@ -125,27 +125,33 @@ struct CfPHomePage: HTML, Sendable {
         div(.class("row g-4")) {
           topicCard(
             title: language == .ja ? "Swift言語" : "Swift Language",
-            description: language == .ja ? "新機能、ベストプラクティス、言語の進化" : "New features, best practices, and language evolution"
+            description: language == .ja
+              ? "新機能、ベストプラクティス、言語の進化" : "New features, best practices, and language evolution"
           )
           topicCard(
             title: "SwiftUI",
-            description: language == .ja ? "モダンなUI開発、アニメーション、アーキテクチャ" : "Modern UI development, animations, and architecture"
+            description: language == .ja
+              ? "モダンなUI開発、アニメーション、アーキテクチャ" : "Modern UI development, animations, and architecture"
           )
           topicCard(
             title: "iOS/macOS/visionOS",
-            description: language == .ja ? "プラットフォーム固有の開発とAPI" : "Platform-specific development and APIs"
+            description: language == .ja
+              ? "プラットフォーム固有の開発とAPI" : "Platform-specific development and APIs"
           )
           topicCard(
             title: language == .ja ? "サーバーサイドSwift" : "Server-Side Swift",
-            description: language == .ja ? "Vapor、バックエンド開発、クラウドデプロイメント" : "Vapor, backend development, and cloud deployment"
+            description: language == .ja
+              ? "Vapor、バックエンド開発、クラウドデプロイメント" : "Vapor, backend development, and cloud deployment"
           )
           topicCard(
             title: language == .ja ? "テストと品質" : "Testing & Quality",
-            description: language == .ja ? "ユニットテスト、UIテスト、コード品質" : "Unit testing, UI testing, and code quality"
+            description: language == .ja
+              ? "ユニットテスト、UIテスト、コード品質" : "Unit testing, UI testing, and code quality"
           )
           topicCard(
             title: language == .ja ? "ツールと生産性" : "Tools & Productivity",
-            description: language == .ja ? "Xcode、デバッグ、開発者体験" : "Xcode, debugging, and developer experience"
+            description: language == .ja
+              ? "Xcode、デバッグ、開発者体験" : "Xcode, debugging, and developer experience"
           )
         }
       }
