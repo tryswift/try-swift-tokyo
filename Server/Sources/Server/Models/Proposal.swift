@@ -29,6 +29,14 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @Field(key: "talk_duration")
   var talkDuration: TalkDuration
 
+  /// Speaker name at time of submission
+  @Field(key: "speaker_name")
+  var speakerName: String
+
+  /// Speaker email at time of submission
+  @Field(key: "speaker_email")
+  var speakerEmail: String
+
   /// Speaker bio
   @Field(key: "bio")
   var bio: String
@@ -61,6 +69,8 @@ final class Proposal: Model, Content, @unchecked Sendable {
     abstract: String,
     talkDetail: String,
     talkDuration: TalkDuration,
+    speakerName: String,
+    speakerEmail: String,
     bio: String,
     iconURL: String? = nil,
     notes: String? = nil,
@@ -72,6 +82,8 @@ final class Proposal: Model, Content, @unchecked Sendable {
     self.abstract = abstract
     self.talkDetail = talkDetail
     self.talkDuration = talkDuration
+    self.speakerName = speakerName
+    self.speakerEmail = speakerEmail
     self.bio = bio
     self.iconURL = iconURL
     self.notes = notes
@@ -95,6 +107,8 @@ final class Proposal: Model, Content, @unchecked Sendable {
       abstract: abstract,
       talkDetail: talkDetail,
       talkDuration: talkDuration,
+      speakerName: speakerName,
+      speakerEmail: speakerEmail,
       bio: bio,
       iconURL: iconURL,
       notes: notes,

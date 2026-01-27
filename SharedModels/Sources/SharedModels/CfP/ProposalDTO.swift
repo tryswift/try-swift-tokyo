@@ -29,6 +29,10 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
   public let abstract: String
   public let talkDetail: String
   public let talkDuration: TalkDuration
+  /// Speaker name at time of submission
+  public let speakerName: String
+  /// Speaker email at time of submission
+  public let speakerEmail: String
   public let bio: String
   public let iconURL: String?
   public let notes: String?
@@ -46,6 +50,8 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
     abstract: String,
     talkDetail: String,
     talkDuration: TalkDuration,
+    speakerName: String,
+    speakerEmail: String,
     bio: String,
     iconURL: String? = nil,
     notes: String? = nil,
@@ -62,6 +68,8 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
     self.abstract = abstract
     self.talkDetail = talkDetail
     self.talkDuration = talkDuration
+    self.speakerName = speakerName
+    self.speakerEmail = speakerEmail
     self.bio = bio
     self.iconURL = iconURL
     self.notes = notes
@@ -80,6 +88,8 @@ public struct CreateProposalRequest: Codable, Sendable {
   public let abstract: String
   public let talkDetail: String
   public let talkDuration: TalkDuration
+  public let speakerName: String
+  public let speakerEmail: String
   public let bio: String
   public let iconURL: String?
   public let notes: String?
@@ -90,6 +100,8 @@ public struct CreateProposalRequest: Codable, Sendable {
     abstract: String,
     talkDetail: String,
     talkDuration: TalkDuration,
+    speakerName: String,
+    speakerEmail: String,
     bio: String,
     iconURL: String? = nil,
     notes: String? = nil
@@ -99,6 +111,8 @@ public struct CreateProposalRequest: Codable, Sendable {
     self.abstract = abstract
     self.talkDetail = talkDetail
     self.talkDuration = talkDuration
+    self.speakerName = speakerName
+    self.speakerEmail = speakerEmail
     self.bio = bio
     self.iconURL = iconURL
     self.notes = notes
@@ -111,6 +125,8 @@ public struct UpdateProposalRequest: Codable, Sendable {
   public let abstract: String?
   public let talkDetail: String?
   public let talkDuration: TalkDuration?
+  public let speakerName: String?
+  public let speakerEmail: String?
   public let bio: String?
   public let iconURL: String?
   public let notes: String?
@@ -120,6 +136,8 @@ public struct UpdateProposalRequest: Codable, Sendable {
     abstract: String? = nil,
     talkDetail: String? = nil,
     talkDuration: TalkDuration? = nil,
+    speakerName: String? = nil,
+    speakerEmail: String? = nil,
     bio: String? = nil,
     iconURL: String? = nil,
     notes: String? = nil
@@ -128,6 +146,8 @@ public struct UpdateProposalRequest: Codable, Sendable {
     self.abstract = abstract
     self.talkDetail = talkDetail
     self.talkDuration = talkDuration
+    self.speakerName = speakerName
+    self.speakerEmail = speakerEmail
     self.bio = bio
     self.iconURL = iconURL
     self.notes = notes

@@ -8,6 +8,8 @@ public struct UserDTO: Codable, Sendable, Equatable, Identifiable {
   public let role: UserRole
   /// User's display name
   public let displayName: String?
+  /// User's email address
+  public let email: String?
   /// User's bio/self-introduction
   public let bio: String?
   /// User's personal/portfolio URL
@@ -26,6 +28,7 @@ public struct UserDTO: Codable, Sendable, Equatable, Identifiable {
     username: String,
     role: UserRole,
     displayName: String? = nil,
+    email: String? = nil,
     bio: String? = nil,
     url: String? = nil,
     organization: String? = nil,
@@ -38,6 +41,7 @@ public struct UserDTO: Codable, Sendable, Equatable, Identifiable {
     self.username = username
     self.role = role
     self.displayName = displayName
+    self.email = email
     self.bio = bio
     self.url = url
     self.organization = organization
@@ -50,6 +54,7 @@ public struct UserDTO: Codable, Sendable, Equatable, Identifiable {
 /// Request object for updating user profile
 public struct UpdateUserProfileRequest: Codable, Sendable {
   public let displayName: String?
+  public let email: String?
   public let bio: String?
   public let url: String?
   public let organization: String?
@@ -57,12 +62,14 @@ public struct UpdateUserProfileRequest: Codable, Sendable {
 
   public init(
     displayName: String? = nil,
+    email: String? = nil,
     bio: String? = nil,
     url: String? = nil,
     organization: String? = nil,
     avatarURL: String? = nil
   ) {
     self.displayName = displayName
+    self.email = email
     self.bio = bio
     self.url = url
     self.organization = organization

@@ -21,6 +21,7 @@ struct UserDTOContent: Content {
   let username: String
   let role: String
   let displayName: String?
+  let email: String?
   let bio: String?
   let url: String?
   let organization: String?
@@ -34,6 +35,7 @@ struct UserDTOContent: Content {
     self.username = dto.username
     self.role = dto.role.rawValue
     self.displayName = dto.displayName
+    self.email = dto.email
     self.bio = dto.bio
     self.url = dto.url
     self.organization = dto.organization
@@ -46,6 +48,7 @@ struct UserDTOContent: Content {
 /// Vapor Content wrapper for UpdateUserProfileRequest
 struct UpdateUserProfileRequestContent: Content {
   let displayName: String?
+  let email: String?
   let bio: String?
   let url: String?
   let organization: String?
@@ -337,6 +340,14 @@ struct AuthController: RouteCollection {
       existingUser.username = githubUser.login
       existingUser.role = role
       existingUser.avatarURL = githubUser.avatarUrl
+      // Update email from GitHub if not already set
+      if existingUser.email == nil, let email = githubUser.email {
+        existingUser.email = email
+      }
+      // Update displayName from GitHub if not already set
+      if existingUser.displayName == nil, let name = githubUser.name {
+        existingUser.displayName = name
+      }
       try await existingUser.save(on: req.db)
       user = existingUser
     } else {
@@ -344,6 +355,8 @@ struct AuthController: RouteCollection {
         githubID: githubUser.id,
         username: githubUser.login,
         role: role,
+        displayName: githubUser.name,
+        email: githubUser.email,
         avatarURL: githubUser.avatarUrl
       )
       try await user.save(on: req.db)
@@ -485,6 +498,9 @@ struct AuthController: RouteCollection {
 
     if let displayName = request.displayName {
       user.displayName = displayName
+    }
+    if let email = request.email {
+      user.email = email
     }
     if let bio = request.bio {
       user.bio = bio
