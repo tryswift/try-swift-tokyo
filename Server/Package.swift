@@ -13,6 +13,7 @@ let package = Package(
     .package(url: "https://github.com/vapor/fluent.git", from: "4.12.0"),
     .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.10.0"),
     .package(url: "https://github.com/vapor/jwt.git", from: "5.1.0"),
+    .package(url: "https://github.com/vapor-community/vapor-elementary.git", from: "0.2.0"),
     .package(name: "SharedModels", path: "../SharedModels"),
   ],
   targets: [
@@ -24,6 +25,7 @@ let package = Package(
         .product(name: "Fluent", package: "fluent"),
         .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
         .product(name: "JWT", package: "jwt"),
+        .product(name: "VaporElementary", package: "vapor-elementary"),
       ],
       swiftSettings: [
         .swiftLanguageMode(.v6)

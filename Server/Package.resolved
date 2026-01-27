@@ -1,5 +1,5 @@
 {
-  "originHash" : "fd9b2faa62aea67bc96cd1c9cdd7024bc9807a529ccb710b953bfb7dc38f2e9e",
+  "originHash" : "26da217de5521b74404cb9cbc29209300ba2856d627fe363b3d46afd460780a3",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -26,6 +26,15 @@
       "state" : {
         "revision" : "742f624a998cba2a9e653d9b1e91ad3f3a5dff6b",
         "version" : "4.15.2"
+      }
+    },
+    {
+      "identity" : "elementary",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/elementary-swift/elementary.git",
+      "state" : {
+        "revision" : "65803c4770b6c8b6452c6ce83ab570c1b7042528",
+        "version" : "0.6.1"
       }
     },
     {
@@ -314,6 +323,15 @@
       "state" : {
         "revision" : "6f3db7122ccffb28e11e121c3797a176fcb88796",
         "version" : "4.121.1"
+      }
+    },
+    {
+      "identity" : "vapor-elementary",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vapor-community/vapor-elementary.git",
+      "state" : {
+        "revision" : "e1326d2439a9d4bd271c24b9765c195f7f793e77",
+        "version" : "0.2.2"
       }
     },
     {
