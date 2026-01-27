@@ -10,7 +10,7 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/twostraws/Ignite", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.2.0"),
-    .package(path: "../iOS"),
+    .package(path: "../DataClient"),
     .package(path: "../LocalizationGenerated")
   ],
   targets: [
@@ -19,7 +19,7 @@ let package = Package(
       dependencies: [
         "Ignite",
         .product(name: "Dependencies", package: "swift-dependencies"),
-        .product(name: "DataClient", package: "iOS"),
+        .product(name: "DataClient", package: "DataClient"),
         .product(name: "LocalizationGenerated", package: "LocalizationGenerated"),
       ],
       resources: [

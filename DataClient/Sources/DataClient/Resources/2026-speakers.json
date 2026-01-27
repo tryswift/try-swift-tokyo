@@ -3,6 +3,7 @@
     "name": "Klemens Strasser",
     "image_name": "klemens_strasser",
     "bio": "Klemens is a indie developer dedicated to crafting delightful apps with a strong focus on accessibility. He won an Apple Design Award as a Student in 2015 for his very first project, Elementary Minute. In 2025, his latest app, Art of Fauna, received both an Apple Design Award and an App Store Award. His work centers on creating thoughtful, high-quality experiences that are welcoming and usable for as many people as possible.",
+    "bio_ja": "Klemensはアクセシビリティに強いこだわりを持ち、素晴らしいアプリを作ることに専念するインディー開発者です。2015年には学生として初めてのプロジェクト「Elementary Minute」でApple Design Awardを受賞しました。2025年には最新アプリ「Art of Fauna」がApple Design AwardとApp Store Awardの両方を受賞しました。彼の仕事は、できるだけ多くの人にとって親しみやすく使いやすい、思慮深く高品質な体験を創造することに重点を置いています。",
     "job_title": "Indie Developer",
     "links": [
       {
@@ -23,6 +24,7 @@
     "name": "Yasuhiro Inami",
     "image_name": "yasuhiro_inami",
     "bio": "Inamiy is an iOS developer at Goodnotes, focusing on mobile app development and AI-powered features.\nHe is a big fan of functional programming including Swift, Haskell, and any statically typed languages that can check his bad code.\nNowadays, he has shifted toward compiler-like work that helps detect and correct poor code produced by AI.",
+    "bio_ja": "GoodnotesでiOS開発者として働いており、モバイルアプリ開発とAI機能の開発に注力しています。\nSwift、Haskell、その他の静的型付け言語を含む関数型プログラミングの大ファンで、自分の悪いコードをチェックしてくれる言語が好きです。\n最近はAIが生成するコードの検出と修正を支援するコンパイラ的な作業にシフトしています。",
     "job_title": "Software Engineer at Goodnotes",
     "links": [
       {
@@ -35,6 +37,7 @@
     "name": "Joannis Orlandos",
     "image_name": "joannis_orlandos",
     "bio": "Joannis Orlandos is a cross-platform Swift developer and member of both the Swift Server Workgroup and Swift Android Workgroup. He announced the official Swift SDK for Android on Swift.org and co-founded Wendy Labs, creators of WendyOS—a Swift-first Linux distribution for embedded devices. Joannis maintains Hummingbird 2, created MongoKitten and Citadel, and co-runs SwiftOnServer.com",
+    "bio_ja": "Joannis Orlandosはクロスプラットフォーム Swift 開発者であり、Swift Server WorkgroupとSwift Android Workgroupの両方のメンバーです。Swift.orgでAndroid向け公式Swift SDKを発表し、組み込みデバイス向けのSwiftファーストLinuxディストリビューション「WendyOS」を作成したWendy Labsを共同設立しました。JoannisはHummingbird 2のメンテナーであり、MongoKittenとCitadelを作成し、SwiftOnServer.comを共同運営しています。",
     "job_title": "OpenSource Maintainer / Co-Founder",
     "links": [
       {
@@ -50,7 +53,8 @@
   {
     "name": "Yuta Koshizawa",
     "image_name": "yuta_koshizawa",
-    "bio": "Yuta is a software engineer specializing in iOS, Swift, and real-time image recognition. He is the author of “Heart of Swift,” a widely read online Swift book in Japan. He also regularly hosts an online study group called “Swift Zoomin’”.",
+    "bio": "Yuta is a software engineer specializing in iOS, Swift, and real-time image recognition. He is the author of 'Heart of Swift,' a widely read online Swift book in Japan. He also regularly hosts an online study group called 'Swift Zoomin''.",
+    "bio_ja": "iOS、Swift、リアルタイム画像認識を専門とするソフトウェアエンジニアです。日本で広く読まれているオンラインSwift本「Heart of Swift」の著者です。また、「Swift Zoomin'」というオンライン勉強会を定期的に開催しています。",
     "job_title": "Chief Engineer at Qoncept",
     "links": [
       {

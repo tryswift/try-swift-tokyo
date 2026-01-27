@@ -7,6 +7,7 @@ struct OutlineComponent: HTML {
 
   var body: some HTML {
     let data: OutlineData = switch year {
+    case .year2024: .year2024
     case .year2025: .year2025
     case .year2026: .year2026
     }
@@ -44,6 +45,13 @@ struct OutlineComponent: HTML {
 
 private struct OutlineData {
   let firstLabel, firstValue, secondLabel, secondValue: String
+
+  static let year2024 = OutlineData(
+    firstLabel: "Date and time",
+    firstValue: "Mar. 22nd - 24th, 2024",
+    secondLabel: "Venue",
+    secondValue: "Shibuya Stream Hall<br>3-21-3 Shibuya, Shibuya-ku, Tokyo"
+  )
 
   static let year2025 = OutlineData(
     firstLabel: "Date and time",

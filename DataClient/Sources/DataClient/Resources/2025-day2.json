@@ -1,0 +1,662 @@
+{
+  "id": 2,
+  "title": "Day 2",
+  "title_ja": "２日目",
+  "date": "2025-04-10T09:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2025-04-10T09:00:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Registration",
+          "title_ja": "受付",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "summary": "Download Luma app and show QR code of your ticket at the reception. You will receive a name tag and a goodie bag.",
+          "summary_ja": "Lumaアプリをダウンロードし、受付でチケットのQRコードを提示してください。ネームタグとお楽しみ袋がプレゼントされます。"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2025-04-10T09:45:00+09:00",
+      "sessions": [
+        {
+          "id": 2,
+          "title": "Opening",
+          "title_ja": "オープニング",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "summary": "Let's start!",
+          "summary_ja": "いよいよ始まりますよ！"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2025-04-10T10:00:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "Let's Table That: Creating Games with TabletopKit for visionOS",
+          "title_ja": "visionOS向けTabletopKitでゲームを作ろう",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "Let's learn about Apple's newest framework TabletopKit for visionOS! You will learn what is TabletopKit and how you can get started using it to build games for visionOS. We'll review the basics of the framework and what it gives you, as opposed to building a game without it. We'll then explore how we would build Monopoly using TabletopKit. No visionOS experience is necessary for getting started! By the end of the talk you'll be able to begin building your own tabletop games.",
+          "description_ja": "Appleの最新フレームワーク、visionOS向けTabletopKitについて学びましょう！\nこのセッションでは、TabletopKitとは何か、そしてそれを使ってvisionOS向けのゲームをどのように構築できるかを理解します。\nフレームワークの基本機能と、それを活用することで得られるメリット（従来の方法でゲームを作る場合との違い）についても解説します。\nさらに、TabletopKitを使用してモノポリーをどのように構築するかについて探求します。\nvisionOSの経験がなくてもすぐに始められる内容です！\nトークの最後には、自分自身のテーブルトップゲームを作り始めるための基礎が身につくでしょう。",
+          "speakers": [
+            {
+              "id": 37,
+              "name": "Mikaela Caron",
+              "image_name": "mikaela_caron",
+              "bio": "Mikaela Caron is an independent iOS Engineer who actively shares her expertise on social media, focusing on iOS development, building apps in public, and freelancing. She's continuing to work on her indie app Fruitful, which helps people connect with others at conferences, while also traveling as much as she can. She's also an organizer for iOSDevHappyHour and loves giving back to the community.",
+              "bio_ja": "Mikaela Caronは、iOS開発、アプリの公開開発、フリーランスに関する知識をSNSで積極的に発信している独立系iOSエンジニアです。現在は、カンファレンスでの交流をサポートするインディーアプリ『Fruitful』の開発を続けながら、できる限り多くの場所を旅しています。また、iOSDevHappyHourのオーガナイザーを務めるなど、コミュニティへの貢献も大切にしています。",
+              "job_title": "Indie iOS Developer",
+              "links": [
+                {
+                  "name": "mikaelacaron.com",
+                  "url": "https://mikaelacaron.com"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2025-04-10T10:25:00+09:00",
+      "sessions": [
+        {
+          "id": 7,
+          "title": "⚡️ Write iOS Game Once and Play in Any Way",
+          "title_ja": "⚡️ 一度作れば、どんな入力でもプレイ可能なiOSゲーム",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "I write a simple iOS game app which only has the \"left\" and \"right\" action. But the exciting is that the user input can be in many way. You can choose slider, button, accelerometer, keyboard, and the new feature in iOS 18: eye tracking. So you also can use it to test any IO functionality you find.",
+          "description_ja": "私は、\"左\"と\"右\"のアクションだけを持つシンプルなiOSゲームアプリを作りました。しかし、興味深いのはユーザー入力の方法が多様である点です。\nスライダー、ボタン、加速度センサー、キーボード、そしてiOS 18で新たに登場したアイ・トラッキングなど、様々な入力手段を選択できます。\nさらに、この仕組みを活用して、あらゆる入出力機能のテストにも利用することが可能です。",
+          "speakers": [
+            {
+              "id": 39,
+              "name": "UJ Cheng",
+              "image_name": "yj_cheng",
+              "bio": "Advanced Software Engineer at Garmin. 10 years of iOS development experience since college. Love solving the LeetCode problems with Swift.",
+              "bio_ja": "Garminのアドバンストソフトウェアエンジニアです。\n大学時代からiOS開発に取り組み、10年以上の経験があります。\nSwiftを使ってLeetCodeの問題を解くのが好きです。",
+              "job_title": "Advanced Software Engineer at Garmin",
+              "links": [
+                {
+                  "name": "@iamhands0me",
+                  "url": "https://www.linkedin.com/in/iamhands0me"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Mikaela Caron and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Mikaela Caronさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 37,
+              "name": "Mikaela Caron",
+              "image_name": "mikaela_caron"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2025-04-10T10:35:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "Rendering beautiful text using MSDFs and Metal.",
+          "title_ja": "MSDFとMetalを用いた美しいテキストレンダリング",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "I will be presenting a fast, real time, infinite canvas user interface implementation using Metal, and will be exploring the use of Multi-channel Signed Distance Fields (MSDFs), for rendering text that looks beautiful and sharp at any zoom level or orientation.",
+          "description_ja": "Metalを活用した高速かつリアルタイムの無限キャンバス型ユーザーインターフェースの実装例を発表します。\nまた、どのズームレベルや向きでも美しくシャープに表示されるテキストをレンダリングするために、Multi-channel Signed Distance Fields（MSDF）の利用法について探求します。",
+          "speakers": [
+            {
+              "id": 41,
+              "name": "Michael Petrie",
+              "image_name": "michael_petrie",
+              "bio": "I'm a New Zealander who has been living in Japan for the past 10 years. I primarily work with low level, real time graphics and audio. This year, I founded a company called kapsy.io, and am currently working on a real time generative music sequencer with the code named _Variations_.",
+              "bio_ja": "ニュージーランド出身で、日本に住んで10年になります。主に低レベルなリアルタイムのグラフィックスやオーディオを扱っています。\n今年、新しくkapsy.ioという会社を設立し、現在はリアルタイムで生成される音楽シーケンサーVariations（コードネーム）の開発を進めています。",
+              "job_title": "Programmer at ZOZO, Inc",
+              "links": [
+                {
+                  "name": "@Kapsy",
+                  "url": "https://github.com/Kapsy"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2025-04-10T11:00:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "Break",
+          "title_ja": "休憩",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "summary": "Take a break and meet other attendees or sponsors",
+          "summary_ja": "休憩して他の参加者やスポンサーと交流しましょう"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2025-04-10T11:30:00+09:00",
+      "sessions": [
+        {
+          "id": 13,
+          "title": "Raymarching Shaders with SwiftUI",
+          "title_ja": "SwiftUIでレイマーチングシェーダー",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "SwiftUI's syntax is great for UI, but it can also be used for 3D graphics. We'll combine SwiftUI's elegant syntax with raymarching and signed distance functions to make cool shaders.",
+          "description_ja": "SwiftUIの文法は主にUI作成に優れていますが、実は3Dグラフィックスにも応用可能です。\nこのセッションでは、SwiftUIの洗練されたシンタックスとレイマーチング、さらにはSigned Distance Functionsを組み合わせることで、クールなシェーダーを作成する方法を探求します。",
+          "speakers": [
+            {
+              "id": 45,
+              "name": "Andrew Zheng",
+              "image_name": "andrew_zheng",
+              "bio": "Hi, I'm Andrew coming from San Francisco! and I like making apps. This is my second time in Japan, excited to be here. よろしくお願いします！",
+              "bio_ja": "こんにちは！サンフランシスコ出身のAndrewです。アプリを作るのが好きです。今回で日本に来るのは2回目ですが、また来られてとても嬉しいです。よろしくお願いします！",
+              "job_title": "iOS Developer at xAI",
+              "links": [
+                {
+                  "name": "@aheze0",
+                  "url": "https://x.com/aheze0"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Michael Petrie and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Michael Petrieさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 41,
+              "name": "Michael Petrie",
+              "image_name": "michael_petrie"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2025-04-10T11:55:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "⚡️ I Built an App for NeXTSTEP or: How I Learned to Stop Worrying and Love Objective-C",
+          "title_ja": "⚡️ NeXTSTEP向けアプリを作った話 ― Objective-Cを恐れるのをやめ、愛するようになった理由",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "We all know that the NS prefix on the Apple platforms comes NextStep. However, until I built an app for NextStep, I did not realize just how much was already there. In this quick talk, I encourage attendees to deepen their knowledge of Objective C and Apple Platforms by stepping back in time to 1996",
+          "description_ja": "AppleプラットフォームにおけるNSプレフィックスがNextStepに由来することは、誰もが知っています。しかし、私がNextStep向けのアプリを作るまでは、その技術がどれほど充実しているかに全く気づいていませんでした。この短いトークでは、1996年にタイムスリップすることで、Objective-CとAppleプラットフォームに対する理解をさらに深めることを皆さんに提案します。",
+          "speakers": [
+            {
+              "id": 47,
+              "name": "Jeffrey Bergier",
+              "image_name": "jeffrey_bergier",
+              "bio": "Cocoa Developer and Teacher. Love technology and cars. Working in the automotive software industry. Living in Tokyo.\nCompany: Woven by Toyota - This talk is not affiliated with my employer in any way.\nGitHub: [@jeffreybergier](https://github.com/jeffreybergier)\nMastodon: [@jeff](https://jeffburg.social/@jeff)",
+              "bio_ja": "Cocoa Developer & Teacher として活動しています。\nテクノロジーと車が大好きで、現在は自動車ソフトウェア業界で働いています（勤務地：東京）。\n\n所属：Woven by Toyota（本講演は所属企業とは関係ありません）\nGitHub：[@jeffreybergier](https://github.com/jeffreybergier)\nMastodon：[@jeff](https://jeffburg.social/@jeff)",
+              "job_title": "Quality Assurance Engineer",
+              "links": [
+                {
+                  "name": "jeffburg.com",
+                  "url": "https://www.jeffburg.com"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Andrew Zheng and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Andrew Zhengさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 45,
+              "name": "Andrew Zheng",
+              "image_name": "andrew_zheng",
+              "bio": "Hi, I'm Andrew coming from San Francisco! and I like making apps. This is my second time in Japan, excited to be here. よろしくお願いします！",
+              "bio_ja": "こんにちは！サンフランシスコ出身のAndrewです。アプリを作るのが好きです。今回で日本に来るのは2回目ですが、また来られてとても嬉しいです。よろしくお願いします！",
+              "job_title": "iOS Developer at xAI",
+              "links": [
+                {
+                  "name": "@aheze0",
+                  "url": "https://x.com/aheze0"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2025-04-10T12:05:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "Vision Pro × Text to 3D Model: How Swift and Generative AI Unlock a New Era of Spatial Computing",
+          "title_ja": "Vision Pro × Text to 3D Model: Swiftと生成型AIが切り拓く新時代の空間コンピューティング",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "Combine Vision Pro (visionOS) with Generative AI to instantly transform text prompts into 3D objects in real-time. Discover how Swift and cutting-edge AI come together to create immersive user experiences beyond the boundaries of traditional apps.",
+          "description_ja": "Vision Pro (visionOS) と生成型AIを組み合わせることで、テキストプロンプトをリアルタイムで瞬時に3Dオブジェクトへ変換します。\nSwiftと最先端のAI技術が融合し、従来のアプリケーションの枠を超えた没入型ユーザー体験を実現する方法をご紹介します。",
+          "speakers": [
+            {
+              "id": 49,
+              "name": "Ryo Igarashi",
+              "image_name": "ryo_igarashi",
+              "bio": "Software Engineer at newmo, Inc.",
+              "bio_ja": "newmo, Inc.のソフトウェアエンジニア",
+              "job_title": "Engineer@newmo, Inc.",
+              "links": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2025-04-10T12:30:00+09:00",
+      "sessions": [
+        {
+          "id": 19,
+          "title": "Lunch",
+          "title_ja": "昼食",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "summary": "Take a lunch box and meet other attendees or sponsors.",
+          "summary_ja": "お弁当を持って、他の参加者やスポンサーと交流しましょう。"
+        },
+        {
+          "id": 18,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Ryo Igarashi and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Ryo Igarashiさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 49,
+              "name": "Ryo Igarashi",
+              "image_name": "ryo_igarashi"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2025-04-11T13:10:00+09:00",
+      "sessions": [
+        {
+          "id": 21,
+          "title": "Swift over Coffee Live",
+          "title_ja": "Swift over Coffee ライブ",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "Join us for a live recording of the popular podcast \"Swift over Coffee,\" where the latest Swift news and practical techniques are discussed. Hosted by Paul Hudson and Mikaela Caron, the show dives into new Swift features, community trends, and coding tips that prove invaluable in everyday development. In addition to the standard recording session, the event features a Q&A with the audience—offering a unique chance to hear exclusive behind-the-scenes stories and up-to-the-minute development insights. This is an ideal opportunity for Swift developers to catch up on cutting-edge trends and strengthen their ties within the community.",
+          "description_ja": "最新の Swift ニュースや実用的なテクニックについて議論する人気のポッドキャスト「Swift over Coffee」のライブ録画に参加してください。ポール ハドソンとミカエラ キャロンが司会を務めるこの番組では、Swift の新しい機能、コミュニティのトレンド、日常の開発で非常に役立つコーディングのヒントについて詳しく説明します。このイベントでは、通常のレコーディング セッションに加えて、聴衆との Q&A も行われ、特別な舞台裏の話や開発に関する最新の洞察を聞くユニークな機会が提供されます。これは、Swift 開発者にとって最先端のトレンドを把握し、コミュニティ内の絆を強化する理想的な機会です。",
+          "speakers": [
+            {
+              "id": 89,
+              "name": "Paul Hudson",
+              "image_name": "paul_hudson",
+              "bio": "Paul is the author of Hacking with Swift, Pro Swift, Swift Design Patterns, Testing Swift, Swift Interview Challenges, and more. Suffice it to say, he quite likes Swift. And coffee. (But mostly Swift.) (And coffee.)",
+              "bio_ja": "Paulは「Hacking with Swift」「Pro Swift」「Swift Design Patterns」「Testing Swift」「Swift Interview Challenges」などの著者です。簡単に言うと、Swiftが大好きです。そしてコーヒーも。（でも主にSwiftが。）（いや、コーヒーも同じくらい。）",
+              "job_title": "Creator at Hacking with Swift",
+              "links": [
+                {
+                  "name": "@twostraws",
+                  "url": "https://x.com/twostraws"
+                },
+                {
+                  "name": "@twostraws",
+                  "url": "https://github.com/twostraws"
+                }
+              ]
+            },
+            {
+              "id": 90,
+              "name": "Mikaela Caron",
+              "image_name": "mikaela_caron",
+              "bio": "Mikaela Caron is an independent iOS Engineer who actively shares her expertise on social media, focusing on iOS development, building apps in public, and freelancing. She's continuing to work on her indie app Fruitful, which helps people connect with others at conferences, while also traveling as much as she can. She's also an organizer for iOSDevHappyHour and loves giving back to the community.",
+              "bio_ja": "Mikaela Caronは、iOS開発、アプリの公開開発、フリーランスに関する知識をSNSで積極的に発信している独立系iOSエンジニアです。現在は、カンファレンスでの交流をサポートするインディーアプリ『Fruitful』の開発を続けながら、できる限り多くの場所を旅しています。また、iOSDevHappyHourのオーガナイザーを務めるなど、コミュニティへの貢献も大切にしています。",
+              "job_title": "Indie iOS Developer",
+              "links": [
+                {
+                  "url": "https://mikaelacaron.com",
+                  "name": "mikaelacaron.com"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2025-04-10T14:00:00+09:00",
+      "sessions": [
+        {
+          "id": 21,
+          "title": "Live coding a streaming ChatGPT proxy with Swift OpenAPI—from scratch!",
+          "title_ja": "Swift OpenAPIを使ったライブコーディング ― ゼロから構築するストリーミングChatGPTプロキシ",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "Join us as we build a ChatGPT client, from scratch, using Swift OpenAPI Generator. We'll take advantage of Swift OpenAPI's pluggable HTTP transports to reuse the same generated client to make upstream calls from a Linux server, providing end-to-end streaming, backed by async sequences, without buffering upstream responses.\n\nIn this session you'll learn how to:\n\nGenerate a type-safe ChatGPT macOS client and use URLSession OpenAPI transport.\nStream LLM responses using Server Sent Events (SSE).\nBootstrap a Linux proxy server using the Vapor OpenAPI transport.\nUse the same generated ChatGPT client within the proxy by switching to the AsyncHTTPClient transport.\nEfficiently transform responses from SSE to JSON Lines, maintaining end-to-end streaming.",
+          "description_ja": "Swift OpenAPI Generatorを使って、ゼロからChatGPTクライアントを構築するライブコーディングに参加してください。\nSwift OpenAPIのプラガブルなHTTPトランスポート機能を活用し、生成された同一クライアントを再利用してLinuxサーバーから上流呼び出しを行います。これにより、非同期シーケンスに支えられたエンドツーエンドのストリーミングが、上流レスポンスをバッファリングすることなく実現できます。\n\nこのセッションでは、以下の内容を学びます:\n\n・タイプセーフなChatGPT macOSクライアントを生成し、URLSession OpenAPIトランスポートを使用する方法\n・サーバー送信イベント（SSE）を利用して、LLMのレスポンスをストリーミングする方法\n・Vapor OpenAPIトランスポートを用いて、Linuxプロキシサーバーをブートストラップする方法\n・AsyncHTTPClientトランスポートに切り替えることで、プロキシ内で同じ生成済みChatGPTクライアントを利用する方法\n・SSEからJSON Linesへのレスポンス変換を効率的に行い、エンドツーエンドのストリーミングを維持するテクニック",
+          "speakers": [
+            {
+              "id": 53,
+              "name": "Si Beaumont",
+              "image_name": "si_beaumont",
+              "bio": "Si works at Apple, where he helps maintain a number of open-source Swift libraries to support server-side use cases. Before that, he's worked in a wide range of areas including virtulalization, cloud technologies, privacy-preserving machine learning, and developer tools. \n\nSi is based in Cambridge, UK, but loves to travel and see new places. He's hugely passionate about coffee and enjoys playing bass guitar.",
+              "bio_ja": "SiはAppleで働いており、サーバーサイドでの利用を支援するために、複数のオープンソースのSwiftライブラリの維持に携わっています。以前は、仮想化、クラウド技術、プライバシー保護機械学習、開発者向けツールなど、幅広い分野での経験を積んできました。\n\n現在はイギリスのケンブリッジを拠点に活動していますが、旅行をして新しい場所を訪れるのが大好きです。コーヒーには強い情熱を持っており、ベースギターを弾くのも楽しんでいます。",
+              "job_title": "Software Engineer @ Apple",
+              "links": [
+                {
+                  "name": "@simonjbeaumont",
+                  "url": "https://github.com/simonjbeaumont"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2025-04-10T14:25:00+09:00",
+      "sessions": [
+        {
+          "id": 23,
+          "title": "Apple Vision Pro new interface based on hand tracking",
+          "title_ja": "Apple Vision Pro: ハンドトラッキングを基盤とした新インターフェース",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "Leverage hand tracking in Apple Vision Pro to build a SwiftUI window that operates like the native visionOS SystemOverlay. Invoke and manipulate windows intuitively in 3D space, creating a touch-like UI. We present a new interface for spatial computing.",
+          "description_ja": "Apple Vision Pro のハンドトラッキング機能を活用して、ネイティブの visionOS SystemOverlay のように動作する SwiftUI ウィンドウを構築します。\n3D空間で直感的にウィンドウを呼び出し、操作することで、タッチ操作に近いユーザーインターフェースを実現します。\nこれにより、空間コンピューティング向けの全く新しいインターフェースを提案します。",
+          "speakers": [
+            {
+              "id": 55,
+              "name": "tochi",
+              "image_name": "tochi",
+              "bio": "I am an engineer/developer specializing in iOS and visionOS. I have created numerous personal apps, including 'Large Contacts' for iOS and 'Good Sleeper 360' for visionOS. I've authored several technical books, such as Slack & Zoom & Trello Basics + Tips for Telework (in the できるfit series) and What We Wanted to Know About Alexa, and more recently, The Path to Becoming a visionOS Developer. I have received many accolades, including the Mashup Award and top honors in contests organized by Japan's Ministry of Internal Affairs and Communications, as well as multiple awards in SPAJAM and other hackathons. I have spoken at various events like JAWS Festa and Alexa Day, and I currently share insights on visionOS through social media.",
+              "bio_ja": "iOSとvisionOSを専門とするエンジニア・開発者です。個人で多数のアプリを開発しており、iOS向けの「Large Contacts」やvisionOS向けの「Good Sleeper 360」などをリリースしています。\nまた、技術書の執筆も手がけており、「Slack & Zoom & Trello 基本+活用術（できるfitシリーズ）」や「Alexaに聞きたかったこと」、最近では「visionOS開発者への道」などを出版しています。\n受賞歴も多数あり、Mashup Awardや総務省主催のコンテストでの最優秀賞、SPAJAMをはじめとするハッカソンでの受賞経験があります。\nまた、JAWS FestaやAlexa Dayなどのイベンで登壇経験があり、現在はvisionOSに関する知見をSNSで発信しています。",
+              "job_title": "Software engineer",
+              "links": [
+                {
+                  "name": "tochi.github.io",
+                  "url": "https://tochi.github.io/profile/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 22,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Si Beaumont and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Si Beaumontさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 53,
+              "name": "Si Beaumont",
+              "image_name": "si_beaumont"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2025-04-10T14:45:00+09:00",
+      "sessions": [
+        {
+          "id": 25,
+          "title": "Group Photo",
+          "title_ja": "写真撮影",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "summary": "Take a group photo with all attendees and speakers",
+          "summary_ja": "参加者全員と講演者と一緒に集合写真を撮ります"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2025-04-10T15:10:00+09:00",
+      "sessions": [
+        {
+          "id": 27,
+          "title": "Break",
+          "title_ja": "休憩",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "summary": "Take a break and meet other attendees or sponsors",
+          "summary_ja": "休憩して他の参加者やスポンサーと交流しましょう"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "time": "2025-04-10T15:40:00+09:00",
+      "sessions": [
+        {
+          "id": 29,
+          "title": "Bring life to your iOS Application with 3D content using RealityKit",
+          "title_ja": "RealityKitでiOSアプリに命を吹き込む",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "Take your iOS app to the next level by integrating 3D content with SwiftUI. Go beyond static models and learn how to add animations, dynamic content ,performance enhancements and interactive elements using RealityKit, creating immersive experiences that set your app apart.",
+          "description_ja": "SwiftUIと連携して3Dコンテンツを取り入れることで、あなたのiOSアプリを次のレベルへと引き上げましょう。\n静的なモデルに留まらず、RealityKitを活用してアニメーション、動的コンテンツ、パフォーマンス向上、そしてインタラクティブな要素を加えることで、他にはない没入型体験を実現する方法を学びます。",
+          "speakers": [
+            {
+              "id": 61,
+              "name": "Kosala Jayasekara",
+              "image_name": "kosala_jayasekara",
+              "bio": "I have completed more than a decade long experience in the field of futuristic developments and managed to gain a  portfolio of local and international clientele while working with prominent corporate entities in Sri Lanka.\n\nCurrently serving as the Chief Technology Officer for Fixel Digital which is a development house specifically for Mobile application developments . it's a pleasure that I am well known for my Punctuality, Attention to detail, and innovative mindset among the clients and the industry that I am being with\n\nI have started iOS Development in its early development stage in 2011. I have been in the apple ecosystem for more than a decade now, also Delivered more than 55+ Apps, including iOS, macOS, tvOS, and watchOS. At the same time, I am serving my knowledge to Students in the IT industry and providing consultation services to my clients from overseas.",
+              "bio_ja": "未来志向の開発に10年以上携わり、国内外の企業と協力しながら幅広いクライアントのポートフォリオを築いてきました。\n\n現在はFixel Digitalの最高技術責任者（CTO）として、モバイルアプリ開発を専門とする開発チームを率いています。業界内では「時間厳守」「細部へのこだわり」「革新的な発想」で知られています。\n\niOS開発には2011年の初期の段階から携わっており、Appleのエコシステムで10年以上の経験を積んできました。これまでにiOS、macOS、tvOS、watchOS向けに55本以上のアプリを開発・リリースしてきました。また、IT業界の学生に知識を共有したり、海外クライアントへのコンサルティング業務も行っています。",
+              "job_title": "Head of Development @ Fixel Digital",
+              "links": [
+                {
+                  "name": "kosalajayasekara.com",
+                  "url": "https://kosalajayasekara.com"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 24,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet tochi and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "tochiさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 55,
+              "name": "tochi",
+              "image_name": "tochi"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2025-04-10T16:05:00+09:00",
+      "sessions": [
+        {
+          "id": 31,
+          "title": "⚡️ Swift × Android: How Skip is Shaping the Future of Cross-Platform Development",
+          "title_ja": "⚡️ Swift × Android: Skipが切り拓くクロスプラットフォーム開発の未来",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "Skip is an innovative tool that transforms Swift code for Android with native performance. Evolving from transpiling Swift to Kotlin, it now runs compiled native Swift on Android. In 5 minutes, discover Skip's fundamentals, architecture, and its advantages over React Native and Flutter!",
+          "description_ja": "Skipは、SwiftコードをAndroid向けに変換し、ネイティブパフォーマンスを実現する革新的なツールです。\n元々はSwiftからKotlinへのトランスパイルとして進化してきましたが、現在はAndroid上でコンパイルされたネイティブSwiftを実行します。\n5分間のセッションで、Skipの基本原理、アーキテクチャ、そしてReact NativeやFlutterに対する優位性についてご紹介します。",
+          "speakers": [
+            {
+              "id": 63,
+              "name": "yamaken",
+              "image_name": "yamaken",
+              "bio": "I usually develop iOS apps at LY Corporation and actively output through blogging and speaking engagements. Last year, I spoke 13 times.",
+              "bio_ja": "LY CorporationでiOSアプリを開発しています。ブログや登壇などのアウトプットにも積極的に取り組んでおり、昨年は13回の登壇を行いました。",
+              "job_title": "iOS Developer at LY Corporation",
+              "links": [
+                {
+                  "name": "@yamakentoc",
+                  "url": "https://x.com/yamakentoc"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 30,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Kosala Jayasekara and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Kosala Jayasekaraさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 61,
+              "name": "Kosala Jayasekara",
+              "image_name": "kosala_jayasekara",
+              "bio": "I have completed more than a decade long experience in the field of futuristic developments and managed to gain a  portfolio of local and international clientele while working with prominent corporate entities in Sri Lanka.\n\nCurrently serving as the Chief Technology Officer for Fixel Digital which is a development house specifically for Mobile application developments . it's a pleasure that I am well known for my Punctuality, Attention to detail, and innovative mindset among the clients and the industry that I am being with\n\nI have started iOS Development in its early development stage in 2011. I have been in the apple ecosystem for more than a decade now, also Delivered more than 55+ Apps, including iOS, macOS, tvOS, and watchOS. At the same time, I am serving my knowledge to Students in the IT industry and providing consultation services to my clients from overseas.",
+              "bio_ja": "未来志向の開発に10年以上携わり、国内外の企業と協力しながら幅広いクライアントのポートフォリオを築いてきました。\n\n現在はFixel Digitalの最高技術責任者（CTO）として、モバイルアプリ開発を専門とする開発チームを率いています。業界内では「時間厳守」「細部へのこだわり」「革新的な発想」で知られています。\n\niOS開発には2011年の初期の段階から携わっており、Appleのエコシステムで10年以上の経験を積んできました。これまでにiOS、macOS、tvOS、watchOS向けに55本以上のアプリを開発・リリースしてきました。また、IT業界の学生に知識を共有したり、海外クライアントへのコンサルティング業務も行っています。",
+              "job_title": "Head of Development @ Fixel Digital",
+              "links": [
+                {
+                  "name": "kosalajayasekara.com",
+                  "url": "https://kosalajayasekara.com"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2025-04-10T16:15:00+09:00",
+      "sessions": [
+        {
+          "id": 33,
+          "title": "Capturing Immersive Videos of J1 Pro Soccer Team FC Machida Zelvia: Building a Swift Viewer and Hosting a Hands-On Session",
+          "title_ja": "J1プロサッカーチームFC町田ゼルビアのImmersive動画を撮影しSwiftでViewerを実装し体験会実施した",
+          "place": "Hall",
+          "place_ja": "ホール",
+          "description": "Immersive Video is a 180-degree video that appears three-dimensional. My team and I, along with several collaborators, captured an Immersive Video of FC Machida Zelvia—a professional soccer team in Japan's J1 League—and hosted a hands-on session exclusively for special members. This project was made possible through the club's support and cooperation. The event was a great success, and we encountered many challenges and learned a great deal through trial and error in the processes of filming, video editing, developing the Swift-based Viewer, and running the session. I'm especially eager to share the in-depth insights we gained from building the Viewer in Swift and the overall experience. It's rare to see professional sports filming projects and Immersive Video technology being showcased at developer conferences, and there are many fascinating insights to be shared from both the video capturing process and the Viewer application development.",
+          "description_ja": "Immersive Videoは立体的に見える180度動画です。\n私と複数人のチームで、サッカーJ1リーグ所属のFC町田ゼルビアのImmersive Videoを撮影し特別会員向けに体験会を実施しました。クラブ協力のもと実現できました。体験会は大成功。撮影、動画編集、Viewer実装、体験会、どれも試行錯誤があり多くの知見を得られました。特にSwiftで実装したViewerの作り込みと体験についての深掘りした知見を共有したいです。\nプロスポーツの撮影自体が開発者向けのカンファレンスで共有される事例が少ないですし、Immersive Video撮影、Viewerアプリも面白い知見が多数です。",
+          "speakers": [
+            {
+              "id": 65,
+              "name": "Satoshi Hattori",
+              "image_name": "satoshi_hattori",
+              "bio": "Belongs to Cyber AI Productions. XR Expert at Cyber Agent.\nResponsible for system development related to XR and studio shooting.\nPurchased Apple Vision Pro locally on its U.S. release day. Actively engaged in development and research, including the visionOS 30 Days project.\nOrganizer of the visionOS Engineer Meetup. Published a book on visionOS app development.\nHas spoken at iOSDC for nine consecutive years, as well as at try! Swift Tokyo, XR Kaigi, Let's visionOS, AWE USA, and more.\nMainly shares updates on X, so please follow!",
+              "bio_ja": "Cyber AI Productions所属。XR Expert at Cyber Agent。\nXR関連とスタジオ撮影関連のシステム開発を担当。\nApple Vision Proを米国発売日に現地購入。visionOS 30 Days開発など精力的に実装と調査をしています。\nvisionOS Engineer Meetup主催。visionOSアプリ開発の書籍出版。\niOSDC9年連続登壇の他、try! Swift Tokyo、XR Kaigi、Let's visionOS、AWE USAなど登壇あり。\nXを中心に発信しているのでフォローしてください。",
+              "job_title": "XR Engineer at Cyber AI Productions",
+              "links": [
+                {
+                  "name": "@shmdevelop",
+                  "url": "https://x.com/shmdevelop"
+                },
+                {
+                  "name": "@satoshi0212",
+                  "url": "https://github.com/satoshi0212"
+                },
+                {
+                  "name": "linkedin.com/in/satoshi-hattori",
+                  "url": "https://www.linkedin.com/in/satoshi-hattori/"
+                },
+                {
+                  "name": "amazon.co.jp/dp/4297143119",
+                  "url": "https://www.amazon.co.jp/dp/4297143119/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "time": "2025-04-10T16:45:00+09:00",
+      "sessions": [
+        {
+          "id": 34,
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Satoshi Hattori and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Satoshi Hattoriさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "id": 65,
+              "name": "Satoshi Hattori",
+              "image_name": "satoshi_hattori"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "time": "2025-04-10T17:40:00+09:00",
+      "sessions": [
+        {
+          "id": 35,
+          "title": "Party",
+          "title_ja": "パーティー",
+          "place": "Tachihi Beach",
+          "place_ja": "たちひビーチ",
+          "summary": "Let's party!",
+          "summary_ja": "パーティーを楽しみましょう！"
+        }
+      ]
+    }
+  ]
+}
