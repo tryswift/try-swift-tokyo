@@ -6,22 +6,25 @@ struct SubmitPageView: HTML, Sendable {
   let success: Bool
   let errorMessage: String?
   let openConference: ConferencePublicInfo?
+  let language: CfPLanguage
 
   init(
     user: UserDTO?, success: Bool, errorMessage: String?,
-    openConference: ConferencePublicInfo? = nil
+    openConference: ConferencePublicInfo? = nil,
+    language: CfPLanguage
   ) {
     self.user = user
     self.success = success
     self.errorMessage = errorMessage
     self.openConference = openConference
+    self.language = language
   }
 
   var body: some HTML {
     div(.class("container py-5")) {
-      h1(.class("fw-bold mb-2")) { "Submit Your Proposal" }
+      h1(.class("fw-bold mb-2")) { CfPStrings.Submit.title(language) }
       p(.class("lead text-muted mb-4")) {
-        "Share your Swift expertise with developers from around the world."
+        CfPStrings.Submit.subtitle(language)
       }
 
       if openConference == nil {
@@ -29,11 +32,13 @@ struct SubmitPageView: HTML, Sendable {
         div(.class("card")) {
           div(.class("card-body text-center p-5")) {
             p(.class("fs-1 mb-3")) { "📅" }
-            h3(.class("fw-bold mb-2")) { "Call for Proposals Not Open" }
+            h3(.class("fw-bold mb-2")) { CfPStrings.Submit.cfpNotOpen(language) }
             p(.class("text-muted mb-4")) {
-              "The Call for Proposals is not currently open. Please check back later for the next conference."
+              CfPStrings.Submit.cfpNotOpenDescription(language)
             }
-            a(.class("btn btn-outline-primary"), .href("/cfp/")) { "Back to Home" }
+            a(.class("btn btn-outline-primary"), .href("/cfp/\(language.urlPrefix)/")) {
+              CfPStrings.Submit.backToHome(language)
+            }
           }
         }
       } else if user != nil {
@@ -42,13 +47,17 @@ struct SubmitPageView: HTML, Sendable {
           div(.class("card")) {
             div(.class("card-body text-center p-5")) {
               p(.class("fs-1 mb-3")) { "✅" }
-              h3(.class("fw-bold mb-2")) { "Proposal Submitted!" }
+              h3(.class("fw-bold mb-2")) { CfPStrings.Submit.proposalSubmitted(language) }
               p(.class("text-muted mb-4")) {
-                "Your proposal has been submitted successfully. Good luck!"
+                CfPStrings.Submit.proposalSubmittedDescription(language)
               }
               div(.class("d-flex gap-2 justify-content-center")) {
-                a(.class("btn btn-primary"), .href("/cfp/my-proposals")) { "View My Proposals" }
-                a(.class("btn btn-outline-primary"), .href("/cfp/submit")) { "Submit Another" }
+                a(.class("btn btn-primary"), .href("/cfp/\(language.urlPrefix)/my-proposals")) {
+                  CfPStrings.Submit.viewMyProposals(language)
+                }
+                a(.class("btn btn-outline-primary"), .href("/cfp/\(language.urlPrefix)/submit")) {
+                  CfPStrings.Submit.submitAnother(language)
+                }
               }
             }
           }
@@ -62,77 +71,85 @@ struct SubmitPageView: HTML, Sendable {
                 }
               }
 
-              form(.method(.post), .action("/cfp/submit")) {
+              form(.method(.post), .action("/cfp/\(language.urlPrefix)/submit")) {
                 div(.class("mb-3")) {
-                  label(.class("form-label fw-semibold"), .for("title")) { "Title *" }
+                  label(.class("form-label fw-semibold"), .for("title")) {
+                    CfPStrings.Submit.formTitleLabel(language)
+                  }
                   input(
                     .type(.text),
                     .class("form-control"),
                     .name("title"),
                     .id("title"),
                     .required,
-                    .placeholder("Enter your talk title")
+                    .placeholder(CfPStrings.Submit.formTitlePlaceholder(language))
                   )
                 }
 
                 div(.class("mb-3")) {
-                  label(.class("form-label fw-semibold"), .for("abstract")) { "Abstract *" }
+                  label(.class("form-label fw-semibold"), .for("abstract")) {
+                    CfPStrings.Submit.formAbstractLabel(language)
+                  }
                   textarea(
                     .class("form-control"),
                     .name("abstract"),
                     .id("abstract"),
                     .custom(name: "rows", value: "3"),
                     .required,
-                    .placeholder("A brief summary of your talk (2-3 sentences)")
+                    .placeholder(CfPStrings.Submit.formAbstractPlaceholder(language))
                   ) {}
                   div(.class("form-text")) {
-                    "This will be shown to the audience if your talk is accepted."
+                    CfPStrings.Submit.formAbstractHint(language)
                   }
                 }
 
                 div(.class("mb-3")) {
-                  label(.class("form-label fw-semibold"), .for("talkDetails")) { "Talk Details *" }
+                  label(.class("form-label fw-semibold"), .for("talkDetails")) {
+                    CfPStrings.Submit.formTalkDetailsLabel(language)
+                  }
                   textarea(
                     .class("form-control"),
                     .name("talkDetails"),
                     .id("talkDetails"),
                     .custom(name: "rows", value: "5"),
                     .required,
-                    .placeholder("Detailed description for reviewers")
+                    .placeholder(CfPStrings.Submit.formTalkDetailsPlaceholder(language))
                   ) {}
                   div(.class("form-text")) {
-                    "Include outline, key points, and what attendees will learn. For reviewers only."
+                    CfPStrings.Submit.formTalkDetailsHint(language)
                   }
                 }
 
                 div(.class("mb-3")) {
                   label(.class("form-label fw-semibold"), .for("talkDuration")) {
-                    "Talk Duration *"
+                    CfPStrings.Submit.formDurationLabel(language)
                   }
                   select(
                     .class("form-select"), .name("talkDuration"), .id("talkDuration"), .required
                   ) {
-                    option(.value("")) { "Choose duration..." }
-                    option(.value("20min")) { "Regular Talk (20 minutes)" }
-                    option(.value("LT")) { "Lightning Talk (5 minutes)" }
+                    option(.value("")) { CfPStrings.Submit.formDurationPlaceholder(language) }
+                    option(.value("20min")) { CfPStrings.Submit.formDurationRegular(language) }
+                    option(.value("LT")) { CfPStrings.Submit.formDurationLightning(language) }
                   }
                 }
 
                 div(.class("mb-3")) {
-                  label(.class("form-label fw-semibold"), .for("bio")) { "Speaker Bio *" }
+                  label(.class("form-label fw-semibold"), .for("bio")) {
+                    CfPStrings.Submit.formBioLabel(language)
+                  }
                   textarea(
                     .class("form-control"),
                     .name("bio"),
                     .id("bio"),
                     .custom(name: "rows", value: "3"),
                     .required,
-                    .placeholder("Tell us about yourself")
+                    .placeholder(CfPStrings.Submit.formBioPlaceholder(language))
                   ) {}
                 }
 
                 div(.class("mb-3")) {
                   label(.class("form-label fw-semibold"), .for("iconUrl")) {
-                    "Profile Picture URL (Optional)"
+                    CfPStrings.Submit.formIconUrlLabel(language)
                   }
                   input(
                     .type(.url),
@@ -145,19 +162,21 @@ struct SubmitPageView: HTML, Sendable {
 
                 div(.class("mb-4")) {
                   label(.class("form-label fw-semibold"), .for("notesToOrganizers")) {
-                    "Notes for Organizers (Optional)"
+                    CfPStrings.Submit.formNotesLabel(language)
                   }
                   textarea(
                     .class("form-control"),
                     .name("notesToOrganizers"),
                     .id("notesToOrganizers"),
                     .custom(name: "rows", value: "2"),
-                    .placeholder("Any special requirements or additional information")
+                    .placeholder(CfPStrings.Submit.formNotesPlaceholder(language))
                   ) {}
                 }
 
                 div(.class("d-grid")) {
-                  button(.type(.submit), .class("btn btn-primary btn-lg")) { "Submit Proposal" }
+                  button(.type(.submit), .class("btn btn-primary btn-lg")) {
+                    CfPStrings.Submit.submitProposal(language)
+                  }
                 }
               }
             }
@@ -168,12 +187,15 @@ struct SubmitPageView: HTML, Sendable {
         div(.class("card")) {
           div(.class("card-body text-center p-5")) {
             p(.class("fs-1 mb-3")) { "🔐" }
-            h3(.class("fw-bold mb-2")) { "Sign In Required" }
+            h3(.class("fw-bold mb-2")) { CfPStrings.Submit.signInRequired(language) }
             p(.class("text-muted mb-4")) {
-              "Connect your GitHub account to submit proposals and track your submissions."
+              CfPStrings.Submit.signInDescription(language)
             }
-            a(.class("btn btn-dark"), .href("/api/v1/auth/github?returnTo=/cfp/submit")) {
-              "Sign in with GitHub"
+            a(
+              .class("btn btn-dark"),
+              .href("/api/v1/auth/github?returnTo=/cfp/\(language.urlPrefix)/submit")
+            ) {
+              CfPStrings.Submit.signInWithGitHub(language)
             }
           }
         }

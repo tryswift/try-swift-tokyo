@@ -3,24 +3,25 @@ import SharedModels
 
 struct GuidelinesPageView: HTML, Sendable {
   let user: UserDTO?
+  let language: CfPLanguage
 
   var body: some HTML {
     div(.class("container py-5")) {
-      h1(.class("fw-bold mb-4")) { "Submission Guidelines" }
+      h1(.class("fw-bold mb-4")) { CfPStrings.Guidelines.title(language) }
       p(.class("lead text-muted mb-5")) {
-        "Everything you need to know about submitting a talk proposal for try! Swift Tokyo 2026."
+        CfPStrings.Guidelines.subtitle(language)
       }
 
       // What We're Looking For
       div(.class("card mb-4")) {
         div(.class("card-body p-4")) {
-          h2(.class("fw-bold mb-3")) { "What We're Looking For" }
+          h2(.class("fw-bold mb-3")) { CfPStrings.Guidelines.whatWereLookingFor(language) }
           ul(.class("mb-0")) {
-            li { "Original content that hasn't been presented at other major conferences" }
-            li { "Practical knowledge that attendees can apply in their work" }
-            li { "Clear learning outcomes for the audience" }
-            li { "Well-structured presentations with demos when applicable" }
-            li { "Topics relevant to the Swift community" }
+            li { CfPStrings.Guidelines.lookingForItem1(language) }
+            li { CfPStrings.Guidelines.lookingForItem2(language) }
+            li { CfPStrings.Guidelines.lookingForItem3(language) }
+            li { CfPStrings.Guidelines.lookingForItem4(language) }
+            li { CfPStrings.Guidelines.lookingForItem5(language) }
           }
         }
       }
@@ -28,16 +29,16 @@ struct GuidelinesPageView: HTML, Sendable {
       // Talk Formats
       div(.class("card mb-4")) {
         div(.class("card-body p-4")) {
-          h2(.class("fw-bold mb-3")) { "Talk Formats" }
+          h2(.class("fw-bold mb-3")) { CfPStrings.Guidelines.talkFormats(language) }
 
-          h4(.class("fw-semibold mt-3")) { "Regular Talk (20 minutes)" }
+          h4(.class("fw-semibold mt-3")) { CfPStrings.Guidelines.regularTalkTitle(language) }
           p(.class("text-muted")) {
-            "A comprehensive session covering a topic in depth. Include time for context, examples, and key takeaways. Live coding and demos are welcome!"
+            CfPStrings.Guidelines.regularTalkDesc(language)
           }
 
-          h4(.class("fw-semibold mt-4")) { "Lightning Talk (5 minutes)" }
+          h4(.class("fw-semibold mt-4")) { CfPStrings.Guidelines.lightningTalkTitle(language) }
           p(.class("text-muted mb-0")) {
-            "A focused, fast-paced presentation covering a single concept, tool, or tip. Perfect for sharing quick wins or introducing new ideas."
+            CfPStrings.Guidelines.lightningTalkDesc(language)
           }
         }
       }
@@ -45,31 +46,31 @@ struct GuidelinesPageView: HTML, Sendable {
       // Proposal Requirements
       div(.class("card mb-4")) {
         div(.class("card-body p-4")) {
-          h2(.class("fw-bold mb-3")) { "Proposal Requirements" }
+          h2(.class("fw-bold mb-3")) { CfPStrings.Guidelines.proposalRequirements(language) }
 
-          h4(.class("fw-semibold mt-3")) { "Title" }
+          h4(.class("fw-semibold mt-3")) { CfPStrings.Guidelines.reqTitleLabel(language) }
           p(.class("text-muted")) {
-            "A clear, descriptive title that accurately represents your talk content."
+            CfPStrings.Guidelines.reqTitleDesc(language)
           }
 
-          h4(.class("fw-semibold mt-3")) { "Abstract" }
+          h4(.class("fw-semibold mt-3")) { CfPStrings.Guidelines.reqAbstractLabel(language) }
           p(.class("text-muted")) {
-            "A 2-3 sentence summary that will be shown publicly if your talk is accepted. This should explain what attendees will learn."
+            CfPStrings.Guidelines.reqAbstractDesc(language)
           }
 
-          h4(.class("fw-semibold mt-3")) { "Talk Details" }
+          h4(.class("fw-semibold mt-3")) { CfPStrings.Guidelines.reqTalkDetailsLabel(language) }
           p(.class("text-muted")) {
-            "A detailed description of your talk for reviewers. Include your outline, key points, and any demos you plan to show. This helps us understand your vision."
+            CfPStrings.Guidelines.reqTalkDetailsDesc(language)
           }
 
-          h4(.class("fw-semibold mt-3")) { "Speaker Bio" }
+          h4(.class("fw-semibold mt-3")) { CfPStrings.Guidelines.reqSpeakerBioLabel(language) }
           p(.class("text-muted")) {
-            "Tell us about yourself! Your background, experience, and what makes you excited about this topic."
+            CfPStrings.Guidelines.reqSpeakerBioDesc(language)
           }
 
-          h4(.class("fw-semibold mt-3")) { "Notes (Optional)" }
+          h4(.class("fw-semibold mt-3")) { CfPStrings.Guidelines.reqNotesLabel(language) }
           p(.class("text-muted mb-0")) {
-            "Any additional information for organizers, such as accessibility needs, scheduling constraints, or whether you've given this talk before."
+            CfPStrings.Guidelines.reqNotesDesc(language)
           }
         }
       }
@@ -77,14 +78,14 @@ struct GuidelinesPageView: HTML, Sendable {
       // Selection Criteria
       div(.class("card mb-4")) {
         div(.class("card-body p-4")) {
-          h2(.class("fw-bold mb-3")) { "Selection Criteria" }
-          p { "Our review committee evaluates proposals based on:" }
+          h2(.class("fw-bold mb-3")) { CfPStrings.Guidelines.selectionCriteria(language) }
+          p { CfPStrings.Guidelines.selectionCriteriaIntro(language) }
           ul(.class("mb-0")) {
-            li { "Relevance to the Swift community" }
-            li { "Originality and uniqueness of content" }
-            li { "Clarity of proposal and learning outcomes" }
-            li { "Speaker's expertise and presentation ability" }
-            li { "Diversity of topics across the conference program" }
+            li { CfPStrings.Guidelines.criteriaItem1(language) }
+            li { CfPStrings.Guidelines.criteriaItem2(language) }
+            li { CfPStrings.Guidelines.criteriaItem3(language) }
+            li { CfPStrings.Guidelines.criteriaItem4(language) }
+            li { CfPStrings.Guidelines.criteriaItem5(language) }
           }
         }
       }
@@ -92,14 +93,14 @@ struct GuidelinesPageView: HTML, Sendable {
       // Tips for Success
       div(.class("card mb-4")) {
         div(.class("card-body p-4")) {
-          h2(.class("fw-bold mb-3")) { "Tips for a Great Proposal" }
+          h2(.class("fw-bold mb-3")) { CfPStrings.Guidelines.tipsTitle(language) }
           ul(.class("mb-0")) {
-            li { "Be specific about what attendees will learn" }
-            li { "Include a clear outline or structure" }
-            li { "Mention any demos or live coding" }
-            li { "Show your passion for the topic" }
-            li { "Proofread your submission carefully" }
-            li { "Don't be afraid to submit multiple proposals!" }
+            li { CfPStrings.Guidelines.tipItem1(language) }
+            li { CfPStrings.Guidelines.tipItem2(language) }
+            li { CfPStrings.Guidelines.tipItem3(language) }
+            li { CfPStrings.Guidelines.tipItem4(language) }
+            li { CfPStrings.Guidelines.tipItem5(language) }
+            li { CfPStrings.Guidelines.tipItem6(language) }
           }
         }
       }
@@ -107,20 +108,22 @@ struct GuidelinesPageView: HTML, Sendable {
       // Speaker Benefits
       div(.class("card mb-4")) {
         div(.class("card-body p-4")) {
-          h2(.class("fw-bold mb-3")) { "Speaker Benefits" }
+          h2(.class("fw-bold mb-3")) { CfPStrings.Guidelines.speakerBenefits(language) }
           ul(.class("mb-0")) {
-            li { "Free conference ticket" }
-            li { "Speaker dinner with other speakers and organizers" }
-            li { "Travel support available for international speakers" }
-            li { "Professional video recording of your talk" }
-            li { "Networking opportunities with Swift developers worldwide" }
+            li { CfPStrings.Guidelines.benefitItem1(language) }
+            li { CfPStrings.Guidelines.benefitItem2(language) }
+            li { CfPStrings.Guidelines.benefitItem3(language) }
+            li { CfPStrings.Guidelines.benefitItem4(language) }
+            li { CfPStrings.Guidelines.benefitItem5(language) }
           }
         }
       }
 
       // CTA
       div(.class("text-center mt-5")) {
-        a(.class("btn btn-primary btn-lg"), .href("/cfp/submit")) { "Submit Your Proposal" }
+        a(.class("btn btn-primary btn-lg"), .href("/cfp/\(language.urlPrefix)/submit")) {
+          CfPStrings.Home.submitYourProposal(language)
+        }
       }
     }
   }
