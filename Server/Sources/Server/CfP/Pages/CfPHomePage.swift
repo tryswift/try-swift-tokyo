@@ -18,7 +18,8 @@ struct CfPHomePage: HTML, Sendable {
           a(.class("btn btn-light btn-lg fw-bold"), .href("/cfp/\(language.urlPrefix)/submit")) {
             CfPStrings.Home.submitYourProposal(language)
           }
-          a(.class("btn btn-outline-light btn-lg"), .href("/cfp/\(language.urlPrefix)/guidelines")) {
+          a(.class("btn btn-outline-light btn-lg"), .href("/cfp/\(language.urlPrefix)/guidelines"))
+          {
             CfPStrings.Home.viewGuidelines(language)
           }
         }

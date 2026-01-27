@@ -23,7 +23,8 @@ struct CfPRoutes: RouteCollection {
 
       // Public pages
       langGroup.get(use: { req in try await homePage(req: req, language: lang) })
-      langGroup.get("guidelines", use: { req in try await guidelinesPage(req: req, language: lang) })
+      langGroup.get(
+        "guidelines", use: { req in try await guidelinesPage(req: req, language: lang) })
       langGroup.get("login", use: { req in try await loginPage(req: req, language: lang) })
       langGroup.get(
         "login-page", use: { req in try await loginPage(req: req, language: lang) })  // Backward compatibility
@@ -39,7 +40,8 @@ struct CfPRoutes: RouteCollection {
         use: { req in try await myProposalsPage(req: req, language: lang) })  // Backward compatibility
 
       // Form submission (POST)
-      langGroup.post("submit", use: { req in try await handleSubmitProposal(req: req, language: lang) })
+      langGroup.post(
+        "submit", use: { req in try await handleSubmitProposal(req: req, language: lang) })
 
       // Logout
       langGroup.get("logout", use: { req in try await logout(req: req, language: lang) })
@@ -76,7 +78,7 @@ struct CfPRoutes: RouteCollection {
     let user = try? await getAuthenticatedUser(req: req)
     let title =
       language == .ja
-        ? "スピーカー募集" : "Call for Proposals"
+      ? "スピーカー募集" : "Call for Proposals"
     return HTMLResponse {
       CfPLayout(title: title, user: user, language: language) {
         CfPHomePage(user: user, language: language)
@@ -215,8 +217,8 @@ struct CfPRoutes: RouteCollection {
     else {
       let errorMessage =
         language == .ja
-          ? "現在、スピーカー募集は行っていません。次回のカンファレンスをお待ちください。"
-          : "The Call for Proposals is not currently open. Please check back later for the next conference."
+        ? "現在、スピーカー募集は行っていません。次回のカンファレンスをお待ちください。"
+        : "The Call for Proposals is not currently open. Please check back later for the next conference."
       return try await renderSubmitPageWithError(
         req: req, user: user, error: errorMessage, language: language)
     }

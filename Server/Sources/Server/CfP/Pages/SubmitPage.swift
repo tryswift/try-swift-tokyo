@@ -9,7 +9,8 @@ struct SubmitPageView: HTML, Sendable {
   let language: CfPLanguage
 
   init(
-    user: UserDTO?, success: Bool, errorMessage: String?, openConference: ConferencePublicInfo? = nil,
+    user: UserDTO?, success: Bool, errorMessage: String?,
+    openConference: ConferencePublicInfo? = nil,
     language: CfPLanguage
   ) {
     self.user = user
@@ -123,8 +124,9 @@ struct SubmitPageView: HTML, Sendable {
                   label(.class("form-label fw-semibold"), .for("talkDuration")) {
                     CfPStrings.Submit.formDurationLabel(language)
                   }
-                  select(.class("form-select"), .name("talkDuration"), .id("talkDuration"), .required)
-                  {
+                  select(
+                    .class("form-select"), .name("talkDuration"), .id("talkDuration"), .required
+                  ) {
                     option(.value("")) { CfPStrings.Submit.formDurationPlaceholder(language) }
                     option(.value("20min")) { CfPStrings.Submit.formDurationRegular(language) }
                     option(.value("LT")) { CfPStrings.Submit.formDurationLightning(language) }

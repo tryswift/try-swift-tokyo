@@ -305,7 +305,8 @@ enum CfPStrings {
     static func ctaDescription(_ lang: CfPLanguage) -> String {
       switch lang {
       case .en:
-        return "We welcome speakers of all experience levels. First-time speakers are encouraged to apply!"
+        return
+          "We welcome speakers of all experience levels. First-time speakers are encouraged to apply!"
       case .ja: return "経験レベルを問わず、すべてのスピーカーを歓迎します。初めての方もぜひご応募ください！"
       }
     }
@@ -323,7 +324,8 @@ enum CfPStrings {
     static func subtitle(_ lang: CfPLanguage) -> String {
       switch lang {
       case .en:
-        return "Everything you need to know about submitting a talk proposal for try! Swift Tokyo 2026."
+        return
+          "Everything you need to know about submitting a talk proposal for try! Swift Tokyo 2026."
       case .ja: return "try! Swift Tokyo 2026へのトーク応募に必要なすべての情報をご紹介します。"
       }
     }

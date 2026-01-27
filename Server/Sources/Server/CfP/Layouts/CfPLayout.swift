@@ -7,8 +7,9 @@ struct CfPLayout<Content: HTML & Sendable>: HTMLDocument, Sendable {
   let language: CfPLanguage
   let pageContent: Content
 
-  init(title: String, user: UserDTO?, language: CfPLanguage, @HTMLBuilder pageContent: () -> Content)
-  {
+  init(
+    title: String, user: UserDTO?, language: CfPLanguage, @HTMLBuilder pageContent: () -> Content
+  ) {
     self.title = title
     self.user = user
     self.language = language
