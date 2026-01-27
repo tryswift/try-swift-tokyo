@@ -85,6 +85,20 @@ enum CfPStrings {
       }
     }
 
+    static func myProposals(_ lang: CfPLanguage) -> String {
+      switch lang {
+      case .en: return "My Proposals"
+      case .ja: return "応募履歴"
+      }
+    }
+
+    static func allProposals(_ lang: CfPLanguage) -> String {
+      switch lang {
+      case .en: return "All Proposals"
+      case .ja: return "全応募一覧"
+      }
+    }
+
     static func importantDates(_ lang: CfPLanguage) -> String {
       switch lang {
       case .en: return "Important Dates"

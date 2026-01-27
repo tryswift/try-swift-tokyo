@@ -30,6 +30,16 @@ struct CfPHomePage: HTML, Sendable {
           a(.class("btn btn-outline-light btn-lg"), .href(language.path(for: "/guidelines"))) {
             language == .ja ? "ガイドラインを見る" : "View Guidelines"
           }
+          a(
+            .class("btn btn-outline-light btn-lg"), .href("/cfp/\(language.urlPrefix)/my-proposals")
+          ) {
+            CfPStrings.Home.myProposals(language)
+          }
+          if user?.role == .admin {
+            a(.class("btn btn-outline-light btn-lg"), .href("/cfp/organizer/proposals")) {
+              CfPStrings.Home.allProposals(language)
+            }
+          }
         }
       }
     }
