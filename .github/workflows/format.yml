@@ -9,7 +9,7 @@ jobs:
   swift_format:
     name: swift-format
     runs-on: ubuntu-latest
-    container: swift:6.0
+    container: swift:6.2
     steps:
       - uses: actions/checkout@v4
       - name: Install
