@@ -105,6 +105,12 @@ extension HomeSectionType {
         .filter { $0.speakers?.isEmpty == false }
 
       WorkshopComponent(workshops: workshops, year: year, language: language)
+
+      Text("And more...!")
+        .horizontalAlignment(.center)
+        .font(.title3)
+        .foregroundStyle(.dimGray)
+        .margin(.top, .px(32))
     case .cfp:
       SectionHeader(type: self, language: language)
       CallForProposalComponent(language: language)
