@@ -102,7 +102,9 @@ struct CfPRoutes: RouteCollection {
     }
   }
 
-  private func renderGuidelinesPage(req: Request, language: CfPLanguage) async throws -> HTMLResponse {
+  private func renderGuidelinesPage(req: Request, language: CfPLanguage) async throws
+    -> HTMLResponse
+  {
     let user = try? await getAuthenticatedUser(req: req)
     return HTMLResponse {
       CfPLayout(
@@ -159,7 +161,9 @@ struct CfPRoutes: RouteCollection {
     }
   }
 
-  private func renderMyProposalsPage(req: Request, language: CfPLanguage) async throws -> HTMLResponse {
+  private func renderMyProposalsPage(req: Request, language: CfPLanguage) async throws
+    -> HTMLResponse
+  {
     let user = try? await getAuthenticatedUser(req: req)
     var proposals: [ProposalDTO] = []
 

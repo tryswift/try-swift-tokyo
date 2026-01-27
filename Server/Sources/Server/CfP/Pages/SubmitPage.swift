@@ -110,7 +110,9 @@ struct SubmitPageView: HTML, Sendable {
                     .id("abstract"),
                     .custom(name: "rows", value: "3"),
                     .required,
-                    .placeholder(language == .ja ? "トークの簡単な要約（2〜3文）" : "A brief summary of your talk (2-3 sentences)")
+                    .placeholder(
+                      language == .ja
+                        ? "トークの簡単な要約（2〜3文）" : "A brief summary of your talk (2-3 sentences)")
                   ) {}
                   div(.class("form-text")) {
                     language == .ja
@@ -129,7 +131,8 @@ struct SubmitPageView: HTML, Sendable {
                     .id("talkDetails"),
                     .custom(name: "rows", value: "5"),
                     .required,
-                    .placeholder(language == .ja ? "レビュアー向けの詳細な説明" : "Detailed description for reviewers")
+                    .placeholder(
+                      language == .ja ? "レビュアー向けの詳細な説明" : "Detailed description for reviewers")
                   ) {}
                   div(.class("form-text")) {
                     language == .ja
@@ -142,8 +145,9 @@ struct SubmitPageView: HTML, Sendable {
                   label(.class("form-label fw-semibold"), .for("talkDuration")) {
                     language == .ja ? "トーク時間 *" : "Talk Duration *"
                   }
-                  select(.class("form-select"), .name("talkDuration"), .id("talkDuration"), .required)
-                  {
+                  select(
+                    .class("form-select"), .name("talkDuration"), .id("talkDuration"), .required
+                  ) {
                     option(.value("")) {
                       language == .ja ? "時間を選択..." : "Choose duration..."
                     }
@@ -192,7 +196,9 @@ struct SubmitPageView: HTML, Sendable {
                     .name("notesToOrganizers"),
                     .id("notesToOrganizers"),
                     .custom(name: "rows", value: "2"),
-                    .placeholder(language == .ja ? "特別な要件や追加情報" : "Any special requirements or additional information")
+                    .placeholder(
+                      language == .ja
+                        ? "特別な要件や追加情報" : "Any special requirements or additional information")
                   ) {}
                 }
 
@@ -218,7 +224,10 @@ struct SubmitPageView: HTML, Sendable {
                 ? "プロポーザルを提出し、提出状況を確認するにはGitHubアカウントでログインしてください。"
                 : "Connect your GitHub account to submit proposals and track your submissions."
             }
-            a(.class("btn btn-dark"), .href("/api/v1/auth/github?returnTo=\(language.path(for: "/submit"))")) {
+            a(
+              .class("btn btn-dark"),
+              .href("/api/v1/auth/github?returnTo=\(language.path(for: "/submit"))")
+            ) {
               language == .ja ? "GitHubでログイン" : "Sign in with GitHub"
             }
           }

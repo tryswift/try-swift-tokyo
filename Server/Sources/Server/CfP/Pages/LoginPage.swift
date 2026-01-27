@@ -31,7 +31,8 @@ struct LoginPageView: HTML, Sendable {
               div(.class("card-body text-center p-5")) {
                 p(.class("fs-1 mb-3")) { "✅" }
                 h2(.class("fw-bold mb-2")) {
-                  HTMLText(language == .ja ? "ようこそ、\(user.username)さん！" : "Welcome, \(user.username)!")
+                  HTMLText(
+                    language == .ja ? "ようこそ、\(user.username)さん！" : "Welcome, \(user.username)!")
                 }
                 p(.class("text-muted mb-4")) {
                   language == .ja
@@ -47,7 +48,8 @@ struct LoginPageView: HTML, Sendable {
                   }
                 }
                 div(.class("mt-4")) {
-                  a(.class("text-muted text-decoration-none"), .href(language.path(for: "/logout"))) {
+                  a(.class("text-muted text-decoration-none"), .href(language.path(for: "/logout")))
+                  {
                     language == .ja ? "ログアウト" : "Logout"
                   }
                 }

@@ -18,7 +18,10 @@ struct CfPNavigation: HTML, Sendable {
       .style("background: rgba(0, 32, 63, 0.95);")
     ) {
       div(.class("container")) {
-        a(.class("navbar-brand fw-bold text-white d-flex align-items-center"), .href(language.path(for: "/"))) {
+        a(
+          .class("navbar-brand fw-bold text-white d-flex align-items-center"),
+          .href(language.path(for: "/"))
+        ) {
           img(
             .src("/cfp/images/riko.png"),
             .alt("Riko"),
