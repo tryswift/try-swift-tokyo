@@ -21,7 +21,8 @@ struct CfPNotFoundPage: HTML, Sendable {
           a(.class("btn btn-primary btn-lg"), .href("/cfp/\(language.urlPrefix)/")) {
             language == .ja ? "CfPホームに戻る" : "Back to CfP Home"
           }
-          a(.class("btn btn-outline-secondary btn-lg"), .href("/cfp/\(language.urlPrefix)/submit")) {
+          a(.class("btn btn-outline-secondary btn-lg"), .href("/cfp/\(language.urlPrefix)/submit"))
+          {
             language == .ja ? "トークを応募する" : "Submit a Proposal"
           }
         }
