@@ -43,6 +43,7 @@ enum AppConfiguration {
     app.migrations.add(CreateUser())
     app.migrations.add(CreateConference())
     app.migrations.add(CreateProposal())
+    app.migrations.add(SeedTrySwiftTokyo2026())
 
     // Auto-migrate in development
     if app.environment == .development {
