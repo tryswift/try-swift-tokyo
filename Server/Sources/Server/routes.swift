@@ -3,6 +3,19 @@ import Vapor
 enum AppRoutes {
   /// Register all routes for the application
   static func register(_ app: Application) throws {
+    // Serve static files for CfP (images, CSS, JS)
+    // FileMiddleware maps request paths directly to filesystem paths
+    // e.g., /cfp/images/riko.png -> Public/cfp/images/riko.png
+    let cfpPublicDirectory = app.directory.workingDirectory + "Public/"
+    app.middleware.use(
+      FileMiddleware(
+        publicDirectory: cfpPublicDirectory,
+        defaultFile: nil,
+        directoryAction: .none,
+        advancedETagComparison: true
+      )
+    )
+
     // Root endpoint
     app.get { req in
       return ["status": "ok", "service": "trySwiftCfP"]
