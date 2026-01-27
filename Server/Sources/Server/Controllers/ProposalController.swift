@@ -116,7 +116,7 @@ struct ProposalController: RouteCollection {
         .filter(\.$isOpen == true)
         .sort(\.$year, .descending)
         .first() else {
-        throw Abort(.badRequest, reason: "No open conference for submissions")
+        throw Abort(.badRequest, reason: "The Call for Proposals is not currently open. Please check back later for the next conference.")
       }
       conference = current
     }

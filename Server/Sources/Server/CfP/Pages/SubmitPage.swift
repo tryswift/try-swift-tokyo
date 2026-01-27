@@ -5,6 +5,14 @@ struct SubmitPageView: HTML, Sendable {
   let user: UserDTO?
   let success: Bool
   let errorMessage: String?
+  let openConference: ConferencePublicInfo?
+
+  init(user: UserDTO?, success: Bool, errorMessage: String?, openConference: ConferencePublicInfo? = nil) {
+    self.user = user
+    self.success = success
+    self.errorMessage = errorMessage
+    self.openConference = openConference
+  }
 
   var body: some HTML {
     div(.class("container py-5")) {
@@ -13,7 +21,19 @@ struct SubmitPageView: HTML, Sendable {
         "Share your Swift expertise with developers from around the world."
       }
 
-      if user != nil {
+      if openConference == nil {
+        // No open conference - show friendly message
+        div(.class("card")) {
+          div(.class("card-body text-center p-5")) {
+            p(.class("fs-1 mb-3")) { "📅" }
+            h3(.class("fw-bold mb-2")) { "Call for Proposals Not Open" }
+            p(.class("text-muted mb-4")) {
+              "The Call for Proposals is not currently open. Please check back later for the next conference."
+            }
+            a(.class("btn btn-outline-primary"), .href("/cfp/")) { "Back to Home" }
+          }
+        }
+      } else if user != nil {
         if success {
           // Success message
           div(.class("card")) {
