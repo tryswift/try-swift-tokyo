@@ -1,6 +1,7 @@
 {
   "id": 1,
   "title": "Day 1",
+  "title_ja": "１日目",
   "date": "2024-03-24T09:00:00+09:00",
   "schedules": [
     {
@@ -8,7 +9,9 @@
       "sessions": [
         {
           "title": "Registration",
-          "summary": "Sign in with Luma and show QR code of your ticket at the reception."
+          "title_ja": "受付",
+          "summary": "Sign in with Luma and show QR code of your ticket at the reception.",
+          "summary_ja": "Lumaでサインインし、受付でチケットのQRコードを提示してください。"
         }
       ]
     },
@@ -17,12 +20,14 @@
       "sessions": [
         {
           "title": "The Composable Architecture",
+          "title_ja": "The Composable Architecture",
           "speakers": [
             {
               "id": 9,
               "name": "Brandon Williams",
               "image_name": "Brandon Williams",
               "bio": "Brandon spent a long time doing mathematics, but now likes to teach programming with a nod towards math. He co-hosts a video series called Point-Free, which focuses on the Swift language and how to best make use of its type system and features.",
+              "bio_ja": "Brandonは長年数学に携わっていましたが、現在は数学的アプローチを取り入れたプログラミングを教えることを楽しんでいます。Swiftの言語機能や型システムを最大限に活用する方法に焦点を当てたビデオシリーズ「Point-Free」を共同で配信しています。",
               "links": [
                 {
                   "url": "https://twitter.com/mbrandonw",
@@ -35,6 +40,7 @@
               "name": "Stephen Celis",
               "image_name": "Stephen Celis",
               "bio": "Stephen entered tech by way of a liberal arts degree. He now works on Point-Free with Brandon Williams, where he tries to spread the word of testable, composable app development.",
+              "bio_ja": "Stephenは文系の学位を経てテック業界に入りました。現在はBrandon Williamsとともに「Point-Free」で活動し、テスト可能で組み合わせ可能なアプリ開発を広めようとしています。",
               "links": [
                 {
                   "url": "https://github.com/stephencelis",
@@ -43,16 +49,19 @@
               ]
             }
           ],
-          "description": "Brandon and Stephen, maintainers of the Composable Architecture, will give a broad overview of the library and demonstrate its core tenets: concise domain modeling with value types, composition of features, dependency management, and testability. We will do this by building a very simple application from scratch, and increasingly adding on more complex features."
+          "description": "Brandon and Stephen, maintainers of the Composable Architecture, will give a broad overview of the library and demonstrate its core tenets: concise domain modeling with value types, composition of features, dependency management, and testability. We will do this by building a very simple application from scratch, and increasingly adding on more complex features.",
+          "description_ja": "Composable Architectureのメンテナーであるブランドンとスティーブンが、ライブラリの概要と核心的な原則を紹介します：値型による簡潔なドメインモデリング、機能の合成、依存関係の管理、テスト容易性。非常にシンプルなアプリケーションをゼロから構築し、徐々に複雑な機能を追加していきます。"
         },
         {
           "title": "Swift, Swift Data, and SwiftData",
+          "title_ja": "Swift、Swift Data、そしてSwiftData",
           "speakers": [
             {
               "id": 6,
               "name": "Paul Hudson",
               "image_name": "paul_hudson",
               "bio": "Paul is the author of Hacking with Swift, Pro Swift, Swift Design Patterns, Testing Swift, Swift Coding Challenges, and more. Suffice it to say, he quite likes Swift. And coffee. (But mostly Swift.) (And coffee.)",
+              "bio_ja": "Paulは「Hacking with Swift」「Pro Swift」「Swift Design Patterns」「Testing Swift」「Swift Coding Challenges」などの著者です。簡単に言うと、Swiftが大好きです。そしてコーヒーも。（でも主にSwiftが。）（いや、コーヒーも同じくらい。）",
               "links": [
                 {
                   "url": "https://twitter.com/twostraws",
@@ -61,16 +70,19 @@
               ]
             }
           ],
-          "description": "In this workshop we'll walk through how Swift's new Observable system is revolutionizing the way we write SwiftUI code, then move on to explore how it's used inside the SwiftData framework make app storage easier than ever. Please come with the latest Xcode installed on your laptop, because this is a hands-on workshop and you'll be expected to write a lot of code."
+          "description": "In this workshop we'll walk through how Swift's new Observable system is revolutionizing the way we write SwiftUI code, then move on to explore how it's used inside the SwiftData framework make app storage easier than ever. Please come with the latest Xcode installed on your laptop, because this is a hands-on workshop and you'll be expected to write a lot of code.",
+          "description_ja": "このワークショップでは、Swiftの新しいObservableシステムがSwiftUIコードの書き方をどのように革新しているかを説明し、次にSwiftDataフレームワーク内でどのように使用されてアプリのストレージをこれまで以上に簡単にしているかを探ります。これはハンズオンワークショップで多くのコードを書くことになりますので、最新のXcodeをインストールしたノートパソコンをご持参ください。"
         },
         {
           "title": "Getting Started with Vapor",
+          "title_ja": "Vaporを始めよう",
           "speakers": [
             {
               "id": 8,
               "name": "Tim Condon",
               "image_name": "Tim Condon",
-              "bio": "Tim is a Swift developer from Manchester, UK and part of the Vapor Core Team. He's part of the server-side Swift team at Kodeco and has written the unofficial-official book on Vapor with the founders of the framework. He founded Broken Hands a few years ago and delivers talks and workshops on Vapor and server-side Swift around the world. He also co-organises the ServerSide.swift conference - the world’s first and only conference focused on server-side Swift.",
+              "bio": "Tim is a Swift developer from Manchester, UK and part of the Vapor Core Team. He's part of the server-side Swift team at Kodeco and has written the unofficial-official book on Vapor with the founders of the framework. He founded Broken Hands a few years ago and delivers talks and workshops on Vapor and server-side Swift around the world. He also co-organises the ServerSide.swift conference - the world's first and only conference focused on server-side Swift.",
+              "bio_ja": "Timはイギリス・マンチェスター出身のSwiftデベロッパーで、Vaporコアチームのメンバーです。Kodecoのサーバーサイドswiftチームに所属し、フレームワークの創設者とともにVaporの非公式公式本を執筆しました。数年前にBroken Handsを設立し、世界中でVaporとサーバーサイドSwiftに関するトークやワークショップを行っています。また、サーバーサイドSwiftに特化した世界初かつ唯一のカンファレンスであるServerSide.swiftを共同主催しています。",
               "links": [
                 {
                   "url": "https://hachyderm.io/@0xTim",
@@ -79,15 +91,18 @@
               ]
             }
           ],
-          "description": "In this workshop you'll learn everything you need to build a simple Vapor application. You'll learn how to create routes, saves models to a database and build REST APIs. This workshop is fully updated for async/await!"
+          "description": "In this workshop you'll learn everything you need to build a simple Vapor application. You'll learn how to create routes, saves models to a database and build REST APIs. This workshop is fully updated for async/await!",
+          "description_ja": "このワークショップでは、シンプルなVaporアプリケーションを構築するために必要なすべてを学びます。ルートの作成方法、モデルのデータベースへの保存方法、REST APIの構築方法を学びます。このワークショップはasync/awaitに完全対応しています！"
         },
         {
           "title": "Getting started with controlling LEGO using Swift",
+          "title_ja": "Swiftを使ったLEGO制御入門",
           "speakers": [
             {
               "name": "Hiromu Tsuruta",
               "image_name": "Hiromu Tsuruta",
               "bio": "Hiromu is a member of Rakuten Group, Inc. and is involved in the development of Rakuten Rakuma as an iOS engineer and tech lead.",
+              "bio_ja": "Hiromuは楽天グループ株式会社のメンバーで、iOSエンジニア兼テックリードとして楽天ラクマの開発に携わっています。",
               "links": [
                 {
                   "name": "@hcrane14",
@@ -99,6 +114,7 @@
               "name": "Shinichiro Oba",
               "image_name": "Shinichiro Oba",
               "bio": "Shinichiro is a software engineer and works on improvements of DevOps and DevEx in various teams. He also contributes some open-sourced swift projects.",
+              "bio_ja": "Shinichiroはソフトウェアエンジニアで、様々なチームでDevOpsとDevExの改善に取り組んでいます。オープンソースのSwiftプロジェクトにも貢献しています。",
               "links": [
                 {
                   "name": "@ooba",
@@ -107,15 +123,18 @@
               ]
             }
           ],
-          "description": "In this workshop, we'll learn how to control Bluetooth Low Energy devices such as LEGO using Swift and Core Bluetooth.\n\nFirst, we'll deepen our understanding of controlling Bluetooth Low Energy (BLE) devices with Swift. After learning an overview of BLE and how to use Core Bluetooth, we will conduct a demonstration using the STAR WARS R2-D2 droid kit provided by littleBits.\n\nNext, we'll learn about the LEGO Wireless Protocol, which is the protocol for controlling LEGO via BLE. Finally, we'll utilize LEGO kits to create something that moves together.\n\nNote : Please note that the number of kits is limited, so if there are many participants, we'll form teams to conduct the workshop."
+          "description": "In this workshop, we'll learn how to control Bluetooth Low Energy devices such as LEGO using Swift and Core Bluetooth.\n\nFirst, we'll deepen our understanding of controlling Bluetooth Low Energy (BLE) devices with Swift. After learning an overview of BLE and how to use Core Bluetooth, we will conduct a demonstration using the STAR WARS R2-D2 droid kit provided by littleBits.\n\nNext, we'll learn about the LEGO Wireless Protocol, which is the protocol for controlling LEGO via BLE. Finally, we'll utilize LEGO kits to create something that moves together.\n\nNote : Please note that the number of kits is limited, so if there are many participants, we'll form teams to conduct the workshop.",
+          "description_ja": "このワークショップでは、SwiftとCore Bluetoothを使ってLEGOなどのBluetooth Low Energyデバイスを制御する方法を学びます。\n\nまず、SwiftでBluetooth Low Energy（BLE）デバイスを制御することへの理解を深めます。BLEの概要とCore Bluetoothの使い方を学んだ後、littleBits提供のSTAR WARS R2-D2ドロイドキットを使ったデモンストレーションを行います。\n\n次に、BLE経由でLEGOを制御するためのプロトコルであるLEGO Wireless Protocolについて学びます。最後に、LEGOキットを使って一緒に動くものを作ります。\n\n注意：キットの数に限りがあるため、参加者が多い場合はチームを組んでワークショップを行います。"
         },
         {
           "title": "Unique to Apple Vision Pro! How to Start Developing Spatial Apps",
+          "title_ja": "Apple Vision Pro限定！空間アプリ開発の始め方",
           "speakers": [
             {
               "name": "Kazuya Hiruma",
               "image_name": "Kazuya Hiruma",
               "bio": "Kazuya worked as a web engineer leader at Kayac, and then fell in love with 3DCG and VR, and moved to the VR team at COLOPL, where he worked as a lead engineer for the development of the VR game \"Nyoro The Snake & Seven Islands\" and experienced developing many VR games. After joining MESON, he worked as an XR engineer before becoming CTO.",
+              "bio_ja": "KazuyaはKayacでウェブエンジニアリーダーとして働いた後、3DCGとVRに魅了され、COLOPLのVRチームに移りました。そこでVRゲーム「Nyoro The Snake & Seven Islands」の開発リードエンジニアを務め、多くのVRゲーム開発を経験しました。MESON入社後はXRエンジニアとして活動し、CTOになりました。",
               "links": [
                 {
                   "name": "@edom18",
@@ -127,6 +146,7 @@
               "name": "Hisaki Sato",
               "image_name": "Hisaki Sato",
               "bio": "Hisaki joined Konami Digital Entertainment and was involved in the online implementation of Winning Eleven for 5 years, developed and operated apps as an engineer at COLOPL for 9 years, developed AR games using location information and AR, and VR games such as OculusRift and PSVR After his experience in development, he joined MESON. He is developing SunnyTune, a launch title for VisionPro at MESON.",
+              "bio_ja": "HisakiはKonami Digital Entertainmentに入社し、5年間ウイニングイレブンのオンライン実装に携わりました。その後COLOPLでエンジニアとして9年間アプリの開発・運用を行い、位置情報やARを使ったARゲーム、OculusRiftやPSVRなどのVRゲームの開発を経験した後、MESONに入社しました。MESONではVisionProのローンチタイトルであるSunnyTuneを開発しています。",
               "links": [
                 {
                   "name": "@lorincho3",
@@ -136,7 +156,9 @@
             }
           ],
           "description": "You will learn how MESON's launch title for Apple Vision Pro is made with hands-on experience.\n\nWe will also talk a bit about how we develop in Unity (PolySpatial).",
-          "requirements": "Latest Xcode, Unity if needed and Apple Vision Pro (if you have, not required)"
+          "description_ja": "MESONのApple Vision Pro向けローンチタイトルがどのように作られているかをハンズオン体験で学びます。\n\nUnity（PolySpatial）での開発方法についても少しお話しします。",
+          "requirements": "Latest Xcode, Unity if needed and Apple Vision Pro (if you have, not required)",
+          "requirements_ja": "最新のXcode、必要に応じてUnity、Apple Vision Pro（お持ちの方、必須ではありません）"
         }
       ]
     },
@@ -145,7 +167,9 @@
       "sessions": [
         {
           "title": "Lunch",
-          "summary": "Please enjoy the meal and have a chat with other attendees."
+          "title_ja": "昼食",
+          "summary": "Please enjoy the meal and have a chat with other attendees.",
+          "summary_ja": "食事を楽しみながら、他の参加者と交流しましょう。"
         }
       ]
     },
@@ -154,11 +178,13 @@
       "sessions": [
         {
           "title": "Open Source Swift Workshop",
+          "title_ja": "オープンソースSwiftワークショップ",
           "speakers": [
             {
               "name": "giginet",
               "image_name": "giginet",
               "bio": "giginet works at LY Corp to improve Developer Experience for LINE. He also contributes some open-sourced developer tools like fastlane, Carthage, XcodeGen, and so on.",
+              "bio_ja": "giginetはLY株式会社でLINEの開発者体験向上に取り組んでいます。fastlane、Carthage、XcodeGenなどのオープンソース開発者ツールにも貢献しています。",
               "links": [
                 {
                   "url": "https://twitter.com/giginet",
@@ -170,6 +196,7 @@
               "name": "Yusuke Kita",
               "image_name": "Yusuke Kita",
               "bio": "He is a software engineer and works on improvements of DevOps and DevEx in various teams. He also contributes some open-sourced swift projects.",
+              "bio_ja": "ソフトウェアエンジニアで、様々なチームでDevOpsとDevExの改善に取り組んでいます。オープンソースのSwiftプロジェクトにも貢献しています。",
               "links": [
                 {
                   "url": "https://twitter.com/kitasuke",
@@ -181,6 +208,7 @@
               "name": "ikesyo",
               "image_name": "ikesyo",
               "bio": "ikesyo is a Swift (corelibs-foundation) contributor. He was also the author or maintainer of projects such as Himotoki, Quick, Nimble, Carthage, and ReactiveSwift. He is currently developing various manga apps at Hatena Co., Ltd.",
+              "bio_ja": "ikesyoはSwift（corelibs-foundation）のコントリビューターです。Himotoki、Quick、Nimble、Carthage、ReactiveSwiftなどのプロジェクトの作者やメンテナーでもありました。現在は株式会社はてなで様々なマンガアプリを開発しています。",
               "links": [
                 {
                   "url": "https://twitter.com/ikesyo",
@@ -189,12 +217,16 @@
               ]
             }
           ],
-          "description": "In this workshop we will look at the Swift compilation process and what those parts are, learn a bit about LLVM, how to find a bug to work on using bugs.swift.org and then making a build with our changes and running tests.A merged pull request is not the goal of this workshop, but after attending this workshop you should have enough knowledge to get started and know where to look to learn more.\n\nIf you are proficient in C++ or even have some experience with LLVM, then you can start working with the Swift compiler right away.\n\nIf you do not have former C++ knowledge fear not, the Swift standard library or SwiftSyntax are written mostly in Swift and the python / swift hybrid '.gyb' files.\nIn addition, we’re welcome to contribute to any other Swift family projects, like Foundation, Swift Package Manager, or any other first-party libraries.",
-          "requirements": "Laptops with the latest stable Xcode and building the Swift compiler is preferred. Instruction will be provided beforehand."
+          "description": "In this workshop we will look at the Swift compilation process and what those parts are, learn a bit about LLVM, how to find a bug to work on using bugs.swift.org and then making a build with our changes and running tests.A merged pull request is not the goal of this workshop, but after attending this workshop you should have enough knowledge to get started and know where to look to learn more.\n\nIf you are proficient in C++ or even have some experience with LLVM, then you can start working with the Swift compiler right away.\n\nIf you do not have former C++ knowledge fear not, the Swift standard library or SwiftSyntax are written mostly in Swift and the python / swift hybrid '.gyb' files.\nIn addition, we're welcome to contribute to any other Swift family projects, like Foundation, Swift Package Manager, or any other first-party libraries.",
+          "description_ja": "このワークショップでは、Swiftのコンパイルプロセスとその各部分について見ていき、LLVMについて少し学び、bugs.swift.orgを使って取り組むバグを見つける方法、そして変更を加えたビルドを作成してテストを実行する方法を学びます。マージされたプルリクエストがこのワークショップの目標ではありませんが、参加後は始めるための十分な知識と、さらに学ぶために見るべき場所がわかるようになります。\n\nC++に精通している方やLLVMの経験がある方は、すぐにSwiftコンパイラの作業を始められます。\n\nC++の知識がなくても心配いりません。Swiftの標準ライブラリやSwiftSyntaxは主にSwiftとpython/swiftハイブリッドの「.gyb」ファイルで書かれています。\nさらに、Foundation、Swift Package Manager、その他のファーストパーティライブラリなど、Swift関連の他のプロジェクトへの貢献も歓迎します。",
+          "requirements": "Laptops with the latest stable Xcode and building the Swift compiler is preferred. Instruction will be provided beforehand.",
+          "requirements_ja": "最新の安定版Xcodeをインストールしたノートパソコン、Swiftコンパイラのビルドが推奨されます。事前に手順が提供されます。"
         },
         {
           "title": "Peer Labs",
-          "summary": "Peer Labs is your chance to get hands on with things you learned from try! Swift presentations, discuss any issues with the speakers, connect with your peers, work on open source projects, organize impromptu learning sessions and more! Peer labs do not have a strict structure, and are open-ended instead. It is what you and your peers make of it! We will ask everyone to introduce themselves in the beginning, and then it is up to you to ask questions and work together with others on projects that interest you."
+          "title_ja": "ピアラボ",
+          "summary": "Peer Labs is your chance to get hands on with things you learned from try! Swift presentations, discuss any issues with the speakers, connect with your peers, work on open source projects, organize impromptu learning sessions and more! Peer labs do not have a strict structure, and are open-ended instead. It is what you and your peers make of it! We will ask everyone to introduce themselves in the beginning, and then it is up to you to ask questions and work together with others on projects that interest you.",
+          "summary_ja": "ピアラボは、try! Swiftのプレゼンテーションで学んだことを実践したり、スピーカーと問題について議論したり、仲間とつながったり、オープンソースプロジェクトに取り組んだり、即興の学習セッションを企画したりする機会です。ピアラボには厳格な構造はなく、オープンエンドです。あなたと仲間次第です！最初に全員に自己紹介をしてもらい、その後は興味のあるプロジェクトについて質問したり、他の人と一緒に取り組むのはあなた次第です。"
         }
       ]
     },
@@ -202,7 +234,8 @@
       "time": "2024-03-24T16:30:00+09:00",
       "sessions": [
         {
-          "title": "Close"
+          "title": "Close",
+          "title_ja": "終了"
         }
       ]
     }

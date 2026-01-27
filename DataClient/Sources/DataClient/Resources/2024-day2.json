@@ -1,6 +1,7 @@
 {
   "id": 2,
   "title": "Day 2",
+  "title_ja": "２日目",
   "date": "2024-03-23T09:00:00+09:00",
   "schedules": [
     {
@@ -10,7 +11,9 @@
         {
           "id": 28,
           "title": "Morning Chat",
-          "summary": "Bring your breakfast and meet other attendees or sponsors."
+          "title_ja": "モーニングチャット",
+          "summary": "Bring your breakfast and meet other attendees or sponsors.",
+          "summary_ja": "朝食を持って、他の参加者やスポンサーと交流しましょう。"
         }
       ]
     },
@@ -21,8 +24,10 @@
         {
           "id": 29,
           "title": "Opening",
+          "title_ja": "オープニング",
           "speaker": "Organizers",
-          "place": "Hall"
+          "place": "Hall",
+          "place_ja": "ホール"
         }
       ]
     },
@@ -33,11 +38,13 @@
         {
           "id": 30,
           "title": "Getting to Know TextKit",
+          "title_ja": "TextKitを知る",
           "speakers": [
             {
               "name": "Marcin Krzyżanowski",
               "image_name": "Marcin Kryzyzanowski",
               "bio": "Marcin is a developer with extensive experience. He currently works at Judo.app, where he is building an interface builder for SwiftUI. Marcin has published numerous iOS/macOS libraries and tools, including CryptoSwift, ObjectivePGP, and the Online Swift Playground, which allows for interactive Swift code execution from a web browser. He is currently on a mission to ship SwiftStudio.app, an independent third-party IDE for Swift.",
+              "bio_ja": "Marcinは豊富な経験を持つ開発者です。現在Judo.appで、SwiftUI向けのインターフェースビルダーを開発しています。CryptoSwift、ObjectivePGP、ウェブブラウザからSwiftコードをインタラクティブに実行できるOnline Swift Playgroundなど、多数のiOS/macOSライブラリやツールを公開しています。現在、独立したサードパーティのSwift IDE「SwiftStudio.app」のリリースに取り組んでいます。",
               "links": [
                 {
                   "url": "https://x.com/krzyzanowskim",
@@ -47,7 +54,9 @@
             }
           ],
           "place": "Hall",
-          "description": "After a year of developing an editor component with the TextKit 2 framework, I gained knowledge of best practices and techniques. I am thrilled to share my experience and insights."
+          "place_ja": "ホール",
+          "description": "After a year of developing an editor component with the TextKit 2 framework, I gained knowledge of best practices and techniques. I am thrilled to share my experience and insights.",
+          "description_ja": "TextKit 2フレームワークでエディターコンポーネントを1年間開発した結果、ベストプラクティスやテクニックの知識を得ました。私の経験と洞察を共有できることを嬉しく思います。"
         }
       ]
     },
@@ -58,12 +67,14 @@
         {
           "id": 31,
           "title": "Drive Through File Provider",
+          "title_ja": "File Providerを駆け抜ける",
           "speaker": "Audrey Zebaze",
           "speakers": [
             {
               "name": "Audrey Zebaze",
               "image_name": "Audrey",
               "bio": "Audrey discovered iOS when she first bought an iPhone Edge in 2008. Since then, she is working passionately on Apple platforms, enjoying SwiftUI and even CoreData while building the macOS Proton Drive app. When she is not coding, watching/playing basketball and football are her favorite activities.\nAs a huge movie addict, Audrey is avoiding trailers as much as possible.",
+              "bio_ja": "Audreyは2008年にiPhone Edgeを初めて購入した時にiOSに出会いました。それ以来、macOS Proton Driveアプリを開発しながら、SwiftUIやCoreDataを楽しみ、Appleプラットフォームに情熱を持って取り組んでいます。コーディング以外では、バスケットボールやサッカーの観戦・プレイが好きです。\n映画の大ファンで、予告編はできるだけ避けるようにしています。",
               "links": [
                 {
                   "url": "https://twitter.com/Mvpohhhdrey",
@@ -73,11 +84,14 @@
             }
           ],
           "place": "Hall",
-          "description": "As most people tend to use cloud sync services to store relevant content, we will explore File Provider framework on both iOS and macOS and all the related features: Finder and Files app integration, remote synchronisation with upload and downloads.  So let’s explore how it works on both iOS and macOS and how you can sync, upload and download files on these platforms."
+          "place_ja": "ホール",
+          "description": "As most people tend to use cloud sync services to store relevant content, we will explore File Provider framework on both iOS and macOS and all the related features: Finder and Files app integration, remote synchronisation with upload and downloads.  So let's explore how it works on both iOS and macOS and how you can sync, upload and download files on these platforms.",
+          "description_ja": "多くの人がクラウド同期サービスを使って重要なコンテンツを保存する中、iOSとmacOS両方のFile Providerフレームワークと関連機能を探ります：FinderとFilesアプリの統合、アップロードとダウンロードによるリモート同期。iOSとmacOSでの動作方法、そしてこれらのプラットフォームでファイルを同期、アップロード、ダウンロードする方法を探りましょう。"
         },
         {
           "id": 32,
           "title": "Office hour",
+          "title_ja": "オフィスアワー",
           "speakers": [
             {
               "name": "Marcin Krzyżanowski",
@@ -85,7 +99,9 @@
             }
           ],
           "place": "Ask the Speaker",
-          "summary": "Meet Marcin and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic."
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Marcin and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Marcinに会って、トークについて質問しましょう。より深い洞察を得て、トピックについてさらに学ぶ絶好の機会です。"
         }
       ]
     },
@@ -96,7 +112,9 @@
         {
           "id": 35,
           "title": "Break",
-          "summary": "Take a break and meet other attendees or sponsors"
+          "title_ja": "休憩",
+          "summary": "Take a break and meet other attendees or sponsors",
+          "summary_ja": "休憩して、他の参加者やスポンサーと交流しましょう"
         }
       ]
     },
@@ -107,12 +125,14 @@
         {
           "id": 33,
           "title": "Enhancing Applications with the Accessibility API",
+          "title_ja": "Accessibility APIでアプリケーションを強化する",
           "speaker": "Kishikawa Katsumi",
           "speakers": [
             {
               "name": "Kishikawa katsumi",
               "image_name": "kishikawa_katsumi",
               "bio": "Katsumi has been developing software for the Apple platform for over 10 years and currently works for a company that develops low-code platforms. He works on automating all kinds of tasks. In his spare time, he builds and maintains various open source projects that improve developer productivity.",
+              "bio_ja": "Katsumiは10年以上Appleプラットフォーム向けのソフトウェアを開発しており、現在はローコードプラットフォームを開発する会社で働いています。あらゆる種類のタスクの自動化に取り組んでいます。空き時間には、開発者の生産性を向上させる様々なオープンソースプロジェクトを構築・維持しています。",
               "links": [
                 {
                   "url": "https://x.com/k_katsumi",
@@ -122,11 +142,14 @@
             }
           ],
           "place": "Hall",
-          "description": "Using the Accessibility API in macOS allows you to access and manipulate UI elements of other applications and retrieve the content displayed. This presentation will introduce methods to add assistant features such as autocomplete and translation to existing applications by utilizing this functionality. We will discuss the application of the Accessibility API to enhance applications, including practical examples."
+          "place_ja": "ホール",
+          "description": "Using the Accessibility API in macOS allows you to access and manipulate UI elements of other applications and retrieve the content displayed. This presentation will introduce methods to add assistant features such as autocomplete and translation to existing applications by utilizing this functionality. We will discuss the application of the Accessibility API to enhance applications, including practical examples.",
+          "description_ja": "macOSのAccessibility APIを使用すると、他のアプリケーションのUI要素にアクセスして操作し、表示されているコンテンツを取得できます。このプレゼンテーションでは、この機能を活用して既存のアプリケーションにオートコンプリートや翻訳などのアシスタント機能を追加する方法を紹介します。実際の例を含め、アプリケーションを強化するためのAccessibility APIの活用について議論します。"
         },
         {
           "id": 34,
           "title": "Office hour",
+          "title_ja": "オフィスアワー",
           "speakers": [
             {
               "name": "Audrey Zebaze",
@@ -134,7 +157,9 @@
             }
           ],
           "place": "Ask the Speaker",
-          "summary": "Meet Audrey and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic."
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Audrey and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Audreyに会って、トークについて質問しましょう。より深い洞察を得て、トピックについてさらに学ぶ絶好の機会です。"
         }
       ]
     },
@@ -145,11 +170,13 @@
         {
           "id": 38,
           "title": "Creating Retro-Style Photos Using Swift",
+          "title_ja": "Swiftを使ってレトロ風の写真を作る",
           "speakers": [
             {
               "name": "Yunosuke Sakai",
               "image_name": "Yunosuke Sakai",
               "bio": "I love beautiful movies, novels, photography and mobile apps!",
+              "bio_ja": "美しい映画、小説、写真、モバイルアプリが大好きです！",
               "links": [
                 {
                   "url": "https://twitter.com/_ski_u",
@@ -158,11 +185,13 @@
               ]
             }
           ],
-          "description": "With iPhones continually advancing their camera capabilities, one can capture satisfying photos without the need for a dedicated digital camera. Yet, there exists a niche of individuals who intentionally purchase older digital or film cameras. They are drawn to the unique aesthetic of photos and videos produced by these cameras.\nIn this talk, we'll explore how to achieve such retro-style photos using Swift. While Core Image's documentation offers articles like \"Simulating Scratchy Analog Film,\" implementing these techniques directly into a camera app may not yield the desired retro effect. Therefore, we'll start by reexamining the question, \"What defines a retro-style photo?\" and aim to create the ideal retro aesthetic."
+          "description": "With iPhones continually advancing their camera capabilities, one can capture satisfying photos without the need for a dedicated digital camera. Yet, there exists a niche of individuals who intentionally purchase older digital or film cameras. They are drawn to the unique aesthetic of photos and videos produced by these cameras.\nIn this talk, we'll explore how to achieve such retro-style photos using Swift. While Core Image's documentation offers articles like \"Simulating Scratchy Analog Film,\" implementing these techniques directly into a camera app may not yield the desired retro effect. Therefore, we'll start by reexamining the question, \"What defines a retro-style photo?\" and aim to create the ideal retro aesthetic.",
+          "description_ja": "iPhoneのカメラ機能が進化し続ける中、専用のデジタルカメラがなくても満足のいく写真が撮れるようになりました。しかし、あえて古いデジタルカメラやフィルムカメラを購入する人々がいます。彼らはこれらのカメラが生み出す独特の美学に惹かれています。\nこのトークでは、Swiftを使ってそのようなレトロ風の写真を実現する方法を探ります。Core Imageのドキュメントには「Simulating Scratchy Analog Film」などの記事がありますが、これらのテクニックをカメラアプリに直接実装しても望むレトロ効果は得られないかもしれません。そこで、「レトロ風の写真とは何か？」という問いを再検討し、理想的なレトロ美学の創出を目指します。"
         },
         {
           "id": 37,
           "title": "Office hour",
+          "title_ja": "オフィスアワー",
           "speakers": [
             {
               "name": "Kishikawa Katsumi",
@@ -170,7 +199,9 @@
             }
           ],
           "place": "Ask the Speaker",
-          "summary": "Meet Katsumi and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic."
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Katsumi and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Katsumiに会って、トークについて質問しましょう。より深い洞察を得て、トピックについてさらに学ぶ絶好の機会です。"
         }
       ]
     },
@@ -181,12 +212,14 @@
         {
           "id": 36,
           "title": "Learning Swift's Type Inference",
+          "title_ja": "Swiftの型推論を学ぶ",
           "speaker": "omochimetaru",
           "speakers": [
             {
               "name": "omochimetaru",
               "image_name": "omochimetaru",
               "bio": "He has been passionate about programming since his childhood and has experience in various programming languages. Ever since discovering Swift, he has been extremely enthusiastic about it.He particularly enjoys writing code that utilizes type systems.\nAs he believes Swift has applications beyond just iOS apps, he also uses Swift on the server side for his regular work. He considers the major appeal of server-side work to be the ability to utilize the latest language features without having to wait for end-users to upgrade their devices.\nHe is deeply interested in Swift as a language and has read almost all of the Swift Evolution proposals from the draft stage. He is also interested in compiler code, and regularly monitors the pull requests to the repository. For his past contributions, he has been recognized as a committer.\nHe runs a study group about the Swift compiler and presents about various topics. Additionally, he's managing a Discord server for discussions about Swift.",
+              "bio_ja": "子供の頃からプログラミングに情熱を持ち、様々なプログラミング言語の経験があります。Swiftに出会ってからはとても熱心に取り組んでいます。特に型システムを活用したコードを書くことが好きです。\nSwiftにはiOSアプリ以外の用途もあると考え、普段の仕事ではサーバーサイドでもSwiftを使用しています。サーバーサイドの大きな魅力は、エンドユーザーのデバイスアップグレードを待たずに最新の言語機能を活用できることだと考えています。\n言語としてのSwiftに深い関心があり、Swift Evolutionのプロポーザルをドラフト段階からほぼすべて読んでいます。コンパイラのコードにも興味があり、リポジトリへのプルリクエストを定期的にチェックしています。過去の貢献により、コミッターとして認められています。\nSwiftコンパイラに関する勉強会を運営し、様々なトピックについて発表しています。また、Swiftについて議論するDiscordサーバーも管理しています。",
               "links": [
                 {
                   "url": "https://x.com/omochimetaru",
@@ -196,7 +229,9 @@
             }
           ],
           "place": "Hall",
-          "description": "Swift boasts a powerful language feature known as type inference, which is crucial for balancing a safe type system with ease of coding. \nUnderstanding how this essential feature is implemented can aid in writing better code. \n\nIn this talk, I will explain the workings of Swift's type inference, including the fundamental algorithm that allows bidirectional propagation of type information for code, and how it's extended to accommodate language features like overloading. \nThis will help understand why compiling code can become overly burdensome and result in errors. \nI will also cover interesting related topics such as overload priority, simultaneous inference in multiple statements, and the challenges of protocol compliance determination.\n\nAdditionally, methods for directly observing the behavior of type inference using compiler options will be introduced, paving the way for further deepening your understanding."
+          "place_ja": "ホール",
+          "description": "Swift boasts a powerful language feature known as type inference, which is crucial for balancing a safe type system with ease of coding. \nUnderstanding how this essential feature is implemented can aid in writing better code. \n\nIn this talk, I will explain the workings of Swift's type inference, including the fundamental algorithm that allows bidirectional propagation of type information for code, and how it's extended to accommodate language features like overloading. \nThis will help understand why compiling code can become overly burdensome and result in errors. \nI will also cover interesting related topics such as overload priority, simultaneous inference in multiple statements, and the challenges of protocol compliance determination.\n\nAdditionally, methods for directly observing the behavior of type inference using compiler options will be introduced, paving the way for further deepening your understanding.",
+          "description_ja": "Swiftは型推論という強力な言語機能を誇り、これは安全な型システムとコーディングの容易さのバランスを取るために重要です。\nこの重要な機能がどのように実装されているかを理解することは、より良いコードを書く助けになります。\n\nこのトークでは、コードに対する型情報の双方向伝播を可能にする基本アルゴリズムや、オーバーロードなどの言語機能に対応するための拡張方法を含む、Swiftの型推論の仕組みを説明します。\nこれにより、コードのコンパイルが過度に負担になりエラーが発生する理由を理解できます。\nオーバーロードの優先順位、複数ステートメントの同時推論、プロトコル準拠判定の課題など、興味深い関連トピックもカバーします。\n\nさらに、コンパイラオプションを使って型推論の動作を直接観察する方法を紹介し、理解をさらに深める道を開きます。"
         }
       ]
     },
@@ -207,7 +242,9 @@
         {
           "id": 41,
           "title": "Lunch",
-          "summary": "Take a lunch box and meet other attendees or sponsors."
+          "title_ja": "昼食",
+          "summary": "Take a lunch box and meet other attendees or sponsors.",
+          "summary_ja": "お弁当を受け取って、他の参加者やスポンサーと交流しましょう。"
         }
       ]
     },
@@ -218,11 +255,13 @@
         {
           "id": 40,
           "title": "Automation for App Localization",
+          "title_ja": "アプリローカライゼーションの自動化",
           "speakers": [
             {
               "name": "Chris Vasselli",
               "image_name": "Chris Vasselli",
-              "bio": "Chris is an independent iOS app developer based out of Nara, Japan (originally from USA). Before going indie in 2018, he was a software engineer at various tech companies for about 10 years, mostly in the security space.\nChris is best known for his two apps in the area of Japanese language learning, Nihongo and Nihongo Lessons. Nihongo is a Japanese dictionary and study tool that’s made for learning from the words you’re encountering in real life. Nihongo Lessons is a companion app for learning Japanese, based on the work of Adam Shapiro and his Japanese Level Up learning program.\nChris loves learning languages, and loves helping people to learn languages. He’s also an avid gamer, hiker, and dad to an amazing 7 year old.",
+              "bio": "Chris is an independent iOS app developer based out of Nara, Japan (originally from USA). Before going indie in 2018, he was a software engineer at various tech companies for about 10 years, mostly in the security space.\nChris is best known for his two apps in the area of Japanese language learning, Nihongo and Nihongo Lessons. Nihongo is a Japanese dictionary and study tool that's made for learning from the words you're encountering in real life. Nihongo Lessons is a companion app for learning Japanese, based on the work of Adam Shapiro and his Japanese Level Up learning program.\nChris loves learning languages, and loves helping people to learn languages. He's also an avid gamer, hiker, and dad to an amazing 7 year old.",
+              "bio_ja": "Chrisは奈良を拠点とする独立系iOSアプリ開発者です（アメリカ出身）。2018年に独立する前は、主にセキュリティ分野で約10年間、様々なテック企業でソフトウェアエンジニアとして働いていました。\nChrisは日本語学習アプリの分野で知られており、NihongoとNihongo Lessonsという2つのアプリを開発しています。Nihongoは実生活で出会う言葉から学ぶための日本語辞書・学習ツールです。Nihongo LessonsはAdam ShapiroのJapanese Level Up学習プログラムに基づく日本語学習のコンパニオンアプリです。\nChrisは言語学習が大好きで、人々の言語学習を助けることも大好きです。また、熱心なゲーマー、ハイカーで、素晴らしい7歳の子供の父親でもあります。",
               "links": [
                 {
                   "url": "https://twitter.com/chrisvasselli",
@@ -231,11 +270,13 @@
               ]
             }
           ],
-          "description": "Localizing your app into other languages can unlock a huge amount of growth potential for your app. But as an indie developer, I don’t have time to spare and don’t have others I can rely on to do the work involved in maintaining a high quality localization. So, I rely heavily on automation to minimize the work associated with maintaining 8 different high-quality localizations in my app Nihongo.\n\nIn this talk, I’ll discuss what aspects of localization I entrust to professional translators, what I use machine translation for, and what I use crowdsourcing from social media for. I’ll discuss techniques for automating various aspects of the localization process, including (1) generating screenshots of strings for providing context to translators and validating their translations, (2) generating app store screenshots, including marketing copy in multiple languages, (3) generating meaningful release notes in multiple languages, and (4) verifying app layout and correctness in multiple languages."
+          "description": "Localizing your app into other languages can unlock a huge amount of growth potential for your app. But as an indie developer, I don't have time to spare and don't have others I can rely on to do the work involved in maintaining a high quality localization. So, I rely heavily on automation to minimize the work associated with maintaining 8 different high-quality localizations in my app Nihongo.\n\nIn this talk, I'll discuss what aspects of localization I entrust to professional translators, what I use machine translation for, and what I use crowdsourcing from social media for. I'll discuss techniques for automating various aspects of the localization process, including (1) generating screenshots of strings for providing context to translators and validating their translations, (2) generating app store screenshots, including marketing copy in multiple languages, (3) generating meaningful release notes in multiple languages, and (4) verifying app layout and correctness in multiple languages.",
+          "description_ja": "アプリを他の言語にローカライズすることで、アプリの成長の可能性を大きく広げることができます。しかし、個人開発者として、高品質なローカライゼーションを維持する作業に費やす時間も頼れる人もいません。そこで、私のアプリNihongoで8つの異なる高品質なローカライゼーションを維持するための作業を最小限にするために、自動化に大きく依存しています。\n\nこのトークでは、ローカライゼーションのどの側面をプロの翻訳者に任せ、何に機械翻訳を使い、何にソーシャルメディアからのクラウドソーシングを使うかについて議論します。ローカライゼーションプロセスの様々な側面を自動化するテクニックについて議論します：（1）翻訳者にコンテキストを提供し翻訳を検証するための文字列のスクリーンショット生成、（2）複数言語でのマーケティングコピーを含むApp Storeスクリーンショットの生成、（3）複数言語での意味のあるリリースノートの生成、（4）複数言語でのアプリレイアウトと正確性の検証。"
         },
         {
           "id": 39,
           "title": "Office hour",
+          "title_ja": "オフィスアワー",
           "speakers": [
             {
               "name": "omochimetaru",
@@ -243,7 +284,9 @@
             }
           ],
           "place": "Ask the Speaker",
-          "summary": "Meet omochimetaru and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic."
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet omochimetaru and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "omochimetaruに会って、トークについて質問しましょう。より深い洞察を得て、トピックについてさらに学ぶ絶好の機会です。"
         }
       ]
     },
@@ -254,11 +297,13 @@
         {
           "id": 44,
           "title": "The Fascinating World of Addition in Swift",
+          "title_ja": "Swiftにおける足し算の魅力的な世界",
           "speakers": [
             {
               "name": "Shogo Yoshida",
               "image_name": "Shogo Yoshida",
               "bio": "I like ramen.",
+              "bio_ja": "ラーメンが好きです。",
               "links": [
                 {
                   "url": "https://twitter.com/shzero5",
@@ -267,11 +312,13 @@
               ]
             }
           ],
-          "description": "Have you ever pondered why '1 + 1 = 2' in Swift? Join me as I unveil the intriguing journey behind this seemingly simple arithmetic operation, delving into Swift's inner workings, including its source code, LLVM, and assembly language. This talk offers a deep dive into the concealed mechanics behind everyday code!"
+          "description": "Have you ever pondered why '1 + 1 = 2' in Swift? Join me as I unveil the intriguing journey behind this seemingly simple arithmetic operation, delving into Swift's inner workings, including its source code, LLVM, and assembly language. This talk offers a deep dive into the concealed mechanics behind everyday code!",
+          "description_ja": "Swiftで「1 + 1 = 2」となる理由を考えたことはありますか？一見単純な算術演算の背後にある興味深い旅を、Swiftのソースコード、LLVM、アセンブリ言語を含む内部の仕組みに踏み込んで解き明かします。このトークは、日常的なコードの背後に隠された仕組みを深く探ります！"
         },
         {
           "id": 43,
           "title": "Office hour",
+          "title_ja": "オフィスアワー",
           "speakers": [
             {
               "name": "Chris Vasselli",
@@ -279,7 +326,9 @@
             }
           ],
           "place": "Ask the Speaker",
-          "summary": "Meet Chris and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic."
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Chris and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Chrisに会って、トークについて質問しましょう。より深い洞察を得て、トピックについてさらに学ぶ絶好の機会です。"
         }
       ]
     },
@@ -290,11 +339,13 @@
         {
           "id": 42,
           "title": "Code Signing - Have Fun and Take Control",
+          "title_ja": "コード署名 - 楽しんでコントロールしよう",
           "speakers": [
             {
               "name": "Josh Holtz",
               "image_name": "Josh Holtz",
               "bio": "Software superstar. Stuttering stud. Lead maintainer of fastlane tools.",
+              "bio_ja": "ソフトウェアのスーパースター。吃音のスタッド。fastlane toolsのリードメンテナー。",
               "links": [
                 {
                   "url": "https://twitter.com/joshdholtz",
@@ -303,7 +354,8 @@
               ]
             }
           ],
-          "description": "Swift is cool but... do you know what's cooler? Successfully code signing your Swift apps. Code signing issues can certainly be scary but they can be really fun to solve! This talk will teach you how to take a step back from scary code signing errors to calmly and quickly code sign your apps."
+          "description": "Swift is cool but... do you know what's cooler? Successfully code signing your Swift apps. Code signing issues can certainly be scary but they can be really fun to solve! This talk will teach you how to take a step back from scary code signing errors to calmly and quickly code sign your apps.",
+          "description_ja": "Swiftはクールですが…もっとクールなものを知っていますか？Swiftアプリのコード署名を成功させることです。コード署名の問題は確かに怖いかもしれませんが、解決するのは本当に楽しいです！このトークでは、怖いコード署名エラーから一歩引いて、落ち着いて素早くアプリに署名する方法を教えます。"
         }
       ]
     },
@@ -314,7 +366,9 @@
         {
           "id": 46,
           "title": "Group Photo",
-          "summary": "Take a group photo with all attendees and speakers"
+          "title_ja": "集合写真",
+          "summary": "Take a group photo with all attendees and speakers",
+          "summary_ja": "参加者とスピーカー全員で集合写真を撮りましょう"
         }
       ]
     },
@@ -325,7 +379,9 @@
         {
           "id": 47,
           "title": "Break",
-          "summary": "Take a break and meet other attendees or sponsors"
+          "title_ja": "休憩",
+          "summary": "Take a break and meet other attendees or sponsors",
+          "summary_ja": "休憩して、他の参加者やスポンサーと交流しましょう"
         }
       ]
     },
@@ -336,11 +392,13 @@
         {
           "id": 48,
           "title": "Building a Smaller App Binary",
+          "title_ja": "より小さなアプリバイナリを構築する",
           "speakers": [
             {
               "name": "Yuta Saito",
               "image_name": "katei",
               "bio": "Yuta is a software engineer at Goodnotes, an open-source developer, and a graduate CS student. He has been contributing to Swift / Ruby / LLVM for WebAssembly support.",
+              "bio_ja": "YutaはGoodnotesのソフトウェアエンジニアで、オープンソース開発者、大学院でCSを学んでいます。WebAssemblyサポートのためにSwift / Ruby / LLVMに貢献しています。",
               "links": [
                 {
                   "url": "https://twitter.com/kateinoigakukun",
@@ -349,11 +407,13 @@
               ]
             }
           ],
-          "description": "Binary size is one of the critical metrics to improve the app experience. There are a bunch of approaches to optimize program size and Swift provides some of them including Swift-specific one. This talk gives you an overview of well-known optimizations and how to write size-friendly Swift code."
+          "description": "Binary size is one of the critical metrics to improve the app experience. There are a bunch of approaches to optimize program size and Swift provides some of them including Swift-specific one. This talk gives you an overview of well-known optimizations and how to write size-friendly Swift code.",
+          "description_ja": "バイナリサイズはアプリ体験を向上させるための重要な指標の一つです。プログラムサイズを最適化するアプローチは数多くあり、SwiftはSwift固有のものを含むいくつかの方法を提供しています。このトークでは、よく知られた最適化の概要と、サイズに優しいSwiftコードの書き方を紹介します。"
         },
         {
           "id": 45,
           "title": "Office hour",
+          "title_ja": "オフィスアワー",
           "speakers": [
             {
               "name": "Josh Holtz",
@@ -361,7 +421,9 @@
             }
           ],
           "place": "Ask the Speaker",
-          "summary": "Meet Josh and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic."
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Josh and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Joshに会って、トークについて質問しましょう。より深い洞察を得て、トピックについてさらに学ぶ絶好の機会です。"
         }
       ]
     },
@@ -372,11 +434,13 @@
         {
           "id": 49,
           "title": "Big Little Wins for You or Your App",
+          "title_ja": "あなたやあなたのアプリのための大小の勝利",
           "speakers": [
             {
               "name": "Zamzam Farzamipooya",
               "image_name": "Zamzam",
               "bio": "Zamzam is a tech lead with deep knowledge in AI and mobile technology, currently advancing her expertise at Veo Technologies in Copenhagen. A movie enthusiast post-work",
+              "bio_ja": "ZamzamはAIとモバイル技術に深い知識を持つテックリードで、現在コペンハーゲンのVeo Technologiesで専門性を高めています。仕事後は映画愛好家です。",
               "links": [
                 {
                   "url": "https://twitter.com/zamzampooya",
@@ -385,11 +449,13 @@
               ]
             }
           ],
-          "description": "This talk will take you through a handful of topics that either make a big or a small win for you or your application, mostly with the new iOS, SwiftUI and Xcode features. Want to give your app some extra sparkle? Let's chat about cool shortcuts, playful animations, and the new tricks from SwiftUI 5 like observation framework, enhanced phased animations, updates to scrollview and new gestures. Come join this session and take home some big and small wins with you."
+          "description": "This talk will take you through a handful of topics that either make a big or a small win for you or your application, mostly with the new iOS, SwiftUI and Xcode features. Want to give your app some extra sparkle? Let's chat about cool shortcuts, playful animations, and the new tricks from SwiftUI 5 like observation framework, enhanced phased animations, updates to scrollview and new gestures. Come join this session and take home some big and small wins with you.",
+          "description_ja": "このトークでは、あなたやあなたのアプリケーションに大きな勝利や小さな勝利をもたらすいくつかのトピックを紹介します。主に新しいiOS、SwiftUI、Xcodeの機能についてです。アプリに輝きを加えたいですか？クールなショートカット、遊び心のあるアニメーション、Observation framework、強化されたphased animations、scrollviewの更新、新しいジェスチャーなど、SwiftUI 5の新しいトリックについて話しましょう。このセッションに参加して、大小の勝利を持ち帰りましょう。"
         },
         {
           "id": 50,
           "title": "Office hour",
+          "title_ja": "オフィスアワー",
           "speakers": [
             {
               "name": "Yuta Saito",
@@ -397,7 +463,9 @@
             }
           ],
           "place": "Ask the Speaker",
-          "summary": "Meet Yuta and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic."
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Yuta and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Yutaに会って、トークについて質問しましょう。より深い洞察を得て、トピックについてさらに学ぶ絶好の機会です。"
         }
       ]
     },
@@ -407,7 +475,8 @@
       "sessions": [
         {
           "id": 50,
-          "title": "Closing"
+          "title": "Closing",
+          "title_ja": "クロージング"
         }
       ]
     },
@@ -418,6 +487,7 @@
         {
           "id": 51,
           "title": "Office hour",
+          "title_ja": "オフィスアワー",
           "speakers": [
             {
               "name": "Zamzam Farzamipooya",
@@ -425,7 +495,9 @@
             }
           ],
           "place": "Ask the Speaker",
-          "summary": "Meet Zamzam Ghorbaninia and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic."
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Zamzam Ghorbaninia and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Zamzam Ghorbaninaに会って、トークについて質問しましょう。より深い洞察を得て、トピックについてさらに学ぶ絶好の機会です。"
         }
       ]
     },
@@ -435,7 +507,8 @@
       "sessions": [
         {
           "id": 52,
-          "title": "Party"
+          "title": "Party",
+          "title_ja": "パーティー"
         }
       ]
     }
