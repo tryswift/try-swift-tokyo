@@ -1,7 +1,7 @@
-import Vapor
 import Fluent
 import JWT
 import SharedModels
+import Vapor
 
 /// Vapor Content wrapper for LocalizedString
 struct LocalizedStringContent: Content {
@@ -114,9 +114,11 @@ struct ConferenceController: RouteCollection {
       throw Abort(.badRequest, reason: "Conference path is required")
     }
 
-    guard let conference = try await Conference.query(on: req.db)
-      .filter(\.$path == path)
-      .first() else {
+    guard
+      let conference = try await Conference.query(on: req.db)
+        .filter(\.$path == path)
+        .first()
+    else {
       throw Abort(.notFound, reason: "Conference not found")
     }
 
@@ -165,9 +167,11 @@ struct ConferenceController: RouteCollection {
       throw Abort(.badRequest, reason: "Conference path is required")
     }
 
-    guard let conference = try await Conference.query(on: req.db)
-      .filter(\.$path == path)
-      .first() else {
+    guard
+      let conference = try await Conference.query(on: req.db)
+        .filter(\.$path == path)
+        .first()
+    else {
       throw Abort(.notFound, reason: "Conference not found")
     }
 
@@ -198,9 +202,11 @@ struct ConferenceController: RouteCollection {
       throw Abort(.badRequest, reason: "Conference path is required")
     }
 
-    guard let conference = try await Conference.query(on: req.db)
-      .filter(\.$path == path)
-      .first() else {
+    guard
+      let conference = try await Conference.query(on: req.db)
+        .filter(\.$path == path)
+        .first()
+    else {
       throw Abort(.notFound, reason: "Conference not found")
     }
 

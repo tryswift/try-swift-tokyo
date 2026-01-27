@@ -7,7 +7,7 @@ import MapKitClient
 import SwiftUI
 
 @Reducer
-public struct Guidance: Sendable{
+public struct Guidance: Sendable {
 
   @ObservableState
   public struct State: Sendable, Equatable {

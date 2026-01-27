@@ -18,7 +18,9 @@ struct ConferenceWebsite {
   }
 
   /// Supported image extensions for web
-  private static let supportedImageExtensions: Set<String> = ["png", "jpg", "jpeg", "gif", "webp", "svg"]
+  private static let supportedImageExtensions: Set<String> = [
+    "png", "jpg", "jpeg", "gif", "webp", "svg",
+  ]
 
   private static func copyAssets() throws {
     let fileManager = FileManager.default
@@ -27,14 +29,20 @@ struct ConferenceWebsite {
     let websiteAssetsDirectory = websiteDirectory.appending(path: "Assets")
     let iosAppDirectory = websiteDirectory.deletingLastPathComponent().appending(path: "iOS")
 
-    let sponsorMediaDirectory = iosAppDirectory.appending(path: "Sources/SponsorFeature/Media.xcassets")
-    let sponsorMediaEnumerator = fileManager.enumerator(at: sponsorMediaDirectory, includingPropertiesForKeys: nil)
+    let sponsorMediaDirectory = iosAppDirectory.appending(
+      path: "Sources/SponsorFeature/Media.xcassets")
+    let sponsorMediaEnumerator = fileManager.enumerator(
+      at: sponsorMediaDirectory, includingPropertiesForKeys: nil)
 
-    let scheduleMediaDirectory = iosAppDirectory.appending(path: "Sources/ScheduleFeature/Media.xcassets")
-    let scheduleMediaEnumerator = fileManager.enumerator(at: scheduleMediaDirectory, includingPropertiesForKeys: nil)
+    let scheduleMediaDirectory = iosAppDirectory.appending(
+      path: "Sources/ScheduleFeature/Media.xcassets")
+    let scheduleMediaEnumerator = fileManager.enumerator(
+      at: scheduleMediaDirectory, includingPropertiesForKeys: nil)
 
-    let trySwiftMediaDirectory = iosAppDirectory.appending(path: "Sources/trySwiftFeature/Media.xcassets")
-    let trySwiftMediaEnumerator = fileManager.enumerator(at: trySwiftMediaDirectory, includingPropertiesForKeys: nil)
+    let trySwiftMediaDirectory = iosAppDirectory.appending(
+      path: "Sources/trySwiftFeature/Media.xcassets")
+    let trySwiftMediaEnumerator = fileManager.enumerator(
+      at: trySwiftMediaDirectory, includingPropertiesForKeys: nil)
 
     try [sponsorMediaEnumerator, scheduleMediaEnumerator, trySwiftMediaEnumerator].forEach {
       while let file = $0?.nextObject() as? URL {
@@ -46,7 +54,8 @@ struct ConferenceWebsite {
         }
 
         // Keep original extension instead of forcing PNG conversion
-        let destURL = websiteAssetsDirectory.appendingPathComponent("images/from_app/\(file.lastPathComponent)")
+        let destURL = websiteAssetsDirectory.appendingPathComponent(
+          "images/from_app/\(file.lastPathComponent)")
 
         let destinationDirectory = destURL.deletingLastPathComponent()
         if !fileManager.fileExists(atPath: destinationDirectory.path) {
@@ -86,12 +95,12 @@ struct ConferenceWebsite {
     }
 
     let aasaContent = """
-    {
-        "appclips": {
-            "apps": ["9PC9DZ9559.jp.tryswift.tokyo.App.Clip"]
-        }
-    }
-    """
+      {
+          "appclips": {
+              "apps": ["9PC9DZ9559.jp.tryswift.tokyo.App.Clip"]
+          }
+      }
+      """
 
     try aasaContent.write(to: aasaFile, atomically: true, encoding: .utf8)
   }

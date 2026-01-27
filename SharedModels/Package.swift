@@ -9,7 +9,7 @@ let package = Package(
     .library(
       name: "SharedModels",
       targets: ["SharedModels"]
-    ),
+    )
   ],
   targets: [
     .target(
@@ -17,6 +17,6 @@ let package = Package(
       swiftSettings: [
         .swiftLanguageMode(.v6)
       ]
-    ),
+    )
   ]
 )

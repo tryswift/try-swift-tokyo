@@ -27,8 +27,16 @@ extension HomeSectionType {
   func isAvailable(for year: ConferenceYear) -> Bool {
     switch year {
     case .year2024: [.about, .outline, .speaker, .timetable, .access].contains(self)
-    case .year2025: [.about, .outline, .speaker, .timetable, .sponsor, .meetTheHosts, .meetTheOrganizers, .access].contains(self)
-    case .year2026: [.about, .outline, .tickets, .cfp, .speaker, .workshop, .sponsor, .meetTheHosts, .meetTheOrganizers, .access].contains(self)
+    case .year2025:
+      [
+        .about, .outline, .speaker, .timetable, .sponsor, .meetTheHosts, .meetTheOrganizers,
+        .access,
+      ].contains(self)
+    case .year2026:
+      [
+        .about, .outline, .tickets, .cfp, .speaker, .workshop, .sponsor, .meetTheHosts, .meetTheOrganizers,
+        .access,
+      ].contains(self)
     }
   }
 
@@ -43,21 +51,24 @@ extension HomeSectionType {
 extension HomeSectionType {
   @MainActor
   @HTMLBuilder
-  func generateContents(for year: ConferenceYear, language: SupportedLanguage, dataClient: DataClient) -> some HTML {
+  func generateContents(
+    for year: ConferenceYear, language: SupportedLanguage, dataClient: DataClient
+  ) -> some HTML {
     switch self {
     case .about:
       HeaderComponent(language: language)
         .ignorePageGutters()
         .id(htmlId)
 
-      let text = switch year {
-      case .year2024:
-        String("hero-text-2024", language: language)
-      case .year2025:
-        String("hero-text-2025", language: language)
-      case .year2026:
-        String("hero-text-2026", language: language)
-      }
+      let text =
+        switch year {
+        case .year2024:
+          String("hero-text-2024", language: language)
+        case .year2025:
+          String("hero-text-2025", language: language)
+        case .year2026:
+          String("hero-text-2026", language: language)
+        }
       Text(text)
         .horizontalAlignment(.center)
         .font(.lead)
@@ -131,12 +142,13 @@ extension HomeSectionType {
 
       let day1 = try! dataClient.fetchDay1(year)
       let day2 = try! dataClient.fetchDay2(year)
-      let day3: Conference = switch year {
-      case .year2024:
-        try! dataClient.fetchWorkshop(year)
-      case .year2025, .year2026:
-        try! dataClient.fetchDay3(year)
-      }
+      let day3: Conference =
+        switch year {
+        case .year2024:
+          try! dataClient.fetchWorkshop(year)
+        case .year2025, .year2026:
+          try! dataClient.fetchDay3(year)
+        }
 
       Grid(alignment: .top, spacing: 16) {
         ForEach([day1, day2, day3]) { data in
@@ -170,14 +182,14 @@ extension HomeSectionType {
             .cornerRadius(.px(16))
             .margin(.bottom, .px(48))
 
-            Grid(alignment: .center, spacing: 48) {
-                ForEach(sponsors) { sponsor in
-                    SponsorComponent(sponsor: sponsor, size: plan.maxSize, language: language)
-                }
+          Grid(alignment: .center, spacing: 48) {
+            ForEach(sponsors) { sponsor in
+              SponsorComponent(sponsor: sponsor, size: plan.maxSize, language: language)
             }
-            .columns(plan.columnCount)
-            .horizontalAlignment(.center)
-            .margin(.bottom, .px(96))
+          }
+          .columns(plan.columnCount)
+          .horizontalAlignment(.center)
+          .margin(.bottom, .px(96))
         }
       }
 
@@ -210,8 +222,8 @@ extension HomeSectionType {
   }
 }
 
-private extension Plan {
-  var columnCount: Int {
+extension Plan {
+  fileprivate var columnCount: Int {
     switch self {
     case .platinum: 1
     case .gold: 2
@@ -222,12 +234,12 @@ private extension Plan {
     }
   }
 
-  var maxSize: CGSize {
+  fileprivate var maxSize: CGSize {
     switch self {
     case .platinum:
       return .init(width: 400, height: 224)
     case .gold:
-        return .init(width: 320, height: 179)
+      return .init(width: 320, height: 179)
     case .silver:
       return .init(width: 220, height: 124)
     case .bronze, .diversityAndInclusion, .student, .community:
@@ -237,7 +249,7 @@ private extension Plan {
     }
   }
 
-  var titleColor: Color {
+  fileprivate var titleColor: Color {
     switch self {
     case .platinum: .init(hex: "#657E8C")
     case .gold: .init(hex: "#5E532A")
@@ -248,14 +260,14 @@ private extension Plan {
     }
   }
 
-    var titleBackgroundColor: Color {
-        switch self {
-        case .platinum: .init(hex: "#D0E1EA")
-        case .gold: .init(hex: "#EFE4B9")
-        case .silver: .init(hex: "#E5E5E5")
-        case .bronze: .init(hex: "#F3E0D5")
-        case .diversityAndInclusion, .student: .init(hex: "#C4F0F2")
-        case .community, .individual: .init(hex: "#EBDFFF")
-        }
+  fileprivate var titleBackgroundColor: Color {
+    switch self {
+    case .platinum: .init(hex: "#D0E1EA")
+    case .gold: .init(hex: "#EFE4B9")
+    case .silver: .init(hex: "#E5E5E5")
+    case .bronze: .init(hex: "#F3E0D5")
+    case .diversityAndInclusion, .student: .init(hex: "#C4F0F2")
+    case .community, .individual: .init(hex: "#EBDFFF")
     }
+  }
 }

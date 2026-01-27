@@ -74,7 +74,9 @@ struct CfPRoutes: RouteCollection {
 
     return HTMLResponse {
       CfPLayout(title: "Submit Proposal", user: user) {
-        SubmitPageView(user: user, success: success, errorMessage: nil, openConference: openConference?.toPublicInfo())
+        SubmitPageView(
+          user: user, success: success, errorMessage: nil,
+          openConference: openConference?.toPublicInfo())
       }
     }
   }
@@ -159,7 +161,10 @@ struct CfPRoutes: RouteCollection {
         .first()
     else {
       return try await renderSubmitPageWithError(
-        req: req, user: user, error: "The Call for Proposals is not currently open. Please check back later for the next conference.")
+        req: req, user: user,
+        error:
+          "The Call for Proposals is not currently open. Please check back later for the next conference."
+      )
     }
 
     guard let conferenceID = conference.id else {

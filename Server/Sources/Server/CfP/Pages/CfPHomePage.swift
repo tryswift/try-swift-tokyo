@@ -69,15 +69,21 @@ struct CfPHomePage: HTML, Sendable {
       div(.class("container")) {
         h2(.class("text-center fw-bold purple-text mb-5")) { "Topics We're Looking For" }
         div(.class("row g-4")) {
-          topicCard(title: "Swift Language", description: "New features, best practices, and language evolution")
-          topicCard(title: "SwiftUI", description: "Modern UI development, animations, and architecture")
+          topicCard(
+            title: "Swift Language",
+            description: "New features, best practices, and language evolution")
+          topicCard(
+            title: "SwiftUI", description: "Modern UI development, animations, and architecture")
           topicCard(
             title: "iOS/macOS/visionOS", description: "Platform-specific development and APIs")
           topicCard(
-            title: "Server-Side Swift", description: "Vapor, backend development, and cloud deployment")
-          topicCard(title: "Testing & Quality", description: "Unit testing, UI testing, and code quality")
+            title: "Server-Side Swift",
+            description: "Vapor, backend development, and cloud deployment")
           topicCard(
-            title: "Tools & Productivity", description: "Xcode, debugging, and developer experience")
+            title: "Testing & Quality", description: "Unit testing, UI testing, and code quality")
+          topicCard(
+            title: "Tools & Productivity", description: "Xcode, debugging, and developer experience"
+          )
         }
       }
     }

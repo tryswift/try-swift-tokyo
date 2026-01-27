@@ -1,6 +1,6 @@
 import Fluent
-import Vapor
 import SharedModels
+import Vapor
 
 /// Proposal model for CfP submissions
 final class Proposal: Model, Content, @unchecked Sendable {

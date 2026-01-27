@@ -1,6 +1,6 @@
 import Fluent
-import Vapor
 import SharedModels
+import Vapor
 
 /// User model for CfP system
 /// Stores GitHub authentication data and role information

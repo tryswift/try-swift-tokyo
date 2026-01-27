@@ -13,7 +13,8 @@ struct MainLayout: Layout {
       MetaTag(.twitterImage, content: ogpLink)
 
       if currentPage.url.pathComponents.last == "_en" {
-        let redirectUrl = URL(string: currentPage.url.absoluteString.replacingOccurrences(of: "_", with: ""))!
+        let redirectUrl = URL(
+          string: currentPage.url.absoluteString.replacingOccurrences(of: "_", with: ""))!
         MetaTag(httpEquivalent: "refresh", content: "0;url=\(redirectUrl.absoluteString)")
       }
     }

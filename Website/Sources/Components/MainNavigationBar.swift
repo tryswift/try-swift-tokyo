@@ -12,7 +12,8 @@ struct MainNavigationBar: HTML {
       for section in sections {
         let target: String = {
           let homePath = Home.generatePath(for: year, language: language)
-          return path(year, language) == homePath ? "#\(section.htmlId)" : "\(homePath)#\(section.htmlId)"
+          return path(year, language) == homePath
+            ? "#\(section.htmlId)" : "\(homePath)#\(section.htmlId)"
         }()
         Link(String(section.rawValue, language: language), target: target)
           .role(.light)

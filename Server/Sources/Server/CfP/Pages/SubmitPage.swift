@@ -7,7 +7,10 @@ struct SubmitPageView: HTML, Sendable {
   let errorMessage: String?
   let openConference: ConferencePublicInfo?
 
-  init(user: UserDTO?, success: Bool, errorMessage: String?, openConference: ConferencePublicInfo? = nil) {
+  init(
+    user: UserDTO?, success: Bool, errorMessage: String?,
+    openConference: ConferencePublicInfo? = nil
+  ) {
     self.user = user
     self.success = success
     self.errorMessage = errorMessage
@@ -103,9 +106,12 @@ struct SubmitPageView: HTML, Sendable {
                 }
 
                 div(.class("mb-3")) {
-                  label(.class("form-label fw-semibold"), .for("talkDuration")) { "Talk Duration *" }
-                  select(.class("form-select"), .name("talkDuration"), .id("talkDuration"), .required)
-                  {
+                  label(.class("form-label fw-semibold"), .for("talkDuration")) {
+                    "Talk Duration *"
+                  }
+                  select(
+                    .class("form-select"), .name("talkDuration"), .id("talkDuration"), .required
+                  ) {
                     option(.value("")) { "Choose duration..." }
                     option(.value("20min")) { "Regular Talk (20 minutes)" }
                     option(.value("LT")) { "Lightning Talk (5 minutes)" }

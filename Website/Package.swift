@@ -11,7 +11,7 @@ let package = Package(
     .package(url: "https://github.com/twostraws/Ignite", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.2.0"),
     .package(path: "../DataClient"),
-    .package(path: "../LocalizationGenerated")
+    .package(path: "../LocalizationGenerated"),
   ],
   targets: [
     .executableTarget(
@@ -25,6 +25,6 @@ let package = Package(
       resources: [
         .process("Resources")
       ]
-    ),
+    )
   ]
 )

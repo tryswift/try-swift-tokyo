@@ -14,8 +14,8 @@ struct LanguageSelector: InlineElement {
   }
 }
 
-private extension SupportedLanguage {
-  var name: String {
+extension SupportedLanguage {
+  fileprivate var name: String {
     switch self {
     case .ja: return "日本語"
     case .en: return "English"
