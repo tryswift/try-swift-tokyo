@@ -7,8 +7,6 @@ on:
     paths:
       - "Website/Sources/**"
       - "Website/Assets/**"
-      - "CfPWebsite/Sources/**"
-      - "CfPWebsite/Assets/**"
       - "SharedModels/**"
       - "trySwiftTokyo.xcworkspace/xcshareddata/swiftpm/Package.resolved"
       - ".github/workflows/deploy_website.yml"
@@ -41,12 +39,6 @@ jobs:
         with:
           swift-version: "6.2"
 
-      - name: Test CfP Website
-        run: |
-          cd CfPWebsite
-          swift test
-          node Tests/verify-login-logic.js
-
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v4
         with:
@@ -59,15 +51,22 @@ jobs:
           cd Website
           swift run Website
 
-      - name: Build CfP Website
-        run: |
-          cd CfPWebsite
-          ./prepare-for-github-pages.sh
-
-      - name: Copy CfP Website to /cfp path
+      - name: Create CfP redirect to Fly.io SSR
         run: |
           mkdir -p Website/Build/cfp
-          cp -r CfPWebsite/Build/* Website/Build/cfp/
+          cat > Website/Build/cfp/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="refresh" content="0; url=https://tryswift-cfp-api.fly.dev/cfp/">
+            <title>Redirecting to CfP...</title>
+          </head>
+          <body>
+            <p>Redirecting to <a href="https://tryswift-cfp-api.fly.dev/cfp/">try! Swift Tokyo CfP</a>...</p>
+          </body>
+          </html>
+          EOF
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
