@@ -9,25 +9,60 @@ struct CfPRoutes: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
     let cfp = routes.grouped("cfp")
 
-    // Public pages
-    cfp.get(use: homePage)
-    cfp.get("guidelines", use: guidelinesPage)
-    cfp.get("login", use: loginPage)
-    cfp.get("login-page", use: loginPage)  // Backward compatibility
+    // Redirect root /cfp to /cfp/en/
+    cfp.get { req -> Response in
+      // Check Accept-Language header for preferred language
+      let acceptLanguage = req.headers.first(name: .acceptLanguage) ?? ""
+      let preferredLanguage: CfPLanguage = acceptLanguage.lowercased().contains("ja") ? .ja : .en
+      return req.redirect(to: "/cfp/\(preferredLanguage.urlPrefix)/")
+    }
 
-    // Auth-aware pages (check auth but don't require it)
-    cfp.get("submit", use: submitPage)
-    cfp.get("submit-page", use: submitPage)  // Backward compatibility
-    cfp.get("my-proposals", use: myProposalsPage)
-    cfp.get("my-proposals-page", use: myProposalsPage)  // Backward compatibility
+    // Language-specific routes
+    for lang in CfPLanguage.allCases {
+      let langGroup = cfp.grouped(PathComponent(stringLiteral: lang.rawValue))
 
-    // Form submission (POST)
-    cfp.post("submit", use: handleSubmitProposal)
+      // Public pages
+      langGroup.get(use: { req in try await homePage(req: req, language: lang) })
+      langGroup.get("guidelines", use: { req in try await guidelinesPage(req: req, language: lang) })
+      langGroup.get("login", use: { req in try await loginPage(req: req, language: lang) })
+      langGroup.get(
+        "login-page", use: { req in try await loginPage(req: req, language: lang) })  // Backward compatibility
 
-    // Logout
-    cfp.get("logout", use: logout)
+      // Auth-aware pages (check auth but don't require it)
+      langGroup.get("submit", use: { req in try await submitPage(req: req, language: lang) })
+      langGroup.get(
+        "submit-page", use: { req in try await submitPage(req: req, language: lang) })  // Backward compatibility
+      langGroup.get(
+        "my-proposals", use: { req in try await myProposalsPage(req: req, language: lang) })
+      langGroup.get(
+        "my-proposals-page",
+        use: { req in try await myProposalsPage(req: req, language: lang) })  // Backward compatibility
 
-    // Organizer pages (admin only)
+      // Form submission (POST)
+      langGroup.post("submit", use: { req in try await handleSubmitProposal(req: req, language: lang) })
+
+      // Logout
+      langGroup.get("logout", use: { req in try await logout(req: req, language: lang) })
+    }
+
+    // Legacy routes without language prefix - redirect to English
+    cfp.get("guidelines") { req -> Response in
+      return req.redirect(to: "/cfp/en/guidelines")
+    }
+    cfp.get("login") { req -> Response in
+      return req.redirect(to: "/cfp/en/login")
+    }
+    cfp.get("submit") { req -> Response in
+      return req.redirect(to: "/cfp/en/submit")
+    }
+    cfp.get("my-proposals") { req -> Response in
+      return req.redirect(to: "/cfp/en/my-proposals")
+    }
+    cfp.get("logout") { req -> Response in
+      return req.redirect(to: "/cfp/en/logout")
+    }
+
+    // Organizer pages (admin only) - not localized
     let organizer = cfp.grouped("organizer")
     organizer.get("proposals", use: organizerProposalsPage)
     organizer.get("proposals", "export", use: exportProposalsCSV)
@@ -37,38 +72,43 @@ struct CfPRoutes: RouteCollection {
   // MARK: - Page Handlers
 
   @Sendable
-  func homePage(req: Request) async throws -> HTMLResponse {
+  func homePage(req: Request, language: CfPLanguage) async throws -> HTMLResponse {
     let user = try? await getAuthenticatedUser(req: req)
+    let title =
+      language == .ja
+        ? "スピーカー募集" : "Call for Proposals"
     return HTMLResponse {
-      CfPLayout(title: "Call for Proposals", user: user) {
-        CfPHomePage(user: user)
+      CfPLayout(title: title, user: user, language: language) {
+        CfPHomePage(user: user, language: language)
       }
     }
   }
 
   @Sendable
-  func guidelinesPage(req: Request) async throws -> HTMLResponse {
+  func guidelinesPage(req: Request, language: CfPLanguage) async throws -> HTMLResponse {
     let user = try? await getAuthenticatedUser(req: req)
+    let title = CfPStrings.Guidelines.title(language)
     return HTMLResponse {
-      CfPLayout(title: "Submission Guidelines", user: user) {
-        GuidelinesPageView(user: user)
+      CfPLayout(title: title, user: user, language: language) {
+        GuidelinesPageView(user: user, language: language)
       }
     }
   }
 
   @Sendable
-  func loginPage(req: Request) async throws -> HTMLResponse {
+  func loginPage(req: Request, language: CfPLanguage) async throws -> HTMLResponse {
     let user = try? await getAuthenticatedUser(req: req)
     let error = req.query[String.self, at: "error"]
+    let title = CfPStrings.Login.title(language)
     return HTMLResponse {
-      CfPLayout(title: "Login", user: user) {
-        LoginPageView(user: user, error: error)
+      CfPLayout(title: title, user: user, language: language) {
+        LoginPageView(user: user, error: error, language: language)
       }
     }
   }
 
   @Sendable
-  func submitPage(req: Request) async throws -> HTMLResponse {
+  func submitPage(req: Request, language: CfPLanguage) async throws -> HTMLResponse {
     let user = try? await getAuthenticatedUser(req: req)
     let success = req.query[String.self, at: "success"] == "true"
 
@@ -78,17 +118,22 @@ struct CfPRoutes: RouteCollection {
       .sort(\.$year, .descending)
       .first()
 
+    let title = CfPStrings.Submit.title(language)
     return HTMLResponse {
-      CfPLayout(title: "Submit Proposal", user: user) {
+      CfPLayout(title: title, user: user, language: language) {
         SubmitPageView(
-          user: user, success: success, errorMessage: nil,
-          openConference: openConference?.toPublicInfo())
+          user: user,
+          success: success,
+          errorMessage: nil,
+          openConference: openConference?.toPublicInfo(),
+          language: language
+        )
       }
     }
   }
 
   @Sendable
-  func myProposalsPage(req: Request) async throws -> HTMLResponse {
+  func myProposalsPage(req: Request, language: CfPLanguage) async throws -> HTMLResponse {
     let user = try? await getAuthenticatedUser(req: req)
     var proposals: [ProposalDTO] = []
 
@@ -103,9 +148,10 @@ struct CfPRoutes: RouteCollection {
       }
     }
 
+    let title = CfPStrings.MyProposals.title(language)
     return HTMLResponse {
-      CfPLayout(title: "My Proposals", user: user) {
-        MyProposalsPageView(user: user, proposals: proposals)
+      CfPLayout(title: title, user: user, language: language) {
+        MyProposalsPageView(user: user, proposals: proposals, language: language)
       }
     }
   }
@@ -113,9 +159,9 @@ struct CfPRoutes: RouteCollection {
   // MARK: - Form Handlers
 
   @Sendable
-  func handleSubmitProposal(req: Request) async throws -> Response {
+  func handleSubmitProposal(req: Request, language: CfPLanguage) async throws -> Response {
     guard let user = try? await getAuthenticatedUser(req: req) else {
-      return req.redirect(to: "/api/v1/auth/github?returnTo=/cfp/submit")
+      return req.redirect(to: "/api/v1/auth/github?returnTo=/cfp/\(language.urlPrefix)/submit")
     }
 
     // Decode form data
@@ -134,29 +180,30 @@ struct CfPRoutes: RouteCollection {
       formData = try req.content.decode(ProposalFormData.self)
     } catch {
       return try await renderSubmitPageWithError(
-        req: req, user: user, error: "Invalid form data")
+        req: req, user: user, error: "Invalid form data", language: language)
     }
 
     // Validate
     guard !formData.title.isEmpty else {
-      return try await renderSubmitPageWithError(req: req, user: user, error: "Title is required")
+      return try await renderSubmitPageWithError(
+        req: req, user: user, error: "Title is required", language: language)
     }
     guard !formData.abstract.isEmpty else {
       return try await renderSubmitPageWithError(
-        req: req, user: user, error: "Abstract is required")
+        req: req, user: user, error: "Abstract is required", language: language)
     }
     guard !formData.talkDetails.isEmpty else {
       return try await renderSubmitPageWithError(
-        req: req, user: user, error: "Talk details are required")
+        req: req, user: user, error: "Talk details are required", language: language)
     }
     guard !formData.bio.isEmpty else {
       return try await renderSubmitPageWithError(
-        req: req, user: user, error: "Speaker bio is required")
+        req: req, user: user, error: "Speaker bio is required", language: language)
     }
 
     guard let talkDuration = TalkDuration(rawValue: formData.talkDuration) else {
       return try await renderSubmitPageWithError(
-        req: req, user: user, error: "Please select a talk duration")
+        req: req, user: user, error: "Please select a talk duration", language: language)
     }
 
     // Find current open conference
@@ -166,16 +213,17 @@ struct CfPRoutes: RouteCollection {
         .sort(\.$year, .descending)
         .first()
     else {
+      let errorMessage =
+        language == .ja
+          ? "現在、スピーカー募集は行っていません。次回のカンファレンスをお待ちください。"
+          : "The Call for Proposals is not currently open. Please check back later for the next conference."
       return try await renderSubmitPageWithError(
-        req: req, user: user,
-        error:
-          "The Call for Proposals is not currently open. Please check back later for the next conference."
-      )
+        req: req, user: user, error: errorMessage, language: language)
     }
 
     guard let conferenceID = conference.id else {
       return try await renderSubmitPageWithError(
-        req: req, user: user, error: "Conference configuration error")
+        req: req, user: user, error: "Conference configuration error", language: language)
     }
 
     // Create proposal
@@ -194,15 +242,18 @@ struct CfPRoutes: RouteCollection {
     try await proposal.save(on: req.db)
 
     // Redirect to success page
-    return req.redirect(to: "/cfp/submit?success=true")
+    return req.redirect(to: "/cfp/\(language.urlPrefix)/submit?success=true")
   }
 
-  private func renderSubmitPageWithError(req: Request, user: UserDTO, error: String) async throws
+  private func renderSubmitPageWithError(
+    req: Request, user: UserDTO, error: String, language: CfPLanguage
+  ) async throws
     -> Response
   {
+    let title = CfPStrings.Submit.title(language)
     let html = HTMLResponse {
-      CfPLayout(title: "Submit Proposal", user: user) {
-        SubmitPageView(user: user, success: false, errorMessage: error)
+      CfPLayout(title: title, user: user, language: language) {
+        SubmitPageView(user: user, success: false, errorMessage: error, language: language)
       }
     }
     return try await html.encodeResponse(for: req)
@@ -211,8 +262,8 @@ struct CfPRoutes: RouteCollection {
   // MARK: - Logout
 
   @Sendable
-  func logout(req: Request) async throws -> Response {
-    let response = req.redirect(to: "/cfp/")
+  func logout(req: Request, language: CfPLanguage) async throws -> Response {
+    let response = req.redirect(to: "/cfp/\(language.urlPrefix)/")
 
     // Clear auth cookies
     response.cookies["cfp_token"] = HTTPCookies.Value(
@@ -242,7 +293,7 @@ struct CfPRoutes: RouteCollection {
     // Check if user is admin
     guard let user, user.role == .admin else {
       return HTMLResponse {
-        CfPLayout(title: "All Proposals", user: user) {
+        CfPLayout(title: "All Proposals", user: user, language: .en) {
           OrganizerProposalsPageView(user: user, proposals: [], conferencePath: nil)
         }
       }
@@ -268,7 +319,7 @@ struct CfPRoutes: RouteCollection {
     }
 
     return HTMLResponse {
-      CfPLayout(title: "All Proposals", user: user) {
+      CfPLayout(title: "All Proposals", user: user, language: .en) {
         OrganizerProposalsPageView(user: user, proposals: proposals, conferencePath: conferencePath)
       }
     }
@@ -281,7 +332,7 @@ struct CfPRoutes: RouteCollection {
     // Check if user is admin
     guard let user, user.role == .admin else {
       return HTMLResponse {
-        CfPLayout(title: "Proposal Detail", user: user) {
+        CfPLayout(title: "Proposal Detail", user: user, language: .en) {
           OrganizerProposalDetailPageView(user: user, proposal: nil)
         }
       }
@@ -289,7 +340,7 @@ struct CfPRoutes: RouteCollection {
 
     guard let proposalID = req.parameters.get("proposalID", as: UUID.self) else {
       return HTMLResponse {
-        CfPLayout(title: "Proposal Detail", user: user) {
+        CfPLayout(title: "Proposal Detail", user: user, language: .en) {
           OrganizerProposalDetailPageView(user: user, proposal: nil)
         }
       }
@@ -306,7 +357,7 @@ struct CfPRoutes: RouteCollection {
     }
 
     return HTMLResponse {
-      CfPLayout(title: proposal?.title ?? "Proposal Detail", user: user) {
+      CfPLayout(title: proposal?.title ?? "Proposal Detail", user: user, language: .en) {
         OrganizerProposalDetailPageView(user: user, proposal: proposal)
       }
     }

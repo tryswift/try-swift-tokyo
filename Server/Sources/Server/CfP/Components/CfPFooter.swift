@@ -1,22 +1,26 @@
 import Elementary
 
 struct CfPFooter: HTML, Sendable {
+  let language: CfPLanguage
+
   var body: some HTML {
     footer(.class("py-5 text-center"), .style("background: #00203f;")) {
       div(.class("container")) {
         div(.class("mb-3")) {
           a(.class("text-white text-decoration-none me-3"), .href("https://tryswift.jp")) {
-            "Main Website"
+            CfPStrings.Footer.mainWebsite(language)
           }
           a(
             .class("text-white text-decoration-none me-3"),
-            .href("https://tryswift.jp/code-of-conduct")
+            .href("https://tryswift.jp/\(language == .ja ? "ja" : "en")/code-of-conduct")
           ) {
-            "Code of Conduct"
+            CfPStrings.Footer.codeOfConduct(language)
           }
-          a(.class("text-white text-decoration-none"), .href("https://tryswift.jp/privacy-policy"))
-          {
-            "Privacy Policy"
+          a(
+            .class("text-white text-decoration-none"),
+            .href("https://tryswift.jp/\(language == .ja ? "ja" : "en")/privacy-policy")
+          ) {
+            CfPStrings.Footer.privacyPolicy(language)
           }
         }
 

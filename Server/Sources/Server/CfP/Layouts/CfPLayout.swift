@@ -4,11 +4,14 @@ import SharedModels
 struct CfPLayout<Content: HTML & Sendable>: HTMLDocument, Sendable {
   var title: String
   let user: UserDTO?
+  let language: CfPLanguage
   let pageContent: Content
 
-  init(title: String, user: UserDTO?, @HTMLBuilder pageContent: () -> Content) {
+  init(title: String, user: UserDTO?, language: CfPLanguage, @HTMLBuilder pageContent: () -> Content)
+  {
     self.title = title
     self.user = user
+    self.language = language
     self.pageContent = pageContent()
   }
 
@@ -16,6 +19,7 @@ struct CfPLayout<Content: HTML & Sendable>: HTMLDocument, Sendable {
     meta(.charset(.utf8))
     meta(.name(.viewport), .content("width=device-width, initial-scale=1"))
     HTMLRaw("<title>\(title) - try! Swift Tokyo CfP</title>")
+    HTMLRaw("<html lang=\"\(language.rawValue)\">")
     link(
       .rel(.stylesheet),
       .href("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css")
@@ -28,7 +32,9 @@ struct CfPLayout<Content: HTML & Sendable>: HTMLDocument, Sendable {
     meta(
       .property("og:description"),
       .content(
-        "Submit your talk proposal for try! Swift Tokyo 2026. Share your Swift expertise with developers from around the world."
+        language == .ja
+          ? "try! Swift Tokyo 2026でのトーク応募をお待ちしています。あなたのSwiftの知識を世界中の開発者と共有しませんか？"
+          : "Submit your talk proposal for try! Swift Tokyo 2026. Share your Swift expertise with developers from around the world."
       )
     )
     meta(.property("og:image"), .content("https://tryswift.jp/cfp/images/ogp.png"))
@@ -49,13 +55,13 @@ struct CfPLayout<Content: HTML & Sendable>: HTMLDocument, Sendable {
   }
 
   var body: some HTML {
-    CfPNavigation(user: user)
+    CfPNavigation(user: user, language: language)
 
     main(.style("padding-top: 70px;")) {
       pageContent
     }
 
-    CfPFooter()
+    CfPFooter(language: language)
 
     script(
       .src("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js")

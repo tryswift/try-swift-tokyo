@@ -3,19 +3,24 @@ import SharedModels
 
 struct CfPHomePage: HTML, Sendable {
   let user: UserDTO?
+  let language: CfPLanguage
 
   var body: some HTML {
     // Hero Section
     section(.class("hero-section text-center py-5")) {
       div(.class("container py-5")) {
-        p(.class("text-white-50 fs-5 mb-2")) { "try! Swift Tokyo 2026" }
-        h1(.class("display-3 fw-bold text-white mb-3")) { "Call for Proposals" }
+        p(.class("text-white-50 fs-5 mb-2")) { CfPStrings.Home.heroSubtitle(language) }
+        h1(.class("display-3 fw-bold text-white mb-3")) { CfPStrings.Home.heroTitle(language) }
         p(.class("lead text-white-50 mb-4 mx-auto"), .style("max-width: 600px;")) {
-          "Share your Swift expertise with developers from around the world. Submit your talk proposal for try! Swift Tokyo 2026!"
+          CfPStrings.Home.heroDescription(language)
         }
         div(.class("d-flex gap-3 justify-content-center flex-wrap")) {
-          a(.class("btn btn-light btn-lg fw-bold"), .href("/cfp/submit")) { "Submit Your Proposal" }
-          a(.class("btn btn-outline-light btn-lg"), .href("/cfp/guidelines")) { "View Guidelines" }
+          a(.class("btn btn-light btn-lg fw-bold"), .href("/cfp/\(language.urlPrefix)/submit")) {
+            CfPStrings.Home.submitYourProposal(language)
+          }
+          a(.class("btn btn-outline-light btn-lg"), .href("/cfp/\(language.urlPrefix)/guidelines")) {
+            CfPStrings.Home.viewGuidelines(language)
+          }
         }
       }
     }
@@ -23,12 +28,30 @@ struct CfPHomePage: HTML, Sendable {
     // Important Dates Section
     section(.class("py-5")) {
       div(.class("container")) {
-        h2(.class("text-center fw-bold purple-text mb-5")) { "Important Dates" }
+        h2(.class("text-center fw-bold purple-text mb-5")) {
+          CfPStrings.Home.importantDates(language)
+        }
         div(.class("row g-4")) {
-          dateCard(emoji: "📅", title: "CfP Opens", date: "January 15, 2026")
-          dateCard(emoji: "⏰", title: "Submission Deadline", date: "February 1, 2026")
-          dateCard(emoji: "📣", title: "Notifications", date: "February 8, 2026")
-          dateCard(emoji: "🎤", title: "Conference", date: "April 12-14, 2026")
+          dateCard(
+            emoji: "📅",
+            title: CfPStrings.Home.cfpOpens(language),
+            date: CfPStrings.Home.cfpOpensDate(language)
+          )
+          dateCard(
+            emoji: "⏰",
+            title: CfPStrings.Home.submissionDeadline(language),
+            date: CfPStrings.Home.submissionDeadlineDate(language)
+          )
+          dateCard(
+            emoji: "📣",
+            title: CfPStrings.Home.notifications(language),
+            date: CfPStrings.Home.notificationsDate(language)
+          )
+          dateCard(
+            emoji: "🎤",
+            title: CfPStrings.Home.conference(language),
+            date: CfPStrings.Home.conferenceDate(language)
+          )
         }
       }
     }
@@ -36,15 +59,15 @@ struct CfPHomePage: HTML, Sendable {
     // Talk Formats Section
     section(.class("py-5 bg-light")) {
       div(.class("container")) {
-        h2(.class("text-center fw-bold purple-text mb-5")) { "Talk Formats" }
+        h2(.class("text-center fw-bold purple-text mb-5")) { CfPStrings.Home.talkFormats(language) }
         div(.class("row g-4")) {
           div(.class("col-md-6")) {
             div(.class("card h-100")) {
               div(.class("card-body text-center p-4")) {
-                h3(.class("fw-bold")) { "🎯 Regular Talk" }
-                p(.class("lead text-muted")) { "20 minutes" }
+                h3(.class("fw-bold")) { "🎯 \(CfPStrings.Home.regularTalk(language))" }
+                p(.class("lead text-muted")) { CfPStrings.Home.regularTalkDuration(language) }
                 p(.class("mt-3")) {
-                  "Deep dive into a specific topic with detailed examples and live demos. Perfect for sharing comprehensive knowledge about Swift development."
+                  CfPStrings.Home.regularTalkDescription(language)
                 }
               }
             }
@@ -52,10 +75,10 @@ struct CfPHomePage: HTML, Sendable {
           div(.class("col-md-6")) {
             div(.class("card h-100")) {
               div(.class("card-body text-center p-4")) {
-                h3(.class("fw-bold")) { "⚡ Lightning Talk" }
-                p(.class("lead text-muted")) { "5 minutes" }
+                h3(.class("fw-bold")) { "⚡ \(CfPStrings.Home.lightningTalk(language))" }
+                p(.class("lead text-muted")) { CfPStrings.Home.lightningTalkDuration(language) }
                 p(.class("mt-3")) {
-                  "Quick, focused presentation on a single idea, tip, or tool. Great for first-time speakers or sharing quick wins!"
+                  CfPStrings.Home.lightningTalkDescription(language)
                 }
               }
             }
@@ -67,22 +90,31 @@ struct CfPHomePage: HTML, Sendable {
     // Topics Section
     section(.class("py-5")) {
       div(.class("container")) {
-        h2(.class("text-center fw-bold purple-text mb-5")) { "Topics We're Looking For" }
+        h2(.class("text-center fw-bold purple-text mb-5")) { CfPStrings.Home.topicsTitle(language) }
         div(.class("row g-4")) {
           topicCard(
-            title: "Swift Language",
-            description: "New features, best practices, and language evolution")
+            title: CfPStrings.Home.topicSwiftLanguage(language),
+            description: CfPStrings.Home.topicSwiftLanguageDesc(language)
+          )
           topicCard(
-            title: "SwiftUI", description: "Modern UI development, animations, and architecture")
+            title: CfPStrings.Home.topicSwiftUI(language),
+            description: CfPStrings.Home.topicSwiftUIDesc(language)
+          )
           topicCard(
-            title: "iOS/macOS/visionOS", description: "Platform-specific development and APIs")
+            title: CfPStrings.Home.topicPlatforms(language),
+            description: CfPStrings.Home.topicPlatformsDesc(language)
+          )
           topicCard(
-            title: "Server-Side Swift",
-            description: "Vapor, backend development, and cloud deployment")
+            title: CfPStrings.Home.topicServerSide(language),
+            description: CfPStrings.Home.topicServerSideDesc(language)
+          )
           topicCard(
-            title: "Testing & Quality", description: "Unit testing, UI testing, and code quality")
+            title: CfPStrings.Home.topicTesting(language),
+            description: CfPStrings.Home.topicTestingDesc(language)
+          )
           topicCard(
-            title: "Tools & Productivity", description: "Xcode, debugging, and developer experience"
+            title: CfPStrings.Home.topicTools(language),
+            description: CfPStrings.Home.topicToolsDesc(language)
           )
         }
       }
@@ -91,11 +123,13 @@ struct CfPHomePage: HTML, Sendable {
     // CTA Section
     section(.class("py-5 bg-purple text-center")) {
       div(.class("container py-4")) {
-        h2(.class("fw-bold text-white mb-3")) { "Ready to Share Your Knowledge?" }
+        h2(.class("fw-bold text-white mb-3")) { CfPStrings.Home.ctaTitle(language) }
         p(.class("lead text-white-50 mb-4")) {
-          "We welcome speakers of all experience levels. First-time speakers are encouraged to apply!"
+          CfPStrings.Home.ctaDescription(language)
         }
-        a(.class("btn btn-light btn-lg fw-bold"), .href("/cfp/submit")) { "Submit Your Proposal" }
+        a(.class("btn btn-light btn-lg fw-bold"), .href("/cfp/\(language.urlPrefix)/submit")) {
+          CfPStrings.Home.submitYourProposal(language)
+        }
       }
     }
   }

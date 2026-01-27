@@ -3,6 +3,7 @@ import SharedModels
 
 struct CfPNavigation: HTML, Sendable {
   let user: UserDTO?
+  let language: CfPLanguage
 
   var body: some HTML {
     nav(
@@ -10,7 +11,10 @@ struct CfPNavigation: HTML, Sendable {
       .style("background: rgba(0, 32, 63, 0.95);")
     ) {
       div(.class("container")) {
-        a(.class("navbar-brand fw-bold text-white d-flex align-items-center"), .href("/cfp/")) {
+        a(
+          .class("navbar-brand fw-bold text-white d-flex align-items-center"),
+          .href("/cfp/\(language.urlPrefix)/")
+        ) {
           img(
             .src("/cfp/images/riko.png"),
             .alt("Riko"),
@@ -32,18 +36,26 @@ struct CfPNavigation: HTML, Sendable {
         div(.class("collapse navbar-collapse"), .id("navbarNav")) {
           ul(.class("navbar-nav ms-auto align-items-center")) {
             li(.class("nav-item")) {
-              a(.class("nav-link text-white"), .href("/cfp/")) { "Home" }
+              a(.class("nav-link text-white"), .href("/cfp/\(language.urlPrefix)/")) {
+                CfPStrings.Navigation.home(language)
+              }
             }
             li(.class("nav-item")) {
-              a(.class("nav-link text-white"), .href("/cfp/guidelines")) { "Guidelines" }
+              a(.class("nav-link text-white"), .href("/cfp/\(language.urlPrefix)/guidelines")) {
+                CfPStrings.Navigation.guidelines(language)
+              }
             }
             li(.class("nav-item")) {
-              a(.class("nav-link text-white"), .href("/cfp/submit")) { "Submit" }
+              a(.class("nav-link text-white"), .href("/cfp/\(language.urlPrefix)/submit")) {
+                CfPStrings.Navigation.submit(language)
+              }
             }
 
             if let user {
               li(.class("nav-item")) {
-                a(.class("nav-link text-white"), .href("/cfp/my-proposals")) { "My Proposals" }
+                a(.class("nav-link text-white"), .href("/cfp/\(language.urlPrefix)/my-proposals")) {
+                  CfPStrings.Navigation.myProposals(language)
+                }
               }
               if user.role == .admin {
                 li(.class("nav-item")) {
@@ -58,14 +70,32 @@ struct CfPNavigation: HTML, Sendable {
                 }
               }
               li(.class("nav-item ms-2")) {
-                a(.class("btn btn-sm btn-danger"), .href("/cfp/logout")) { "Sign Out" }
+                a(.class("btn btn-sm btn-danger"), .href("/cfp/\(language.urlPrefix)/logout")) {
+                  CfPStrings.Navigation.signOut(language)
+                }
               }
             } else {
               li(.class("nav-item ms-2")) {
                 a(.class("btn btn-sm btn-light"), .href("/api/v1/auth/github")) {
-                  "Login with GitHub"
+                  CfPStrings.Navigation.loginWithGitHub(language)
                 }
               }
+            }
+
+            // Language switcher
+            li(.class("nav-item ms-3")) {
+              a(
+                .class(
+                  language == .en ? "nav-link text-white fw-bold" : "nav-link text-white-50"),
+                .href("/cfp/en/")
+              ) { "EN" }
+            }
+            li(.class("nav-item")) {
+              a(
+                .class(
+                  language == .ja ? "nav-link text-white fw-bold" : "nav-link text-white-50"),
+                .href("/cfp/ja/")
+              ) { "日本語" }
             }
           }
         }
