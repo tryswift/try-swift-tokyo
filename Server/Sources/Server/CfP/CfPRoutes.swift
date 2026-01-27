@@ -45,6 +45,9 @@ struct CfPRoutes: RouteCollection {
 
       // Logout
       langGroup.get("logout", use: { req in try await logout(req: req, language: lang) })
+
+      // 404 page (catch-all for unmatched routes within language group)
+      langGroup.get("**", use: { req in try await notFoundPage(req: req, language: lang) })
     }
 
     // Legacy routes without language prefix - redirect to English
@@ -72,6 +75,17 @@ struct CfPRoutes: RouteCollection {
   }
 
   // MARK: - Page Handlers
+
+  @Sendable
+  func notFoundPage(req: Request, language: CfPLanguage) async throws -> HTMLResponse {
+    let user = try? await getAuthenticatedUser(req: req)
+    let title = language == .ja ? "ページが見つかりません" : "Page Not Found"
+    return HTMLResponse {
+      CfPLayout(title: title, user: user, language: language) {
+        CfPNotFoundPage(user: user, language: language)
+      }
+    }
+  }
 
   @Sendable
   func homePage(req: Request, language: CfPLanguage) async throws -> HTMLResponse {
