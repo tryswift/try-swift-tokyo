@@ -22,6 +22,10 @@ struct CfPHomePage: HTML, Sendable {
           {
             CfPStrings.Home.viewGuidelines(language)
           }
+          a(.class("btn btn-outline-light btn-lg"), .href("/cfp/\(language.urlPrefix)/my-proposals"))
+          {
+            CfPStrings.Home.myProposals(language)
+          }
         }
       }
     }
