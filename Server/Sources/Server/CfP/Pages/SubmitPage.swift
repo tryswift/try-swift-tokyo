@@ -170,8 +170,7 @@ struct SubmitPageView: HTML, Sendable {
         .custom(name: "rows", value: "3"),
         .required,
         .placeholder(
-          language == .ja
-            ? "トークの簡単な要約（2〜3文）" : "A brief summary of your talk (2-3 sentences)")
+          language == .ja ? "トークの簡単な要約（2〜3文）" : "A brief summary of your talk (2-3 sentences)")
       ) {}
       div(.class("form-text")) {
         language == .ja
@@ -367,8 +366,7 @@ struct SubmitPageView: HTML, Sendable {
         .id("notesToOrganizers"),
         .custom(name: "rows", value: "2"),
         .placeholder(
-          language == .ja
-            ? "特別な要件や追加情報" : "Any special requirements or additional information")
+          language == .ja ? "特別な要件や追加情報" : "Any special requirements or additional information")
       ) {}
     }
   }

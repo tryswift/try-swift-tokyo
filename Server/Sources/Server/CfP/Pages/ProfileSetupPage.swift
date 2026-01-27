@@ -7,7 +7,10 @@ struct ProfileSetupPageView: HTML, Sendable {
   let successMessage: String?
   let returnTo: String?
 
-  init(user: UserDTO, errorMessage: String? = nil, successMessage: String? = nil, returnTo: String? = nil) {
+  init(
+    user: UserDTO, errorMessage: String? = nil, successMessage: String? = nil,
+    returnTo: String? = nil
+  ) {
     self.user = user
     self.errorMessage = errorMessage
     self.successMessage = successMessage
@@ -217,7 +220,8 @@ struct ProfileSetupPageView: HTML, Sendable {
   }
 
   private var previewScript: some HTML {
-    HTMLRaw("""
+    HTMLRaw(
+      """
       <script>
         function updatePreview(url) {
           const preview = document.getElementById('avatarPreview');

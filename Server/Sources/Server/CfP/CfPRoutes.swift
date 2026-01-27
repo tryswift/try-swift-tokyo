@@ -74,10 +74,9 @@ struct CfPRoutes: RouteCollection {
 
   /// Check if user profile is incomplete (missing required fields)
   private func isProfileIncomplete(_ user: UserDTO) -> Bool {
-    user.displayName == nil || user.displayName?.isEmpty == true ||
-    user.email == nil || user.email?.isEmpty == true ||
-    user.bio == nil || user.bio?.isEmpty == true ||
-    user.avatarURL == nil || user.avatarURL?.isEmpty == true
+    user.displayName == nil || user.displayName?.isEmpty == true || user.email == nil
+      || user.email?.isEmpty == true || user.bio == nil || user.bio?.isEmpty == true
+      || user.avatarURL == nil || user.avatarURL?.isEmpty == true
   }
 
   @Sendable
@@ -302,7 +301,9 @@ struct CfPRoutes: RouteCollection {
     return req.redirect(to: returnTo)
   }
 
-  private func renderProfilePageWithError(req: Request, user: UserDTO, error: String, returnTo: String?) async throws -> Response {
+  private func renderProfilePageWithError(
+    req: Request, user: UserDTO, error: String, returnTo: String?
+  ) async throws -> Response {
     let html = HTMLResponse {
       CfPLayout(title: "Profile Setup", user: user) {
         ProfileSetupPageView(user: user, errorMessage: error, returnTo: returnTo)
