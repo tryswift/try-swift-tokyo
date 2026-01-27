@@ -9,6 +9,7 @@ enum HomeSectionType: String, CaseIterable {
   case tickets = "Tickets"
   case cfp = "Call for Proposals"
   case speaker = "Speaker"
+  case workshop = "Workshop"
   case timetable = "Timetable"
   case sponsor = "Sponsor"
   case meetTheHosts = "Meet the Hosts"
@@ -33,7 +34,7 @@ extension HomeSectionType {
       ].contains(self)
     case .year2026:
       [
-        .about, .outline, .tickets, .cfp, .speaker, .sponsor, .meetTheHosts, .meetTheOrganizers,
+        .about, .outline, .tickets, .cfp, .speaker, .workshop, .sponsor, .meetTheHosts, .meetTheOrganizers,
         .access,
       ].contains(self)
     }
@@ -106,6 +107,21 @@ extension HomeSectionType {
           SpeakerModal(year: year, speaker: speaker, language: language)
         }
       }
+    case .workshop:
+      SectionHeader(type: self, language: language)
+
+      let workshops = try! dataClient.fetchDay1(year: .year2026)
+        .schedules
+        .flatMap(\.sessions)
+        .filter { $0.speakers?.isEmpty == false }
+
+      WorkshopComponent(workshops: workshops, year: year, language: language)
+
+      Text(String("And more...!", language: language))
+        .horizontalAlignment(.center)
+        .font(.title3)
+        .foregroundStyle(.dimGray)
+        .margin(.top, .px(32))
     case .cfp:
       SectionHeader(type: self, language: language)
       CallForProposalComponent(language: language)

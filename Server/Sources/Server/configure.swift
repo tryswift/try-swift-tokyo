@@ -45,10 +45,8 @@ enum AppConfiguration {
     app.migrations.add(CreateProposal())
     app.migrations.add(SeedTrySwiftTokyo2026())
 
-    // Auto-migrate in development
-    if app.environment == .development {
-      try await app.autoMigrate()
-    }
+    // Auto-migrate on startup (safe for production as Fluent tracks completed migrations)
+    try await app.autoMigrate()
 
     // MARK: - JWT Configuration
 
@@ -71,6 +69,9 @@ enum AppConfiguration {
       allowCredentials: true
     )
     app.middleware.use(CORSMiddleware(configuration: corsConfiguration))
+
+    // Serve static files from Public directory
+    app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 
     // MARK: - Routes
 

@@ -22,7 +22,7 @@ struct CfPLayout<Content: HTML & Sendable>: HTMLDocument, Sendable {
     )
     link(
       .rel(.icon), .custom(name: "type", value: "image/png"),
-      .href("https://tryswift.jp/images/favicon.png"))
+      .href("/cfp/images/favicon.png"))
     // OGP Meta tags
     meta(.property("og:title"), .content("\(title) - try! Swift Tokyo 2026"))
     meta(
