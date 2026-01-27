@@ -3,6 +3,7 @@
     "name": "usagimaru",
     "image_name": "usagimaru",
     "bio": "He was fascinated by the smooth and beautiful UI of Mac OS X and started working with Cocoa to create it by himself. After working as a commercial iOS developer, he now works as a software designer and architect, aiming to create beautiful software with smooth UI. He is also a member of 'macOS native' community organizers.",
+    "bio_ja": "Mac OS Xの滑らかで美しいUIに魅了され、自分でもCocoaを使って作り始めました。商用iOSデベロッパーとして活動後、現在はソフトウェアデザイナー兼アーキテクトとして、滑らかなUIを持つ美しいソフトウェアの開発を目指しています。また、「macOS native」コミュニティの運営メンバーでもあります。",
     "links": [
       {
         "url": "https://twitter.com/usagimaruma",
@@ -14,6 +15,7 @@
     "name": "Xingyu Wang",
     "image_name": "Xingyu Wang",
     "bio": "Xiangyu works at Duolingo and belongs to Max Immersion team, which develops the GPT-based subscription feature called Roleplay. She develops new improvements and features for Roleplay, mostly on iOS.\nApart from being a full-stack software developer, She enjoys most of my time playing the piano and reading.\nShe loves learning languages. She speaks Chinese and English fluently and is learning French.",
+    "bio_ja": "XiangyuはDuolingoのMax Immersionチームに所属し、GPTベースのサブスクリプション機能「Roleplay」の開発を担当しています。主にiOSでRoleplayの改善や新機能の開発を行っています。\nフルスタックソフトウェア開発者として働く傍ら、ピアノ演奏や読書を楽しんでいます。\n言語学習が大好きで、中国語と英語を流暢に話し、現在はフランス語を学習中です。",
     "links": [
       {
         "url": "https://twitter.com/rubyxw3",
@@ -25,6 +27,7 @@
     "name": "S_Shimotori",
     "image_name": "SHIMOTORI Shigure",
     "bio": "S_Shimotori is an iOS application engineer. After work, I prepare for conferences, and on my days off, I enjoy playing games and eating out.",
+    "bio_ja": "S_ShimotoriはiOSアプリケーションエンジニアです。仕事の後はカンファレンスの準備をし、休日はゲームをしたり外食を楽しんだりしています。",
     "links": [
       {
         "url": "https://twitter.com/S_Shimotori_pub",
@@ -36,6 +39,7 @@
     "name": "Saleem Abdulrasool",
     "image_name": "Saleem Abdulrasool",
     "bio": "Saleem is currently a Software Engineer at The Browser Company and a member of the Swift core team. He has worked at Google, Facebook, and Microsoft in the past. His interests lie in systems, and has worked on compilers and programming languages for over a decade, with some embedded systems thrown in. While currently focused on cross-platform Swift, primarily on Windows, he has ported Swift to Android and Windows amongst other environments.",
+    "bio_ja": "SaleemはThe Browser Companyのソフトウェアエンジニアで、Swiftコアチームのメンバーです。過去にはGoogle、Facebook、Microsoftで働いていました。システムに興味があり、10年以上コンパイラやプログラミング言語に携わり、組み込みシステムも手がけています。現在はクロスプラットフォームSwift、特にWindows向けに注力しており、SwiftをAndroidやWindowsなど様々な環境に移植しています。",
     "links": [
       {
         "url": "https://twitter.com/compnerd",
@@ -47,6 +51,7 @@
     "name": "Lil Ossa",
     "image_name": "Lil Ossa",
     "bio": "Osama is an iOS engineer at Classmethod in Japan, and He's also a breakdancer who came in second place at the World Breakdancing Championship in Germany in 2007. In the world, He often go by the name 'Lil Ossa'. He has a passion for both beer and dance, as well as creating iOS apps. He loves sharing his unique iOS development experiences at conferences, including Swiftable 2023 and iOSDC Japan 2022.",
+    "bio_ja": "OsamaはクラスメソッドのiOSエンジニアで、2007年ドイツで開催された世界ブレイクダンス選手権で準優勝したブレイクダンサーでもあります。世界では「Lil Ossa」の名前で活動しています。ビールとダンス、そしてiOSアプリ開発に情熱を持っています。Swiftable 2023やiOSDC Japan 2022など、カンファレンスで独自のiOS開発経験を共有することを楽しんでいます。",
     "links": [
       {
         "url": "https://twitter.com/littleossa",
@@ -58,6 +63,7 @@
     "name": "Satoshi Hattori",
     "image_name": "satoshi_hattori",
     "bio": "Satoshi is a software engineer living in Tokyo, Japan.\nHe works for CyberAgent in a photography studio that enables virtual production.\nHe is also working on 'the visionOS 30 Days Development Challenge' and a virtual camera implementation, and uploading the results to GitHub.\nHe loves ARKit and has recently pursued visionOS development and looks forward to a society where Vision Pro is widely used.",
+    "bio_ja": "Satoshiは東京在住のソフトウェアエンジニアです。\nCyberAgentでバーチャルプロダクションを実現する撮影スタジオに所属しています。\n「visionOS 30 Days Development Challenge」やバーチャルカメラの実装にも取り組み、その成果をGitHubに公開しています。\nARKitが大好きで、最近はvisionOS開発に力を入れており、Vision Proが広く普及する社会を楽しみにしています。",
     "links": [
       {
         "url": "https://twitter.com/shmdevelop",
@@ -69,6 +75,7 @@
     "name": "Paul Hudson",
     "image_name": "paul_hudson",
     "bio": "Paul is the author of Hacking with Swift, Pro Swift, Swift Design Patterns, Testing Swift, Swift Coding Challenges, and more. Suffice it to say, he quite likes Swift. And coffee. (But mostly Swift.) (And coffee.)",
+    "bio_ja": "Paulは「Hacking with Swift」「Pro Swift」「Swift Design Patterns」「Testing Swift」「Swift Coding Challenges」などの著者です。簡単に言うと、Swiftが大好きです。そしてコーヒーも。（でも主にSwiftが。）（いや、コーヒーも同じくらい。）",
     "links": [
       {
         "url": "https://twitter.com/twostraws",
@@ -80,6 +87,7 @@
     "name": "Kazuhiro Kamakura",
     "image_name": "Kazuhiro Kamakura",
     "bio": "Kazuhiro Kamakura works at LY corporation. He loves not only programming but also making things in general. In his spare time, he remodels houses.",
+    "bio_ja": "鎌倉和宏はLY株式会社で働いています。プログラミングだけでなく、ものづくり全般が好きです。空き時間には家のリフォームをしています。",
     "links": [
       {
         "url": "https://twitter.com/yoyokkTT",
@@ -91,6 +99,7 @@
     "name": "Tim Condon",
     "image_name": "Tim Condon",
     "bio": "Tim is a Swift developer from Manchester, UK and part of the Vapor Core Team. He's part of the server-side Swift team at Kodeco and has written the unofficial-official book on Vapor with the founders of the framework. He founded Broken Hands a few years ago and delivers talks and workshops on Vapor and server-side Swift around the world. He also co-organises the ServerSide.swift conference - the world's first and only conference focused on server-side Swift.",
+    "bio_ja": "Timはイギリス・マンチェスター出身のSwiftデベロッパーで、Vaporコアチームのメンバーです。Kodecoのサーバーサイドswiftチームに所属し、フレームワークの創設者とともにVaporの非公式公式本を執筆しました。数年前にBroken Handsを設立し、世界中でVaporとサーバーサイドSwiftに関するトークやワークショップを行っています。また、サーバーサイドSwiftに特化した世界初かつ唯一のカンファレンスであるServerSide.swiftを共同主催しています。",
     "links": [
       {
         "url": "https://hachyderm.io/@0xTim",
@@ -102,6 +111,7 @@
     "name": "Brandon Williams",
     "image_name": "Brandon Williams",
     "bio": "Brandon spent a long time doing mathematics, but now likes to teach programming with a nod towards math. He co-hosts a video series called Point-Free, which focuses on the Swift language and how to best make use of its type system and features.",
+    "bio_ja": "Brandonは長年数学に携わっていましたが、現在は数学的アプローチを取り入れたプログラミングを教えることを楽しんでいます。Swiftの言語機能や型システムを最大限に活用する方法に焦点を当てたビデオシリーズ「Point-Free」を共同で配信しています。",
     "links": [
       {
         "url": "https://twitter.com/mbrandonw",
@@ -113,6 +123,7 @@
     "name": "Stephen Celis",
     "image_name": "Stephen Celis",
     "bio": "Stephen entered tech by way of a liberal arts degree. He now works on Point-Free with Brandon Williams, where he tries to spread the word of testable, composable app development.",
+    "bio_ja": "Stephenは文系の学位を経てテック業界に入りました。現在はBrandon Williamsとともに「Point-Free」で活動し、テスト可能で組み合わせ可能なアプリ開発を広めようとしています。",
     "links": [
       {
         "url": "https://github.com/stephencelis",
@@ -124,6 +135,7 @@
     "name": "Akimu Hirai",
     "image_name": "Akimu Hirai",
     "bio": "Akimu is an iOS software developer at LY Corporation. He is working on the chat related features of LINE app. In his free time, he is a developer of simutrans OTRP, a Japanese fork of Simutrans, an open source transport simulator written in C++. He is a scholarship winner of WWDC18 from Japan.",
+    "bio_ja": "AkimuはLY株式会社のiOSソフトウェアデベロッパーで、LINEアプリのチャット関連機能を担当しています。空き時間にはC++で書かれたオープンソースの交通シミュレーターSimutransの日本版フォークであるsimutrans OTRPの開発者として活動しています。WWDC18の日本からのスカラシップ受賞者です。",
     "links": [
       {
         "url": "https://twitter.com/himeshi_tech",
@@ -135,6 +147,7 @@
     "name": "Emad Ghorbaninia",
     "image_name": "Emad",
     "bio": "Emad is a Mobile Lead and Solution Architect at Visma Acubiz in Denmark and he is always eager to learn new topics. When he's not in front of a computer he is usually playing board games",
+    "bio_ja": "Emadはデンマークのvisma AcubizでモバイルリードおよびソリューションアーキテクトをしていPradeilles。常に新しいトピックを学ぶことに熱心です。コンピューターの前にいないときは、たいていボードゲームをしています。",
     "links": [
       {
         "url": "https://twitter.com/emadgnia",
@@ -146,6 +159,7 @@
     "name": "Marcin Krzyżanowski",
     "image_name": "Marcin Kryzyzanowski",
     "bio": "Marcin is a developer with extensive experience. He currently works at Judo.app, where he is building an interface builder for SwiftUI. Marcin has published numerous iOS/macOS libraries and tools, including CryptoSwift, ObjectivePGP, and the Online Swift Playground, which allows for interactive Swift code execution from a web browser. He is currently on a mission to ship SwiftStudio.app, an independent third-party IDE for Swift.",
+    "bio_ja": "Marcinは豊富な経験を持つ開発者です。現在Judo.appで、SwiftUI向けのインターフェースビルダーを開発しています。CryptoSwift、ObjectivePGP、ウェブブラウザからSwiftコードをインタラクティブに実行できるOnline Swift Playgroundなど、多数のiOS/macOSライブラリやツールを公開しています。現在、独立したサードパーティのSwift IDE「SwiftStudio.app」のリリースに取り組んでいます。",
     "links": [
       {
         "url": "https://x.com/krzyzanowskim",
@@ -157,6 +171,7 @@
     "name": "Audrey Zebaze",
     "image_name": "Audrey",
     "bio": "Audrey discovered iOS when she first bought an iPhone Edge in 2008. Since then, she is working passionately on Apple platforms, enjoying SwiftUI and even CoreData while building the macOS Proton Drive app. When she is not coding, watching/playing basketball and football are her favorite activities.\nAs a huge movie addict, Audrey is avoiding trailers as much as possible.",
+    "bio_ja": "Audreyは2008年にiPhone Edgeを初めて購入した時にiOSに出会いました。それ以来、macOS Proton Driveアプリを開発しながら、SwiftUIやCoreDataを楽しみ、Appleプラットフォームに情熱を持って取り組んでいます。コーディング以外では、バスケットボールやサッカーの観戦・プレイが好きです。\n映画の大ファンで、予告編はできるだけ避けるようにしています。",
     "links": [
       {
         "url": "https://twitter.com/Mvpohhhdrey",
@@ -168,6 +183,7 @@
     "name": "Kishikawa katsumi",
     "image_name": "kishikawa_katsumi",
     "bio": "Katsumi has been developing software for the Apple platform for over 10 years and currently works for a company that develops low-code platforms. He works on automating all kinds of tasks. In his spare time, he builds and maintains various open source projects that improve developer productivity.",
+    "bio_ja": "Katsumiは10年以上Appleプラットフォーム向けのソフトウェアを開発しており、現在はローコードプラットフォームを開発する会社で働いています。あらゆる種類のタスクの自動化に取り組んでいます。空き時間には、開発者の生産性を向上させる様々なオープンソースプロジェクトを構築・維持しています。",
     "links": [
       {
         "url": "https://x.com/k_katsumi",
@@ -179,6 +195,7 @@
     "name": "Yunosuke Sakai",
     "image_name": "Yunosuke Sakai",
     "bio": "I love beautiful movies, novels, photography and mobile apps!",
+    "bio_ja": "美しい映画、小説、写真、モバイルアプリが大好きです！",
     "links": [
       {
         "url": "https://twitter.com/_ski_u",
@@ -190,6 +207,7 @@
     "name": "omochimetaru",
     "image_name": "omochimetaru",
     "bio": "He has been passionate about programming since his childhood and has experience in various programming languages. Ever since discovering Swift, he has been extremely enthusiastic about it. He particularly enjoys writing code that utilizes type systems.\nAs he believes Swift has applications beyond just iOS apps, he also uses Swift on the server side for his regular work. He considers the major appeal of server-side work to be the ability to utilize the latest language features without having to wait for end-users to upgrade their devices.\nHe is deeply interested in Swift as a language and has read almost all of the Swift Evolution proposals from the draft stage. He is also interested in compiler code, and regularly monitors the pull requests to the repository. For his past contributions, he has been recognized as a committer.\nHe runs a study group about the Swift compiler and presents about various topics. Additionally, he's managing a Discord server for discussions about Swift.",
+    "bio_ja": "子供の頃からプログラミングに情熱を持ち、様々なプログラミング言語の経験があります。Swiftに出会ってからはとても熱心に取り組んでいます。特に型システムを活用したコードを書くことが好きです。\nSwiftにはiOSアプリ以外の用途もあると考え、普段の仕事ではサーバーサイドでもSwiftを使用しています。サーバーサイドの大きな魅力は、エンドユーザーのデバイスアップグレードを待たずに最新の言語機能を活用できることだと考えています。\n言語としてのSwiftに深い関心があり、Swift Evolutionのプロポーザルをドラフト段階からほぼすべて読んでいます。コンパイラのコードにも興味があり、リポジトリへのプルリクエストを定期的にチェックしています。過去の貢献により、コミッターとして認められています。\nSwiftコンパイラに関する勉強会を運営し、様々なトピックについて発表しています。また、Swiftについて議論するDiscordサーバーも管理しています。",
     "links": [
       {
         "url": "https://x.com/omochimetaru",
@@ -201,6 +219,7 @@
     "name": "Chris Vasselli",
     "image_name": "Chris Vasselli",
     "bio": "Chris is an independent iOS app developer based out of Nara, Japan (originally from USA). Before going indie in 2018, he was a software engineer at various tech companies for about 10 years, mostly in the security space.\nChris is best known for his two apps in the area of Japanese language learning, Nihongo and Nihongo Lessons. Nihongo is a Japanese dictionary and study tool that's made for learning from the words you're encountering in real life. Nihongo Lessons is a companion app for learning Japanese, based on the work of Adam Shapiro and his Japanese Level Up learning program.\nChris loves learning languages, and loves helping people to learn languages. He's also an avid gamer, hiker, and dad to an amazing 7 year old.",
+    "bio_ja": "Chrisは奈良を拠点とする独立系iOSアプリ開発者です（アメリカ出身）。2018年に独立する前は、主にセキュリティ分野で約10年間、様々なテック企業でソフトウェアエンジニアとして働いていました。\nChrisは日本語学習アプリの分野で知られており、NihongoとNihongo Lessonsという2つのアプリを開発しています。Nihongoは実生活で出会う言葉から学ぶための日本語辞書・学習ツールです。Nihongo LessonsはAdam ShapiroのJapanese Level Up学習プログラムに基づく日本語学習のコンパニオンアプリです。\nChrisは言語学習が大好きで、人々の言語学習を助けることも大好きです。また、熱心なゲーマー、ハイカーで、素晴らしい7歳の子供の父親でもあります。",
     "links": [
       {
         "url": "https://twitter.com/chrisvasselli",
@@ -212,6 +231,7 @@
     "name": "Shogo Yoshida",
     "image_name": "Shogo Yoshida",
     "bio": "I like ramen.",
+    "bio_ja": "ラーメンが好きです。",
     "links": [
       {
         "url": "https://twitter.com/shzero5",
@@ -223,6 +243,7 @@
     "name": "Josh Holtz",
     "image_name": "Josh Holtz",
     "bio": "Software superstar. Stuttering stud. Lead maintainer of fastlane tools.",
+    "bio_ja": "ソフトウェアのスーパースター。吃音のスタッド。fastlane toolsのリードメンテナー。",
     "links": [
       {
         "url": "https://twitter.com/joshdholtz",
@@ -234,6 +255,7 @@
     "name": "Yuta Saito",
     "image_name": "katei",
     "bio": "Yuta is a software engineer at Goodnotes, an open-source developer, and a graduate CS student. He has been contributing to Swift / Ruby / LLVM for WebAssembly support.",
+    "bio_ja": "YutaはGoodnotesのソフトウェアエンジニアで、オープンソース開発者、大学院でCSを学んでいます。WebAssemblyサポートのためにSwift / Ruby / LLVMに貢献しています。",
     "links": [
       {
         "url": "https://twitter.com/kateinoigakukun",
@@ -245,6 +267,7 @@
     "name": "Zamzam Farzamipooya",
     "image_name": "Zamzam",
     "bio": "Zamzam is a tech lead with deep knowledge in AI and mobile technology, currently advancing her expertise at Veo Technologies in Copenhagen. A movie enthusiast post-work",
+    "bio_ja": "ZamzamはAIとモバイル技術に深い知識を持つテックリードで、現在コペンハーゲンのVeo Technologiesで専門性を高めています。仕事後は映画愛好家です。",
     "links": [
       {
         "url": "https://twitter.com/zamzampooya",
