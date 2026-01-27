@@ -18,11 +18,10 @@ struct CfPNotFoundPage: HTML, Sendable {
             : "The page you're looking for doesn't exist or has been moved."
         }
         div(.class("d-flex gap-3 justify-content-center flex-wrap")) {
-          a(.class("btn btn-primary btn-lg"), .href("/cfp/\(language.urlPrefix)/")) {
+          a(.class("btn btn-primary btn-lg"), .href(language.path(for: "/"))) {
             language == .ja ? "CfPホームに戻る" : "Back to CfP Home"
           }
-          a(.class("btn btn-outline-secondary btn-lg"), .href("/cfp/\(language.urlPrefix)/submit"))
-          {
+          a(.class("btn btn-outline-secondary btn-lg"), .href(language.path(for: "/submit"))) {
             language == .ja ? "トークを応募する" : "Submit a Proposal"
           }
         }

@@ -5,22 +5,30 @@ struct CfPHomePage: HTML, Sendable {
   let user: UserDTO?
   let language: CfPLanguage
 
+  init(user: UserDTO?, language: CfPLanguage = .en) {
+    self.user = user
+    self.language = language
+  }
+
   var body: some HTML {
     // Hero Section
     section(.class("hero-section text-center py-5")) {
       div(.class("container py-5")) {
-        p(.class("text-white-50 fs-5 mb-2")) { CfPStrings.Home.heroSubtitle(language) }
-        h1(.class("display-3 fw-bold text-white mb-3")) { CfPStrings.Home.heroTitle(language) }
+        p(.class("text-white-50 fs-5 mb-2")) { "try! Swift Tokyo 2026" }
+        h1(.class("display-3 fw-bold text-white mb-3")) {
+          language == .ja ? "プロポーザル募集" : "Call for Proposals"
+        }
         p(.class("lead text-white-50 mb-4 mx-auto"), .style("max-width: 600px;")) {
-          CfPStrings.Home.heroDescription(language)
+          language == .ja
+            ? "あなたのSwiftの知識を世界中の開発者と共有しませんか？try! Swift Tokyo 2026でトークプロポーザルを提出してください！"
+            : "Share your Swift expertise with developers from around the world. Submit your talk proposal for try! Swift Tokyo 2026!"
         }
         div(.class("d-flex gap-3 justify-content-center flex-wrap")) {
-          a(.class("btn btn-light btn-lg fw-bold"), .href("/cfp/\(language.urlPrefix)/submit")) {
-            CfPStrings.Home.submitYourProposal(language)
+          a(.class("btn btn-light btn-lg fw-bold"), .href(language.path(for: "/submit"))) {
+            language == .ja ? "プロポーザルを提出する" : "Submit Your Proposal"
           }
-          a(.class("btn btn-outline-light btn-lg"), .href("/cfp/\(language.urlPrefix)/guidelines"))
-          {
-            CfPStrings.Home.viewGuidelines(language)
+          a(.class("btn btn-outline-light btn-lg"), .href(language.path(for: "/guidelines"))) {
+            language == .ja ? "ガイドラインを見る" : "View Guidelines"
           }
         }
       }
@@ -30,28 +38,28 @@ struct CfPHomePage: HTML, Sendable {
     section(.class("py-5")) {
       div(.class("container")) {
         h2(.class("text-center fw-bold purple-text mb-5")) {
-          CfPStrings.Home.importantDates(language)
+          language == .ja ? "重要な日程" : "Important Dates"
         }
         div(.class("row g-4")) {
           dateCard(
             emoji: "📅",
-            title: CfPStrings.Home.cfpOpens(language),
-            date: CfPStrings.Home.cfpOpensDate(language)
+            title: language == .ja ? "CfP開始" : "CfP Opens",
+            date: language == .ja ? "2026年1月15日" : "January 15, 2026"
           )
           dateCard(
             emoji: "⏰",
-            title: CfPStrings.Home.submissionDeadline(language),
-            date: CfPStrings.Home.submissionDeadlineDate(language)
+            title: language == .ja ? "応募締切" : "Submission Deadline",
+            date: language == .ja ? "2026年2月1日" : "February 1, 2026"
           )
           dateCard(
             emoji: "📣",
-            title: CfPStrings.Home.notifications(language),
-            date: CfPStrings.Home.notificationsDate(language)
+            title: language == .ja ? "結果発表" : "Notifications",
+            date: language == .ja ? "2026年2月8日" : "February 8, 2026"
           )
           dateCard(
             emoji: "🎤",
-            title: CfPStrings.Home.conference(language),
-            date: CfPStrings.Home.conferenceDate(language)
+            title: language == .ja ? "カンファレンス" : "Conference",
+            date: language == .ja ? "2026年4月12-14日" : "April 12-14, 2026"
           )
         }
       }
@@ -60,15 +68,21 @@ struct CfPHomePage: HTML, Sendable {
     // Talk Formats Section
     section(.class("py-5 bg-light")) {
       div(.class("container")) {
-        h2(.class("text-center fw-bold purple-text mb-5")) { CfPStrings.Home.talkFormats(language) }
+        h2(.class("text-center fw-bold purple-text mb-5")) {
+          language == .ja ? "トークの形式" : "Talk Formats"
+        }
         div(.class("row g-4")) {
           div(.class("col-md-6")) {
             div(.class("card h-100")) {
               div(.class("card-body text-center p-4")) {
-                h3(.class("fw-bold")) { "🎯 \(CfPStrings.Home.regularTalk(language))" }
-                p(.class("lead text-muted")) { CfPStrings.Home.regularTalkDuration(language) }
+                h3(.class("fw-bold")) { "🎯 \(language == .ja ? "レギュラートーク" : "Regular Talk")" }
+                p(.class("lead text-muted")) {
+                  language == .ja ? "20分" : "20 minutes"
+                }
                 p(.class("mt-3")) {
-                  CfPStrings.Home.regularTalkDescription(language)
+                  language == .ja
+                    ? "特定のトピックについて詳しく解説し、具体的な例やライブデモを交えてお話しください。Swiftの開発に関する包括的な知識を共有するのに最適です。"
+                    : "Deep dive into a specific topic with detailed examples and live demos. Perfect for sharing comprehensive knowledge about Swift development."
                 }
               }
             }
@@ -76,10 +90,14 @@ struct CfPHomePage: HTML, Sendable {
           div(.class("col-md-6")) {
             div(.class("card h-100")) {
               div(.class("card-body text-center p-4")) {
-                h3(.class("fw-bold")) { "⚡ \(CfPStrings.Home.lightningTalk(language))" }
-                p(.class("lead text-muted")) { CfPStrings.Home.lightningTalkDuration(language) }
+                h3(.class("fw-bold")) { "⚡ \(language == .ja ? "ライトニングトーク" : "Lightning Talk")" }
+                p(.class("lead text-muted")) {
+                  language == .ja ? "5分" : "5 minutes"
+                }
                 p(.class("mt-3")) {
-                  CfPStrings.Home.lightningTalkDescription(language)
+                  language == .ja
+                    ? "1つのアイデア、ヒント、ツールに焦点を当てた短くて集中したプレゼンテーションです。初めての登壇者や、ちょっとしたアイデアの共有に最適です！"
+                    : "Quick, focused presentation on a single idea, tip, or tool. Great for first-time speakers or sharing quick wins!"
                 }
               }
             }
@@ -91,31 +109,33 @@ struct CfPHomePage: HTML, Sendable {
     // Topics Section
     section(.class("py-5")) {
       div(.class("container")) {
-        h2(.class("text-center fw-bold purple-text mb-5")) { CfPStrings.Home.topicsTitle(language) }
+        h2(.class("text-center fw-bold purple-text mb-5")) {
+          language == .ja ? "募集しているトピック" : "Topics We're Looking For"
+        }
         div(.class("row g-4")) {
           topicCard(
-            title: CfPStrings.Home.topicSwiftLanguage(language),
-            description: CfPStrings.Home.topicSwiftLanguageDesc(language)
+            title: language == .ja ? "Swift言語" : "Swift Language",
+            description: language == .ja ? "新機能、ベストプラクティス、言語の進化" : "New features, best practices, and language evolution"
           )
           topicCard(
-            title: CfPStrings.Home.topicSwiftUI(language),
-            description: CfPStrings.Home.topicSwiftUIDesc(language)
+            title: "SwiftUI",
+            description: language == .ja ? "モダンなUI開発、アニメーション、アーキテクチャ" : "Modern UI development, animations, and architecture"
           )
           topicCard(
-            title: CfPStrings.Home.topicPlatforms(language),
-            description: CfPStrings.Home.topicPlatformsDesc(language)
+            title: "iOS/macOS/visionOS",
+            description: language == .ja ? "プラットフォーム固有の開発とAPI" : "Platform-specific development and APIs"
           )
           topicCard(
-            title: CfPStrings.Home.topicServerSide(language),
-            description: CfPStrings.Home.topicServerSideDesc(language)
+            title: language == .ja ? "サーバーサイドSwift" : "Server-Side Swift",
+            description: language == .ja ? "Vapor、バックエンド開発、クラウドデプロイメント" : "Vapor, backend development, and cloud deployment"
           )
           topicCard(
-            title: CfPStrings.Home.topicTesting(language),
-            description: CfPStrings.Home.topicTestingDesc(language)
+            title: language == .ja ? "テストと品質" : "Testing & Quality",
+            description: language == .ja ? "ユニットテスト、UIテスト、コード品質" : "Unit testing, UI testing, and code quality"
           )
           topicCard(
-            title: CfPStrings.Home.topicTools(language),
-            description: CfPStrings.Home.topicToolsDesc(language)
+            title: language == .ja ? "ツールと生産性" : "Tools & Productivity",
+            description: language == .ja ? "Xcode、デバッグ、開発者体験" : "Xcode, debugging, and developer experience"
           )
         }
       }
@@ -124,12 +144,16 @@ struct CfPHomePage: HTML, Sendable {
     // CTA Section
     section(.class("py-5 bg-purple text-center")) {
       div(.class("container py-4")) {
-        h2(.class("fw-bold text-white mb-3")) { CfPStrings.Home.ctaTitle(language) }
-        p(.class("lead text-white-50 mb-4")) {
-          CfPStrings.Home.ctaDescription(language)
+        h2(.class("fw-bold text-white mb-3")) {
+          language == .ja ? "あなたの知識を共有しませんか？" : "Ready to Share Your Knowledge?"
         }
-        a(.class("btn btn-light btn-lg fw-bold"), .href("/cfp/\(language.urlPrefix)/submit")) {
-          CfPStrings.Home.submitYourProposal(language)
+        p(.class("lead text-white-50 mb-4")) {
+          language == .ja
+            ? "経験レベルに関係なく、すべてのスピーカーを歓迎します。初めての登壇者の方も、ぜひご応募ください！"
+            : "We welcome speakers of all experience levels. First-time speakers are encouraged to apply!"
+        }
+        a(.class("btn btn-light btn-lg fw-bold"), .href(language.path(for: "/submit"))) {
+          language == .ja ? "プロポーザルを提出する" : "Submit Your Proposal"
         }
       }
     }
