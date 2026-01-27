@@ -355,20 +355,43 @@ struct AuthController: RouteCollection {
     let token = try await req.jwt.sign(payload)
 
     // 10. Set secure HTTP-only cookie and redirect to frontend
-    // Use returnTo from state if provided, otherwise default frontend
-    let baseRedirect = statePayload.returnTo ?? Self.frontendURL
+    // Use returnTo from state if provided, otherwise default to login page
+    let returnTo = statePayload.returnTo ?? "/cfp/login"
 
     req.logger.info("OAuth flow completed, redirecting", metadata: [
       "username": .string(user.username),
-      "role": .string(role.rawValue)
+      "role": .string(role.rawValue),
+      "returnTo": .string(returnTo)
     ])
 
-    // Create response with redirect including token in URL
-    // NOTE: We use URL params because the API (fly.dev) cannot set cookies for frontend domain (tryswift.jp)
-    // The frontend JavaScript will immediately move these to localStorage and clean the URL
-    let redirectURL = "\(baseRedirect)/login-page?auth=success&token=\(token)&username=\(user.username)"
+    // Create response with redirect and set HTTP-only cookie
+    // Since CfP pages are now served from the same Vapor server, we can set cookies directly
+    let response = Response(status: .seeOther)
+    response.headers.replaceOrAdd(name: .location, value: returnTo)
 
-    return req.redirect(to: redirectURL)
+    // Set HTTP-only cookie for authentication
+    response.cookies["cfp_token"] = HTTPCookies.Value(
+      string: token,
+      expires: Date().addingTimeInterval(86400 * 7),  // 7 days
+      maxAge: 86400 * 7,
+      path: "/",
+      isSecure: Environment.get("APP_ENV") == "production",
+      isHTTPOnly: true,
+      sameSite: .lax
+    )
+
+    // Also set username cookie (not HTTP-only, for display purposes)
+    response.cookies["cfp_username"] = HTTPCookies.Value(
+      string: user.username,
+      expires: Date().addingTimeInterval(86400 * 7),
+      maxAge: 86400 * 7,
+      path: "/",
+      isSecure: Environment.get("APP_ENV") == "production",
+      isHTTPOnly: false,
+      sameSite: .lax
+    )
+
+    return response
   }
 
   // MARK:  - Helper Methods

@@ -16,9 +16,12 @@ enum AppRoutes {
     // API version prefix
     let api = app.grouped("api", "v1")
 
-    // Register controllers
+    // Register API controllers
     try api.register(collection: AuthController())
     try api.register(collection: ConferenceController())
     try api.register(collection: ProposalController())
+
+    // Register CfP SSR pages
+    try app.register(collection: CfPRoutes())
   }
 }
