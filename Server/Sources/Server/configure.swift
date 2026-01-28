@@ -44,6 +44,8 @@ enum AppConfiguration {
     app.migrations.add(CreateConference())
     app.migrations.add(CreateProposal())
     app.migrations.add(SeedTrySwiftTokyo2026())
+    app.migrations.add(AddUserEmail())
+    app.migrations.add(AddProposalSpeakerInfo())
 
     // Auto-migrate on startup (safe for production as Fluent tracks completed migrations)
     try await app.autoMigrate()

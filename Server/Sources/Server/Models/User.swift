@@ -26,6 +26,10 @@ final class User: Model, Content, @unchecked Sendable {
   @OptionalField(key: "display_name")
   var displayName: String?
 
+  /// User's email address
+  @OptionalField(key: "email")
+  var email: String?
+
   /// User's bio/self-introduction
   @OptionalField(key: "bio")
   var bio: String?
@@ -61,6 +65,7 @@ final class User: Model, Content, @unchecked Sendable {
     username: String,
     role: UserRole,
     displayName: String? = nil,
+    email: String? = nil,
     bio: String? = nil,
     url: String? = nil,
     organization: String? = nil,
@@ -71,6 +76,7 @@ final class User: Model, Content, @unchecked Sendable {
     self.username = username
     self.role = role
     self.displayName = displayName
+    self.email = email
     self.bio = bio
     self.url = url
     self.organization = organization
@@ -88,6 +94,7 @@ final class User: Model, Content, @unchecked Sendable {
       username: username,
       role: role,
       displayName: displayName,
+      email: email,
       bio: bio,
       url: url,
       organization: organization,

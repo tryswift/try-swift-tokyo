@@ -31,7 +31,7 @@ struct CfPHomePage: HTML, Sendable {
             language == .ja ? "ガイドラインを見る" : "View Guidelines"
           }
           a(
-            .class("btn btn-outline-light btn-lg"), .href("/cfp/\(language.urlPrefix)/my-proposals")
+            .class("btn btn-outline-light btn-lg"), .href(language.path(for: "/my-proposals"))
           ) {
             CfPStrings.Home.myProposals(language)
           }

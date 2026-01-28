@@ -13,6 +13,8 @@ struct ProposalDTOContent: Content {
   let abstract: String
   let talkDetail: String
   let talkDuration: String
+  let speakerName: String
+  let speakerEmail: String
   let bio: String
   let iconURL: String?
   let notes: String?
@@ -30,6 +32,8 @@ struct ProposalDTOContent: Content {
     self.abstract = dto.abstract
     self.talkDetail = dto.talkDetail
     self.talkDuration = dto.talkDuration.rawValue
+    self.speakerName = dto.speakerName
+    self.speakerEmail = dto.speakerEmail
     self.bio = dto.bio
     self.iconURL = dto.iconURL
     self.notes = dto.notes
@@ -47,6 +51,8 @@ struct CreateProposalRequestContent: Content {
   let abstract: String
   let talkDetail: String
   let talkDuration: String
+  let speakerName: String
+  let speakerEmail: String
   let bio: String
   let iconURL: String?
   let notes: String?
@@ -61,6 +67,8 @@ struct CreateProposalRequestContent: Content {
       abstract: abstract,
       talkDetail: talkDetail,
       talkDuration: duration,
+      speakerName: speakerName,
+      speakerEmail: speakerEmail,
       bio: bio,
       iconURL: iconURL,
       notes: notes
@@ -149,6 +157,12 @@ struct ProposalController: RouteCollection {
     guard !createRequest.talkDetail.isEmpty else {
       throw Abort(.badRequest, reason: "Talk detail is required")
     }
+    guard !createRequest.speakerName.isEmpty else {
+      throw Abort(.badRequest, reason: "Speaker name is required")
+    }
+    guard !createRequest.speakerEmail.isEmpty else {
+      throw Abort(.badRequest, reason: "Speaker email is required")
+    }
     guard !createRequest.bio.isEmpty else {
       throw Abort(.badRequest, reason: "Bio is required")
     }
@@ -160,6 +174,8 @@ struct ProposalController: RouteCollection {
       abstract: createRequest.abstract,
       talkDetail: createRequest.talkDetail,
       talkDuration: createRequest.talkDuration,
+      speakerName: createRequest.speakerName,
+      speakerEmail: createRequest.speakerEmail,
       bio: createRequest.bio,
       iconURL: createRequest.iconURL,
       notes: createRequest.notes,

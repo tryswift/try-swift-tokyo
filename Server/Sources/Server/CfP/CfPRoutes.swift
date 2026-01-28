@@ -18,6 +18,11 @@ struct CfPRoutes: RouteCollection {
     cfp.get("submit-page", use: submitPage)  // Backward compatibility
     cfp.get("my-proposals", use: myProposalsPage)
     cfp.get("my-proposals-page", use: myProposalsPage)  // Backward compatibility
+
+    // Profile setup page
+    cfp.get("profile", use: profilePage)
+    cfp.post("profile", use: handleUpdateProfile)
+
     cfp.post("submit", use: handleSubmitProposal)
     cfp.get("logout", use: logout)
 
@@ -45,8 +50,33 @@ struct CfPRoutes: RouteCollection {
   }
 
   @Sendable
-  func loginPage(req: Request) async throws -> HTMLResponse {
-    try await renderLoginPage(req: req, language: .en)
+  func loginPage(req: Request) async throws -> Response {
+    let user = try? await getAuthenticatedUser(req: req)
+    let error = req.query[String.self, at: "error"]
+
+    // If user is logged in and profile is incomplete, redirect to profile setup
+    if let user, isProfileIncomplete(user) {
+      return req.redirect(to: "/cfp/profile?returnTo=/cfp/submit")
+    }
+
+    let html = HTMLResponse {
+      CfPLayout(
+        title: "Login",
+        user: user,
+        language: .en,
+        currentPath: "/login"
+      ) {
+        LoginPageView(user: user, error: error, language: .en)
+      }
+    }
+    return try await html.encodeResponse(for: req)
+  }
+
+  /// Check if user profile is incomplete (missing required fields)
+  private func isProfileIncomplete(_ user: UserDTO) -> Bool {
+    user.displayName == nil || user.displayName?.isEmpty == true || user.email == nil
+      || user.email?.isEmpty == true || user.bio == nil || user.bio?.isEmpty == true
+      || user.avatarURL == nil || user.avatarURL?.isEmpty == true
   }
 
   @Sendable
@@ -190,7 +220,97 @@ struct CfPRoutes: RouteCollection {
     }
   }
 
+  @Sendable
+  func profilePage(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req) else {
+      return req.redirect(to: "/api/v1/auth/github?returnTo=/cfp/profile")
+    }
+
+    let returnTo = req.query[String.self, at: "returnTo"]
+    let success = req.query[String.self, at: "success"] == "true"
+
+    let html = HTMLResponse {
+      CfPLayout(title: "Profile Setup", user: user) {
+        ProfileSetupPageView(
+          user: user,
+          successMessage: success ? "Profile updated successfully!" : nil,
+          returnTo: returnTo
+        )
+      }
+    }
+    return try await html.encodeResponse(for: req)
+  }
+
   // MARK: - Form Handlers
+
+  @Sendable
+  func handleUpdateProfile(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req) else {
+      return req.redirect(to: "/api/v1/auth/github?returnTo=/cfp/profile")
+    }
+
+    // Decode form data
+    struct ProfileFormData: Content {
+      var displayName: String
+      var email: String
+      var bio: String
+      var avatarURL: String
+      var returnTo: String?
+    }
+
+    let formData: ProfileFormData
+    do {
+      formData = try req.content.decode(ProfileFormData.self)
+    } catch {
+      return try await renderProfilePageWithError(
+        req: req, user: user, error: "Invalid form data", returnTo: nil)
+    }
+
+    // Validate
+    guard !formData.displayName.isEmpty else {
+      return try await renderProfilePageWithError(
+        req: req, user: user, error: "Name is required", returnTo: formData.returnTo)
+    }
+    guard !formData.email.isEmpty else {
+      return try await renderProfilePageWithError(
+        req: req, user: user, error: "Email is required", returnTo: formData.returnTo)
+    }
+    guard !formData.bio.isEmpty else {
+      return try await renderProfilePageWithError(
+        req: req, user: user, error: "Bio is required", returnTo: formData.returnTo)
+    }
+    guard !formData.avatarURL.isEmpty else {
+      return try await renderProfilePageWithError(
+        req: req, user: user, error: "Profile picture URL is required", returnTo: formData.returnTo)
+    }
+
+    // Update user in database
+    guard let dbUser = try await User.find(user.id, on: req.db) else {
+      return try await renderProfilePageWithError(
+        req: req, user: user, error: "User not found", returnTo: formData.returnTo)
+    }
+
+    dbUser.displayName = formData.displayName
+    dbUser.email = formData.email
+    dbUser.bio = formData.bio
+    dbUser.avatarURL = formData.avatarURL
+    try await dbUser.save(on: req.db)
+
+    // Redirect to returnTo or submit page
+    let returnTo = formData.returnTo ?? "/cfp/submit"
+    return req.redirect(to: returnTo)
+  }
+
+  private func renderProfilePageWithError(
+    req: Request, user: UserDTO, error: String, returnTo: String?
+  ) async throws -> Response {
+    let html = HTMLResponse {
+      CfPLayout(title: "Profile Setup", user: user) {
+        ProfileSetupPageView(user: user, errorMessage: error, returnTo: returnTo)
+      }
+    }
+    return try await html.encodeResponse(for: req)
+  }
 
   @Sendable
   func handleSubmitProposal(req: Request) async throws -> Response {
@@ -213,8 +333,10 @@ struct CfPRoutes: RouteCollection {
       var abstract: String
       var talkDetails: String
       var talkDuration: String
+      var speakerName: String
+      var speakerEmail: String
       var bio: String
-      var iconUrl: String?
+      var iconUrl: String
       var notesToOrganizers: String?
     }
 
@@ -255,11 +377,35 @@ struct CfPRoutes: RouteCollection {
         language: language
       )
     }
+    guard !formData.speakerName.isEmpty else {
+      return try await renderSubmitPageWithError(
+        req: req,
+        user: user,
+        error: language == .ja ? "スピーカー名は必須です" : "Speaker name is required",
+        language: language
+      )
+    }
+    guard !formData.speakerEmail.isEmpty else {
+      return try await renderSubmitPageWithError(
+        req: req,
+        user: user,
+        error: language == .ja ? "スピーカーメールは必須です" : "Speaker email is required",
+        language: language
+      )
+    }
     guard !formData.bio.isEmpty else {
       return try await renderSubmitPageWithError(
         req: req,
         user: user,
         error: language == .ja ? "スピーカー自己紹介は必須です" : "Speaker bio is required",
+        language: language
+      )
+    }
+    guard !formData.iconUrl.isEmpty else {
+      return try await renderSubmitPageWithError(
+        req: req,
+        user: user,
+        error: language == .ja ? "プロフィール画像URLは必須です" : "Profile picture URL is required",
         language: language
       )
     }
@@ -306,8 +452,10 @@ struct CfPRoutes: RouteCollection {
       abstract: formData.abstract,
       talkDetail: formData.talkDetails,
       talkDuration: talkDuration,
+      speakerName: formData.speakerName,
+      speakerEmail: formData.speakerEmail,
       bio: formData.bio,
-      iconURL: formData.iconUrl?.isEmpty == true ? nil : formData.iconUrl,
+      iconURL: formData.iconUrl,
       notes: formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers,
       speakerID: user.id
     )
