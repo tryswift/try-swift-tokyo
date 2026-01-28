@@ -1,0 +1,30 @@
+# Skip configuration for try! Swift Tokyo Android app
+# https://skip.tools/docs/
+
+# Application configuration
+app:
+  id: tokyo.tryswift.android
+  name: try! Swift Tokyo
+  version: 1.0.0
+
+# Android-specific settings
+android:
+  minSdk: 26
+  targetSdk: 34
+  compileSdk: 34
+
+# Skip transpilation settings
+skip:
+  # Modules to transpile
+  modules:
+    - AndroidApp
+    - ScheduleFeature
+    - SponsorFeature
+    - VenueFeature
+    - AboutFeature
+
+# Resource handling
+resources:
+  # Copy JSON data files from DataClient
+  assets:
+    - ../DataClient/Sources/DataClient/Resources/*.json
