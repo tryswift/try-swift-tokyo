@@ -1,6 +1,7 @@
 {
   "id": 1,
   "title": "Workshop",
+  "title_ja": "ワークショップ",
   "date": "2026-04-12T12:00:00+09:00",
   "schedules": [
     {
@@ -8,13 +9,16 @@
       "sessions": [
         {
           "title": "High-Performance Swift",
+          "title_ja": "高パフォーマンスSwift",
           "speakers": [
             {
               "id": 1,
               "name": "Paul Hudson",
               "image_name": "paul_hudson",
               "bio": "Paul is the author of Hacking with Swift, Pro Swift, Swift Design Patterns, Testing Swift, Swift Interview Challenges, and more. Suffice it to say, he quite likes Swift. And coffee. (But mostly Swift.) (And coffee.)",
+              "bio_ja": "Paulは「Hacking with Swift」「Pro Swift」「Swift Design Patterns」「Testing Swift」「Swift Interview Challenges」などの著者です。簡単に言うと、Swiftが大好きです。そしてコーヒーも。（でも主にSwiftが。）（いや、コーヒーも同じくらい。）",
               "job_title": "Creator at Hacking with Swift",
+              "job_title_ja": "Hacking with Swift クリエイター",
               "links": [
                 {
                   "url": "https://x.com/twostraws",
@@ -27,17 +31,21 @@
               ]
             }
           ],
-          "description": "This workshop will teach a range of techniques to increase the performance of Swift apps. We will follow a simple pattern several times over: identify a performance problem using Instruments, work through code to resolve the issue, then run Instruments again to ensure the problem is resolved.\n\nAs we work through the sample project, students will learn to use different parts of Instruments effectively, what makes Swift and SwiftUI code slow, how to write more efficient code in the future, and also how to write performance tests to ensure performance problems don't return."
+          "description": "This workshop will teach a range of techniques to increase the performance of Swift apps. We will follow a simple pattern several times over: identify a performance problem using Instruments, work through code to resolve the issue, then run Instruments again to ensure the problem is resolved.\n\nAs we work through the sample project, students will learn to use different parts of Instruments effectively, what makes Swift and SwiftUI code slow, how to write more efficient code in the future, and also how to write performance tests to ensure performance problems don't return.",
+          "description_ja": "このワークショップでは、Swiftアプリのパフォーマンスを向上させるための様々なテクニックを学びます。シンプルなパターンを何度も繰り返します：Instrumentsを使ってパフォーマンスの問題を特定し、コードを修正して問題を解決し、再度Instrumentsを実行して問題が解決されたことを確認します。\n\nサンプルプロジェクトを進める中で、参加者はInstrumentsの各機能を効果的に使う方法、SwiftとSwiftUIのコードが遅くなる原因、将来的により効率的なコードを書く方法、そしてパフォーマンスの問題が再発しないようにパフォーマンステストを書く方法を学びます。"
         },
         {
           "title": "Designing Visual Effects with Metal and SwiftUI",
+          "title_ja": "MetalとSwiftUIでビジュアルエフェクトをデザインする",
           "speakers": [
             {
               "id": 4,
               "name": "Victor Baro",
               "image_name": "victor_baro",
               "bio": "Victor Baro is an iOS developer with ~10 years of experience across startups and large organizations. He is the co-founder and CEO of Panels, a digital comics reading app, and works hands-on as a full stack developer with a strong focus on UI, interaction, and animation.",
+              "bio_ja": "Victor Baroは、スタートアップから大企業まで約10年の経験を持つiOSデベロッパーです。デジタルコミック読書アプリ「Panels」の共同創業者兼CEOであり、UI、インタラクション、アニメーションに重点を置いたフルスタック開発者として実務に携わっています。",
               "job_title": "Co-founder & iOS Developer",
+              "job_title_ja": "共同創業者 & iOSデベロッパー",
               "links": [
                 {
                   "url": "https://x.com/victorbaro",
@@ -50,17 +58,21 @@
               ]
             }
           ],
-          "description": "Metal shaders unlock a level of visual expression in SwiftUI that goes far beyond built-in modifiers, but they are often perceived as complex, low-level, or hard to approach. This workshop is designed to make Metal shaders accessible, visual, and fun for SwiftUI developers, even for those with no prior graphics or Metal experience.\n\nThe workshop starts with a visual-first approach using MetalGraph, a macOS app created specifically to explore and design Metal shaders through a node-based interface with real-time previews. Participants will experiment with coordinates, color, animation, and interaction visually, without writing Metal code at first. This helps build intuition around how shaders work and how complex effects emerge from simple ideas.\n\nOnce participants are comfortable with the concepts, we transition from visual experimentation to real SwiftUI + Metal code. Participants will learn how to translate what they built visually into Metal shader functions, integrate them into SwiftUI using modern APIs such as colorEffect and distortionEffect, and drive them using SwiftUI state, gestures, and time.\n\nRather than focusing on project setup or boilerplate, the workshop emphasizes how to think in shaders: how to invent new effects, how to iterate quickly, and how to avoid common pitfalls related to performance and coordinate systems.\n\nBy the end of the workshop, participants will have a solid mental model of Metal shaders in SwiftUI, hands-on experience building custom visual effects, and the confidence to continue experimenting in their own projects."
+          "description": "Metal shaders unlock a level of visual expression in SwiftUI that goes far beyond built-in modifiers, but they are often perceived as complex, low-level, or hard to approach. This workshop is designed to make Metal shaders accessible, visual, and fun for SwiftUI developers, even for those with no prior graphics or Metal experience.\n\nThe workshop starts with a visual-first approach using MetalGraph, a macOS app created specifically to explore and design Metal shaders through a node-based interface with real-time previews. Participants will experiment with coordinates, color, animation, and interaction visually, without writing Metal code at first. This helps build intuition around how shaders work and how complex effects emerge from simple ideas.\n\nOnce participants are comfortable with the concepts, we transition from visual experimentation to real SwiftUI + Metal code. Participants will learn how to translate what they built visually into Metal shader functions, integrate them into SwiftUI using modern APIs such as colorEffect and distortionEffect, and drive them using SwiftUI state, gestures, and time.\n\nRather than focusing on project setup or boilerplate, the workshop emphasizes how to think in shaders: how to invent new effects, how to iterate quickly, and how to avoid common pitfalls related to performance and coordinate systems.\n\nBy the end of the workshop, participants will have a solid mental model of Metal shaders in SwiftUI, hands-on experience building custom visual effects, and the confidence to continue experimenting in their own projects.",
+          "description_ja": "Metalシェーダーは、SwiftUIの組み込みモディファイアをはるかに超えたビジュアル表現を可能にしますが、複雑で低レベル、取っつきにくいと思われがちです。このワークショップは、グラフィックスやMetalの経験がなくても、SwiftUI開発者がMetalシェーダーを身近に、視覚的に、楽しく学べるように設計されています。\n\nワークショップは、MetalGraphというmacOSアプリを使ったビジュアルファーストなアプローチから始まります。これはノードベースのインターフェースとリアルタイムプレビューでMetalシェーダーを探求・設計するために特別に作られたアプリです。参加者は最初はMetalコードを書かずに、座標、色、アニメーション、インタラクションを視覚的に実験します。これにより、シェーダーがどのように機能し、シンプルなアイデアから複雑なエフェクトがどのように生まれるかについて直感的な理解を深めることができます。\n\n概念に慣れたら、視覚的な実験から実際のSwiftUI + Metalコードへと移行します。参加者は、視覚的に構築したものをMetalシェーダー関数に変換する方法、colorEffectやdistortionEffectなどのモダンなAPIを使ってSwiftUIに統合する方法、SwiftUIのstate、ジェスチャー、時間を使ってシェーダーを駆動する方法を学びます。\n\nプロジェクトのセットアップや定型コードに焦点を当てるのではなく、シェーダーで考える方法を重視します：新しいエフェクトを生み出す方法、素早くイテレーションする方法、パフォーマンスや座標系に関する一般的な落とし穴を避ける方法などです。\n\nワークショップの終わりまでに、参加者はSwiftUIにおけるMetalシェーダーの確固たるメンタルモデル、カスタムビジュアルエフェクトを構築する実践経験、そして自分のプロジェクトで実験を続ける自信を身につけます。"
         },
         {
           "title": "iOS Private Playgrounds",
+          "title_ja": "iOS Private Playgrounds",
           "speakers": [
             {
               "id": 2,
               "name": "Vistar",
               "image_name": "vistar",
               "bio": "I primarily work on Apple platform app development and research the core APIs of the operating system.",
+              "bio_ja": "主にAppleプラットフォームのアプリ開発と、オペレーティングシステムのコアAPIの研究に取り組んでいます。",
               "job_title": "iOS Developer",
+              "job_title_ja": "iOSデベロッパー",
               "links": [
                 {
                   "url": "https://x.com/Lmssync",
@@ -77,7 +89,9 @@
               "name": "Kazuki Nakashima",
               "image_name": "kazuki_nakashima",
               "bio": "iOS Application Development",
+              "bio_ja": "iOSアプリケーション開発",
               "job_title": "iOS Developer",
+              "job_title_ja": "iOSデベロッパー",
               "links": [
                 {
                   "url": "https://x.com/lynnswap",
@@ -90,7 +104,8 @@
               ]
             }
           ],
-          "description": "This workshop is an experimental session that deliberately sets aside the App Store Review Guidelines in order to peer inside the \"black box\" of iOS. By intentionally using Private APIs and undocumented behaviors that are normally off-limits in everyday development, the goal is to gain a deeper understanding of how UIKit and SwiftUI actually work under the hood.\n\nThe workshop is run in a hackathon-style format, where all participants share a single SwiftUI-based repository and collaboratively add features to it.\n\nIn the first half, the instructor will perform live coding demonstrations that achieve UI customizations which would normally be impossible, using Private APIs such as the Objective-C runtime and Key-Value Coding (KVC). These changes will be pushed to the shared repository, and participants will pull and run them locally as the starting point.\n\nIn the second half, the workshop shifts to a hands-on format where participants write code themselves. Those who have specific features they want to try to implement can work on their own ideas, while others can choose from several themes proposed by the instructor. Along the way, intermediate results will be shared and discussed so that participants can exchange insights as they develop. At the end, everyone will present the hacks they worked on and the behaviors they discovered.\n\nThis workshop is not about learning techniques intended for App Store releases. However, understanding what happens behind the scenes of the frameworks and being able to reason about their behavior will strengthen your ability to solve difficult bugs and improve your skills in debugging and performance optimization. Step beyond everyday app development and explore the depths of iOS together through the world of the dynamic runtime."
+          "description": "This workshop is an experimental session that deliberately sets aside the App Store Review Guidelines in order to peer inside the \"black box\" of iOS. By intentionally using Private APIs and undocumented behaviors that are normally off-limits in everyday development, the goal is to gain a deeper understanding of how UIKit and SwiftUI actually work under the hood.\n\nThe workshop is run in a hackathon-style format, where all participants share a single SwiftUI-based repository and collaboratively add features to it.\n\nIn the first half, the instructor will perform live coding demonstrations that achieve UI customizations which would normally be impossible, using Private APIs such as the Objective-C runtime and Key-Value Coding (KVC). These changes will be pushed to the shared repository, and participants will pull and run them locally as the starting point.\n\nIn the second half, the workshop shifts to a hands-on format where participants write code themselves. Those who have specific features they want to try to implement can work on their own ideas, while others can choose from several themes proposed by the instructor. Along the way, intermediate results will be shared and discussed so that participants can exchange insights as they develop. At the end, everyone will present the hacks they worked on and the behaviors they discovered.\n\nThis workshop is not about learning techniques intended for App Store releases. However, understanding what happens behind the scenes of the frameworks and being able to reason about their behavior will strengthen your ability to solve difficult bugs and improve your skills in debugging and performance optimization. Step beyond everyday app development and explore the depths of iOS together through the world of the dynamic runtime.",
+          "description_ja": "このワークショップは、iOSの「ブラックボックス」の中を覗くために、あえてApp Store審査ガイドラインを一旦脇に置く実験的なセッションです。通常の開発では禁止されているPrivate APIや非公開の動作を意図的に使用することで、UIKitやSwiftUIが内部でどのように動作しているかをより深く理解することを目指します。\n\nワークショップはハッカソン形式で進行し、参加者全員が1つのSwiftUIベースのリポジトリを共有し、協力して機能を追加していきます。\n\n前半では、インストラクターがObjective-CランタイムやKey-Value Coding（KVC）などのPrivate APIを使用して、通常では不可能なUIカスタマイズを実現するライブコーディングデモンストレーションを行います。これらの変更は共有リポジトリにプッシュされ、参加者はそれをローカルにプルして出発点として実行します。\n\n後半では、参加者自身がコードを書くハンズオン形式に移行します。実装したい特定の機能がある人は自分のアイデアに取り組み、それ以外の人はインストラクターが提案するいくつかのテーマから選ぶことができます。途中で中間結果を共有・議論し、参加者が開発を進めながら知見を交換できるようにします。最後に、全員が取り組んだハックと発見した動作を発表します。\n\nこのワークショップはApp Storeリリースを目的とした技術を学ぶものではありません。しかし、フレームワークの裏側で何が起きているかを理解し、その動作を推論できるようになることで、難しいバグを解決する能力が強化され、デバッグやパフォーマンス最適化のスキルが向上します。日常のアプリ開発を超えて、動的ランタイムの世界を通じてiOSの深層を一緒に探索しましょう。"
         }
       ]
     }
