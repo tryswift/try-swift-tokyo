@@ -60,7 +60,8 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
                   )
                 }
                 div {
-                  h5(.class("mb-1")) { HTMLText(proposal.speakerUsername) }
+                  h5(.class("mb-1")) { HTMLText(proposal.speakerName) }
+                  p(.class("text-muted mb-1 small")) { HTMLText(proposal.speakerEmail) }
                   a(
                     .href("https://github.com/\(proposal.speakerUsername)"),
                     .target(.blank),
