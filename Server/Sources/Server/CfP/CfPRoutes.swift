@@ -35,6 +35,11 @@ struct CfPRoutes: RouteCollection {
     ja.get("my-proposals", use: myProposalsPageJa)
     ja.post("submit", use: handleSubmitProposalJa)
     ja.get("logout", use: logoutJa)
+
+    // Organizer pages
+    let organizer = cfp.grouped("organizer")
+    organizer.get("proposals", use: organizerProposalsPage)
+    organizer.get("proposals", ":proposalID", use: organizerProposalDetailPage)
   }
 
   // MARK: - English Page Handlers
@@ -517,6 +522,78 @@ struct CfPRoutes: RouteCollection {
     )
 
     return response
+  }
+
+  // MARK: - Organizer Pages
+
+  @Sendable
+  func organizerProposalsPage(req: Request) async throws -> HTMLResponse {
+    let user = try? await getAuthenticatedUser(req: req)
+    let conferencePath = req.query[String.self, at: "conference"]
+
+    // Get proposals (filtered by conference if specified)
+    var proposals: [ProposalDTO] = []
+    if let user, user.role == .admin {
+      let query = Proposal.query(on: req.db)
+        .with(\.$speaker)
+        .with(\.$conference)
+        .sort(\.$createdAt, .descending)
+
+      if let conferencePath {
+        if let conference = try await Conference.query(on: req.db)
+          .filter(\.$path == conferencePath)
+          .first(),
+          let conferenceID = conference.id
+        {
+          query.filter(\.$conference.$id == conferenceID)
+        }
+      }
+
+      let dbProposals = try await query.all()
+      proposals = try dbProposals.map {
+        try $0.toDTO(speakerUsername: $0.speaker.username, conference: $0.conference)
+      }
+    }
+
+    return HTMLResponse {
+      CfPLayout(title: "Organizer - Proposals", user: user) {
+        OrganizerProposalsPageView(
+          user: user,
+          proposals: proposals,
+          conferencePath: conferencePath
+        )
+      }
+    }
+  }
+
+  @Sendable
+  func organizerProposalDetailPage(req: Request) async throws -> HTMLResponse {
+    let user = try? await getAuthenticatedUser(req: req)
+    var proposal: ProposalDTO?
+
+    if let user, user.role == .admin {
+      if let proposalIDString = req.parameters.get("proposalID"),
+        let proposalID = UUID(uuidString: proposalIDString)
+      {
+        if let dbProposal = try await Proposal.query(on: req.db)
+          .filter(\.$id == proposalID)
+          .with(\.$speaker)
+          .with(\.$conference)
+          .first()
+        {
+          proposal = try dbProposal.toDTO(
+            speakerUsername: dbProposal.speaker.username,
+            conference: dbProposal.conference
+          )
+        }
+      }
+    }
+
+    return HTMLResponse {
+      CfPLayout(title: proposal?.title ?? "Proposal Detail", user: user) {
+        OrganizerProposalDetailPageView(user: user, proposal: proposal)
+      }
+    }
   }
 
   // MARK: - Helper Methods

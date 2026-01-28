@@ -64,6 +64,13 @@ struct CfPNavigation: HTML, Sendable {
                   language == .ja ? "マイプロポーザル" : "My Proposals"
                 }
               }
+              if user.role == .admin {
+                li(.class("nav-item")) {
+                  a(.class("nav-link text-warning fw-bold"), .href("/cfp/organizer/proposals")) {
+                    "📋 Organizer"
+                  }
+                }
+              }
               li(.class("nav-item")) {
                 span(.class("nav-link text-white fw-bold")) {
                   HTMLText("👤 \(user.username)")
