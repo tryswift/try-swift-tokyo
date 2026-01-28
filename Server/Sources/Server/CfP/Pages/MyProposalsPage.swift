@@ -75,7 +75,8 @@ struct MyProposalsPageView: HTML, Sendable {
             }
           }
         } else {
-          HTMLRaw("""
+          HTMLRaw(
+            """
             <style>
               .proposal-card:hover {
                 box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
