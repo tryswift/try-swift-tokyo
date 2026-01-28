@@ -624,7 +624,8 @@ struct CfPRoutes: RouteCollection {
     let dbProposals = try await query.all()
 
     // Build CSV
-    var csv = "ID,Title,Abstract,Talk Details,Duration,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At\n"
+    var csv =
+      "ID,Title,Abstract,Talk Details,Duration,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At\n"
 
     let dateFormatter = ISO8601DateFormatter()
 
