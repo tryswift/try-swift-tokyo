@@ -23,7 +23,7 @@ struct CfPNavigation: HTML, Sendable {
           .href(language.path(for: "/"))
         ) {
           img(
-            .src("/cfp/images/riko.png"),
+            .src("/images/riko.png"),
             .alt("Riko"),
             .class("me-2"),
             .style("height: 28px; width: 28px;")
@@ -66,7 +66,7 @@ struct CfPNavigation: HTML, Sendable {
               }
               if user.role == .admin {
                 li(.class("nav-item")) {
-                  a(.class("nav-link text-warning fw-bold"), .href("/cfp/organizer/proposals")) {
+                  a(.class("nav-link text-warning fw-bold"), .href("/organizer/proposals")) {
                     "📋 Organizer"
                   }
                 }

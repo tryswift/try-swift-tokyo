@@ -247,7 +247,7 @@ struct SubmitPageView: HTML, Sendable {
       }
       a(
         .class("btn btn-sm btn-outline-secondary"),
-        .href("/cfp/profile?returnTo=\(language.path(for: "/submit"))")
+        .href("/profile?returnTo=\(language.path(for: "/submit"))")
       ) {
         language == .ja ? "プロフィールを編集" : "Edit Profile"
       }

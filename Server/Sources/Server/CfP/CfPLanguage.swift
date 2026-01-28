@@ -24,9 +24,9 @@ enum CfPLanguage: String, CaseIterable, Sendable {
   /// Creates path for a given route in this language
   func path(for route: String) -> String {
     if self == .en {
-      return "/cfp\(route)"
+      return route
     } else {
-      return "/cfp/ja\(route)"
+      return "/ja\(route)"
     }
   }
 

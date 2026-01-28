@@ -85,7 +85,7 @@ struct ProfileSetupPageView: HTML, Sendable {
   }
 
   private var profileForm: some HTML {
-    form(.method(.post), .action("/cfp/profile")) {
+    form(.method(.post), .action("/profile")) {
       hiddenReturnTo
       displayNameField
       emailField
@@ -213,7 +213,7 @@ struct ProfileSetupPageView: HTML, Sendable {
   @HTMLBuilder
   private var skipButton: some HTML {
     if !isProfileIncomplete {
-      a(.class("btn btn-outline-secondary"), .href(returnTo ?? "/cfp/submit")) {
+      a(.class("btn btn-outline-secondary"), .href(returnTo ?? "/submit")) {
         "Skip for Now"
       }
     }

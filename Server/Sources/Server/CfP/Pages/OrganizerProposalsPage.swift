@@ -21,7 +21,7 @@ struct OrganizerProposalsPageView: HTML, Sendable {
         a(
           .class("btn btn-success"),
           .href(
-            "/cfp/organizer/proposals/export\(conferencePath.map { "?conference=\($0)" } ?? "")")
+            "/organizer/proposals/export\(conferencePath.map { "?conference=\($0)" } ?? "")")
         ) {
           "Export CSV"
         }
@@ -107,7 +107,7 @@ struct OrganizerProposalsPageView: HTML, Sendable {
             p(.class("text-muted mb-4")) {
               "You need organizer permissions to view this page."
             }
-            a(.class("btn btn-primary"), .href("/cfp/")) { "Return to Home" }
+            a(.class("btn btn-primary"), .href("/")) { "Return to Home" }
           }
         }
       }
@@ -124,7 +124,7 @@ struct OrganizerProposalRow: HTML, Sendable {
       td(.class("align-middle")) { HTMLText("\(index)") }
       td(.class("align-middle")) {
         a(
-          .href("/cfp/organizer/proposals/\(proposal.id)"),
+          .href("/organizer/proposals/\(proposal.id)"),
           .class("text-decoration-none fw-semibold")
         ) {
           HTMLText(proposal.title)
@@ -167,7 +167,7 @@ struct OrganizerProposalRow: HTML, Sendable {
       }
       td(.class("align-middle")) {
         a(
-          .href("/cfp/organizer/proposals/\(proposal.id)"),
+          .href("/organizer/proposals/\(proposal.id)"),
           .class("btn btn-sm btn-outline-primary")
         ) {
           "View"

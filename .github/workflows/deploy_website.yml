@@ -59,11 +59,11 @@ jobs:
           <html lang="en">
           <head>
             <meta charset="UTF-8">
-            <meta http-equiv="refresh" content="0; url=https://tryswift-cfp-api.fly.dev/cfp/">
+            <meta http-equiv="refresh" content="0; url=https://cfp.tryswift.jp/">
             <title>Redirecting to CfP...</title>
           </head>
           <body>
-            <p>Redirecting to <a href="https://tryswift-cfp-api.fly.dev/cfp/">try! Swift Tokyo CfP</a>...</p>
+            <p>Redirecting to <a href="https://cfp.tryswift.jp/">try! Swift Tokyo CfP</a>...</p>
           </body>
           </html>
           EOF
