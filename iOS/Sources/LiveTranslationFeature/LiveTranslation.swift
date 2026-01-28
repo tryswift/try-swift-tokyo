@@ -499,8 +499,10 @@ public struct LiveTranslationView: View {
               send(.speakText(text, itemId: item.id))
             }
           } label: {
-            Image(systemName: store.speakingItemId == item.id ? "stop.circle.fill" : "speaker.wave.2")
-              .foregroundStyle(store.speakingItemId == item.id ? .red : .accentColor)
+            Image(
+              systemName: store.speakingItemId == item.id ? "stop.circle.fill" : "speaker.wave.2"
+            )
+            .foregroundStyle(store.speakingItemId == item.id ? .red : .accentColor)
           }
           .buttonStyle(.plain)
           .accessibilityLabel(
