@@ -29,8 +29,8 @@ struct CfPFooter: HTML, Sendable {
         div(.class("mb-3")) {
           a(
             .class("text-white text-decoration-none me-3"),
-            .href("https://twitter.com/tryswiftconf")
-          ) { "Twitter" }
+            .href("https://x.com/tryswiftconf")
+          ) { "X" }
           a(.class("text-white text-decoration-none"), .href("https://github.com/tryswift")) {
             "GitHub"
           }
