@@ -39,6 +39,7 @@ struct CfPRoutes: RouteCollection {
     // Organizer pages
     let organizer = cfp.grouped("organizer")
     organizer.get("proposals", use: organizerProposalsPage)
+    organizer.get("proposals", "export", use: organizerExportProposalsCSV)
     organizer.get("proposals", ":proposalID", use: organizerProposalDetailPage)
   }
 
@@ -594,6 +595,77 @@ struct CfPRoutes: RouteCollection {
         OrganizerProposalDetailPageView(user: user, proposal: proposal)
       }
     }
+  }
+
+  @Sendable
+  func organizerExportProposalsCSV(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    let conferencePath = req.query[String.self, at: "conference"]
+
+    // Build query
+    let query = Proposal.query(on: req.db)
+      .with(\.$speaker)
+      .with(\.$conference)
+      .sort(\.$createdAt, .descending)
+
+    if let conferencePath {
+      if let conference = try await Conference.query(on: req.db)
+        .filter(\.$path == conferencePath)
+        .first(),
+        let conferenceID = conference.id
+      {
+        query.filter(\.$conference.$id == conferenceID)
+      }
+    }
+
+    let dbProposals = try await query.all()
+
+    // Build CSV
+    var csv = "ID,Title,Abstract,Talk Details,Duration,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At\n"
+
+    let dateFormatter = ISO8601DateFormatter()
+
+    for proposal in dbProposals {
+      let columns = [
+        proposal.id?.uuidString ?? "",
+        escapeCSV(proposal.title),
+        escapeCSV(proposal.abstract),
+        escapeCSV(proposal.talkDetail),
+        proposal.talkDuration.rawValue,
+        escapeCSV(proposal.speakerName),
+        escapeCSV(proposal.speakerEmail),
+        proposal.speaker.username,
+        escapeCSV(proposal.bio),
+        proposal.iconURL ?? "",
+        escapeCSV(proposal.notes ?? ""),
+        proposal.conference.displayName,
+        proposal.createdAt.map { dateFormatter.string(from: $0) } ?? "",
+      ]
+      csv += columns.joined(separator: ",") + "\n"
+    }
+
+    var headers = HTTPHeaders()
+    headers.add(name: .contentType, value: "text/csv; charset=utf-8")
+    headers.add(
+      name: .contentDisposition,
+      value: "attachment; filename=\"proposals-\(conferencePath ?? "all").csv\""
+    )
+
+    return Response(status: .ok, headers: headers, body: .init(string: csv))
+  }
+
+  private func escapeCSV(_ value: String) -> String {
+    let needsQuoting =
+      value.contains(",") || value.contains("\"") || value.contains("\n")
+      || value.contains("\r")
+    if needsQuoting {
+      let escaped = value.replacingOccurrences(of: "\"", with: "\"\"")
+      return "\"\(escaped)\""
+    }
+    return value
   }
 
   // MARK: - Helper Methods
