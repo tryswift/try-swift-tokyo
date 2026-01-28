@@ -18,6 +18,7 @@ struct CfPRoutes: RouteCollection {
     cfp.get("submit-page", use: submitPage)  // Backward compatibility
     cfp.get("my-proposals", use: myProposalsPage)
     cfp.get("my-proposals-page", use: myProposalsPage)  // Backward compatibility
+    cfp.get("my-proposals", ":proposalID", use: myProposalDetailPage)
 
     // Profile setup page
     cfp.get("profile", use: profilePage)
@@ -33,6 +34,7 @@ struct CfPRoutes: RouteCollection {
     ja.get("login", use: loginPageJa)
     ja.get("submit", use: submitPageJa)
     ja.get("my-proposals", use: myProposalsPageJa)
+    ja.get("my-proposals", ":proposalID", use: myProposalDetailPageJa)
     ja.post("submit", use: handleSubmitProposalJa)
     ja.get("logout", use: logoutJa)
 
@@ -94,6 +96,11 @@ struct CfPRoutes: RouteCollection {
     try await renderMyProposalsPage(req: req, language: .en)
   }
 
+  @Sendable
+  func myProposalDetailPage(req: Request) async throws -> HTMLResponse {
+    try await renderMyProposalDetailPage(req: req, language: .en)
+  }
+
   // MARK: - Japanese Page Handlers
 
   @Sendable
@@ -119,6 +126,11 @@ struct CfPRoutes: RouteCollection {
   @Sendable
   func myProposalsPageJa(req: Request) async throws -> HTMLResponse {
     try await renderMyProposalsPage(req: req, language: .ja)
+  }
+
+  @Sendable
+  func myProposalDetailPageJa(req: Request) async throws -> HTMLResponse {
+    try await renderMyProposalDetailPage(req: req, language: .ja)
   }
 
   // MARK: - Shared Render Methods
@@ -221,6 +233,43 @@ struct CfPRoutes: RouteCollection {
         currentPath: "/my-proposals"
       ) {
         MyProposalsPageView(user: user, proposals: proposals, language: language)
+      }
+    }
+  }
+
+  private func renderMyProposalDetailPage(req: Request, language: CfPLanguage) async throws
+    -> HTMLResponse
+  {
+    let user = try? await getAuthenticatedUser(req: req)
+    var proposal: ProposalDTO?
+
+    if let user {
+      if let proposalIDString = req.parameters.get("proposalID"),
+        let proposalID = UUID(uuidString: proposalIDString)
+      {
+        // Fetch proposal and verify it belongs to the current user
+        if let dbProposal = try await Proposal.query(on: req.db)
+          .filter(\.$id == proposalID)
+          .filter(\.$speaker.$id == user.id)
+          .with(\.$conference)
+          .first()
+        {
+          proposal = try dbProposal.toDTO(
+            speakerUsername: user.username,
+            conference: dbProposal.conference
+          )
+        }
+      }
+    }
+
+    return HTMLResponse {
+      CfPLayout(
+        title: proposal?.title ?? (language == .ja ? "プロポーザル詳細" : "Proposal Detail"),
+        user: user,
+        language: language,
+        currentPath: "/my-proposals"
+      ) {
+        MyProposalDetailPageView(user: user, proposal: proposal, language: language)
       }
     }
   }

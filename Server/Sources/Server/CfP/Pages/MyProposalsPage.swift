@@ -75,6 +75,18 @@ struct MyProposalsPageView: HTML, Sendable {
             }
           }
         } else {
+          HTMLRaw("""
+            <style>
+              .proposal-card:hover {
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+                transform: translateY(-2px);
+                transition: all 0.2s ease-in-out;
+              }
+              .proposal-card {
+                transition: all 0.2s ease-in-out;
+              }
+            </style>
+            """)
           for proposal in proposals {
             ProposalCard(proposal: proposal, language: language)
           }
@@ -121,31 +133,36 @@ struct ProposalCard: HTML, Sendable {
   }
 
   var body: some HTML {
-    div(.class("card mb-3")) {
-      div(.class("card-body")) {
-        div(.class("d-flex justify-content-between align-items-start")) {
-          div {
-            h5(.class("card-title mb-1")) { HTMLText(proposal.title) }
-            span(
-              .class(
-                proposal.talkDuration == .regular
-                  ? "badge bg-primary" : "badge bg-warning text-dark"
-              )
-            ) {
-              HTMLText(
-                language == .ja
-                  ? (proposal.talkDuration == .regular ? "レギュラートーク" : "ライトニングトーク")
-                  : proposal.talkDuration.rawValue)
+    a(
+      .href(language.path(for: "/my-proposals/\(proposal.id.uuidString)")),
+      .class("text-decoration-none")
+    ) {
+      div(.class("card mb-3 proposal-card")) {
+        div(.class("card-body")) {
+          div(.class("d-flex justify-content-between align-items-start")) {
+            div {
+              h5(.class("card-title mb-1 text-dark")) { HTMLText(proposal.title) }
+              span(
+                .class(
+                  proposal.talkDuration == .regular
+                    ? "badge bg-primary" : "badge bg-warning text-dark"
+                )
+              ) {
+                HTMLText(
+                  language == .ja
+                    ? (proposal.talkDuration == .regular ? "レギュラートーク" : "ライトニングトーク")
+                    : proposal.talkDuration.rawValue)
+              }
+            }
+            if let createdAt = proposal.createdAt {
+              small(.class("text-muted")) {
+                HTMLText(formatDate(createdAt))
+              }
             }
           }
-          if let createdAt = proposal.createdAt {
-            small(.class("text-muted")) {
-              HTMLText(formatDate(createdAt))
-            }
+          p(.class("card-text text-muted mt-2 mb-0")) {
+            HTMLText(proposal.abstract)
           }
-        }
-        p(.class("card-text text-muted mt-2 mb-0")) {
-          HTMLText(proposal.abstract)
         }
       }
     }
