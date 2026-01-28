@@ -523,6 +523,15 @@ struct CfPRoutes: RouteCollection {
 
     try await proposal.save(on: req.db)
 
+    // Notify organizers via Slack
+    await SlackNotifier.notifyNewProposal(
+      title: formData.title,
+      speakerName: formData.speakerName,
+      talkDuration: talkDuration.rawValue,
+      client: req.client,
+      logger: req.logger
+    )
+
     // Redirect to success page
     return req.redirect(to: "\(language.path(for: "/submit"))?success=true")
   }
