@@ -76,10 +76,7 @@ public struct ScheduleDetailView: View {
               .font(.callout)
           }
           .padding()
-          .overlay {
-            RoundedRectangle(cornerRadius: 16)
-              .stroke(Color.accentColor, lineWidth: 1)
-          }
+          .glassEffect(.regular.tint(.accentColor), in: .rect(cornerRadius: 16))
         }
       }
       .padding(.horizontal)
@@ -128,20 +125,8 @@ public struct ScheduleDetailView: View {
       }
     }
     .padding()
-    .background(
-      secondarySystemBackgroundColor
-        .clipShape(RoundedRectangle(cornerRadius: 8))
-    )
+    .glassEffect(.regular, in: .rect(cornerRadius: 16))
     .padding()
-
-  }
-
-  private var secondarySystemBackgroundColor: Color {
-    #if os(macOS)
-      Color(nsColor: .underPageBackgroundColor)
-    #else
-      Color(uiColor: .secondarySystemBackground)
-    #endif
   }
 }
 

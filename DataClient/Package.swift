@@ -5,11 +5,11 @@ let package = Package(
   name: "DataClient",
   defaultLocalization: "en",
   platforms: [
-    .macOS(.v14),
-    .iOS(.v17),
-    .watchOS(.v10),
-    .tvOS(.v17),
-    .visionOS(.v1),
+    .macOS(.v26),
+    .iOS(.v26),
+    .watchOS(.v26),
+    .tvOS(.v26),
+    .visionOS(.v26),
   ],
   products: [
     .library(

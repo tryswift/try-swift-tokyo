@@ -113,55 +113,110 @@ public struct TrySwiftView: View {
   }
 
   @ViewBuilder var root: some View {
-    List {
-      Section {
-        HStack {
-          Spacer()
+    ScrollView {
+      VStack(spacing: 20) {
+        // Logo Section
+        VStack(spacing: 16) {
           Image("logo", bundle: .module)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(maxWidth: 400, alignment: .center)
+            .frame(maxWidth: 300)
             .accessibilityIgnoresInvertColors()
-          Spacer()
+          Text("try! Swift Description", bundle: .module)
+            .multilineTextAlignment(.center)
         }
-        Text("try! Swift Description", bundle: .module)
+        .padding()
+        .frame(maxWidth: .infinity)
+        .glassEffect(.clear, in: .rect(cornerRadius: 20))
+
+        // Legal Section
+        VStack(spacing: 12) {
+          Button {
+            send(.codeOfConductTapped)
+          } label: {
+            HStack {
+              Text("Code of Conduct", bundle: .module)
+              Spacer()
+              Image(systemName: "chevron.right")
+                .foregroundStyle(.secondary)
+            }
+            .padding()
+          }
+          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+
+          Button {
+            send(.privacyPolicyTapped)
+          } label: {
+            HStack {
+              Text("Privacy Policy", bundle: .module)
+              Spacer()
+              Image(systemName: "chevron.right")
+                .foregroundStyle(.secondary)
+            }
+            .padding()
+          }
+          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+        }
+
+        // Team Section
+        VStack(spacing: 12) {
+          Button {
+            send(.organizerTapped)
+          } label: {
+            HStack {
+              Text("Organizers", bundle: .module)
+              Spacer()
+              Image(systemName: "chevron.right")
+                .foregroundStyle(.secondary)
+            }
+            .padding()
+          }
+          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+
+          Button {
+            send(.acknowledgementsTapped)
+          } label: {
+            HStack {
+              Text("Acknowledgements", bundle: .module)
+              Spacer()
+              Image(systemName: "chevron.right")
+                .foregroundStyle(.secondary)
+            }
+            .padding()
+          }
+          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+        }
+
+        // Links Section
+        VStack(spacing: 12) {
+          Button {
+            send(.ticketTapped)
+          } label: {
+            HStack {
+              Text("Luma", bundle: .module)
+              Spacer()
+              Image(systemName: "arrow.up.right")
+                .foregroundStyle(.secondary)
+            }
+            .padding()
+          }
+          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+
+          Button {
+            send(.websiteTapped)
+          } label: {
+            HStack {
+              Text("try! Swift Website", bundle: .module)
+              Spacer()
+              Image(systemName: "arrow.up.right")
+                .foregroundStyle(.secondary)
+            }
+            .padding()
+          }
+          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+        }
       }
-      Section {
-        Button {
-          send(.codeOfConductTapped)
-        } label: {
-          Text("Code of Conduct", bundle: .module)
-        }
-        Button {
-          send(.privacyPolicyTapped)
-        } label: {
-          Text("Privacy Policy", bundle: .module)
-        }
-      }
-      Section {
-        Button {
-          send(.organizerTapped)
-        } label: {
-          Text("Organizers", bundle: .module)
-        }
-        Button {
-          send(.acknowledgementsTapped)
-        } label: {
-          Text("Acknowledgements", bundle: .module)
-        }
-      }
-      Section {
-        Button {
-          send(.ticketTapped)
-        } label: {
-          Text("Luma", bundle: .module)
-        }
-        Button {
-          send(.websiteTapped)
-        } label: {
-          Text("try! Swift Website", bundle: .module)
-        }
-      }
+      .padding()
     }
     .navigationTitle(Text("try! Swift", bundle: .module))
   }
