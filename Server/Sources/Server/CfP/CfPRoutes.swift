@@ -7,27 +7,25 @@ import VaporElementary
 /// Routes for CfP SSR pages
 struct CfPRoutes: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
-    let cfp = routes.grouped("cfp")
-
-    // English routes (default)
-    cfp.get(use: homePage)
-    cfp.get("guidelines", use: guidelinesPage)
-    cfp.get("login", use: loginPage)
-    cfp.get("login-page", use: loginPage)  // Backward compatibility
-    cfp.get("submit", use: submitPage)
-    cfp.get("submit-page", use: submitPage)  // Backward compatibility
-    cfp.get("my-proposals", use: myProposalsPage)
-    cfp.get("my-proposals-page", use: myProposalsPage)  // Backward compatibility
+    // English routes (default) - at root level
+    routes.get(use: homePage)
+    routes.get("guidelines", use: guidelinesPage)
+    routes.get("login", use: loginPage)
+    routes.get("login-page", use: loginPage)  // Backward compatibility
+    routes.get("submit", use: submitPage)
+    routes.get("submit-page", use: submitPage)  // Backward compatibility
+    routes.get("my-proposals", use: myProposalsPage)
+    routes.get("my-proposals-page", use: myProposalsPage)  // Backward compatibility
 
     // Profile setup page
-    cfp.get("profile", use: profilePage)
-    cfp.post("profile", use: handleUpdateProfile)
+    routes.get("profile", use: profilePage)
+    routes.post("profile", use: handleUpdateProfile)
 
-    cfp.post("submit", use: handleSubmitProposal)
-    cfp.get("logout", use: logout)
+    routes.post("submit", use: handleSubmitProposal)
+    routes.get("logout", use: logout)
 
     // Japanese routes
-    let ja = cfp.grouped("ja")
+    let ja = routes.grouped("ja")
     ja.get(use: homePageJa)
     ja.get("guidelines", use: guidelinesPageJa)
     ja.get("login", use: loginPageJa)
@@ -37,9 +35,17 @@ struct CfPRoutes: RouteCollection {
     ja.get("logout", use: logoutJa)
 
     // Organizer pages
-    let organizer = cfp.grouped("organizer")
+    let organizer = routes.grouped("organizer")
     organizer.get("proposals", use: organizerProposalsPage)
     organizer.get("proposals", ":proposalID", use: organizerProposalDetailPage)
+
+    // Backward compatibility: redirect /cfp/* to /*
+    let cfpRedirect = routes.grouped("cfp")
+    cfpRedirect.get { req in req.redirect(to: "/", redirectType: .permanent) }
+    cfpRedirect.get("**") { req -> Response in
+      let path = req.url.path.replacingOccurrences(of: "/cfp", with: "")
+      return req.redirect(to: path.isEmpty ? "/" : path, redirectType: .permanent)
+    }
   }
 
   // MARK: - English Page Handlers
@@ -61,7 +67,7 @@ struct CfPRoutes: RouteCollection {
 
     // If user is logged in and profile is incomplete, redirect to profile setup
     if let user, isProfileIncomplete(user) {
-      return req.redirect(to: "/cfp/profile?returnTo=/cfp/submit")
+      return req.redirect(to: "/profile?returnTo=/submit")
     }
 
     let html = HTMLResponse {
@@ -228,7 +234,7 @@ struct CfPRoutes: RouteCollection {
   @Sendable
   func profilePage(req: Request) async throws -> Response {
     guard let user = try? await getAuthenticatedUser(req: req) else {
-      return req.redirect(to: "/api/v1/auth/github?returnTo=/cfp/profile")
+      return req.redirect(to: "/api/v1/auth/github?returnTo=/profile")
     }
 
     let returnTo = req.query[String.self, at: "returnTo"]
@@ -251,7 +257,7 @@ struct CfPRoutes: RouteCollection {
   @Sendable
   func handleUpdateProfile(req: Request) async throws -> Response {
     guard let user = try? await getAuthenticatedUser(req: req) else {
-      return req.redirect(to: "/api/v1/auth/github?returnTo=/cfp/profile")
+      return req.redirect(to: "/api/v1/auth/github?returnTo=/profile")
     }
 
     // Decode form data
@@ -302,7 +308,7 @@ struct CfPRoutes: RouteCollection {
     try await dbUser.save(on: req.db)
 
     // Redirect to returnTo or submit page
-    let returnTo = formData.returnTo ?? "/cfp/submit"
+    let returnTo = formData.returnTo ?? "/submit"
     return req.redirect(to: returnTo)
   }
 

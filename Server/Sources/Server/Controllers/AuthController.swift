@@ -155,7 +155,7 @@ enum OAuthError: AbortError {
 struct AuthController: RouteCollection {
   /// The frontend URL to redirect to after authentication
   static var frontendURL: String {
-    Environment.get("FRONTEND_URL") ?? "https://tryswift.jp/cfp"
+    Environment.get("FRONTEND_URL") ?? "https://cfp.tryswift.jp"
   }
 
   /// The callback URL for GitHub OAuth
@@ -378,7 +378,7 @@ struct AuthController: RouteCollection {
 
     // 10. Set secure HTTP-only cookie and redirect to frontend
     // Use returnTo from state if provided, otherwise default to login page
-    let returnTo = statePayload.returnTo ?? "/cfp/login"
+    let returnTo = statePayload.returnTo ?? "/login"
 
     req.logger.info(
       "OAuth flow completed, redirecting",
@@ -457,6 +457,7 @@ struct AuthController: RouteCollection {
     let allowedHosts = [
       "tryswift-cfp-website.fly.dev",
       "tryswift.jp",
+      "cfp.tryswift.jp",
       "localhost",
     ]
 

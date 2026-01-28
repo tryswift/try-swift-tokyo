@@ -36,7 +36,7 @@ struct CfPHomePage: HTML, Sendable {
             CfPStrings.Home.myProposals(language)
           }
           if user?.role == .admin {
-            a(.class("btn btn-outline-light btn-lg"), .href("/cfp/organizer/proposals")) {
+            a(.class("btn btn-outline-light btn-lg"), .href("/organizer/proposals")) {
               CfPStrings.Home.allProposals(language)
             }
           }

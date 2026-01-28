@@ -12,7 +12,7 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
         if let proposal {
           // Back button
           div(.class("mb-4")) {
-            a(.class("btn btn-outline-secondary"), .href("/cfp/organizer/proposals")) {
+            a(.class("btn btn-outline-secondary"), .href("/organizer/proposals")) {
               "← Back to All Proposals"
             }
           }
@@ -152,7 +152,7 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
               p(.class("text-muted mb-4")) {
                 "The proposal you are looking for does not exist."
               }
-              a(.class("btn btn-primary"), .href("/cfp/organizer/proposals")) {
+              a(.class("btn btn-primary"), .href("/organizer/proposals")) {
                 "Back to All Proposals"
               }
             }
@@ -166,7 +166,7 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
             p(.class("text-muted mb-4")) {
               "You need organizer permissions to view this page."
             }
-            a(.class("btn btn-primary"), .href("/cfp/")) { "Return to Home" }
+            a(.class("btn btn-primary"), .href("/")) { "Return to Home" }
           }
         }
       }
