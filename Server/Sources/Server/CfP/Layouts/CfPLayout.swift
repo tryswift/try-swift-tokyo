@@ -41,10 +41,10 @@ struct CfPLayout<Content: HTML & Sendable>: HTMLDocument, Sendable {
         "Submit your talk proposal for try! Swift Tokyo 2026. Share your Swift expertise with developers from around the world."
       )
     )
-    meta(.property("og:image"), .content("https://cfp.tryswift.jp/images/ogp.png"))
+    meta(.property("og:image"), .content("https://tryswift.jp/images/ogp.jpg"))
     meta(.name("twitter:card"), .content("summary_large_image"))
     meta(.name("twitter:title"), .content("\(title) - try! Swift Tokyo 2026"))
-    meta(.name("twitter:image"), .content("https://cfp.tryswift.jp/images/ogp.png"))
+    meta(.name("twitter:image"), .content("https://tryswift.jp/images/ogp.jpg"))
     // Custom styles
     HTMLRaw(
       """
