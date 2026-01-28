@@ -9,7 +9,7 @@ let package = Package(
     .iOS(.v17),
     .watchOS(.v10),
     .tvOS(.v17),
-    .visionOS(.v1)
+    .visionOS(.v1),
   ],
   products: [
     .library(
@@ -19,7 +19,7 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.2.0"),
-    .package(path: "../SharedModels")
+    .package(path: "../SharedModels"),
   ],
   targets: [
     .target(
@@ -27,7 +27,7 @@ let package = Package(
       dependencies: [
         .product(name: "Dependencies", package: "swift-dependencies"),
         .product(name: "DependenciesMacros", package: "swift-dependencies"),
-        .product(name: "SharedModels", package: "SharedModels")
+        .product(name: "SharedModels", package: "SharedModels"),
       ],
       resources: [
         .process("Resources")
