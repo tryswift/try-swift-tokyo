@@ -1,10 +1,5 @@
 {
-<<<<<<< Updated upstream
-  "originHash" : "b4c510c0f637c40814bfe2651bab707877eb78116586b2416518811a178f925c",
-||||||| Stash base
-=======
-  "originHash" : "023e2866d063dda705f3d0ba53822c9511e04e11a69b6cf6270c2927283a6776",
->>>>>>> Stashed changes
+  "originHash" : "7b8dbc68aefc67ad0c8faec46b33e1b9c08148d9fcae294ed60b21af36320efd",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -29,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/combine-schedulers",
       "state" : {
-        "revision" : "5928286acce13def418ec36d05a001a9641086f2",
-        "version" : "1.0.3"
+        "revision" : "fd16d76fd8b9a976d88bfb6cacc05ca8d19c91b6",
+        "version" : "1.1.0"
       }
     },
     {
@@ -40,6 +35,15 @@
       "state" : {
         "revision" : "742f624a998cba2a9e653d9b1e91ad3f3a5dff6b",
         "version" : "4.15.2"
+      }
+    },
+    {
+      "identity" : "elementary",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/elementary-swift/elementary.git",
+      "state" : {
+        "revision" : "65803c4770b6c8b6452c6ce83ab570c1b7042528",
+        "version" : "0.6.1"
       }
     },
     {
@@ -56,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/fluent-kit.git",
       "state" : {
-        "revision" : "06dadea2c17b3fa4e671f4a3cdc0840e970939b3",
-        "version" : "1.54.2"
+        "revision" : "f8f38b81009bb84eb2cb017b8914f44d3dde5ed5",
+        "version" : "1.55.0"
       }
     },
     {
@@ -74,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/twostraws/Ignite",
       "state" : {
-        "revision" : "f1156ba190bb7aad854ae674c589dafeb04be9e2",
-        "version" : "0.6.0"
+        "revision" : "5c16e8488354a9300d8656dd4639b24c312da871",
+        "version" : "0.6.2"
       }
     },
     {
@@ -110,8 +114,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nicklockwood/LRUCache.git",
       "state" : {
-        "revision" : "0d91406ecd4d6c1c56275866f00508d9aeacc92a",
-        "version" : "1.2.0"
+        "revision" : "cb5b2bd0da83ad29c0bec762d39f41c8ad0eaf3e",
+        "version" : "1.2.1"
       }
     },
     {
@@ -182,8 +186,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser.git",
       "state" : {
-        "revision" : "cdd0ef3755280949551dc26dee5de9ddeda89f54",
-        "version" : "1.6.2"
+        "revision" : "c5d11a805e765f52ba34ec7284bd4fcd6ba68615",
+        "version" : "1.7.0"
       }
     },
     {
@@ -290,8 +294,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-custom-dump",
       "state" : {
-        "revision" : "82645ec760917961cfa08c9c0c7104a57a0fa4b1",
-        "version" : "1.3.3"
+        "revision" : "93a8aa4937030b606de42f44b17870249f49af0b",
+        "version" : "1.3.4"
       }
     },
     {
@@ -299,8 +303,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-dependencies",
       "state" : {
-        "revision" : "a10f9feeb214bc72b5337b6ef6d5a029360db4cc",
-        "version" : "1.10.0"
+        "revision" : "411297072220a96f1501211afebd3715316907d2",
+        "version" : "1.10.1"
       }
     },
     {
@@ -380,8 +384,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio.git",
       "state" : {
-        "revision" : "233f61bc2cfbb22d0edeb2594da27a20d2ce514e",
-        "version" : "2.93.0"
+        "revision" : "5e72fc102906ebe75a3487595a653e6f43725552",
+        "version" : "2.94.0"
       }
     },
     {
@@ -488,8 +492,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/scinfu/SwiftSoup.git",
       "state" : {
-        "revision" : "4206bc7b8bd9a4ff8e9511211e1b4bff979ef9c4",
-        "version" : "2.11.1"
+        "revision" : "d86f244ed497d48012782e2f59c985a55e77b3f5",
+        "version" : "2.11.3"
       }
     },
     {
@@ -499,6 +503,15 @@
       "state" : {
         "revision" : "6f3db7122ccffb28e11e121c3797a176fcb88796",
         "version" : "4.121.1"
+      }
+    },
+    {
+      "identity" : "vapor-elementary",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vapor-community/vapor-elementary.git",
+      "state" : {
+        "revision" : "e1326d2439a9d4bd271c24b9765c195f7f793e77",
+        "version" : "0.2.2"
       }
     },
     {
@@ -515,8 +528,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
       "state" : {
-        "revision" : "4c27acf5394b645b70d8ba19dc249c0472d5f618",
-        "version" : "1.7.0"
+        "revision" : "34e463e98ab8541c604af706c99bed7160f5ec70",
+        "version" : "1.8.1"
       }
     }
   ],
