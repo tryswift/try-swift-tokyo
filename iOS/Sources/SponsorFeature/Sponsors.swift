@@ -86,28 +86,29 @@ public struct SponsorsListView: View {
           Text(plan.rawValue.localizedCapitalized)
             .font(.title.bold())
             .padding(.top, 64)
-            .foregroundStyle(Color.black)
+            .foregroundStyle(.primary)
             .accessibilityAddTraits(.isHeader)
           LazyVGrid(
             columns: Array(repeating: plan.gridItem, count: plan.columnCount),
             spacing: 64
           ) {
             ForEach(allPlans[plan]!, id: \.self) { sponsor in
-              Image(sponsor.imageName, bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(maxWidth: 300)
-                .onTapGesture {
-                  send(.sponsorTapped(sponsor))
-                }
-                .accessibilityAddTraits(.isLink)
-                .accessibilityIgnoresInvertColors()
+              Button {
+                send(.sponsorTapped(sponsor))
+              } label: {
+                Image(sponsor.imageName, bundle: .module)
+                  .resizable()
+                  .aspectRatio(contentMode: .fit)
+                  .frame(maxWidth: 300)
+                  .padding()
+              }
+              .glassEffect(.clear.interactive(), in: .rect(cornerRadius: 16))
+              .accessibilityAddTraits(.isLink)
+              .accessibilityIgnoresInvertColors()
             }
           }
-          .background(Color.white)
         }
         .padding()
-        .background(Color.white)
       }
       .navigationTitle(Text("Sponsors", bundle: .module))
     } else {

@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
   name: "iOS",
   defaultLocalization: "en",
-  platforms: [.iOS(.v17), .macOS(.v14), .watchOS(.v10), .tvOS(.v17), .visionOS(.v1)],
+  platforms: [.iOS(.v26), .macOS(.v26), .watchOS(.v26), .tvOS(.v26), .visionOS(.v26)],
   products: [
     .library(
       name: "AppFeature",
@@ -21,7 +21,7 @@ let package = Package(
       targets: ["trySwiftFeature"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.18.0"),
+    .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.21.0"),
     .package(url: "https://github.com/maiyama18/LicensesPlugin", from: "0.2.0"),
     .package(url: "https://github.com/flitto/rtt_sdk", branch: "0.1.5"),
     .package(name: "SharedModels", path: "../SharedModels"),

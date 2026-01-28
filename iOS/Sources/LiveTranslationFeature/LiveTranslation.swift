@@ -404,12 +404,13 @@ public struct LiveTranslationView: View {
 
   @ViewBuilder
   var translationContents: some View {
-    LazyVStack {
+    LazyVStack(spacing: 12) {
       ForEach(store.chatList) { item in
         Text(item.trItem?.content ?? item.item.text)
           .frame(maxWidth: .infinity, alignment: .leading)
           .multilineTextAlignment(.leading)
           .padding()
+          .glassEffect(.regular, in: .rect(cornerRadius: 16))
           .onAppear {
             guard item == store.chatList.last else { return }
             send(.setShowingLastChat(true))
@@ -420,6 +421,7 @@ public struct LiveTranslationView: View {
           }
       }
     }
+    .padding(.horizontal)
   }
 
   @ViewBuilder
@@ -428,7 +430,7 @@ public struct LiveTranslationView: View {
       Spacer()
       Text("Powered by", bundle: .module)
         .font(.caption)
-        .foregroundStyle(Color(.secondaryLabel))
+        .foregroundStyle(.secondary)
       Image(.flitto)
         .resizable()
         .offset(x: -10)
@@ -437,6 +439,9 @@ public struct LiveTranslationView: View {
         .accessibilityIgnoresInvertColors()
       Spacer()
     }
+    .padding(.vertical, 8)
+    .glassEffect(.clear, in: .capsule)
+    .padding(.horizontal)
   }
 }
 
