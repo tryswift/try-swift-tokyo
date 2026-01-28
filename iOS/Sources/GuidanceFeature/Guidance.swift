@@ -10,13 +10,13 @@ import SwiftUI
 public struct Guidance: Sendable {
 
   @ObservableState
-  public struct State: Sendable, Equatable {
+  public struct State: Equatable, @unchecked Sendable {
     var lines: Lines = .tachikawa
     var route: MKRoute?
     var origin: MKMapItem?
     var originTitle: LocalizedStringKey { lines.originTitle }
     var destinationItem: MKMapItem?
-    nonisolated(unsafe) var cameraPosition: MapCameraPosition = .automatic
+    @ObservationStateIgnored var cameraPosition: MapCameraPosition = .automatic
     var isLookAroundPresented: Bool = false
     var lookAround: MKLookAroundScene?
 
@@ -198,9 +198,15 @@ public struct GuidanceView: View {
         Button {
           send(.openMapTapped)
         } label: {
-          Text("Open Map", bundle: .module)
+          Label {
+            Text("Open Map", bundle: .module)
+          } icon: {
+            Image(systemName: "map")
+          }
+          .padding(.horizontal, 20)
+          .padding(.vertical, 12)
         }
-        .buttonStyle(.borderedProminent)
+        .glassEffect(.regular.tint(.accentColor).interactive(), in: .capsule)
         .padding(.horizontal)
         directions
         venueInfo
@@ -221,6 +227,9 @@ public struct GuidanceView: View {
         .font(.title.bold())
       Text("Tachikawa Stage Garden address", bundle: .module)
     }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .padding()
+    .glassEffect(.regular, in: .rect(cornerRadius: 16))
   }
 
   @ViewBuilder
@@ -265,7 +274,7 @@ public struct GuidanceView: View {
       if store.lookAround != nil {
         LookAroundPreview(scene: $store.lookAround)
           .frame(width: 120, height: 80, alignment: .bottomLeading)
-          .clipShape(RoundedRectangle(cornerRadius: 8))
+          .glassEffect(.clear, in: .rect(cornerRadius: 12))
           .padding()
       }
     }
@@ -273,14 +282,17 @@ public struct GuidanceView: View {
 
   @ViewBuilder
   var directions: some View {
-    VStack(alignment: .leading) {
+    VStack(alignment: .leading, spacing: 12) {
       Text("Directions", bundle: .module)
         .font(.headline)
         .accessibilityAddTraits(.isHeader)
+        .padding(.horizontal)
       ForEach(store.lines.directions) { direction in
         VStack {
           HStack {
             Text("\(direction.order)")
+              .font(.headline)
+              .foregroundStyle(.secondary)
             Text(direction.description, bundle: .module)
           }
           .frame(maxWidth: .infinity, alignment: .leading)
@@ -289,9 +301,11 @@ public struct GuidanceView: View {
               .resizable()
               .aspectRatio(contentMode: .fit)
               .frame(maxWidth: 400)
+              .clipShape(RoundedRectangle(cornerRadius: 12))
           }
         }
         .padding()
+        .glassEffect(.regular, in: .rect(cornerRadius: 16))
       }
     }
     .padding()

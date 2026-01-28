@@ -191,17 +191,11 @@ public struct ScheduleView: View {
                 listRow(session: session)
                   .padding()
               }
-              .background(
-                secondarySystemBackgroundColor
-                  .clipShape(RoundedRectangle(cornerRadius: 8))
-              )
+              .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 16))
             } else {
               listRow(session: session)
                 .padding()
-                .background(
-                  secondarySystemBackgroundColor
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                )
+                .glassEffect(.regular, in: .rect(cornerRadius: 16))
             }
           }
         }
@@ -220,10 +214,6 @@ public struct ScheduleView: View {
               .resizable()
               .aspectRatio(contentMode: .fit)
               .clipShape(Circle())
-              .background(
-                systemBackgroundColor
-                  .clipShape(Circle())
-              )
               .frame(width: 60)
               .accessibilityElement(children: .ignore)
               .accessibilityIgnoresInvertColors()
@@ -288,22 +278,6 @@ public struct ScheduleView: View {
     }
     let formatter = ListFormatter()
     return formatter.string(from: givenNames)!
-  }
-
-  private var systemBackgroundColor: Color {
-    #if os(macOS)
-      Color(nsColor: .windowBackgroundColor)
-    #else
-      Color(uiColor: .systemBackground)
-    #endif
-  }
-
-  private var secondarySystemBackgroundColor: Color {
-    #if os(macOS)
-      Color(nsColor: .underPageBackgroundColor)
-    #else
-      Color(uiColor: .secondarySystemBackground)
-    #endif
   }
 
   private var labelColor: Color {
