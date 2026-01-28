@@ -1,3 +1,4 @@
+import AVFoundation
 import BuildConfig
 import ComposableArchitecture
 import Foundation
@@ -43,6 +44,13 @@ public struct LiveTranslation: Sendable {
     /// showing last chat
     var isShowingLastChat: Bool = false
 
+    /// Text-to-Speech speed rate (0.0 to 1.0, default 0.5)
+    var speechRate: Float = 0.5
+    /// Currently speaking item ID
+    var speakingItemId: String? = nil
+    /// Show speed control
+    var isShowingSpeedControl: Bool = false
+
     public init() {}
   }
 
@@ -65,11 +73,17 @@ public struct LiveTranslation: Sendable {
       case selectLangCode(String)
       case setSelectedLanguageSheet(Bool)
       case setShowingLastChat(Bool)
+      case speakText(String, itemId: String)
+      case stopSpeaking
+      case setSpeechRate(Float)
+      case setShowingSpeedControl(Bool)
+      case speechDidFinish
     }
   }
 
   @Dependency(\.liveTranslationServiceClient) var liveTranslationServiceClient
   @Dependency(\.buildConfig) var buildConfig
+  @Dependency(\.speechSynthesizer) var speechSynthesizer
 
   private let connectChatRoomTaskId: String = "connectChatRoomTask"
 
@@ -109,6 +123,26 @@ public struct LiveTranslation: Sendable {
         return .none
       case .view(.setShowingLastChat(let flag)):
         state.isShowingLastChat = flag
+        return .none
+      case .view(.speakText(let text, let itemId)):
+        state.speakingItemId = itemId
+        return .run { [state] send in
+          await speechSynthesizer.speak(text, state.selectedLangCode, state.speechRate)
+          await send(.view(.speechDidFinish))
+        }
+      case .view(.stopSpeaking):
+        state.speakingItemId = nil
+        return .run { _ in
+          await speechSynthesizer.stop()
+        }
+      case .view(.setSpeechRate(let rate)):
+        state.speechRate = rate
+        return .none
+      case .view(.setShowingSpeedControl(let flag)):
+        state.isShowingSpeedControl = flag
+        return .none
+      case .view(.speechDidFinish):
+        state.speakingItemId = nil
         return .none
       case .connectChatStream:
         return .run { [state] send in
@@ -367,6 +401,11 @@ public struct LiveTranslationView: View {
         send(.connectStream)
       }
       .navigationTitle(Text("Live translation", bundle: .module))
+      .safeAreaInset(edge: .bottom) {
+        if store.isShowingSpeedControl {
+          speedControlView
+        }
+      }
       .toolbar {
         if !store.isConnected {
           ToolbarItem(placement: .topBarLeading) {
@@ -378,13 +417,20 @@ public struct LiveTranslationView: View {
           }
         }
         ToolbarItem(placement: .topBarTrailing) {
-          Button {
-            send(.setSelectedLanguageSheet(!store.isSelectedLanguageSheet))
-          } label: {
-            let selectedLanguage =
-              store.langSet?.langCodingKey(store.selectedLangCode) ?? ""
-            Text(selectedLanguage)
-            Image(systemName: "globe")
+          HStack {
+            Button {
+              send(.setShowingSpeedControl(!store.isShowingSpeedControl))
+            } label: {
+              Image(systemName: "speedometer")
+            }
+            Button {
+              send(.setSelectedLanguageSheet(!store.isSelectedLanguageSheet))
+            } label: {
+              let selectedLanguage =
+                store.langSet?.langCodingKey(store.selectedLangCode) ?? ""
+              Text(selectedLanguage)
+              Image(systemName: "globe")
+            }
           }
           .sheet(isPresented: $store.isSelectedLanguageSheet) {
             SelectLanguageSheet(
@@ -403,21 +449,75 @@ public struct LiveTranslationView: View {
   }
 
   @ViewBuilder
+  var speedControlView: some View {
+    VStack(spacing: 8) {
+      HStack {
+        Text("Speech Speed", bundle: .module)
+          .font(.subheadline)
+        Spacer()
+        Text(speedLabel)
+          .font(.subheadline)
+          .foregroundStyle(.secondary)
+      }
+      Slider(
+        value: Binding(
+          get: { store.speechRate },
+          set: { send(.setSpeechRate($0)) }
+        ),
+        in: 0.1...1.0,
+        step: 0.1
+      )
+    }
+    .padding()
+    .background(.regularMaterial)
+  }
+
+  private var speedLabel: String {
+    let rate = store.speechRate
+    if rate <= 0.3 {
+      return String(localized: "Slow", bundle: .module)
+    } else if rate <= 0.6 {
+      return String(localized: "Normal", bundle: .module)
+    } else {
+      return String(localized: "Fast", bundle: .module)
+    }
+  }
+
+  @ViewBuilder
   var translationContents: some View {
     LazyVStack {
       ForEach(store.chatList) { item in
-        Text(item.trItem?.content ?? item.item.text)
-          .frame(maxWidth: .infinity, alignment: .leading)
-          .multilineTextAlignment(.leading)
-          .padding()
-          .onAppear {
-            guard item == store.chatList.last else { return }
-            send(.setShowingLastChat(true))
+        HStack(alignment: .top, spacing: 8) {
+          Text(item.trItem?.content ?? item.item.text)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .multilineTextAlignment(.leading)
+          Button {
+            let text = item.trItem?.content ?? item.item.text
+            if store.speakingItemId == item.id {
+              send(.stopSpeaking)
+            } else {
+              send(.speakText(text, itemId: item.id))
+            }
+          } label: {
+            Image(systemName: store.speakingItemId == item.id ? "stop.circle.fill" : "speaker.wave.2")
+              .foregroundStyle(store.speakingItemId == item.id ? .red : .accentColor)
           }
-          .onDisappear {
-            guard item == store.chatList.last else { return }
-            send(.setShowingLastChat(false))
-          }
+          .buttonStyle(.plain)
+          .accessibilityLabel(
+            store.speakingItemId == item.id
+              ? Text("Stop speaking", bundle: .module)
+              : Text("Speak text", bundle: .module)
+          )
+        }
+        .padding()
+        .onAppear {
+          guard item == store.chatList.last else { return }
+          send(.setShowingLastChat(true))
+        }
+        .onDisappear {
+          guard item == store.chatList.last else { return }
+          send(.setShowingLastChat(false))
+        }
       }
     }
   }
