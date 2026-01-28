@@ -448,6 +448,11 @@ struct AuthController: RouteCollection {
 
   /// Validate that returnTo URL is allowed (prevent open redirect)
   private func isValidReturnURL(_ urlString: String) -> Bool {
+    // Allow relative paths (same-origin redirects are safe)
+    if urlString.hasPrefix("/") && !urlString.hasPrefix("//") {
+      return true
+    }
+
     guard let url = URL(string: urlString),
       let host = url.host?.lowercased()
     else {
