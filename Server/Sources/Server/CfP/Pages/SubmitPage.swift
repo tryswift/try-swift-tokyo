@@ -202,6 +202,11 @@ struct SubmitPageView: HTML, Sendable {
     }
   }
 
+  /// Whether the current user is an invited speaker
+  private var isInvitedSpeaker: Bool {
+    user?.role.isInvitedSpeaker == true
+  }
+
   private var durationField: some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("talkDuration")) {
@@ -213,11 +218,17 @@ struct SubmitPageView: HTML, Sendable {
         option(.value("")) {
           language == .ja ? "時間を選択..." : "Choose duration..."
         }
-        option(.value("20min")) {
-          language == .ja ? "レギュラートーク（20分）" : "Regular Talk (20 minutes)"
-        }
-        option(.value("LT")) {
-          language == .ja ? "ライトニングトーク（5分）" : "Lightning Talk (5 minutes)"
+        if isInvitedSpeaker {
+          option(.value("invited")) {
+            language == .ja ? "招待スピーカー（20分）" : "Invited Talk (20 minutes)"
+          }
+        } else {
+          option(.value("20min")) {
+            language == .ja ? "レギュラートーク（20分）" : "Regular Talk (20 minutes)"
+          }
+          option(.value("LT")) {
+            language == .ja ? "ライトニングトーク（5分）" : "Lightning Talk (5 minutes)"
+          }
         }
       }
     }

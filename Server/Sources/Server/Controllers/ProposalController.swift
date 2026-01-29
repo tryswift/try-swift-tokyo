@@ -57,10 +57,16 @@ struct CreateProposalRequestContent: Content {
   let iconURL: String?
   let notes: String?
 
-  func toRequest(defaultConferencePath: String) throws -> CreateProposalRequest {
+  func toRequest(defaultConferencePath: String, userRole: UserRole) throws -> CreateProposalRequest {
     guard let duration = TalkDuration(rawValue: talkDuration) else {
-      throw Abort(.badRequest, reason: "Invalid talk duration. Use '20min' or 'LT'")
+      throw Abort(.badRequest, reason: "Invalid talk duration. Use '20min', 'LT', or 'invited'")
     }
+
+    // Validate that only invited speakers can submit invited talks
+    if duration.isInvitedOnly && !userRole.isInvitedSpeaker {
+      throw Abort(.forbidden, reason: "Only invited speakers can submit invited talks")
+    }
+
     return CreateProposalRequest(
       conferencePath: conferencePath ?? defaultConferencePath,
       title: title,
@@ -145,7 +151,10 @@ struct ProposalController: RouteCollection {
       throw Abort(.internalServerError, reason: "Conference ID is missing")
     }
 
-    let createRequest = try contentRequest.toRequest(defaultConferencePath: conference.path)
+    let createRequest = try contentRequest.toRequest(
+      defaultConferencePath: conference.path,
+      userRole: payload.role
+    )
 
     // Validate input
     guard !createRequest.title.isEmpty else {

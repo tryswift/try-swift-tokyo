@@ -313,23 +313,47 @@ struct AuthController: RouteCollection {
       throw OAuthError.userFetchFailed(String(describing: error))
     }
 
-    // 6. Check if user is a member of the tryswift/tokyo team
-    var isTeamMember = false
+    // 6. Check if user is a member of the tryswift/tokyo team (admin)
+    var isAdminTeamMember = false
     do {
-      isTeamMember = try await GitHubOAuth.isTeamMember(
+      isAdminTeamMember = try await GitHubOAuth.isTeamMember(
         accessToken: accessToken,
         username: githubUser.login,
         organization: config.organizationName,
         teamSlug: config.teamSlug,
         client: req.client
       )
-      req.logger.info("Team membership check:  \(isTeamMember)")
+      req.logger.info("Admin team membership check: \(isAdminTeamMember)")
     } catch {
-      req.logger.warning("Team membership check failed (defaulting to speaker): \(error)")
+      req.logger.warning("Admin team membership check failed: \(error)")
+    }
+
+    // 6b. Check if user is a member of the invited speaker team
+    var isInvitedSpeakerTeamMember = false
+    if !isAdminTeamMember {
+      do {
+        isInvitedSpeakerTeamMember = try await GitHubOAuth.isTeamMember(
+          accessToken: accessToken,
+          username: githubUser.login,
+          organization: config.organizationName,
+          teamSlug: config.invitedSpeakerTeamSlug,
+          client: req.client
+        )
+        req.logger.info("Invited speaker team membership check: \(isInvitedSpeakerTeamMember)")
+      } catch {
+        req.logger.warning("Invited speaker team membership check failed: \(error)")
+      }
     }
 
     // 7. Determine user role based on team membership
-    let role: UserRole = isTeamMember ? .admin : .speaker
+    let role: UserRole
+    if isAdminTeamMember {
+      role = .admin
+    } else if isInvitedSpeakerTeamMember {
+      role = .invitedSpeaker
+    } else {
+      role = .speaker
+    }
 
     // 8. Find or create user
     let user: User

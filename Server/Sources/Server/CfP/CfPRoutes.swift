@@ -480,6 +480,18 @@ struct CfPRoutes: RouteCollection {
       )
     }
 
+    // Validate that only invited speakers can submit invited talks
+    if talkDuration.isInvitedOnly && !user.role.isInvitedSpeaker {
+      return try await renderSubmitPageWithError(
+        req: req,
+        user: user,
+        error: language == .ja
+          ? "招待スピーカーセッションは招待スピーカーのみが提出できます"
+          : "Only invited speakers can submit invited talks",
+        language: language
+      )
+    }
+
     // Find current open conference
     guard
       let conference = try await Conference.query(on: req.db)
