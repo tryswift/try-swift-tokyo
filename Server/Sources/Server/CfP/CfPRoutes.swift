@@ -1036,7 +1036,8 @@ struct CfPRoutes: RouteCollection {
     let importedCount = req.query[Int.self, at: "imported"]
     let skippedCount = req.query[Int.self, at: "skipped"]
     let errorCount = req.query[Int.self, at: "errors"]
-    let errorMessage = errorCount.map { $0 > 0 ? "\($0) rows had errors during import" : nil } ?? nil
+    let errorMessage =
+      errorCount.map { $0 > 0 ? "\($0) rows had errors during import" : nil } ?? nil
 
     return HTMLResponse {
       CfPLayout(title: "Import from PaperCall.io", user: user) {
@@ -1083,7 +1084,8 @@ struct CfPRoutes: RouteCollection {
       parsedProposals = try PaperCallCSVParser.parse(csvContent)
     } catch {
       let errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
-      let encodedError = errorMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+      let encodedError =
+        errorMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         ?? "Parse+error"
       return req.redirect(to: "/organizer/proposals/import?error=\(encodedError)")
     }
