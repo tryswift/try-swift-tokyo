@@ -9,6 +9,7 @@ enum GitHubOAuth {
     let clientSecret: String
     let organizationName: String
     let teamSlug: String
+    let invitedSpeakerTeamSlug: String
 
     init() throws {
       guard let clientID = Environment.get("GITHUB_CLIENT_ID") else {
@@ -22,6 +23,8 @@ enum GitHubOAuth {
       self.clientSecret = clientSecret
       self.organizationName = Environment.get("GITHUB_ORG") ?? "tryswift"
       self.teamSlug = Environment.get("GITHUB_TEAM") ?? "tokyo"
+      self.invitedSpeakerTeamSlug =
+        Environment.get("GITHUB_INVITED_SPEAKER_TEAM") ?? "tokyo-2026-speaker"
     }
 
     enum ConfigError: Error, CustomStringConvertible {

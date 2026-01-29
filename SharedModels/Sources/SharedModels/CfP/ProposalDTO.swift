@@ -4,6 +4,7 @@ import Foundation
 public enum TalkDuration: String, Codable, Sendable, Equatable, CaseIterable {
   case regular = "20min"
   case lightning = "LT"
+  case invited = "invited"
 
   public var displayName: String {
     switch self {
@@ -11,7 +12,14 @@ public enum TalkDuration: String, Codable, Sendable, Equatable, CaseIterable {
       return "20 minutes"
     case .lightning:
       return "Lightning Talk (5 min)"
+    case .invited:
+      return "Invited Talk (20 min)"
     }
+  }
+
+  /// Whether this duration is only available for invited speakers
+  public var isInvitedOnly: Bool {
+    self == .invited
   }
 }
 
