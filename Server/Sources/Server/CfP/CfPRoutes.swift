@@ -17,6 +17,9 @@ struct CfPRoutes: RouteCollection {
     routes.get("my-proposals", use: myProposalsPage)
     routes.get("my-proposals-page", use: myProposalsPage)  // Backward compatibility
     routes.get("my-proposals", ":proposalID", use: myProposalDetailPage)
+    routes.get("my-proposals", ":proposalID", "edit", use: editProposalPage)
+    routes.post("my-proposals", ":proposalID", "edit", use: handleEditProposal)
+    routes.post("my-proposals", ":proposalID", "withdraw", use: handleWithdrawProposal)
 
     // Profile setup page
     routes.get("profile", use: profilePage)
@@ -33,6 +36,9 @@ struct CfPRoutes: RouteCollection {
     ja.get("submit", use: submitPageJa)
     ja.get("my-proposals", use: myProposalsPageJa)
     ja.get("my-proposals", ":proposalID", use: myProposalDetailPageJa)
+    ja.get("my-proposals", ":proposalID", "edit", use: editProposalPageJa)
+    ja.post("my-proposals", ":proposalID", "edit", use: handleEditProposalJa)
+    ja.post("my-proposals", ":proposalID", "withdraw", use: handleWithdrawProposalJa)
     ja.post("submit", use: handleSubmitProposalJa)
     ja.get("logout", use: logoutJa)
 
@@ -108,6 +114,21 @@ struct CfPRoutes: RouteCollection {
     try await renderMyProposalDetailPage(req: req, language: .en)
   }
 
+  @Sendable
+  func editProposalPage(req: Request) async throws -> HTMLResponse {
+    try await renderEditProposalPage(req: req, language: .en)
+  }
+
+  @Sendable
+  func handleEditProposal(req: Request) async throws -> Response {
+    try await processEditProposal(req: req, language: .en)
+  }
+
+  @Sendable
+  func handleWithdrawProposal(req: Request) async throws -> Response {
+    try await processWithdrawProposal(req: req, language: .en)
+  }
+
   // MARK: - Japanese Page Handlers
 
   @Sendable
@@ -138,6 +159,21 @@ struct CfPRoutes: RouteCollection {
   @Sendable
   func myProposalDetailPageJa(req: Request) async throws -> HTMLResponse {
     try await renderMyProposalDetailPage(req: req, language: .ja)
+  }
+
+  @Sendable
+  func editProposalPageJa(req: Request) async throws -> HTMLResponse {
+    try await renderEditProposalPage(req: req, language: .ja)
+  }
+
+  @Sendable
+  func handleEditProposalJa(req: Request) async throws -> Response {
+    try await processEditProposal(req: req, language: .ja)
+  }
+
+  @Sendable
+  func handleWithdrawProposalJa(req: Request) async throws -> Response {
+    try await processWithdrawProposal(req: req, language: .ja)
   }
 
   // MARK: - Shared Render Methods
@@ -220,6 +256,7 @@ struct CfPRoutes: RouteCollection {
   {
     let user = try? await getAuthenticatedUser(req: req)
     var proposals: [ProposalDTO] = []
+    let showWithdrawnMessage = req.query[String.self, at: "withdrawn"] == "true"
 
     if let user {
       let dbProposals = try await Proposal.query(on: req.db)
@@ -239,7 +276,9 @@ struct CfPRoutes: RouteCollection {
         language: language,
         currentPath: "/my-proposals"
       ) {
-        MyProposalsPageView(user: user, proposals: proposals, language: language)
+        MyProposalsPageView(
+          user: user, proposals: proposals, language: language,
+          showWithdrawnMessage: showWithdrawnMessage)
       }
     }
   }
@@ -249,6 +288,7 @@ struct CfPRoutes: RouteCollection {
   {
     let user = try? await getAuthenticatedUser(req: req)
     var proposal: ProposalDTO?
+    let showUpdatedMessage = req.query[String.self, at: "updated"] == "true"
 
     if let user {
       if let proposalIDString = req.parameters.get("proposalID"),
@@ -276,7 +316,9 @@ struct CfPRoutes: RouteCollection {
         language: language,
         currentPath: "/my-proposals"
       ) {
-        MyProposalDetailPageView(user: user, proposal: proposal, language: language)
+        MyProposalDetailPageView(
+          user: user, proposal: proposal, language: language,
+          showUpdatedMessage: showUpdatedMessage)
       }
     }
   }
@@ -565,6 +607,231 @@ struct CfPRoutes: RouteCollection {
       }
     }
     return try await html.encodeResponse(for: req)
+  }
+
+  // MARK: - Edit Proposal
+
+  private func renderEditProposalPage(req: Request, language: CfPLanguage) async throws
+    -> HTMLResponse
+  {
+    let user = try? await getAuthenticatedUser(req: req)
+    var proposal: ProposalDTO?
+
+    if let user {
+      if let proposalIDString = req.parameters.get("proposalID"),
+        let proposalID = UUID(uuidString: proposalIDString)
+      {
+        // Fetch proposal and verify it belongs to the current user
+        if let dbProposal = try await Proposal.query(on: req.db)
+          .filter(\.$id == proposalID)
+          .filter(\.$speaker.$id == user.id)
+          .with(\.$conference)
+          .first()
+        {
+          proposal = try dbProposal.toDTO(
+            speakerUsername: user.username,
+            conference: dbProposal.conference
+          )
+        }
+      }
+    }
+
+    return HTMLResponse {
+      CfPLayout(
+        title: language == .ja ? "プロポーザルを編集" : "Edit Proposal",
+        user: user,
+        language: language,
+        currentPath: "/my-proposals"
+      ) {
+        EditProposalPageView(user: user, proposal: proposal, language: language)
+      }
+    }
+  }
+
+  private func processEditProposal(req: Request, language: CfPLanguage) async throws -> Response {
+    // 1. Authentication check
+    guard let user = try? await getAuthenticatedUser(req: req) else {
+      return req.redirect(to: "/api/v1/auth/github?returnTo=\(language.path(for: "/my-proposals"))")
+    }
+
+    // 2. Get proposal ID
+    guard let proposalIDString = req.parameters.get("proposalID"),
+      let proposalID = UUID(uuidString: proposalIDString)
+    else {
+      throw Abort(.badRequest, reason: "Invalid proposal ID")
+    }
+
+    // 3. Fetch proposal and verify ownership
+    guard
+      let proposal = try await Proposal.query(on: req.db)
+        .filter(\.$id == proposalID)
+        .filter(\.$speaker.$id == user.id)
+        .with(\.$conference)
+        .first()
+    else {
+      throw Abort(
+        .notFound, reason: language == .ja ? "プロポーザルが見つかりません" : "Proposal not found")
+    }
+
+    // 4. Decode form data
+    struct EditFormData: Content {
+      var title: String
+      var abstract: String
+      var talkDetails: String
+      var talkDuration: String
+      var speakerName: String
+      var speakerEmail: String
+      var bio: String
+      var iconUrl: String
+      var notesToOrganizers: String?
+    }
+
+    let formData: EditFormData
+    do {
+      formData = try req.content.decode(EditFormData.self)
+    } catch {
+      return try await renderEditProposalPageWithError(
+        req: req, user: user, proposal: proposal,
+        error: language == .ja ? "フォームデータが無効です" : "Invalid form data",
+        language: language
+      )
+    }
+
+    // 5. Validation
+    guard !formData.title.isEmpty else {
+      return try await renderEditProposalPageWithError(
+        req: req, user: user, proposal: proposal,
+        error: language == .ja ? "タイトルは必須です" : "Title is required",
+        language: language
+      )
+    }
+    guard !formData.abstract.isEmpty else {
+      return try await renderEditProposalPageWithError(
+        req: req, user: user, proposal: proposal,
+        error: language == .ja ? "概要は必須です" : "Abstract is required",
+        language: language
+      )
+    }
+    guard !formData.talkDetails.isEmpty else {
+      return try await renderEditProposalPageWithError(
+        req: req, user: user, proposal: proposal,
+        error: language == .ja ? "トークの詳細は必須です" : "Talk details are required",
+        language: language
+      )
+    }
+    guard !formData.speakerName.isEmpty else {
+      return try await renderEditProposalPageWithError(
+        req: req, user: user, proposal: proposal,
+        error: language == .ja ? "スピーカー名は必須です" : "Speaker name is required",
+        language: language
+      )
+    }
+    guard !formData.speakerEmail.isEmpty else {
+      return try await renderEditProposalPageWithError(
+        req: req, user: user, proposal: proposal,
+        error: language == .ja ? "スピーカーメールは必須です" : "Speaker email is required",
+        language: language
+      )
+    }
+    guard !formData.bio.isEmpty else {
+      return try await renderEditProposalPageWithError(
+        req: req, user: user, proposal: proposal,
+        error: language == .ja ? "スピーカー自己紹介は必須です" : "Speaker bio is required",
+        language: language
+      )
+    }
+    guard !formData.iconUrl.isEmpty else {
+      return try await renderEditProposalPageWithError(
+        req: req, user: user, proposal: proposal,
+        error: language == .ja ? "プロフィール画像URLは必須です" : "Profile picture URL is required",
+        language: language
+      )
+    }
+
+    guard let talkDuration = TalkDuration(rawValue: formData.talkDuration) else {
+      return try await renderEditProposalPageWithError(
+        req: req, user: user, proposal: proposal,
+        error: language == .ja ? "トーク時間を選択してください" : "Please select a talk duration",
+        language: language
+      )
+    }
+
+    // 6. Update proposal
+    proposal.title = formData.title
+    proposal.abstract = formData.abstract
+    proposal.talkDetail = formData.talkDetails
+    proposal.talkDuration = talkDuration
+    proposal.speakerName = formData.speakerName
+    proposal.speakerEmail = formData.speakerEmail
+    proposal.bio = formData.bio
+    proposal.iconURL = formData.iconUrl
+    proposal.notes =
+      formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers
+
+    try await proposal.save(on: req.db)
+
+    // 7. Redirect to detail page with success message
+    return req.redirect(
+      to: "\(language.path(for: "/my-proposals/\(proposalID.uuidString)"))?updated=true")
+  }
+
+  private func renderEditProposalPageWithError(
+    req: Request,
+    user: UserDTO,
+    proposal: Proposal,
+    error: String,
+    language: CfPLanguage
+  ) async throws -> Response {
+    let proposalDTO = try proposal.toDTO(
+      speakerUsername: user.username,
+      conference: proposal.conference
+    )
+    let html = HTMLResponse {
+      CfPLayout(
+        title: language == .ja ? "プロポーザルを編集" : "Edit Proposal",
+        user: user,
+        language: language,
+        currentPath: "/my-proposals"
+      ) {
+        EditProposalPageView(user: user, proposal: proposalDTO, errorMessage: error, language: language)
+      }
+    }
+    return try await html.encodeResponse(for: req)
+  }
+
+  // MARK: - Withdraw Proposal
+
+  private func processWithdrawProposal(req: Request, language: CfPLanguage) async throws
+    -> Response
+  {
+    // 1. Authentication check
+    guard let user = try? await getAuthenticatedUser(req: req) else {
+      return req.redirect(to: "/api/v1/auth/github?returnTo=\(language.path(for: "/my-proposals"))")
+    }
+
+    // 2. Get proposal ID
+    guard let proposalIDString = req.parameters.get("proposalID"),
+      let proposalID = UUID(uuidString: proposalIDString)
+    else {
+      throw Abort(.badRequest, reason: "Invalid proposal ID")
+    }
+
+    // 3. Fetch proposal and verify ownership
+    guard
+      let proposal = try await Proposal.query(on: req.db)
+        .filter(\.$id == proposalID)
+        .filter(\.$speaker.$id == user.id)
+        .first()
+    else {
+      throw Abort(
+        .notFound, reason: language == .ja ? "プロポーザルが見つかりません" : "Proposal not found")
+    }
+
+    // 4. Delete proposal
+    try await proposal.delete(on: req.db)
+
+    // 5. Redirect to my-proposals with success message
+    return req.redirect(to: "\(language.path(for: "/my-proposals"))?withdrawn=true")
   }
 
   // MARK: - Logout

@@ -6,15 +6,33 @@ struct MyProposalsPageView: HTML, Sendable {
   let user: UserDTO?
   let proposals: [ProposalDTO]
   let language: CfPLanguage
+  let showWithdrawnMessage: Bool
 
-  init(user: UserDTO?, proposals: [ProposalDTO], language: CfPLanguage = .en) {
+  init(
+    user: UserDTO?, proposals: [ProposalDTO], language: CfPLanguage = .en,
+    showWithdrawnMessage: Bool = false
+  ) {
     self.user = user
     self.proposals = proposals
     self.language = language
+    self.showWithdrawnMessage = showWithdrawnMessage
   }
 
   var body: some HTML {
     div(.class("container py-5")) {
+      // Withdrawn success message
+      if showWithdrawnMessage {
+        div(
+          .class("alert alert-info alert-dismissible fade show mb-4"),
+          .custom(name: "role", value: "alert")
+        ) {
+          language == .ja ? "プロポーザルが取り下げられました。" : "Proposal has been withdrawn."
+          button(
+            .type(.button), .class("btn-close"), .custom(name: "data-bs-dismiss", value: "alert")
+          ) {}
+        }
+      }
+
       h1(.class("fw-bold mb-2")) {
         language == .ja ? "マイプロポーザル" : "My Proposals"
       }

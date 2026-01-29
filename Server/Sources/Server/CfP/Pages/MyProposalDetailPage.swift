@@ -6,21 +6,39 @@ struct MyProposalDetailPageView: HTML, Sendable {
   let user: UserDTO?
   let proposal: ProposalDTO?
   let language: CfPLanguage
+  let showUpdatedMessage: Bool
 
-  init(user: UserDTO?, proposal: ProposalDTO?, language: CfPLanguage = .en) {
+  init(
+    user: UserDTO?, proposal: ProposalDTO?, language: CfPLanguage = .en,
+    showUpdatedMessage: Bool = false
+  ) {
     self.user = user
     self.proposal = proposal
     self.language = language
+    self.showUpdatedMessage = showUpdatedMessage
   }
 
   var body: some HTML {
     div(.class("container py-5")) {
-      if let user {
+      if user != nil {
         if let proposal {
           // Back button
           div(.class("mb-4")) {
             a(.class("btn btn-outline-secondary"), .href(language.path(for: "/my-proposals"))) {
               language == .ja ? "← プロポーザル一覧に戻る" : "← Back to My Proposals"
+            }
+          }
+
+          // Success message
+          if showUpdatedMessage {
+            div(
+              .class("alert alert-success alert-dismissible fade show mb-4"),
+              .custom(name: "role", value: "alert")
+            ) {
+              language == .ja ? "プロポーザルが更新されました。" : "Proposal updated successfully."
+              button(
+                .type(.button), .class("btn-close"), .custom(name: "data-bs-dismiss", value: "alert")
+              ) {}
             }
           }
 
@@ -43,6 +61,23 @@ struct MyProposalDetailPageView: HTML, Sendable {
                 span(.class("text-muted")) {
                   HTMLText(proposal.conferenceDisplayName)
                 }
+              }
+            }
+            // Action buttons
+            div(.class("d-flex gap-2")) {
+              a(
+                .class("btn btn-outline-primary"),
+                .href(language.path(for: "/my-proposals/\(proposal.id.uuidString)/edit"))
+              ) {
+                language == .ja ? "編集" : "Edit"
+              }
+              button(
+                .type(.button),
+                .class("btn btn-outline-danger"),
+                .custom(name: "data-bs-toggle", value: "modal"),
+                .custom(name: "data-bs-target", value: "#withdrawModal")
+              ) {
+                language == .ja ? "取り下げ" : "Withdraw"
               }
             }
           }
@@ -150,6 +185,9 @@ struct MyProposalDetailPageView: HTML, Sendable {
               }
             }
           }
+
+          // Withdraw confirmation modal
+          withdrawConfirmModal(proposalID: proposal.id)
         } else {
           // Proposal not found
           div(.class("card")) {
@@ -201,5 +239,41 @@ struct MyProposalDetailPageView: HTML, Sendable {
       formatter.locale = Locale(identifier: "ja_JP")
     }
     return formatter.string(from: date)
+  }
+
+  private func withdrawConfirmModal(proposalID: UUID) -> some HTML {
+    let title = language == .ja ? "プロポーザルの取り下げ" : "Withdraw Proposal"
+    let warning = language == .ja ? "この操作は取り消せません。" : "This action cannot be undone."
+    let message =
+      language == .ja
+      ? "本当にこのプロポーザルを取り下げますか？提出したすべての情報が削除されます。"
+      : "Are you sure you want to withdraw this proposal? All submitted information will be permanently deleted."
+    let cancelText = language == .ja ? "キャンセル" : "Cancel"
+    let withdrawText = language == .ja ? "取り下げる" : "Withdraw"
+    let actionURL = language.path(for: "/my-proposals/\(proposalID.uuidString)/withdraw")
+
+    return HTMLRaw(
+      """
+      <div class="modal fade" id="withdrawModal" tabindex="-1" aria-labelledby="withdrawModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="withdrawModalLabel">\(title)</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p class="text-danger fw-bold">\(warning)</p>
+              <p>\(message)</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">\(cancelText)</button>
+              <form method="post" action="\(actionURL)" style="display: inline;">
+                <button type="submit" class="btn btn-danger">\(withdrawText)</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      """)
   }
 }
