@@ -3,7 +3,7 @@
         {
             "id": 1,
             "name": "RevenueCat",
-            "imageName": "PLATINUM_RevenueCat",
+            "imageName": "2026_RevenueCat",
             "link": "http://rev.cat/"
         }
     ],
@@ -11,46 +11,46 @@
         {
             "id": 1,
             "name": "株式会社U-NEXT",
-            "imageName": "GOLD_u-next",
+            "imageName": "2026_U-NEXT",
             "link": "https://www.unext.co.jp/en",
             "japanese_link": "https://www.unext.co.jp/"
         },
         {
             "id": 2,
             "name": "Sentry",
-            "imageName": "GOLD_Sentry",
+            "imageName": "2026_Sentry",
             "link": "https://sentry.ichizoku.io/"
         },
         {
             "id": 3,
             "name": "合同会社DMM.com",
-            "imageName": "GOLD_DMM",
+            "imageName": "2026_DMM",
             "link": "https://dmm-corp.com/"
         },
         {
             "id": 4,
             "name": "株式会社ディー・エヌ・エー",
-            "imageName": "GOLD_DeNA",
+            "imageName": "2026_DeNA",
             "link": "https://dena.com/intl/",
             "japanese_link": "https://dena.com/"
         },
         {
             "id": 5,
             "name": "LINEヤフー株式会社",
-            "imageName": "GOLD_LINEヤフー",
+            "imageName": "2026_LINEヤフー",
             "link": "https://www.lycorp.co.jp/en/",
             "japanese_link": "https://www.lycorp.co.jp/ja/"
         },
         {
             "id": 6,
             "name": "フェンリル株式会社",
-            "imageName": "GOLD_Fenrir",
+            "imageName": "2026_Fenrir",
             "link": "https://www.fenrir-inc.com"
         },
         {
             "id": 7,
             "name": "Runway",
-            "imageName": "GOLD_Runway",
+            "imageName": "2026_Runway",
             "link": "https://www.runway.team/"
         }
     ],
@@ -58,20 +58,20 @@
         {
             "id": 1,
             "name": "株式会社メルカリ",
-            "imageName": "SILVER_mercari",
+            "imageName": "2026_mercari",
             "link": "https://about.mercari.com/en/",
             "japanese_link": "https://about.mercari.com/"
         },
         {
             "id": 2,
             "name": "株式会社はてな",
-            "imageName": "SILVER_hatena",
+            "imageName": "2026_Hatena",
             "link": "https://hatena.co.jp"
         },
         {
             "id": 3,
             "name": "野村ホールディングス株式会社",
-            "imageName": "SILVER_nomura",
+            "imageName": "2026_NOMURA",
             "link": "https://www.nomura.co.jp/fic/recruit/"
         }
     ],
@@ -79,13 +79,13 @@
         {
             "id": 1,
             "name": "ピクシブ株式会社",
-            "imageName": "BRONZE_pixiv",
+            "imageName": "2026_pixiv",
             "link": "https://www.pixiv.co.jp/"
         },
         {
             "id": 2,
             "name": "サイボウズ株式会社",
-            "imageName": "BRONZE_cybozu",
+            "imageName": "2026_cybozu",
             "link": "https://tech.cybozu.io/"
         }
     ],
@@ -93,7 +93,7 @@
         {
             "id": 1,
             "name": "野村ホールディングス株式会社",
-            "imageName": "SILVER_nomura",
+            "imageName": "2026_NOMURA",
             "link": "https://www.nomura.co.jp/fic/recruit/"
         }
     ],
@@ -101,20 +101,20 @@
         {
             "id": 1,
             "name": "株式会社メルカリ",
-            "imageName": "SILVER_mercari",
+            "imageName": "2026_mercari",
             "link": "https://about.mercari.com/en/",
             "japanese_link": "https://about.mercari.com/"
         },
         {
             "id": 2,
             "name": "ピクシブ株式会社",
-            "imageName": "BRONZE_pixiv",
+            "imageName": "2026_pixiv",
             "link": "https://www.pixiv.co.jp/"
         },
         {
             "id": 3,
             "name": "サイボウズ株式会社",
-            "imageName": "BRONZE_cybozu",
+            "imageName": "2026_cybozu",
             "link": "https://tech.cybozu.io/"
         }
     ],
