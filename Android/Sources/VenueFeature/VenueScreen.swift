@@ -42,9 +42,9 @@ public enum TransportOption: String, CaseIterable, Identifiable {
 
   var lineColor: Color {
     switch self {
-    case .tachikawa: return .red
-    case .haneda: return .green
-    case .tokyo: return .purple
+    case .tachikawa: return Color.red
+    case .haneda: return Color.green
+    case .tokyo: return Color.purple
     }
   }
 }
@@ -77,7 +77,7 @@ public struct VenueScreen: View {
   private var transportPicker: some View {
     Picker("From", selection: $selectedOption) {
       ForEach(TransportOption.allCases) { option in
-        Text(option.rawValue).tag(option)
+        Text(option.rawValue).tag(option as TransportOption)
       }
     }
     .pickerStyle(.segmented)
@@ -87,21 +87,21 @@ public struct VenueScreen: View {
     ZStack {
       RoundedRectangle(cornerRadius: 12)
         .fill(Color.gray.opacity(0.2))
-        .aspectRatio(16 / 10, contentMode: .fit)
+        .aspectRatio(1.6, contentMode: ContentMode.fit)
 
       VStack(spacing: 8) {
         Image(systemName: "map")
-          .font(.largeTitle)
-          .foregroundStyle(.secondary)
+          .font(Font.largeTitle)
+          .foregroundStyle(Color.secondary)
 
         Text("Tachikawa Stage Garden")
-          .font(.headline)
+          .font(Font.headline)
 
         Text("〒190-0014 Tokyo, Tachikawa, Midoricho, 3 Chome−3−20")
-          .font(.caption)
-          .foregroundStyle(.secondary)
-          .multilineTextAlignment(.center)
-          .padding(.horizontal)
+          .font(Font.caption)
+          .foregroundStyle(Color.secondary)
+          .multilineTextAlignment(TextAlignment.center)
+          .padding(Edge.Set.horizontal)
       }
     }
   }
@@ -116,33 +116,33 @@ public struct VenueScreen: View {
   }
 
   private var directionsSection: some View {
-    VStack(alignment: .leading, spacing: 12) {
+    VStack(alignment: HorizontalAlignment.leading, spacing: 12) {
       HStack {
         Text("Directions from \(selectedOption.rawValue)")
-          .font(.headline)
+          .font(Font.headline)
 
         Spacer()
 
         Text(selectedOption.duration)
-          .font(.subheadline)
-          .foregroundStyle(.secondary)
+          .font(Font.subheadline)
+          .foregroundStyle(Color.secondary)
       }
 
-      ForEach(Array(selectedOption.directions.enumerated()), id: \.offset) { index, direction in
-        HStack(alignment: .top, spacing: 12) {
+      ForEach(Array(selectedOption.directions.enumerated()), id: \.offset) { (index: Int, direction: String) in
+        HStack(alignment: VerticalAlignment.top, spacing: 12) {
           Circle()
             .fill(selectedOption.lineColor)
             .frame(width: 24, height: 24)
             .overlay {
               Text("\(index + 1)")
-                .font(.caption.bold())
-                .foregroundStyle(.white)
+                .font(Font.caption.bold())
+                .foregroundStyle(Color.white)
             }
 
           Text(direction)
-            .font(.body)
+            .font(Font.body)
         }
-        .padding(.vertical, 4)
+        .padding(Edge.Set.vertical, 4)
       }
     }
     .padding()
@@ -151,20 +151,20 @@ public struct VenueScreen: View {
   }
 
   private var venueInfoSection: some View {
-    VStack(alignment: .leading, spacing: 8) {
+    VStack(alignment: HorizontalAlignment.leading, spacing: 8) {
       Text("Tachikawa Stage Garden")
-        .font(.title2.bold())
+        .font(Font.title2.bold())
 
       Text("3-3-20 Midoricho, Tachikawa City, Tokyo 190-0014")
-        .font(.body)
-        .foregroundStyle(.secondary)
+        .font(Font.body)
+        .foregroundStyle(Color.secondary)
 
       Link(destination: URL(string: "https://www.tachikawasg.com")!) {
         Label("Visit Website", systemImage: "globe")
       }
-      .padding(.top, 4)
+      .padding(Edge.Set.top, 4)
     }
-    .frame(maxWidth: .infinity, alignment: .leading)
+    .frame(maxWidth: CGFloat.infinity, alignment: Alignment.leading)
     .padding()
     .background(Color.gray.opacity(0.1))
     .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -189,6 +189,8 @@ public struct VenueScreen: View {
   }
 }
 
+#if !SKIP
 #Preview {
   VenueScreen()
 }
+#endif

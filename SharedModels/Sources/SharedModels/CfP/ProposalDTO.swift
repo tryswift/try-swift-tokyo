@@ -1,5 +1,8 @@
 import Foundation
 
+// CfP types are iOS-only (not used in Android app)
+#if !SKIP
+
 /// Talk duration options
 public enum TalkDuration: String, Codable, Sendable, Equatable, CaseIterable {
   case regular = "20min"
@@ -161,3 +164,5 @@ public struct UpdateProposalRequest: Codable, Sendable {
     self.notes = notes
   }
 }
+
+#endif

@@ -43,7 +43,7 @@ public struct SponsorSectionView: View {
 
   public var body: some View {
     VStack(spacing: 16) {
-      Text(plan.rawValue.localizedCapitalized)
+      Text(plan.rawValue.capitalized)
         .font(Font.title2.bold())
         .frame(maxWidth: CGFloat.infinity, alignment: Alignment.leading)
 
@@ -82,8 +82,8 @@ public struct SponsorCardView: View {
     VStack {
       RoundedRectangle(cornerRadius: 8)
         .fill(Color.secondary.opacity(0.1))
-        .aspectRatio(16 / 9, contentMode: ContentMode.fit)
-        .overlay {
+        .aspectRatio(1.778, contentMode: ContentMode.fit)
+        .overlay(alignment: Alignment.center) {
           if let name = sponsor.name {
             Text(name)
               .font(Font.caption)

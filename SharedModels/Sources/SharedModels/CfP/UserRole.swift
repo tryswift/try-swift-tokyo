@@ -1,5 +1,8 @@
 import Foundation
 
+// CfP types are iOS-only (not used in Android app)
+#if !SKIP
+
 /// User role for the CfP system
 /// - admin: Organizer with full access (members of try-swift GitHub org)
 /// - invitedSpeaker: Invited speaker who can submit invited talks
@@ -28,3 +31,5 @@ public enum UserRole: String, Codable, Sendable, Equatable, CaseIterable {
     }
   }
 }
+
+#endif

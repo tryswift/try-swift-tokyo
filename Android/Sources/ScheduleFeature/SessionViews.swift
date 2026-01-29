@@ -19,7 +19,7 @@ public struct SessionRowView: View {
           .multilineTextAlignment(TextAlignment.leading)
 
         if let speakers = session.speakers {
-          Text(speakers.map(\.name).joined(separator: ", "))
+          Text(speakerNames(speakers))
             .font(Font.subheadline)
             .foregroundStyle(Color.secondary)
         }
@@ -43,11 +43,20 @@ public struct SessionRowView: View {
     .clipShape(RoundedRectangle(cornerRadius: 12))
   }
 
+  // Helper function to avoid Kotlin type inference issues with map
+  private func speakerNames(_ speakers: [Speaker]) -> String {
+    var names: [String] = []
+    for speaker in speakers {
+      names.append(speaker.name)
+    }
+    return names.joined(separator: ", ")
+  }
+
   @ViewBuilder
   private var speakerAvatars: some View {
     if let speakers = session.speakers {
       VStack(spacing: 4) {
-        ForEach(speakers.prefix(2), id: \.name) { speaker in
+        ForEach(Array(speakers.prefix(2)), id: \.name) { speaker in
           SpeakerAvatarView(speaker: speaker, size: 44)
         }
       }
@@ -78,11 +87,19 @@ public struct SpeakerAvatarView: View {
       .fill(Color.blue.opacity(0.2))
       .frame(width: size, height: size)
       .overlay {
-        Text(String(speaker.name.prefix(1)))
-          .font(size > 50 ? Font.title2 : Font.body)
+        Text(avatarInitial)
+          .font(avatarFont)
           .fontWeight(Font.Weight.medium)
           .foregroundStyle(Color.blue)
       }
+  }
+
+  private var avatarInitial: String {
+    String(speaker.name.prefix(1))
+  }
+
+  private var avatarFont: Font {
+    size > 50 ? Font.title2 : Font.body
   }
 }
 

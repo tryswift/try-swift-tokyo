@@ -33,11 +33,17 @@ public struct SponsorsScreen: View {
         }
       }
     } else {
-      ContentUnavailableView(
-        "No Sponsors",
-        systemImage: "building.2",
-        description: Text("Sponsor information is not available")
-      )
+      VStack(spacing: 16) {
+        Image(systemName: "building.2")
+          .font(Font.system(size: 48))
+          .foregroundStyle(Color.secondary)
+        Text("No Sponsors")
+          .font(Font.headline)
+        Text("Sponsor information is not available")
+          .font(Font.subheadline)
+          .foregroundStyle(Color.secondary)
+      }
+      .padding()
     }
   }
 }

@@ -1,5 +1,8 @@
 import Foundation
 
+// CfP types are iOS-only (not used in Android app)
+#if !SKIP
+
 /// Localized string supporting multiple languages
 public struct LocalizedString: Codable, Sendable, Equatable {
   public let en: String
@@ -141,3 +144,5 @@ public enum ConferenceDescriptions {
       """
   )
 }
+
+#endif

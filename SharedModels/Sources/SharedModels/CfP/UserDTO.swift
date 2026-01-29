@@ -1,5 +1,8 @@
 import Foundation
 
+// CfP types are iOS-only (not used in Android app)
+#if !SKIP
+
 /// Data Transfer Object for User profile
 public struct UserDTO: Codable, Sendable, Equatable, Identifiable {
   public let id: UUID
@@ -87,3 +90,5 @@ public struct AuthResponse: Codable, Sendable {
     self.user = user
   }
 }
+
+#endif
