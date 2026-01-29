@@ -133,6 +133,7 @@ final class Conference: Model, Content, @unchecked Sendable {
   /// Convert to public info for SSR pages
   func toPublicInfo() -> ConferencePublicInfo {
     ConferencePublicInfo(
+      id: id ?? UUID(),
       path: path,
       displayName: displayName,
       deadline: deadline
@@ -142,6 +143,7 @@ final class Conference: Model, Content, @unchecked Sendable {
 
 /// Public conference info for SSR pages
 struct ConferencePublicInfo: Sendable {
+  let id: UUID
   let path: String
   let displayName: String
   let deadline: Date?

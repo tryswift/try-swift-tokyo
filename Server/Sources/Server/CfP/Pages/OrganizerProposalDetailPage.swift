@@ -35,6 +35,13 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
                 }
               }
             }
+            // Edit button
+            a(
+              .class("btn btn-outline-primary"),
+              .href("/organizer/proposals/\(proposal.id.uuidString)/edit")
+            ) {
+              "Edit Proposal"
+            }
           }
 
           // Speaker info card

@@ -17,13 +17,23 @@ struct OrganizerProposalsPageView: HTML, Sendable {
             "Review all submitted CfP proposals."
           }
         }
-        // Export button
-        a(
-          .class("btn btn-success"),
-          .href(
-            "/organizer/proposals/export\(conferencePath.map { "?conference=\($0)" } ?? "")")
-        ) {
-          "Export CSV"
+        // Action buttons
+        div(.class("d-flex gap-2")) {
+          // Import button
+          a(
+            .class("btn btn-outline-primary"),
+            .href("/organizer/proposals/import")
+          ) {
+            "Import from PaperCall.io"
+          }
+          // Export button
+          a(
+            .class("btn btn-success"),
+            .href(
+              "/organizer/proposals/export\(conferencePath.map { "?conference=\($0)" } ?? "")")
+          ) {
+            "Export CSV"
+          }
         }
       }
 

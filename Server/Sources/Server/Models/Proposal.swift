@@ -49,6 +49,14 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @OptionalField(key: "notes")
   var notes: String?
 
+  /// PaperCall ID (if imported from PaperCall.io)
+  @OptionalField(key: "papercall_id")
+  var paperCallID: String?
+
+  /// PaperCall Speaker Username (for reference when imported)
+  @OptionalField(key: "papercall_username")
+  var paperCallUsername: String?
+
   /// Reference to the speaker who submitted the proposal
   @Parent(key: "speaker_id")
   var speaker: User
