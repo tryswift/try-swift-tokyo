@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
   name: "Shared",
   defaultLocalization: "en",
-  platforms: [.iOS(.v17), .macOS(.v14), .watchOS(.v10), .tvOS(.v17)],
+  platforms: [.iOS(.v17), .macOS(.v15), .watchOS(.v10), .tvOS(.v17)],
   products: [
     .library(name: "SharedViews", targets: ["SharedViews"])
   ],

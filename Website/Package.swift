@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
   name: "Website",
   defaultLocalization: "en",
-  platforms: [.macOS(.v14)],
+  platforms: [.macOS(.v15)],
   dependencies: [
     .package(url: "https://github.com/twostraws/Ignite", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.2.0"),
