@@ -203,10 +203,11 @@ public struct GuidanceView: View {
           } icon: {
             Image(systemName: "map")
           }
-          .padding(.horizontal, 20)
-          .padding(.vertical, 12)
+          .padding(.horizontal, 12)
+          .padding(.vertical, 8)
         }
-        .glassEffect(.regular.tint(.accentColor).interactive(), in: .capsule)
+        .buttonStyle(.glassProminent)
+        .buttonBorderShape(.capsule)
         .padding(.horizontal)
         directions
         venueInfo
