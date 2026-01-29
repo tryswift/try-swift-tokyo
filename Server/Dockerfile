@@ -57,7 +57,7 @@ WORKDIR /app
 COPY --from=build /staging /app
 
 # Copy CfP static assets (images)
-COPY ./CfPWebsite/Assets/images ./Public/cfp/images
+COPY ./CfPWebsite/Assets/images ./Public/images
 
 ENV SWIFT_BACKTRACE=enable=yes,sanitize=yes,threads=all,images=all,interactive=no,swift-backtrace=./swift-backtrace-static
 

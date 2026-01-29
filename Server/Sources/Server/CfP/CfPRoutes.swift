@@ -7,39 +7,48 @@ import VaporElementary
 /// Routes for CfP SSR pages
 struct CfPRoutes: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
-    let cfp = routes.grouped("cfp")
-
-    // English routes (default)
-    cfp.get(use: homePage)
-    cfp.get("guidelines", use: guidelinesPage)
-    cfp.get("login", use: loginPage)
-    cfp.get("login-page", use: loginPage)  // Backward compatibility
-    cfp.get("submit", use: submitPage)
-    cfp.get("submit-page", use: submitPage)  // Backward compatibility
-    cfp.get("my-proposals", use: myProposalsPage)
-    cfp.get("my-proposals-page", use: myProposalsPage)  // Backward compatibility
+    // English routes (default) - at root level
+    routes.get(use: homePage)
+    routes.get("guidelines", use: guidelinesPage)
+    routes.get("login", use: loginPage)
+    routes.get("login-page", use: loginPage)  // Backward compatibility
+    routes.get("submit", use: submitPage)
+    routes.get("submit-page", use: submitPage)  // Backward compatibility
+    routes.get("my-proposals", use: myProposalsPage)
+    routes.get("my-proposals-page", use: myProposalsPage)  // Backward compatibility
+    routes.get("my-proposals", ":proposalID", use: myProposalDetailPage)
 
     // Profile setup page
-    cfp.get("profile", use: profilePage)
-    cfp.post("profile", use: handleUpdateProfile)
+    routes.get("profile", use: profilePage)
+    routes.post("profile", use: handleUpdateProfile)
 
-    cfp.post("submit", use: handleSubmitProposal)
-    cfp.get("logout", use: logout)
+    routes.post("submit", use: handleSubmitProposal)
+    routes.get("logout", use: logout)
 
     // Japanese routes
-    let ja = cfp.grouped("ja")
+    let ja = routes.grouped("ja")
     ja.get(use: homePageJa)
     ja.get("guidelines", use: guidelinesPageJa)
     ja.get("login", use: loginPageJa)
     ja.get("submit", use: submitPageJa)
     ja.get("my-proposals", use: myProposalsPageJa)
+    ja.get("my-proposals", ":proposalID", use: myProposalDetailPageJa)
     ja.post("submit", use: handleSubmitProposalJa)
     ja.get("logout", use: logoutJa)
 
     // Organizer pages
-    let organizer = cfp.grouped("organizer")
+    let organizer = routes.grouped("organizer")
     organizer.get("proposals", use: organizerProposalsPage)
+    organizer.get("proposals", "export", use: organizerExportProposalsCSV)
     organizer.get("proposals", ":proposalID", use: organizerProposalDetailPage)
+
+    // Backward compatibility: redirect /cfp/* to /*
+    let cfpRedirect = routes.grouped("cfp")
+    cfpRedirect.get { req in req.redirect(to: "/", redirectType: .permanent) }
+    cfpRedirect.get("**") { req -> Response in
+      let path = req.url.path.replacingOccurrences(of: "/cfp", with: "")
+      return req.redirect(to: path.isEmpty ? "/" : path, redirectType: .permanent)
+    }
   }
 
   // MARK: - English Page Handlers
@@ -61,7 +70,7 @@ struct CfPRoutes: RouteCollection {
 
     // If user is logged in and profile is incomplete, redirect to profile setup
     if let user, isProfileIncomplete(user) {
-      return req.redirect(to: "/cfp/profile?returnTo=/cfp/submit")
+      return req.redirect(to: "/profile?returnTo=/submit")
     }
 
     let html = HTMLResponse {
@@ -94,6 +103,11 @@ struct CfPRoutes: RouteCollection {
     try await renderMyProposalsPage(req: req, language: .en)
   }
 
+  @Sendable
+  func myProposalDetailPage(req: Request) async throws -> HTMLResponse {
+    try await renderMyProposalDetailPage(req: req, language: .en)
+  }
+
   // MARK: - Japanese Page Handlers
 
   @Sendable
@@ -119,6 +133,11 @@ struct CfPRoutes: RouteCollection {
   @Sendable
   func myProposalsPageJa(req: Request) async throws -> HTMLResponse {
     try await renderMyProposalsPage(req: req, language: .ja)
+  }
+
+  @Sendable
+  func myProposalDetailPageJa(req: Request) async throws -> HTMLResponse {
+    try await renderMyProposalDetailPage(req: req, language: .ja)
   }
 
   // MARK: - Shared Render Methods
@@ -225,10 +244,47 @@ struct CfPRoutes: RouteCollection {
     }
   }
 
+  private func renderMyProposalDetailPage(req: Request, language: CfPLanguage) async throws
+    -> HTMLResponse
+  {
+    let user = try? await getAuthenticatedUser(req: req)
+    var proposal: ProposalDTO?
+
+    if let user {
+      if let proposalIDString = req.parameters.get("proposalID"),
+        let proposalID = UUID(uuidString: proposalIDString)
+      {
+        // Fetch proposal and verify it belongs to the current user
+        if let dbProposal = try await Proposal.query(on: req.db)
+          .filter(\.$id == proposalID)
+          .filter(\.$speaker.$id == user.id)
+          .with(\.$conference)
+          .first()
+        {
+          proposal = try dbProposal.toDTO(
+            speakerUsername: user.username,
+            conference: dbProposal.conference
+          )
+        }
+      }
+    }
+
+    return HTMLResponse {
+      CfPLayout(
+        title: proposal?.title ?? (language == .ja ? "プロポーザル詳細" : "Proposal Detail"),
+        user: user,
+        language: language,
+        currentPath: "/my-proposals"
+      ) {
+        MyProposalDetailPageView(user: user, proposal: proposal, language: language)
+      }
+    }
+  }
+
   @Sendable
   func profilePage(req: Request) async throws -> Response {
     guard let user = try? await getAuthenticatedUser(req: req) else {
-      return req.redirect(to: "/api/v1/auth/github?returnTo=/cfp/profile")
+      return req.redirect(to: "/api/v1/auth/github?returnTo=/profile")
     }
 
     let returnTo = req.query[String.self, at: "returnTo"]
@@ -251,7 +307,7 @@ struct CfPRoutes: RouteCollection {
   @Sendable
   func handleUpdateProfile(req: Request) async throws -> Response {
     guard let user = try? await getAuthenticatedUser(req: req) else {
-      return req.redirect(to: "/api/v1/auth/github?returnTo=/cfp/profile")
+      return req.redirect(to: "/api/v1/auth/github?returnTo=/profile")
     }
 
     // Decode form data
@@ -302,7 +358,7 @@ struct CfPRoutes: RouteCollection {
     try await dbUser.save(on: req.db)
 
     // Redirect to returnTo or submit page
-    let returnTo = formData.returnTo ?? "/cfp/submit"
+    let returnTo = formData.returnTo ?? "/submit"
     return req.redirect(to: returnTo)
   }
 
@@ -467,6 +523,15 @@ struct CfPRoutes: RouteCollection {
 
     try await proposal.save(on: req.db)
 
+    // Notify organizers via Slack
+    await SlackNotifier.notifyNewProposal(
+      title: formData.title,
+      speakerName: formData.speakerName,
+      talkDuration: talkDuration.rawValue,
+      client: req.client,
+      logger: req.logger
+    )
+
     // Redirect to success page
     return req.redirect(to: "\(language.path(for: "/submit"))?success=true")
   }
@@ -594,6 +659,78 @@ struct CfPRoutes: RouteCollection {
         OrganizerProposalDetailPageView(user: user, proposal: proposal)
       }
     }
+  }
+
+  @Sendable
+  func organizerExportProposalsCSV(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    let conferencePath = req.query[String.self, at: "conference"]
+
+    // Build query
+    let query = Proposal.query(on: req.db)
+      .with(\.$speaker)
+      .with(\.$conference)
+      .sort(\.$createdAt, .descending)
+
+    if let conferencePath {
+      if let conference = try await Conference.query(on: req.db)
+        .filter(\.$path == conferencePath)
+        .first(),
+        let conferenceID = conference.id
+      {
+        query.filter(\.$conference.$id == conferenceID)
+      }
+    }
+
+    let dbProposals = try await query.all()
+
+    // Build CSV
+    var csv =
+      "ID,Title,Abstract,Talk Details,Duration,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At\n"
+
+    let dateFormatter = ISO8601DateFormatter()
+
+    for proposal in dbProposals {
+      let columns = [
+        proposal.id?.uuidString ?? "",
+        escapeCSV(proposal.title),
+        escapeCSV(proposal.abstract),
+        escapeCSV(proposal.talkDetail),
+        proposal.talkDuration.rawValue,
+        escapeCSV(proposal.speakerName),
+        escapeCSV(proposal.speakerEmail),
+        proposal.speaker.username,
+        escapeCSV(proposal.bio),
+        proposal.iconURL ?? "",
+        escapeCSV(proposal.notes ?? ""),
+        proposal.conference.displayName,
+        proposal.createdAt.map { dateFormatter.string(from: $0) } ?? "",
+      ]
+      csv += columns.joined(separator: ",") + "\n"
+    }
+
+    var headers = HTTPHeaders()
+    headers.add(name: .contentType, value: "text/csv; charset=utf-8")
+    headers.add(
+      name: .contentDisposition,
+      value: "attachment; filename=\"proposals-\(conferencePath ?? "all").csv\""
+    )
+
+    return Response(status: .ok, headers: headers, body: .init(string: csv))
+  }
+
+  private func escapeCSV(_ value: String) -> String {
+    let needsQuoting =
+      value.contains(",") || value.contains("\"") || value.contains("\n")
+      || value.contains("\r")
+    if needsQuoting {
+      let escaped = value.replacingOccurrences(of: "\"", with: "\"\"")
+      return "\"\(escaped)\""
+    }
+    return value
   }
 
   // MARK: - Helper Methods

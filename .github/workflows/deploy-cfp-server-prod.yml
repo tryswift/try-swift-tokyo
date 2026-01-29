@@ -1,12 +1,12 @@
-name: Deploy CfP Server (Development)
+name: Deploy CfP Server (Production)
 
 on:
   push:
-    branches: [cfp]
+    branches: [main]
     paths:
       - "Server/**"
       - "MyLibrary/Sources/SharedModels/**"
-      - "fly.toml"
+      - "fly.production.toml"
   workflow_dispatch:
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
       - name: Setup Fly.io CLI
         uses: superfly/flyctl-actions/setup-flyctl@v1
 
-      - name: Deploy to Fly.io
-        run: flyctl deploy --remote-only
+      - name: Deploy to Fly.io (Production)
+        run: flyctl deploy --remote-only --config fly.production.toml
         env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN_PROD }}

@@ -5,7 +5,7 @@ enum AppRoutes {
   static func register(_ app: Application) throws {
     // Serve static files for CfP (images, CSS, JS)
     // FileMiddleware maps request paths directly to filesystem paths
-    // e.g., /cfp/images/riko.png -> Public/cfp/images/riko.png
+    // e.g., /images/riko.png -> Public/images/riko.png
     let cfpPublicDirectory = app.directory.workingDirectory + "Public/"
     app.middleware.use(
       FileMiddleware(
@@ -16,8 +16,9 @@ enum AppRoutes {
       )
     )
 
-    // Root endpoint
-    app.get { req in
+    // Root endpoint - handled by CfPRoutes for production
+    // Status endpoint for monitoring
+    app.get("status") { req in
       return ["status": "ok", "service": "trySwiftCfP"]
     }
 

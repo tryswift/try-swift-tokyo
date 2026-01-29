@@ -241,16 +241,8 @@ struct SubmitPageView: HTML, Sendable {
   }
 
   private var speakerInfoHeader: some HTML {
-    div(.class("d-flex justify-content-between align-items-center mb-3")) {
-      h5(.class("card-title mb-0")) {
-        language == .ja ? "スピーカー情報" : "Speaker Information"
-      }
-      a(
-        .class("btn btn-sm btn-outline-secondary"),
-        .href("/cfp/profile?returnTo=\(language.path(for: "/submit"))")
-      ) {
-        language == .ja ? "プロフィールを編集" : "Edit Profile"
-      }
+    h5(.class("card-title mb-3")) {
+      language == .ja ? "スピーカー情報" : "Speaker Information"
     }
   }
 

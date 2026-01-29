@@ -2,18 +2,25 @@ import Elementary
 import Foundation
 import SharedModels
 
-struct OrganizerProposalDetailPageView: HTML, Sendable {
+struct MyProposalDetailPageView: HTML, Sendable {
   let user: UserDTO?
   let proposal: ProposalDTO?
+  let language: CfPLanguage
+
+  init(user: UserDTO?, proposal: ProposalDTO?, language: CfPLanguage = .en) {
+    self.user = user
+    self.proposal = proposal
+    self.language = language
+  }
 
   var body: some HTML {
     div(.class("container py-5")) {
-      if let user, user.role == .admin {
+      if let user {
         if let proposal {
           // Back button
           div(.class("mb-4")) {
-            a(.class("btn btn-outline-secondary"), .href("/organizer/proposals")) {
-              "← Back to All Proposals"
+            a(.class("btn btn-outline-secondary"), .href(language.path(for: "/my-proposals"))) {
+              language == .ja ? "← プロポーザル一覧に戻る" : "← Back to My Proposals"
             }
           }
 
@@ -28,7 +35,10 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
                       ? "badge bg-primary fs-6" : "badge bg-warning text-dark fs-6"
                   )
                 ) {
-                  HTMLText(proposal.talkDuration.displayName)
+                  HTMLText(
+                    language == .ja
+                      ? (proposal.talkDuration == .regular ? "レギュラートーク" : "ライトニングトーク")
+                      : proposal.talkDuration.displayName)
                 }
                 span(.class("text-muted")) {
                   HTMLText(proposal.conferenceDisplayName)
@@ -40,7 +50,7 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
           // Speaker info card
           div(.class("card mb-4")) {
             div(.class("card-header")) {
-              strong { "Speaker Information" }
+              strong { language == .ja ? "スピーカー情報" : "Speaker Information" }
             }
             div(.class("card-body")) {
               div(.class("d-flex align-items-center mb-3")) {
@@ -67,19 +77,19 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
                     .target(.blank),
                     .class("text-muted small")
                   ) {
-                    "View GitHub Profile"
+                    language == .ja ? "GitHubプロフィールを見る" : "View GitHub Profile"
                   }
                 }
               }
-              h6(.class("fw-bold mb-2")) { "Bio" }
-              p(.class("mb-0")) { HTMLText(proposal.bio) }
+              h6(.class("fw-bold mb-2")) { language == .ja ? "自己紹介" : "Bio" }
+              p(.class("mb-0"), .style("white-space: pre-wrap;")) { HTMLText(proposal.bio) }
             }
           }
 
           // Abstract card
           div(.class("card mb-4")) {
             div(.class("card-header")) {
-              strong { "Abstract" }
+              strong { language == .ja ? "概要" : "Abstract" }
             }
             div(.class("card-body")) {
               p(.class("mb-0"), .style("white-space: pre-wrap;")) {
@@ -91,7 +101,7 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
           // Talk details card
           div(.class("card mb-4")) {
             div(.class("card-header")) {
-              strong { "Talk Details (for reviewers)" }
+              strong { language == .ja ? "トーク詳細（レビュアー向け）" : "Talk Details (for reviewers)" }
             }
             div(.class("card-body")) {
               p(.class("mb-0"), .style("white-space: pre-wrap;")) {
@@ -104,7 +114,7 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
           if let notes = proposal.notes, !notes.isEmpty {
             div(.class("card mb-4 border-warning")) {
               div(.class("card-header bg-warning text-dark")) {
-                strong { "Notes to Organizers" }
+                strong { language == .ja ? "運営者へのメモ" : "Notes to Organizers" }
               }
               div(.class("card-body")) {
                 p(.class("mb-0"), .style("white-space: pre-wrap;")) {
@@ -117,28 +127,24 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
           // Metadata card
           div(.class("card")) {
             div(.class("card-header")) {
-              strong { "Metadata" }
+              strong { language == .ja ? "メタデータ" : "Metadata" }
             }
             div(.class("card-body")) {
               dl(.class("row mb-0")) {
-                dt(.class("col-sm-3")) { "Proposal ID" }
-                dd(.class("col-sm-9")) {
-                  code { HTMLText(proposal.id.uuidString) }
-                }
-                dt(.class("col-sm-3")) { "Submitted" }
+                dt(.class("col-sm-3")) { language == .ja ? "提出日" : "Submitted" }
                 dd(.class("col-sm-9")) {
                   if let createdAt = proposal.createdAt {
                     HTMLText(formatDate(createdAt))
                   } else {
-                    "Unknown"
+                    language == .ja ? "不明" : "Unknown"
                   }
                 }
-                dt(.class("col-sm-3")) { "Last Updated" }
+                dt(.class("col-sm-3")) { language == .ja ? "最終更新" : "Last Updated" }
                 dd(.class("col-sm-9")) {
                   if let updatedAt = proposal.updatedAt {
                     HTMLText(formatDate(updatedAt))
                   } else {
-                    "Never"
+                    language == .ja ? "なし" : "Never"
                   }
                 }
               }
@@ -148,25 +154,39 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
           // Proposal not found
           div(.class("card")) {
             div(.class("card-body text-center p-5")) {
-              h3(.class("fw-bold mb-2")) { "Proposal Not Found" }
-              p(.class("text-muted mb-4")) {
-                "The proposal you are looking for does not exist."
+              h3(.class("fw-bold mb-2")) {
+                language == .ja ? "プロポーザルが見つかりません" : "Proposal Not Found"
               }
-              a(.class("btn btn-primary"), .href("/organizer/proposals")) {
-                "Back to All Proposals"
+              p(.class("text-muted mb-4")) {
+                language == .ja
+                  ? "お探しのプロポーザルは存在しないか、アクセス権限がありません。"
+                  : "The proposal you are looking for does not exist or you don't have access to it."
+              }
+              a(.class("btn btn-primary"), .href(language.path(for: "/my-proposals"))) {
+                language == .ja ? "マイプロポーザルに戻る" : "Back to My Proposals"
               }
             }
           }
         }
       } else {
-        // Not authorized
+        // Not logged in
         div(.class("card")) {
           div(.class("card-body text-center p-5")) {
-            h3(.class("fw-bold mb-2")) { "Access Denied" }
-            p(.class("text-muted mb-4")) {
-              "You need organizer permissions to view this page."
+            p(.class("fs-1 mb-3")) { "🔐" }
+            h3(.class("fw-bold mb-2")) {
+              language == .ja ? "ログインが必要です" : "Sign In Required"
             }
-            a(.class("btn btn-primary"), .href("/")) { "Return to Home" }
+            p(.class("text-muted mb-4")) {
+              language == .ja
+                ? "プロポーザルを確認するにはログインしてください。"
+                : "Please sign in to view your proposals."
+            }
+            a(
+              .class("btn btn-dark"),
+              .href("/api/v1/auth/github?returnTo=\(language.path(for: "/my-proposals"))")
+            ) {
+              language == .ja ? "GitHubでログイン" : "Sign in with GitHub"
+            }
           }
         }
       }
@@ -177,6 +197,9 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
     let formatter = DateFormatter()
     formatter.dateStyle = .medium
     formatter.timeStyle = .short
+    if language == .ja {
+      formatter.locale = Locale(identifier: "ja_JP")
+    }
     return formatter.string(from: date)
   }
 }

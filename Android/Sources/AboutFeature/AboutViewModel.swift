@@ -1,6 +1,6 @@
 import Foundation
-import Observation
 import SharedModels
+import SkipModel
 
 @Observable
 public final class AboutViewModel {
