@@ -1,6 +1,6 @@
 import Foundation
-import Observation
 import SharedModels
+import SkipModel
 
 public enum ScheduleDay: String, CaseIterable, Identifiable {
   case day1 = "Day 1"
