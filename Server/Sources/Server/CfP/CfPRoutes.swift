@@ -793,7 +793,8 @@ struct CfPRoutes: RouteCollection {
         language: language,
         currentPath: "/my-proposals"
       ) {
-        EditProposalPageView(user: user, proposal: proposalDTO, errorMessage: error, language: language)
+        EditProposalPageView(
+          user: user, proposal: proposalDTO, errorMessage: error, language: language)
       }
     }
     return try await html.encodeResponse(for: req)

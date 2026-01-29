@@ -37,7 +37,8 @@ struct MyProposalDetailPageView: HTML, Sendable {
             ) {
               language == .ja ? "プロポーザルが更新されました。" : "Proposal updated successfully."
               button(
-                .type(.button), .class("btn-close"), .custom(name: "data-bs-dismiss", value: "alert")
+                .type(.button), .class("btn-close"),
+                .custom(name: "data-bs-dismiss", value: "alert")
               ) {}
             }
           }

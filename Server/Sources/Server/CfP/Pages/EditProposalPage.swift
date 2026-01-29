@@ -100,8 +100,9 @@ struct EditProposalPageView: HTML, Sendable {
   }
 
   private func editForm(proposal: ProposalDTO) -> some HTML {
-    form(.method(.post), .action(language.path(for: "/my-proposals/\(proposal.id.uuidString)/edit")))
-    {
+    form(
+      .method(.post), .action(language.path(for: "/my-proposals/\(proposal.id.uuidString)/edit"))
+    ) {
       titleField(value: proposal.title)
       abstractField(value: proposal.abstract)
       talkDetailsField(value: proposal.talkDetail)
