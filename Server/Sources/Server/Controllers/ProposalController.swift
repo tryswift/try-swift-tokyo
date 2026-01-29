@@ -57,7 +57,8 @@ struct CreateProposalRequestContent: Content {
   let iconURL: String?
   let notes: String?
 
-  func toRequest(defaultConferencePath: String, userRole: UserRole) throws -> CreateProposalRequest {
+  func toRequest(defaultConferencePath: String, userRole: UserRole) throws -> CreateProposalRequest
+  {
     guard let duration = TalkDuration(rawValue: talkDuration) else {
       throw Abort(.badRequest, reason: "Invalid talk duration. Use '20min', 'LT', or 'invited'")
     }
