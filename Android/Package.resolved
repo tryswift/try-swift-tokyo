@@ -1,4 +1,5 @@
 {
+  "originHash" : "18f20fd8f5b2065d58fb307eae745dfe93631a71469468442a3969c50eca8f9e",
   "pins" : [
     {
       "identity" : "skip",
@@ -7,6 +8,15 @@
       "state" : {
         "revision" : "8e0c0421c04b00dd55795c913d94279a71a8c3f9",
         "version" : "1.7.0"
+      }
+    },
+    {
+      "identity" : "skip-bridge",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.tools/skip-bridge.git",
+      "state" : {
+        "revision" : "dfbd3559f862e3d8e411400156469f681eaeefcb",
+        "version" : "0.16.5"
       }
     },
     {
@@ -53,7 +63,16 @@
         "revision" : "37097af075cddb4ea4cd7f0acbf05169b8359c23",
         "version" : "1.4.0"
       }
+    },
+    {
+      "identity" : "swift-jni",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.tools/swift-jni.git",
+      "state" : {
+        "revision" : "e2cc18b34695d0f3e7948a6c1d4b95cd5d89571f",
+        "version" : "0.3.1"
+      }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
