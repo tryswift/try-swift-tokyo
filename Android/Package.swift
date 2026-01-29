@@ -14,7 +14,6 @@ let package = Package(
     .package(url: "https://source.skip.tools/skip-foundation.git", from: "1.0.0"),
     .package(url: "https://source.skip.tools/skip-model.git", from: "1.0.0"),
     .package(name: "SharedModels", path: "../SharedModels"),
-    .package(name: "Shared", path: "../Shared"),
   ],
   targets: [
     .target(
@@ -34,7 +33,6 @@ let package = Package(
       name: "ScheduleFeature",
       dependencies: [
         .product(name: "SharedModels", package: "SharedModels"),
-        .product(name: "SharedViews", package: "Shared"),
         .product(name: "SkipUI", package: "skip-ui"),
         .product(name: "SkipFoundation", package: "skip-foundation"),
         .product(name: "SkipModel", package: "skip-model"),
@@ -45,7 +43,6 @@ let package = Package(
       name: "SponsorFeature",
       dependencies: [
         .product(name: "SharedModels", package: "SharedModels"),
-        .product(name: "SharedViews", package: "Shared"),
         .product(name: "SkipUI", package: "skip-ui"),
         .product(name: "SkipFoundation", package: "skip-foundation"),
         .product(name: "SkipModel", package: "skip-model"),

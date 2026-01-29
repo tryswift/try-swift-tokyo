@@ -1,5 +1,4 @@
 import SharedModels
-import SharedViews
 import SwiftUI
 
 /// Schedule screen for Android.
@@ -33,7 +32,7 @@ public struct ScheduleScreen: View {
         // Uses shared SessionDetailView - identical code on iOS and Android
         SessionDetailView(session: session)
           .navigationTitle("Session")
-          .navigationBarTitleDisplayMode(.inline)
+          .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
       }
     }
     .onAppear {
