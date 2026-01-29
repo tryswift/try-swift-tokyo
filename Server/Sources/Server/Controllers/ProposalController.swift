@@ -184,6 +184,15 @@ struct ProposalController: RouteCollection {
 
     try await proposal.save(on: req.db)
 
+    // Notify organizers via Slack
+    await SlackNotifier.notifyNewProposal(
+      title: createRequest.title,
+      speakerName: createRequest.speakerName,
+      talkDuration: createRequest.talkDuration.rawValue,
+      client: req.client,
+      logger: req.logger
+    )
+
     return ProposalDTOContent(
       from: try proposal.toDTO(speakerUsername: payload.username, conference: conference))
   }
