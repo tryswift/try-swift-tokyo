@@ -3,7 +3,7 @@
         {
             "id": 1,
             "name": "RevenueCat",
-            "imageName": "2026_RevenueCat",
+            "imageName": "Sponsor/2026/2026_RevenueCat",
             "link": "http://rev.cat/"
         }
     ],
@@ -11,46 +11,46 @@
         {
             "id": 1,
             "name": "株式会社U-NEXT",
-            "imageName": "2026_U-NEXT",
+            "imageName": "Sponsor/2026/2026_U-NEXT",
             "link": "https://www.unext.co.jp/en",
             "japanese_link": "https://www.unext.co.jp/"
         },
         {
             "id": 2,
             "name": "Sentry",
-            "imageName": "2026_Sentry",
+            "imageName": "Sponsor/2026/2026_Sentry",
             "link": "https://sentry.ichizoku.io/"
         },
         {
             "id": 3,
             "name": "合同会社DMM.com",
-            "imageName": "2026_DMM",
+            "imageName": "Sponsor/2026/2026_DMM",
             "link": "https://dmm-corp.com/"
         },
         {
             "id": 4,
             "name": "株式会社ディー・エヌ・エー",
-            "imageName": "2026_DeNA",
+            "imageName": "Sponsor/2026/2026_DeNA",
             "link": "https://dena.com/intl/",
             "japanese_link": "https://dena.com/"
         },
         {
             "id": 5,
             "name": "LINEヤフー株式会社",
-            "imageName": "2026_LINEヤフー",
+            "imageName": "Sponsor/2026/2026_LINEヤフー",
             "link": "https://www.lycorp.co.jp/en/",
             "japanese_link": "https://www.lycorp.co.jp/ja/"
         },
         {
             "id": 6,
             "name": "フェンリル株式会社",
-            "imageName": "2026_Fenrir",
+            "imageName": "Sponsor/2026/2026_Fenrir",
             "link": "https://www.fenrir-inc.com"
         },
         {
             "id": 7,
             "name": "Runway",
-            "imageName": "2026_Runway",
+            "imageName": "Sponsor/2026/2026_Runway",
             "link": "https://www.runway.team/"
         }
     ],
@@ -58,20 +58,20 @@
         {
             "id": 1,
             "name": "株式会社メルカリ",
-            "imageName": "2026_mercari",
+            "imageName": "Sponsor/2026/2026_mercari",
             "link": "https://about.mercari.com/en/",
             "japanese_link": "https://about.mercari.com/"
         },
         {
             "id": 2,
             "name": "株式会社はてな",
-            "imageName": "2026_Hatena",
+            "imageName": "Sponsor/2026/2026_Hatena",
             "link": "https://hatena.co.jp"
         },
         {
             "id": 3,
             "name": "野村ホールディングス株式会社",
-            "imageName": "2026_NOMURA",
+            "imageName": "Sponsor/2026/2026_NOMURA",
             "link": "https://www.nomura.co.jp/fic/recruit/"
         }
     ],
@@ -79,13 +79,13 @@
         {
             "id": 1,
             "name": "ピクシブ株式会社",
-            "imageName": "2026_pixiv",
+            "imageName": "Sponsor/2026/2026_pixiv",
             "link": "https://www.pixiv.co.jp/"
         },
         {
             "id": 2,
             "name": "サイボウズ株式会社",
-            "imageName": "2026_cybozu",
+            "imageName": "Sponsor/2026/2026_cybozu",
             "link": "https://tech.cybozu.io/"
         }
     ],
@@ -93,7 +93,7 @@
         {
             "id": 1,
             "name": "野村ホールディングス株式会社",
-            "imageName": "2026_NOMURA",
+            "imageName": "Sponsor/2026/2026_NOMURA",
             "link": "https://www.nomura.co.jp/fic/recruit/"
         }
     ],
@@ -101,20 +101,20 @@
         {
             "id": 1,
             "name": "株式会社メルカリ",
-            "imageName": "2026_mercari",
+            "imageName": "Sponsor/2026/2026_mercari",
             "link": "https://about.mercari.com/en/",
             "japanese_link": "https://about.mercari.com/"
         },
         {
             "id": 2,
             "name": "ピクシブ株式会社",
-            "imageName": "2026_pixiv",
+            "imageName": "Sponsor/2026/2026_pixiv",
             "link": "https://www.pixiv.co.jp/"
         },
         {
             "id": 3,
             "name": "サイボウズ株式会社",
-            "imageName": "2026_cybozu",
+            "imageName": "Sponsor/2026/2026_cybozu",
             "link": "https://tech.cybozu.io/"
         }
     ],
@@ -123,109 +123,109 @@
         {
             "id": 1,
             "name": "Shinichiro Oba",
-            "imageName": "individual_2026_ooba",
+            "imageName": "Individual/2026/Individual_2026_ooba",
             "link": "https://x.com/ooba"
         },
         {
             "id": 2,
             "name": "Kishikawa Katsumi",
-            "imageName": "individual_2026_KatsumiKishikawa",
+            "imageName": "Individual/2026/Individual_2026_KatsumiKishikawa",
             "link": "https://github.com/kishikawakatsumi"
         },
         {
             "id": 3,
             "name": "Vanja Cosic",
-            "imageName": "individual_2026_VanjaCosic",
+            "imageName": "Individual/2026/Individual_2026_VanjaCosic",
             "link": "https://x.com/vanjacosic"
         },
         {
             "id": 4,
             "name": "Takatsu Youichi",
-            "imageName": "individual_2026_YouichiTakatsu",
+            "imageName": "Individual/2026/Individual_2026_YouichiTakatsu",
             "link": "https://x.com/ta_ka_tsu"
         },
         {
             "id": 5,
             "name": "Steve Aoki",
-            "imageName": "individual_2026_SteaveAoki",
+            "imageName": "Individual/2026/Individual_2026_SteaveAoki",
             "link": "https://x.com/solti"
         },
         {
             "id": 6,
             "name": "lovee",
-            "imageName": "individual_2026_lovee",
+            "imageName": "Individual/2026/Individual_2026_lovee",
             "link": "https://x.com/lovee"
         },
         {
             "id": 7,
             "name": "yujif",
-            "imageName": "individual_2026_YujiFujisaka",
+            "imageName": "Individual/2026/Individual_2026_YujiFujisaka",
             "link": "https://linkedin.com/in/fujisaka-yuji"
         },
         {
             "id": 8,
             "name": "Paul Hudson",
-            "imageName": "individual_2026_PaulHudson",
+            "imageName": "Individual/2026/Individual_2026_PaulHudson",
             "link": "https://x.com/twostraws"
         },
         {
             "id": 9,
             "name": "Tomoya Hirano (noppe)",
-            "imageName": "individual_2026_noppe",
+            "imageName": "Individual/2026/Individual_2026_noppe",
             "link": "https://x.com/noppefoxwolf"
         },
         {
             "id": 10,
             "name": "Kazushi Oenoki",
-            "imageName": "individual_2026_tamadeveloper",
+            "imageName": "Individual/2026/Individual_2026_tamadeveloper",
             "link": "https://x.com/tamadeveloper"
         },
         {
             "id": 11,
             "name": "FromAtom",
-            "imageName": "individual_2026_FromAtom",
+            "imageName": "Individual/2026/Individual_2026_FromAtom",
             "link": "https://x.com/FromAtom"
         },
         {
             "id": 12,
             "name": "laprasdrum",
-            "imageName": "individual_2026_YuyaMoriguchi",
+            "imageName": "Individual/2026/Individual_2026_YuyaMoriguchi",
             "link": "https://x.com/laprasdrum"
         },
         {
             "id": 13,
             "name": "giginet",
-            "imageName": "individual_2026_giginet",
+            "imageName": "Individual/2026/Individual_2026_giginet",
             "link": "https://x.com/giginet"
         },
         {
             "id": 14,
             "name": "1024jp",
-            "imageName": "individual_2026_1024jp",
+            "imageName": "Individual/2026/Individual_2026_1024jp",
             "link": "https://x.com/1024jp"
         },
         {
             "id": 15,
             "name": "Frederik Vogel",
-            "imageName": "individual_2026_Freddy",
+            "imageName": "Individual/2026/Individual_2026_Freddy",
             "link": "https://x.com/Schaltfehler"
         },
         {
             "id": 16,
             "name": "log5",
-            "imageName": "individual_2026_log5",
+            "imageName": "Individual/2026/Individual_2026_log5",
             "link": "https://x.com/log5"
         },
         {
             "id": 17,
             "name": "遠藤正悟",
-            "imageName": "individual_2026_shogo4405",
+            "imageName": "Individual/2026/Individual_2026_shogo4405",
             "link": "https://github.com/shogo4405"
         },
         {
             "id": 18,
             "name": "문스콧 - Moon Scott",
-            "imageName": "individual_2026_ScottMoon",
+            "imageName": "Individual/2026/Individual_2026_ScottMoon",
             "link": "https://linkedin.com/in/moon-scott-751710b9"
         }
     ]
