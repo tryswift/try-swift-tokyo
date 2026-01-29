@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
   name: "try-swift-tokyo-android",
   defaultLocalization: "en",
-  platforms: [.iOS(.v17), .macOS(.v14), .tvOS(.v17), .watchOS(.v10)],
+  platforms: [.iOS(.v17), .macOS(.v15), .tvOS(.v17), .watchOS(.v10)],
   products: [
     .library(name: "AndroidApp", type: .dynamic, targets: ["AndroidApp"])
   ],

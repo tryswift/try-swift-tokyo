@@ -5,7 +5,7 @@ let package = Package(
   name: "DataClient",
   defaultLocalization: "en",
   platforms: [
-    .macOS(.v26),
+    .macOS(.v15),
     .iOS(.v26),
     .watchOS(.v26),
     .tvOS(.v26),
