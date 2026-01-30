@@ -1036,8 +1036,17 @@ struct CfPRoutes: RouteCollection {
     let importedCount = req.query[Int.self, at: "imported"]
     let skippedCount = req.query[Int.self, at: "skipped"]
     let errorCount = req.query[Int.self, at: "errors"]
-    let errorMessage =
-      errorCount.map { $0 > 0 ? "\($0) rows had errors during import" : nil } ?? nil
+    let errorParam = req.query[String.self, at: "error"]
+
+    // Determine error message
+    let errorMessage: String?
+    if let errorParam {
+      errorMessage = errorParam
+    } else if let errorCount, errorCount > 0 {
+      errorMessage = "\(errorCount) rows had errors during import"
+    } else {
+      errorMessage = nil
+    }
 
     return HTMLResponse {
       CfPLayout(title: "Import from PaperCall.io", user: user) {
@@ -1083,7 +1092,23 @@ struct CfPRoutes: RouteCollection {
     do {
       parsedProposals = try PaperCallCSVParser.parse(csvContent)
     } catch {
-      let errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+      req.logger.error("CSV parse error: \(error)")
+      let errorMessage: String
+      if let parseError = error as? PaperCallCSVParser.ParseError {
+        switch parseError {
+        case .invalidHeader:
+          errorMessage =
+            "Invalid CSV format. Please use PaperCall.io standard export or the custom format shown below."
+        case .missingRequiredField(let field, let row):
+          errorMessage = "Missing required field '\(field)' at row \(row)"
+        case .invalidFormat(let reason):
+          errorMessage = "CSV format error: \(reason)"
+        case .emptyFile:
+          errorMessage = "CSV file is empty"
+        }
+      } else {
+        errorMessage = "Failed to parse CSV file"
+      }
       let encodedError =
         errorMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         ?? "Parse+error"
