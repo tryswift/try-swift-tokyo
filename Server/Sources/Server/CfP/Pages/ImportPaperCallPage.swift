@@ -123,7 +123,7 @@ struct ImportPaperCallPageView: HTML, Sendable {
         .custom(name: "accept", value: ".csv,text/csv")
       )
       div(.class("form-text")) {
-        "Expected columns: ID, Title, Abstract, Talk Details, Duration, Speaker Name, Speaker Email, Speaker Username, Bio, Icon URL, Notes, Conference, Submitted At"
+        "Supported formats: PaperCall.io standard export or custom export with columns: ID, Title, Abstract, etc."
       }
     }
   }
@@ -160,11 +160,23 @@ struct ImportPaperCallPageView: HTML, Sendable {
         strong { "CSV Format Reference" }
       }
       div(.class("card-body")) {
-        p { "The CSV should match the PaperCall.io export format:" }
-        HTMLRaw(
-          """
-          <pre class="bg-light p-3 rounded"><code>ID,Title,Abstract,Talk Details,Duration,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At</code></pre>
-          """)
+        p { "Two CSV formats are supported:" }
+        div(.class("mb-3")) {
+          p(.class("fw-semibold mb-2")) { "1. PaperCall.io Standard Export (recommended)" }
+          HTMLRaw(
+            """
+            <pre class="bg-light p-3 rounded"><code>name,email,avatar,location,bio,twitter,url,organization,shirt_size,talk_format,title,abstract,description,notes,audience_level,tags,rating,state,confirmed,created_at,additional_info</code></pre>
+            """)
+          p(.class("text-muted small")) { "This is the default export format from PaperCall.io's proposal export feature." }
+        }
+        div {
+          p(.class("fw-semibold mb-2")) { "2. Custom Export Format" }
+          HTMLRaw(
+            """
+            <pre class="bg-light p-3 rounded"><code>ID,Title,Abstract,Talk Details,Duration,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At</code></pre>
+            """)
+          p(.class("text-muted small")) { "Use this format if you're manually creating or transforming the CSV." }
+        }
         div(.class("alert alert-warning mt-3 mb-0")) {
           strong { "Note: " }
           "Imported proposals will be associated with a system user (papercall-import) since they don't have GitHub accounts. You can edit the proposals after import using the Edit function."

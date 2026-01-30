@@ -41,9 +41,19 @@ enum PaperCallCSVParser {
     }
   }
 
-  /// Expected CSV header
-  private static let expectedHeader =
+  /// Expected CSV header for custom format
+  private static let expectedCustomHeader =
     "ID,Title,Abstract,Talk Details,Duration,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At"
+
+  /// Expected CSV header for PaperCall standard export
+  private static let expectedStandardHeader =
+    "name,email,avatar,location,bio,twitter,url,organization,shirt_size,talk_format,title,abstract,description,notes,audience_level,tags,rating,state,confirmed,created_at,additional_info"
+
+  /// CSV format type
+  private enum CSVFormat {
+    case custom
+    case standard
+  }
 
   /// Parse CSV content into PaperCallProposal array
   static func parse(_ content: String) throws -> [PaperCallProposal] {
@@ -52,9 +62,14 @@ enum PaperCallCSVParser {
       throw ParseError.emptyFile
     }
 
-    // Validate header
+    // Detect format
     let header = lines[0].trimmingCharacters(in: .whitespaces)
-    guard header == expectedHeader else {
+    let format: CSVFormat
+    if header == expectedCustomHeader {
+      format = .custom
+    } else if header == expectedStandardHeader {
+      format = .standard
+    } else {
       throw ParseError.invalidHeader(actual: header)
     }
 
@@ -69,28 +84,73 @@ enum PaperCallCSVParser {
       guard !trimmedLine.isEmpty else { continue }
 
       let columns = parseCSVLine(line)
-      guard columns.count >= 13 else {
-        throw ParseError.invalidFormat(
-          reason: "Row \(index + 2) has insufficient columns (\(columns.count), expected 13)")
+
+      let proposal: PaperCallProposal
+      switch format {
+      case .custom:
+        guard columns.count >= 13 else {
+          throw ParseError.invalidFormat(
+            reason: "Row \(index + 2) has insufficient columns (\(columns.count), expected 13)")
+        }
+        proposal = PaperCallProposal(
+          id: columns[0].trimmingCharacters(in: .whitespaces),
+          title: columns[1].trimmingCharacters(in: .whitespaces),
+          abstract: columns[2].trimmingCharacters(in: .whitespaces),
+          talkDetails: columns[3].trimmingCharacters(in: .whitespaces),
+          duration: columns[4].trimmingCharacters(in: .whitespaces),
+          speakerName: columns[5].trimmingCharacters(in: .whitespaces),
+          speakerEmail: columns[6].trimmingCharacters(in: .whitespaces),
+          speakerUsername: columns[7].trimmingCharacters(in: .whitespaces),
+          bio: columns[8].trimmingCharacters(in: .whitespaces),
+          iconURL: columns[9].trimmingCharacters(in: .whitespaces).isEmpty
+            ? nil : columns[9].trimmingCharacters(in: .whitespaces),
+          notes: columns[10].trimmingCharacters(in: .whitespaces).isEmpty
+            ? nil : columns[10].trimmingCharacters(in: .whitespaces),
+          conference: columns[11].trimmingCharacters(in: .whitespaces),
+          submittedAt: columns[12].trimmingCharacters(in: .whitespaces)
+        )
+
+      case .standard:
+        guard columns.count >= 21 else {
+          throw ParseError.invalidFormat(
+            reason: "Row \(index + 2) has insufficient columns (\(columns.count), expected 21)")
+        }
+        // Standard format mapping:
+        // 0:name, 1:email, 2:avatar, 3:location, 4:bio, 5:twitter, 6:url, 7:organization,
+        // 8:shirt_size, 9:talk_format, 10:title, 11:abstract, 12:description, 13:notes,
+        // 14:audience_level, 15:tags, 16:rating, 17:state, 18:confirmed, 19:created_at, 20:additional_info
+        let name = columns[0].trimmingCharacters(in: .whitespaces)
+        let email = columns[1].trimmingCharacters(in: .whitespaces)
+        let avatar = columns[2].trimmingCharacters(in: .whitespaces)
+        let bio = columns[4].trimmingCharacters(in: .whitespaces)
+        let twitter = columns[5].trimmingCharacters(in: .whitespaces)
+        let talkFormat = columns[9].trimmingCharacters(in: .whitespaces)
+        let title = columns[10].trimmingCharacters(in: .whitespaces)
+        let abstract = columns[11].trimmingCharacters(in: .whitespaces)
+        let description = columns[12].trimmingCharacters(in: .whitespaces)
+        let notes = columns[13].trimmingCharacters(in: .whitespaces)
+        let createdAt = columns[19].trimmingCharacters(in: .whitespaces)
+
+        // Generate a unique ID from email+title if not provided
+        let id = "\(email)-\(title)".hashValue.description
+
+        proposal = PaperCallProposal(
+          id: id,
+          title: title,
+          abstract: abstract,
+          talkDetails: description,
+          duration: talkFormat,
+          speakerName: name,
+          speakerEmail: email,
+          speakerUsername: twitter,
+          bio: bio,
+          iconURL: avatar.isEmpty ? nil : avatar,
+          notes: notes.isEmpty ? nil : notes,
+          conference: "PaperCall Import",
+          submittedAt: createdAt
+        )
       }
 
-      let proposal = PaperCallProposal(
-        id: columns[0].trimmingCharacters(in: .whitespaces),
-        title: columns[1].trimmingCharacters(in: .whitespaces),
-        abstract: columns[2].trimmingCharacters(in: .whitespaces),
-        talkDetails: columns[3].trimmingCharacters(in: .whitespaces),
-        duration: columns[4].trimmingCharacters(in: .whitespaces),
-        speakerName: columns[5].trimmingCharacters(in: .whitespaces),
-        speakerEmail: columns[6].trimmingCharacters(in: .whitespaces),
-        speakerUsername: columns[7].trimmingCharacters(in: .whitespaces),
-        bio: columns[8].trimmingCharacters(in: .whitespaces),
-        iconURL: columns[9].trimmingCharacters(in: .whitespaces).isEmpty
-          ? nil : columns[9].trimmingCharacters(in: .whitespaces),
-        notes: columns[10].trimmingCharacters(in: .whitespaces).isEmpty
-          ? nil : columns[10].trimmingCharacters(in: .whitespaces),
-        conference: columns[11].trimmingCharacters(in: .whitespaces),
-        submittedAt: columns[12].trimmingCharacters(in: .whitespaces)
-      )
       proposals.append(proposal)
     }
 
@@ -102,7 +162,7 @@ enum PaperCallCSVParser {
     var result: [String] = []
     var current = ""
     var inQuotes = false
-    var chars = Array(line)
+    let chars = Array(line)
     var i = 0
 
     while i < chars.count {
