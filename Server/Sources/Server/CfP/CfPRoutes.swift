@@ -46,7 +46,11 @@ struct CfPRoutes: RouteCollection {
     let organizer = routes.grouped("organizer")
     organizer.get("proposals", use: organizerProposalsPage)
     organizer.get("proposals", "export", use: organizerExportProposalsCSV)
+    organizer.get("proposals", "import", use: organizerImportPage)
+    organizer.post("proposals", "import", use: handleImportCSV)
     organizer.get("proposals", ":proposalID", use: organizerProposalDetailPage)
+    organizer.get("proposals", ":proposalID", "edit", use: organizerEditProposalPage)
+    organizer.post("proposals", ":proposalID", "edit", use: handleOrganizerEditProposal)
 
     // Backward compatibility: redirect /cfp/* to /*
     let cfpRedirect = routes.grouped("cfp")
@@ -1011,6 +1015,278 @@ struct CfPRoutes: RouteCollection {
       return "\"\(escaped)\""
     }
     return value
+  }
+
+  // MARK: - Import from PaperCall
+
+  @Sendable
+  func organizerImportPage(req: Request) async throws -> HTMLResponse {
+    let user = try? await getAuthenticatedUser(req: req)
+
+    // Get available conferences for selection
+    var conferences: [ConferencePublicInfo] = []
+    if let user, user.role == .admin {
+      conferences = try await Conference.query(on: req.db)
+        .sort(\.$year, .descending)
+        .all()
+        .map { $0.toPublicInfo() }
+    }
+
+    // Check for import result query params
+    let importedCount = req.query[Int.self, at: "imported"]
+    let skippedCount = req.query[Int.self, at: "skipped"]
+    let errorCount = req.query[Int.self, at: "errors"]
+    let errorMessage =
+      errorCount.map { $0 > 0 ? "\($0) rows had errors during import" : nil } ?? nil
+
+    return HTMLResponse {
+      CfPLayout(title: "Import from PaperCall.io", user: user) {
+        ImportPaperCallPageView(
+          user: user,
+          conferences: conferences,
+          errorMessage: errorMessage,
+          importedCount: importedCount,
+          skippedCount: skippedCount
+        )
+      }
+    }
+  }
+
+  @Sendable
+  func handleImportCSV(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    // Decode multipart form data
+    struct ImportFormData: Content {
+      var csvFile: File
+      var conferenceId: UUID
+      var skipDuplicates: String?
+    }
+
+    let formData: ImportFormData
+    do {
+      formData = try req.content.decode(ImportFormData.self)
+    } catch {
+      return req.redirect(to: "/organizer/proposals/import?error=Invalid+form+data")
+    }
+
+    // Validate file
+    guard formData.csvFile.filename.hasSuffix(".csv") else {
+      return req.redirect(to: "/organizer/proposals/import?error=Please+upload+a+CSV+file")
+    }
+
+    // Parse CSV content
+    let csvContent = String(buffer: formData.csvFile.data)
+    let parsedProposals: [PaperCallProposal]
+    do {
+      parsedProposals = try PaperCallCSVParser.parse(csvContent)
+    } catch {
+      let errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+      let encodedError =
+        errorMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        ?? "Parse+error"
+      return req.redirect(to: "/organizer/proposals/import?error=\(encodedError)")
+    }
+
+    // Get conference
+    guard let conference = try await Conference.find(formData.conferenceId, on: req.db) else {
+      return req.redirect(to: "/organizer/proposals/import?error=Conference+not+found")
+    }
+
+    guard let conferenceID = conference.id else {
+      return req.redirect(to: "/organizer/proposals/import?error=Conference+ID+missing")
+    }
+
+    // Get PaperCall import user
+    guard
+      let importUser = try await User.find(
+        AddPaperCallImportUser.paperCallUserID,
+        on: req.db
+      )
+    else {
+      return req.redirect(
+        to: "/organizer/proposals/import?error=Import+user+not+configured.+Run+migrations+first.")
+    }
+
+    guard let importUserID = importUser.id else {
+      return req.redirect(to: "/organizer/proposals/import?error=Import+user+ID+missing")
+    }
+
+    // Import proposals
+    let skipDuplicates = formData.skipDuplicates == "true"
+    var importedCount = 0
+    var skippedCount = 0
+    var errorCount = 0
+
+    for parsed in parsedProposals {
+      do {
+        // Check for duplicate (by PaperCall ID)
+        if skipDuplicates {
+          let existing = try await Proposal.query(on: req.db)
+            .filter(\.$paperCallID == parsed.id)
+            .first()
+          if existing != nil {
+            skippedCount += 1
+            continue
+          }
+        }
+
+        let proposal = Proposal(
+          conferenceID: conferenceID,
+          title: parsed.title,
+          abstract: parsed.abstract,
+          talkDetail: parsed.talkDetails,
+          talkDuration: TalkDuration.fromPaperCall(parsed.duration),
+          speakerName: parsed.speakerName,
+          speakerEmail: parsed.speakerEmail,
+          bio: parsed.bio,
+          iconURL: parsed.iconURL,
+          notes: parsed.notes,
+          speakerID: importUserID
+        )
+        proposal.paperCallID = parsed.id
+        proposal.paperCallUsername = parsed.speakerUsername
+
+        try await proposal.save(on: req.db)
+        importedCount += 1
+      } catch {
+        errorCount += 1
+        req.logger.error("Failed to import proposal: \(error.localizedDescription)")
+      }
+    }
+
+    // Redirect with results
+    return req.redirect(
+      to:
+        "/organizer/proposals/import?imported=\(importedCount)&skipped=\(skippedCount)&errors=\(errorCount)"
+    )
+  }
+
+  // MARK: - Organizer Edit Proposal
+
+  @Sendable
+  func organizerEditProposalPage(req: Request) async throws -> HTMLResponse {
+    let user = try? await getAuthenticatedUser(req: req)
+    var proposal: ProposalDTO?
+    var conferences: [ConferencePublicInfo] = []
+
+    if let user, user.role == .admin {
+      conferences = try await Conference.query(on: req.db)
+        .sort(\.$year, .descending)
+        .all()
+        .map { $0.toPublicInfo() }
+
+      if let proposalIDString = req.parameters.get("proposalID"),
+        let proposalID = UUID(uuidString: proposalIDString)
+      {
+        if let dbProposal = try await Proposal.query(on: req.db)
+          .filter(\.$id == proposalID)
+          .with(\.$speaker)
+          .with(\.$conference)
+          .first()
+        {
+          proposal = try dbProposal.toDTO(
+            speakerUsername: dbProposal.paperCallUsername ?? dbProposal.speaker.username,
+            conference: dbProposal.conference
+          )
+        }
+      }
+    }
+
+    return HTMLResponse {
+      CfPLayout(title: "Edit Proposal (Organizer)", user: user) {
+        OrganizerEditProposalPageView(
+          user: user,
+          proposal: proposal,
+          conferences: conferences
+        )
+      }
+    }
+  }
+
+  @Sendable
+  func handleOrganizerEditProposal(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    guard let proposalIDString = req.parameters.get("proposalID"),
+      let proposalID = UUID(uuidString: proposalIDString)
+    else {
+      throw Abort(.badRequest, reason: "Invalid proposal ID")
+    }
+
+    guard
+      let proposal = try await Proposal.query(on: req.db)
+        .filter(\.$id == proposalID)
+        .with(\.$conference)
+        .first()
+    else {
+      throw Abort(.notFound, reason: "Proposal not found")
+    }
+
+    // Decode form data
+    struct OrganizerEditFormData: Content {
+      var conferenceId: UUID
+      var title: String
+      var abstract: String
+      var talkDetails: String
+      var talkDuration: String
+      var speakerName: String
+      var speakerEmail: String
+      var bio: String
+      var iconUrl: String
+      var notesToOrganizers: String?
+    }
+
+    let formData: OrganizerEditFormData
+    do {
+      formData = try req.content.decode(OrganizerEditFormData.self)
+    } catch {
+      throw Abort(.badRequest, reason: "Invalid form data")
+    }
+
+    // Validate required fields
+    guard !formData.title.isEmpty else {
+      throw Abort(.badRequest, reason: "Title is required")
+    }
+    guard !formData.abstract.isEmpty else {
+      throw Abort(.badRequest, reason: "Abstract is required")
+    }
+    guard !formData.talkDetails.isEmpty else {
+      throw Abort(.badRequest, reason: "Talk details are required")
+    }
+    guard !formData.speakerName.isEmpty else {
+      throw Abort(.badRequest, reason: "Speaker name is required")
+    }
+    guard !formData.speakerEmail.isEmpty else {
+      throw Abort(.badRequest, reason: "Speaker email is required")
+    }
+    guard !formData.bio.isEmpty else {
+      throw Abort(.badRequest, reason: "Speaker bio is required")
+    }
+
+    guard let talkDuration = TalkDuration(rawValue: formData.talkDuration) else {
+      throw Abort(.badRequest, reason: "Invalid talk duration")
+    }
+
+    // Update proposal
+    proposal.$conference.id = formData.conferenceId
+    proposal.title = formData.title
+    proposal.abstract = formData.abstract
+    proposal.talkDetail = formData.talkDetails
+    proposal.talkDuration = talkDuration
+    proposal.speakerName = formData.speakerName
+    proposal.speakerEmail = formData.speakerEmail
+    proposal.bio = formData.bio
+    proposal.iconURL = formData.iconUrl.isEmpty ? nil : formData.iconUrl
+    proposal.notes = formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers
+
+    try await proposal.save(on: req.db)
+
+    return req.redirect(to: "/organizer/proposals/\(proposalID)?updated=true")
   }
 
   // MARK: - Helper Methods
