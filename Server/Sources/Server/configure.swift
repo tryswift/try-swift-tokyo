@@ -62,6 +62,12 @@ enum AppConfiguration {
     // Configure JWT with HS256 algorithm
     await app.jwt.keys.add(hmac: HMACKey(from: jwtSecret), digestAlgorithm: .sha256)
 
+    // MARK: - Request Body Size Configuration
+
+    // Increase max body size for CSV file uploads (default is 16KB)
+    // Set to 10MB to support large PaperCall.io CSV exports
+    app.routes.defaultMaxBodySize = "10mb"
+
     // MARK: - Middleware
 
     // Enable CORS for frontend and iOS client
