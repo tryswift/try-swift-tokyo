@@ -190,6 +190,7 @@ struct OrganizerProposalRow: HTML, Sendable {
     let formatter = DateFormatter()
     formatter.dateStyle = .short
     formatter.timeStyle = .short
+    formatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
     return formatter.string(from: date)
   }
 }

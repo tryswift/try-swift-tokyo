@@ -236,6 +236,7 @@ struct MyProposalDetailPageView: HTML, Sendable {
     let formatter = DateFormatter()
     formatter.dateStyle = .medium
     formatter.timeStyle = .short
+    formatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
     if language == .ja {
       formatter.locale = Locale(identifier: "ja_JP")
     }

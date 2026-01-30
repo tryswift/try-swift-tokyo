@@ -190,6 +190,7 @@ struct ProposalCard: HTML, Sendable {
   private func formatDate(_ date: Date) -> String {
     let formatter = DateFormatter()
     formatter.dateStyle = .medium
+    formatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
     if language == .ja {
       formatter.locale = Locale(identifier: "ja_JP")
     }
