@@ -30,7 +30,7 @@ enum PaperCallCSVParser {
       switch self {
       case .invalidHeader(let actual):
         return
-          "Invalid CSV header. Expected: ID,Title,Abstract,Talk Details,Duration,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At. Got: \(actual)"
+          "Invalid CSV header. Expected: \(expectedCustomHeader) or \(expectedStandardHeader). Got: \(actual)"
       case .missingRequiredField(let field, let row):
         return "Missing required field '\(field)' at row \(row)"
       case .invalidFormat(let reason):
@@ -42,11 +42,11 @@ enum PaperCallCSVParser {
   }
 
   /// Expected CSV header for custom format
-  private static let expectedCustomHeader =
+  static let expectedCustomHeader =
     "ID,Title,Abstract,Talk Details,Duration,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At"
 
   /// Expected CSV header for PaperCall standard export
-  private static let expectedStandardHeader =
+  static let expectedStandardHeader =
     "name,email,avatar,location,bio,twitter,url,organization,shirt_size,talk_format,title,abstract,description,notes,audience_level,tags,rating,state,confirmed,created_at,additional_info"
 
   /// CSV format type
@@ -62,8 +62,10 @@ enum PaperCallCSVParser {
       throw ParseError.emptyFile
     }
 
-    // Detect format
-    let header = lines[0].trimmingCharacters(in: .whitespaces)
+    // Detect format (strip BOM and carriage return for compatibility)
+    let header = lines[0]
+      .trimmingCharacters(in: .whitespacesAndNewlines)
+      .replacingOccurrences(of: "\u{FEFF}", with: "")
     let format: CSVFormat
     if header == expectedCustomHeader {
       format = .custom
