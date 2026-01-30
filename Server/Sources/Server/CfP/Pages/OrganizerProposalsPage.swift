@@ -170,50 +170,51 @@ struct OrganizerProposalsPageView: HTML, Sendable {
   @HTMLBuilder
   private func renderFilterScript() -> some HTML {
     script {
-      HTMLRaw("""
-      document.addEventListener('DOMContentLoaded', function() {
-        const filterCards = document.querySelectorAll('.proposal-filter-card');
-        const proposalRows = document.querySelectorAll('.proposal-row');
-        let activeFilter = 'all';
+      HTMLRaw(
+        """
+        document.addEventListener('DOMContentLoaded', function() {
+          const filterCards = document.querySelectorAll('.proposal-filter-card');
+          const proposalRows = document.querySelectorAll('.proposal-row');
+          let activeFilter = 'all';
 
-        filterCards.forEach(card => {
-          card.addEventListener('click', function() {
-            const filter = this.getAttribute('data-filter');
-            activeFilter = filter;
+          filterCards.forEach(card => {
+            card.addEventListener('click', function() {
+              const filter = this.getAttribute('data-filter');
+              activeFilter = filter;
 
-            // Update card styles to show active state
-            filterCards.forEach(c => {
-              c.style.opacity = '0.6';
-              c.style.transform = 'scale(0.98)';
+              // Update card styles to show active state
+              filterCards.forEach(c => {
+                c.style.opacity = '0.6';
+                c.style.transform = 'scale(0.98)';
+              });
+              this.style.opacity = '1';
+              this.style.transform = 'scale(1.02)';
+
+              // Filter rows
+              proposalRows.forEach(row => {
+                if (filter === 'all') {
+                  row.style.display = '';
+                } else {
+                  const duration = row.getAttribute('data-duration');
+                  row.style.display = duration === filter ? '' : 'none';
+                }
+              });
             });
-            this.style.opacity = '1';
-            this.style.transform = 'scale(1.02)';
+          });
 
-            // Filter rows
-            proposalRows.forEach(row => {
-              if (filter === 'all') {
-                row.style.display = '';
-              } else {
-                const duration = row.getAttribute('data-duration');
-                row.style.display = duration === filter ? '' : 'none';
+          // Set initial active state for "all" filter
+          const allFilterCard = document.querySelector('[data-filter="all"]');
+          if (allFilterCard) {
+            allFilterCard.style.transform = 'scale(1.02)';
+            filterCards.forEach(c => {
+              if (c !== allFilterCard) {
+                c.style.opacity = '0.6';
+                c.style.transform = 'scale(0.98)';
               }
             });
-          });
+          }
         });
-
-        // Set initial active state for "all" filter
-        const allFilterCard = document.querySelector('[data-filter="all"]');
-        if (allFilterCard) {
-          allFilterCard.style.transform = 'scale(1.02)';
-          filterCards.forEach(c => {
-            if (c !== allFilterCard) {
-              c.style.opacity = '0.6';
-              c.style.transform = 'scale(0.98)';
-            }
-          });
-        }
-      });
-      """)
+        """)
     }
   }
 }
