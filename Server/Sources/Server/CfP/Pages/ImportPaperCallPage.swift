@@ -167,7 +167,9 @@ struct ImportPaperCallPageView: HTML, Sendable {
             """
             <pre class="bg-light p-3 rounded"><code>name,email,avatar,location,bio,twitter,url,organization,shirt_size,talk_format,title,abstract,description,notes,audience_level,tags,rating,state,confirmed,created_at,additional_info</code></pre>
             """)
-          p(.class("text-muted small")) { "This is the default export format from PaperCall.io's proposal export feature." }
+          p(.class("text-muted small")) {
+            "This is the default export format from PaperCall.io's proposal export feature."
+          }
         }
         div {
           p(.class("fw-semibold mb-2")) { "2. Custom Export Format" }
@@ -175,7 +177,9 @@ struct ImportPaperCallPageView: HTML, Sendable {
             """
             <pre class="bg-light p-3 rounded"><code>ID,Title,Abstract,Talk Details,Duration,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At</code></pre>
             """)
-          p(.class("text-muted small")) { "Use this format if you're manually creating or transforming the CSV." }
+          p(.class("text-muted small")) {
+            "Use this format if you're manually creating or transforming the CSV."
+          }
         }
         div(.class("alert alert-warning mt-3 mb-0")) {
           strong { "Note: " }
