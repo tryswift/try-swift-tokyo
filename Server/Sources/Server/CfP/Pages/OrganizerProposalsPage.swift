@@ -171,7 +171,9 @@ struct OrganizerProposalRow: HTML, Sendable {
       td(.class("align-middle")) {
         if let createdAt = proposal.createdAt {
           small(.class("text-muted")) {
-            HTMLText(formatDate(createdAt))
+            HTMLRaw(
+              "<time class=\"local-time\" datetime=\"\(formatISO(createdAt))\" data-style=\"short\"></time>"
+            )
           }
         }
       }
@@ -186,10 +188,9 @@ struct OrganizerProposalRow: HTML, Sendable {
     }
   }
 
-  private func formatDate(_ date: Date) -> String {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .short
+  private func formatISO(_ date: Date) -> String {
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = [.withInternetDateTime]
     return formatter.string(from: date)
   }
 }
