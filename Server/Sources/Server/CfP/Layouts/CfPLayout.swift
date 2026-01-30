@@ -70,5 +70,26 @@ struct CfPLayout<Content: HTML & Sendable>: HTMLDocument, Sendable {
     script(
       .src("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js")
     ) {}
+
+    HTMLRaw(
+      """
+      <script>
+      document.querySelectorAll("time.local-time").forEach(function(el) {
+        var dt = new Date(el.getAttribute("datetime"));
+        if (isNaN(dt)) return;
+        var lang = document.documentElement.lang || navigator.language;
+        var style = el.getAttribute("data-style") || "medium";
+        var opts = {};
+        if (style === "short") {
+          opts = { year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric" };
+        } else if (style === "medium") {
+          opts = { year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "numeric" };
+        } else if (style === "date") {
+          opts = { year: "numeric", month: "short", day: "numeric" };
+        }
+        el.textContent = dt.toLocaleString(lang, opts);
+      });
+      </script>
+      """)
   }
 }
