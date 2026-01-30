@@ -48,7 +48,7 @@ struct ImportPaperCallPageView: HTML, Sendable {
       }
       h1(.class("fw-bold mb-2")) { "Import from PaperCall.io" }
       p(.class("lead text-muted mb-4")) {
-        "Upload a CSV file exported from PaperCall.io to import proposals."
+        "Upload a CSV or JSON file exported from PaperCall.io to import proposals."
       }
     }
   }
@@ -112,7 +112,7 @@ struct ImportPaperCallPageView: HTML, Sendable {
   private var csvFileField: some HTML {
     div(.class("mb-4")) {
       label(.class("form-label fw-semibold"), .for("csvFile")) {
-        "CSV File *"
+        "CSV / JSON File *"
       }
       input(
         .type(.file),
@@ -120,10 +120,10 @@ struct ImportPaperCallPageView: HTML, Sendable {
         .name("csvFile"),
         .id("csvFile"),
         .required,
-        .custom(name: "accept", value: ".csv,text/csv")
+        .custom(name: "accept", value: ".csv,.json,text/csv,application/json")
       )
       div(.class("form-text")) {
-        "Supported formats: PaperCall.io standard export or custom export with columns: ID, Title, Abstract, etc."
+        "Supported formats: PaperCall.io CSV export, custom CSV, or PaperCall.io JSON export."
       }
     }
   }
@@ -157,22 +157,32 @@ struct ImportPaperCallPageView: HTML, Sendable {
   private var csvFormatHelp: some HTML {
     div(.class("card mt-4")) {
       div(.class("card-header")) {
-        strong { "CSV Format Reference" }
+        strong { "Format Reference" }
       }
       div(.class("card-body")) {
-        p { "Two CSV formats are supported:" }
+        p { "Three formats are supported:" }
         div(.class("mb-3")) {
-          p(.class("fw-semibold mb-2")) { "1. PaperCall.io Standard Export (recommended)" }
+          p(.class("fw-semibold mb-2")) { "1. PaperCall.io JSON Export (recommended)" }
+          HTMLRaw(
+            """
+            <pre class="bg-light p-3 rounded"><code>[{"name":"...","email":"...","avatar":"...","title":"...","abstract":"...","talk_format":"...","description":"...","notes":"...","created_at":"...", ...}]</code></pre>
+            """)
+          p(.class("text-muted small")) {
+            "JSON array of proposal objects exported from PaperCall.io."
+          }
+        }
+        div(.class("mb-3")) {
+          p(.class("fw-semibold mb-2")) { "2. PaperCall.io Standard CSV Export" }
           HTMLRaw(
             """
             <pre class="bg-light p-3 rounded"><code>name,email,avatar,location,bio,twitter,url,organization,shirt_size,talk_format,title,abstract,description,notes,audience_level,tags,rating,state,confirmed,created_at,additional_info</code></pre>
             """)
           p(.class("text-muted small")) {
-            "This is the default export format from PaperCall.io's proposal export feature."
+            "This is the default CSV export format from PaperCall.io's proposal export feature."
           }
         }
         div {
-          p(.class("fw-semibold mb-2")) { "2. Custom Export Format" }
+          p(.class("fw-semibold mb-2")) { "3. Custom CSV Format" }
           HTMLRaw(
             """
             <pre class="bg-light p-3 rounded"><code>ID,Title,Abstract,Talk Details,Duration,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At</code></pre>

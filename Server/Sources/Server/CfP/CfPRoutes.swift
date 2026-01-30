@@ -1081,18 +1081,25 @@ struct CfPRoutes: RouteCollection {
       return req.redirect(to: "/organizer/proposals/import?error=Invalid+form+data")
     }
 
-    // Validate file
-    guard formData.csvFile.filename.hasSuffix(".csv") else {
-      return req.redirect(to: "/organizer/proposals/import?error=Please+upload+a+CSV+file")
+    // Validate file extension
+    let filename = formData.csvFile.filename.lowercased()
+    guard filename.hasSuffix(".csv") || filename.hasSuffix(".json") else {
+      return req.redirect(
+        to: "/organizer/proposals/import?error=Please+upload+a+CSV+or+JSON+file")
     }
 
-    // Parse CSV content
-    let csvContent = String(buffer: formData.csvFile.data)
+    // Parse file content
+    let fileContent = String(buffer: formData.csvFile.data)
+    let isJSON = filename.hasSuffix(".json")
     let parsedProposals: [PaperCallProposal]
     do {
-      parsedProposals = try PaperCallCSVParser.parse(csvContent)
+      if isJSON {
+        parsedProposals = try PaperCallJSONParser.parse(fileContent)
+      } else {
+        parsedProposals = try PaperCallCSVParser.parse(fileContent)
+      }
     } catch {
-      req.logger.error("CSV parse error: \(error)")
+      req.logger.error("Import parse error: \(error)")
       let errorMessage: String
       if let parseError = error as? PaperCallCSVParser.ParseError {
         switch parseError {
@@ -1106,8 +1113,17 @@ struct CfPRoutes: RouteCollection {
         case .emptyFile:
           errorMessage = "CSV file is empty"
         }
+      } else if let parseError = error as? PaperCallJSONParser.ParseError {
+        switch parseError {
+        case .invalidJSON(let underlying):
+          errorMessage = "Invalid JSON format: \(underlying)"
+        case .emptyFile:
+          errorMessage = "JSON file is empty"
+        case .emptyArray:
+          errorMessage = "JSON file contains no proposals"
+        }
       } else {
-        errorMessage = "Failed to parse CSV file"
+        errorMessage = "Failed to parse file"
       }
       let encodedError =
         errorMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)

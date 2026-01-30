@@ -212,7 +212,12 @@ extension TalkDuration {
     case "invited", "keynote", "invited talk":
       return .invited
     default:
-      // Default to regular if unknown
+      // Handle PaperCall JSON formats like "Lightning Talk (5min)", "Talk (20 minutes)"
+      if normalized.contains("lightning") {
+        return .lightning
+      } else if normalized.contains("keynote") || normalized.contains("invited") {
+        return .invited
+      }
       return .regular
     }
   }
