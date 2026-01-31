@@ -10,7 +10,7 @@ struct SelectLanguageSheet: View {
 
   var body: some View {
     ScrollView {
-      LazyVStack {
+      LazyVStack(spacing: 12) {
         ForEach(languageListWithTitle) { lang in
           Button(action: { selectedLanguageAction(lang.langCode) }) {
             Text(lang.langTitle)
@@ -18,8 +18,10 @@ struct SelectLanguageSheet: View {
               .padding()
               .contentShape(.rect)
           }
+          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
         }
       }
+      .padding()
     }
     .task {
       self.languageListWithTitle = await makeLanguageWithTitleList()
