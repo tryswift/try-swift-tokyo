@@ -24,7 +24,7 @@ struct OrganizerProposalsPageView: HTML, Sendable {
             .class("btn btn-outline-primary"),
             .href("/organizer/proposals/import")
           ) {
-            "Import from PaperCall.io"
+            "Import Speaker Candidates"
           }
           // Export button
           a(
