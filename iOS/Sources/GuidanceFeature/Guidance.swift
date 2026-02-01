@@ -207,7 +207,7 @@ public struct GuidanceView: View {
           .padding(.vertical, 8)
         }
         #if os(iOS) || os(macOS)
-        .buttonStyle(.glassProminent)
+        .glassProminentIfAvailable()
         #else
         .buttonStyle(.borderedProminent)
         #endif
