@@ -746,7 +746,7 @@ struct TimetableEditorPageView: HTML, Sendable {
             new Sortable(list, {
               group: {
                 name: 'unassigned-' + dayNum,
-                pull: 'clone',
+                pull: true,
                 put: false
               },
               animation: 150,
