@@ -1,10 +1,10 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.2
 import PackageDescription
 
 let package = Package(
   name: "try-swift-tokyo-android",
   defaultLocalization: "en",
-  platforms: [.iOS(.v17), .macOS(.v15), .tvOS(.v17), .watchOS(.v10)],
+  platforms: [.iOS(.v26), .macOS(.v26), .tvOS(.v26), .watchOS(.v26)],
   products: [
     .library(name: "AndroidApp", type: .dynamic, targets: ["AndroidApp"])
   ],
@@ -14,7 +14,6 @@ let package = Package(
     .package(url: "https://source.skip.tools/skip-foundation.git", from: "1.0.0"),
     .package(url: "https://source.skip.tools/skip-model.git", from: "1.0.0"),
     .package(name: "SharedModels", path: "../SharedModels"),
-    .package(name: "Shared", path: "../Shared"),
   ],
   targets: [
     .target(
@@ -34,7 +33,6 @@ let package = Package(
       name: "ScheduleFeature",
       dependencies: [
         .product(name: "SharedModels", package: "SharedModels"),
-        .product(name: "SharedViews", package: "Shared"),
         .product(name: "SkipUI", package: "skip-ui"),
         .product(name: "SkipFoundation", package: "skip-foundation"),
         .product(name: "SkipModel", package: "skip-model"),
@@ -45,7 +43,6 @@ let package = Package(
       name: "SponsorFeature",
       dependencies: [
         .product(name: "SharedModels", package: "SharedModels"),
-        .product(name: "SharedViews", package: "Shared"),
         .product(name: "SkipUI", package: "skip-ui"),
         .product(name: "SkipFoundation", package: "skip-foundation"),
         .product(name: "SkipModel", package: "skip-model"),

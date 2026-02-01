@@ -17,35 +17,37 @@ public struct SessionRowView: View {
     HStack(spacing: 12) {
       speakerAvatars
 
-      VStack(alignment: .leading, spacing: 4) {
+      VStack(alignment: HorizontalAlignment.leading, spacing: 4) {
         Text(session.title)
-          .font(.headline)
-          .multilineTextAlignment(.leading)
+          .font(Font.headline)
+          .multilineTextAlignment(TextAlignment.leading)
 
         if let speakers = session.speakers {
           Text(speakers.map(\.name).joined(separator: ", "))
-            .font(.subheadline)
-            .foregroundStyle(.secondary)
+            .font(Font.subheadline)
+            .foregroundStyle(Color.secondary)
         }
 
         if let summary = session.summary {
           Text(summary)
-            .font(.caption)
-            .foregroundStyle(.tertiary)
+            .font(Font.caption)
+            .foregroundStyle(Color.gray)
             .lineLimit(2)
         }
       }
-      .frame(maxWidth: .infinity, alignment: .leading)
+      .frame(maxWidth: CGFloat.infinity, alignment: Alignment.leading)
 
       if session.description != nil {
         Image(systemName: "chevron.right")
-          .foregroundStyle(.secondary)
+          .foregroundStyle(Color.secondary)
       }
     }
     .padding()
     .background(Color.secondary.opacity(0.1))
     .clipShape(RoundedRectangle(cornerRadius: 12))
+    #if !SKIP
     .contentShape(Rectangle())
+    #endif
     .onTapGesture {
       onTap?()
     }
@@ -65,7 +67,7 @@ public struct SessionRowView: View {
         .frame(width: 44, height: 44)
         .overlay {
           Image(systemName: "calendar")
-            .foregroundStyle(.orange)
+            .foregroundStyle(Color.orange)
         }
     }
   }
@@ -88,13 +90,14 @@ public struct SpeakerAvatarView: View {
       .frame(width: size, height: size)
       .overlay {
         Text(String(speaker.name.prefix(1)))
-          .font(size > 50 ? .title2 : .body)
-          .fontWeight(.medium)
-          .foregroundStyle(.blue)
+          .font(size > 50 ? Font.title2 : Font.body)
+          .fontWeight(Font.Weight.medium)
+          .foregroundStyle(Color.blue)
       }
   }
 }
 
+#if !SKIP
 #Preview {
   VStack(spacing: 16) {
     SessionRowView(
@@ -123,3 +126,4 @@ public struct SpeakerAvatarView: View {
   }
   .padding()
 }
+#endif

@@ -1,5 +1,5 @@
 {
-  "originHash" : "66249f819dac399cd04685cb5c16a283b11d016a67c6f28e965cde7db66d315e",
+  "originHash" : "781b9a521ebad5558c44f5d296ac5713302ad17b2d75cde80c1fcc47a10f92b3",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -26,6 +26,42 @@
       "state" : {
         "branch" : "0.1.5",
         "revision" : "f1da670032cb52081285752b7a8c479118038393"
+      }
+    },
+    {
+      "identity" : "skip",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.tools/skip.git",
+      "state" : {
+        "revision" : "8e0c0421c04b00dd55795c913d94279a71a8c3f9",
+        "version" : "1.7.0"
+      }
+    },
+    {
+      "identity" : "skip-foundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.tools/skip-foundation.git",
+      "state" : {
+        "revision" : "6213f6612c7f77a13ef8172528c8ff1715530108",
+        "version" : "1.3.11"
+      }
+    },
+    {
+      "identity" : "skip-lib",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.tools/skip-lib.git",
+      "state" : {
+        "revision" : "112874f0222f4815798c924e2b299ba23eb53111",
+        "version" : "1.3.8"
+      }
+    },
+    {
+      "identity" : "skip-unit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.tools/skip-unit.git",
+      "state" : {
+        "revision" : "37097af075cddb4ea4cd7f0acbf05169b8359c23",
+        "version" : "1.4.0"
       }
     },
     {

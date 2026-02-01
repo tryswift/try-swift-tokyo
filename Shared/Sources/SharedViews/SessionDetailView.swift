@@ -12,7 +12,7 @@ public struct SessionDetailView: View {
 
   public var body: some View {
     ScrollView {
-      VStack(alignment: .leading, spacing: 24) {
+      VStack(alignment: HorizontalAlignment.leading, spacing: 24) {
         headerSection
 
         if let speakers = session.speakers, !speakers.isEmpty {
@@ -32,35 +32,35 @@ public struct SessionDetailView: View {
   }
 
   private var headerSection: some View {
-    VStack(alignment: .leading, spacing: 8) {
+    VStack(alignment: HorizontalAlignment.leading, spacing: 8) {
       Text(session.title)
-        .font(.largeTitle.bold())
+        .font(Font.largeTitle.bold())
 
       if let place = session.place {
         Label(place, systemImage: "mappin.circle")
-          .font(.subheadline)
-          .foregroundStyle(.secondary)
+          .font(Font.subheadline)
+          .foregroundStyle(Color.secondary)
       }
     }
   }
 
   private func speakersSection(speakers: [Speaker]) -> some View {
-    VStack(alignment: .leading, spacing: 12) {
+    VStack(alignment: HorizontalAlignment.leading, spacing: 12) {
       Text("Speakers")
-        .font(.title3.bold())
+        .font(Font.title3.bold())
 
       ForEach(speakers, id: \.name) { speaker in
         HStack(spacing: 12) {
           SpeakerAvatarView(speaker: speaker, size: 56)
 
-          VStack(alignment: .leading, spacing: 4) {
+          VStack(alignment: HorizontalAlignment.leading, spacing: 4) {
             Text(speaker.name)
-              .font(.headline)
+              .font(Font.headline)
 
             if let bio = speaker.bio {
               Text(bio)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .font(Font.subheadline)
+                .foregroundStyle(Color.secondary)
                 .lineLimit(3)
             }
           }
@@ -70,30 +70,31 @@ public struct SessionDetailView: View {
   }
 
   private func descriptionSection(description: String) -> some View {
-    VStack(alignment: .leading, spacing: 8) {
+    VStack(alignment: HorizontalAlignment.leading, spacing: 8) {
       Text("Description")
-        .font(.title3.bold())
+        .font(Font.title3.bold())
 
       Text(description)
-        .font(.body)
+        .font(Font.body)
     }
   }
 
   private func requirementsSection(requirements: String) -> some View {
-    VStack(alignment: .leading, spacing: 8) {
+    VStack(alignment: HorizontalAlignment.leading, spacing: 8) {
       Text("Requirements")
-        .font(.title3.bold())
+        .font(Font.title3.bold())
 
       Text(requirements)
-        .font(.body)
+        .font(Font.body)
         .padding()
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: CGFloat.infinity, alignment: Alignment.leading)
         .background(Color.orange.opacity(0.1))
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
   }
 }
 
+#if !SKIP
 #Preview {
   NavigationStack {
     SessionDetailView(
@@ -117,3 +118,4 @@ public struct SessionDetailView: View {
     .navigationBarTitleDisplayMode(.inline)
   }
 }
+#endif

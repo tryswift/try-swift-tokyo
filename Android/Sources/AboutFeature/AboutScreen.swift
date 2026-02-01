@@ -42,8 +42,8 @@ public struct AboutScreen: View {
           .frame(width: 200, height: 100)
           .overlay {
             Text("try! Swift Tokyo")
-              .font(.title2.bold())
-              .foregroundStyle(.orange)
+              .font(Font.title2.bold())
+              .foregroundStyle(Color.orange)
           }
         Spacer()
       }
@@ -56,7 +56,7 @@ public struct AboutScreen: View {
       Text(
         "try! Swift Tokyo is an international community gathering about the latest advancements in Swift Development. The event takes place in Tokyo, Japan."
       )
-      .font(.body)
+      .font(Font.body)
     }
   }
 
@@ -91,16 +91,16 @@ public struct AboutScreen: View {
                 .frame(width: 40, height: 40)
                 .overlay {
                   Text(String(organizer.name.prefix(1)))
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(Color.blue)
                 }
 
               Text(organizer.name)
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color.primary)
 
               Spacer()
 
               Image(systemName: "chevron.right")
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             }
           }
         }
@@ -140,22 +140,22 @@ struct OrganizerDetailSheet: View {
             .frame(width: 120, height: 120)
             .overlay {
               Text(String(organizer.name.prefix(1)))
-                .font(.largeTitle)
-                .foregroundStyle(.blue)
+                .font(Font.largeTitle)
+                .foregroundStyle(Color.blue)
             }
 
           Text(organizer.name)
-            .font(.title.bold())
+            .font(Font.title.bold())
 
           Text(organizer.bio)
-            .font(.body)
-            .multilineTextAlignment(.center)
-            .padding(.horizontal)
+            .font(Font.body)
+            .multilineTextAlignment(TextAlignment.center)
+            .padding(Edge.Set.horizontal)
 
           if let links = organizer.links, !links.isEmpty {
             VStack(spacing: 12) {
               Text("Links")
-                .font(.headline)
+                .font(Font.headline)
 
               ForEach(links, id: \.url) { link in
                 Button {
@@ -166,24 +166,36 @@ struct OrganizerDetailSheet: View {
                 .buttonStyle(.bordered)
               }
             }
-            .padding(.top)
+            .padding(Edge.Set.top)
           }
         }
         .padding()
       }
       .navigationTitle("Profile")
-      .navigationBarTitleDisplayMode(.inline)
+      #if os(iOS) || SKIP
+      .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
       .toolbar {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
           Button("Done") {
             dismiss()
           }
         }
       }
+      #else
+      .toolbar {
+        ToolbarItem(placement: ToolbarItemPlacement.automatic) {
+          Button("Done") {
+            dismiss()
+          }
+        }
+      }
+      #endif
     }
   }
 }
 
+#if !SKIP
 #Preview {
   AboutScreen()
 }
+#endif
