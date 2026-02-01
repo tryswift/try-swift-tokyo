@@ -45,6 +45,8 @@ struct CfPRoutes: RouteCollection {
     // Organizer pages
     let organizer = routes.grouped("organizer")
     organizer.get("proposals", use: organizerProposalsPage)
+    organizer.get("proposals", "new", use: organizerNewProposalPage)
+    organizer.post("proposals", "new", use: handleOrganizerNewProposal)
     organizer.get("proposals", "export", use: organizerExportProposalsCSV)
     organizer.get("proposals", "import", use: organizerImportPage)
     organizer.post("proposals", "import", use: handleImportCSV)
@@ -1404,6 +1406,181 @@ struct CfPRoutes: RouteCollection {
     try await proposal.save(on: req.db)
 
     return req.redirect(to: "/organizer/proposals/\(proposalID)?updated=true")
+  }
+
+  // MARK: - Organizer New Proposal
+
+  @Sendable
+  func organizerNewProposalPage(req: Request) async throws -> HTMLResponse {
+    let user = try? await getAuthenticatedUser(req: req)
+    var conferences: [ConferencePublicInfo] = []
+
+    if let user, user.role == .admin {
+      conferences = try await Conference.query(on: req.db)
+        .sort(\.$year, .descending)
+        .all()
+        .map { $0.toPublicInfo() }
+    }
+
+    return HTMLResponse {
+      CfPLayout(title: "Add Proposal", user: user) {
+        OrganizerNewProposalPageView(
+          user: user,
+          conferences: conferences
+        )
+      }
+    }
+  }
+
+  @Sendable
+  func handleOrganizerNewProposal(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    struct NewProposalFormData: Content {
+      var conferenceId: UUID
+      var title: String
+      var abstract: String
+      var talkDetails: String
+      var talkDuration: String
+      var speakerName: String
+      var speakerEmail: String
+      var bio: String
+      var iconUrl: String?
+      var githubUsername: String?
+      var notesToOrganizers: String?
+    }
+
+    let formData: NewProposalFormData
+    do {
+      formData = try req.content.decode(NewProposalFormData.self)
+    } catch {
+      return try await renderNewProposalPageWithError(
+        req: req, user: user, error: "Invalid form data")
+    }
+
+    // Validate required fields
+    guard !formData.title.isEmpty else {
+      return try await renderNewProposalPageWithError(
+        req: req, user: user, error: "Title is required")
+    }
+    guard !formData.abstract.isEmpty else {
+      return try await renderNewProposalPageWithError(
+        req: req, user: user, error: "Abstract is required")
+    }
+    guard !formData.talkDetails.isEmpty else {
+      return try await renderNewProposalPageWithError(
+        req: req, user: user, error: "Talk details are required")
+    }
+    guard !formData.speakerName.isEmpty else {
+      return try await renderNewProposalPageWithError(
+        req: req, user: user, error: "Speaker name is required")
+    }
+    guard !formData.speakerEmail.isEmpty else {
+      return try await renderNewProposalPageWithError(
+        req: req, user: user, error: "Speaker email is required")
+    }
+    guard !formData.bio.isEmpty else {
+      return try await renderNewProposalPageWithError(
+        req: req, user: user, error: "Speaker bio is required")
+    }
+    guard let talkDuration = TalkDuration(rawValue: formData.talkDuration) else {
+      return try await renderNewProposalPageWithError(
+        req: req, user: user, error: "Please select a talk duration")
+    }
+
+    // Verify conference exists
+    guard let conference = try await Conference.find(formData.conferenceId, on: req.db) else {
+      return try await renderNewProposalPageWithError(
+        req: req, user: user, error: "Conference not found")
+    }
+    guard let conferenceID = conference.id else {
+      return try await renderNewProposalPageWithError(
+        req: req, user: user, error: "Conference ID missing")
+    }
+
+    // Determine speaker user ID
+    let speakerID: UUID
+    let githubUsername = formData.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+    if !githubUsername.isEmpty {
+      // Look up by GitHub username
+      if let existingUser = try await User.query(on: req.db)
+        .filter(\.$username == githubUsername)
+        .first(),
+        let existingUserID = existingUser.id
+      {
+        speakerID = existingUserID
+      } else {
+        return try await renderNewProposalPageWithError(
+          req: req, user: user,
+          error: "GitHub user '\(githubUsername)' not found. The user must have logged in at least once."
+        )
+      }
+    } else {
+      // Use system import user
+      guard
+        let importUser = try await User.find(
+          AddPaperCallImportUser.paperCallUserID, on: req.db)
+      else {
+        return try await renderNewProposalPageWithError(
+          req: req, user: user,
+          error: "Import user not configured. Run migrations first.")
+      }
+      guard let importUserID = importUser.id else {
+        return try await renderNewProposalPageWithError(
+          req: req, user: user, error: "Import user ID missing")
+      }
+      speakerID = importUserID
+    }
+
+    // Create proposal
+    let proposal = Proposal(
+      conferenceID: conferenceID,
+      title: formData.title,
+      abstract: formData.abstract,
+      talkDetail: formData.talkDetails,
+      talkDuration: talkDuration,
+      speakerName: formData.speakerName,
+      speakerEmail: formData.speakerEmail,
+      bio: formData.bio,
+      iconURL: formData.iconUrl?.isEmpty == true ? nil : formData.iconUrl,
+      notes: formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers,
+      speakerID: speakerID
+    )
+
+    if !githubUsername.isEmpty {
+      proposal.paperCallUsername = githubUsername
+    }
+
+    try await proposal.save(on: req.db)
+
+    guard let proposalID = proposal.id else {
+      return req.redirect(to: "/organizer/proposals")
+    }
+
+    return req.redirect(to: "/organizer/proposals/\(proposalID)")
+  }
+
+  private func renderNewProposalPageWithError(
+    req: Request, user: UserDTO, error: String
+  ) async throws -> Response {
+    let conferences = try await Conference.query(on: req.db)
+      .sort(\.$year, .descending)
+      .all()
+      .map { $0.toPublicInfo() }
+
+    let html = HTMLResponse {
+      CfPLayout(title: "Add Proposal", user: user) {
+        OrganizerNewProposalPageView(
+          user: user,
+          conferences: conferences,
+          errorMessage: error
+        )
+      }
+    }
+    return try await html.encodeResponse(for: req)
   }
 
   // MARK: - Timetable Editor
