@@ -156,7 +156,8 @@ public struct LiveTranslation: Sendable {
         let isValid = langList.contains { $0.langCode == currentCode }
         if !isValid {
           let deviceCode = Locale.autoupdatingCurrent.language.languageCode?.identifier ?? "en"
-          let fallbackCode = langList.contains(where: { $0.langCode == deviceCode }) ? deviceCode : "en"
+          let fallbackCode =
+            langList.contains(where: { $0.langCode == deviceCode }) ? deviceCode : "en"
           state.$selectedLangCode.withLock { $0 = fallbackCode }
         }
         return .none
