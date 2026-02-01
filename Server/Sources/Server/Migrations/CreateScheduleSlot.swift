@@ -5,7 +5,9 @@ struct CreateScheduleSlot: AsyncMigration {
   func prepare(on database: Database) async throws {
     try await database.schema(ScheduleSlot.schema)
       .id()
-      .field("conference_id", .uuid, .required, .references(Conference.schema, "id", onDelete: .cascade))
+      .field(
+        "conference_id", .uuid, .required, .references(Conference.schema, "id", onDelete: .cascade)
+      )
       .field("proposal_id", .uuid, .references(Proposal.schema, "id", onDelete: .setNull))
       .field("day", .int, .required)
       .field("start_time", .datetime, .required)

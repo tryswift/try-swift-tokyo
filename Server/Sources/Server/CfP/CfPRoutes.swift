@@ -1498,7 +1498,8 @@ struct CfPRoutes: RouteCollection {
     let endTime = body.endTime.flatMap { formatter.date(from: $0) }
 
     // Get max sort_order for this day
-    let maxOrder = try await ScheduleSlot.query(on: req.db)
+    let maxOrder =
+      try await ScheduleSlot.query(on: req.db)
       .filter(\.$conference.$id == body.conferenceId)
       .filter(\.$day == body.day)
       .sort(\.$sortOrder, .descending)
