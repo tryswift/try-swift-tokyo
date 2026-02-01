@@ -35,7 +35,7 @@ let package = Package(
       name: "ServerTests",
       dependencies: [
         "Server",
-        .product(name: "XCTVapor", package: "vapor"),
+        .product(name: "VaporTesting", package: "vapor"),
       ],
       swiftSettings: [
         .swiftLanguageMode(.v6)
