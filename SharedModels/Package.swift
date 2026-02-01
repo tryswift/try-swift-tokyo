@@ -17,6 +17,13 @@ let package = Package(
       swiftSettings: [
         .swiftLanguageMode(.v6)
       ]
-    )
+    ),
+    .testTarget(
+      name: "SharedModelsTests",
+      dependencies: ["SharedModels"],
+      swiftSettings: [
+        .swiftLanguageMode(.v6)
+      ]
+    ),
   ]
 )
