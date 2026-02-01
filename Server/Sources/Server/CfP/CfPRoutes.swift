@@ -1703,10 +1703,10 @@ struct CfPRoutes: RouteCollection {
     let encoder = JSONEncoder()
     encoder.keyEncodingStrategy = .convertToSnakeCase
     encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-    nonisolated(unsafe) let jstFormatter = ISO8601DateFormatter()
-    jstFormatter.formatOptions = [.withInternetDateTime]
-    jstFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")!
     encoder.dateEncodingStrategy = .custom { date, encoder in
+      let jstFormatter = ISO8601DateFormatter()
+      jstFormatter.formatOptions = [.withInternetDateTime]
+      jstFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")!
       var container = encoder.singleValueContainer()
       try container.encode(jstFormatter.string(from: date))
     }
