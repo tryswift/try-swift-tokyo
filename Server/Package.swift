@@ -36,7 +36,7 @@ let package = Package(
       dependencies: [
         "Server",
         .product(name: "SharedModels", package: "SharedModels"),
-        .product(name: "XCTVapor", package: "vapor"),
+        .product(name: "VaporTesting", package: "vapor"),
       ],
       swiftSettings: [
         .swiftLanguageMode(.v6)
