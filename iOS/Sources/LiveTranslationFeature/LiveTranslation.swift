@@ -20,7 +20,7 @@ public struct LiveTranslation: Sendable {
     /// Live Translation Room Info
     var roomInfo: ChatRoomEntity.Make.Response? = .none
     /// Current language code which user selected
-    var selectedLangCode: String =
+    @Shared(.appStorage("selectedLangCode")) var selectedLangCode: String =
       Locale.autoupdatingCurrent.language.languageCode?.identifier ?? "en"
 
     /// While updating chat
@@ -61,6 +61,7 @@ public struct LiveTranslation: Sendable {
     case changeLangCode(String)
     case view(View)
 
+    case validateSelectedLangCode([LanguageEntity.Response.LanguageItem])
     case handleResponseChat(RealTimeEntity.Chat.Response)
     case checkUpdateChatWaitingQueue
     case handleResponseTranslation(RealTimeEntity.Translation.Response)
@@ -150,8 +151,18 @@ public struct LiveTranslation: Sendable {
         }.cancellable(id: connectChatRoomTaskId)
       case .disconnectChatStream:
         return .cancel(id: connectChatRoomTaskId)
+      case .validateSelectedLangCode(let langList):
+        let currentCode = state.selectedLangCode
+        let isValid = langList.contains { $0.langCode == currentCode }
+        if !isValid {
+          let deviceCode = Locale.autoupdatingCurrent.language.languageCode?.identifier ?? "en"
+          let fallbackCode =
+            langList.contains(where: { $0.langCode == deviceCode }) ? deviceCode : "en"
+          state.$selectedLangCode.withLock { $0 = fallbackCode }
+        }
+        return .none
       case .changeLangCode(let newLangCode):
-        state.selectedLangCode = newLangCode
+        state.$selectedLangCode.withLock { $0 = newLangCode }
         return .run { [state] send in
           await loadLangSet(langCode: newLangCode, send: send)
           await loadTranslation(chatList: state.chatList, newLangCode)
@@ -224,6 +235,7 @@ extension LiveTranslation {
       await send(
         .set(\.langList, langList)
       )
+      await send(.validateSelectedLangCode(langList))
     } catch {
       print("\(#function): \(error.serialized().displayMessage)")
     }
