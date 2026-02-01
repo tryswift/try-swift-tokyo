@@ -175,7 +175,9 @@ struct ProposalCard: HTML, Sendable {
             }
             if let createdAt = proposal.createdAt {
               small(.class("text-muted")) {
-                HTMLText(formatDate(createdAt))
+                HTMLRaw(
+                  "<time class=\"local-time\" datetime=\"\(formatISO(createdAt))\" data-style=\"date\"></time>"
+                )
               }
             }
           }
@@ -187,12 +189,9 @@ struct ProposalCard: HTML, Sendable {
     }
   }
 
-  private func formatDate(_ date: Date) -> String {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .medium
-    if language == .ja {
-      formatter.locale = Locale(identifier: "ja_JP")
-    }
+  private func formatISO(_ date: Date) -> String {
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = [.withInternetDateTime]
     return formatter.string(from: date)
   }
 }

@@ -170,7 +170,9 @@ struct MyProposalDetailPageView: HTML, Sendable {
                 dt(.class("col-sm-3")) { language == .ja ? "提出日" : "Submitted" }
                 dd(.class("col-sm-9")) {
                   if let createdAt = proposal.createdAt {
-                    HTMLText(formatDate(createdAt))
+                    HTMLRaw(
+                      "<time class=\"local-time\" datetime=\"\(formatISO(createdAt))\" data-style=\"medium\"></time>"
+                    )
                   } else {
                     language == .ja ? "不明" : "Unknown"
                   }
@@ -178,7 +180,9 @@ struct MyProposalDetailPageView: HTML, Sendable {
                 dt(.class("col-sm-3")) { language == .ja ? "最終更新" : "Last Updated" }
                 dd(.class("col-sm-9")) {
                   if let updatedAt = proposal.updatedAt {
-                    HTMLText(formatDate(updatedAt))
+                    HTMLRaw(
+                      "<time class=\"local-time\" datetime=\"\(formatISO(updatedAt))\" data-style=\"medium\"></time>"
+                    )
                   } else {
                     language == .ja ? "なし" : "Never"
                   }
@@ -232,13 +236,9 @@ struct MyProposalDetailPageView: HTML, Sendable {
     }
   }
 
-  private func formatDate(_ date: Date) -> String {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .medium
-    formatter.timeStyle = .short
-    if language == .ja {
-      formatter.locale = Locale(identifier: "ja_JP")
-    }
+  private func formatISO(_ date: Date) -> String {
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = [.withInternetDateTime]
     return formatter.string(from: date)
   }
 
