@@ -1,7 +1,7 @@
 import Elementary
 import SharedModels
 
-struct ImportPaperCallPageView: HTML, Sendable {
+struct ImportSpeakersPageView: HTML, Sendable {
   let user: UserDTO?
   let conferences: [ConferencePublicInfo]
   let errorMessage: String?
@@ -40,15 +40,14 @@ struct ImportPaperCallPageView: HTML, Sendable {
 
   private var pageHeader: some HTML {
     div {
-      // Back button
       div(.class("mb-4")) {
         a(.class("btn btn-outline-secondary"), .href("/organizer/proposals")) {
           "<- Back to All Proposals"
         }
       }
-      h1(.class("fw-bold mb-2")) { "Import from PaperCall.io" }
+      h1(.class("fw-bold mb-2")) { "Import Speaker Candidates" }
       p(.class("lead text-muted mb-4")) {
-        "Upload a CSV file exported from PaperCall.io to import proposals."
+        "Upload a CSV file exported from Google Form to import speaker candidates."
       }
     }
   }
@@ -68,7 +67,7 @@ struct ImportPaperCallPageView: HTML, Sendable {
     if let imported = importedCount, let skipped = skippedCount {
       div(.class("alert alert-info mb-4")) {
         strong { "Import completed: " }
-        HTMLText("\(imported) proposals imported, \(skipped) duplicates skipped.")
+        HTMLText("\(imported) candidates imported, \(skipped) duplicates skipped.")
       }
     }
   }
@@ -104,7 +103,7 @@ struct ImportPaperCallPageView: HTML, Sendable {
         }
       }
       div(.class("form-text")) {
-        "All imported proposals will be associated with this conference."
+        "All imported candidates will be associated with this conference."
       }
     }
   }
@@ -123,7 +122,7 @@ struct ImportPaperCallPageView: HTML, Sendable {
         .custom(name: "accept", value: ".csv,text/csv")
       )
       div(.class("form-text")) {
-        "Supported formats: PaperCall.io standard export or custom export with columns: ID, Title, Abstract, etc."
+        "Upload a CSV exported from the Google Form for speaker candidates."
       }
     }
   }
@@ -140,7 +139,7 @@ struct ImportPaperCallPageView: HTML, Sendable {
           .checked
         )
         label(.class("form-check-label"), .for("skipDuplicates")) {
-          "Skip duplicate entries (based on PaperCall ID)"
+          "Skip duplicate entries (based on speaker email and talk title)"
         }
       }
     }
@@ -149,7 +148,7 @@ struct ImportPaperCallPageView: HTML, Sendable {
   private var submitButton: some HTML {
     div(.class("d-grid")) {
       button(.type(.submit), .class("btn btn-primary btn-lg")) {
-        "Import Proposals"
+        "Import Candidates"
       }
     }
   }
@@ -160,30 +159,14 @@ struct ImportPaperCallPageView: HTML, Sendable {
         strong { "CSV Format Reference" }
       }
       div(.class("card-body")) {
-        p { "Two CSV formats are supported:" }
-        div(.class("mb-3")) {
-          p(.class("fw-semibold mb-2")) { "1. PaperCall.io Standard Export (recommended)" }
-          HTMLRaw(
-            """
-            <pre class="bg-light p-3 rounded"><code>name,email,avatar,location,bio,twitter,url,organization,shirt_size,talk_format,title,abstract,description,notes,audience_level,tags,rating,state,confirmed,created_at,additional_info</code></pre>
-            """)
-          p(.class("text-muted small")) {
-            "This is the default export format from PaperCall.io's proposal export feature."
-          }
-        }
-        div {
-          p(.class("fw-semibold mb-2")) { "2. Custom Export Format" }
-          HTMLRaw(
-            """
-            <pre class="bg-light p-3 rounded"><code>ID,Title,Abstract,Talk Details,Duration,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At</code></pre>
-            """)
-          p(.class("text-muted small")) {
-            "Use this format if you're manually creating or transforming the CSV."
-          }
-        }
+        p { "The CSV should match the Google Form speaker candidate export format with columns:" }
+        HTMLRaw(
+          """
+          <pre class="bg-light p-3 rounded" style="white-space: pre-wrap;"><code>タイムスタンプ, Email, Your Name / お名前, メールアドレス, You want to…, SNS, GitHub, Short Bio / 自己紹介, Expertise / 専門性, Links of your speaking experience, Where are you currently located?, Company support?, Title of your talk, Summary, Talk Detail for organizers, ...</code></pre>
+          """)
         div(.class("alert alert-warning mt-3 mb-0")) {
           strong { "Note: " }
-          "Imported proposals will be associated with a system user (papercall-import) since they don't have GitHub accounts. You can edit the proposals after import using the Edit function."
+          "Imported candidates will be associated with a system user since they don't have CfP accounts. You can edit the proposals after import using the Edit function on each proposal detail page."
         }
       }
     }

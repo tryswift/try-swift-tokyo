@@ -1017,7 +1017,7 @@ struct CfPRoutes: RouteCollection {
     return value
   }
 
-  // MARK: - Import from PaperCall
+  // MARK: - Import Speaker Candidates
 
   @Sendable
   func organizerImportPage(req: Request) async throws -> HTMLResponse {
@@ -1036,21 +1036,13 @@ struct CfPRoutes: RouteCollection {
     let importedCount = req.query[Int.self, at: "imported"]
     let skippedCount = req.query[Int.self, at: "skipped"]
     let errorCount = req.query[Int.self, at: "errors"]
-    let errorParam = req.query[String.self, at: "error"]
-
-    // Determine error message
-    let errorMessage: String?
-    if let errorParam {
-      errorMessage = errorParam
-    } else if let errorCount, errorCount > 0 {
-      errorMessage = "\(errorCount) rows had errors during import"
-    } else {
-      errorMessage = nil
-    }
+    let errorMessage =
+      req.query[String.self, at: "error"]
+      ?? (errorCount.map { $0 > 0 ? "\($0) rows had errors during import" : nil } ?? nil)
 
     return HTMLResponse {
-      CfPLayout(title: "Import from PaperCall.io", user: user) {
-        ImportPaperCallPageView(
+      CfPLayout(title: "Import Speaker Candidates", user: user) {
+        ImportSpeakersPageView(
           user: user,
           conferences: conferences,
           errorMessage: errorMessage,
@@ -1088,27 +1080,11 @@ struct CfPRoutes: RouteCollection {
 
     // Parse CSV content
     let csvContent = String(buffer: formData.csvFile.data)
-    let parsedProposals: [PaperCallProposal]
+    let candidates: [SpeakerCandidate]
     do {
-      parsedProposals = try PaperCallCSVParser.parse(csvContent)
+      candidates = try SpeakersCSVParser.parse(csvContent)
     } catch {
-      req.logger.error("CSV parse error: \(error)")
-      let errorMessage: String
-      if let parseError = error as? PaperCallCSVParser.ParseError {
-        switch parseError {
-        case .invalidHeader:
-          errorMessage =
-            "Invalid CSV format. Please use PaperCall.io standard export or the custom format shown below."
-        case .missingRequiredField(let field, let row):
-          errorMessage = "Missing required field '\(field)' at row \(row)"
-        case .invalidFormat(let reason):
-          errorMessage = "CSV format error: \(reason)"
-        case .emptyFile:
-          errorMessage = "CSV file is empty"
-        }
-      } else {
-        errorMessage = "Failed to parse CSV file"
-      }
+      let errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
       let encodedError =
         errorMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         ?? "Parse+error"
@@ -1124,7 +1100,7 @@ struct CfPRoutes: RouteCollection {
       return req.redirect(to: "/organizer/proposals/import?error=Conference+ID+missing")
     }
 
-    // Get PaperCall import user
+    // Get import system user
     guard
       let importUser = try await User.find(
         AddPaperCallImportUser.paperCallUserID,
@@ -1139,18 +1115,20 @@ struct CfPRoutes: RouteCollection {
       return req.redirect(to: "/organizer/proposals/import?error=Import+user+ID+missing")
     }
 
-    // Import proposals
+    // Import candidates
     let skipDuplicates = formData.skipDuplicates == "true"
     var importedCount = 0
     var skippedCount = 0
     var errorCount = 0
 
-    for parsed in parsedProposals {
+    for candidate in candidates {
       do {
-        // Check for duplicate (by PaperCall ID)
+        // Check for duplicate (by speaker email + title)
         if skipDuplicates {
           let existing = try await Proposal.query(on: req.db)
-            .filter(\.$paperCallID == parsed.id)
+            .filter(\.$speakerEmail == candidate.email)
+            .filter(\.$title == candidate.title)
+            .filter(\.$conference.$id == conferenceID)
             .first()
           if existing != nil {
             skippedCount += 1
@@ -1158,27 +1136,30 @@ struct CfPRoutes: RouteCollection {
           }
         }
 
+        let notes = SpeakersCSVParser.buildNotes(from: candidate)
+        let githubUsername = SpeakersCSVParser.extractGitHubUsername(from: candidate.github)
+        let iconURL = SpeakersCSVParser.githubAvatarURL(from: candidate.github)
+
         let proposal = Proposal(
           conferenceID: conferenceID,
-          title: parsed.title,
-          abstract: parsed.abstract,
-          talkDetail: parsed.talkDetails,
-          talkDuration: TalkDuration.fromPaperCall(parsed.duration),
-          speakerName: parsed.speakerName,
-          speakerEmail: parsed.speakerEmail,
-          bio: parsed.bio,
-          iconURL: parsed.iconURL,
-          notes: parsed.notes,
+          title: candidate.title,
+          abstract: candidate.summary,
+          talkDetail: candidate.talkDetail,
+          talkDuration: .regular,
+          speakerName: candidate.name,
+          speakerEmail: candidate.email,
+          bio: candidate.bio,
+          iconURL: iconURL,
+          notes: notes.isEmpty ? nil : notes,
           speakerID: importUserID
         )
-        proposal.paperCallID = parsed.id
-        proposal.paperCallUsername = parsed.speakerUsername
+        proposal.paperCallUsername = githubUsername.isEmpty ? nil : githubUsername
 
         try await proposal.save(on: req.db)
         importedCount += 1
       } catch {
         errorCount += 1
-        req.logger.error("Failed to import proposal: \(error.localizedDescription)")
+        req.logger.error("Failed to import candidate: \(error.localizedDescription)")
       }
     }
 
