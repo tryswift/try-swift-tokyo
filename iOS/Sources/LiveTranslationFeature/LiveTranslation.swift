@@ -1,6 +1,7 @@
 import AVFoundation
 import BuildConfig
 import ComposableArchitecture
+import DependencyExtra
 import Foundation
 import LiveTranslationSDK_iOS
 import SwiftUI
@@ -524,7 +525,7 @@ public struct LiveTranslationView: View {
           )
         }
         .padding()
-        .glassEffect(.regular, in: .rect(cornerRadius: 16))
+        .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
         .onAppear {
           guard item == store.chatList.last else { return }
           send(.setShowingLastChat(true))
@@ -554,7 +555,7 @@ public struct LiveTranslationView: View {
       Spacer()
     }
     .padding(.vertical, 8)
-    .glassEffect(.clear, in: .capsule)
+    .glassEffectIfAvailable(.clear, in: .capsule)
     .padding(.horizontal)
   }
 }

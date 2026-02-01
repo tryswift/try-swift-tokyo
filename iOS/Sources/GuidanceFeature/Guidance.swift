@@ -230,7 +230,7 @@ public struct GuidanceView: View {
     }
     .frame(maxWidth: .infinity, alignment: .leading)
     .padding()
-    .glassEffect(.regular, in: .rect(cornerRadius: 16))
+    .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
   }
 
   @ViewBuilder
@@ -275,7 +275,7 @@ public struct GuidanceView: View {
       if store.lookAround != nil {
         LookAroundPreview(scene: $store.lookAround)
           .frame(width: 120, height: 80, alignment: .bottomLeading)
-          .glassEffect(.clear, in: .rect(cornerRadius: 12))
+          .glassEffectIfAvailable(.clear, in: .rect(cornerRadius: 12))
           .padding()
       }
     }
@@ -306,7 +306,7 @@ public struct GuidanceView: View {
           }
         }
         .padding()
-        .glassEffect(.regular, in: .rect(cornerRadius: 16))
+        .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
       }
     }
     .padding()

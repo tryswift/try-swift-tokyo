@@ -1,3 +1,4 @@
+import DependencyExtra
 import LiveTranslationSDK_iOS
 import SwiftUI
 
@@ -18,7 +19,7 @@ struct SelectLanguageSheet: View {
               .padding()
               .contentShape(.rect)
           }
-          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+          .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 12))
         }
       }
       .padding()

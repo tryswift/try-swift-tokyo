@@ -191,11 +191,11 @@ public struct ScheduleView: View {
                 listRow(session: session)
                   .padding()
               }
-              .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 16))
+              .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
             } else {
               listRow(session: session)
                 .padding()
-                .glassEffect(.regular, in: .rect(cornerRadius: 16))
+                .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
             }
           }
         }

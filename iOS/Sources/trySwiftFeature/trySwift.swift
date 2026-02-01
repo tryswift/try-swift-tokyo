@@ -127,7 +127,7 @@ public struct TrySwiftView: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .glassEffect(.clear, in: .rect(cornerRadius: 20))
+        .glassEffectIfAvailable(.clear, in: .rect(cornerRadius: 20))
 
         // Legal Section
         VStack(spacing: 12) {
@@ -142,7 +142,7 @@ public struct TrySwiftView: View {
             }
             .padding()
           }
-          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+          .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 12))
 
           Button {
             send(.privacyPolicyTapped)
@@ -155,7 +155,7 @@ public struct TrySwiftView: View {
             }
             .padding()
           }
-          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+          .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 12))
         }
 
         // Team Section
@@ -171,7 +171,7 @@ public struct TrySwiftView: View {
             }
             .padding()
           }
-          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+          .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 12))
 
           Button {
             send(.acknowledgementsTapped)
@@ -184,7 +184,7 @@ public struct TrySwiftView: View {
             }
             .padding()
           }
-          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+          .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 12))
         }
 
         // Links Section
@@ -200,7 +200,7 @@ public struct TrySwiftView: View {
             }
             .padding()
           }
-          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+          .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 12))
 
           Button {
             send(.websiteTapped)
@@ -213,7 +213,7 @@ public struct TrySwiftView: View {
             }
             .padding()
           }
-          .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+          .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 12))
         }
       }
       .padding()
