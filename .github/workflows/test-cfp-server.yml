@@ -1,0 +1,33 @@
+name: Test CfP Server
+
+on:
+  push:
+    paths:
+      - "Server/**"
+      - "SharedModels/**"
+      - ".github/workflows/test-cfp-server.yml"
+
+jobs:
+  test:
+    name: Test Server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "6.2"
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v4
+        with:
+          key: spm-server-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: spm-server-${{ runner.os }}-
+          path: Server/.build
+
+      - name: Test
+        run: |
+          cd Server
+          swift test

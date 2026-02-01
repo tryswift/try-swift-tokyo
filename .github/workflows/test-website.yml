@@ -1,0 +1,35 @@
+name: Test Website
+
+on:
+  push:
+    paths:
+      - "Website/**"
+      - "SharedModels/**"
+      - "DataClient/**"
+      - "LocalizationGenerated/**"
+      - ".github/workflows/test-website.yml"
+
+jobs:
+  build:
+    name: Build Website
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "6.2"
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v4
+        with:
+          key: spm-website-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: spm-website-${{ runner.os }}-
+          path: Website/.build
+
+      - name: Build
+        run: |
+          cd Website
+          swift build
