@@ -101,6 +101,13 @@ let package = Package(
       ]
     ),
     .testTarget(
+      name: "LiveTranslationFeatureTests",
+      dependencies: [
+        "LiveTranslationFeature",
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+      ]
+    ),
+    .testTarget(
       name: "ScheduleFeatureTests",
       dependencies: [
         "ScheduleFeature",

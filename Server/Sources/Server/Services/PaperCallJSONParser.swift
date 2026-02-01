@@ -1,6 +1,23 @@
 import Foundation
 import SharedModels
 
+/// Represents a parsed proposal from PaperCall export
+struct PaperCallProposal: Sendable {
+  let id: String
+  let title: String
+  let abstract: String
+  let talkDetails: String
+  let duration: String
+  let speakerName: String
+  let speakerEmail: String
+  let speakerUsername: String
+  let bio: String
+  let iconURL: String?
+  let notes: String?
+  let conference: String
+  let submittedAt: String
+}
+
 /// Parser for PaperCall JSON exports
 enum PaperCallJSONParser {
   enum ParseError: Error, LocalizedError {
@@ -82,6 +99,32 @@ enum PaperCallJSONParser {
         conference: "PaperCall Import",
         submittedAt: entry.created_at ?? ""
       )
+    }
+  }
+}
+
+// MARK: - TalkDuration Extension
+
+extension TalkDuration {
+  /// Map PaperCall duration string to TalkDuration
+  static func fromPaperCall(_ duration: String) -> TalkDuration {
+    let normalized = duration.lowercased().trimmingCharacters(in: .whitespaces)
+
+    switch normalized {
+    case "5", "5 min", "5 minutes", "lightning", "lt", "lightning talk":
+      return .lightning
+    case "20", "20 min", "20 minutes", "regular", "standard":
+      return .regular
+    case "invited", "keynote", "invited talk":
+      return .invited
+    default:
+      // Handle PaperCall JSON formats like "Lightning Talk (5min)", "Talk (20 minutes)"
+      if normalized.contains("lightning") {
+        return .lightning
+      } else if normalized.contains("keynote") || normalized.contains("invited") {
+        return .invited
+      }
+      return .regular
     }
   }
 }

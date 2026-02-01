@@ -19,21 +19,28 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:..\/MyLibrary",
+        "containerPath" : "container:..\/iOS",
+        "identifier" : "LiveTranslationFeatureTests",
+        "name" : "LiveTranslationFeatureTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/iOS",
         "identifier" : "ScheduleFeatureTests",
         "name" : "ScheduleFeatureTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/MyLibrary",
+        "containerPath" : "container:..\/iOS",
         "identifier" : "SponsorFeatureTests",
         "name" : "SponsorFeatureTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/MyLibrary",
+        "containerPath" : "container:..\/iOS",
         "identifier" : "trySwiftFeatureTests",
         "name" : "trySwiftFeatureTests"
       }

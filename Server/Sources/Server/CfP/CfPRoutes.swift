@@ -1017,7 +1017,7 @@ struct CfPRoutes: RouteCollection {
     return value
   }
 
-  // MARK: - Import from PaperCall
+  // MARK: - Import Speaker Candidates
 
   @Sendable
   func organizerImportPage(req: Request) async throws -> HTMLResponse {
@@ -1036,21 +1036,13 @@ struct CfPRoutes: RouteCollection {
     let importedCount = req.query[Int.self, at: "imported"]
     let skippedCount = req.query[Int.self, at: "skipped"]
     let errorCount = req.query[Int.self, at: "errors"]
-    let errorParam = req.query[String.self, at: "error"]
-
-    // Determine error message
-    let errorMessage: String?
-    if let errorParam {
-      errorMessage = errorParam
-    } else if let errorCount, errorCount > 0 {
-      errorMessage = "\(errorCount) rows had errors during import"
-    } else {
-      errorMessage = nil
-    }
+    let errorMessage =
+      req.query[String.self, at: "error"]
+      ?? (errorCount.map { $0 > 0 ? "\($0) rows had errors during import" : nil } ?? nil)
 
     return HTMLResponse {
-      CfPLayout(title: "Import from PaperCall.io", user: user) {
-        ImportPaperCallPageView(
+      CfPLayout(title: "Import Speaker Candidates", user: user) {
+        ImportSpeakersPageView(
           user: user,
           conferences: conferences,
           errorMessage: errorMessage,
@@ -1091,45 +1083,6 @@ struct CfPRoutes: RouteCollection {
     // Parse file content
     let fileContent = String(buffer: formData.csvFile.data)
     let isJSON = filename.hasSuffix(".json")
-    let parsedProposals: [PaperCallProposal]
-    do {
-      if isJSON {
-        parsedProposals = try PaperCallJSONParser.parse(fileContent)
-      } else {
-        parsedProposals = try PaperCallCSVParser.parse(fileContent)
-      }
-    } catch {
-      req.logger.error("Import parse error: \(error)")
-      let errorMessage: String
-      if let parseError = error as? PaperCallCSVParser.ParseError {
-        switch parseError {
-        case .invalidHeader:
-          errorMessage =
-            "Invalid CSV format. Please use PaperCall.io standard export or the custom format shown below."
-        case .missingRequiredField(let field, let row):
-          errorMessage = "Missing required field '\(field)' at row \(row)"
-        case .invalidFormat(let reason):
-          errorMessage = "CSV format error: \(reason)"
-        case .emptyFile:
-          errorMessage = "CSV file is empty"
-        }
-      } else if let parseError = error as? PaperCallJSONParser.ParseError {
-        switch parseError {
-        case .invalidJSON(let underlying):
-          errorMessage = "Invalid JSON format: \(underlying)"
-        case .emptyFile:
-          errorMessage = "JSON file is empty"
-        case .emptyArray:
-          errorMessage = "JSON file contains no proposals"
-        }
-      } else {
-        errorMessage = "Failed to parse file"
-      }
-      let encodedError =
-        errorMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        ?? "Parse+error"
-      return req.redirect(to: "/organizer/proposals/import?error=\(encodedError)")
-    }
 
     // Get conference
     guard let conference = try await Conference.find(formData.conferenceId, on: req.db) else {
@@ -1140,7 +1093,7 @@ struct CfPRoutes: RouteCollection {
       return req.redirect(to: "/organizer/proposals/import?error=Conference+ID+missing")
     }
 
-    // Get PaperCall import user
+    // Get import system user
     guard
       let importUser = try await User.find(
         AddPaperCallImportUser.paperCallUserID,
@@ -1155,46 +1108,115 @@ struct CfPRoutes: RouteCollection {
       return req.redirect(to: "/organizer/proposals/import?error=Import+user+ID+missing")
     }
 
-    // Import proposals
     let skipDuplicates = formData.skipDuplicates == "true"
     var importedCount = 0
     var skippedCount = 0
     var errorCount = 0
 
-    for parsed in parsedProposals {
+    if isJSON {
+      // JSON import: parse PaperCall JSON
+      let parsedProposals: [PaperCallProposal]
       do {
-        // Check for duplicate (by PaperCall ID)
-        if skipDuplicates {
-          let existing = try await Proposal.query(on: req.db)
-            .filter(\.$paperCallID == parsed.id)
-            .first()
-          if existing != nil {
-            skippedCount += 1
-            continue
-          }
-        }
-
-        let proposal = Proposal(
-          conferenceID: conferenceID,
-          title: parsed.title,
-          abstract: parsed.abstract,
-          talkDetail: parsed.talkDetails,
-          talkDuration: TalkDuration.fromPaperCall(parsed.duration),
-          speakerName: parsed.speakerName,
-          speakerEmail: parsed.speakerEmail,
-          bio: parsed.bio,
-          iconURL: parsed.iconURL,
-          notes: parsed.notes,
-          speakerID: importUserID
-        )
-        proposal.paperCallID = parsed.id
-        proposal.paperCallUsername = parsed.speakerUsername
-
-        try await proposal.save(on: req.db)
-        importedCount += 1
+        parsedProposals = try PaperCallJSONParser.parse(fileContent)
       } catch {
-        errorCount += 1
-        req.logger.error("Failed to import proposal: \(error.localizedDescription)")
+        let errorMessage =
+          (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+        let encodedError =
+          errorMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+          ?? "Parse+error"
+        return req.redirect(to: "/organizer/proposals/import?error=\(encodedError)")
+      }
+
+      for parsed in parsedProposals {
+        do {
+          if skipDuplicates {
+            let existing = try await Proposal.query(on: req.db)
+              .filter(\.$speakerEmail == parsed.speakerEmail)
+              .filter(\.$title == parsed.title)
+              .filter(\.$conference.$id == conferenceID)
+              .first()
+            if existing != nil {
+              skippedCount += 1
+              continue
+            }
+          }
+
+          let proposal = Proposal(
+            conferenceID: conferenceID,
+            title: parsed.title,
+            abstract: parsed.abstract,
+            talkDetail: parsed.talkDetails,
+            talkDuration: TalkDuration.fromPaperCall(parsed.duration),
+            speakerName: parsed.speakerName,
+            speakerEmail: parsed.speakerEmail,
+            bio: parsed.bio,
+            iconURL: parsed.iconURL,
+            notes: parsed.notes,
+            speakerID: importUserID
+          )
+          proposal.paperCallUsername =
+            parsed.speakerUsername.isEmpty ? nil : parsed.speakerUsername
+
+          try await proposal.save(on: req.db)
+          importedCount += 1
+        } catch {
+          errorCount += 1
+          req.logger.error("Failed to import proposal: \(error.localizedDescription)")
+        }
+      }
+    } else {
+      // CSV import: parse Google Form CSV
+      let candidates: [SpeakerCandidate]
+      do {
+        candidates = try SpeakersCSVParser.parse(fileContent)
+      } catch {
+        let errorMessage =
+          (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+        let encodedError =
+          errorMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+          ?? "Parse+error"
+        return req.redirect(to: "/organizer/proposals/import?error=\(encodedError)")
+      }
+
+      for candidate in candidates {
+        do {
+          if skipDuplicates {
+            let existing = try await Proposal.query(on: req.db)
+              .filter(\.$speakerEmail == candidate.email)
+              .filter(\.$title == candidate.title)
+              .filter(\.$conference.$id == conferenceID)
+              .first()
+            if existing != nil {
+              skippedCount += 1
+              continue
+            }
+          }
+
+          let notes = SpeakersCSVParser.buildNotes(from: candidate)
+          let githubUsername = SpeakersCSVParser.extractGitHubUsername(from: candidate.github)
+          let iconURL = SpeakersCSVParser.githubAvatarURL(from: candidate.github)
+
+          let proposal = Proposal(
+            conferenceID: conferenceID,
+            title: candidate.title,
+            abstract: candidate.summary,
+            talkDetail: candidate.talkDetail,
+            talkDuration: .regular,
+            speakerName: candidate.name,
+            speakerEmail: candidate.email,
+            bio: candidate.bio,
+            iconURL: iconURL,
+            notes: notes.isEmpty ? nil : notes,
+            speakerID: importUserID
+          )
+          proposal.paperCallUsername = githubUsername.isEmpty ? nil : githubUsername
+
+          try await proposal.save(on: req.db)
+          importedCount += 1
+        } catch {
+          errorCount += 1
+          req.logger.error("Failed to import candidate: \(error.localizedDescription)")
+        }
       }
     }
 
