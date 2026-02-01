@@ -94,6 +94,7 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
       talkDetailsField(value: proposal.talkDetail)
       durationField(selected: proposal.talkDuration)
       speakerInfoSection(proposal: proposal)
+      githubUsernameField(value: proposal.speakerUsername)
       notesField(value: proposal.notes)
       submitButton
     }
@@ -311,6 +312,26 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
         .class("rounded-circle border"),
         .style("width: 100px; height: 100px; object-fit: cover;")
       )
+    }
+  }
+
+  private func githubUsernameField(value: String) -> some HTML {
+    div(.class("mb-4")) {
+      label(.class("form-label fw-semibold"), .for("githubUsername")) {
+        "GitHub Username (Optional)"
+      }
+      input(
+        .type(.text),
+        .class("form-control"),
+        .name("githubUsername"),
+        .id("githubUsername"),
+        .value(value == "papercall-import" ? "" : value),
+        .placeholder("e.g. octocat")
+      )
+      div(.class("form-text")) {
+        "If specified, the proposal will be linked to this GitHub user account. "
+        "Leave blank to keep the current association."
+      }
     }
   }
 

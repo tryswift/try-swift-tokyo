@@ -1120,6 +1120,7 @@ struct CfPRoutes: RouteCollection {
       var csvFile: File
       var conferenceId: UUID
       var skipDuplicates: String?
+      var githubUsername: String?
     }
 
     let formData: ImportFormData
@@ -1149,19 +1150,41 @@ struct CfPRoutes: RouteCollection {
       return req.redirect(to: "/organizer/proposals/import?error=Conference+ID+missing")
     }
 
-    // Get import system user
-    guard
-      let importUser = try await User.find(
-        AddPaperCallImportUser.paperCallUserID,
-        on: req.db
-      )
-    else {
-      return req.redirect(
-        to: "/organizer/proposals/import?error=Import+user+not+configured.+Run+migrations+first.")
-    }
+    // Determine speaker user ID
+    let speakerID: UUID
+    let githubUsername =
+      formData.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
-    guard let importUserID = importUser.id else {
-      return req.redirect(to: "/organizer/proposals/import?error=Import+user+ID+missing")
+    if !githubUsername.isEmpty {
+      // Look up by GitHub username
+      guard
+        let existingUser = try await User.query(on: req.db)
+          .filter(\.$username == githubUsername)
+          .first(),
+        let existingUserID = existingUser.id
+      else {
+        let encodedError =
+          "GitHub user '\(githubUsername)' not found. The user must have logged in at least once."
+            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "User+not+found"
+        return req.redirect(to: "/organizer/proposals/import?error=\(encodedError)")
+      }
+      speakerID = existingUserID
+    } else {
+      // Use system import user
+      guard
+        let importUser = try await User.find(
+          AddPaperCallImportUser.paperCallUserID,
+          on: req.db
+        )
+      else {
+        return req.redirect(
+          to:
+            "/organizer/proposals/import?error=Import+user+not+configured.+Run+migrations+first.")
+      }
+      guard let importUserID = importUser.id else {
+        return req.redirect(to: "/organizer/proposals/import?error=Import+user+ID+missing")
+      }
+      speakerID = importUserID
     }
 
     let skipDuplicates = formData.skipDuplicates == "true"
@@ -1208,7 +1231,7 @@ struct CfPRoutes: RouteCollection {
             bio: parsed.bio,
             iconURL: parsed.iconURL,
             notes: parsed.notes,
-            speakerID: importUserID
+            speakerID: speakerID
           )
           proposal.paperCallUsername =
             parsed.speakerUsername.isEmpty ? nil : parsed.speakerUsername
@@ -1263,7 +1286,7 @@ struct CfPRoutes: RouteCollection {
             bio: candidate.bio,
             iconURL: iconURL,
             notes: notes.isEmpty ? nil : notes,
-            speakerID: importUserID
+            speakerID: speakerID
           )
           proposal.paperCallUsername = githubUsername.isEmpty ? nil : githubUsername
 
@@ -1357,6 +1380,7 @@ struct CfPRoutes: RouteCollection {
       var speakerEmail: String
       var bio: String
       var iconUrl: String
+      var githubUsername: String?
       var notesToOrganizers: String?
     }
 
@@ -1389,6 +1413,26 @@ struct CfPRoutes: RouteCollection {
 
     guard let talkDuration = TalkDuration(rawValue: formData.talkDuration) else {
       throw Abort(.badRequest, reason: "Invalid talk duration")
+    }
+
+    // Update speaker user if GitHub username is provided
+    let githubUsername =
+      formData.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    if !githubUsername.isEmpty {
+      guard
+        let existingUser = try await User.query(on: req.db)
+          .filter(\.$username == githubUsername)
+          .first(),
+        let existingUserID = existingUser.id
+      else {
+        throw Abort(
+          .badRequest,
+          reason:
+            "GitHub user '\(githubUsername)' not found. The user must have logged in at least once."
+        )
+      }
+      proposal.$speaker.id = existingUserID
+      proposal.paperCallUsername = githubUsername
     }
 
     // Update proposal
