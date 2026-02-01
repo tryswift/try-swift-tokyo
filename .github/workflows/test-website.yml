@@ -25,7 +25,7 @@ jobs:
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v4
         with:
-          key: spm-website-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          key: spm-website-${{ runner.os }}-swift-6.2-${{ hashFiles('Website/Package.resolved', 'Website/Package.swift') }}
           restore-keys: spm-website-${{ runner.os }}-
           path: Website/.build
 
