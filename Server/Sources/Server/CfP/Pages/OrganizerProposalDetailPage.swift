@@ -20,7 +20,12 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
           // Header
           div(.class("d-flex justify-content-between align-items-start mb-4")) {
             div {
-              h1(.class("fw-bold mb-2")) { HTMLText(proposal.title) }
+              div(.class("d-flex align-items-center gap-3 mb-2")) {
+                h1(.class("fw-bold mb-0")) { HTMLText(proposal.title) }
+                span(.class("badge \(proposal.status.badgeClass) fs-6")) {
+                  HTMLText(proposal.status.displayName)
+                }
+              }
               div(.class("d-flex align-items-center gap-3")) {
                 span(
                   .class(
@@ -35,12 +40,39 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
                 }
               }
             }
-            // Edit button
-            a(
-              .class("btn btn-outline-primary"),
-              .href("/organizer/proposals/\(proposal.id.uuidString)/edit")
-            ) {
-              "Edit Proposal"
+            div(.class("d-flex gap-2")) {
+              // Status action buttons
+              if proposal.status == .submitted || proposal.status == .rejected {
+                HTMLRaw(
+                  """
+                  <form method="post" action="/organizer/proposals/\(proposal.id)/accept">
+                    <button type="submit" class="btn btn-success">Accept</button>
+                  </form>
+                  """)
+              }
+              if proposal.status == .submitted || proposal.status == .accepted {
+                HTMLRaw(
+                  """
+                  <form method="post" action="/organizer/proposals/\(proposal.id)/reject">
+                    <button type="submit" class="btn btn-outline-danger">Reject</button>
+                  </form>
+                  """)
+              }
+              if proposal.status == .accepted || proposal.status == .rejected {
+                HTMLRaw(
+                  """
+                  <form method="post" action="/organizer/proposals/\(proposal.id)/revert-status">
+                    <button type="submit" class="btn btn-outline-secondary">Revert to Submitted</button>
+                  </form>
+                  """)
+              }
+              // Edit button
+              a(
+                .class("btn btn-outline-primary"),
+                .href("/organizer/proposals/\(proposal.id.uuidString)/edit")
+              ) {
+                "Edit Proposal"
+              }
             }
           }
 

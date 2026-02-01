@@ -46,6 +46,7 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
   public let notes: String?
   public let speakerID: UUID
   public let speakerUsername: String
+  public let status: ProposalStatus
   public let createdAt: Date?
   public let updatedAt: Date?
 
@@ -65,6 +66,7 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
     notes: String? = nil,
     speakerID: UUID,
     speakerUsername: String,
+    status: ProposalStatus = .submitted,
     createdAt: Date? = nil,
     updatedAt: Date? = nil
   ) {
@@ -83,6 +85,7 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
     self.notes = notes
     self.speakerID = speakerID
     self.speakerUsername = speakerUsername
+    self.status = status
     self.createdAt = createdAt
     self.updatedAt = updatedAt
   }

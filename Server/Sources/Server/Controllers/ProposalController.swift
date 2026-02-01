@@ -20,6 +20,7 @@ struct ProposalDTOContent: Content {
   let notes: String?
   let speakerID: UUID
   let speakerUsername: String
+  let status: String
   let createdAt: Date?
   let updatedAt: Date?
 
@@ -39,6 +40,7 @@ struct ProposalDTOContent: Content {
     self.notes = dto.notes
     self.speakerID = dto.speakerID
     self.speakerUsername = dto.speakerUsername
+    self.status = dto.status.rawValue
     self.createdAt = dto.createdAt
     self.updatedAt = dto.updatedAt
   }

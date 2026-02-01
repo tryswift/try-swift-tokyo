@@ -57,6 +57,10 @@ final class Conference: Model, Content, @unchecked Sendable {
   @Children(for: \.$conference)
   var proposals: [Proposal]
 
+  /// Schedule slots for this conference
+  @Children(for: \.$conference)
+  var scheduleSlots: [ScheduleSlot]
+
   /// Timestamps
   @Timestamp(key: "created_at", on: .create)
   var createdAt: Date?

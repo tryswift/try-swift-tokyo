@@ -70,6 +70,11 @@ struct CfPNavigation: HTML, Sendable {
                     "📋 Organizer"
                   }
                 }
+                li(.class("nav-item")) {
+                  a(.class("nav-link text-info fw-bold"), .href("/organizer/timetable")) {
+                    "📅 Timetable"
+                  }
+                }
               }
               li(.class("nav-item")) {
                 span(.class("nav-link text-white fw-bold")) {

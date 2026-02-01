@@ -51,6 +51,19 @@ struct CfPRoutes: RouteCollection {
     organizer.get("proposals", ":proposalID", use: organizerProposalDetailPage)
     organizer.get("proposals", ":proposalID", "edit", use: organizerEditProposalPage)
     organizer.post("proposals", ":proposalID", "edit", use: handleOrganizerEditProposal)
+    organizer.post("proposals", ":proposalID", "accept", use: handleAcceptProposal)
+    organizer.post("proposals", ":proposalID", "reject", use: handleRejectProposal)
+    organizer.post("proposals", ":proposalID", "revert-status", use: handleRevertProposalStatus)
+
+    // Timetable editor
+    organizer.get("timetable", use: timetableEditorPage)
+    organizer.get("timetable", "api", "slots", use: getTimetableSlots)
+    organizer.post("timetable", "api", "slots", use: createSlot)
+    organizer.post("timetable", "api", "slots", ":slotID", use: updateSlot)
+    organizer.post("timetable", "api", "slots", ":slotID", "delete", use: deleteSlot)
+    organizer.post("timetable", "api", "reorder", use: reorderSlots)
+    organizer.get("timetable", "export", use: exportAllTimetableJSON)
+    organizer.get("timetable", "export", ":day", use: exportTimetableJSON)
 
     // Backward compatibility: redirect /cfp/* to /*
     let cfpRedirect = routes.grouped("cfp")
@@ -973,7 +986,7 @@ struct CfPRoutes: RouteCollection {
 
     // Build CSV
     var csv =
-      "ID,Title,Abstract,Talk Details,Duration,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At\n"
+      "ID,Title,Abstract,Talk Details,Duration,Status,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At\n"
 
     let dateFormatter = ISO8601DateFormatter()
 
@@ -984,6 +997,7 @@ struct CfPRoutes: RouteCollection {
         escapeCSV(proposal.abstract),
         escapeCSV(proposal.talkDetail),
         proposal.talkDuration.rawValue,
+        proposal.status.rawValue,
         escapeCSV(proposal.speakerName),
         escapeCSV(proposal.speakerEmail),
         proposal.speaker.username,
@@ -1015,6 +1029,46 @@ struct CfPRoutes: RouteCollection {
       return "\"\(escaped)\""
     }
     return value
+  }
+
+  // MARK: - Accept/Reject Proposals
+
+  @Sendable
+  func handleAcceptProposal(req: Request) async throws -> Response {
+    try await changeProposalStatus(req: req, newStatus: .accepted)
+  }
+
+  @Sendable
+  func handleRejectProposal(req: Request) async throws -> Response {
+    try await changeProposalStatus(req: req, newStatus: .rejected)
+  }
+
+  @Sendable
+  func handleRevertProposalStatus(req: Request) async throws -> Response {
+    try await changeProposalStatus(req: req, newStatus: .submitted)
+  }
+
+  private func changeProposalStatus(req: Request, newStatus: ProposalStatus) async throws
+    -> Response
+  {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    guard let proposalIDString = req.parameters.get("proposalID"),
+      let proposalID = UUID(uuidString: proposalIDString)
+    else {
+      throw Abort(.badRequest, reason: "Invalid proposal ID")
+    }
+
+    guard let proposal = try await Proposal.find(proposalID, on: req.db) else {
+      throw Abort(.notFound, reason: "Proposal not found")
+    }
+
+    proposal.status = newStatus
+    try await proposal.save(on: req.db)
+
+    return req.redirect(to: "/organizer/proposals/\(proposalID)")
   }
 
   // MARK: - Import Speaker Candidates
@@ -1350,6 +1404,517 @@ struct CfPRoutes: RouteCollection {
     try await proposal.save(on: req.db)
 
     return req.redirect(to: "/organizer/proposals/\(proposalID)?updated=true")
+  }
+
+  // MARK: - Timetable Editor
+
+  @Sendable
+  func timetableEditorPage(req: Request) async throws -> HTMLResponse {
+    let user = try? await getAuthenticatedUser(req: req)
+
+    guard let user, user.role == .admin else {
+      return HTMLResponse {
+        CfPLayout(title: "Timetable Editor", user: user) {
+          TimetableEditorPageView(
+            user: user,
+            conference: nil,
+            acceptedProposals: [],
+            slots: [],
+            days: []
+          )
+        }
+      }
+    }
+
+    // Get latest conference
+    guard
+      let conference = try await Conference.query(on: req.db)
+        .sort(\.$year, .descending)
+        .first(),
+      let conferenceID = conference.id
+    else {
+      throw Abort(.notFound, reason: "No conference found")
+    }
+
+    // Get accepted proposals
+    let allAccepted = try await Proposal.query(on: req.db)
+      .filter(\.$conference.$id == conferenceID)
+      .filter(\.$status == .accepted)
+      .with(\.$conference)
+      .with(\.$speaker)
+      .sort(\.$talkDuration)
+      .sort(\.$speakerName)
+      .all()
+
+    let acceptedDTOs = try allAccepted.map {
+      try $0.toDTO(
+        speakerUsername: $0.paperCallUsername ?? $0.speaker.username,
+        conference: $0.conference)
+    }
+
+    // Get existing schedule slots
+    let slots = try await ScheduleSlot.query(on: req.db)
+      .filter(\.$conference.$id == conferenceID)
+      .with(\.$proposal) { proposal in
+        proposal.with(\.$speaker)
+        proposal.with(\.$conference)
+      }
+      .sort(\.$day)
+      .sort(\.$sortOrder)
+      .all()
+
+    let days = computeConferenceDays(conference: conference)
+
+    let slotDTOs = try slots.map { slot -> ScheduleSlotDTO in
+      try ScheduleSlotDTO(slot: slot)
+    }
+
+    // Proposals already assigned to slots
+    let assignedProposalIDs = Set(slots.compactMap { $0.$proposal.id })
+    let unassignedProposals = acceptedDTOs.filter { !assignedProposalIDs.contains($0.id) }
+
+    return HTMLResponse {
+      CfPLayout(title: "Timetable Editor", user: user) {
+        TimetableEditorPageView(
+          user: user,
+          conference: conference.toPublicInfo(),
+          acceptedProposals: unassignedProposals,
+          slots: slotDTOs,
+          days: days
+        )
+      }
+    }
+  }
+
+  @Sendable
+  func getTimetableSlots(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    guard
+      let conference = try await Conference.query(on: req.db)
+        .sort(\.$year, .descending)
+        .first(),
+      let conferenceID = conference.id
+    else {
+      throw Abort(.notFound, reason: "No conference found")
+    }
+
+    let slots = try await ScheduleSlot.query(on: req.db)
+      .filter(\.$conference.$id == conferenceID)
+      .with(\.$proposal) { proposal in
+        proposal.with(\.$speaker)
+        proposal.with(\.$conference)
+      }
+      .sort(\.$day)
+      .sort(\.$sortOrder)
+      .all()
+
+    let slotDTOs = try slots.map { try ScheduleSlotDTO(slot: $0) }
+
+    let encoder = JSONEncoder()
+    encoder.dateEncodingStrategy = .iso8601
+    let data = try encoder.encode(slotDTOs)
+
+    var headers = HTTPHeaders()
+    headers.contentType = .json
+    return Response(status: .ok, headers: headers, body: .init(data: data))
+  }
+
+  @Sendable
+  func createSlot(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    struct CreateSlotRequest: Content {
+      var conferenceId: UUID
+      var proposalId: UUID?
+      var day: Int
+      var startTime: String
+      var endTime: String?
+      var slotType: String
+      var customTitle: String?
+      var customTitleJa: String?
+      var place: String?
+      var placeJa: String?
+    }
+
+    let body = try req.content.decode(CreateSlotRequest.self)
+
+    guard let slotType = SlotType(rawValue: body.slotType) else {
+      throw Abort(.badRequest, reason: "Invalid slot type")
+    }
+
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = [.withInternetDateTime]
+    guard let startTime = formatter.date(from: body.startTime) else {
+      throw Abort(.badRequest, reason: "Invalid start time format")
+    }
+    let endTime = body.endTime.flatMap { formatter.date(from: $0) }
+
+    // Get max sort_order for this day
+    let maxOrder =
+      try await ScheduleSlot.query(on: req.db)
+      .filter(\.$conference.$id == body.conferenceId)
+      .filter(\.$day == body.day)
+      .sort(\.$sortOrder, .descending)
+      .first()?.sortOrder ?? -1
+
+    let slot = ScheduleSlot(
+      conferenceID: body.conferenceId,
+      proposalID: body.proposalId,
+      day: body.day,
+      startTime: startTime,
+      endTime: endTime,
+      slotType: slotType,
+      customTitle: body.customTitle,
+      customTitleJa: body.customTitleJa,
+      place: body.place,
+      placeJa: body.placeJa,
+      sortOrder: maxOrder + 1
+    )
+
+    try await slot.save(on: req.db)
+
+    // Reload with relations
+    let reloadQuery = ScheduleSlot.query(on: req.db)
+      .filter(\.$id == slot.id!)
+      .with(\.$proposal) { proposal in
+        proposal.with(\.$speaker)
+        proposal.with(\.$conference)
+      }
+    guard let saved = try await reloadQuery.first() else {
+      throw Abort(.internalServerError, reason: "Failed to reload slot")
+    }
+
+    let dto = try ScheduleSlotDTO(slot: saved)
+    let encoder = JSONEncoder()
+    encoder.dateEncodingStrategy = .iso8601
+    let data = try encoder.encode(dto)
+
+    var headers = HTTPHeaders()
+    headers.contentType = .json
+    return Response(status: .created, headers: headers, body: .init(data: data))
+  }
+
+  @Sendable
+  func updateSlot(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    guard let slotIDString = req.parameters.get("slotID"),
+      let slotID = UUID(uuidString: slotIDString)
+    else {
+      throw Abort(.badRequest, reason: "Invalid slot ID")
+    }
+
+    guard let slot = try await ScheduleSlot.find(slotID, on: req.db) else {
+      throw Abort(.notFound, reason: "Slot not found")
+    }
+
+    // Use Codable wrapper to distinguish missing vs explicit null
+    struct OptionalField<T: Codable & Sendable>: Codable, Sendable {
+      let value: T?
+      init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.value = container.decodeNil() ? nil : try container.decode(T.self)
+      }
+    }
+
+    struct UpdateSlotRequest: Content {
+      var proposalId: UUID?
+      var day: Int?
+      var startTime: String?
+      var endTime: String?
+      var slotType: String?
+      var customTitle: OptionalField<String>?
+      var customTitleJa: OptionalField<String>?
+      var place: OptionalField<String>?
+      var placeJa: OptionalField<String>?
+    }
+
+    let body = try req.content.decode(UpdateSlotRequest.self)
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = [.withInternetDateTime]
+
+    if let slotTypeStr = body.slotType {
+      guard let slotType = SlotType(rawValue: slotTypeStr) else {
+        throw Abort(.badRequest, reason: "Invalid slot type")
+      }
+      slot.slotType = slotType
+    }
+    if let day = body.day {
+      slot.day = day
+    }
+    if let startTimeStr = body.startTime {
+      guard let startTime = formatter.date(from: startTimeStr) else {
+        throw Abort(.badRequest, reason: "Invalid startTime format")
+      }
+      slot.startTime = startTime
+    }
+    if let endTimeStr = body.endTime {
+      guard let endTime = formatter.date(from: endTimeStr) else {
+        throw Abort(.badRequest, reason: "Invalid endTime format")
+      }
+      slot.endTime = endTime
+    }
+    if let proposalId = body.proposalId {
+      slot.$proposal.id = proposalId
+    }
+    // OptionalField: present with value → set, present with null → clear, absent → keep
+    if let field = body.customTitle { slot.customTitle = field.value }
+    if let field = body.customTitleJa { slot.customTitleJa = field.value }
+    if let field = body.place { slot.place = field.value }
+    if let field = body.placeJa { slot.placeJa = field.value }
+
+    try await slot.save(on: req.db)
+
+    return Response(status: .ok)
+  }
+
+  @Sendable
+  func deleteSlot(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    guard let slotIDString = req.parameters.get("slotID"),
+      let slotID = UUID(uuidString: slotIDString)
+    else {
+      throw Abort(.badRequest, reason: "Invalid slot ID")
+    }
+
+    guard let slot = try await ScheduleSlot.find(slotID, on: req.db) else {
+      throw Abort(.notFound, reason: "Slot not found")
+    }
+
+    try await slot.delete(on: req.db)
+
+    return Response(status: .noContent)
+  }
+
+  @Sendable
+  func reorderSlots(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    struct ReorderItem: Content {
+      var id: UUID
+      var sortOrder: Int
+    }
+
+    let items = try req.content.decode([ReorderItem].self)
+
+    for item in items {
+      if let slot = try await ScheduleSlot.find(item.id, on: req.db) {
+        slot.sortOrder = item.sortOrder
+        try await slot.save(on: req.db)
+      }
+    }
+
+    return Response(status: .ok)
+  }
+
+  // MARK: - Timetable JSON Export
+
+  @Sendable
+  func exportTimetableJSON(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    guard let dayString = req.parameters.get("day"), let day = Int(dayString) else {
+      throw Abort(.badRequest, reason: "Invalid day parameter")
+    }
+
+    guard
+      let conference = try await Conference.query(on: req.db)
+        .sort(\.$year, .descending)
+        .first(),
+      let conferenceID = conference.id
+    else {
+      throw Abort(.notFound, reason: "No conference found")
+    }
+
+    let json = try await buildTimetableJSON(
+      req: req, conference: conference, conferenceID: conferenceID, day: day)
+
+    return try encodeTimetableResponse(json, filename: "\(conference.year)-day\(day).json")
+  }
+
+  @Sendable
+  func exportAllTimetableJSON(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    guard
+      let conference = try await Conference.query(on: req.db)
+        .sort(\.$year, .descending)
+        .first(),
+      let conferenceID = conference.id
+    else {
+      throw Abort(.notFound, reason: "No conference found")
+    }
+
+    let days = computeConferenceDays(conference: conference)
+    var allDays: [TimetableExportConference] = []
+
+    for dayInfo in days {
+      let json = try await buildTimetableJSON(
+        req: req, conference: conference, conferenceID: conferenceID, day: dayInfo.dayNumber)
+      allDays.append(json)
+    }
+
+    return try encodeTimetableResponse(allDays, filename: "timetable-all.json")
+  }
+
+  private func encodeTimetableResponse<T: Encodable>(_ value: T, filename: String) throws
+    -> Response
+  {
+    let encoder = JSONEncoder()
+    encoder.keyEncodingStrategy = .convertToSnakeCase
+    encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+    encoder.dateEncodingStrategy = .custom { date, encoder in
+      let jstFormatter = ISO8601DateFormatter()
+      jstFormatter.formatOptions = [.withInternetDateTime]
+      jstFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")!
+      var container = encoder.singleValueContainer()
+      try container.encode(jstFormatter.string(from: date))
+    }
+
+    let data = try encoder.encode(value)
+
+    var headers = HTTPHeaders()
+    headers.contentType = .json
+    headers.add(name: .contentDisposition, value: "attachment; filename=\"\(filename)\"")
+    return Response(status: .ok, headers: headers, body: .init(data: data))
+  }
+
+  private func buildTimetableJSON(
+    req: Request, conference: Conference, conferenceID: UUID, day: Int
+  ) async throws -> TimetableExportConference {
+    let slots = try await ScheduleSlot.query(on: req.db)
+      .filter(\.$conference.$id == conferenceID)
+      .filter(\.$day == day)
+      .with(\.$proposal) { proposal in
+        proposal.with(\.$speaker)
+        proposal.with(\.$conference)
+      }
+      .sort(\.$sortOrder)
+      .all()
+
+    // Group slots by start_time
+    var schedulesByTime: [(time: Date, slots: [ScheduleSlot])] = []
+    var currentTime: Date?
+    var currentSlots: [ScheduleSlot] = []
+
+    for slot in slots {
+      if slot.startTime != currentTime {
+        if let time = currentTime, !currentSlots.isEmpty {
+          schedulesByTime.append((time: time, slots: currentSlots))
+        }
+        currentTime = slot.startTime
+        currentSlots = [slot]
+      } else {
+        currentSlots.append(slot)
+      }
+    }
+    if let time = currentTime, !currentSlots.isEmpty {
+      schedulesByTime.append((time: time, slots: currentSlots))
+    }
+
+    let schedules = schedulesByTime.map { group -> TimetableExportSchedule in
+      let sessions = group.slots.map { slot -> TimetableExportSession in
+        if let proposal = slot.proposal {
+          return TimetableExportSession(
+            title: proposal.title,
+            titleJa: nil,
+            summary: String(proposal.abstract.prefix(200)),
+            summaryJa: nil,
+            speakers: [
+              TimetableExportSpeaker(
+                name: proposal.speakerName,
+                imageName:
+                  proposal.speakerName.lowercased().replacingOccurrences(of: " ", with: "_"),
+                bio: proposal.bio,
+                bioJa: nil,
+                links: []
+              )
+            ],
+            place: slot.place,
+            placeJa: slot.placeJa,
+            description: proposal.abstract,
+            descriptionJa: nil
+          )
+        } else {
+          return TimetableExportSession(
+            title: slot.customTitle ?? slot.slotType.displayName,
+            titleJa: slot.customTitleJa,
+            summary: nil,
+            summaryJa: nil,
+            speakers: nil,
+            place: slot.place,
+            placeJa: slot.placeJa,
+            description: slot.descriptionText,
+            descriptionJa: slot.descriptionTextJa
+          )
+        }
+      }
+      return TimetableExportSchedule(time: group.time, sessions: sessions)
+    }
+
+    let dayDate: Date
+    if let startDate = conference.startDate {
+      dayDate = Calendar.current.date(byAdding: .day, value: day - 1, to: startDate) ?? startDate
+    } else {
+      dayDate = Date()
+    }
+
+    let dayLabels = ["Workshop", "Day 1", "Day 2"]
+    let dayLabel = day <= dayLabels.count ? dayLabels[day - 1] : "Day \(day)"
+
+    return TimetableExportConference(
+      id: day,
+      title: dayLabel,
+      titleJa: nil,
+      date: dayDate,
+      schedules: schedules
+    )
+  }
+
+  // MARK: - Timetable Helper Types
+
+  struct DayInfo: Sendable {
+    let dayNumber: Int
+    let label: String
+    let date: Date?
+  }
+
+  func computeConferenceDays(conference: Conference) -> [DayInfo] {
+    guard let startDate = conference.startDate, let endDate = conference.endDate else {
+      return [DayInfo(dayNumber: 1, label: "Day 1", date: nil)]
+    }
+
+    var days: [DayInfo] = []
+    let calendar = Calendar.current
+    var current = startDate
+    var dayNum = 1
+    let dayLabels = ["Workshop", "Day 1", "Day 2"]
+
+    while current <= endDate {
+      let label = dayNum <= dayLabels.count ? dayLabels[dayNum - 1] : "Day \(dayNum)"
+      days.append(DayInfo(dayNumber: dayNum, label: label, date: current))
+      dayNum += 1
+      guard let next = calendar.date(byAdding: .day, value: 1, to: current) else { break }
+      current = next
+    }
+
+    return days
   }
 
   // MARK: - Helper Methods
