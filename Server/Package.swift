@@ -35,6 +35,7 @@ let package = Package(
       name: "ServerTests",
       dependencies: [
         "Server",
+        .product(name: "SharedModels", package: "SharedModels"),
         .product(name: "XCTVapor", package: "vapor"),
       ],
       swiftSettings: [
