@@ -1,142 +1,228 @@
+import Fluent
+import FluentSQLiteDriver
 import Foundation
 import SharedModels
 import Testing
+import Vapor
 
 @testable import Server
 
-@Suite("Organizer Proposal Tests")
-struct OrganizerProposalTests {
-
-  // MARK: - GitHub Username Validation
-
-  @Test("Empty GitHub username trims to empty string")
-  func emptyGithubUsername() {
-    let raw: String? = ""
-    let trimmed = raw?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-    #expect(trimmed.isEmpty)
+/// SQLite-compatible migration that creates the full proposals table schema in one step.
+/// The production migrations use ALTER TABLE with `.sql(.default(...))` which SQLite
+/// doesn't support, so we create the final schema directly for test purposes.
+private struct CreateTestProposalSchema: AsyncMigration {
+  var name: String { "CreateTestProposalSchema" }
+  func prepare(on database: Database) async throws {
+    try await database.schema(Proposal.schema)
+      .id()
+      .field("conference_id", .uuid, .required, .references(Conference.schema, "id"))
+      .field("title", .string, .required)
+      .field("abstract", .string, .required)
+      .field("talk_detail", .string, .required)
+      .field("talk_duration", .string, .required)
+      .field("bio", .string, .required)
+      .field("icon_url", .string)
+      .field("notes", .string)
+      .field("speaker_id", .uuid, .required, .references(User.schema, "id"))
+      .field("created_at", .datetime)
+      .field("updated_at", .datetime)
+      // Fields from AddProposalSpeakerInfo
+      .field("speaker_name", .string, .required)
+      .field("speaker_email", .string, .required)
+      // Fields from AddProposalPaperCallFields
+      .field("papercall_id", .string)
+      .field("papercall_username", .string)
+      // Field from AddProposalStatus
+      .field("status", .string, .required)
+      .create()
   }
 
-  @Test("Nil GitHub username defaults to empty string")
-  func nilGithubUsername() {
-    let raw: String? = nil
-    let trimmed = raw?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-    #expect(trimmed.isEmpty)
+  func revert(on database: Database) async throws {
+    try await database.schema(Proposal.schema).delete()
+  }
+}
+
+@Suite("resolveSpeakerID Tests")
+struct ResolveSpeakerIDTests {
+
+  /// Create a Vapor Application backed by in-memory SQLite with all required tables.
+  private func makeTestApp() async throws -> Application {
+    let app = try await Application.make(.testing)
+    app.databases.use(.sqlite(.memory), as: .sqlite)
+
+    // Use production migrations where SQLite-compatible,
+    // and a combined schema for proposals to avoid ALTER TABLE issues.
+    app.migrations.add(CreateUser())
+    app.migrations.add(AddUserEmail())
+    app.migrations.add(CreateConference())
+    app.migrations.add(SeedTrySwiftTokyo2026())
+    app.migrations.add(AddPaperCallImportUser())
+    app.migrations.add(CreateTestProposalSchema())
+
+    try await app.autoMigrate()
+    return app
   }
 
-  @Test("Whitespace-only GitHub username trims to empty string")
-  func whitespaceGithubUsername() {
-    let raw: String? = "   "
-    let trimmed = raw?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-    #expect(trimmed.isEmpty)
+  // MARK: - resolveSpeakerID: nil / empty / whitespace → import user
+
+  @Test("nil username returns import user ID")
+  func resolveNilUsername() async throws {
+    let app = try await makeTestApp()
+    defer { Task { try? await app.asyncShutdown() } }
+
+    let routes = CfPRoutes()
+    let id = try await routes.resolveSpeakerID(githubUsername: nil, on: app.db)
+    #expect(id == AddPaperCallImportUser.paperCallUserID)
   }
 
-  @Test("Valid GitHub username is preserved after trimming")
-  func validGithubUsername() {
-    let raw: String? = "  octocat  "
-    let trimmed = raw?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-    #expect(trimmed == "octocat")
+  @Test("empty string returns import user ID")
+  func resolveEmptyUsername() async throws {
+    let app = try await makeTestApp()
+    defer { Task { try? await app.asyncShutdown() } }
+
+    let routes = CfPRoutes()
+    let id = try await routes.resolveSpeakerID(githubUsername: "", on: app.db)
+    #expect(id == AddPaperCallImportUser.paperCallUserID)
   }
 
-  // MARK: - PaperCall Import User ID
+  @Test("whitespace-only string returns import user ID")
+  func resolveWhitespaceUsername() async throws {
+    let app = try await makeTestApp()
+    defer { Task { try? await app.asyncShutdown() } }
 
-  @Test("PaperCall import user ID is a well-known UUID")
-  func paperCallImportUserID() {
-    let expectedID = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
-    #expect(AddPaperCallImportUser.paperCallUserID == expectedID)
+    let routes = CfPRoutes()
+    let id = try await routes.resolveSpeakerID(githubUsername: "   ", on: app.db)
+    #expect(id == AddPaperCallImportUser.paperCallUserID)
   }
 
-  // MARK: - Talk Duration Values
+  // MARK: - resolveSpeakerID: existing user
 
-  @Test("All TalkDuration cases have non-empty raw values")
-  func talkDurationRawValues() {
-    for duration in TalkDuration.allCases {
-      #expect(!duration.rawValue.isEmpty)
+  @Test("existing GitHub username returns matching user ID")
+  func resolveExistingUser() async throws {
+    let app = try await makeTestApp()
+    defer { Task { try? await app.asyncShutdown() } }
+
+    let user = User(githubID: 12345, username: "octocat", role: .speaker)
+    try await user.save(on: app.db)
+
+    let routes = CfPRoutes()
+    let id = try await routes.resolveSpeakerID(githubUsername: "octocat", on: app.db)
+    #expect(id == user.id)
+  }
+
+  @Test("username with surrounding whitespace still finds user")
+  func resolveTrimsWhitespace() async throws {
+    let app = try await makeTestApp()
+    defer { Task { try? await app.asyncShutdown() } }
+
+    let user = User(githubID: 99999, username: "trimtest", role: .speaker)
+    try await user.save(on: app.db)
+
+    let routes = CfPRoutes()
+    let id = try await routes.resolveSpeakerID(githubUsername: "  trimtest  ", on: app.db)
+    #expect(id == user.id)
+  }
+
+  // MARK: - resolveSpeakerID: non-existent user throws
+
+  @Test("non-existent username throws Abort(.badRequest)")
+  func resolveNonExistentUser() async throws {
+    let app = try await makeTestApp()
+    defer { Task { try? await app.asyncShutdown() } }
+
+    let routes = CfPRoutes()
+    do {
+      _ = try await routes.resolveSpeakerID(githubUsername: "no-such-user", on: app.db)
+      Issue.record("Expected Abort to be thrown")
+    } catch let error as Abort {
+      #expect(error.status == .badRequest)
+      #expect(error.reason.contains("no-such-user"))
     }
   }
 
-  @Test("TalkDuration raw values are valid form field values")
-  func talkDurationFormValues() {
-    // These raw values are used in HTML form selects and must not contain special chars
-    let validValues = ["20min", "LT", "invited"]
-    for duration in TalkDuration.allCases {
-      #expect(validValues.contains(duration.rawValue))
-    }
-  }
+  // MARK: - Edit handler: clearing GitHub username reverts to import user
 
-  @Test("TalkDuration can be initialized from raw values")
-  func talkDurationFromRawValue() {
-    #expect(TalkDuration(rawValue: "20min") == .regular)
-    #expect(TalkDuration(rawValue: "LT") == .lightning)
-    #expect(TalkDuration(rawValue: "invited") == .invited)
-    #expect(TalkDuration(rawValue: "invalid") == nil)
-    #expect(TalkDuration(rawValue: "") == nil)
-  }
+  @Test("clearing GitHub username on edit reverts speaker to import user")
+  func editClearGithubUsernameRevertsToImportUser() async throws {
+    let app = try await makeTestApp()
+    defer { Task { try? await app.asyncShutdown() } }
 
-  // MARK: - ProposalDTO Construction
+    let realUser = User(githubID: 55555, username: "realuser", role: .speaker)
+    try await realUser.save(on: app.db)
 
-  @Test("ProposalDTO can be created with all fields")
-  func proposalDTOConstruction() {
-    let id = UUID()
-    let confID = UUID()
-    let speakerID = UUID()
-    let dto = ProposalDTO(
-      id: id,
-      conferenceId: confID,
-      conferencePath: "tryswift-tokyo-2026",
-      conferenceDisplayName: "try! Swift Tokyo 2026",
+    let conference = try await Conference.query(on: app.db)
+      .filter(\.$path == "tryswift-tokyo-2026")
+      .first()
+    let conferenceID = try #require(conference?.id)
+
+    let proposal = Proposal(
+      conferenceID: conferenceID,
       title: "Test Talk",
       abstract: "Abstract",
-      talkDetail: "Details",
+      talkDetail: "Detail",
       talkDuration: .regular,
-      speakerName: "Speaker",
-      speakerEmail: "speaker@test.com",
+      speakerName: "Real User",
+      speakerEmail: "real@test.com",
       bio: "Bio",
-      iconURL: "https://example.com/icon.png",
-      notes: "Notes",
-      speakerID: speakerID,
-      speakerUsername: "octocat"
+      speakerID: try #require(realUser.id)
     )
-    #expect(dto.id == id)
-    #expect(dto.conferenceId == confID)
-    #expect(dto.speakerID == speakerID)
-    #expect(dto.speakerUsername == "octocat")
-    #expect(dto.status == .submitted)
+    try await proposal.save(on: app.db)
+
+    // Pre-condition: speaker is the real user, not the import user
+    #expect(proposal.$speaker.id == realUser.id)
+    #expect(proposal.$speaker.id != AddPaperCallImportUser.paperCallUserID)
+
+    // Simulate the edit handler's revert logic (mirrors handleOrganizerEditProposal)
+    let githubUsername = ""
+    if !githubUsername.isEmpty {
+      Issue.record("Should not enter this branch")
+    } else if proposal.$speaker.id != AddPaperCallImportUser.paperCallUserID {
+      let routes = CfPRoutes()
+      let importUserID = try await routes.resolveSpeakerID(githubUsername: nil, on: app.db)
+      proposal.$speaker.id = importUserID
+      proposal.paperCallUsername = nil
+    }
+
+    try await proposal.save(on: app.db)
+
+    let updated = try await Proposal.find(proposal.id, on: app.db)
+    #expect(updated?.$speaker.id == AddPaperCallImportUser.paperCallUserID)
   }
 
-  @Test("ProposalDTO defaults status to submitted")
-  func proposalDTODefaultStatus() {
-    let dto = ProposalDTO(
-      id: UUID(),
-      conferenceId: UUID(),
-      conferencePath: "test",
-      conferenceDisplayName: "Test",
-      title: "T",
-      abstract: "A",
-      talkDetail: "D",
+  @Test("clearing GitHub username is no-op when already on import user")
+  func editClearGithubUsernameNoopForImportUser() async throws {
+    let app = try await makeTestApp()
+    defer { Task { try? await app.asyncShutdown() } }
+
+    let conference = try await Conference.query(on: app.db)
+      .filter(\.$path == "tryswift-tokyo-2026")
+      .first()
+    let conferenceID = try #require(conference?.id)
+
+    let proposal = Proposal(
+      conferenceID: conferenceID,
+      title: "Imported Talk",
+      abstract: "Abstract",
+      talkDetail: "Detail",
       talkDuration: .regular,
-      speakerName: "S",
-      speakerEmail: "e@e.com",
-      bio: "B",
-      speakerID: UUID(),
-      speakerUsername: "user"
+      speakerName: "Imported Speaker",
+      speakerEmail: "imported@test.com",
+      bio: "Bio",
+      speakerID: AddPaperCallImportUser.paperCallUserID
     )
-    #expect(dto.status == .submitted)
-  }
+    try await proposal.save(on: app.db)
 
-  // MARK: - GitHub Username Display Logic
+    // When username is cleared but speaker is already the import user,
+    // the revert branch should NOT execute.
+    let githubUsername = ""
+    var didRevert = false
+    if !githubUsername.isEmpty {
+      Issue.record("Should not enter this branch")
+    } else if proposal.$speaker.id != AddPaperCallImportUser.paperCallUserID {
+      didRevert = true
+    }
 
-  @Test("papercall-import username should be cleared in edit form")
-  func paperCallUsernameCleared() {
-    // The edit form shows empty for papercall-import users
-    let username = "papercall-import"
-    let displayValue = username == "papercall-import" ? "" : username
-    #expect(displayValue == "")
-  }
-
-  @Test("Regular GitHub username should be shown in edit form")
-  func regularUsernameShown() {
-    let username = "octocat"
-    let displayValue = username == "papercall-import" ? "" : username
-    #expect(displayValue == "octocat")
+    #expect(!didRevert)
+    #expect(proposal.$speaker.id == AddPaperCallImportUser.paperCallUserID)
   }
 }

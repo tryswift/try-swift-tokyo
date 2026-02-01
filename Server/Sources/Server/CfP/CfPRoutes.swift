@@ -1390,7 +1390,7 @@ struct CfPRoutes: RouteCollection {
       throw Abort(.badRequest, reason: "Invalid talk duration")
     }
 
-    // Update speaker user if GitHub username is provided
+    // Update speaker user based on GitHub username field
     let githubUsername =
       formData.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
     if !githubUsername.isEmpty {
@@ -1398,6 +1398,11 @@ struct CfPRoutes: RouteCollection {
         githubUsername: formData.githubUsername, on: req.db)
       proposal.$speaker.id = resolvedID
       proposal.paperCallUsername = githubUsername
+    } else if proposal.$speaker.id != AddPaperCallImportUser.paperCallUserID {
+      // Clear: revert to system import user
+      let importUserID = try await resolveSpeakerID(githubUsername: nil, on: req.db)
+      proposal.$speaker.id = importUserID
+      proposal.paperCallUsername = nil
     }
 
     // Update proposal
