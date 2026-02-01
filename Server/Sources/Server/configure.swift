@@ -50,6 +50,7 @@ enum AppConfiguration {
     app.migrations.add(AddProposalPaperCallFields())
     app.migrations.add(AddProposalStatus())
     app.migrations.add(CreateScheduleSlot())
+    app.migrations.add(AddScheduleSlotIndexes())
 
     // Auto-migrate on startup (safe for production as Fluent tracks completed migrations)
     try await app.autoMigrate()

@@ -1558,41 +1558,60 @@ struct CfPRoutes: RouteCollection {
       throw Abort(.notFound, reason: "Slot not found")
     }
 
+    // Use Codable wrapper to distinguish missing vs explicit null
+    struct OptionalField<T: Codable & Sendable>: Codable, Sendable {
+      let value: T?
+      init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.value = container.decodeNil() ? nil : try container.decode(T.self)
+      }
+    }
+
     struct UpdateSlotRequest: Content {
       var proposalId: UUID?
       var day: Int?
       var startTime: String?
       var endTime: String?
       var slotType: String?
-      var customTitle: String?
-      var customTitleJa: String?
-      var place: String?
-      var placeJa: String?
+      var customTitle: OptionalField<String>?
+      var customTitleJa: OptionalField<String>?
+      var place: OptionalField<String>?
+      var placeJa: OptionalField<String>?
     }
 
     let body = try req.content.decode(UpdateSlotRequest.self)
     let formatter = ISO8601DateFormatter()
     formatter.formatOptions = [.withInternetDateTime]
 
-    if let slotTypeStr = body.slotType, let slotType = SlotType(rawValue: slotTypeStr) {
+    if let slotTypeStr = body.slotType {
+      guard let slotType = SlotType(rawValue: slotTypeStr) else {
+        throw Abort(.badRequest, reason: "Invalid slot type")
+      }
       slot.slotType = slotType
     }
     if let day = body.day {
       slot.day = day
     }
-    if let startTimeStr = body.startTime, let startTime = formatter.date(from: startTimeStr) {
+    if let startTimeStr = body.startTime {
+      guard let startTime = formatter.date(from: startTimeStr) else {
+        throw Abort(.badRequest, reason: "Invalid startTime format")
+      }
       slot.startTime = startTime
     }
     if let endTimeStr = body.endTime {
-      slot.endTime = formatter.date(from: endTimeStr)
+      guard let endTime = formatter.date(from: endTimeStr) else {
+        throw Abort(.badRequest, reason: "Invalid endTime format")
+      }
+      slot.endTime = endTime
     }
     if let proposalId = body.proposalId {
       slot.$proposal.id = proposalId
     }
-    slot.customTitle = body.customTitle ?? slot.customTitle
-    slot.customTitleJa = body.customTitleJa ?? slot.customTitleJa
-    slot.place = body.place ?? slot.place
-    slot.placeJa = body.placeJa ?? slot.placeJa
+    // OptionalField: present with value → set, present with null → clear, absent → keep
+    if let field = body.customTitle { slot.customTitle = field.value }
+    if let field = body.customTitleJa { slot.customTitleJa = field.value }
+    if let field = body.place { slot.place = field.value }
+    if let field = body.placeJa { slot.placeJa = field.value }
 
     try await slot.save(on: req.db)
 

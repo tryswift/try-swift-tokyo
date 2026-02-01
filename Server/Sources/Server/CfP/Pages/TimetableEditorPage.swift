@@ -9,6 +9,17 @@ struct TimetableEditorPageView: HTML, Sendable {
   let slots: [ScheduleSlotDTO]
   let days: [CfPRoutes.DayInfo]
 
+  /// Generate JS object mapping dayNumber -> ISO date string
+  private var dayDatesJSON: String {
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = [.withFullDate]
+    let entries = days.compactMap { day -> String? in
+      guard let date = day.date else { return nil }
+      return "\(day.dayNumber): '\(formatter.string(from: date))'"
+    }
+    return entries.joined(separator: ", ")
+  }
+
   var body: some HTML {
     div(.class("container-fluid py-4 px-4")) {
       if let user, user.role == .admin {
@@ -533,6 +544,7 @@ struct TimetableEditorPageView: HTML, Sendable {
         """
         document.addEventListener('DOMContentLoaded', function() {
           var conferenceId = '\(conference?.id.uuidString ?? "")';
+          var dayDates = {\(dayDatesJSON)};
 
           // ============================================================
           // Utility: Format ISO date string to HH:MM in JST
@@ -565,8 +577,14 @@ struct TimetableEditorPageView: HTML, Sendable {
             if (parts.length < 2) return null;
             var hours = parseInt(parts[0], 10);
             var minutes = parseInt(parts[1], 10);
-            // Use 2026-04-09 as base workshop day (day 1)
-            // day 1 = Apr 9, day 2 = Apr 10, day 3 = Apr 11
+            // Use conference day dates from server data
+            var dayISO = dayDates[dayNumber];
+            if (dayISO) {
+              var ref = new Date(dayISO);
+              var baseDate = new Date(Date.UTC(ref.getUTCFullYear(), ref.getUTCMonth(), ref.getUTCDate(), hours - 9, minutes, 0));
+              return baseDate.toISOString();
+            }
+            // Fallback: use epoch-based date
             var baseDate = new Date(Date.UTC(2026, 3, 8 + dayNumber, hours - 9, minutes, 0));
             return baseDate.toISOString();
           }
