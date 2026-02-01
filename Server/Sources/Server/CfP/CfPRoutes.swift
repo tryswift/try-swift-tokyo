@@ -1667,7 +1667,7 @@ struct CfPRoutes: RouteCollection {
     let json = try await buildTimetableJSON(
       req: req, conference: conference, conferenceID: conferenceID, day: day)
 
-    return try encodeTimetableResponse(json, filename: "2026-day\(day).json")
+    return try encodeTimetableResponse(json, filename: "\(conference.year)-day\(day).json")
   }
 
   @Sendable
