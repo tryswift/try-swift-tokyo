@@ -20,7 +20,7 @@ public struct LiveTranslation: Sendable {
     /// Live Translation Room Info
     var roomInfo: ChatRoomEntity.Make.Response? = .none
     /// Current language code which user selected
-    @Shared(.appStorage("selectedLangCode")) var selectedLangCode: String =
+    @Shared(.selectedLangCode) var selectedLangCode: String =
       Locale.autoupdatingCurrent.language.languageCode?.identifier ?? "en"
 
     /// While updating chat
@@ -703,6 +703,12 @@ extension Array {
       let endIndex = index(startIndex, offsetBy: size, limitedBy: count) ?? endIndex
       return Array(self[startIndex..<endIndex])
     }
+  }
+}
+
+extension SharedKey where Self == AppStorageKey<String> {
+  static var selectedLangCode: Self {
+    appStorage("selectedLangCode")
   }
 }
 
