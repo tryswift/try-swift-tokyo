@@ -206,7 +206,11 @@ public struct GuidanceView: View {
           .padding(.horizontal, 12)
           .padding(.vertical, 8)
         }
+        #if os(iOS) || os(macOS)
         .buttonStyle(.glassProminent)
+        #else
+        .buttonStyle(.borderedProminent)
+        #endif
         .buttonBorderShape(.capsule)
         .padding(.horizontal)
         directions
