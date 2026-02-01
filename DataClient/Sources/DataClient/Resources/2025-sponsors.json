@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "RevenueCat",
-      "imageName": "PLATINUM_RevenueCat",
+      "imageName": "2025_RevenueCat",
       "link": "http://rev.cat/"
     }
   ],
@@ -11,72 +11,72 @@
     {
       "id": 2,
       "name": "株式会社U-NEXT",
-      "imageName": "GOLD_u-next",
+      "imageName": "2025_U-NEXT",
       "link": "https://www.unext.co.jp/en",
       "japanese_link": "https://www.unext.co.jp/"
     },
     {
       "id": 3,
       "name": "KINTOテクノロジーズ株式会社",
-      "imageName": "GOLD_kinto-technologies",
+      "imageName": "2025_KINTO-Technologies",
       "link": "https://www.kinto-technologies.com/"
     },
     {
       "id": 4,
       "name": "合同会社DMM.com",
-      "imageName": "GOLD_DMM",
+      "imageName": "2025_DMM",
       "link": "https://dmm-corp.com/"
     },
     {
       "id": 5,
       "name": "株式会社サイバーエージェント",
-      "imageName": "GOLD_CyberAgent",
+      "imageName": "2025_CyberAgent",
       "link": "https://www.cyberagent.co.jp/en/",
       "japanese_link": "https://www.cyberagent.co.jp/"
     },
     {
       "id": 6,
       "name": "LINEヤフー株式会社",
-      "imageName": "GOLD_LINEヤフー",
+      "imageName": "2025_LINEヤフー",
       "link": "https://www.lycorp.co.jp/en/",
       "japanese_link": "https://www.lycorp.co.jp/ja/"
     },
     {
       "id": 7,
       "name": "株式会社TVer",
-      "imageName": "GOLD_TVer",
+      "imageName": "2025_TVer",
       "link": "https://recruit.tver.co.jp/"
     },
     {
       "id": 8,
       "name": "株式会社MagicPod",
-      "imageName": "GOLD_MagicPod",
+      "imageName": "2025_MagicPod",
       "link": "https://magicpod.com/en/",
       "japanese_link": "https://magicpod.com/"
     },
     {
       "id": 9,
       "name": "オイシックス・ラ・大地株式会社",
-      "imageName": "GOLD_ORD",
+      "imageName": "2025_Oisix-ra-daichi",
       "link": "https://recruit.oisixradaichi.co.jp/"
     },
     {
       "id": 10,
       "name": "株式会社ディー・エヌ・エー",
-      "imageName": "GOLD_DeNA",
+      "imageName": "2025_DeNA",
       "link": "https://dena.com/intl/",
       "japanese_link": "https://dena.com/"
     },
     {
       "id": 22,
       "name": "Tramline",
-      "imageName": "GOLD_Tramline",
+      "imageName": "2025_Tramline",
       "link": "https://www.tramline.app/"
     },
     {
       "id": 24,
       "name": "株式会社MIXI",
-      "imageName": "GOLD_MIXI",
+      "imageName": "2025_MIXI",
       "link": "https://mixi.co.jp/en/",
       "japanese_link": "https://mixi.co.jp"
     }
@@ -85,40 +85,40 @@
     {
       "id": 11,
       "name": "株式会社はてな",
-      "imageName": "SILVER_hatena",
+      "imageName": "2025_hatena",
       "link": "https://hatena.co.jp"
     },
     {
       "id": 12,
       "name": "株式会社メドレー",
-      "imageName": "SILVER_medley",
+      "imageName": "2025_MEDLEY",
       "link": "https://www.medley.jp/en/",
       "japanese_link": "https://www.medley.jp/"
     },
     {
       "id": 13,
       "name": "newmo株式会社",
-      "imageName": "SILVER_newmo",
+      "imageName": "2025_newmo",
       "link": "https://newmo.me/"
     },
     {
       "id": 14,
       "name": "野村ホールディングス株式会社",
-      "imageName": "SILVER_nomura",
+      "imageName": "2025_NOMURA",
       "link": "https://www.nomuraholdings.com/top.html",
       "japanese_link": "https://www.nomuraholdings.com/jp/top.html"
     },
     {
       "id": 15,
       "name": "株式会社メルカリ",
-      "imageName": "SILVER_mercari",
+      "imageName": "2025_mercari",
       "link": "https://about.mercari.com/en/",
       "japanese_link": "https://about.mercari.com/"
     },
     {
       "id": 16,
       "name": "株式会社マネーフォワード",
-      "imageName": "SILVER_ moneyforward",
+      "imageName": "2025_MoneyForward",
       "link": "https://corp.moneyforward.com/en/",
       "japanese_link": "https://corp.moneyforward.com/"
     }
@@ -127,39 +127,39 @@
     {
       "id": 17,
       "name": "サイボウズ株式会社",
-      "imageName": "BRONZE_cybozu",
+      "imageName": "2025_cybozu",
       "link": "https://tech.cybozu.io/"
     },
     {
       "id": 18,
       "name": "株式会社ミラティブ",
-      "imageName": "BRONZE_mirrativ",
+      "imageName": "2025_Mirrative",
       "link": "https://www.mirrativ.co.jp/en",
       "japanese_link": "https://www.mirrativ.co.jp/"
     },
     {
       "id": 19,
       "name": "ピクシブ株式会社",
-      "imageName": "BRONZE_pixiv",
+      "imageName": "2025_pixiv",
       "link": "https://www.pixiv.co.jp/"
     },
     {
       "id": 20,
       "name": "ZOZO, Inc.",
-      "imageName": "BRONZE_zozo",
+      "imageName": "2025_ZOZO",
       "link": "https://corp.zozo.com/en/",
       "japanese_link": "https://corp.zozo.com/"
     },
     {
       "id": 21,
       "name": "株式会社スマートバンク",
-      "imageName": "BRONZE_smartbank",
+      "imageName": "2025_SmartBank",
       "link": "https://smartbank.co.jp/"
     },
     {
       "id": 25,
       "name": "株式会社Luup",
-      "imageName": "BRONZE_Luup",
+      "imageName": "2025_Luup",
       "link": "https://luup.sc/en/",
       "japanese_link": "https://luup.sc/"
     }
@@ -168,21 +168,21 @@
     {
       "id": 6,
       "name": "LINEヤフー株式会社",
-      "imageName": "GOLD_LINEヤフー",
+      "imageName": "2025_LINEヤフー",
       "link": "https://www.lycorp.co.jp/en/",
       "japanese_link": "https://www.lycorp.co.jp/ja/"
     },
     {
       "id": 15,
       "name": "株式会社メルカリ",
-      "imageName": "SILVER_mercari",
+      "imageName": "2025_mercari",
       "link": "https://about.mercari.com/en/",
       "japanese_link": "https://about.mercari.com/"
     },
     {
       "id": 20,
       "name": "ZOZO, Inc.",
-      "imageName": "BRONZE_zozo",
+      "imageName": "2025_ZOZO",
       "link": "https://corp.zozo.com/en/",
       "japanese_link": "https://corp.zozo.com/"
     }
@@ -191,45 +191,45 @@
     {
       "id": 1,
       "name": "RevenueCat",
-      "imageName": "PLATINUM_RevenueCat",
+      "imageName": "2025_RevenueCat",
       "link": "http://rev.cat/"
     },
     {
       "id": 15,
       "name": "株式会社メルカリ",
-      "imageName": "SILVER_mercari",
+      "imageName": "2025_mercari",
       "link": "https://about.mercari.com/en/",
       "japanese_link": "https://about.mercari.com/"
     },
     {
       "id": 17,
       "name": "サイボウズ株式会社",
-      "imageName": "BRONZE_cybozu",
+      "imageName": "2025_cybozu",
       "link": "https://tech.cybozu.io/"
     },
     {
       "id": 19,
       "name": "ピクシブ株式会社",
-      "imageName": "BRONZE_pixiv",
+      "imageName": "2025_pixiv",
       "link": "https://www.pixiv.co.jp/"
     },
     {
       "id": 20,
       "name": "ZOZO, Inc.",
-      "imageName": "BRONZE_zozo",
+      "imageName": "2025_ZOZO",
       "link": "https://corp.zozo.com/en/",
       "japanese_link": "https://corp.zozo.com/"
     },
     {
       "id": 23,
       "name": "岸川克己",
-      "imageName": "STUDENT_SCHOLARSHIP_kishikawakatsumi",
+      "imageName": "2025_KishikawaKatsumi",
       "link": "https://kishikawakatsumi.com/"
     },
     {
       "id": 24,
       "name": "株式会社MIXI",
-      "imageName": "GOLD_MIXI",
+      "imageName": "2025_MIXI",
       "link": "https://mixi.co.jp/en/",
       "japanese_link": "https://mixi.co.jp"
     }
@@ -238,25 +238,25 @@
     {
       "id": 1,
       "name": "DroidKaigi Association",
-      "imageName": "COMMUNITY_DroidKaigi",
+      "imageName": "2025_DroidKaigi",
       "link": "https://droidkaigi.jp/"
     },
     {
       "id": 2,
       "name": "サイフォン合同会社",
-      "imageName": "COMMUNITY_Scivone",
+      "imageName": "2025_SCIVONE",
       "link": "https://www.scivone.com"
     },
     {
       "id": 3,
       "name": "Emerge Tools",
-      "imageName": "COMMUNITY_Emerge-Tools",
+      "imageName": "2025_Emerge-Tools",
       "link": "https://www.emergetools.com/"
     },
     {
       "id": 4,
       "name": "Flitto",
-      "imageName": "COMMUNITY_Flitto",
+      "imageName": "2025_Flitto",
       "link": "https://flitto.com/"
     }
   ],
