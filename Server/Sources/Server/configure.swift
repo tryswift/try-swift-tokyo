@@ -48,6 +48,8 @@ enum AppConfiguration {
     app.migrations.add(AddProposalSpeakerInfo())
     app.migrations.add(AddPaperCallImportUser())
     app.migrations.add(AddProposalPaperCallFields())
+    app.migrations.add(AddProposalStatus())
+    app.migrations.add(CreateScheduleSlot())
 
     // Auto-migrate on startup (safe for production as Fluent tracks completed migrations)
     try await app.autoMigrate()

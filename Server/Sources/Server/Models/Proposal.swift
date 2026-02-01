@@ -57,6 +57,10 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @OptionalField(key: "papercall_username")
   var paperCallUsername: String?
 
+  /// Proposal review status
+  @Field(key: "status")
+  var status: ProposalStatus
+
   /// Reference to the speaker who submitted the proposal
   @Parent(key: "speaker_id")
   var speaker: User
@@ -82,7 +86,8 @@ final class Proposal: Model, Content, @unchecked Sendable {
     bio: String,
     iconURL: String? = nil,
     notes: String? = nil,
-    speakerID: UUID
+    speakerID: UUID,
+    status: ProposalStatus = .submitted
   ) {
     self.id = id
     self.$conference.id = conferenceID
@@ -96,6 +101,7 @@ final class Proposal: Model, Content, @unchecked Sendable {
     self.iconURL = iconURL
     self.notes = notes
     self.$speaker.id = speakerID
+    self.status = status
   }
 
   /// Convert to DTO for API responses
@@ -122,6 +128,7 @@ final class Proposal: Model, Content, @unchecked Sendable {
       notes: notes,
       speakerID: $speaker.id,
       speakerUsername: speakerUsername,
+      status: status,
       createdAt: createdAt,
       updatedAt: updatedAt
     )

@@ -73,11 +73,19 @@ struct OrganizerProposalsPageView: HTML, Sendable {
 
   @HTMLBuilder
   private func renderStatsCards() -> some HTML {
-    div(.class("row mb-4")) {
-      div(.class("col-md-4")) {
+    let acceptedCount = proposals.filter { $0.status == .accepted }.count
+    let rejectedCount = proposals.filter { $0.status == .rejected }.count
+    let submittedCount = proposals.filter { $0.status == .submitted }.count
+    let regularCount = proposals.filter { $0.talkDuration == .regular }.count
+    let ltCount = proposals.filter { $0.talkDuration == .lightning }.count
+
+    // Status stats row
+    div(.class("row mb-3")) {
+      div(.class("col-md-3")) {
         div(
           .class("card bg-primary text-white proposal-filter-card"),
           .data("filter", value: "all"),
+          .data("filter-type", value: "status"),
           .style("cursor: pointer;"),
           .role("button")
         ) {
@@ -87,11 +95,57 @@ struct OrganizerProposalsPageView: HTML, Sendable {
           }
         }
       }
+      div(.class("col-md-3")) {
+        div(
+          .class("card bg-secondary text-white proposal-filter-card"),
+          .data("filter", value: "submitted"),
+          .data("filter-type", value: "status"),
+          .style("cursor: pointer;"),
+          .role("button")
+        ) {
+          div(.class("card-body")) {
+            h3(.class("card-title mb-0")) { HTMLText("\(submittedCount)") }
+            p(.class("card-text mb-0")) { "Submitted" }
+          }
+        }
+      }
+      div(.class("col-md-3")) {
+        div(
+          .class("card bg-success text-white proposal-filter-card"),
+          .data("filter", value: "accepted"),
+          .data("filter-type", value: "status"),
+          .style("cursor: pointer;"),
+          .role("button")
+        ) {
+          div(.class("card-body")) {
+            h3(.class("card-title mb-0")) { HTMLText("\(acceptedCount)") }
+            p(.class("card-text mb-0")) { "Accepted" }
+          }
+        }
+      }
+      div(.class("col-md-3")) {
+        div(
+          .class("card bg-danger text-white proposal-filter-card"),
+          .data("filter", value: "rejected"),
+          .data("filter-type", value: "status"),
+          .style("cursor: pointer;"),
+          .role("button")
+        ) {
+          div(.class("card-body")) {
+            h3(.class("card-title mb-0")) { HTMLText("\(rejectedCount)") }
+            p(.class("card-text mb-0")) { "Rejected" }
+          }
+        }
+      }
+    }
+
+    // Duration stats row
+    div(.class("row mb-4")) {
       div(.class("col-md-4")) {
-        let regularCount = proposals.filter { $0.talkDuration == .regular }.count
         div(
           .class("card bg-info text-white proposal-filter-card"),
           .data("filter", value: "20min"),
+          .data("filter-type", value: "duration"),
           .style("cursor: pointer;"),
           .role("button")
         ) {
@@ -102,10 +156,25 @@ struct OrganizerProposalsPageView: HTML, Sendable {
         }
       }
       div(.class("col-md-4")) {
-        let ltCount = proposals.filter { $0.talkDuration == .lightning }.count
+        let invitedCount = proposals.filter { $0.talkDuration == .invited }.count
+        div(
+          .class("card bg-dark text-white proposal-filter-card"),
+          .data("filter", value: "invited"),
+          .data("filter-type", value: "duration"),
+          .style("cursor: pointer;"),
+          .role("button")
+        ) {
+          div(.class("card-body")) {
+            h3(.class("card-title mb-0")) { HTMLText("\(invitedCount)") }
+            p(.class("card-text mb-0")) { "Invited Talks" }
+          }
+        }
+      }
+      div(.class("col-md-4")) {
         div(
           .class("card bg-warning text-dark proposal-filter-card"),
           .data("filter", value: "LT"),
+          .data("filter-type", value: "duration"),
           .style("cursor: pointer;"),
           .role("button")
         ) {
@@ -144,13 +213,14 @@ struct OrganizerProposalsPageView: HTML, Sendable {
           table(.class("table table-hover mb-0")) {
             thead(.class("table-light")) {
               tr {
-                th(.style("width: 5%")) { "#" }
-                th(.style("width: 25%")) { "Title" }
-                th(.style("width: 15%")) { "Speaker" }
-                th(.style("width: 10%")) { "Duration" }
-                th(.style("width: 15%")) { "Conference" }
-                th(.style("width: 15%")) { "Submitted" }
-                th(.style("width: 15%")) { "Actions" }
+                th(.style("width: 4%")) { "#" }
+                th(.style("width: 22%")) { "Title" }
+                th(.style("width: 12%")) { "Speaker" }
+                th(.style("width: 8%")) { "Duration" }
+                th(.style("width: 8%")) { "Status" }
+                th(.style("width: 12%")) { "Conference" }
+                th(.style("width: 12%")) { "Submitted" }
+                th(.style("width: 22%")) { "Actions" }
               }
             }
             tbody {
@@ -185,34 +255,63 @@ struct OrganizerProposalsPageView: HTML, Sendable {
         document.addEventListener('DOMContentLoaded', function() {
           const filterCards = document.querySelectorAll('.proposal-filter-card');
           const proposalRows = document.querySelectorAll('.proposal-row');
-          let activeFilter = 'all';
+          let activeStatusFilter = 'all';
+          let activeDurationFilter = null;
+
+          function applyFilters() {
+            proposalRows.forEach(row => {
+              const status = row.getAttribute('data-status');
+              const duration = row.getAttribute('data-duration');
+              let show = true;
+              if (activeStatusFilter !== 'all') {
+                show = show && (status === activeStatusFilter);
+              }
+              if (activeDurationFilter) {
+                show = show && (duration === activeDurationFilter);
+              }
+              row.style.display = show ? '' : 'none';
+            });
+          }
 
           filterCards.forEach(card => {
             card.addEventListener('click', function() {
               const filter = this.getAttribute('data-filter');
-              activeFilter = filter;
+              const filterType = this.getAttribute('data-filter-type');
 
-              // Update card styles to show active state
-              filterCards.forEach(c => {
+              if (filterType === 'status') {
+                activeStatusFilter = filter;
+                // Reset duration filter when clicking status
+                activeDurationFilter = null;
+                document.querySelectorAll('[data-filter-type="duration"]').forEach(c => {
+                  c.style.opacity = '0.6';
+                  c.style.transform = 'scale(0.98)';
+                });
+              } else if (filterType === 'duration') {
+                // Toggle duration filter
+                if (activeDurationFilter === filter) {
+                  activeDurationFilter = null;
+                } else {
+                  activeDurationFilter = filter;
+                }
+              }
+
+              // Update card styles for this filter type
+              document.querySelectorAll('[data-filter-type="' + filterType + '"]').forEach(c => {
                 c.style.opacity = '0.6';
                 c.style.transform = 'scale(0.98)';
               });
-              this.style.opacity = '1';
-              this.style.transform = 'scale(1.02)';
+              if (filterType === 'duration' && activeDurationFilter === null) {
+                // All duration cards dimmed
+              } else {
+                this.style.opacity = '1';
+                this.style.transform = 'scale(1.02)';
+              }
 
-              // Filter rows
-              proposalRows.forEach(row => {
-                if (filter === 'all') {
-                  row.style.display = '';
-                } else {
-                  const duration = row.getAttribute('data-duration');
-                  row.style.display = duration === filter ? '' : 'none';
-                }
-              });
+              applyFilters();
             });
           });
 
-          // Set initial active state for "all" filter
+          // Set initial active state
           const allFilterCard = document.querySelector('[data-filter="all"]');
           if (allFilterCard) {
             allFilterCard.style.transform = 'scale(1.02)';
@@ -236,7 +335,8 @@ struct OrganizerProposalRow: HTML, Sendable {
   var body: some HTML {
     tr(
       .class("proposal-row"),
-      .data("duration", value: proposal.talkDuration.rawValue)
+      .data("duration", value: proposal.talkDuration.rawValue),
+      .data("status", value: proposal.status.rawValue)
     ) {
       td(.class("align-middle")) { HTMLText("\(index)") }
       td(.class("align-middle")) {
@@ -271,6 +371,11 @@ struct OrganizerProposalRow: HTML, Sendable {
         }
       }
       td(.class("align-middle")) {
+        span(.class("badge \(proposal.status.badgeClass)")) {
+          HTMLText(proposal.status.displayName)
+        }
+      }
+      td(.class("align-middle")) {
         small(.class("text-muted")) {
           HTMLText(proposal.conferenceDisplayName)
         }
@@ -285,11 +390,29 @@ struct OrganizerProposalRow: HTML, Sendable {
         }
       }
       td(.class("align-middle")) {
-        a(
-          .href("/organizer/proposals/\(proposal.id)"),
-          .class("btn btn-sm btn-outline-primary")
-        ) {
-          "View"
+        div(.class("d-flex gap-1")) {
+          a(
+            .href("/organizer/proposals/\(proposal.id)"),
+            .class("btn btn-sm btn-outline-primary")
+          ) {
+            "View"
+          }
+          if proposal.status == .submitted || proposal.status == .rejected {
+            HTMLRaw(
+              """
+              <form method="post" action="/organizer/proposals/\(proposal.id)/accept" style="display:inline">
+                <button type="submit" class="btn btn-sm btn-success">Accept</button>
+              </form>
+              """)
+          }
+          if proposal.status == .submitted || proposal.status == .accepted {
+            HTMLRaw(
+              """
+              <form method="post" action="/organizer/proposals/\(proposal.id)/reject" style="display:inline">
+                <button type="submit" class="btn btn-sm btn-outline-danger">Reject</button>
+              </form>
+              """)
+          }
         }
       }
     }
