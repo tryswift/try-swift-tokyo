@@ -1158,7 +1158,7 @@ struct CfPRoutes: RouteCollection {
     } catch {
       let encodedError =
         error.localizedDescription
-          .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "User+not+found"
+        .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "User+not+found"
       return req.redirect(to: "/organizer/proposals/import?error=\(encodedError)")
     }
 
