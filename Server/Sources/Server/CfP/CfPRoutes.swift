@@ -1152,39 +1152,14 @@ struct CfPRoutes: RouteCollection {
 
     // Determine speaker user ID
     let speakerID: UUID
-    let githubUsername =
-      formData.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-
-    if !githubUsername.isEmpty {
-      // Look up by GitHub username
-      guard
-        let existingUser = try await User.query(on: req.db)
-          .filter(\.$username == githubUsername)
-          .first(),
-        let existingUserID = existingUser.id
-      else {
-        let encodedError =
-          "GitHub user '\(githubUsername)' not found. The user must have logged in at least once."
+    do {
+      speakerID = try await resolveSpeakerID(
+        githubUsername: formData.githubUsername, on: req.db)
+    } catch {
+      let encodedError =
+        error.localizedDescription
           .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "User+not+found"
-        return req.redirect(to: "/organizer/proposals/import?error=\(encodedError)")
-      }
-      speakerID = existingUserID
-    } else {
-      // Use system import user
-      guard
-        let importUser = try await User.find(
-          AddPaperCallImportUser.paperCallUserID,
-          on: req.db
-        )
-      else {
-        return req.redirect(
-          to:
-            "/organizer/proposals/import?error=Import+user+not+configured.+Run+migrations+first.")
-      }
-      guard let importUserID = importUser.id else {
-        return req.redirect(to: "/organizer/proposals/import?error=Import+user+ID+missing")
-      }
-      speakerID = importUserID
+      return req.redirect(to: "/organizer/proposals/import?error=\(encodedError)")
     }
 
     let skipDuplicates = formData.skipDuplicates == "true"
@@ -1419,19 +1394,9 @@ struct CfPRoutes: RouteCollection {
     let githubUsername =
       formData.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
     if !githubUsername.isEmpty {
-      guard
-        let existingUser = try await User.query(on: req.db)
-          .filter(\.$username == githubUsername)
-          .first(),
-        let existingUserID = existingUser.id
-      else {
-        throw Abort(
-          .badRequest,
-          reason:
-            "GitHub user '\(githubUsername)' not found. The user must have logged in at least once."
-        )
-      }
-      proposal.$speaker.id = existingUserID
+      let resolvedID = try await resolveSpeakerID(
+        githubUsername: formData.githubUsername, on: req.db)
+      proposal.$speaker.id = resolvedID
       proposal.paperCallUsername = githubUsername
     }
 
@@ -1548,37 +1513,12 @@ struct CfPRoutes: RouteCollection {
     let speakerID: UUID
     let githubUsername =
       formData.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-
-    if !githubUsername.isEmpty {
-      // Look up by GitHub username
-      if let existingUser = try await User.query(on: req.db)
-        .filter(\.$username == githubUsername)
-        .first(),
-        let existingUserID = existingUser.id
-      {
-        speakerID = existingUserID
-      } else {
-        return try await renderNewProposalPageWithError(
-          req: req, user: user,
-          error:
-            "GitHub user '\(githubUsername)' not found. The user must have logged in at least once."
-        )
-      }
-    } else {
-      // Use system import user
-      guard
-        let importUser = try await User.find(
-          AddPaperCallImportUser.paperCallUserID, on: req.db)
-      else {
-        return try await renderNewProposalPageWithError(
-          req: req, user: user,
-          error: "Import user not configured. Run migrations first.")
-      }
-      guard let importUserID = importUser.id else {
-        return try await renderNewProposalPageWithError(
-          req: req, user: user, error: "Import user ID missing")
-      }
-      speakerID = importUserID
+    do {
+      speakerID = try await resolveSpeakerID(
+        githubUsername: formData.githubUsername, on: req.db)
+    } catch {
+      return try await renderNewProposalPageWithError(
+        req: req, user: user, error: error.localizedDescription)
     }
 
     // Create proposal
@@ -2141,6 +2081,46 @@ struct CfPRoutes: RouteCollection {
   }
 
   // MARK: - Helper Methods
+
+  /// Resolve the speaker user ID from an optional GitHub username.
+  /// If a non-empty username is provided, looks up the user in the database.
+  /// Otherwise falls back to the system import user (papercall-import).
+  /// Throws `Abort` if the specified user is not found or the import user is missing.
+  func resolveSpeakerID(
+    githubUsername rawUsername: String?,
+    on db: Database
+  ) async throws -> UUID {
+    let username = rawUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+    if !username.isEmpty {
+      guard
+        let user = try await User.query(on: db)
+          .filter(\.$username == username)
+          .first(),
+        let userID = user.id
+      else {
+        throw Abort(
+          .badRequest,
+          reason:
+            "GitHub user '\(username)' not found. The user must have logged in at least once."
+        )
+      }
+      return userID
+    }
+
+    guard
+      let importUser = try await User.find(
+        AddPaperCallImportUser.paperCallUserID, on: db)
+    else {
+      throw Abort(
+        .internalServerError,
+        reason: "Import user not configured. Run migrations first.")
+    }
+    guard let importUserID = importUser.id else {
+      throw Abort(.internalServerError, reason: "Import user ID missing")
+    }
+    return importUserID
+  }
 
   /// Get authenticated user from cookie or authorization header
   func getAuthenticatedUser(req: Request) async throws -> UserDTO? {
