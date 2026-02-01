@@ -1165,7 +1165,7 @@ struct CfPRoutes: RouteCollection {
       else {
         let encodedError =
           "GitHub user '\(githubUsername)' not found. The user must have logged in at least once."
-            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "User+not+found"
+          .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "User+not+found"
         return req.redirect(to: "/organizer/proposals/import?error=\(encodedError)")
       }
       speakerID = existingUserID
@@ -1546,7 +1546,8 @@ struct CfPRoutes: RouteCollection {
 
     // Determine speaker user ID
     let speakerID: UUID
-    let githubUsername = formData.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    let githubUsername =
+      formData.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
     if !githubUsername.isEmpty {
       // Look up by GitHub username
@@ -1559,7 +1560,8 @@ struct CfPRoutes: RouteCollection {
       } else {
         return try await renderNewProposalPageWithError(
           req: req, user: user,
-          error: "GitHub user '\(githubUsername)' not found. The user must have logged in at least once."
+          error:
+            "GitHub user '\(githubUsername)' not found. The user must have logged in at least once."
         )
       }
     } else {
