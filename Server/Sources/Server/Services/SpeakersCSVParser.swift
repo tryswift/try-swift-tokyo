@@ -69,7 +69,8 @@ enum SpeakersCSVParser {
       let columns = parseCSVLine(record)
       guard columns.count >= 15 else {
         throw ParseError.invalidFormat(
-          reason: "Row \(index + 2) has insufficient columns (\(columns.count), expected at least 15)"
+          reason:
+            "Row \(index + 2) has insufficient columns (\(columns.count), expected at least 15)"
         )
       }
 
@@ -129,7 +130,8 @@ enum SpeakersCSVParser {
 
   /// Build icon URL from GitHub username
   static func githubAvatarURL(from github: String) -> String? {
-    let username = github
+    let username =
+      github
       .replacingOccurrences(of: "https://github.com/", with: "")
       .replacingOccurrences(of: "http://github.com/", with: "")
       .replacingOccurrences(of: "@", with: "")

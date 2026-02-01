@@ -1085,7 +1085,8 @@ struct CfPRoutes: RouteCollection {
       candidates = try SpeakersCSVParser.parse(csvContent)
     } catch {
       let errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
-      let encodedError = errorMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+      let encodedError =
+        errorMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         ?? "Parse+error"
       return req.redirect(to: "/organizer/proposals/import?error=\(encodedError)")
     }
