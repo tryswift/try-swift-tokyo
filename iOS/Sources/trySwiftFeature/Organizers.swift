@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import DataClient
+import DependencyExtra
 import SharedModels
 import SwiftUI
 
@@ -68,22 +69,29 @@ public struct OrganizersView: View {
   public var store: StoreOf<Organizers>
 
   public var body: some View {
-    List {
-      ForEach(store.organizers) { organizer in
-        Button {
-          send(._organizerTapped(organizer))
-        } label: {
-          Label {
-            Text(LocalizedStringKey(organizer.name), bundle: .module)
-          } icon: {
-            Image(organizer.imageName, bundle: .module)
-              .resizable()
-              .aspectRatio(contentMode: .fit)
-              .clipShape(Circle())
-              .accessibilityIgnoresInvertColors()
+    ScrollView {
+      LazyVStack(spacing: 12) {
+        ForEach(store.organizers) { organizer in
+          Button {
+            send(._organizerTapped(organizer))
+          } label: {
+            HStack(spacing: 12) {
+              Image(organizer.imageName, bundle: .module)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 60, height: 60)
+                .clipShape(Circle())
+                .accessibilityIgnoresInvertColors()
+              Text(LocalizedStringKey(organizer.name), bundle: .module)
+                .font(.body)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding()
           }
+          .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
         }
       }
+      .padding()
     }
     .onAppear {
       send(.onAppear)
