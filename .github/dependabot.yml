@@ -1,0 +1,37 @@
+version: 2
+updates:
+  # iOS app - Swift Package Manager
+  - package-ecosystem: "swift"
+    directory: "/iOS"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "iOS"
+
+  # Website - Swift Package Manager
+  - package-ecosystem: "swift"
+    directory: "/Website"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "Web"
+
+  # CfP Server - Swift Package Manager
+  - package-ecosystem: "swift"
+    directory: "/Server"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "CfP"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "CI"
