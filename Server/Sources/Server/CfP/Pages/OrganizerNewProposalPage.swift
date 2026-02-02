@@ -1,20 +1,17 @@
 import Elementary
 import SharedModels
 
-struct OrganizerEditProposalPageView: HTML, Sendable {
+struct OrganizerNewProposalPageView: HTML, Sendable {
   let user: UserDTO?
-  let proposal: ProposalDTO?
   let conferences: [ConferencePublicInfo]
   let errorMessage: String?
 
   init(
     user: UserDTO?,
-    proposal: ProposalDTO?,
     conferences: [ConferencePublicInfo],
     errorMessage: String? = nil
   ) {
     self.user = user
-    self.proposal = proposal
     self.conferences = conferences
     self.errorMessage = errorMessage
   }
@@ -22,14 +19,9 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
   var body: some HTML {
     div(.class("container py-5")) {
       if let user, user.role == .admin {
-        if let proposal {
-          pageHeader(proposal: proposal)
-          importedAlert(proposal: proposal)
-          errorAlert
-          editFormCard(proposal: proposal)
-        } else {
-          notFoundCard
-        }
+        pageHeader
+        errorAlert
+        newProposalFormCard
       } else {
         accessDeniedCard
       }
@@ -37,31 +29,19 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
     previewScript
   }
 
-  private func pageHeader(proposal: ProposalDTO) -> some HTML {
+  private var pageHeader: some HTML {
     div {
-      // Back button
       div(.class("mb-4")) {
         a(
           .class("btn btn-outline-secondary"),
-          .href("/organizer/proposals/\(proposal.id.uuidString)")
+          .href("/organizer/proposals")
         ) {
-          "<- Back to Proposal"
+          "<- Back to All Proposals"
         }
       }
-      h1(.class("fw-bold mb-2")) { "Edit Proposal (Organizer)" }
+      h1(.class("fw-bold mb-2")) { "Add Proposal" }
       p(.class("lead text-muted mb-4")) {
-        "Edit proposal details as an organizer."
-      }
-    }
-  }
-
-  @HTMLBuilder
-  private func importedAlert(proposal: ProposalDTO) -> some HTML {
-    // Check if this is an imported proposal (speaker is papercall-import)
-    if proposal.speakerUsername == "papercall-import" {
-      div(.class("alert alert-info mb-4")) {
-        strong { "Imported Proposal: " }
-        "This proposal was imported from PaperCall.io and is not linked to a GitHub account."
+        "Manually add a proposal that was not imported from PaperCall or Google Sheets."
       }
     }
   }
@@ -75,53 +55,48 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
     }
   }
 
-  private func editFormCard(proposal: ProposalDTO) -> some HTML {
+  private var newProposalFormCard: some HTML {
     div(.class("card")) {
       div(.class("card-body p-4")) {
-        editForm(proposal: proposal)
+        newProposalForm
       }
     }
   }
 
-  private func editForm(proposal: ProposalDTO) -> some HTML {
+  private var newProposalForm: some HTML {
     form(
       .method(.post),
-      .action("/organizer/proposals/\(proposal.id.uuidString)/edit")
+      .action("/organizer/proposals/new")
     ) {
-      conferenceField(proposal: proposal)
-      titleField(value: proposal.title)
-      abstractField(value: proposal.abstract)
-      talkDetailsField(value: proposal.talkDetail)
-      durationField(selected: proposal.talkDuration)
-      speakerInfoSection(proposal: proposal)
-      githubUsernameField(value: proposal.speakerUsername)
-      notesField(value: proposal.notes)
+      conferenceField
+      titleField
+      abstractField
+      talkDetailsField
+      durationField
+      speakerInfoSection
+      githubUsernameField
+      notesField
       submitButton
     }
   }
 
-  private func conferenceField(proposal: ProposalDTO) -> some HTML {
+  private var conferenceField: some HTML {
     div(.class("mb-4")) {
       label(.class("form-label fw-semibold"), .for("conferenceId")) {
         "Conference *"
       }
       select(.class("form-select"), .name("conferenceId"), .id("conferenceId"), .required) {
+        option(.value("")) { "Select conference..." }
         for conf in conferences {
-          if conf.id == proposal.conferenceId {
-            option(.value(conf.id.uuidString), .selected) {
-              HTMLText(conf.displayName)
-            }
-          } else {
-            option(.value(conf.id.uuidString)) {
-              HTMLText(conf.displayName)
-            }
+          option(.value(conf.id.uuidString)) {
+            HTMLText(conf.displayName)
           }
         }
       }
     }
   }
 
-  private func titleField(value: String) -> some HTML {
+  private var titleField: some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("title")) {
         "Title *"
@@ -132,13 +107,12 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
         .name("title"),
         .id("title"),
         .required,
-        .value(value),
         .placeholder("Enter talk title")
       )
     }
   }
 
-  private func abstractField(value: String) -> some HTML {
+  private var abstractField: some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("abstract")) {
         "Abstract *"
@@ -150,16 +124,14 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
         .custom(name: "rows", value: "3"),
         .required,
         .placeholder("A brief summary of the talk (2-3 sentences)")
-      ) {
-        HTMLText(value)
-      }
+      ) { "" }
       div(.class("form-text")) {
         "This will be shown to the audience if the talk is accepted."
       }
     }
   }
 
-  private func talkDetailsField(value: String) -> some HTML {
+  private var talkDetailsField: some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("talkDetails")) {
         "Talk Details *"
@@ -171,16 +143,14 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
         .custom(name: "rows", value: "5"),
         .required,
         .placeholder("Detailed description for reviewers")
-      ) {
-        HTMLText(value)
-      }
+      ) { "" }
       div(.class("form-text")) {
         "Include outline, key points, and what attendees will learn. For reviewers only."
       }
     }
   }
 
-  private func durationField(selected: TalkDuration) -> some HTML {
+  private var durationField: some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("talkDuration")) {
         "Talk Duration *"
@@ -190,44 +160,38 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
       ) {
         option(.value("")) { "Choose duration..." }
         for duration in TalkDuration.allCases {
-          if duration == selected {
-            option(.value(duration.rawValue), .selected) {
-              HTMLText(duration.displayName)
-            }
-          } else {
-            option(.value(duration.rawValue)) {
-              HTMLText(duration.displayName)
-            }
+          option(.value(duration.rawValue)) {
+            HTMLText(duration.displayName)
           }
         }
       }
     }
   }
 
-  private func speakerInfoSection(proposal: ProposalDTO) -> some HTML {
+  private var speakerInfoSection: some HTML {
     div(.class("card bg-light mb-4")) {
       div(.class("card-body")) {
         h5(.class("card-title mb-3")) { "Speaker Information" }
         p(.class("text-muted small mb-3")) {
-          "Edit the speaker information for this proposal."
+          "Enter the speaker information for this proposal."
         }
         div(.class("row")) {
-          speakerTextFields(proposal: proposal)
-          speakerIconField(iconURL: proposal.iconURL)
+          speakerTextFields
+          speakerIconField
         }
       }
     }
   }
 
-  private func speakerTextFields(proposal: ProposalDTO) -> some HTML {
+  private var speakerTextFields: some HTML {
     div(.class("col-md-8")) {
-      speakerNameField(value: proposal.speakerName)
-      speakerEmailField(value: proposal.speakerEmail)
-      speakerBioField(value: proposal.bio)
+      speakerNameField
+      speakerEmailField
+      speakerBioField
     }
   }
 
-  private func speakerNameField(value: String) -> some HTML {
+  private var speakerNameField: some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("speakerName")) {
         "Name *"
@@ -238,13 +202,12 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
         .name("speakerName"),
         .id("speakerName"),
         .required,
-        .value(value),
         .placeholder("Speaker display name")
       )
     }
   }
 
-  private func speakerEmailField(value: String) -> some HTML {
+  private var speakerEmailField: some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("speakerEmail")) {
         "Email *"
@@ -255,7 +218,6 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
         .name("speakerEmail"),
         .id("speakerEmail"),
         .required,
-        .value(value),
         .placeholder("speaker@email.com")
       )
       div(.class("form-text")) {
@@ -264,7 +226,7 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
     }
   }
 
-  private func speakerBioField(value: String) -> some HTML {
+  private var speakerBioField: some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("bio")) {
         "Speaker Bio *"
@@ -276,13 +238,11 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
         .custom(name: "rows", value: "3"),
         .required,
         .placeholder("Speaker biography")
-      ) {
-        HTMLText(value)
-      }
+      ) { "" }
     }
   }
 
-  private func speakerIconField(iconURL: String?) -> some HTML {
+  private var speakerIconField: some HTML {
     div(.class("col-md-4")) {
       div(.class("mb-3")) {
         label(.class("form-label fw-semibold"), .for("iconUrl")) {
@@ -293,21 +253,20 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
           .class("form-control"),
           .name("iconUrl"),
           .id("iconUrl"),
-          .value(iconURL ?? ""),
           .placeholder("https://example.com/photo.jpg"),
           .custom(name: "oninput", value: "updateIconPreview(this.value)")
         )
       }
-      iconPreview(iconURL: iconURL)
+      iconPreview
     }
   }
 
-  private func iconPreview(iconURL: String?) -> some HTML {
+  private var iconPreview: some HTML {
     div(.class("text-center mt-3")) {
       p(.class("text-muted small mb-2")) { "Preview:" }
       img(
         .id("iconPreview"),
-        .src(iconURL ?? ""),
+        .src(""),
         .alt("Profile picture preview"),
         .class("rounded-circle border"),
         .style("width: 100px; height: 100px; object-fit: cover;")
@@ -315,7 +274,7 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
     }
   }
 
-  private func githubUsernameField(value: String) -> some HTML {
+  private var githubUsernameField: some HTML {
     div(.class("mb-4")) {
       label(.class("form-label fw-semibold"), .for("githubUsername")) {
         "GitHub Username (Optional)"
@@ -325,17 +284,16 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
         .class("form-control"),
         .name("githubUsername"),
         .id("githubUsername"),
-        .value(value == "papercall-import" ? "" : value),
         .placeholder("e.g. octocat")
       )
       div(.class("form-text")) {
         "If specified, the proposal will be linked to this GitHub user account. "
-        "Leave blank to keep the current association."
+        "Leave blank to use the system import user."
       }
     }
   }
 
-  private func notesField(value: String?) -> some HTML {
+  private var notesField: some HTML {
     div(.class("mb-4")) {
       label(.class("form-label fw-semibold"), .for("notesToOrganizers")) {
         "Notes for Organizers (Optional)"
@@ -346,32 +304,14 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
         .id("notesToOrganizers"),
         .custom(name: "rows", value: "2"),
         .placeholder("Any special requirements or additional information")
-      ) {
-        if let value {
-          HTMLText(value)
-        }
-      }
+      ) { "" }
     }
   }
 
   private var submitButton: some HTML {
     div(.class("d-grid")) {
       button(.type(.submit), .class("btn btn-primary btn-lg")) {
-        "Update Proposal"
-      }
-    }
-  }
-
-  private var notFoundCard: some HTML {
-    div(.class("card")) {
-      div(.class("card-body text-center p-5")) {
-        h3(.class("fw-bold mb-2")) { "Proposal Not Found" }
-        p(.class("text-muted mb-4")) {
-          "The proposal you are looking for does not exist."
-        }
-        a(.class("btn btn-primary"), .href("/organizer/proposals")) {
-          "Back to All Proposals"
-        }
+        "Add Proposal"
       }
     }
   }

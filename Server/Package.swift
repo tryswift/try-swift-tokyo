@@ -12,6 +12,7 @@ let package = Package(
     .package(url: "https://github.com/vapor/vapor.git", from: "4.110.0"),
     .package(url: "https://github.com/vapor/fluent.git", from: "4.12.0"),
     .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.10.0"),
+    .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: "4.7.0"),
     .package(url: "https://github.com/vapor/jwt.git", from: "5.1.0"),
     .package(url: "https://github.com/vapor-community/vapor-elementary.git", from: "0.2.0"),
     .package(name: "SharedModels", path: "../SharedModels"),
@@ -35,7 +36,9 @@ let package = Package(
       name: "ServerTests",
       dependencies: [
         "Server",
+        .product(name: "SharedModels", package: "SharedModels"),
         .product(name: "VaporTesting", package: "vapor"),
+        .product(name: "FluentSQLiteDriver", package: "fluent-sqlite-driver"),
       ],
       swiftSettings: [
         .swiftLanguageMode(.v6)

@@ -42,30 +42,27 @@ struct OrganizerProposalsPageView: HTML, Sendable {
       }
       // Action buttons
       div(.class("d-flex gap-2")) {
+        // Add Proposal button
+        a(
+          .class("btn btn-primary"),
+          .href("/organizer/proposals/new")
+        ) {
+          "+ Add Proposal"
+        }
         // Import button
         a(
           .class("btn btn-outline-primary"),
           .href("/organizer/proposals/import")
         ) {
-          "Import from PaperCall.io"
+          "Import"
         }
-        // Action buttons
-        div(.class("d-flex gap-2")) {
-          // Import button
-          a(
-            .class("btn btn-outline-primary"),
-            .href("/organizer/proposals/import")
-          ) {
-            "Import Speaker Candidates"
-          }
-          // Export button
-          a(
-            .class("btn btn-success"),
-            .href(
-              "/organizer/proposals/export\(conferencePath.map { "?conference=\($0)" } ?? "")")
-          ) {
-            "Export CSV"
-          }
+        // Export button
+        a(
+          .class("btn btn-success"),
+          .href(
+            "/organizer/proposals/export\(conferencePath.map { "?conference=\($0)" } ?? "")")
+        ) {
+          "Export CSV"
         }
       }
     }

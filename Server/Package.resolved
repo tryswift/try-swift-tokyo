@@ -1,5 +1,5 @@
 {
-  "originHash" : "26da217de5521b74404cb9cbc29209300ba2856d627fe363b3d46afd460780a3",
+  "originHash" : "dbd91a8a279abcaf0d7f7fd49758cb26db479a5b3e70c482cad540e51cc236cc",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -65,6 +65,15 @@
       }
     },
     {
+      "identity" : "fluent-sqlite-driver",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vapor/fluent-sqlite-driver.git",
+      "state" : {
+        "revision" : "73529a63ab11c7fe87da17b5a67a1b1f58c020f8",
+        "version" : "4.8.1"
+      }
+    },
+    {
       "identity" : "jwt",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/jwt.git",
@@ -125,6 +134,24 @@
       "state" : {
         "revision" : "c0ea243ffeb8b5ff9e20a281e44003c6abb8896f",
         "version" : "3.34.0"
+      }
+    },
+    {
+      "identity" : "sqlite-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vapor/sqlite-kit.git",
+      "state" : {
+        "revision" : "f35a863ecc2da5d563b836a9a696b148b0f4169f",
+        "version" : "4.5.2"
+      }
+    },
+    {
+      "identity" : "sqlite-nio",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vapor/sqlite-nio.git",
+      "state" : {
+        "revision" : "2ab61385b70da8ed74958ce62fa9ebf0359cb08b",
+        "version" : "1.12.2"
       }
     },
     {

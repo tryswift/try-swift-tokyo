@@ -82,6 +82,7 @@ struct ImportSpeakersPageView: HTML, Sendable {
         ) {
           conferenceField
           csvFileField
+          githubUsernameField
           optionsField
           submitButton
         }
@@ -123,6 +124,25 @@ struct ImportSpeakersPageView: HTML, Sendable {
       )
       div(.class("form-text")) {
         "Supported formats: Google Form CSV export or PaperCall.io JSON export."
+      }
+    }
+  }
+
+  private var githubUsernameField: some HTML {
+    div(.class("mb-4")) {
+      label(.class("form-label fw-semibold"), .for("githubUsername")) {
+        "GitHub Username (Optional)"
+      }
+      input(
+        .type(.text),
+        .class("form-control"),
+        .name("githubUsername"),
+        .id("githubUsername"),
+        .placeholder("e.g. octocat")
+      )
+      div(.class("form-text")) {
+        "If specified, all imported proposals will be linked to this GitHub user account. "
+        "Leave blank to use the system import user."
       }
     }
   }
