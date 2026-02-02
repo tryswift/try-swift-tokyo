@@ -17,10 +17,12 @@ extension LocalizedString {
 }
 
 // Extension for String literals used in UI
-// Looks up from trySwiftFeature Localizable.xcstrings, falls back to literal if not found
+// Looks up from Website, then trySwiftFeature Localizable.xcstrings, falls back to literal if not found
 extension String {
   init(_ literal: String, language: SupportedLanguage) {
-    if let localized = TrySwiftStrings[literal] {
+    if let localized = WebsiteStrings[literal] {
+      self = localized.localized(for: language)
+    } else if let localized = TrySwiftStrings[literal] {
       self = localized.localized(for: language)
     } else {
       // Fallback to literal if not found in localizations
