@@ -368,6 +368,8 @@ public struct LiveTranslationView: View {
       VStack {
         ScrollViewReader { proxy in
           ScrollView {
+            flittoLogo
+
             if store.roomNumber.isEmpty {
               ContentUnavailableView("Room is unavailable", systemImage: "text.page.slash.fill")
               Spacer()
@@ -378,11 +380,9 @@ public struct LiveTranslationView: View {
               translationContents
             }
 
-            flittoLogo
+            Spacer()
+              .frame(height: 28)
               .id(scrollContentBottomID)
-              .padding(.bottom, 16)
-              .accessibilityElement(children: .ignore)
-              .accessibilityLabel(Text(verbatim: "Powered by Flitto"))
           }
           .onChange(of: store.chatList.last) { old, new in
             guard old != .none else {
@@ -556,6 +556,8 @@ public struct LiveTranslationView: View {
     .padding(.vertical, 8)
     .glassEffect(.clear, in: .capsule)
     .padding(.horizontal)
+    .accessibilityElement(children: .ignore)
+    .accessibilityLabel(Text(verbatim: "Powered by Flitto"))
   }
 }
 
