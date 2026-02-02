@@ -372,18 +372,17 @@ public struct LiveTranslationView: View {
             if store.roomNumber.isEmpty {
               ContentUnavailableView("Room is unavailable", systemImage: "text.page.slash.fill")
               Spacer()
+              flittoLogo
             } else if store.chatList.isEmpty {
               ContentUnavailableView("Not started yet", systemImage: "text.page.slash.fill")
               Spacer()
+              flittoLogo
             } else {
               translationContents
+              Color.clear
+                .id(scrollContentBottomID)
+                .frame(height: 1)
             }
-
-            flittoLogo
-              .id(scrollContentBottomID)
-              .padding(.bottom, 16)
-              .accessibilityElement(children: .ignore)
-              .accessibilityLabel(Text(verbatim: "Powered by Flitto"))
           }
           .onChange(of: store.chatList.last) { old, new in
             guard old != .none else {
