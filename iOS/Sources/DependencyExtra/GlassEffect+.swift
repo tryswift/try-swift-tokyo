@@ -52,21 +52,17 @@ extension View {
   }
 }
 
+// MARK: - visionOS shim
 #if os(visionOS)
-/// dummy for visionOS
-public enum Glass : Equatable, Sendable {
-  case regular
-  case clear
-  case identity
+/// dummy
+public struct Glass: Equatable, Sendable {
+  public init() {}
 
-  // dummy
-  public func tint(_ color: Color?) -> Self {
-    return .regular
-  }
+  public static var regular: Glass { .init() }
+  public static var clear: Glass { .init() }
+  public static var identity: Glass { .init() }
 
-  //
-  public func interactive(_ isEnabled: Bool = true) -> Self {
-    return .regular
-  }
+  public func tint(_ color: Color?) -> Glass { self }
+  public func interactive(_ isEnabled: Bool = true) -> Glass { self }
 }
-#endif // os(visionOS)
+#endif

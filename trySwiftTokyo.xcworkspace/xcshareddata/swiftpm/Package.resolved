@@ -1,5 +1,5 @@
 {
-  "originHash" : "9612136b5b2abba7608516126bb417fb1bec584a745731b432950921ecf790fe",
+  "originHash" : "324c816c8dd7ea736a439474dc829ef053f0d226af8c0e5b91d42cb1cd0d30c7",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -321,8 +321,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-custom-dump",
       "state" : {
-        "revision" : "93a8aa4937030b606de42f44b17870249f49af0b",
-        "version" : "1.3.4"
+        "revision" : "2a2a938798236b8fa0bc57c453ee9de9f9ec3ab0",
+        "version" : "1.4.1"
       }
     },
     {
@@ -420,8 +420,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio-extras.git",
       "state" : {
-        "revision" : "cc599775aa85d04340f09b47e5432564f9889ae7",
-        "version" : "1.32.0"
+        "revision" : "3df009d563dc9f21a5c85b33d8c2e34d2e4f8c3b",
+        "version" : "1.32.1"
       }
     },
     {
