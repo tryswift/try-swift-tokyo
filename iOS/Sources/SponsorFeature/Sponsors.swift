@@ -125,7 +125,7 @@ extension Plan {
     case .gold, .silver, .bronze, .diversityAndInclusion, .community, .student:
       return GridItem(.flexible(minimum: 64, maximum: 512), spacing: 64, alignment: .center)
     case .individual:
-      return GridItem.init(.adaptive(minimum: 64, maximum: 128), spacing: 32, alignment: .center)
+      return GridItem.init(.adaptive(minimum: 64, maximum: 128), spacing: 4, alignment: .center)
     }
 
   }

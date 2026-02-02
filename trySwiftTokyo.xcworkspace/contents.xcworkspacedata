@@ -17,9 +17,6 @@
       location = "group:DataClient">
    </FileRef>
    <FileRef
-      location = "group:CfPWebsite">
-   </FileRef>
-   <FileRef
       location = "group:Server">
    </FileRef>
    <FileRef
