@@ -54,15 +54,15 @@ extension View {
 
 // MARK: - visionOS shim
 #if os(visionOS)
-/// dummy
-public struct Glass: Equatable, Sendable {
-  public init() {}
+  /// dummy
+  public struct Glass: Equatable, Sendable {
+    public init() {}
 
-  public static var regular: Glass { .init() }
-  public static var clear: Glass { .init() }
-  public static var identity: Glass { .init() }
+    public static var regular: Glass { .init() }
+    public static var clear: Glass { .init() }
+    public static var identity: Glass { .init() }
 
-  public func tint(_ color: Color?) -> Glass { self }
-  public func interactive(_ isEnabled: Bool = true) -> Glass { self }
-}
+    public func tint(_ color: Color?) -> Glass { self }
+    public func interactive(_ isEnabled: Bool = true) -> Glass { self }
+  }
 #endif
