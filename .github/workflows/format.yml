@@ -19,7 +19,7 @@ jobs:
         run: swift format --ignore-unparsable-files --in-place --recursive ./App/ ./Server/ ./SharedModels/ ./iOS/ ./Website/ ./CfPWebsite/
       - name: Configure safe directory
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "[ci skip] Run swift-format"
         env:
