@@ -64,7 +64,11 @@ let package = Package(
         "BuildConfig",
         "DependencyExtra",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        .product(name: "rtt-sdk", package: "rtt_sdk"),
+        .product(
+          name: "rtt-sdk",
+          package: "rtt_sdk",
+          condition: .when(platforms: [.iOS, .visionOS])
+        ),
       ]
     ),
     .target(

@@ -51,3 +51,22 @@ extension View {
     #endif
   }
 }
+
+#if os(visionOS)
+/// dummy for visionOS
+public enum Glass : Equatable, Sendable {
+  case regular
+  case clear
+  case identity
+
+  // dummy
+  public func tint(_ color: Color?) -> Self {
+    return .regular
+  }
+
+  //
+  public func interactive(_ isEnabled: Bool = true) -> Self {
+    return .regular
+  }
+}
+#endif // os(visionOS)
