@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import DataClient
+import DependencyExtra
 import Foundation
 import SharedModels
 import SwiftUI
