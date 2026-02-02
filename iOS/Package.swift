@@ -62,6 +62,7 @@ let package = Package(
       name: "LiveTranslationFeature",
       dependencies: [
         "BuildConfig",
+        "DependencyExtra",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         .product(name: "rtt-sdk", package: "rtt_sdk"),
       ]

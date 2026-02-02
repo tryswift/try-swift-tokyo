@@ -76,7 +76,7 @@ public struct ScheduleDetailView: View {
               .font(.callout)
           }
           .padding()
-          .glassEffect(.regular.tint(.accentColor), in: .rect(cornerRadius: 16))
+          .glassEffectIfAvailable(.regular.tint(.accentColor), in: .rect(cornerRadius: 16))
         }
       }
       .padding(.horizontal)
@@ -125,7 +125,7 @@ public struct ScheduleDetailView: View {
       }
     }
     .padding()
-    .glassEffect(.regular, in: .rect(cornerRadius: 16))
+    .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
     .padding()
   }
 }

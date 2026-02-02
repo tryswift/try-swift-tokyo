@@ -102,7 +102,7 @@ public struct SponsorsListView: View {
                   .frame(maxWidth: 300)
                   .padding()
               }
-              .glassEffect(.clear.interactive(), in: .rect(cornerRadius: 16))
+              .glassEffectIfAvailable(.clear.interactive(), in: .rect(cornerRadius: 16))
               .accessibilityAddTraits(.isLink)
               .accessibilityIgnoresInvertColors()
             }
