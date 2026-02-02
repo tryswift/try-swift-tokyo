@@ -11,13 +11,7 @@
       location = "group:iOS">
    </FileRef>
    <FileRef
-      location = "group:Website">
-   </FileRef>
-   <FileRef
       location = "group:DataClient">
-   </FileRef>
-   <FileRef
-      location = "group:Server">
    </FileRef>
    <FileRef
       location = "group:SharedModels">
