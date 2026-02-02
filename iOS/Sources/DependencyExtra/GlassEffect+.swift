@@ -3,26 +3,6 @@ import SwiftUI
 extension View {
 
   @ViewBuilder
-  func glassEffectIfAvailable(
-    _ glass: Glass = .regular,
-    cornerRadius: CGFloat = 24
-  ) -> some View {
-    #if os(iOS) || os(macOS)
-      if #available(iOS 26.0, macOS 26.0, *) {
-        self.glassEffect(
-          glass,
-          in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-        )
-      } else {
-        self
-      }
-    #else
-      // visionOS / watchOS / tvOS etc.: do nothing (also compiles)
-      self
-    #endif
-  }
-
-  @ViewBuilder
   func glassEffectIfAvailable<S: InsettableShape>(
     _ glass: Glass = .regular,
     in shape: S
