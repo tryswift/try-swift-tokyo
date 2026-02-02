@@ -17,7 +17,7 @@ extension View {
         self
       }
     #else
-      // visionOS / watchOS / tvOS など：何もしない（コンパイルも通る）
+      // visionOS / watchOS / tvOS etc.: do nothing (also compiles)
       self
     #endif
   }
