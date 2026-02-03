@@ -5,6 +5,7 @@ import SharedModels
 struct OrganizerProposalDetailPageView: HTML, Sendable {
   let user: UserDTO?
   let proposal: ProposalDTO?
+  let csrfToken: String
 
   var body: some HTML {
     div(.class("container py-5")) {
@@ -46,6 +47,7 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
                 HTMLRaw(
                   """
                   <form method="post" action="/organizer/proposals/\(proposal.id)/accept">
+                    <input type="hidden" name="_csrf" value="\(csrfToken)">
                     <button type="submit" class="btn btn-success">Accept</button>
                   </form>
                   """)
@@ -54,6 +56,7 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
                 HTMLRaw(
                   """
                   <form method="post" action="/organizer/proposals/\(proposal.id)/reject">
+                    <input type="hidden" name="_csrf" value="\(csrfToken)">
                     <button type="submit" class="btn btn-outline-danger">Reject</button>
                   </form>
                   """)
@@ -62,6 +65,7 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
                 HTMLRaw(
                   """
                   <form method="post" action="/organizer/proposals/\(proposal.id)/revert-status">
+                    <input type="hidden" name="_csrf" value="\(csrfToken)">
                     <button type="submit" class="btn btn-outline-secondary">Revert to Submitted</button>
                   </form>
                   """)
