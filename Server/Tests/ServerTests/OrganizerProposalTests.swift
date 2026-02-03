@@ -58,6 +58,7 @@ struct ResolveSpeakerIDTests {
     app.migrations.add(SeedTrySwiftTokyo2026())
     app.migrations.add(AddPaperCallImportUser())
     app.migrations.add(CreateTestProposalSchema())
+    app.migrations.add(CreateScheduleSlot())
 
     try await app.autoMigrate()
     return app
@@ -187,6 +188,102 @@ struct ResolveSpeakerIDTests {
 
     let updated = try await Proposal.find(proposal.id, on: app.db)
     #expect(updated?.$speaker.id == AddPaperCallImportUser.paperCallUserID)
+  }
+
+  // MARK: - Delete proposal
+
+  @Test("deleting a proposal removes it and sets linked ScheduleSlot proposal_id to null")
+  func deleteProposalSetsScheduleSlotNull() async throws {
+    let app = try await makeTestApp()
+    defer { Task { try? await app.asyncShutdown() } }
+
+    let conference = try await Conference.query(on: app.db)
+      .filter(\.$path == "tryswift-tokyo-2026")
+      .first()
+    let conferenceID = try #require(conference?.id)
+
+    let proposal = Proposal(
+      conferenceID: conferenceID,
+      title: "Talk to Delete",
+      abstract: "Abstract",
+      talkDetail: "Detail",
+      talkDuration: .regular,
+      speakerName: "Speaker",
+      speakerEmail: "speaker@test.com",
+      bio: "Bio",
+      speakerID: AddPaperCallImportUser.paperCallUserID
+    )
+    try await proposal.save(on: app.db)
+    let proposalID = try #require(proposal.id)
+
+    // Create a ScheduleSlot linked to this proposal
+    let slot = ScheduleSlot(
+      conferenceID: conferenceID,
+      proposalID: proposalID,
+      day: 1,
+      startTime: Date(),
+      slotType: .talk,
+      sortOrder: 1
+    )
+    try await slot.save(on: app.db)
+    let slotID = try #require(slot.id)
+
+    // Verify slot is linked
+    let linkedSlot = try await ScheduleSlot.find(slotID, on: app.db)
+    #expect(linkedSlot?.$proposal.id == proposalID)
+
+    // Delete proposal — onDelete: .setNull should null out slot's proposal_id
+    try await proposal.delete(on: app.db)
+
+    // Verify proposal is gone
+    let deleted = try await Proposal.find(proposalID, on: app.db)
+    #expect(deleted == nil)
+
+    // Verify slot still exists but proposal_id is now null
+    let updatedSlot = try await ScheduleSlot.find(slotID, on: app.db)
+    #expect(updatedSlot != nil)
+    #expect(updatedSlot?.$proposal.id == nil)
+  }
+
+  // MARK: - Update GitHub ID
+
+  @Test("updating GitHub username changes speaker association")
+  func updateGitHubUsername() async throws {
+    let app = try await makeTestApp()
+    defer { Task { try? await app.asyncShutdown() } }
+
+    let realUser = User(githubID: 77777, username: "newowner", role: .speaker)
+    try await realUser.save(on: app.db)
+
+    let conference = try await Conference.query(on: app.db)
+      .filter(\.$path == "tryswift-tokyo-2026")
+      .first()
+    let conferenceID = try #require(conference?.id)
+
+    let proposal = Proposal(
+      conferenceID: conferenceID,
+      title: "Reassign Talk",
+      abstract: "Abstract",
+      talkDetail: "Detail",
+      talkDuration: .regular,
+      speakerName: "Original Speaker",
+      speakerEmail: "original@test.com",
+      bio: "Bio",
+      speakerID: AddPaperCallImportUser.paperCallUserID
+    )
+    try await proposal.save(on: app.db)
+
+    // Simulate the update-github handler logic
+    let routes = CfPRoutes()
+    let resolvedID = try await routes.resolveSpeakerID(
+      githubUsername: "newowner", on: app.db)
+    proposal.$speaker.id = resolvedID
+    proposal.paperCallUsername = "newowner"
+    try await proposal.save(on: app.db)
+
+    let updated = try await Proposal.find(proposal.id, on: app.db)
+    #expect(updated?.$speaker.id == realUser.id)
+    #expect(updated?.paperCallUsername == "newowner")
   }
 
   @Test("clearing GitHub username is no-op when already on import user")

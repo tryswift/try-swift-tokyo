@@ -56,6 +56,9 @@ struct CfPRoutes: RouteCollection {
     organizer.get("proposals", ":proposalID", use: organizerProposalDetailPage)
     organizer.get("proposals", ":proposalID", "edit", use: organizerEditProposalPage)
     organizer.post("proposals", ":proposalID", "edit", use: handleOrganizerEditProposal)
+    organizer.post("proposals", ":proposalID", "delete", use: handleOrganizerDeleteProposal)
+    organizer.post(
+      "proposals", ":proposalID", "update-github", use: handleOrganizerUpdateGitHub)
     organizer.post("proposals", ":proposalID", "accept", use: handleAcceptProposal)
     organizer.post("proposals", ":proposalID", "reject", use: handleRejectProposal)
     organizer.post("proposals", ":proposalID", "revert-status", use: handleRevertProposalStatus)
@@ -1332,13 +1335,16 @@ struct CfPRoutes: RouteCollection {
     }
 
     let csrfToken = csrfToken(from: req)
+    let githubUpdated = req.query[String.self, at: "github-updated"] != nil
+
     return HTMLResponse {
       CfPLayout(title: "Edit Proposal (Organizer)", user: user) {
         OrganizerEditProposalPageView(
           user: user,
           proposal: proposal,
           conferences: conferences,
-          csrfToken: csrfToken
+          csrfToken: csrfToken,
+          githubUpdated: githubUpdated
         )
       }
     }
@@ -1441,6 +1447,79 @@ struct CfPRoutes: RouteCollection {
     try await proposal.save(on: req.db)
 
     return req.redirect(to: "/organizer/proposals/\(proposalID)?updated=true")
+  }
+
+  // MARK: - Organizer Delete Proposal
+
+  @Sendable
+  func handleOrganizerDeleteProposal(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    guard let proposalIDString = req.parameters.get("proposalID"),
+      let proposalID = UUID(uuidString: proposalIDString)
+    else {
+      throw Abort(.badRequest, reason: "Invalid proposal ID")
+    }
+
+    guard
+      let proposal = try await Proposal.query(on: req.db)
+        .filter(\.$id == proposalID)
+        .first()
+    else {
+      throw Abort(.notFound, reason: "Proposal not found")
+    }
+
+    try await proposal.delete(on: req.db)
+
+    return req.redirect(to: "/organizer/proposals?deleted=true")
+  }
+
+  // MARK: - Organizer Update GitHub
+
+  @Sendable
+  func handleOrganizerUpdateGitHub(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    guard let proposalIDString = req.parameters.get("proposalID"),
+      let proposalID = UUID(uuidString: proposalIDString)
+    else {
+      throw Abort(.badRequest, reason: "Invalid proposal ID")
+    }
+
+    guard
+      let proposal = try await Proposal.query(on: req.db)
+        .filter(\.$id == proposalID)
+        .first()
+    else {
+      throw Abort(.notFound, reason: "Proposal not found")
+    }
+
+    struct UpdateGitHubFormData: Content {
+      var githubUsername: String?
+    }
+
+    let formData = try req.content.decode(UpdateGitHubFormData.self)
+    let githubUsername =
+      formData.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+    if !githubUsername.isEmpty {
+      let resolvedID = try await resolveSpeakerID(
+        githubUsername: githubUsername, on: req.db)
+      proposal.$speaker.id = resolvedID
+      proposal.paperCallUsername = githubUsername
+    } else if proposal.$speaker.id != AddPaperCallImportUser.paperCallUserID {
+      let importUserID = try await resolveSpeakerID(githubUsername: nil, on: req.db)
+      proposal.$speaker.id = importUserID
+      proposal.paperCallUsername = nil
+    }
+
+    try await proposal.save(on: req.db)
+
+    return req.redirect(to: "/organizer/proposals/\(proposalID)/edit?github-updated=true")
   }
 
   // MARK: - Organizer New Proposal
