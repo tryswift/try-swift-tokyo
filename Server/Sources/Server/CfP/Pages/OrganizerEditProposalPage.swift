@@ -339,7 +339,8 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
   }
 
   private func githubUpdateCard(proposal: ProposalDTO) -> some HTML {
-    let currentValue = proposal.speakerUsername == "papercall-import" ? "" : proposal.speakerUsername
+    let currentValue =
+      proposal.speakerUsername == "papercall-import" ? "" : proposal.speakerUsername
     return div(.class("card mt-4")) {
       div(.class("card-header")) {
         strong { "GitHub Account" }
