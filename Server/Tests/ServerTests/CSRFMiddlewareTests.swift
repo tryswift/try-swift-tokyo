@@ -45,9 +45,13 @@ struct CSRFMiddlewareTests {
   func getPreservesExistingCookie() async throws {
     let app = try await makeApp()
     do {
-      try await app.testing().test(.GET, "page", beforeRequest: { req in
-        req.headers.cookie = HTTPCookies(dictionaryLiteral: ("csrf_token", .init(string: "existing-token")))
-      }) { response in
+      try await app.testing().test(
+        .GET, "page",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(
+            dictionaryLiteral: ("csrf_token", .init(string: "existing-token")))
+        }
+      ) { response in
         #expect(response.status == .ok)
 
         // Should not set a new cookie since one already exists
@@ -82,9 +86,13 @@ struct CSRFMiddlewareTests {
   func postWithCookieButNoTokenReturns403() async throws {
     let app = try await makeApp()
     do {
-      try await app.testing().test(.POST, "action", beforeRequest: { req in
-        req.headers.cookie = HTTPCookies(dictionaryLiteral: ("csrf_token", .init(string: "test-token")))
-      }) { response in
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(
+            dictionaryLiteral: ("csrf_token", .init(string: "test-token")))
+        }
+      ) { response in
         #expect(response.status == .forbidden)
       }
     } catch {
@@ -98,10 +106,14 @@ struct CSRFMiddlewareTests {
   func postWithMismatchedTokensReturns403() async throws {
     let app = try await makeApp()
     do {
-      try await app.testing().test(.POST, "action", beforeRequest: { req in
-        req.headers.cookie = HTTPCookies(dictionaryLiteral: ("csrf_token", .init(string: "correct-token")))
-        req.headers.replaceOrAdd(name: "X-CSRF-Token", value: "wrong-token")
-      }) { response in
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(
+            dictionaryLiteral: ("csrf_token", .init(string: "correct-token")))
+          req.headers.replaceOrAdd(name: "X-CSRF-Token", value: "wrong-token")
+        }
+      ) { response in
         #expect(response.status == .forbidden)
       }
     } catch {
@@ -118,10 +130,13 @@ struct CSRFMiddlewareTests {
     let app = try await makeApp()
     do {
       let token = "valid-csrf-token"
-      try await app.testing().test(.POST, "action", beforeRequest: { req in
-        req.headers.cookie = HTTPCookies(dictionaryLiteral: ("csrf_token", .init(string: token)))
-        req.headers.replaceOrAdd(name: "X-CSRF-Token", value: token)
-      }) { response in
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(dictionaryLiteral: ("csrf_token", .init(string: token)))
+          req.headers.replaceOrAdd(name: "X-CSRF-Token", value: token)
+        }
+      ) { response in
         #expect(response.status == .ok)
       }
     } catch {
@@ -136,11 +151,14 @@ struct CSRFMiddlewareTests {
     let app = try await makeApp()
     do {
       let token = "valid-csrf-token"
-      try await app.testing().test(.POST, "action", beforeRequest: { req in
-        req.headers.cookie = HTTPCookies(dictionaryLiteral: ("csrf_token", .init(string: token)))
-        req.headers.contentType = .urlEncodedForm
-        req.body = ByteBuffer(string: "_csrf=\(token)")
-      }) { response in
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(dictionaryLiteral: ("csrf_token", .init(string: token)))
+          req.headers.contentType = .urlEncodedForm
+          req.body = ByteBuffer(string: "_csrf=\(token)")
+        }
+      ) { response in
         #expect(response.status == .ok)
       }
     } catch {
@@ -155,13 +173,16 @@ struct CSRFMiddlewareTests {
     let app = try await makeApp()
     do {
       let token = "valid-csrf-token"
-      try await app.testing().test(.POST, "action", beforeRequest: { req in
-        req.headers.cookie = HTTPCookies(dictionaryLiteral: ("csrf_token", .init(string: token)))
-        req.headers.contentType = .urlEncodedForm
-        req.body = ByteBuffer(string: "_csrf=\(token)")
-        // Header has wrong value, but form field is correct
-        req.headers.replaceOrAdd(name: "X-CSRF-Token", value: "wrong-token")
-      }) { response in
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(dictionaryLiteral: ("csrf_token", .init(string: token)))
+          req.headers.contentType = .urlEncodedForm
+          req.body = ByteBuffer(string: "_csrf=\(token)")
+          // Header has wrong value, but form field is correct
+          req.headers.replaceOrAdd(name: "X-CSRF-Token", value: "wrong-token")
+        }
+      ) { response in
         #expect(response.status == .ok)
       }
     } catch {
@@ -177,10 +198,13 @@ struct CSRFMiddlewareTests {
   func postWithEmptyCookieReturns403() async throws {
     let app = try await makeApp()
     do {
-      try await app.testing().test(.POST, "action", beforeRequest: { req in
-        req.headers.cookie = HTTPCookies(dictionaryLiteral: ("csrf_token", .init(string: "")))
-        req.headers.replaceOrAdd(name: "X-CSRF-Token", value: "")
-      }) { response in
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(dictionaryLiteral: ("csrf_token", .init(string: "")))
+          req.headers.replaceOrAdd(name: "X-CSRF-Token", value: "")
+        }
+      ) { response in
         #expect(response.status == .forbidden)
       }
     } catch {

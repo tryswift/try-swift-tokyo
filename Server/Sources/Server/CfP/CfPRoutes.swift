@@ -437,7 +437,8 @@ struct CfPRoutes: RouteCollection {
     let csrfToken = csrfToken(from: req)
     let html = HTMLResponse {
       CfPLayout(title: "Profile Setup", user: user) {
-        ProfileSetupPageView(user: user, errorMessage: error, returnTo: returnTo, csrfToken: csrfToken)
+        ProfileSetupPageView(
+          user: user, errorMessage: error, returnTo: returnTo, csrfToken: csrfToken)
       }
     }
     return try await html.encodeResponse(for: req)
@@ -632,7 +633,8 @@ struct CfPRoutes: RouteCollection {
         language: language,
         currentPath: "/submit"
       ) {
-        SubmitPageView(user: user, success: false, errorMessage: error, language: language, csrfToken: csrfToken)
+        SubmitPageView(
+          user: user, success: false, errorMessage: error, language: language, csrfToken: csrfToken)
       }
     }
     return try await html.encodeResponse(for: req)
@@ -673,7 +675,8 @@ struct CfPRoutes: RouteCollection {
         language: language,
         currentPath: "/my-proposals"
       ) {
-        EditProposalPageView(user: user, proposal: proposal, language: language, csrfToken: csrfToken)
+        EditProposalPageView(
+          user: user, proposal: proposal, language: language, csrfToken: csrfToken)
       }
     }
   }
@@ -825,7 +828,8 @@ struct CfPRoutes: RouteCollection {
         currentPath: "/my-proposals"
       ) {
         EditProposalPageView(
-          user: user, proposal: proposalDTO, errorMessage: error, language: language, csrfToken: csrfToken)
+          user: user, proposal: proposalDTO, errorMessage: error, language: language,
+          csrfToken: csrfToken)
       }
     }
     return try await html.encodeResponse(for: req)
