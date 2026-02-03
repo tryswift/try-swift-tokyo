@@ -1,0 +1,266 @@
+[
+  {
+    "name": "Felix Krause",
+    "image_name": "felix",
+    "bio": "Felix has been building iOS apps for 4 years, before starting to work on iOS developer tools. He built fastlane during college, which got acquired by Twitter last year. Since then Felix works full-time on open source developer tools, mostly focused on mobile developers.",
+    "bio_ja": "iOS開発者のためのツールに取り組むまで4年間iOSアプリを作っていました。大学在学中にfastlaneを開発し、昨年Twitterによって買収されました。それ以来モバイル開発に重点を置いたオープンソースの開発ツールに取り組んでいます。",
+    "links": [
+      {
+        "name": "@KrauseFx",
+        "url": "https://x.com/KrauseFx"
+      }
+    ]
+  },
+  {
+    "name": "Agnes Vasarhelyi",
+    "image_name": "agnes",
+    "bio": "Agnes Vasarhelyi is an iOS developer at Ustream. She likes to build up software from streams of values and automate things in the meantime. Her blog tells you about reactive programming and her tweets about organizing community events.",
+    "bio_ja": "UstreamのiOSデベロッパーです。リアクティブプログラミングを用いてソフトウェアを開発することと、自動化が好きです。ブログではリアクティブプログラミングについて書いていて、Twitterでは運営するコミュニティのイベントについてツイートしています。",
+    "links": [
+      {
+        "name": "@vasarhelyia",
+        "url": "https://x.com/vasarhelyia"
+      }
+    ]
+  },
+  {
+    "name": "Soroush Khanlou",
+    "image_name": "soroush",
+    "bio": "Soroush Khanlou is a New York-based iOS consultant. He’s written apps for the New Yorker, David Chang’s Ando, Rap Genius, and non-profits like Urban Archive. He blogs about programming at khanlou.com, mostly making fun of view controllers. In his free time, he runs, bakes bread and pastries, and collects suitcases.",
+    "bio_ja": "ニューヨークに拠点を置くiOSコンサルタントです。New Yorker、David ChangのAndo、Rap GeniusやUrban Archiveのような非営利団体向けのアプリを作っています。 またkhanlou.comでプログラミングに関するブログを書いていて、主にビューコントローラをネタにしています。 自由な時間には、ランニングやパンとペストリーを焼いていて、スーツケースを集めています。",
+    "links": [
+      {
+        "name": "@khanlou",
+        "url": "https://x.com/khanlou"
+      }
+    ]
+  },
+  {
+    "name": "Nate Cook",
+    "image_name": "nate",
+    "bio": "Nate Cook is the creator of SwiftDoc.org and managing editor of NSHipster, where he writes on topics in Cocoa and Swift. Follow him on Twitter @nnnnnnnn",
+    "bio_ja": "SwiftDoc.orgの創設者でNSHipsterの編集長を務めています。CocoaやSwiftに関する話題を書いています。彼のTwitterアカウント@nnnnnnnnをフォローしましょう。",
+    "links": [
+      {
+        "name": "@nnnnnnnn",
+        "url": "https://x.com/nnnnnnnn"
+      }
+    ]
+  },
+  {
+    "name": "Kyle Fuller",
+    "image_name": "kyle",
+    "bio": "Kyle Fuller started developing Swift the very day it was announced and he hasn’t looked back since. He’s an active contributor in the open-source Swift scene with more projects than he can count.",
+    "bio_ja": "Swiftが発表されたその日からSwift開発を始め、順調に歩みを進めています。非常に積極的なSwiftオープンソースコントリビューターとして、数え切れないほどのプロジェクトに関わっています。",
+    "links": [
+      {
+        "name": "@kylefuller",
+        "url": "https://x.com/kylefuller"
+      }
+    ]
+  },
+  {
+    "name": "Meghan Kane",
+    "image_name": "meghan",
+    "bio": "Meghan is an iOS developer at SoundCloud in Berlin. She is passionate about encouraging people to learn to code and breaking down any barriers to entry to the world of programming. When not coding, Meghan can usually be found cycling or playing board games.",
+    "bio_ja": "ベルリンにあるSoundCloudでiOSデベロッパをしています。みなさんがプログラミングを学ぶためのあらゆる障壁をなくすために情熱を注いでいます。コーディングをしていないときは、サイクリングをしたりボードゲームをしています。",
+    "links": [
+      {
+        "name": "@meghafon",
+        "url": "https://x.com/meghafon"
+      }
+    ]
+  },
+  {
+    "name": "Sommer Panage",
+    "image_name": "sommer",
+    "bio": "Sommer Panage is currently the lead iOS developer at Chorus Fitness. Before taking on this role, she spent two years as a freelance iOS dev while pursing a career as professional circus artist and instructor. Previously, she worked as the head of Mobile Accessibility on iOS and Android at Twitter. Prior to Twitter, Sommer worked on the iOS team at Apple. She earned her BA in Psychology and MS in Computer Science at Stanford University. When she is not Swifting away, you can find her training rope, trapeze or handstands, running or even doing CrossFit. You can follow her on Twitter at @sommer.",
+    "bio_ja": "現在はChorus Fitness,のiOSリードデベロッパーです。 その前はプロのサーカスアーティストやインストラクターとしてキャリアを積みながら、フリーのiOSデベロッパーとして2年間働いていました。 以前はTwitterでiOSとAndroidでモバイルアクセシビリティの責任者でした。 Twitterの前は、AppleのiOSチームで働いていました。 スタンフォード大学で心理学の学士号とコンピュータサイエンスの修士号を取得しました。 Swiftから離れているときは、ロープ、ブランコ、逆立ちのトレーニングやランニング、CrossFitをしています。彼女のTwitterアカウント@sommerをフォローしましょう。",
+    "links": [
+      {
+        "name": "@Sommer",
+        "url": "https://x.com/Sommer"
+      }
+    ]
+  },
+  {
+    "name": "Jon Reid",
+    "image_name": "jon",
+    "bio": "Jon Reid works as an iOS developer at American Express, with the made-up job title 'Code Janitor'. Jon is new to Swift, but has been doing Test Driven Development since 2001. He was born in Tokyo, once worked at Tohoku Gakuin University in Sendai, and is excited to return to Japan!",
+    "bio_ja": "American Expressで \"Code Janitor\" という職位でiOS開発をしています。Swiftは初心者ですが、2001年よりテスト駆動開発をしています。日本生まれで、仙台にある東北学院大学で一度働いたことがあり、日本に戻ってくることにワクワクしています！",
+    "links": [
+      {
+        "name": "@qcoding",
+        "url": "https://x.com/qcoding"
+      }
+    ]
+  },
+  {
+    "name": "Alexis Gallagher",
+    "image_name": "alexis",
+    "bio": "Alexis is as an independent consultant, building all sorts of systems with Swift, Clojure, bash, a heartfelt sincerity, a nagging skepticism, and the motley wisdom from his past adventures in science, finance, and comedy. Twitter: @alexisgallagher",
+    "bio_ja": "コンサルタントとして独立し、科学、金融、コメディにおける経験からSwift、Clojure、bash、誠意、懐疑論など多彩であらゆる種類のシステムを構築しています。Twitter: @alexisgallagher",
+    "links": [
+      {
+        "name": "@alexisgallagher",
+        "url": "https://x.com/alexisgallagher"
+      }
+    ]
+  },
+  {
+    "name": "Brandon Williams",
+    "image_name": "brandon",
+    "bio": "Brandon did math for a very long time, and is now a developer at Kickstarter, contributing to iOS, Android, and web. He enjoys talking about functional programming and how to use it to better our craft as engineers.",
+    "bio_ja": "長年の間、数学の領域に携わり、現在はKickstarterでデベロッパーとしてiOS, Android, Webのプロジェクトに関わっています。関数型プログラミング そして エンジニアとして成果物の品質向上のために関数型プログラミングを利用する方法を話すことが大好きです。",
+    "links": [
+      {
+        "name": "@mbrandonw",
+        "url": "https://x.com/mbrandonw"
+      }
+    ]
+  },
+  {
+    "name": "Mo Kudeki",
+    "image_name": "mokudeki",
+    "bio": "Mo is the Lead iOS Engineer at VINA, an app that helps connect women for friendship and community. Before that, she worked on the Twitter iPhone app. As her alter ego DJ/producer/occasional mermaid dpeshMo, she spends nights/weekends crafting beats and connecting people via all the right house & techno vibes.",
+    "bio_ja": "VINAのリードiOSエンジニアとして、女性が友好関係を築いたりコミュニティ活動を行うことを支援するアプリを開発しています。前職ではTwitterのiPhoneアプリを担当していました。彼女の分身はDJ、プロデューサー、ときどきマーメイドのdpeshMoで、ライトハウスやテクノのビートを通して人と人を繋げることに週末の夜を使ってます。",
+    "links": [
+      {
+        "name": "@kudeki",
+        "url": "https://x.com/kudeki"
+      }
+    ]
+  },
+  {
+    "name": "Eric Wing",
+    "image_name": "eric",
+    "bio": "Feeling he was living too extravagant of a lifestyle of ramen and subsidized bus passes, Eric Wing graduated (kicking and screaming) from the University of California at San Diego with a Masters degree n Computer Engineering just days before 9/11. In the following quest for free food, he worked a wide range of jobs in the field from automated testing on orbiting satellite systems to scientific visualization with a variety of different operating systems and programming languages. But in a stroke of genius (actually, it was more likely just a stroke), he figured out how he could work even harder for no money and started working on open source projects. He has been a contributor to projects such as SDL (Simple DirectMedia Layer), OpenSceneGraph, and LuaCocoa. And when he was offered a co-authorship of Beginning iPhone Games Development, how could he possibly refuse the idea of even more hard work for virtually no pay? Then in a flash of brilliance (or more likely electrocution performing an ill-advised hardware upgrade), he realized he could top himself doing startups with their relentless amount of work and possible financial losses. He became the Chief Architect for Corona SDK and then co-founder of Lanica building a native game engine for Appcelerator. And now he is working on his craziest endeavor yet, Blurrr SDK.",
+    "bio_ja": "ラーメンとバスの補助券がある暮らしはぜいたくすぎると感じて、9.11の直前にサンディエゴのカリフォルニア大学サンディエゴ校をコンピュータエンジニアリングの修士号を取得して（泣きわめいて）卒業しました。その後タダ飯を食べるために、軌道上の衛星システムの自動テストからさまざまな異なるオペレーティングシステムとプログラミング言語による科学的可視化まで、幅広い分野の仕事をしました。しかし天才なひらめきで（実際には脳卒中の可能性が高い）お金のためではないことにもっと一生懸命働けることがわかり、オープンソースプロジェクトに取り組みはじめました。SDL（Simple DirectMedia Layer）、OpenSceneGraph、LuaCocoaなどのプロジェクトに貢献してきました。そしてBeginning iPhone Games Developmentの共同開発を提案されたとき、どのようにして実質的に無報酬でさらに一生懸命働くのを拒んだのでしょうか？そのときは輝かしいひらめき（もしくは軽率なハードウェアアップグレードを行う感電）で、過酷な仕事量と財政的損失の可能性を秘めたスタートアップのトップに立つことができると気づきました。Corona SDKのチーフアーキテクトとなり、そしてAppceleratorのネイティブゲームエンジンを構築するLancelの共同設立者になりました。そして今は夢中でBlurrr SDKに取り組んでいます。",
+    "links": [
+      {
+        "name": "@ewingfighter",
+        "url": "https://x.com/ewingfighter"
+      }
+    ]
+  },
+  {
+    "name": "Rikke M&oslash;ller Koblauch",
+    "image_name": "rikke",
+    "bio": "Product designer crafting for the small screens. Designing experiences for everything from big global brands to personal side projects.",
+    "bio_ja": "プロダクトデザイナーで、現在はモバイルデバイスなど小さい画面のデザインに関わっています。グローバルなブランドから個人のサイドプロジェクトまで幅広いユーザー体験をデザインしています。",
+    "links": [
+      {
+        "name": "@Rikkekoblauch",
+        "url": "https://x.com/Rikkekoblauch"
+      }
+    ]
+  },
+  {
+    "name": "Laura Ragone",
+    "image_name": "laura",
+    "bio": "Laura is an iOS Engineer at Meetup, where she just recently completed a full redesign and rewrite of the mobile app in Swift.  Though she holds a degree in mechanical engineering with a concentration in robotics, she pivoted after deciding that smartphones were doing a better job of taking over the world.  In her spare time, Laura writes Pebble watch apps from a couch in Brooklyn, NY alongside her basset hound Hollie.",
+    "bio_ja": "Meetup社のiOSエンジニアです。ちょうど最近Meetupアプリを完全に再デザインし、Swiftで書き直し終えたところです。ロボットにフォーカスした機械工学の学位をもっていますが、スマートフォンが世界を席巻すると判断し、iOSエンジニアにピボットしました。空き時間には、バセット・ハウンド犬のHollieのそばで、Brooklyn、NYのソファーからPebbleのウォッチアプリを書いています。",
+    "links": [
+      {
+        "name": "@lauraggle",
+        "url": "https://x.com/lauraggle"
+      }
+    ]
+  },
+  {
+    "name": "Krzysztof Siejkowski",
+    "image_name": "krzysztof",
+    "bio": "Krzysztof (or Chris) is an iOS developer at Polidea, a hardware-friendly software house in Warsaw, Poland. He's a co-organizer of Mobile Warsaw, a community for mobile developers, and a Swift enthusiast. A cultural anthropologist by training, he tries to see programming techniques from a humanistic perspective.",
+    "bio_ja": "ポーランドのワルシャワにあるハードウェアフレンドリなソフトウェアハウスであるPolideaでiOS開発者をしています。モバイル開発者向けコミュニティ Mobile Warsaw の共同主催者であり、Swiftの愛好家です。文化人類学者のため、人間中心主義的な観点からプログラミングのテクニックを観察するよう心がけています。",
+    "links": [
+      {
+        "name": "@_siejkowski",
+        "url": "https://x.com/_siejkowski"
+      }
+    ]
+  },
+  {
+    "name": "Yusuke Ito",
+    "image_name": "YusukeIto",
+    "bio": "Yusuke Ito is an architect at Shiroyagi Corporation and an engineer at HANDS MEMORY, designing whole architecture and engineering of various web services. He started Cocoa in 2006, and has been working on the Apple platform after the iPhone Jailbreaking community in Japan. His personal project is creating Hi-Fi audio devices.",
+    "bio_ja": "白ヤギコーポレーションのアーキテクト、HANDS MEMORYのエンジニアです。iOS Appの設計・実装、サーバーサイドの設計と実装を行っています。2006年からCocoaを使い始め、日本のJailbreakコミュニティを経てAppleプラットフォーム上での開発をしています。プライベートでは、オーディオ機器の製作をしています。",
+    "links": [
+      {
+        "name": "@novi_",
+        "url": "https://x.com/novi_"
+      }
+    ]
+  },
+  {
+    "name": "Kazuaki Matsuo",
+    "image_name": "KazuakiMatsuo",
+    "bio": "Kazuaki MATSUO was the first test engineer to join Cookpad a few years ago. He has been focusing on testing and improving the quality of Cookpad's web services and iOS and Android mobile applications. He has been doing manual testing, test automation, working improving the development process... The \"cocoa\" used in his Twitter or GitHub account comes from the Cocoa framework, because of the influence he got from working on iOS applications at university.",
+    "bio_ja": "クックパッド株式会社に、テストエンジニアとして所属しています。最近はiOS/Androidとしたモバイルアプリを中心にテスト/品質という点で業務に関わっています。そこでは、手動/自動テストの構築や実施、その戦略を立てたり、テストだけではなく開発プロセスなどもっと大きな枠組みからサービスの品質を向上するために活動しています。実は、私のTwitterやGitHubなどで使っている\"cocoa\"は、大学の頃に日本でiPhoneが発売された頃にそのアプリ開発で影響を受けたCocoaフレームワークからきています。",
+    "links": [
+      {
+        "name": "@Kazu_cocoa",
+        "url": "https://x.com/Kazu_cocoa"
+      }
+    ]
+  },
+  {
+    "name": "Orta Therox",
+    "image_name": "orta",
+    "bio": "Orta Therox is a developer at Artsy, where he’s helped move the company towards doing Open Source by Default. He’s helped run CocoaPods for the last 4 years and has been working on Danger for the last year.",
+    "bio_ja": "Artsyにて開発者をしており、Artsyでのソフトウェア開発を原則的にオープンソースとして行うことに貢献しました。この4年間、CocoaPodsの運営に携わり、昨年はDangerに注力していました。",
+    "links": [
+      {
+        "name": "@orta",
+        "url": "https://x.com/orta"
+      }
+    ]
+  },
+  {
+    "name": "Christopher Rogers",
+    "image_name": "christopher",
+    "bio": "Christopher has been developing software at Line in Tokyo for 8 years, for iOS since iOS 4, and in Swift since 1.0.",
+    "bio_ja": "2009年から今のLINEでソフトウェア開発をしています。iOSはiOS 4から、Swiftは1.0から取り組んでいます。",
+    "links": [
+      {
+        "name": "@christorogers",
+        "url": "https://x.com/christorogers"
+      }
+    ]
+  },
+  {
+    "name": "Marius Rackwitz",
+    "image_name": "mrackwitz",
+    "bio": "Marius has been developing mobile & web applications ever since he graduated from university. In more recent years, he's shifted his focus towards mobile development, especially iOS and Objective-C, and since it came out a growing portion of Swift. With his work on the CocoaPods team, he hasn't forgotten about Ruby either. Since he joined Realm, he has also become more involved in the mobile community, presenting at many conferences.",
+    "bio_ja": "大学を卒業してからモバイル、ウェブアプリケーションを開発しています。最近はモバイル開発にフォーカスしており、特にiOSとObjective-C、そしてSwiftも増えてきました。CocoaPodsチームではRubyにも打ち込んでいます。Realmで働き始めてからは、多くのカンファレンスで講演を行うなど、モバイルコミュニティに積極的に関わっています。",
+    "links": [
+      {
+        "name": "@mrackwitz",
+        "url": "https://x.com/mrackwitz"
+      }
+    ]
+  },
+  {
+    "name": "Derek Lee",
+    "image_name": "derek",
+    "bio": "Derek has been immersed in iOS development for the last 5 years and has most recently been practicing Lean Product Development as a full-stack software engineer at Pivotal Labs' Tokyo office. He’s most passionate about TDD, writing clean code, and object-oriented design. Outside of Pivotal he makes time for his pet project 'Groove Freedom': an iPad app he built to help drummers practice more effectively. For maintaining good work/life balance Derek can also be found drumming, lifting weights, practicing meditation and co-organizing the Tokyo iOS Meetup.",
+    "bio_ja": "Derekは過去5年間iOS開発に没頭しており、最近ではPivotal Labsの東京オフィスのフルスタックソフトウェアエンジニアとしてリーン製品開発を実践しています。 彼はTDDやきれいなコードを書くこと、オブジェクト指向の設計に誰よりも情熱的です。 Pivotalの外では、彼は彼のペットプロジェクト「Groove Freedom（ドラマーがより効果的に練習をするためのiPadアプリ）」のために時間を使っています。ワークライフバランスを維持するために、Derekはドラム演奏、ウェイトリフティング、瞑想、Tokyo iOS Meetupの共同オーガナイザーをしたりしています。",
+    "links": [
+      {
+        "name": "@derekleerock",
+        "url": "https://x.com/derekleerock"
+      }
+    ]
+  },
+  {
+    "name": "Kateryna Gridina",
+    "image_name": "kateryna",
+    "bio": "Software engineer at Zalando. Mobile development enthusiast, Swift nerd.",
+    "bio_ja": "Zalandoのソフトウェアエンジニアです。モバイル開発に熱心なSwiftマニアです。",
+    "links": [
+      {
+        "name": "@gridNAka",
+        "url": "https://x.com/gridNAka"
+      }
+    ]
+  }
+]

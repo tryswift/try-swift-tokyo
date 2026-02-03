@@ -1,0 +1,563 @@
+{
+  "id": 2,
+  "title": "Day 2",
+  "title_ja": "2日目",
+  "date": "2019-03-22T09:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2019-03-22T09:00:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Breakfast",
+          "title_ja": "朝食"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2019-03-22T09:45:00+09:00",
+      "sessions": [
+        {
+          "id": 2,
+          "title": "Opening Remarks",
+          "title_ja": "開会"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2019-03-22T10:00:00+09:00",
+      "sessions": [
+        {
+          "id": 3,
+          "title": "The Laws of Magic",
+          "title_ja": "魔法の法則",
+          "description": "Learn to develop intelligent and immersive experiences by following rules inspired by Sci-Fi and Fantasy fiction. Like software, a complex and engaging magic system uses guidelines to construct a concrete user experience. This talk explores some speculative laws that support fictional world-building and shows how you can incorporate these lessons into your day-to-day app and code development to produce the same result: user engagement, purpose, and a sense of wonder.",
+          "description_ja": "SFとファンタジー小説にインスパイアされたルールに従って、知的で没入型の体験を開発することを学びます。ソフトウェアと同様に、複雑で魅力的な魔法のシステムもガイドラインを使用して具体的なユーザー体験を構築します。この講演では、架空の世界構築をサポートするいくつかの思索的な法則を探り、これらの教訓を日々のアプリとコード開発に組み込んで同じ結果を生み出す方法を説明します。",
+          "speakers": [
+            {
+              "name": "Dave DeLong",
+              "image_name": "dave_deLong",
+              "bio": "A seven-year veteran of Apple, Dave DeLong is an accomplished iOS engineer with a passion for teaching, experimentation, and hacking the Objective-C runtime. During his time at Apple, he worked on the UIKit framework, Developer Evangelism, and Apple Maps. He also worked on the Product Experience team at Snap, Inc.                                                                                  Dave, his family, and his large collection of Brandon Sanderson books live near Salt Lake City, where he’s an active member of the local developer community. He can often be found on Twitter teaching developers about all the ways that calendrical calculations can go wrong and pontificating on the virtues of eating chocolate with peanut butter.",
+              "bio_ja": "Appleの7年のベテランであるDave DeLongは、教えること、実験すること、そしてObjective-Cランタイムをハックすることに情熱を注いでいる熟練したiOSエンジニアです。彼はAppleにいた間、UIKit、Developer Evangelism、そしてApple Mapsに取り組んでいました。また、Snap, Inc.のプロダクトエクスペリエンスチームにも携わっていました。彼は家族とソルトレイクシティの近くに住んでいて、たくさんのBrandon Sanderson本のコレクションを持っていたり、地元の開発者コミュニティで活発に活動しています。彼はよくTwitterに出没して、開発者にカレンダーの計算はうまくいかないことや、ピーナッツバターとチョコレートを食べることの美徳について教えている姿をみることができます。",
+              "job_title": "Ex-Apple iOS Engineer",
+              "job_title_ja": "Ex-Apple iOS Engineer",
+              "links": [
+                {
+                  "name": "@davedelong",
+                  "url": "https://x.com/davedelong"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2019-03-22T10:25:00+09:00",
+      "sessions": [
+        {
+          "id": 4,
+          "title": "Making Portrait mode yourself",
+          "title_ja": "ポートレートモードを自作しよう",
+          "description": "On the iPhoneX series, with dual cameras, you can blur the background using depth information and finish beautiful portrait photographs.\nIn this talk I will talk about the process of separating and blurring the foreground and background from the image 'without depth information', blurring the portrait mode, swigging with Swift, finishing beautiful pictures.",
+          "description_ja": "最近のiPhoneはデュアルカメラやTrueDepthカメラの搭載により、深度情報を利用して背景をぼかし、被写体を際立たせた美しい写真を撮影することができます。\nこのトークでは、「深度情報を持たない」画像から背景と被写体を分離してぼかすポートレートモードを、Swiftでゴリゴリ自作して、美しい写真を仕上げていく過程をお話しします。",
+          "speakers": [
+            {
+              "name": "Rina Kotake",
+              "image_name": "rina",
+              "bio": "Rina started to work at DeNA from 2017. From she was child, her dream is being Pokemon master. In 2011 MITOU Program, she adopted this program and open her eyes up to the fun in making things. She attended a lots of hackathon and contest and got over 25 awards. Now she develops MangaBox iOS app.",
+              "bio_ja": "将来の夢は「ポケモンマスター」。未踏事業「スーパークリエイター」に認定されて以降、ものづくりの楽しさに目覚める。多くのハッカソンやコンテストに参加し、25以上の賞を獲得。現在はDeNAで「マンガボックス 」のiOSアプリ開発を行う。",
+              "job_title": "iOS Developer at DeNA",
+              "job_title_ja": "iOS Developer at DeNA",
+              "links": [
+                {
+                  "name": "@koooootake",
+                  "url": "https://x.com/koooootake"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2019-03-22T10:35:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "Building a Social Network in Swift",
+          "title_ja": "Swiftでソーシャルネットワークをつくろう",
+          "description": "“But is it really ready for production?” Server-side Swift has come a long way in just a few years. Ian Partridge and David Okun will show how full-stack Swift is ready for your next project, along with the open standards you can take advantage of as you go live on the cloud. Spend more time writing Swift and less time talking about it!",
+          "description_ja": "「本当にプロダクトに使用できる状態なの？」 サーバーサイドSwiftは、ここ数年で大きな発展を遂げました。Ian PartridgeとDavid Okunが、フルスタックSwiftが、いかにあなたの次のプロジェクトで実用的かお見せします。合わせて、クラウド環境で稼働させる際に活用できるオープン標準についてもご紹介します。\nSwiftについて話すことに時間を使うより、Swiftを書くことにもっと時間を使いましょう！",
+          "speakers": [
+            {
+              "name": "Ian Partridge",
+              "image_name": "ian",
+              "bio": "Ian Partridge is the technical lead of the Swift@IBM development team, working in open source to bring Swift to the cloud. A committer to the core Swift libraries and a developer of Kitura, one of the leading Swift web frameworks, he comes from a background in virtual machine performance and debugging. Ian regularly speaks at conferences including AltConf, iOSCon, dotSwift, SwiftConf and more.",
+              "bio_ja": "Ian PartridgeはSwift@IBM開発チームのテクニカルリードで、Swiftをクラウドに持っていくOSSの開発をしています。Core Swift Libraryのコミッターをしていたり、SwiftのwebフレームワークのひとつであるKituraの開発者でもあります。仮想マシンのパフォーマンスやデバッグのバックグラウンドを持っています。IanはAltConfやiOSCon,dotSwift, SwiftConfなどのカンファレンスで登壇をしています。",
+              "job_title": "Swift@IBM",
+              "job_title_ja": "Swift@IBM",
+              "links": [
+                {
+                  "name": "@alfa",
+                  "url": "https://x.com/alfa"
+                }
+              ]
+            },
+            {
+              "name": "David Okun",
+              "image_name": "david",
+              "bio": "David Okun is a mobile software developer turned developer advocate for IBM in Austin, Texas. David has been primarily focused on iOS mobile software, but is also interested in Swift on the Server, and other web technologies such as Node.js.",
+              "bio_ja": "David Okunは元々モバイルソフトウェア開発者でしたが、現在はIBMのTexas州Austinの支社でDeveloper Advocateをしています。Davidは主にiOSのモバイルソフトウェアにフォーカスしていましたが、Swift on Serverや、Node.jsのような他のwebの技術にも興味があります。",
+              "job_title": "Swift@IBM",
+              "job_title_ja": "Swift@IBM",
+              "links": [
+                {
+                  "name": "@dokun24",
+                  "url": "https://x.com/dokun24"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2019-03-22T11:00:00+09:00",
+      "sessions": [
+        {
+          "id": 6,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2019-03-22T11:30:00+09:00",
+      "sessions": [
+        {
+          "id": 7,
+          "title": "Swift Hardware Hacking",
+          "title_ja": "Swift Hardware Hacking",
+          "description": "In this talk, we’ll explore how to use Swift to hack hardware.\nWe’ll look at expanding the functionality of a cat coin bank (the one where you place a coin on top and cat pulls it into the coin bank) using a micro-controller and various sensors.\nWe will:Count money as it is depositedSpeak out the deposited amount/total balanceConnect to a phone via Bluetooth LE to send information between devicesThe purpose of this talk is to understand how to get started working with Swift and hardware, it will provide enough of a foundation so you can try projects on your own.",
+          "description_ja": "このトークでは、Swiftを使ったハードウェアのハックの方法をお話します。猫の貯金箱(上にコインを置くと、猫がそれを貯金箱の中に引き込むもの)の機能を、マイクロコントローラーや様々なセンサーをつかって拡張する様子をお見せします。\n内容はお金が預けられた際にカウントする。預金総額/総合収支を音声でお知らせする。Bluetooth LEで電話と接続し、デバイス間で情報を送る。です。このトークの目的は、どのようにSwiftでハードウェアを扱うことを始めるか理解することです。自分のプロジェクトで試せるように、必要十分な土台を提供します。",
+          "speakers": [
+            {
+              "name": "Sally Shepard",
+              "image_name": "sally_shepard",
+              "bio": "Sally Shepard is an iOS developer, accessibility consultant, writer and hardware hacker who has worked on a wide variety of award winning apps. Before the iPhone existed, she studied audio engineering, a field which combined her love of music and tinkering with expensive hardware. She lives in London and in her spare time she enjoys playing any instrument with strings, attaching sensors to her cat and taking pictures with vintage cameras.",
+              "bio_ja": "Sally Shepardは、iOS開発者、アクセシビリティコンサルタント、ライター、そしてハードウェアハッカーでもあります。 色々な賞を獲得した多くのアプリケーションに携わってきました。 iPhoneが発売される前は、彼女が好きな音楽と機械いじり掛け合わせた領域である音響技術を学んでいました。 現在はロンドンに住んでおり、余暇に、あらゆる弦楽器を弾いたり、猫にセンサーをつけたり、ビンテージカメラで写真を撮ったりしています。",
+              "job_title": "iOS Developer, Accessibility Consultant, Writer and Hardware Hacker",
+              "job_title_ja": "iOS Developer, Accessibility Consultant, Writer and Hardware Hacker",
+              "links": [
+                {
+                  "name": "@mostgood",
+                  "url": "https://x.com/mostgood"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2019-03-22T11:55:00+09:00",
+      "sessions": [
+        {
+          "id": 8,
+          "title": "Basics of Implement convenience with SwiftSyntax",
+          "title_ja": "SwiftSyntax で便利を実現する基礎",
+          "description": "SwiftSyntax can realize swift code generation, rewriting, static inspection and so on.\nHowever, how to use SwiftSyntax is almost known. I'd like to talk about this method in digest.",
+          "description_ja": "SwiftSyntax を使うと、Swift のコード生成や書き換え、静的検査などを実現できます。しかし、SwiftSyntax の使い方はほとんど知られていません。この方法をダイジェストで紹介します。",
+          "speakers": [
+            {
+              "name": "Yuki Kokubun",
+              "image_name": "kuniwak",
+              "bio": "Yuki is working at DeNA and experts for unit testing in iOS / Web. He purchases fun, wise, and valued testing. He likes to hear the voice of testing.",
+              "bio_ja": "iOS や Web の単体テストを専門としていて、最近は株式会社ディー・エヌ・エーで楽しく賢く価値あるテストを追求している。趣味はテストの声を聴くこと。",
+              "job_title": "iOS/Web application developer in DeNA",
+              "job_title_ja": "iOS/Web application developer in DeNA",
+              "links": [
+                {
+                  "name": "@orga_chem",
+                  "url": "https://x.com/orga_chem"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2019-03-22T12:05:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "Swift type metadata",
+          "title_ja": "Swift type metadata",
+          "description": "Swift has type metadata, which can be stored type information on runtime. We don't use directly not so much, but it's important to understand the behavior of Swift runtime. In this talk, I'd like to talk about the type metadata and its implementation.",
+          "description_ja": "Swiftには実行時に型情報を保持するためのType metadataという仕組みがあります。\n我々が頻繁に直接使うことはありませんが、Swiftのランタイムの動作を理解するための重要な要素です。\nこのトークでは Type metadata やその実装について紹介します。",
+          "speakers": [
+            {
+              "name": "Yuta Saito",
+              "image_name": "kateinoigakukun",
+              "bio": "Yuta is an intern at Mercari's iOS team. He gets lost with Swift everyday in the beautiful world of types. His hobby recently is to read the Swift compiler.",
+              "bio_ja": "株式会社メルカリのiOSインターンです。型による綺麗な世界を求めて日々Swiftと戯れています。最近はSwiftコンパイラを読むのが趣味です。",
+              "job_title": "iOS Developer at Mercari",
+              "job_title_ja": "iOS Developer at Mercari",
+              "links": [
+                {
+                  "name": "@kateinoigakukun",
+                  "url": "https://x.com/kateinoigakukun"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2019-03-22T12:30:00+09:00",
+      "sessions": [
+        {
+          "id": 10,
+          "title": "Building a Mobile Design System",
+          "title_ja": "モバイルのデザインシステムを構築する",
+          "description": "Learn how to build a mobile design system from the ground up. Learn what a design system is, how it's useful to your team, how it can help speed up your development and the first 3-5 things you need to focus on to get started successfully.",
+          "description_ja": "モバイルデザインシステムをゼロから構築する方法を学びます。デザインシステムとは何か、チームにどう役立つのか、開発のスピードアップにどのように役立つか、そして成功するためにはじめにフォーカスすべき３〜５つのことを学びます。",
+          "speakers": [
+            {
+              "name": "Kristina Fox",
+              "image_name": "krstnfx",
+              "bio": "Kristina Fox is a Senior iOS Engineer at Intuit. She writes tutorials and technical commentary on iOS and watchOS development on her website kristina.io. As an international speaker, she has presented on topics ranging from Apple Watch development to using technical writing to advance engineering skills. Her past speaking events include talks at AltConf, NSSpain, iOSDevUK and many more. Kristina’s main goal in life is to consume as much avocado toast as she can. She also enjoys watching cat videos and Twittering. Find her on Twitter @krstnfx.",
+              "bio_ja": "Kristina FoxはIntuitのシニアiOSエンジニアです。kristina.ioでiOSやwatchOSのチュートリアルを書いたり、技術コメンテーターをしています。国際スピーカーとして、Apple Watch開発からエンジニアリングスキルを伸ばすための技術ライティングまで、幅広い内容で講演しています。過去にはAltConfやNSSpain、iOSDevUKなどのイベントで登壇しています。彼女の人生の目標はアボガドトーストをできるだけたくさん食べることです。猫の動画をみたり、Twitterをすることも楽しんでいます。Twitterは @krstnfx です。",
+              "job_title": "Senior iOS Engineer at Intuit",
+              "job_title_ja": "Senior iOS Engineer at Intuit",
+              "links": [
+                {
+                  "name": "@krstnfx",
+                  "url": "https://x.com/krstnfx"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2019-03-22T13:00:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2019-03-22T14:30:00+09:00",
+      "sessions": [
+        {
+          "id": 12,
+          "title": "Shaping Sounds in Swift",
+          "title_ja": "Swiftにおける音の成形",
+          "description": "Sound design with synthesizers is always viewed as something incredibly complicated, however with Swift it doesn't need to be. This talk will focus on the basics of sound synthesis, design, and how you can take really basic sounds and turn them into some of the most memorable of the century.",
+          "description_ja": "シンセサイザーを使ったサウンドデザインは目も当てられないほど複雑というのが一般的ですが、Swiftではそんなことにはなりません。このトークでは、音の合成、デザインの基本、そして基本的な音を、どうやって最高のものに変えることができるかに焦点を当てます。",
+          "speakers": [
+            {
+              "name": "Adam Bell",
+              "image_name": "adam_bell",
+              "bio": "Adam is a software engineer specializing in audio, animations, interactions, and gestures, currently working on Origami Studio at Facebook. When he's not racing cars or messing with synthesizers, you'll usually find him dabbling in the internals of Apple products or getting Doom to run on platforms it really wasn't designed for (https://www.youtube.com/watch?v=GD0L46y3IqI) 🙃.",
+              "bio_ja": "Adamは、オーディオ、アニメーション、インタラクション、ジェスチャーに精通したソフトウェアエンジニアです。現在は、FacebookのOrigami Studioで働いています。 彼は、シンセサイザーにちょっかいを出すかカーレースをしていないときは、大体Apple製品をいじっているかDoomが動かないように作られているプラットフォームでDoomを動かしています (https://www.youtube.com/watch?v=GD0L46y3IqI) 🙃。",
+              "job_title": "Software Engineer at Facebook",
+              "job_title_ja": "Software Engineer at Facebook",
+              "links": [
+                {
+                  "name": "@b3ll",
+                  "url": "https://x.com/b3ll"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2019-03-22T14:55:00+09:00",
+      "sessions": [
+        {
+          "id": 13,
+          "title": "Psychology study background and prospects in iOS device",
+          "title_ja": "iOS端末を利用した心理学研究の背景と展望",
+          "description": "In past psychology study, experiments using Personal computer or physical lebber has conducted. And today the way is changing that experiments using touch screen for human or other animals are increased. In this talk, I'd like to show you about the histrical background and iPad application using Swift, which cooporate with research institutes, then discuss the necessity and role for software technology in future science study.",
+          "description_ja": "これまでの心理学研究では、パーソナルコンピュータを利用したものや、物理的なレバーを用いた実験が行なわれてきました。\nしかし、今日ではそのあり方が変貌しつつあります。その内容は、ヒトやヒト以外の動物においても、タッチスクリーンを用いた実験が増えているという事実です。\nその歴史的背景と、登壇者が現在研究機関と協力して開発・実施している Swift 製の iPad アプリを紹介しつつ、これからの科学研究におけるソフトウェア技術の必要性とその役割を論じます。",
+          "speakers": [
+            {
+              "name": "Yuto Mizutani",
+              "image_name": "yuto",
+              "bio": "Yuto is new graduate iOS developer at VALU. He hopes to bridge scientific research and technology. He has been working with iOS (Swift) in collaboration with external organizations since he was student. He likes electronic work, so his dream is to build fully automated home.",
+              "bio_ja": "株式会社 VALU にて iOS アプリを開発している新卒エンジニア。科学研究と技術の橋渡しをしたいと願い、大学時代から外部機関と連携し iOS (Swift) を用いた研究を行っている。 電子工作が好きで、将来の夢は自宅の全自動化。",
+              "job_title": "iOS Developer at VALU",
+              "job_title_ja": "iOS Developer at VALU",
+              "links": [
+                {
+                  "name": "@expensive_man",
+                  "url": "https://x.com/expensive_man"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2019-03-22T15:05:00+09:00",
+      "sessions": [
+        {
+          "id": 14,
+          "title": "Property-based test beginning with SwiftCheck",
+          "title_ja": "SwiftCheckで始めるProperty-based Testing",
+          "description": "There is a method called Property-based Testing that describes the logical properties that the function should satisfy and generates random input values ​​to test. It's based on Haskell 's QuickCheck is the main source, and it has been ported to many languages ​​and also Swift has an OSS called SwiftCheck.  In this talk, I'll show you the concept of Property-based Testing and how to describe with SwiftCheck.",
+          "description_ja": "関数が満たすべき論理的性質を記述し、ランダムな入力値を生成させてテストを行うProperty-based Testingというテスト手法があります。HaskellのQuickCheckが大元となっていますが、多数の言語に移植されており、SwiftでもSwiftCheckというOSSが開発されています。このトークではProperty-based Testingの考え方と、SwiftCheckでの記述方法を解説をします。",
+          "speakers": [
+            {
+              "name": "Yusuke Hosonuma",
+              "image_name": "yusuke",
+              "bio": "Yusuke is working at DeNA SWET group. He recognizes how beautiful of Functional Programming and study Haskell now. He likes to solve algorithm problems with Haskell, with automated testing.",
+              "bio_ja": "株式会社DeNAのSWETグループで働いてます。最近、関数型プログラミングの美しさを再認識し、Haskellに再入門しています。Haskellでアルゴリズムの問題を解くのが楽しかったりする日々です。もちろん自動テストを添えて。",
+              "job_title": "Software Engineer at DeNA",
+              "job_title_ja": "Software Engineer at DeNA",
+              "links": [
+                {
+                  "name": "@tobi462",
+                  "url": "https://x.com/tobi462"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "time": "2019-03-22T15:30:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "All about linking libraries",
+          "title_ja": "All about linking libraries",
+          "description": "When developing an iOS application, you rarely do not use libraries or framework.\nWe use OS provided frameworks such like UIKit and Swift standard libraries. We also use useful third-party libraries.\n\nAt the same time, everyone may have suffered from link errors, duplicate symbols, weird error messages from package managers.\nIt is difficult to solve link errors because the cause of the problem comes from various things such as project setting,  the library is static or dynamic, distribution method of the library or execution environment (on device or simulator).\n\nLearning the mechanism of the link makes you possible to solve the problems.\n\nIn this talk, I will explain about a library and framework which can be used for iOS applications and explain the mechanism of how external libraries will be linked with your applications.",
+          "description_ja": "iOSアプリを開発する際、ライブラリやフレームワークを使わないということはほとんどありません。\nOSが提供するUIKitやSwift標準ライブラリを使いますし、サードバーティの便利なライブラリを使用することもあります。\n\nそして、誰もが１度はリンクエラーや重複したシンボル、パッケージマネージャが出力するエラーメッセージに悩んだことがあることでしょう。\nリンクエラーの解決が難しいのは、問題の原因がプロジェクト設定、ライブラリの種類・配布方法、実行先（デバイスやシミュレータ）の環境など多岐にわたるためです。\n\nリンクとは何か、何が起こっているのかを学ぶことでその問題は解決できるようになります。\n\nこのセッションではLibraryとFramework、StaticとDynamicの違い、それぞれのメリットとデメリット、SwiftからImportするために必要なことを知り、外部のライブラリがどのようにして自分のアプリから利用できるようになるかという仕組みを解説します。",
+          "speakers": [
+            {
+              "name": "Kishikawa Katsumi",
+              "image_name": "katsumi",
+              "bio": "iOS Developer. Love to create small tools for developers.",
+              "bio_ja": "開発者向けの小さなツールを作るのが好きです。",
+              "job_title": "iOS Developer",
+              "job_title_ja": "iOS Developer",
+              "links": [
+                {
+                  "name": "@k_katsumi",
+                  "url": "https://x.com/k_katsumi"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2019-03-22T15:40:00+09:00",
+      "sessions": [
+        {
+          "id": 16,
+          "title": "The Philosopher's String",
+          "title_ja": "賢者のString",
+          "description": "Swift’s String type aims to strike an optimal balance between correctness, performance, and ease of use. This talk will explore the philosophy behind String and how we as a community can drive ease of use even further to make programming with String a true joy.",
+          "description_ja": "SwiftのString型は、正確さ、パフォーマンス、そして使いやすさの絶妙なバランスを目標にしています。\nこのトークではString型の背景にある哲学や、私たちがコミュニティとしていかにStringを使ったプログラミングの楽しさと手軽さを追求できるかについてお話しします。",
+          "speakers": [
+            {
+              "name": "Michael Ilseman",
+              "image_name": "ilseman",
+              "bio": "Michael works at Apple on Swift’s Standard Library team.",
+              "bio_ja": "MichaelはAppleのSwift's Standard Libraryチームで働いています",
+              "job_title": "Swift's Standard Library team at Apple",
+              "job_title_ja": "Swift's Standard Library team at Apple",
+              "links": [
+                {
+                  "name": "@Ilseman",
+                  "url": "https://x.com/Ilseman"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2019-03-22T16:05:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "time": "2019-03-22T16:35:00+09:00",
+      "sessions": [
+        {
+          "id": 18,
+          "title": "Assembly. You can do it!",
+          "title_ja": "アセンブリ、君ならできる！",
+          "description": "We’ve all had the experience of debugging an app only to end up looking at a wall of assembly that seems impossible to understand. Or maybe you’ve wanted to look at the source code for a UIKit method to understand why it behaves the way it does. In this talk, I’ll show you that even us regular developers can learn enough assembly to help track down bugs, to reverse engineer parts of the system frameworks, and to understand our own code more deeply.",
+          "description_ja": "みなさんにはアプリのデバッグで、結局アセンブリという自分には理解不能な壁を見るだけになった経験があったでしょう。もしくは、なぜUIKitがこのような挙動を示すのかを理解するために、UIKitのメソッドのソードコードをみたくなったこともあるかもしれません。このトークでは、我々のような普通の開発者でもアセンブリを深く学ぶことによって、バグを見つけ出したり、システムフレームワークのリバースエンジニアリングを行ったり、自身のコードをより深く理解することができることをお見せします。",
+          "speakers": [
+            {
+              "name": "Andrew Madsen",
+              "image_name": "andrew",
+              "bio": "Andrew is director of the iOS program at Lambda School. He has been doing Cocoa development for the last 14 years, with a particular focus on audio and video apps for creative people. A full time iOS teacher for the past three years, he loves sharing the wonderful world of Swift and iOS with new programmers. Andrew is also co-host of the iPhreaks iOS development podcast, and enjoys being a part of the developer community. Despite embracing Swift starting in 2014, Objective-C will always be his first love.",
+              "bio_ja": "AndrewはLambdaスクールのiOSプログラムのディレクターです。この14年間、クリエイティブな人たちにむけて、特に音楽や動画のアプリを作成するなど、Cocoa開発を行ってきました。この3年、フルタイムのiOSの先生として、新人プログラマーにSwiftやiOSの素晴らしい世界を伝えています。iPhreaks iOS developmentというpodcastを共催していたり、開発者コミュニティを楽しんでいます。2014年からSwiftを始めましたが、Objective-Cは常に彼の初恋です。",
+              "job_title": "Director of iOS at Lambda School,  iPhreaks Co-host",
+              "job_title_ja": "Director of iOS at Lambda School,  iPhreaks Co-host",
+              "links": [
+                {
+                  "name": "@armadsen",
+                  "url": "https://x.com/armadsen"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "time": "2019-03-22T17:00:00+09:00",
+      "sessions": [
+        {
+          "id": 19,
+          "title": "Contributing to Swift Compiler",
+          "title_ja": "Swiftコンパイラにコントリビュートする",
+          "description": "Do you want to contribute to Swift Compiler? If you have cool idea, it’s a good enough reason to start. It’s challenging, but Swift community helps you a lot! In this talk, we’ll cover overview of Swift Compiler and go over how and where to start.",
+          "description_ja": "Swiftコンパイラにコントリビュートしてみたいと思ったことはありますか？いいアイディアがあるなら、それで十分動機になります。難しい部分もありますが、Swiftコミュニティがお手伝いします！このトークでは、Swiftコンパイラの概要と、コンパイラの始め方、どこから始めたら良いかをお話しします。",
+          "speakers": [
+            {
+              "name": "Yusuke Kita",
+              "image_name": "kitasuke",
+              "bio": "I’m a Software Engineer at Mercari. I've been working on Mercari US app in frontend and backend team. I'm passionate about learning new technology. When not coding, you can find me cycling.",
+              "bio_ja": "メルカリのソフトウェアエンジニア。Mericari USアプリのフロントエンド・バックエンドチームで働いています。新しい技術を学ぶのが大好きです。休みの日はサイクリングをしています。",
+              "job_title": "Software Engineer at Mercari",
+              "job_title_ja": "Software Engineer at Mercari",
+              "links": [
+                {
+                  "name": "@kitasuke",
+                  "url": "https://x.com/kitasuke"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "time": "2019-03-22T17:10:00+09:00",
+      "sessions": [
+        {
+          "id": 20,
+          "title": "In defence of Core Data",
+          "title_ja": "Core Dataを守るために",
+          "description": "Over the year, Core Data has gained a pretty bad reputation amongst developers who prefer to use another service like Realm for their local persistence. In this talk I will make an argument for using Core Data and why it's not so bad. I will share some examples of where it's easy to go wrong with Core Data, and how to avoid those pitfalls. I will also quickly go over setting up Core Data in an app and by the end the audience should have a couple of simple rules that should help them safely integrate Core Data in their apps.",
+          "description_ja": "この数年、Core Dataはローカルでの永続化において、Realmのような他のサービスを好む開発者の間ではかなりひどい評判です。このトークでは、Core Dataを使うことはそんなに悪いことではないと考える理由を説明します。Core Dataでうまくいかないところや、その落とし穴を回避する例をお見せします。また、Core Dataのアプリへの設定についても簡単に説明します。終わりには、みなさんはCore Dataをアプリに安全に統合するのに役立つ簡単なルールを用意することになるでしょう。",
+          "speakers": [
+            {
+              "name": "Donny Wals",
+              "image_name": "donnywals",
+              "bio": "I'm a passionate and curious iOS developer, Author and Speaker. I currently work at Disney on our internal iOS SDK. I have written three books on iOS development and have delivered several talks and workshop over the past couple of years. Next to iOS development I'm a huge cat lover and I like noodling on my guitar.",
+              "bio_ja": "Donnyは情熱的で好奇心旺盛なiOS開発者、著者、スピーカーです。Disneyで働いていて、内部iOSSDKを開発しています。この数年iOS開発本を３冊書き、何回か登壇したり、ワークショップを開いています。iOS開発以外では、猫の愛好家だったり、ギターの即興が好きです。",
+              "job_title": "iOS @ Disney",
+              "job_title_ja": "iOS @ Disney",
+              "links": [
+                {
+                  "name": "@DonnyWals",
+                  "url": "https://x.com/DonnyWals"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "time": "2019-03-22T17:35:00+09:00",
+      "sessions": [
+        {
+          "id": 21,
+          "title": "次へつなごう— Extending a hand to the next generation of Apple developers",
+          "title_ja": "次へつなごう— Extending a hand to the next generation of Apple developers",
+          "description": "It’s never been a better time to start learning how to code. Technologies are evolving and growing every day, and with Apple’s recent advances in Swift and Swift playgrounds, Apple development has never been easier to try. However in the tech industry, there still exists a large gap between individuals trying to enter the industry as a Software Engineer, and the hiring demands of tech companies trying to fill their engineering roles. This talk will focus on this gap - the leaky bucket we see in the demographics of Software Engineers. We’ll talk about how we as Software Engineers can strengthen the existing Apple developer community by discussing how we can extend a hand to those trying to enter. This will involve topics such as sharing perspectives from non-Software Engineers about the difficulties of breaking the barrier, as well as the unique opportunity that Swift and this Apple developer community can provide.",
+          "description_ja": "コーディングを学ぶには絶好のタイミング！技術は日進月歩、進化を遂げています。Apple Platformでの開発はSwiftやSwift playgroundにおける進歩によって、より簡単に取り組めるようになりました。しかし、この業界では、ソフトウェアエンジニアになろうとしている人と、エンジニアリングの役割を果たそうとしているテック企業の採用要求にはまだギャップが存在します。このトークでは、ソフトウェアエンジニアの人口統計からよく見落とされがちなポイントに焦点を当てます。これからソフトウェアエンジニアになろうとしている人々にどのように手を差し伸べられるのかを議論し、私たちソフトウェアエンジニアがApple開発者コミュニティをどのように成長させられるのかについてお話しします。ソフトウェアエンジニアではない人が壁を乗り越えることの難しさや、SwiftとこのApple開発者コミュニティが提供できるものとは何なのかについてもお話します。",
+          "speakers": [
+            {
+              "name": "Mayuko Inoue",
+              "image_name": "mayuko_inoue",
+              "bio": "Mayuko is an iOS Engineer and the founder of helloMayuko, a youtube channel with over 200,000 subscribers aimed at helping make the tech industry feel more accessible to those trying to enter. She creates vlog-style videos about software development and other topics to demystify the life and career path of a Software Engineer. She is passionate about the creating products that help people, the creative arts, and boppin music.",
+              "bio_ja": "MayukoはiOSエンジニアと20万人以上のチャンネル登録者を持つYoutuberです。 初心者にとってテック業界をより身近に感じるよう、ソフトウェアエンジニアのキャリアパスやシリコンバレーでの生活、ソフトウェア開発やその他の話題についてのvlogを制作してます。 アメリカ生まれ育ちで関西弁を喋る彼女。最近はサードウェイブコーヒーにはまってます。",
+              "job_title": "iOS Engineer and YouTuber",
+              "job_title_ja": "iOS Engineer and YouTuber",
+              "links": [
+                {
+                  "name": "@hellomayuko",
+                  "url": "https://x.com/hellomayuko"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "time": "2019-03-22T18:00:00+09:00",
+      "sessions": [
+        {
+          "id": 22,
+          "title": "Closing / Announcements",
+          "title_ja": "クロージング"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "time": "2019-03-22T18:30:00+09:00",
+      "sessions": [
+        {
+          "id": 23,
+          "title": "Party🎉",
+          "title_ja": "Party🎉"
+        }
+      ]
+    }
+  ]
+}

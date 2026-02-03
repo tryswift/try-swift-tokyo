@@ -1,0 +1,476 @@
+{
+  "id": 1,
+  "title": "Day 1",
+  "title_ja": "1日目",
+  "date": "2020-03-18T09:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2020-03-18T09:00:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Registration & Breakfast",
+          "title_ja": "受付・朝食"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2020-03-18T10:00:00+09:00",
+      "sessions": [
+        {
+          "id": 2,
+          "title": "Opening Remarks",
+          "title_ja": "開会"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2020-03-18T10:15:00+09:00",
+      "sessions": [
+        {
+          "id": 3,
+          "title": "The Building Blocks of SwiftUI",
+          "title_ja": "SwiftUIを構成するもの",
+          "description": "Ever wondered how the closures of SwiftUI's View, VStack, List and so on come together to build an actual interface? Well this is the session for you, we'll explore function builders, the magic that exists behind each of those types, and see how we can use them not just within SwiftUI but for our own gains too — did someone say easy to build NSAttributedStrings?",
+          "description_ja": "SwiftUIのView、VStack、Listなどのクロージャーがどのように連携して実際のインターフェースを構築するのか疑問に思ったことはありませんか？さて、これはそんなあなたのためのセッションです。Function Builderやこれらの型の背後に存在する魔法を調べ、SwiftUI内だけでなく、私たち自身の利益のためにそれらをどのように使用できるかを見ていきましょう。",
+          "speakers": [
+            {
+              "name": "Josh Garnham",
+              "image_name": "67210735-8258f480-f411-11e9-88c6-dc35b077a97c",
+              "bio": "A former Apple Engineer working within the iCloud team, Josh Garnham is now building a bank at Monzo. He has a passion for the technical; reverse-engineering and getting his hands dirty to understand how things work and to push technologies to their limits. That’s his kind of fun.",
+              "bio_ja": "iCloudチームで働いていた元AppleエンジニアのJosh Garnhamは、現在Monzoに銀行を設立しています。彼は技術に情熱を傾けており、リバースエンジニアリングや手を動かすことで物事の仕組みを理解し、テクノロジーを限界まで押し上げます。それは彼の一種の楽しみです。",
+              "job_title": "Senior iOS Engineer at Monzo Bank",
+              "job_title_ja": "Senior iOS Engineer at Monzo Bank",
+              "links": [
+                {
+                  "name": "@jgarnham",
+                  "url": "https://x.com/jgarnham"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2020-03-18T10:40:00+09:00",
+      "sessions": [
+        {
+          "id": 4,
+          "title": "Let’s analyze Swift struct",
+          "title_ja": "Swiftのstructを分析する",
+          "description": "Most of the standard library types are written in struct and Apple recommends using it over class for performance reasons. But what’s the downside? One of them is a binary size impact. This talk will go over the analysis of Swift struct. It will go into details of its behavior and how the struct size can have a limiting impact on some of the compiler optimizations and the reasons why. It will also cover when to choose struct vs class when writing your own code.",
+          "description_ja": "標準ライブラリの型のほとんどはstructで記述されており、Appleもパフォーマンス上の理由からclassよりもstruct使用することを推奨しています。しかし、マイナス面は何でしょうか？その1つは、バイナリサイズへの影響です。このトークでは、Swiftのstructを分析について説明します。動作の詳細と、strucのサイズがコンパイラの最適化のいくつかとその理由に限定的な影響を与える方法について説明します。また、独自のコードを記述するときに、structとclassどちらを選択すればよいか、そのタイミングについても説明します。",
+          "speakers": [
+            {
+              "name": "Ellie Shin",
+              "image_name": "ellie-1972d42b-6665-4406-890d-0b58703a0a72",
+              "bio": "Ellie is a senior iOS Engineer at Uber on the mobile platform team. She has worked on building Uber’s rider app and tools including a code generator and a duplicate code detector. She cares deeply about optimizing iOS apps and frameworks at scale. She has previously worked at Spotify and Microsoft among other companies, primarily on iOS. She has given talks at UIKonf, NSSpain, and other conferences, on iOS app binary size optimization, efficient code generation, and Swift String performance.",
+              "bio_ja": "Ellieは、UberのモバイルプラットフォームチームのシニアiOSエンジニアです。彼女はUberのライダーアプリやコードジェネレーター、重複コード検出器などのツールの構築に取り組んできました。iOSアプリとフレームワークを大規模に最適化することに深く関心を持っています。以前はSpotifyとMicrosoftで主にiOSのチームで働いていました。UIKonf、NSSpain、およびその他のカンファレンスでは、iOSアプリのバイナリサイズの最適化、効率的なコード生成、Swift Stringのパフォーマンスについて講演しました。",
+              "job_title": "Sr. iOS Engineer @Uber",
+              "job_title_ja": "Sr. iOS Engineer @Uber",
+              "links": [
+                {
+                  "name": "@ellsk1",
+                  "url": "https://x.com/ellsk1"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2020-03-18T11:05:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2020-03-18T11:35:00+09:00",
+      "sessions": [
+        {
+          "id": 6,
+          "title": "The system of type inference",
+          "title_ja": "Swiftの型推論の流れ",
+          "description": "I've been interested in the mechanism of type inference since I started using Swift. When Swift2 came out, I studied Hindley-Milner (HM) type inference and implemented it myself. However, with HM-type inference, the advanced inference of Swift could not be realized, and I was worried about how to extend it to realize a language like Swift. Over the past year, I have been reading the inside of the compiler a little bit and giving a talk on type inference through participation in the Swift compiler workshop. Based on this experience, in this talk, I will explain the overall flow of type inference in Swift and the contents of inference processing. Through my talk, I'm hoping the beginners will be a good starting point for getting started with type inference and hope that the Swift community will have more developers who understand type inference.",
+          "description_ja": "私はSwiftを触り始めたころから型推論の仕組みに興味を持ちました。Swift2が出た頃にHindley-Milner型推論（HM型推論）を勉強し、自分で実装してみたことがあります。しかし、HM型推論では、Swiftが持つ高度な推論を実現することができず、どのように拡張するとSwiftのような言語が実現できるのか気になっていました。 この一年ほど、Swiftコンパイラの勉強会への参加を通し、少しずつコンパイラの内部を読み解いたり、型推論の発表を行ったりしてきました。 このような経験を踏まえ、このトークでは、Swiftの型推論の流れの全体像と、推論処理の中身を解説します。 私の発表を通して、初級者が型推論に入門する良いとっかかりとなり、Swiftコミュニティに型推論を理解している開発者が増えることを望みます。",
+          "speakers": [
+            {
+              "name": "omochimetaru",
+              "image_name": "EgkugHJ6_400x400-c8c8a2d1-c233-4a22-bfbe-039746abf7f2",
+              "bio": "Omochi writes swift for iOS, macOS, server side in my job at Qoncept, Inc. He have known \"pleasure of types\" well from Swift and fallen love to it. He have published many talks and articles about inside swift compiler and design pattern for Swift era.",
+              "bio_ja": "株式会社コンセプトの業務でiOS, macOS, サーバサイド向けにSwiftを書いています。Swiftの型の喜びを知ってからSwiftガチ恋勢になりました。コンパイラ内部についてやSwift時代のデザインパターンについて、多くのトークや記事を発表しています。",
+              "job_title": "Swift lover",
+              "job_title_ja": "Swift lover",
+              "links": [
+                {
+                  "name": "@omochimetaru",
+                  "url": "https://x.com/omochimetaru"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2020-03-18T12:10:00+09:00",
+      "sessions": [
+        {
+          "id": 7,
+          "title": "Let’s make a Collection",
+          "title_ja": "Collectionを作ろう",
+          "description": "The collections that come with Swift are usually good enough for your needs. Most of your types will be stored in arrays and dictionaries. You might even use sets and tuples. I'm sure you can make create your own type but there will come a day where you would like to make your own collection. When that day comes, you’ll be glad that you listened to this talk. Come with me. We are going to make our own collection from scratch. We’ll talk about the requirements our newly created collection must meet and the promises it makes in order to conform. While doing that we will reinforce our understanding of protocols and use the methods it rewards us for our conformance.",
+          "description_ja": "Swiftに備えられたCollectionは、ほとんどの利用シーンで十分な役割を果たすでしょう。ほとんどの型は配列と辞書に保持されます。Setやタプルを使うこともあるでしょう。あなたはすでに独自の型を作ることが出来ると思いますが、そのうち独自のCollectionを作りたい日がきっと来ると思います。その時にはこのトークを聞いておいて良かったと思うことでしょう。私と一緒にスクラッチからCollectionを作る方法を学びましょう。Collectionを新しく作るために満たすべき条件や約束事についてお話し、protocolについての理解を強化し、実際にメソッドを使ってみましょう。",
+          "speakers": [
+            {
+              "name": "Curtis Colly",
+              "image_name": "me_china1",
+              "bio": "Curtis Colly is self-employed as a full-stack web application and iOS developer. Having built a variety of consumer oriented web apps in a myriad of web languages, he appreciates the safety and efficiency that the statically typed Swift offers. He strives to make his code functional, durable and scalable. Curtis enjoys seeking hidden truths. As a result, he appreciates good conversations, experiencing difference cultures and testing innovative ideas in the real-world. He is currently working on a video app for people to share meaningful thoughts on various topics.",
+              "bio_ja": "Curtis Collyは、フルスタックのWebアプリ開発と。無数のWeb言語でさまざまなコンシューマ向けWebアプリを構築した彼は、静的型付け言語であるSwiftが提供する安全性と効率性を高く評価しています。コードを関数型で、耐久性があり、スケーラブルにするよう努めています。また、隠された真実を探し求めています。その結果、彼は良い会話、異なる文化を体験し、現実世界で革新的なアイデアをテストすることを高く評価しています。現在、人々がさまざまなトピックについて有意義な考えを共有するためのビデオアプリの開発に取り組んでいます。",
+              "job_title": "Indie Web and iOS Developer",
+              "job_title_ja": "Indie Web and iOS Developer",
+              "links": [
+                {
+                  "name": "@curtiscolly",
+                  "url": "https://x.com/curtiscolly"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2020-03-18T12:35:00+09:00",
+      "sessions": [
+        {
+          "id": 8,
+          "title": "Sign in With Apple Challenges",
+          "title_ja": "Sign in With Appleへの挑戦",
+          "description": "Sign in with Apple hit us with full force with unknown timelines, missing documentation, and a whole slew of User Profile merging woes that left team to their own implementation and UX questions. This talk will cover some of those conversations we had and decisions we made along the way to implement this feature.",
+          "description_ja": "Sign in with Appleは、不明瞭なタイムライン、ドキュメントの不足、多数のユーザープロファイルの統合という悲惨な事態を引き起こし、チームに独自の実装や、UXの疑問を残しました。このトークでは、我々が行った議論や、この機能を実装する過程で行った意思決定を紹介します。",
+          "speakers": [
+            {
+              "name": "Anat Gilboa",
+              "image_name": "anat_gilboa",
+              "bio": "Anat is a software engineer turned-product manager. She spent 2.5 years working at Blue Apron on their iOS app, focusing mainly on product management for her last few months there. Prior to joining Blue Apron, she worked at American Express on their mobile banking app. When she is not writing code, she likes learning languages and traveling.",
+              "bio_ja": "Anatは、ソフトウェアエンジニアあがりのプロダクトマネージャーです。Blue ApronのiOSチームで2年半働いており、主にここ数ヶ月のプロダクトマネジメントに集中しています。 Blue Apronに入社する前は、American Expressでモバイルバンキングアプリを開発していました。 コードを書いていないときは、言語の学習と旅行が好きです。",
+              "job_title": "Product Engineer",
+              "job_title_ja": "Product Engineer",
+              "links": [
+                {
+                  "name": "@anat_gilboa",
+                  "url": "https://x.com/anat_gilboa"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2020-03-18T13:00:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2020-03-18T14:30:00+09:00",
+      "sessions": [
+        {
+          "id": 10,
+          "title": "What is Modelessness?",
+          "title_ja": "モードレスネスとは何か",
+          "description": "From my 20 years of experience as a design consulting, I believe \"modelessness\" is the most fundamental principle of user interface design. Understanding the concept of modeless user interface helps you develop truly usable and empowering apps.\nThere is no silver bullet in design methods, except this simple approach - getting your app modeless. In my perspective, 90 percent of business apps have serious usability problems because they are composed of functional modes. You can dramatically improve or innovate them by getting rid of modes.\nIn this presentation, I will talk about the philosophy and technique of modeless design that turns your product much more meaningful.",
+          "description_ja": "20年間のデザインコンサルタントとしての経験から、私は「モードレスネス」が最も根源的なユーザーインターフェースデザインの原則だと信じています。モードレスなユーザーインターフェースのコンセプトを理解することは、真に使いやすくパワーを与えるアプリを開発するのを助けます。\nデザインメソッドには銀の弾丸はありません - アプリをモードレスにすることを除けば。私が見る限り、ビジネスアプリの90%は、機能的なモードで構成されていることによるユーザビリティ上の深刻な問題を抱えています。モードを取り除くことによって、あなたは製品を劇的に改善または革新することができるのです。\nこのプレゼンテーションでは、あなたの製品をもっとずっと意味深くするモードレスデザインの思想とテクニックについて話します。",
+          "speakers": [
+            {
+              "name": "Manabu Ueno",
+              "image_name": "ueno",
+              "bio": "Design consultant, interaction designer, user interface designer, graphic designer, usability engineer, and programmer. Ueno has extensive experiences in designing business, web, mobile, desktop, and embedded application user interfaces, and he takes a leading role in developing the design consulting methods at Sociomedia (sociomedia.com and sociomedia.co.jp), one of the most advanced design consulting firms in Tokyo, Japan.",
+              "bio_ja": "大規模エンタープライズシステム、基幹系業務アプリケーション、産業用アプリケーション、専門職種向けアプリケーション、各種ウェブアプリケーション、モバイルアプリケーション、デスクトップアプリケーション、その他の様々なインタラクティブメディアのヒューマンインターフェース設計およびユーザビリティコンサルティングを数多く経験。デザインコンサルタント／インタラクションデザイナー／インターフェースデザイナー／グラフィックデザイナー／ユーザビリティエンジニア／プログラマー。 ソシオメディア株式会社においてデザインコンサルティングメソッド開発を担う。執筆、講演など多数。HCD-Net 人間中心設計認定専門家。",
+              "job_title": "Design Consultant at Sociomedia",
+              "job_title_ja": "Design Consultant at Sociomedia",
+              "links": [
+                {
+                  "name": "@manabuueno",
+                  "url": "https://x.com/manabuueno"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2020-03-18T14:55:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "Deep dive into \"Optimizing and Diagnostic\" by Swift Compiler",
+          "title_ja": "Swiftコンパイラによる「最適化と診断」を体感する",
+          "description": "Through my talk, you can understand deeply about “Optimizing and Diagnostic” of Swift Compiler phase which is a very interesting phase in compiler.\n\n  We learned many compiler knowledge in past try! Swift. For example, we learned how to read Swift Intermediate Language（SIL）and how our code is treated by Swift Compiler in Tokyo 2018(https://www.youtube.com/watch?v=sT0SNp-Tw-8).\n\n  Is it okay to only know how to read SIL? No, we can also understand “Optimizing and Diagnostic” phase in Swift Compiler.\n\n  And, we can learn following things through learning “Optimizing and Diagnosing”\n\n  How compiler grantees the safety of our Swift Program\n  How optimizer would destroy our Program. This would occur when we set an optimize option on the release build.\n  I will talk about Easy “Optimizing and Diagnostic” tutorial through my talk. You can learn how SIL is optimized by Swift compiler which from our swift code, and “Diagnostic” phase which we are touching unconsciously many times. I’ll show you the demonstration with compiler to make your understanding very deep.\n\n  Of course, I’ll show you easy tutorial of SIL and overview of Swift Compiler, so don’t be afraid to listen my talk!",
+          "description_ja": "本トークを通じて、Swiftコンパイラの特に面白いフェーズである、コンパイラが私達のコードに行う「最適化と診断」について深く知ることができます。\nいままでのtry! Swiftではコンパイラに関するたくさんのことを学びました。例えば、Tokyo 2018では、Swift Intermediate Language（SIL）の読み歩き方を学び、私達のSwiftコードがどのようにコンパイラに取り扱われるかを学びましたね (https://www.youtube.com/watch?v=sT0SNp-Tw-8)。\nでは、SILを読めるようになっただけで終わりでしょうか？ いいえ、SILを読めるようになった次の大きなステップとして、SwiftコンパイラがSILに対して行っている「最適化と診断」について学ぶことができます。\nまた、私達はSwiftコンパイラの「最適化と診断」を学ぶことを通じて、\n診断によって私達のプログラムはどのように安全が保証されていくのか しかし、最適化は一歩間違えるとどのように危険になるか。これは例えばiPhone アプリケーションのReleaseビルドなど、最適化が様々な場面で起こりうることです。 を知ることができます。\n本トークでは、Swiftコンパイラの興味深いフェーズである「最適化と診断」について、簡単に入門します。 私達のSILに変換されたSwiftのプログラムは、どのようにして最適化されているのか、そして、私達の身近にあるけど、意識してないコンパイラによる「診断」について解説します。 実際にコンパイラを使ったデモンストレーションを通じて、私達が意識しない「最適化と診断」を深く体感することができます。\nもちろん、トークの冒頭では、Swiftコンパイラのオーバービューや最低限のSILの復習をしますので、お気軽に聞いてください。",
+          "speakers": [
+            {
+              "name": "freddi(Yuki Aki)",
+              "image_name": "freddi",
+              "links": [
+                {
+                  "name": "@___freddi___",
+                  "url": "https://x.com/___freddi___"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2020-03-18T15:10:00+09:00",
+      "sessions": [
+        {
+          "id": 12,
+          "title": "Continuous visual regression testing",
+          "title_ja": "Continuous visual regression testing",
+          "description": "The larger the development scale, the more time-lapsed regression will be, but it will be costly to maintain this with QA / QC. In order to solve this problem, like the Storybook in web application development, while generating and distributing the catalog application of the component, not only asserting with the difference of UI with Snapshot test, but also the change that the implementer did not intend has occurred by visual regression tests that enable visualization from CI.",
+          "description_ja": "開発の規模が大きくなるほど時間とともにリグレッションが伴いますが、これをQA/QCで保守するのは大変なコストがかかります。 この問題を解決するために、Webアプリ開発におけるStorybookのように、コンポーネントのカタログアプリを生成し配布しつつ、Snapshot testでUIの差分でassertするだけではなく、実装者が意図しない変更が生じていないかCIからpull requestに対してレポートで可視化できるようにするVisual regression testを紹介します。",
+          "speakers": [
+            {
+              "name": "Ryo Aoyama",
+              "image_name": "ra1028-27af14c9-ebc9-438c-ba21-b43391342a5c",
+              "bio": "Ryo is an iOS developer at CATS team in CyberAgent. He likes to create and dive into OSS and looking for things for free time except sleeping and programming.",
+              "bio_ja": "CyberAgentのCATSというチームでiOSエンジニアをしています。OSSを作るのも見るのも好きです。睡眠とプログラミング以外の趣味を探しています。",
+              "job_title": "iOS Developer at CyberAgent, Inc.",
+              "job_title_ja": "iOS Developer at CyberAgent, Inc.",
+              "links": [
+                {
+                  "name": "@ra1028fe5",
+                  "url": "https://x.com/ra1028fe5"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2020-03-18T15:35:00+09:00",
+      "sessions": [
+        {
+          "id": 13,
+          "title": "Introduction to Machine Learning with TensorFlow and Swift",
+          "title_ja": "TensorFlowとSwiftを使った機械学習への招待",
+          "description": "Learn the ‘new’ paradigm of machine learning, and how models are an alternative implementation for some logic scenarios, as opposed to writing if/then rules and other code. This session will guide you through understanding many of the new concepts in machine learning that you might not be familiar with including neurons, training loops, optimizers, and loss functions. You will learn how to train a machine learning model with TensorFlow, convert it to TensorFlow Lite and deploy to your iOS application, all without leaving the comfort zone of Swift.",
+          "description_ja": "機械学習の新しいパラダイムと、if/thenで実装されたようなコードではなくモデルでロジックを実装する方法を学びましょう。このセッションでは、ニューロンやトレーニングループ損失関数のような、まだあまり知られていない機械学習の新しいコンセプトをご紹介します。TensorFlowでモデルをトレーニングする方法と、慣れ親しんだSwiftを使いTensorFlow Liteに変換しiOSアプリケーションに変換する方法を学びます。",
+          "speakers": [
+            {
+              "name": "Khanh LeViet",
+              "image_name": "khanhlvg",
+              "bio": "Khanh LeViet is a TensorFlow Developer Advocate at Google, helping developers in APAC build smarter products with AI. He speaks at technology conferences, writes and publishes sample code on GitHub. Before his AI journey, Khanh was a mobile developer working on both Android and iOS.",
+              "bio_ja": "Khanh LeVietはGoogleのTensorFlowのDeveloper Advocateであり、APACの開発者がAIでよりスマートな製品を構築するのを支援しています。彼は技術カンファレンスで講演し、GitHubでサンプルコードを書いて公開しています。 AIを担当する前は、KhanhはAndroidとiOSの両方に取り組んでいるモバイル開発者でした。",
+              "job_title": "AI Advocate @ Google",
+              "job_title_ja": "AI Advocate @ Google",
+              "links": [
+                {
+                  "name": "@khanhlvg",
+                  "url": "https://x.com/khanhlvg"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2020-03-18T16:00:00+09:00",
+      "sessions": [
+        {
+          "id": 14,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "time": "2020-03-18T16:30:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "Augmented Reality in Real Estate",
+          "title_ja": "不動産のAR",
+          "description": "Embrace the future and use augmented reality to bring a new way to interact with real estate. In this session we will have a look at how you can make a useful app powered by AR. People occlusion, AR coaching UI, AR Quicklook with USDZ files and many more will be covered.",
+          "description_ja": "未来を受け入れ、拡張現実を使用して、不動産と対話する新しい方法をもたらします。このセッションでは、ARを活用した便利なアプリを作成する方法について説明します。ピープルオクルージョン、ARコーチングUI、USDZファイルを使用したAR Quicklookなどがカバーされます。",
+          "speakers": [
+            {
+              "name": "Roxana Jula",
+              "image_name": "roxana",
+              "bio": "Roxana is a Romanian mobile developer based in Dubai with a passion for augmented reality.  She started coding when she was 13 years old and so far has been part of the development team of over 20 apps including one of the biggest digital public services app in Scandinavia. She is involved in the tech community, both online (instagram.com/coderox/) and offline at local events. As an advocate for women in tech, Roxana is encouraging other girls to join the tech world.",
+              "bio_ja": "Roxanaは、ドバイに拠点を置くルーマニアのモバイル開発者であり、ARへの情熱を持っています。彼女は13歳のときにコーディングを始め、これまでスカンジナビア最大のデジタル公共サービスアプリの1つを含む20以上のアプリの開発チームの一員でした。彼女はオンライン(instagram.com/coderox/)とオフラインの両方で地元のイベントで技術コミュニティに参加しています。Women in techのAdvocateとして、女性がテクノロジーの世界に参加することを奨励しています。",
+              "job_title": "Mobile Developer at Nodes",
+              "job_title_ja": "Mobile Developer at Nodes",
+              "links": [
+                {
+                  "name": "@RoxanaJula",
+                  "url": "https://x.com/RoxanaJula"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2020-03-18T16:55:00+09:00",
+      "sessions": [
+        {
+          "id": 16,
+          "title": "Interview with Confidence",
+          "title_ja": "自信を持って面接に臨もう",
+          "description": "Interviews are stressful. The questions are tricky. You don’t immediately know the answers, so you nervously rush to figure something (…anything) out. It’s almost like the interviewer is rooting for you to fail… or are they? Come find out how to walk into your next interview full of confidence!",
+          "description_ja": "面接にはストレスがつきものです。質問は難しく、あなたは神経質になりつつも、何がなんでも答えを急いで探し出します。面接官はまるであなたが失敗することを応援しているかのようです。本当でしょうか？自信を持って次の面接に参加するためにはどうしたらいいのか考えてみましょう。",
+          "speakers": [
+            {
+              "name": "Alex Karp",
+              "image_name": "alex",
+              "bio": "Alex Karp is a Senior App Engineering Manager at Wayfair, his teams focusing on the very bottom parts of the conversion funnel in their iOS and Android apps: the checkout process, shipping information, and loyalty and financing programs. He lives near Boston with his girlfriend and adorable young cockapoo. In his free time, he brings back the 1920s via his love of dancing and teaching Lindy Hop.",
+              "bio_ja": "Alex KarpはWayfairのシニアアプリエンジニアリングマネージャーであり、彼のチームはiOSおよびAndroidアプリのコンバージョンファンネルの一番下の部分、つまり精算プロセス、出荷情報、ロイヤルティプログラムおよびファイナンスプログラムに注力しています。 ボストンの近くにガールフレンドと愛らしい若いコカプーと住んでいます。 暇な時は、ダンスとリンディホップを教えることへの愛を通して1920年代を呼び戻しています。",
+              "job_title": "Senior App Engineering Manager at Wayfair",
+              "job_title_ja": "Senior App Engineering Manager at Wayfair",
+              "links": [
+                {
+                  "name": "@numberwizard68",
+                  "url": "https://x.com/numberwizard68"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2020-03-18T17:10:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "Build Swift Web Playground for Fun and Profit",
+          "title_ja": "Build Swift Web Playground for Fun and Profit",
+          "description": "Playground is one of the most useful tools for understanding programming languages. Swift provides a very easy-to-use Playground so we can easily try out the Swift code and see the results.\nLooking at other programming languages, modern languages have some kind of Playground mechanics. In addition, there are many languages where the Web Playground is provided.\nUnfortunately, the official Swift Web Playground is not yet available, but you can create your own Web-powered Playground using Swift and Web technology!",
+          "description_ja": "Playgroundはプログラミング言語を理解するためのツールとしてもっとも有用なものの一つです。 Swiftは非常に使いやすいPlaygroundが提供されていて私たちはSwiftコードをとても簡単に試して実行結果を確認できます。\n他のプログラミング言語に目を向けてみると、最近の言語は何かしらのPlayground の仕組みを備えています。さらにWebのPlaygroundが提供されている言語も多くあります。\nWebのPlaygroundはさらにさまざまな応用ができます。 手元に環境がなくても実行できるのでiPhoneでちょっとアイデアを試したり、議論のために問題のあるコードと実行結果を人と共有したり、ドキュメントなどに載せるサンプルコードが実行できる、いわゆる「動くドキュメント」を提供することもできます。\n残念ながら公式のSwiftのWeb Playgroundはまだ提供されていませんが、SwiftとWebの技術を使ってWebで動くSwift Playgroundを自分で作ることができます！\nこちらが私の作ったSwiftのWeb Playgroundです=> https://swift-playground.kishikawakatsumi.com/ Web APIを備えているので、応用として、Discordを利用したSwiftのコミュニティ内で、コードを投稿すると実行結果が表示されるという議論のための便利なツールとして積極的に利用されています。 私の作ったライブラリの動作をセットアップ不要で試せる環境として利用することもあります。\nこのように、PlaygroundをWebの世界に持っていくと、とても強力で応用力があるツールになります。\n現在、私は汎用的でないものも含めて５つのPlaygroundを利用可能な形で公開しています。 既存の技術の組み合わせて作られているので、難しいことは何もありませんが、DockerやLinuxサーバーのセットアップなど、広い範囲の技術に触れることができるので、このような仕組みを作ることはとても楽しいです。\nいろいろなSwift Web Playgroundがたくさん作られてほしいと思っていますので、私の経験から、SwiftをWebで実行する（しているように見える）ために何が必要か、どのような技術をどう使って実現しているのか、気をつけることは何か、ということをお伝えします。",
+          "speakers": [
+            {
+              "name": "Katsumi Kishikawa",
+              "image_name": "katsumi",
+              "bio": "Software engineer. Creator of KeychainAccess, IBPCollectionViewCompositionalLayout, SpreadsheetView, etc. Love to build tools for developers.",
+              "bio_ja": "Software engineer. Creator of KeychainAccess, IBPCollectionViewCompositionalLayout, SpreadsheetView, etc. Love to build tools for developers.",
+              "job_title": "Software engineer",
+              "job_title_ja": "Software engineer",
+              "links": [
+                {
+                  "name": "@kishikawakatsumi",
+                  "url": "https://x.com/kishikawakatsumi"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "time": "2020-03-18T17:25:00+09:00",
+      "sessions": [
+        {
+          "id": 18,
+          "title": "As Cute as a Button",
+          "title_ja": "かっこいいボタンをつくる",
+          "description": "Buttons, buttons, buttons! Buttons are the key component of any iOS app. Let’s talk about different ways we can make buttons in our apps look cool, stand out, and engage our users. From images, to shapes, to animations, let’s make those buttons pop!",
+          "description_ja": "ボタン、ボタン、ボタン！ボタンは、iOSアプリの重要なコンポーネントです。アプリのボタンをかっこよく見せて、ユーザーを引き付けるさまざまな方法について説明しましょう。画像から形、アニメーションまで、これらのボタンをポップにしましょう！",
+          "speakers": [
+            {
+              "name": "Janina Kutyn",
+              "image_name": "yuVUb9Fu_400x400-97aa3e9e-0306-4b25-a90b-5d15379748ef",
+              "bio": "Amsterdam-based iOS engineer with an international background: she studied Computer Engineering at the University of British Columbia, and has worked in Vancouver, London, and Silicon Valley before coming to Amsterdam. At Apple, she was part of the team that launched Apple Music.",
+              "bio_ja": "国際的なバックグラウンドを持つアムステルダムに拠点を置くiOSエンジニアです。彼女はブリティッシュコロンビア大学でコンピューターエンジニアリングを学び、アムステルダムに来る前にバンクーバー、ロンドン、シリコンバレーで働いていました。 Appleにいたころは、Apple Musicを立ち上げたチームの一員でした。",
+              "job_title": "Lead iOS Developer at adidas",
+              "job_title_ja": "Lead iOS Developer at adidas",
+              "links": [
+                {
+                  "name": "@JaninaKutyn",
+                  "url": "https://x.com/JaninaKutyn"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "time": "2020-03-18T17:50:00+09:00",
+      "sessions": [
+        {
+          "id": 19,
+          "title": "How We Fail",
+          "title_ja": "どうして失敗するのか",
+          "description": "What causes our code and processes to fail? Complex systems fail in complex ways, and Soroush Khanlou will discuss some examples of catastrophic failures, what caused them, and how we can hope to avoid them in the future.",
+          "description_ja": "コードとプロセスが失敗する原因は何でしょう？複雑なシステムは複雑な方法で失敗します。私が壊滅的な障害の例、それらを引き起こした原因、および将来それらを回避する方法を説明します。",
+          "speakers": [
+            {
+              "name": "Soroush Khanlou",
+              "image_name": "L66LJPm-_400x400-55d907ab-9636-40ac-b745-15202236f78e",
+              "bio": "Soroush Khanlou is a New York-based iOS consultant. He’s worked on apps for Betterment, the New Yorker, Rap Genius, and non-profits like Urban Archive. He blogs about programming at khanlou.com. In his free time, he runs, bakes bread and pastries, and collects suitcases.",
+              "bio_ja": "Soroush Khanlouは、ニューヨークに拠点を置くiOSコンサルタントです。彼は、Betterment、New Yorker、Rap Genius、およびUrban Archiveなどの非営利団体向けのアプリに取り組んでいます。プログラミングについてkhanlou.comでブログを書いています。暇な時は、走ったり、パンとペストリーを焼いたり、スーツケースを集めたりしています。",
+              "job_title": "iOS Developer",
+              "job_title_ja": "iOS Developer",
+              "links": [
+                {
+                  "name": "@khanlou",
+                  "url": "https://x.com/khanlou"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "time": "2020-03-18T18:15:00+09:00",
+      "sessions": [
+        {
+          "id": 20,
+          "title": "Closing / Announcements",
+          "title_ja": "Closing / Announcements"
+        }
+      ]
+    }
+  ]
+}

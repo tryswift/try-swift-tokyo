@@ -26,6 +26,14 @@ extension HomeSectionType {
 
   func isAvailable(for year: ConferenceYear) -> Bool {
     switch year {
+    case .year2017, .year2018:
+      [
+        .about, .outline, .speaker, .timetable, .access,
+      ].contains(self)
+    case .year2019, .year2020:
+      [
+        .about, .outline, .speaker, .timetable, .access,
+      ].contains(self)
     case .year2024:
       [
         .about, .outline, .speaker, .timetable, .access,
@@ -65,6 +73,8 @@ extension HomeSectionType {
 
       let text =
         switch year {
+        case .year2017, .year2018, .year2019, .year2020:
+          String("hero-text-past", language: language)
         case .year2024:
           String("hero-text-2024", language: language)
         case .year2025:
@@ -145,25 +155,30 @@ extension HomeSectionType {
 
       let day1 = try! dataClient.fetchDay1(year)
       let day2 = try! dataClient.fetchDay2(year)
-      let day3: Conference =
+      let day3: Conference? =
         switch year {
+        case .year2017, .year2018, .year2019, .year2020:
+          nil
         case .year2024:
           try! dataClient.fetchWorkshop(year)
         case .year2025, .year2026:
           try! dataClient.fetchDay3(year)
         }
 
+      let allDays: [Conference] = [day1, day2] + (day3.map { [$0] } ?? [])
+      let columnCount = allDays.count
+
       Grid(alignment: .top, spacing: 16) {
-        ForEach([day1, day2, day3]) { data in
+        ForEach(allDays) { data in
           Section {
             TimetableComponent(conference: data, language: language)
           }
         }
       }
-      .columns(3)
+      .columns(columnCount)
 
       Alert {
-        let sessions = [day1, day2, day3]
+        let sessions = allDays
           .flatMap { $0.schedules.flatMap(\.sessions) }
           .filter(\.hasDescription)
         ForEach(sessions) { session in

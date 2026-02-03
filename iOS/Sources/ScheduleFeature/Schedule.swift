@@ -19,13 +19,14 @@ public struct Schedule {
   public struct SchedulesResponse: Equatable {
     var day1: Conference
     var day2: Conference
-    var day3: Conference
+    var day3: Conference?
   }
 
   @ObservableState
   public struct State: Equatable {
 
     var path = StackState<Path.State>()
+    var selectedYear: ConferenceYear = .latest
     var selectedDay: Days = .day1
     var searchText: String = ""
     var isSearchBarPresented: Bool = false
@@ -47,6 +48,7 @@ public struct Schedule {
     public enum View {
       case onAppear
       case disclosureTapped(Session)
+      case yearSelected(ConferenceYear)
     }
   }
 
@@ -67,14 +69,22 @@ public struct Schedule {
     Reduce { state, action in
       switch action {
       case .view(.onAppear):
+        let year = state.selectedYear
         return .send(
           .fetchResponse(
             Result {
-              let day1 = try dataClient.fetchDay1(.year2026)
-              let day2 = try dataClient.fetchDay2(.year2026)
-              let day3 = try dataClient.fetchDay3(.year2026)
+              let day1 = try dataClient.fetchDay1(year)
+              let day2 = try dataClient.fetchDay2(year)
+              let day3 = try? dataClient.fetchDay3(year)
               return .init(day1: day1, day2: day2, day3: day3)
             }))
+      case .view(.yearSelected(let year)):
+        state.selectedYear = year
+        state.selectedDay = .day1
+        state.day1 = nil
+        state.day2 = nil
+        state.day3 = nil
+        return .send(.view(.onAppear))
       case .view(.disclosureTapped(let session)):
         guard let description = session.description, let speakers = session.speakers else {
           return .none
@@ -139,8 +149,13 @@ public struct ScheduleView: View {
   var root: some View {
     ScrollView {
       Picker("Days", selection: $store.selectedDay) {
-        ForEach(Schedule.Days.allCases) { day in
-          Text(day.rawValue, bundle: .module)
+        Text(Schedule.Days.day1.rawValue, bundle: .module)
+          .tag(Schedule.Days.day1)
+        Text(Schedule.Days.day2.rawValue, bundle: .module)
+          .tag(Schedule.Days.day2)
+        if store.day3 != nil {
+          Text(Schedule.Days.day3.rawValue, bundle: .module)
+            .tag(Schedule.Days.day3)
         }
       }
       .pickerStyle(.segmented)
@@ -171,6 +186,25 @@ public struct ScheduleView: View {
     })
     .navigationTitle(Text("Schedule", bundle: .module))
     .searchable(text: $store.searchText, isPresented: $store.isSearchBarPresented)
+    .toolbar {
+      ToolbarItem(placement: .topBarTrailing) {
+        Menu {
+          ForEach(ConferenceYear.allCases, id: \.self) { year in
+            Button {
+              send(.yearSelected(year))
+            } label: {
+              if year == store.selectedYear {
+                Label(String(year.rawValue), systemImage: "checkmark")
+              } else {
+                Text(String(year.rawValue))
+              }
+            }
+          }
+        } label: {
+          Label(String(store.selectedYear.rawValue), systemImage: "calendar")
+        }
+      }
+    }
   }
 
   @ViewBuilder

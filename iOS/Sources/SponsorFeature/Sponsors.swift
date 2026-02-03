@@ -40,7 +40,7 @@ public struct SponsorsList: Sendable {
     Reduce { state, action in
       switch action {
       case .view(.onAppear):
-        state.sponsors = try! dataClient.fetchSponsors(.year2026)
+        state.sponsors = try? dataClient.fetchSponsors(.latest)
         return .none
 
       case .view(.sponsorTapped(let sponsor)):
