@@ -7,19 +7,22 @@ struct SubmitPageView: HTML, Sendable {
   let errorMessage: String?
   let openConference: ConferencePublicInfo?
   let language: CfPLanguage
+  let csrfToken: String
 
   init(
     user: UserDTO?,
     success: Bool,
     errorMessage: String?,
     openConference: ConferencePublicInfo? = nil,
-    language: CfPLanguage = .en
+    language: CfPLanguage = .en,
+    csrfToken: String = ""
   ) {
     self.user = user
     self.success = success
     self.errorMessage = errorMessage
     self.openConference = openConference
     self.language = language
+    self.csrfToken = csrfToken
   }
 
   /// Get GitHub avatar URL as fallback
@@ -132,6 +135,7 @@ struct SubmitPageView: HTML, Sendable {
 
   private var proposalForm: some HTML {
     form(.method(.post), .action(language.path(for: "/submit"))) {
+      input(.type(.hidden), .name("_csrf"), .value(csrfToken))
       titleField
       abstractField
       talkDetailsField

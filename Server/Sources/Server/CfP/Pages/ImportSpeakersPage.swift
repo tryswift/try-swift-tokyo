@@ -8,6 +8,7 @@ struct ImportSpeakersPageView: HTML, Sendable {
   let successMessage: String?
   let importedCount: Int?
   let skippedCount: Int?
+  let csrfToken: String
 
   init(
     user: UserDTO?,
@@ -15,7 +16,8 @@ struct ImportSpeakersPageView: HTML, Sendable {
     errorMessage: String? = nil,
     successMessage: String? = nil,
     importedCount: Int? = nil,
-    skippedCount: Int? = nil
+    skippedCount: Int? = nil,
+    csrfToken: String = ""
   ) {
     self.user = user
     self.conferences = conferences
@@ -23,6 +25,7 @@ struct ImportSpeakersPageView: HTML, Sendable {
     self.successMessage = successMessage
     self.importedCount = importedCount
     self.skippedCount = skippedCount
+    self.csrfToken = csrfToken
   }
 
   var body: some HTML {
@@ -80,6 +83,7 @@ struct ImportSpeakersPageView: HTML, Sendable {
           .action("/organizer/proposals/import"),
           .custom(name: "enctype", value: "multipart/form-data")
         ) {
+          input(.type(.hidden), .name("_csrf"), .value(csrfToken))
           conferenceField
           csvFileField
           githubUsernameField

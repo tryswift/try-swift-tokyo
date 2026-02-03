@@ -7,15 +7,18 @@ struct MyProposalDetailPageView: HTML, Sendable {
   let proposal: ProposalDTO?
   let language: CfPLanguage
   let showUpdatedMessage: Bool
+  let csrfToken: String
 
   init(
     user: UserDTO?, proposal: ProposalDTO?, language: CfPLanguage = .en,
-    showUpdatedMessage: Bool = false
+    showUpdatedMessage: Bool = false,
+    csrfToken: String = ""
   ) {
     self.user = user
     self.proposal = proposal
     self.language = language
     self.showUpdatedMessage = showUpdatedMessage
+    self.csrfToken = csrfToken
   }
 
   var body: some HTML {
@@ -269,6 +272,7 @@ struct MyProposalDetailPageView: HTML, Sendable {
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">\(cancelText)</button>
               <form method="post" action="\(actionURL)" style="display: inline;">
+                <input type="hidden" name="_csrf" value="\(csrfToken)">
                 <button type="submit" class="btn btn-danger">\(withdrawText)</button>
               </form>
             </div>
