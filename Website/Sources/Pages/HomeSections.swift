@@ -178,7 +178,8 @@ extension HomeSectionType {
       .columns(columnCount)
 
       Alert {
-        let sessions = allDays
+        let sessions =
+          allDays
           .flatMap { $0.schedules.flatMap(\.sessions) }
           .filter(\.hasDescription)
         ForEach(sessions) { session in

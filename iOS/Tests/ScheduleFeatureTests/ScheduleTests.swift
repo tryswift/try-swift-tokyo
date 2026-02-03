@@ -70,7 +70,9 @@ struct ScheduleTests {
     } withDependencies: {
       $0[DataClient.self].fetchDay1 = { @Sendable _ in .mock1 }
       $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
-      $0[DataClient.self].fetchDay3 = { @Sendable _ in throw DataClientError.resourceNotFound("2017-day3") }
+      $0[DataClient.self].fetchDay3 = { @Sendable _ in
+        throw DataClientError.resourceNotFound("2017-day3")
+      }
     }
 
     await store.send(.view(.yearSelected(.year2017))) {
