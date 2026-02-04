@@ -34,8 +34,7 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
           githubUpdatedAlert
           errorAlert
           editFormCard(proposal: proposal)
-          githubUpdateCard(proposal: proposal)
-          deleteCard(proposal: proposal)
+          bottomCards(proposal: proposal)
         } else {
           notFoundCard
         }
@@ -336,6 +335,12 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
           """)
       }
     }
+  }
+
+  @HTMLBuilder
+  private func bottomCards(proposal: ProposalDTO) -> some HTML {
+    githubUpdateCard(proposal: proposal)
+    deleteCard(proposal: proposal)
   }
 
   private func githubUpdateCard(proposal: ProposalDTO) -> some HTML {
