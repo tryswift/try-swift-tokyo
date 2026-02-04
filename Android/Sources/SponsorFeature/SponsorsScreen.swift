@@ -1,9 +1,7 @@
 import SharedModels
-import SharedViews
 import SwiftUI
 
 /// Sponsors screen for Android.
-/// Uses shared SponsorGridView component - identical SwiftUI code on both platforms.
 public struct SponsorsScreen: View {
   @State private var viewModel = SponsorsViewModel()
   @Environment(\.openURL) private var openURL
@@ -26,25 +24,32 @@ public struct SponsorsScreen: View {
       ProgressView()
     } else if let error = viewModel.errorMessage {
       Text(error)
-        .foregroundStyle(.red)
+        .foregroundStyle(Color.red)
         .padding()
     } else if let sponsors = viewModel.sponsors {
-      // Uses shared SponsorGridView - identical code on iOS and Android
       SponsorGridView(sponsors: sponsors) { sponsor in
         if let url = sponsor.link {
           openURL(url)
         }
       }
     } else {
-      ContentUnavailableView(
-        "No Sponsors",
-        systemImage: "building.2",
-        description: Text("Sponsor information is not available")
-      )
+      VStack(spacing: 16) {
+        Image(systemName: "building.2")
+          .font(Font.system(size: 48))
+          .foregroundStyle(Color.secondary)
+        Text("No Sponsors")
+          .font(Font.headline)
+        Text("Sponsor information is not available")
+          .font(Font.subheadline)
+          .foregroundStyle(Color.secondary)
+      }
+      .padding()
     }
   }
 }
 
+#if !SKIP
 #Preview {
   SponsorsScreen()
 }
+#endif

@@ -1,8 +1,7 @@
 import SharedModels
 import SwiftUI
 
-/// A reusable sponsor grid component.
-/// This SwiftUI code is shared between iOS and Android platforms.
+/// A reusable sponsor grid component for Android.
 public struct SponsorGridView: View {
   let sponsors: Sponsors
   let onSponsorTap: (Sponsor) -> Void
@@ -44,7 +43,7 @@ public struct SponsorSectionView: View {
 
   public var body: some View {
     VStack(spacing: 16) {
-      Text(plan.rawValue.localizedCapitalized)
+      Text(plan.rawValue.capitalized)
         .font(Font.title2.bold())
         .frame(maxWidth: CGFloat.infinity, alignment: Alignment.leading)
 
@@ -83,8 +82,8 @@ public struct SponsorCardView: View {
     VStack {
       RoundedRectangle(cornerRadius: 8)
         .fill(Color.secondary.opacity(0.1))
-        .aspectRatio(16 / 9, contentMode: ContentMode.fit)
-        .overlay {
+        .aspectRatio(1.778, contentMode: ContentMode.fit)
+        .overlay(alignment: Alignment.center) {
           if let name = sponsor.name {
             Text(name)
               .font(Font.caption)
@@ -96,24 +95,3 @@ public struct SponsorCardView: View {
     }
   }
 }
-
-#if !SKIP
-#Preview {
-  SponsorGridView(
-    sponsors: Sponsors(
-      platinum: [Sponsor(id: 1, name: "Platinum Sponsor", imageName: "platinum")],
-      gold: [
-        Sponsor(id: 2, name: "Gold A", imageName: "gold_a"),
-        Sponsor(id: 3, name: "Gold B", imageName: "gold_b"),
-      ],
-      silver: [],
-      bronze: [],
-      diversity: [],
-      student: [],
-      community: [],
-      individual: []
-    ),
-    onSponsorTap: { _ in }
-  )
-}
-#endif

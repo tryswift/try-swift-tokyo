@@ -1,5 +1,4 @@
 import SharedModels
-import SharedViews
 import SwiftUI
 
 /// Schedule screen for Android.
@@ -21,7 +20,7 @@ public struct ScheduleScreen: View {
               .padding()
           } else if let error = viewModel.errorMessage {
             Text(error)
-              .foregroundStyle(.red)
+              .foregroundStyle(Color.red)
               .padding()
           } else if let conference = viewModel.currentConference {
             conferenceList(conference: conference)
@@ -33,7 +32,9 @@ public struct ScheduleScreen: View {
         // Uses shared SessionDetailView - identical code on iOS and Android
         SessionDetailView(session: session)
           .navigationTitle("Session")
-          .navigationBarTitleDisplayMode(.inline)
+          #if os(iOS) || SKIP
+          .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
+          #endif
       }
     }
     .onAppear {
@@ -46,20 +47,20 @@ public struct ScheduleScreen: View {
   private var dayPicker: some View {
     Picker("Days", selection: $viewModel.selectedDay) {
       ForEach(ScheduleDay.allCases) { day in
-        Text(day.rawValue).tag(day)
+        Text(day.rawValue).tag(day as ScheduleDay)
       }
     }
     .pickerStyle(.segmented)
-    .padding(.horizontal)
+    .padding(Edge.Set.horizontal)
   }
 
   // MARK: - Conference List
 
   private func conferenceList(conference: Conference) -> some View {
-    VStack(alignment: .leading, spacing: 16) {
-      Text(conference.date, style: .date)
-        .font(.title2)
-        .padding(.horizontal)
+    VStack(alignment: HorizontalAlignment.leading, spacing: 16) {
+      Text(conference.date, style: Text.DateStyle.date)
+        .font(Font.title2)
+        .padding(Edge.Set.horizontal)
 
       ForEach(conference.schedules, id: \.time) { schedule in
         scheduleSection(schedule: schedule)
@@ -69,9 +70,9 @@ public struct ScheduleScreen: View {
   }
 
   private func scheduleSection(schedule: SharedModels.Schedule) -> some View {
-    VStack(alignment: .leading, spacing: 8) {
-      Text(schedule.time, style: .time)
-        .font(.subheadline.bold())
+    VStack(alignment: HorizontalAlignment.leading, spacing: 8) {
+      Text(schedule.time, style: Text.DateStyle.time)
+        .font(Font.subheadline.bold())
 
       ForEach(schedule.sessions, id: \.title) { session in
         // Uses shared SessionRowView - identical code on iOS and Android
@@ -88,6 +89,8 @@ public struct ScheduleScreen: View {
   }
 }
 
+#if !SKIP
 #Preview {
   ScheduleScreen()
 }
+#endif
