@@ -45,6 +45,7 @@ public struct Schedule {
     case view(View)
     case fetchResponse(Result<SchedulesResponse, Error>)
 
+    @CasePathable
     public enum View {
       case onAppear
       case disclosureTapped(Session)
