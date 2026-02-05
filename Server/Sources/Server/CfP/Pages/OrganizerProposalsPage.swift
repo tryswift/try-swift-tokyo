@@ -307,7 +307,7 @@ struct OrganizerProposalsPageView: HTML, Sendable {
                   <div class="mb-3">
                     <label class="form-label fw-semibold" for="inlineGithubUsername">GitHub Username</label>
                     <input type="text" class="form-control" name="githubUsername" id="inlineGithubUsername" placeholder="e.g. octocat">
-                    <div class="form-text">Leave blank to use the system import user.</div>
+                    <div class="form-text">If specified, the proposal will be linked to this GitHub user account. Leave blank to use the system import user.</div>
                   </div>
                 </div>
               </div>
