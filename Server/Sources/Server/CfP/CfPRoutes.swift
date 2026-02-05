@@ -916,7 +916,13 @@ struct CfPRoutes: RouteCollection {
 
     // Get proposals (filtered by conference if specified)
     var proposals: [ProposalDTO] = []
+    var conferences: [ConferencePublicInfo] = []
     if let user, user.role == .admin {
+      conferences = try await Conference.query(on: req.db)
+        .sort(\.$year, .descending)
+        .all()
+        .map { $0.toPublicInfo() }
+
       let query = Proposal.query(on: req.db)
         .with(\.$speaker)
         .with(\.$conference)
@@ -938,12 +944,15 @@ struct CfPRoutes: RouteCollection {
       }
     }
 
+    let csrfToken = csrfToken(from: req)
     return HTMLResponse {
       CfPLayout(title: "Organizer - Proposals", user: user) {
         OrganizerProposalsPageView(
           user: user,
           proposals: proposals,
-          conferencePath: conferencePath
+          conferencePath: conferencePath,
+          conferences: conferences,
+          csrfToken: csrfToken
         )
       }
     }
@@ -1335,7 +1344,6 @@ struct CfPRoutes: RouteCollection {
     }
 
     let csrfToken = csrfToken(from: req)
-    let githubUpdated = req.query[String.self, at: "github-updated"] != nil
 
     return HTMLResponse {
       CfPLayout(title: "Edit Proposal (Organizer)", user: user) {
@@ -1343,8 +1351,7 @@ struct CfPRoutes: RouteCollection {
           user: user,
           proposal: proposal,
           conferences: conferences,
-          csrfToken: csrfToken,
-          githubUpdated: githubUpdated
+          csrfToken: csrfToken
         )
       }
     }
@@ -1519,7 +1526,7 @@ struct CfPRoutes: RouteCollection {
 
     try await proposal.save(on: req.db)
 
-    return req.redirect(to: "/organizer/proposals/\(proposalID)/edit?github-updated=true")
+    return req.redirect(to: "/organizer/proposals/\(proposalID)/edit")
   }
 
   // MARK: - Organizer New Proposal
