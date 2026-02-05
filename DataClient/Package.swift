@@ -32,6 +32,13 @@ let package = Package(
       resources: [
         .process("Resources")
       ]
-    )
+    ),
+    .testTarget(
+      name: "DataClientTests",
+      dependencies: [
+        "DataClient",
+        .product(name: "SharedModels", package: "SharedModels"),
+      ]
+    ),
   ]
 )

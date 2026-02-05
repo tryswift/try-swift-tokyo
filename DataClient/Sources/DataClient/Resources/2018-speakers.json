@@ -1,0 +1,436 @@
+[
+  {
+    "name": "Norman Maurer",
+    "image_name": "norman",
+    "bio": "Norman Maurer is a software engineer on the iCloud team at Apple.  He works on the asynchronous network frameworks that underly many of Apple's services.",
+    "bio_ja": "Norman Maurer は Apple の iCloud チームのソフトウェアエンジニアです。 Apple の多くのサービスの根底にある非同期ネットワークのフレームワークに取り組んでいます。",
+    "job_title": "Software Engineer at Apple",
+    "job_title_ja": "Software Engineer at Apple",
+    "links": [
+      {
+        "name": "@normanmaurer",
+        "url": "https://x.com/normanmaurer"
+      }
+    ]
+  },
+  {
+    "name": "Krzysztof Zabłocki",
+    "image_name": "krzysztof",
+    "bio": "Krzysztof is the Lead iOS developer at The New York Times, known for creating Sourcery, Objective-C Playgrounds, and Apple’s Essential Apps like Foldify and 3D Game Engines. Passionate about writing quality code and helping other do the same. He blogs on merowing.info and open sources tools/libraries on github.com/krzysztofzablocki.",
+    "bio_ja": "KrzysztofはNew York TimesのリードiOSエンジニアで、 Sourceryや Objective-C Playgrounds 、さらにFoldifyや3D Game Engineなど、Appleに欠かせないアプリの開発で有名です。品質の高いコードを書いたり、他の人も同じように書けるようにすることにも熱心です。merowing.infoでブログを書いており、公開されているOSSはGitHub github.com/krzysztofzablocki で見ることができます。",
+    "job_title": "Creator of Sourcery & Objective-C Playgrounds",
+    "job_title_ja": "Creator of Sourcery & Objective-C Playgrounds",
+    "links": [
+      {
+        "name": "@merowing_",
+        "url": "https://x.com/merowing_"
+      }
+    ]
+  },
+  {
+    "name": "Sarah Olson",
+    "image_name": "sarah",
+    "bio": "Sarah Olson is an iOS developer for Trello at Atlassian. She has over eighteen years of development experience in a variety of technologies, including iOS, Android, Java, and WordPress development. As Director of Women Who Code Twin Cities, she leads a variety of initiatives and events focused on creating a more inclusive tech culture. You can follow her on Twitter at @saraheolson.",
+    "bio_ja": "Sarah Olsonは Atlassian で Trello を作っている iOS 開発者です。 iOS, Android, Java, Wordpress を含む様々な技術領域で18年以上開発しています。 Women Who Code Twin Cities のディレクターとして、より包括的な技術文化の創造に着目した様々な構想やイベントを率いています。Twitter @saraheolson をフォローしましょう。",
+    "job_title": "iOS Developer at Trello",
+    "job_title_ja": "iOS Developer at Trello",
+    "links": [
+      {
+        "name": "@saraheolson",
+        "url": "https://x.com/saraheolson"
+      }
+    ]
+  },
+  {
+    "name": "Brandon Kase",
+    "image_name": "bkase",
+    "bio": "Brandon Kase brings typed functional programming to weird places. He has shipped production code on Android with Kotlin, iOS with Swift and React Native, and Web with JS/Flow/React. Brandon is currently building a new cryptocurrency at O(1) Labs. He came across functional programming while pursuing a B.S. in Computer Science from Carnegie Mellon University. Brandon is excited that strong static typing and functional programming are becoming mainstream, and believes that techniques once reserved for academia will help industry produce more reliable software.",
+    "bio_ja": "Brandon Kase は型付関数プログラミングを奇妙な場所に導入しています。 Kotlin で Android アプリを、 Swift や React Native で iOS アプリを、そして JS/Flow/React で Web サイトを作ってきました。 今は O(1) Lab で新しい暗号通貨を作っています。彼はカーネギーメロン大学でコンピュータサイエンスの学位を取りながら、関数プログラミングを学んできました。強い静的型付けや関数プログラミングが主流となってきたことにワクワクしており、かつて学問のために進んだ技術が、より品質の高いソフトウェアを作り出すことに役立つと信じています。良い設計のプログラミング言語やライブラリなどにハマっています。",
+    "job_title": "iOS Engineer at Pinterest",
+    "job_title_ja": "iOS Engineer at Pinterest",
+    "links": [
+      {
+        "name": "@bkase_",
+        "url": "https://x.com/bkase_"
+      }
+    ]
+  },
+  {
+    "name": "Tamar Nachmany",
+    "image_name": "tamar",
+    "bio": "Tamar Nachmany has spent the past two years building Tumblr as an iOS engineer on Tumblr's Community, Messaging, and Core iOS teams. She is passionate about learning from technology communities around the world and has given talks about engineering and product design in Germany, Australia, Mexico, the United States, and soon Japan! When she is not writing software she teaches engineering, writes fiction, and organizes an art residency. She lives in New York.",
+    "bio_ja": "Tamar Nachmany はこの２年間、iOS エンジニアとして Tumblr のコミュニティ、メッセージ、コア iOS チームで Tumblr の開発を行ってきました。彼女は、世界中の技術コミュニティから学ぶことに対して情熱を持っており、エンジニアリングやプロダクトデザインのトークをこれまでドイツ、オーストラリア、メキシコ、アメリカで行ってきました。そしてもうすぐ日本でも！ソフトウェア以外では、エンジニアリングを教えたり、小説を書いたり、アートレジデンスを組織しています。ニューヨーク在住。",
+    "job_title": "iOS Engineer at Tumblr",
+    "job_title_ja": "iOS Engineer at Tumblr",
+    "links": [
+      {
+        "name": "@tamarshmallows",
+        "url": "https://x.com/tamarshmallows"
+      }
+    ]
+  },
+  {
+    "name": "Wendy Lu",
+    "image_name": "wendy",
+    "bio": "Wendy is an iOS engineer and has been working at Pinterest for the last 5 years. She is currently engineering manager of the Ad Formats team with a focus on mobile. Previously, she led the launch of their commerce product on mobile and has also touched everything from the data layer to the UI frameworks. She has given talks at several iOS conferences and moderates a mobile development panel at Grace Hopper. In a past life she competed on the US Synchronised Swimming National Team.",
+    "bio_ja": "Wendy は iOS エンジニアとして５年間 Pinterest で働いていました。今は、モバイルを中心とした広告フォーマットチームのエンジニアリングマネージャです。以前は、モバイルにおけるコマース製品を立ち上げ、データレイヤーからUIフレームワークに至るまですべてを担当してきました。これまでいくつかのiOSカンファレンスでトークしたり、 Grace Hopper Conference の mobile development panel をモデレートしています。昔は、アメリカのシンクロナイズドスイミングナショナルチームで競い合っていました。",
+    "job_title": "iOS Engineer at Pinterest",
+    "job_title_ja": "iOS Engineer at Pinterest",
+    "links": [
+      {
+        "name": "@wendyluwho",
+        "url": "https://x.com/wendyluwho"
+      }
+    ]
+  },
+  {
+    "name": "Samuel Goodwin",
+    "image_name": "samuel",
+    "bio": "Samuel has worked on iOS since the SDK’s first release and has been in Amsterdam for the last 6 years running his company, Roundwall Software. He rides skateboards, plays bass guitar, and rides bikes.",
+    "bio_ja": "Samuel は、SDKの初期リリースからiOSに取り組んでおり、この6年間アムステルダムで Roundwall Software を経営しています。スケートボードに乗ったり、ベースギターを弾いたり、自転車にも乗ります。",
+    "job_title": "Founder of Roundwall Software",
+    "job_title_ja": "Founder of Roundwall Software",
+    "links": [
+      {
+        "name": "@samuelgoodwin",
+        "url": "https://x.com/samuelgoodwin"
+      }
+    ]
+  },
+  {
+    "name": "Sash Zats",
+    "image_name": "sash",
+    "bio": "Sash is a software engineer at Facebook working on News Feed. He works on user interaction, animations and experiences that make people smile. Strong believer that, in the future, designers will code and engineers will design because there will be no distinction between two. Days since he broke the like button: 0.",
+    "bio_ja": "Sash はFacebookのソフトウェアエンジニアでニュースフィードを作っています。ユーザーインタラクションやアニメーション、ユーザー体験の向上で、人々に笑顔を与えます。近い将来、デザイナーがコーディングをし、エンジニアがデザインをするようになると確信しています。その壁が無くなるからです。毎日いいね!ボタンを押せるのは彼のおかげです。",
+    "job_title": "Software Engineer at Facebook",
+    "job_title_ja": "Software Engineer at Facebook",
+    "links": [
+      {
+        "name": "@zats",
+        "url": "https://x.com/zats"
+      }
+    ]
+  },
+  {
+    "name": "Karl von Randow",
+    "image_name": "karl",
+    "bio": "Back in the olden days Karl was co-founder of Camera+, which sold over 12 million copies on the App Store. More recently he created Vee for Video—an app for quickly shooting, editing and sharing video. He is also the creator of Charles Proxy—a popular desktop app for observing an app’s network traffic—and co-founder of Letterboxd—a social website and app for movie lovers. Karl likes creating things.",
+    "bio_ja": "かつて、Karl は App Store で1200万以上ダウンロードされている Camera+ の Co-Founder でした。 最近では、動画を素早くとったり、編集したり、共有したりする、Vee for Video をいうアプリを作りました。また、アプリのネットワーク監視のデスクトップアプリとして人気のある、Charles Proxy も作っていたり、動画が大好きな人のためのソーシャルウェブサイトとアプリである、 Letterboxd の Co-Founder でもあります。物を作ることが大好きなのです。",
+    "job_title": "Creator of Camera+, Charles Proxy, and Vee",
+    "job_title_ja": "Creator of Camera+, Charles Proxy, and Vee",
+    "links": [
+      {
+        "name": "@avon",
+        "url": "https://x.com/avon"
+      }
+    ]
+  },
+  {
+    "name": "Katsumi Kishikawa",
+    "image_name": "katsumi",
+    "bio": "Katsumi Kishikawa is an iOS/macOS developer working at Realm. He’s a serial open source library developer, and has published some popular libraries on GitHub. He’s also made big contributions to the iOS developer community in Japan with his experience and knowledge.",
+    "bio_ja": "RealmのiOS/macOS開発者。オープンソースの開発を行ったり、有名なライブラリを自身のGitHubに公開している。日本においては、その経験と知識で、日本のiOS開発者コミュニティに大きく貢献している。",
+    "job_title": "Freelance Software Engineer",
+    "job_title_ja": "Freelance Software Engineer",
+    "links": [
+      {
+        "name": "@k_katsumi",
+        "url": "https://x.com/k_katsumi"
+      }
+    ]
+  },
+  {
+    "name": "Kohki Miki",
+    "image_name": "giginet",
+    "bio": "Kohki Miki (a.k.a @giginet) is a software engineer at Cookpad. He builds infrastructure for mobile development and works to improve productivity of mobile developers. Also, he builds fastlane tools, as a member of core contributors, and other useful development tools. \n \n He likes game development, so he creates some games and writes books about game development.",
+    "bio_ja": "クックパッドのエンジニア。業務ではモバイル向けの開発基盤に携わり、開発者の生産性向上のため尽力している。 OSS では幾つかの開発ツールをホストしているほか、 fastlane tools の Core Contributor でもある。\n \n 趣味はインディーゲーム開発。著書に「cocos2d-xで始めるゲーム開発」など",
+    "job_title": "Engineer at Cookpad",
+    "job_title_ja": "Engineer at Cookpad",
+    "links": [
+      {
+        "name": "@giginet",
+        "url": "https://x.com/giginet"
+      }
+    ]
+  },
+  {
+    "name": "Ellen Shapiro",
+    "image_name": "ellen",
+    "bio": "Ellen Shapiro is a native mobile developer who recently moved to the Netherlands. She's been building iOS and Android apps since 2010, and was most recently the lead mobile developer for SpotHero. In addition, Ellen writes and edits iOS and Android tutorials for RayWenderlich.com, and is the lead developer for Hum, a prominent iOS app for songwriting. In her spare time Ellen enjoys playing the guitar, traveling, biking, and hanging out with her girlfriend and their two cats.",
+    "bio_ja": "Ellen Shapiro は最近オランダに移住したネイティブモバイルエンジニアです。 2010年からiOSとAndroidのアプリを作り始めて、最近までは、SpotHero でリードモバイルエンジニアを努めていました。さらに、 RayWenderlich.com でiOSとAndroidのチュートリアルを書いており、 作曲のiOSアプリでは有名な Hum でリードエンジニアを努めています。暇なときは、ギターを弾いたり、旅行したり、自転車に乗ったり、女友達や２匹の猫とぶらぶらしたりしています。",
+    "job_title": "iOS Developer at Bakken & Bæck",
+    "job_title_ja": "iOS Developer at Bakken & Bæck",
+    "links": [
+      {
+        "name": "@designatednerd",
+        "url": "https://x.com/designatednerd"
+      }
+    ]
+  },
+  {
+    "name": "Shuichi Tsutsumi",
+    "image_name": "shu223",
+    "bio": "Shuichi has been a freelance iOS developer in Tokyo, and works for Fyusion Inc. in San Francisco since 2016. Co-authored “iOS x BLE Core Bluetooth Programming” (2015) and authored “iOS Programming - Advanced 100 Recipes” (2013). He is the creator of some popular OSS repositories such as iOS Sampler series.",
+    "bio_ja": "元フリーランスiOSエンジニア、2016年末よりサンフランシスコのFyusion社勤務。著書に「iOS×BLE　Core Bluetooth プログラミング」(2015)、「iOSアプリ開発　達人のレシピ100」（2013）。GitHubで「iOS Sampler」シリーズ他さまざまなオープンソースを公開している。",
+    "job_title": "iOS Developer in Tokyo/San Francisco",
+    "job_title_ja": "iOS Developer in Tokyo/San Francisco",
+    "links": [
+      {
+        "name": "@shu223",
+        "url": "https://x.com/shu223"
+      }
+    ]
+  },
+  {
+    "name": "Samuel Giddins",
+    "image_name": "sam",
+    "bio": "Samuel is a developer well-versed in the rituals of writing developer tools that occasionally work. By day, Samuel works on making the mobile developer experience at Square less arduous; by night he can be found breaking Bundler and CocoaPods.\n\n Before this whole 'developer' thing, Samuel studied in the highly impractical Mathematics & Economics departments at University of Chicago, learning subjects such as 'numbers', 'social theory', and 'memes'.\n\nWhen not coding, Samuel is often in the kitchen, marveling at the fact that dinner smells better than it looks.",
+    "bio_ja": "Samuel は開発者向けツールを作ることに精通しています。日中は Square におけるモバイル開発者の負担を減らすような仕事をしている開発者で、夜はBundler と CocoaPods の Core Contributor です。 \n\n 開発者になる前は、シカゴ大学で数学や経済学の学科で、「数」、「社会理論」、「ミーム」のような科目を学んでしました。キッチンに立つことが多く、夕食が見た目よりもにおいの方が良いという事実に驚いています。",
+    "job_title": "Bundler & CocoaPods Core Team, Developer at Square",
+    "job_title_ja": "Bundler & CocoaPods Core Team, Developer at Square",
+    "links": [
+      {
+        "name": "@segiddins",
+        "url": "https://x.com/segiddins"
+      }
+    ]
+  },
+  {
+    "name": "Ben Scheirman",
+    "image_name": "ben",
+    "bio": "Ben Scheirman is an independent software developer from Houston, Texas. He is best known for creating NSScreencast, a site that delivers quality training videos on iOS development. Ben has been writing iOS apps since 2009, and has produced more than 300 videos teaching others to do the same. You can find Ben’s website at benscheirman.com or follow him on Twitter @subdigital.",
+    "bio_ja": "Ben Scheirman はヒューストン出身の個人開発者です。iOS開発を動画で学べる NSScreencast を作っていることでよく知られています。Ben は2009年からiOSアプリを作り始めて、300本以上の動画を作成してきました。Webサイト benscheirman.com や Twitter @subdigital をチェックしましょう。",
+    "job_title": "Creator of NSScreencast",
+    "job_title_ja": "Creator of NSScreencast",
+    "links": [
+      {
+        "name": "@subdigital",
+        "url": "https://x.com/subdigital"
+      }
+    ]
+  },
+  {
+    "name": "Javier Soto",
+    "image_name": "javi",
+    "bio": "Javier Soto. Spanish, iOS developer in the SF Bay Area for the past 5 years. Worked at Pebble and Twitter before, now at Twitch. Big fan of Swift. When not writing code, he's playing chess, solving Rubik's cubes or flying planes",
+    "bio_ja": "Javier Soto はスペイン出身で、SFのベイエリアで5年間iOSエンジニアをしています。以前は、 Pebble や Twitter で働いていて、今は Twitch にいます。Swift の大ファンです。コードを書いていないときは、チェスをしたり、ルービックキューブを解いたり、飛行機を飛ばしています。",
+    "job_title": "iOS Developer at Twitch",
+    "job_title_ja": "iOS Developer at Twitch",
+    "links": [
+      {
+        "name": "@javi",
+        "url": "https://x.com/javi"
+      }
+    ]
+  },
+  {
+    "name": "Daisy Ramos",
+    "image_name": "daisy",
+    "bio": "Daisy is an avid iOS developer and lover of all that is tech. Most recently working on the iOS team at Citi FinTech building data-driven solutions and new features for their consumer banking app. She also actively consults for early stage companies looking to build the next big thing. Daisy holds a B.S in Computer Science from Queens College in NYC, the same college where the try! Swift NYC meetup originated. She now organizes the meetup and hosts a wide variety of technical Swift talks. She can be found on twitter as @daisyr317.",
+    "bio_ja": "Daisy は熱心なiOSエンジニアで技術が大好きです。最近は Citi FinTech でデータドリブンなソリューションを構築したり、自社顧客向けの銀行アプリへの新機能を追加しています。また、将来大きなことを成し遂げようとしているアーリーステージの会社へのコンサルティングにも積極的です。try! Swift NYC meetup の所縁の地でもある、ニューヨークの Queens College でコンピュータサイエンスの学士を取りました。今は多種多様な Swift の技術的なトークが披露されるミートアップを主宰しています。Twitterは @daisyr317 です。",
+    "job_title": "iOS Developer",
+    "job_title_ja": "iOS Developer",
+    "links": [
+      {
+        "name": "@daisyr317",
+        "url": "https://x.com/daisyr317"
+      }
+    ]
+  },
+  {
+    "name": "David Hoang",
+    "image_name": "david",
+    "bio": "David Hoang loves Swift, Visual Programming, and infusing the design and engineering process together. In his 15-year career he has worked in B2B at ExactTarget, Brand at HTC, being a founder of a digital studio, Design Director at Black Pixel, and now Head of Product Design at One Medical. \n\nHe’s worked on three apps featured by Apple and got into programming as a designer with the desire to push ideas to become more tangible. It’s true that he has a VM of Mac OS 9 running so he can use HyperCard. \n\nWhen he’s not working, David likes to collaborate with other designers and engineers, travel, read, and paint. He currently lives in San Francisco, California, but his heart is back in New York City.",
+    "bio_ja": "David Hoang は、 Swift やビジュアルプログラミングが大好きで、デザインとエンジニアリングのプロセスを融合させています。この15年で、 ExactTarget の B2B、HTC のブランド担当、デジタルスタジオの創設者、Black Pixel のデザインディレクターを経て、今では One Medical のプロダクトデザインのヘッドとして働いています。\n\nAppleにフィーチャーされた3つのアプリをつくっており、アイディアをより具現化するためにデザイナーとしてプログラミングをはじめました。HyperCardを使えるようにするために、Mac OS 9が動作するVMを持っているのは本当のことです。仕事以外では、他のデザイナーやエンジニアと協業したり、旅行や読書、ペイントするのが好きです。今はサンフランシスコにすんでますが、想い出はニューヨークにあります。",
+    "job_title": "Head of Product Design at One Medical",
+    "job_title_ja": "Head of Product Design at One Medical",
+    "links": [
+      {
+        "name": "@davidhoang",
+        "url": "https://x.com/davidhoang"
+      }
+    ]
+  },
+  {
+    "name": "Kate Castellano",
+    "image_name": "kate",
+    "bio": "Kate Castellano is a Venezuelan Informatics Engineer, specialized in Mobile Development. She started her career as an Android Developer but then decided to change to iOS Development, where she has been working for the past 6 years. One of her passions is to work towards the inclusion of more women in technology, therefore she was the co-organizer of Women Who Go Berlin chapter, Event-Manager for Berlin's Geekettes Mentorship Program and a mentor in Learn It Girl!. She currently works as a Senior iOS Developer for Clue and looks forward to join more organisations. When she is not organising events or coding, you can find her traveling or finding new musicals to sing along to.",
+    "bio_ja": "Kate Castellano はベネズエラ出身のモバイル開発が得意なソフトウェアエンジニアです。初めは Android アプリのエンジニアでしたが、仕事を始めて6年たった頃に、iOSの開発に移りました。テクノロジーに関わる女性を増やすことに高い意欲を持っており、Women Who Go Berlin chapter の共同主催者や、ベルリンの Geekettes Mentorship Program のイベントマネージャ、Learn It Girl! のメンターを務めていました。現在はClue のシニアiOSエンジニアで、さらに参画する組織を探しています。休みの日は旅行に出かけたり、新しいミュージカルを探しています。",
+    "job_title": "Senior iOS Developer at Clue",
+    "job_title_ja": "Senior iOS Developer at Clue",
+    "links": [
+      {
+        "name": "@katecastellano",
+        "url": "https://x.com/katecastellano"
+      }
+    ]
+  },
+  {
+    "name": "Yuka Ezura",
+    "image_name": "ezura",
+    "bio": "Yuka Ezura is an iOS engineer working at LINE. She belongs to the cloud AI platform “Clova” development team. At conferences and many study meetings, she presents topics focused on Swift language. She is also a personality at a web radio station mookmook radio.",
+    "bio_ja": "LINE の iOS エンジニア。クラウド AI プラットフォーム Clova 開発チームに所属。カンファレンスや勉強会で主に Swift を中心にしたテーマで発表している。また、web ラジオ局 mookmook radio でパーソナリティを務めている。",
+    "job_title": "iOS Engineer at LINE",
+    "job_title_ja": "iOS Engineer at LINE",
+    "links": [
+      {
+        "name": "@eduraaa",
+        "url": "https://x.com/eduraaa"
+      }
+    ]
+  },
+  {
+    "name": "Pushkar Kulkarni",
+    "image_name": "pushkar",
+    "bio": "Pushkar Kulkarni is a server-side Swift developer working with IBM. Prior to Swift, he worked on IBM's Java runtime, working on the JIT compiler and the Java standard library. Over the last two years, he has been contributing to open source Swift Foundation, focussed on making URLSession fully functional on Linux. He thinks Swift is the coolest language ever and is excited about the opportunities it offers on the server side.",
+    "bio_ja": "Pushkar Kulkarni は IBM のサーバーサイド Swift の開発者です。Swift に関わる前は、IBM の Java のランタイムの部署にいて、 JIT コンパイラや、 Java の標準ライブラリを開発していました。過去二年間、オープンソース Swift の Foundation にコントリビュートしており、特に Linux の URLSession 関数型の世界にすることに注力しています。Swift は最もクールな言語で、サーバーサイドで提供されることにわくわくしています。",
+    "job_title": "Server-Side Swift at IBM",
+    "job_title_ja": "Server-Side Swift at IBM",
+    "links": [
+      {
+        "name": "@pushkar_nk",
+        "url": "https://x.com/pushkar_nk"
+      }
+    ]
+  },
+  {
+    "name": "Yusuke Kita",
+    "image_name": "kita",
+    "bio": "Yusuke Kita is an iOS developer at Mercari. He works on the internationalization of the Mercari app. He's passionate about learning new technology. When not coding, you can find him cycling.",
+    "bio_ja": "メルカリのiOSエンジニア。iOSチームのMercariアプリの国際化に取り組んでいます。新しい技術を学ぶのが大好きです。コーディングしていないときは、サイクリングをしています。",
+    "job_title": "iOS Developer at Mercari",
+    "job_title_ja": "iOS Developer at Mercari",
+    "links": [
+      {
+        "name": "@kitasuke",
+        "url": "https://x.com/kitasuke"
+      }
+    ]
+  },
+  {
+    "name": "Kentaro Matsumae",
+    "image_name": "kenmaz",
+    "bio": "Kentaro Matsumae is an engineer at DeNA, where he works on the MangaBox iOS app. Previously, he worked on several other apps including niconico. When not coding, he studies machine learning.",
+    "bio_ja": "DeNA のエンジニア。マンガボックスというサービスの iOS  アプリを開発しています。前職ではニコニコ動画のアプリなどを開発していました。最近は趣味で機械学習の勉強をしています。",
+    "job_title": "Engineer at DeNA",
+    "job_title_ja": "Engineer at DeNA",
+    "links": [
+      {
+        "name": "@kenmaz",
+        "url": "https://x.com/kenmaz"
+      }
+    ]
+  },
+  {
+    "name": "Vu Nhat Minh",
+    "image_name": "orakaro",
+    "bio": "Orakaro is an iOS Engineer at Mercari currently working on Atte, the Japanese community classifieds app. Though he had years of backend web programming experiences using languages such as Python or Scala, he decided to move on as a native mobile engineer after figuring out that smartphone apps were doing a better job of impacting the world each and every day. He also enjoys digging around concepts and theories in functional programming, learning abstract algebra and excited to help bring those academy concepts closer to industry products.\n\nIn spare time Orakaro enjoys playing the ancient game of Go. He is a 2 dan amateur go player.",
+    "bio_ja": "Orakaroは、現在メルカリのiOSエンジニアで、日本の地域コミュニティアプリであるアッテに取り組んでいます。彼は何年にもわたり、PythonやScalaなどの言語を使用したバックエンドWebプログラミングの経験を持っていましたが、スマートフォンアプリが毎日世界に影響を与えるような素晴らしい仕事をしていることを知り、ネイティブモバイルエンジニアとして取り組むことにしました。また、関数プログラミングの概念や理論を掘り下げ、抽象代数を学び、そのアカデミックなコンセプトを業界のプロダクトに近づけることを楽しみにしています。\n\n時間のあるときには、囲碁を楽しんでいます。二段のアマチュアです。",
+    "job_title": "iOS Engineer at Mercari / Souzoh",
+    "job_title_ja": "iOS Engineer at Mercari / Souzoh",
+    "links": [
+      {
+        "name": "@orakaro",
+        "url": "https://x.com/orakaro"
+      }
+    ]
+  },
+  {
+    "name": "Toru Kuriyama",
+    "image_name": "kotetu",
+    "bio": "Toru Kuriyama is an iOS application engineer at Sansan Inc, which handles business card management service, and develops 'Sansan' iOS app for corporations.",
+    "bio_ja": "名刺管理サービスを手がけるSansan株式会社に所属するiOSアプリエンジニアです。法人向け名刺管理サービス 'Sansan' のiOSアプリ開発を担当しています。",
+    "job_title": "iOS Engineer at Sansan",
+    "job_title_ja": "iOS Engineer at Sansan",
+    "links": [
+      {
+        "name": "@kotetu",
+        "url": "https://x.com/kotetu"
+      }
+    ]
+  },
+  {
+    "name": "Tatsuya Tanaka",
+    "image_name": "tattn",
+    "bio": "Tatsuya Tanaka is an engineer at Yahoo! JAPAN, where he mainly develops transit iOS apps. When not coding, he shares iOS tips at meetups or on his blog. You can find him at Hackathons.",
+    "bio_ja": "ヤフーのエンジニア。業務では主に乗換案内のiOSアプリを開発。 勉強会やブログでSwiftやiOS開発のTipsなどを紹介しています。 ハッカソンが好きで、よく参加しています。",
+    "job_title": "Engineer at Yahoo! JAPAN",
+    "job_title_ja": "Engineer at Yahoo! JAPAN",
+    "links": [
+      {
+        "name": "@tanakasan2525",
+        "url": "https://x.com/tanakasan2525"
+      }
+    ]
+  },
+  {
+    "name": "Yuki Asai",
+    "image_name": "yukiasai",
+    "bio": "Yuki Asai develops iOS apps and server-side apps using Scala. He codes with Swift, Haskell, Ruby, and sometimes ReactNative.",
+    "bio_ja": "iOSアプリを開発したりScalaでサーバーアプリを開発したりしてます。得意な言語はSwift、Haskell、Ruby。あ、ReactNativeもやってます。",
+    "job_title": "iOS Developer at Recruit Marketing Partners",
+    "job_title_ja": "iOS Developer at Recruit Marketing Partners",
+    "links": [
+      {
+        "name": "@yukiasai417",
+        "url": "https://x.com/yukiasai417"
+      }
+    ]
+  },
+  {
+    "name": "Takeshi Ihara",
+    "image_name": "ihara",
+    "bio": "Takeshi Ihara is an iOS engineer of English learning services at Recruit Marketing Partners. He uses server side Swift in his personal apps. When not coding, you can find him bouldering or playing games.",
+    "bio_ja": "リクルートマーケティングパートナーズで英語系の学習サービスのiOSエンジニアをしています。個人サービスでサーバーサイドSwiftを活用しています。趣味はボルダリングと格闘ゲームです。",
+    "job_title": "iOS Engineer at Recruit Marketing Partners",
+    "job_title_ja": "iOS Engineer at Recruit Marketing Partners",
+    "links": [
+      {
+        "name": "@nonchalant0303",
+        "url": "https://x.com/nonchalant0303"
+      }
+    ]
+  },
+  {
+    "name": "Tiago Martinho",
+    "image_name": "tiago",
+    "bio": "Tiago Martinho is a Developer at ThoughtWorks in Barcelona - he created Swift Peer Labs in Barcelona. He loves to create apps, mainly for iOS (he already built more than 15 projects). Tiago is currently studying Machine Learning. He started iOS development professionally with Swift 1.0 in 2014.",
+    "bio_ja": "バルセロナにあるThoghtWorksのエンジニアです、Swift Peer Lab (もくもく会）を開催しています。アプリを作るのが好きで、主にiOSのアプリをつくっています（これまで15以上のプロジェクトを立ち上げました）。今は機械学習を勉強していて、プロとしてiOS開発を始めたのは2014年で、Swift1.0のときでした。",
+    "job_title": "Developer at ThoughtWorks",
+    "job_title_ja": "Developer at ThoughtWorks",
+    "links": [
+      {
+        "name": "@martinho_t",
+        "url": "https://x.com/martinho_t"
+      }
+    ]
+  },
+  {
+    "name": "Yuya Hirayama",
+    "image_name": "hiragram",
+    "bio": "Yuya Hirayama is an iOS engineer at VASILY Inc. He likes the idea of protocol-oriented programming, and pursuing code that realizes type-safe operation with minimal local definition by protocol + protocol extension. Recently, he is pulled toward the strong appeal of server side Swift, focusing more on Swift itself rather than iOS development. Yuya Hirayama also develops a virtual currency service as a side project, including the iOS application and the back-end API using Swift. In addition, he actively speaks at 'iOS Discord' and organizes 'Discord Offline', the first offline event of the community.",
+    "bio_ja": "株式会社VASILY iOSアプリエンジニア プロトコル指向プログラミングの思想が好きで、プロトコル+プロトコル拡張によって局所の定義を最小限に型安全な動作を実現するコードを追求しています。 また、最近はiOS開発よりもよりSwiftそのものに注目できるサーバーサイドSwiftに強い魅力を感じ、サイドプロジェクトとして仮想通貨関連のサービスをiOSアプリからバックエンドのAPIまで通じてSwiftで開発しています。 iOS Discordでアクティブに発言したり、同コミュニティ初のオフラインイベントDiscord Offlineを主宰したりするなど、コミュニティ活動も精力的に行います。",
+    "job_title": "iOS Engineer at VASILY Inc.",
+    "job_title_ja": "iOS Engineer at VASILY Inc.",
+    "links": [
+      {
+        "name": "@hiragram",
+        "url": "https://x.com/hiragram"
+      }
+    ]
+  },
+  {
+    "name": "Nobuo Saito",
+    "image_name": "tarunon",
+    "bio": "Nobuo Saito is an engineer at Mercari. He likes Swift, games and sleeping, so he has problems with time allocation. He recently bought MHW, so the time required for gaming has doubled. It is serious.",
+    "bio_ja": "株式会社メルカリ所属の iOS エンジニアです。 Swift とゲームと睡眠が好きで、時間配分に悩んでいます。最近 MHW を買ってしまい、ゲームに必要な時間が2倍になってしまいました。大変です。",
+    "job_title": "iOS Engineer at Mercari",
+    "job_title_ja": "iOS Engineer at Mercari",
+    "links": [
+      {
+        "name": "@tarunon",
+        "url": "https://x.com/tarunon"
+      }
+    ]
+  }
+]

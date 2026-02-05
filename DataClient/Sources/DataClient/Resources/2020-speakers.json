@@ -1,0 +1,380 @@
+[
+  {
+    "name": "Yonas Kolb",
+    "image_name": "2393781-d7cea03c-8a8d-4827-8a8a-f4644c75b150",
+    "bio": "Yonas is an iOS developer with a passion for Swift, Architecture, UX, and Dev tools. He is the creator of a few popular open source Swift tools such as XcodeGen and Mint. When he's not coding he can be found exploring the outdoors",
+    "bio_ja": "YonasはSwiftやアーキテクチャ、UX、そして開発者ツールに情熱をもったiOS開発者で、XcodeGenやMintといった有名なオープンソースのSwift製ツールの作者です。趣味はアウトドアです。",
+    "job_title": "iOS Developer",
+    "job_title_ja": "iOS Developer",
+    "links": [
+      {
+        "name": "@yonaskolb",
+        "url": "https://x.com/yonaskolb"
+      }
+    ]
+  },
+  {
+    "name": "Olivier Halligon",
+    "image_name": "216089-64793e94-1fb4-4555-ae07-dd7ed312f4e4",
+    "bio": "Olivier is an iOS engineer passionate about Swift, Tooling and Automation, teaching and sharing knowledge. He also likes contributing to the OSS community (author of SwiftGen, OHHTTPStubs, Reusable…; Sourcery contributor; previously core contributor at CocoaPods and Fastlane). He currently lives in west of France, currently works remotely on Platform, CI and Tooling at Babylon Health (London, UK), and loves Dr Who, Sherlock, Ghibli, and good food (especially takoyakis",
+    "bio_ja": "OlivierはSwiftやツール、自動化、教育や知識の共有に情熱を持ったiOSエンジニアです。OSSコミュニティに貢献するのも好きで、SwiftGenやOHHTTPStubs、Reusableの作者であり、SourceryのContributorです。以前はCocoaPodsやFastlaneのCore Contributorをしていました。今はフランス西部に住んでおり、イギリスのロンドンにあるBabylon Healthでリモートワークをしながら、プラットフォームやCI、ツールの仕事をしています。Doctor WhoやSherlock, ジブリそして食べ物が大好きで、特にたこ焼きが大好きです。",
+    "job_title": "Mobile Tooling Engineer at Babylon Health",
+    "job_title_ja": "Mobile Tooling Engineer at Babylon Health",
+    "links": [
+      {
+        "name": "@aligatr",
+        "url": "https://x.com/aligatr"
+      }
+    ]
+  },
+  {
+    "name": "Konrad Malawski",
+    "image_name": "18076686_10203407377623086_5841486944639354653_o",
+    "bio": "Konrad is part of Apple's Swift Server Libraries team.",
+    "bio_ja": "AppleのSwift Serverライブラリチームの一員です。",
+    "job_title": "Server Side Swift Libraries Team",
+    "job_title_ja": "Server Side Swift Libraries Team",
+    "links": [
+      {
+        "name": "@ktosopl",
+        "url": "https://x.com/ktosopl"
+      }
+    ]
+  },
+  {
+    "name": "Manabu Ueno",
+    "image_name": "ueno",
+    "bio": "Design consultant, interaction designer, user interface designer, graphic designer, usability engineer, and programmer. Ueno has extensive experiences in designing business, web, mobile, desktop, and embedded application user interfaces, and he takes a leading role in developing the design consulting methods at Sociomedia (sociomedia.com and sociomedia.co.jp), one of the most advanced design consulting firms in Tokyo, Japan.",
+    "bio_ja": "大規模エンタープライズシステム、基幹系業務アプリケーション、産業用アプリケーション、専門職種向けアプリケーション、各種ウェブアプリケーション、モバイルアプリケーション、デスクトップアプリケーション、その他の様々なインタラクティブメディアのヒューマンインターフェース設計およびユーザビリティコンサルティングを数多く経験。デザインコンサルタント／インタラクションデザイナー／インターフェースデザイナー／グラフィックデザイナー／ユーザビリティエンジニア／プログラマー。 ソシオメディア株式会社においてデザインコンサルティングメソッド開発を担う。執筆、講演など多数。HCD-Net 人間中心設計認定専門家。",
+    "job_title": "Design Consultant at Sociomedia",
+    "job_title_ja": "Design Consultant at Sociomedia",
+    "links": [
+      {
+        "name": "@manabuueno",
+        "url": "https://x.com/manabuueno"
+      }
+    ]
+  },
+  {
+    "name": "omochimetaru",
+    "image_name": "EgkugHJ6_400x400-c8c8a2d1-c233-4a22-bfbe-039746abf7f2",
+    "bio": "Omochi writes swift for iOS, macOS, server side in my job at Qoncept, Inc. He have known \"pleasure of types\" well from Swift and fallen love to it. He have published many talks and articles about inside swift compiler and design pattern for Swift era.",
+    "bio_ja": "株式会社コンセプトの業務でiOS, macOS, サーバサイド向けにSwiftを書いています。Swiftの型の喜びを知ってからSwiftガチ恋勢になりました。コンパイラ内部についてやSwift時代のデザインパターンについて、多くのトークや記事を発表しています。",
+    "job_title": "Swift lover",
+    "job_title_ja": "Swift lover",
+    "links": [
+      {
+        "name": "@omochimetaru",
+        "url": "https://x.com/omochimetaru"
+      }
+    ]
+  },
+  {
+    "name": "Ryo Aoyama",
+    "image_name": "ra1028-27af14c9-ebc9-438c-ba21-b43391342a5c",
+    "bio": "Ryo is an iOS developer at CATS team in CyberAgent. He likes to create and dive into OSS and looking for things for free time except sleeping and programming.",
+    "bio_ja": "CyberAgentのCATSというチームでiOSエンジニアをしています。OSSを作るのも見るのも好きです。睡眠とプログラミング以外の趣味を探しています。",
+    "job_title": "iOS Developer at CyberAgent, Inc.",
+    "job_title_ja": "iOS Developer at CyberAgent, Inc.",
+    "links": [
+      {
+        "name": "@ra1028fe5",
+        "url": "https://x.com/ra1028fe5"
+      }
+    ]
+  },
+  {
+    "name": "Janina Kutyn",
+    "image_name": "yuVUb9Fu_400x400-97aa3e9e-0306-4b25-a90b-5d15379748ef",
+    "bio": "Amsterdam-based iOS engineer with an international background: she studied Computer Engineering at the University of British Columbia, and has worked in Vancouver, London, and Silicon Valley before coming to Amsterdam. At Apple, she was part of the team that launched Apple Music.",
+    "bio_ja": "国際的なバックグラウンドを持つアムステルダムに拠点を置くiOSエンジニアです。彼女はブリティッシュコロンビア大学でコンピューターエンジニアリングを学び、アムステルダムに来る前にバンクーバー、ロンドン、シリコンバレーで働いていました。 Appleにいたころは、Apple Musicを立ち上げたチームの一員でした。",
+    "job_title": "Lead iOS Developer at adidas",
+    "job_title_ja": "Lead iOS Developer at adidas",
+    "links": [
+      {
+        "name": "@JaninaKutyn",
+        "url": "https://x.com/JaninaKutyn"
+      }
+    ]
+  },
+  {
+    "name": "Vincent Pradeilles",
+    "image_name": "5090957-fd658909-636c-48ed-af52-6fac409659ba",
+    "bio": "Vincent started working on iOS apps back in 2011. For the last years, he’s been working at Worldline, where he contributes to building great apps for major French banks. He loves Swift and enjoys sharing about it on the Internet. Most notably, he built the framework KeyPathKit that implements a SQL-like syntax for data manipulation.  He is also the person behind the Twitter account @ios_memes.",
+    "bio_ja": "Vincentは2011年にiOSアプリの開発に着手しました。ここ数年、彼はWorldlineで働いており、フランスの主要銀行向けの優れたアプリの開発に貢献しています。彼はSwiftが大好きで、インターネットでの知識の共有を楽しんでいます。最も注目すべきは、データ操作用のSQLのような構文を実装するフレームワークKeyPathKitを構築したことです。@ios_memesの中の人でもあります。",
+    "job_title": "iOS @ Worldline",
+    "job_title_ja": "iOS @ Worldline",
+    "links": [
+      {
+        "name": "@v_pradeilles",
+        "url": "https://x.com/v_pradeilles"
+      }
+    ]
+  },
+  {
+    "name": "Josh Garnham",
+    "image_name": "67210735-8258f480-f411-11e9-88c6-dc35b077a97c",
+    "bio": "A former Apple Engineer working within the iCloud team, Josh Garnham is now building a bank at Monzo. He has a passion for the technical; reverse-engineering and getting his hands dirty to understand how things work and to push technologies to their limits. That’s his kind of fun.",
+    "bio_ja": "iCloudチームで働いていた元AppleエンジニアのJosh Garnhamは、現在Monzoに銀行を設立しています。彼は技術に情熱を傾けており、リバースエンジニアリングや手を動かすことで物事の仕組みを理解し、テクノロジーを限界まで押し上げます。それは彼の一種の楽しみです。",
+    "job_title": "Senior iOS Engineer at Monzo Bank",
+    "job_title_ja": "Senior iOS Engineer at Monzo Bank",
+    "links": [
+      {
+        "name": "@jgarnham",
+        "url": "https://x.com/jgarnham"
+      }
+    ]
+  },
+  {
+    "name": "Frank Courville",
+    "image_name": "avatar-d0532788-d411-4ba2-8431-c53ae28cdda9",
+    "bio": "Frank has been building iOS apps since the era of felt backgrounds. He now works as full-time Swift and iOS educator, helping teams stay on the cutting edge of iOS development. He likes to write about iOS on his website, talk about productivity on his podcast, and ramble about Transformers to anyone who’ll listen.",
+    "bio_ja": "フランクは、背景がフェルトだった時代からiOSアプリを構築してきました。現在、フルタイムのSwiftとiOSの教育者として働いており、チームがiOS開発の最先端を走り続けることを支援しています。彼は自分のウェブサイトでiOSについて書いたり、ポッドキャストで生産性について話したり、誰にでもとりあえずトランスフォーマーの話しをするのが好きです。",
+    "job_title": "Swift and iOS trainer at iOSCoachFrank",
+    "job_title_ja": "Swift and iOS trainer at iOSCoachFrank",
+    "links": [
+      {
+        "name": "@frankacy",
+        "url": "https://x.com/frankacy"
+      }
+    ]
+  },
+  {
+    "name": "Ellie Shin",
+    "image_name": "ellie-1972d42b-6665-4406-890d-0b58703a0a72",
+    "bio": "Ellie is a senior iOS Engineer at Uber on the mobile platform team. She has worked on building Uber’s rider app and tools including a code generator and a duplicate code detector. She cares deeply about optimizing iOS apps and frameworks at scale. She has previously worked at Spotify and Microsoft among other companies, primarily on iOS. She has given talks at UIKonf, NSSpain, and other conferences, on iOS app binary size optimization, efficient code generation, and Swift String performance.",
+    "bio_ja": "Ellieは、UberのモバイルプラットフォームチームのシニアiOSエンジニアです。彼女はUberのライダーアプリやコードジェネレーター、重複コード検出器などのツールの構築に取り組んできました。iOSアプリとフレームワークを大規模に最適化することに深く関心を持っています。以前はSpotifyとMicrosoftで主にiOSのチームで働いていました。UIKonf、NSSpain、およびその他のカンファレンスでは、iOSアプリのバイナリサイズの最適化、効率的なコード生成、Swift Stringのパフォーマンスについて講演しました。",
+    "job_title": "Sr. iOS Engineer @Uber",
+    "job_title_ja": "Sr. iOS Engineer @Uber",
+    "links": [
+      {
+        "name": "@ellsk1",
+        "url": "https://x.com/ellsk1"
+      }
+    ]
+  },
+  {
+    "name": "Soroush Khanlou",
+    "image_name": "L66LJPm-_400x400-55d907ab-9636-40ac-b745-15202236f78e",
+    "bio": "Soroush Khanlou is a New York-based iOS consultant. He’s worked on apps for Betterment, the New Yorker, Rap Genius, and non-profits like Urban Archive. He blogs about programming at khanlou.com. In his free time, he runs, bakes bread and pastries, and collects suitcases.",
+    "bio_ja": "Soroush Khanlouは、ニューヨークに拠点を置くiOSコンサルタントです。彼は、Betterment、New Yorker、Rap Genius、およびUrban Archiveなどの非営利団体向けのアプリに取り組んでいます。プログラミングについてkhanlou.comでブログを書いています。暇な時は、走ったり、パンとペストリーを焼いたり、スーツケースを集めたりしています。",
+    "job_title": "iOS Developer",
+    "job_title_ja": "iOS Developer",
+    "links": [
+      {
+        "name": "@khanlou",
+        "url": "https://x.com/khanlou"
+      }
+    ]
+  },
+  {
+    "name": "Carola Nitz",
+    "image_name": "2445653-9e33672b-5bf8-449f-a31e-76b01ea4a298",
+    "bio": "Carola is a Senior Software Engineer at Netflix with many years of experience working on various iOS Apps. She spent the some time working on big complex projects like Apple Maps and VLC for iOS where she learned to navigate matured projects with legacy code. She’s become known for her Debugging talks and tweets but her passion is Open Source, where she enjoys working in a diverse team and sharing her knowledge",
+    "bio_ja": "CarolaはNetflixのシニアソフトウェアエンジニアであり、長年さまざまなiOSアプリを作ってきました。彼女は、Apple MapsやVLC for iOSなどの大きな複雑なプロジェクトに時間を費やし、成熟したプロジェクトをレガシーコードでナビゲートすることを学びました。彼女はデバッグに関するトークやツイートで知られるようになりましたが、彼女の情熱はオープンソースに注がれており、多様なチームで働き、知識を共有することを楽しんでいます。",
+    "job_title": "Senior Software Developer at Netflix",
+    "job_title_ja": "Senior Software Developer at Netflix",
+    "links": [
+      {
+        "name": "@_caro_n",
+        "url": "https://x.com/_caro_n"
+      }
+    ]
+  },
+  {
+    "name": "Abizer Nasir",
+    "image_name": "Abizer",
+    "bio": "Abizer has worked in a variety of contract roles on macOS but mostly IOS projects in London.  For the past 5 years he has worked exclusively in Swift, and lately using SwiftUI. He has a focus on writing modern, maintainable code with a preference for functional programming. He aspires to reach SDK in Go (いご).",
+    "bio_ja": "Abizerはロンドンに住んでおり、様々な契約形態でmacOSの仕事をしたり、iOSのプロジェクトに関わってきました。過去5年間、Swiftに専念し、最近はSwiftUIを使っています。関数型プログラミングを優先して、最新で保守可能なコードを書くことに重点を置いています。彼はGo（いご）でSDKに到達することを目指しています。",
+    "job_title": "iOS / macOS Contract Developer",
+    "job_title_ja": "iOS / macOS Contract Developer",
+    "links": [
+      {
+        "name": "@abizern",
+        "url": "https://x.com/abizern"
+      }
+    ]
+  },
+  {
+    "name": "Fabio Milano",
+    "image_name": "iamfabiomilano",
+    "bio": "Software engineer at Native UI frameworks team, Fabio spends most of his time traversing trees , diffing nodes and computing layouts off of the main thread. Writes APIs to build complex user interfaces and supports product teams to meet their UI performance goals, in `.userInteractive`  QoS fashion.",
+    "bio_ja": "ネイティブUIフレームワークチームのソフトウェアエンジニアであるFabioは、ほとんどの時間をツリーの走査、ノードの比較、メインスレッドからのレイアウトの計算に費やしています。複雑なユーザーインターフェイスを構築するAPIを記述し、プロダクトチームが最優先 (in `.userInteractive` QoS) でUIパフォーマンスの目標を達成できるようサポートします。",
+    "job_title": "Software Engineer",
+    "job_title_ja": "Software Engineer",
+    "links": [
+      {
+        "name": "@iamfabiomilano",
+        "url": "https://x.com/iamfabiomilano"
+      }
+    ]
+  },
+  {
+    "name": "Alaina Kafkes",
+    "image_name": "alainakafkes",
+    "bio": "Alaina Kafkes is a software engineer at Medium, where she works predominantly on iOS development and petting other people’s dogs. She has spoken and written extensively about the intersection of technology and the humanities. Current interests include swimming laps and loafing around bookstores.",
+    "bio_ja": "Alaina KafkesはMediumのソフトウェアエンジニアで、主にiOSの開発と他人の犬とのふれあいに取り組んでいます。技術と人文科学の共通部分について広く話し、記事を書いています。今の趣味は、水泳や書店巡りです。",
+    "job_title": "iOS Engineer at Medium",
+    "job_title_ja": "iOS Engineer at Medium",
+    "links": [
+      {
+        "name": "@alainakafkes",
+        "url": "https://x.com/alainakafkes"
+      }
+    ]
+  },
+  {
+    "name": "Khanh LeViet",
+    "image_name": "khanhlvg",
+    "bio": "Khanh LeViet is a TensorFlow Developer Advocate at Google, helping developers in APAC build smarter products with AI. He speaks at technology conferences, writes and publishes sample code on GitHub. Before his AI journey, Khanh was a mobile developer working on both Android and iOS.",
+    "bio_ja": "Khanh LeVietはGoogleのTensorFlowのDeveloper Advocateであり、APACの開発者がAIでよりスマートな製品を構築するのを支援しています。彼は技術カンファレンスで講演し、GitHubでサンプルコードを書いて公開しています。 AIを担当する前は、KhanhはAndroidとiOSの両方に取り組んでいるモバイル開発者でした。",
+    "job_title": "AI Advocate @ Google",
+    "job_title_ja": "AI Advocate @ Google",
+    "links": [
+      {
+        "name": "@khanhlvg",
+        "url": "https://x.com/khanhlvg"
+      }
+    ]
+  },
+  {
+    "name": "Curtis Colly",
+    "image_name": "me_china1",
+    "bio": "Curtis Colly is self-employed as a full-stack web application and iOS developer. Having built a variety of consumer oriented web apps in a myriad of web languages, he appreciates the safety and efficiency that the statically typed Swift offers. He strives to make his code functional, durable and scalable. Curtis enjoys seeking hidden truths. As a result, he appreciates good conversations, experiencing difference cultures and testing innovative ideas in the real-world. He is currently working on a video app for people to share meaningful thoughts on various topics.",
+    "bio_ja": "Curtis Collyは、フルスタックのWebアプリ開発と。無数のWeb言語でさまざまなコンシューマ向けWebアプリを構築した彼は、静的型付け言語であるSwiftが提供する安全性と効率性を高く評価しています。コードを関数型で、耐久性があり、スケーラブルにするよう努めています。また、隠された真実を探し求めています。その結果、彼は良い会話、異なる文化を体験し、現実世界で革新的なアイデアをテストすることを高く評価しています。現在、人々がさまざまなトピックについて有意義な考えを共有するためのビデオアプリの開発に取り組んでいます。",
+    "job_title": "Indie Web and iOS Developer",
+    "job_title_ja": "Indie Web and iOS Developer",
+    "links": [
+      {
+        "name": "@curtiscolly",
+        "url": "https://x.com/curtiscolly"
+      }
+    ]
+  },
+  {
+    "name": "Roxana Jula",
+    "image_name": "roxana",
+    "bio": "Roxana is a Romanian mobile developer based in Dubai with a passion for augmented reality.  She started coding when she was 13 years old and so far has been part of the development team of over 20 apps including one of the biggest digital public services app in Scandinavia. She is involved in the tech community, both online (instagram.com/coderox/) and offline at local events. As an advocate for women in tech, Roxana is encouraging other girls to join the tech world.",
+    "bio_ja": "Roxanaは、ドバイに拠点を置くルーマニアのモバイル開発者であり、ARへの情熱を持っています。彼女は13歳のときにコーディングを始め、これまでスカンジナビア最大のデジタル公共サービスアプリの1つを含む20以上のアプリの開発チームの一員でした。彼女はオンライン(instagram.com/coderox/)とオフラインの両方で地元のイベントで技術コミュニティに参加しています。Women in techのAdvocateとして、女性がテクノロジーの世界に参加することを奨励しています。",
+    "job_title": "Mobile Developer at Nodes",
+    "job_title_ja": "Mobile Developer at Nodes",
+    "links": [
+      {
+        "name": "@RoxanaJula",
+        "url": "https://x.com/RoxanaJula"
+      }
+    ]
+  },
+  {
+    "name": "Anat Gilboa",
+    "image_name": "anat_gilboa",
+    "bio": "Anat is a software engineer turned-product manager. She spent 2.5 years working at Blue Apron on their iOS app, focusing mainly on product management for her last few months there. Prior to joining Blue Apron, she worked at American Express on their mobile banking app. When she is not writing code, she likes learning languages and traveling.",
+    "bio_ja": "Anatは、ソフトウェアエンジニアあがりのプロダクトマネージャーです。Blue ApronのiOSチームで2年半働いており、主にここ数ヶ月のプロダクトマネジメントに集中しています。 Blue Apronに入社する前は、American Expressでモバイルバンキングアプリを開発していました。 コードを書いていないときは、言語の学習と旅行が好きです。",
+    "job_title": "Product Engineer",
+    "job_title_ja": "Product Engineer",
+    "links": [
+      {
+        "name": "@anat_gilboa",
+        "url": "https://x.com/anat_gilboa"
+      }
+    ]
+  },
+  {
+    "name": "Shai Mishali",
+    "image_name": "freak4pc",
+    "bio": "Shai is iOS Tech Lead for Gett, the on-demand mobility company, and is involved in several open source projects on his spare time - mainly the RxSwiftCommunity and RxSwift projects, as well as an international speaker. Author on the upcoming Combine book from raywenderlich.com and a hackathon addict and 1st place winner of BattleHack World Finals 2014. You can find him on GitHub and Twitter as @freak4pc.",
+    "bio_ja": "Shaiは、オンデマンドモビリティ企業であるG​​ettのiOS Tech Leadであり、空き時間にいくつかのオープンソースプロジェクト（主にRxSwiftCommunityおよびRxSwiftプロジェクト、および国際スピーカー）に関与しています。 raywenderlich.comからこれから出版されるCombine本の著者であり、ハッカソン中毒者であり、BattleHack World Finals 2014で1位の受賞者です。GitHubとTwitterで@freak4pcとして活動しています。",
+    "job_title": "iOS Tech Lead @ Gett",
+    "job_title_ja": "iOS Tech Lead @ Gett",
+    "links": [
+      {
+        "name": "@freak4pc",
+        "url": "https://x.com/freak4pc"
+      }
+    ]
+  },
+  {
+    "name": "Suyeol Jeon",
+    "image_name": "devxoul",
+    "bio": "Suyeol introduces himself as a lazy developer who writes many code to write less code. He enjoys contributing to open source community. He is also an author of several famous open source libraries such as ReactorKit, Then and URLNavigator.",
+    "bio_ja": "Suyeolは、より少ないコードを書くために多くのコードを書く怠惰な開発者を自称しています。彼はオープンソースコミュニティへの貢献を楽しんでいます。また、ReactorKit、Then、URLNavigatorなどの有名なオープンソースライブラリの著者でもあります。",
+    "job_title": "Lead iOS engineer at StyleShare",
+    "job_title_ja": "Lead iOS engineer at StyleShare",
+    "links": [
+      {
+        "name": "@devxoul",
+        "url": "https://x.com/devxoul"
+      }
+    ]
+  },
+  {
+    "name": "Katsumi Kishikawa",
+    "image_name": "katsumi",
+    "bio": "Software engineer. Creator of KeychainAccess, IBPCollectionViewCompositionalLayout, SpreadsheetView, etc. Love to build tools for developers.",
+    "bio_ja": "Software engineer. Creator of KeychainAccess, IBPCollectionViewCompositionalLayout, SpreadsheetView, etc. Love to build tools for developers.",
+    "job_title": "Software engineer",
+    "job_title_ja": "Software engineer",
+    "links": [
+      {
+        "name": "@kishikawakatsumi",
+        "url": "https://x.com/kishikawakatsumi"
+      }
+    ]
+  },
+  {
+    "name": "Yuki Aki",
+    "image_name": "freddi",
+    "bio": "Yuki is an Engineer at LINE Fukuoka, and organizer of HAKATA.swift, which local community of Swift in Fukuoka. He loves studying about mysterious things like swift compiler and also loves sharing what he learned. His hobby is drawing his original cartoon cat character, and he shares his drawing to express emotion in life on his SNS.",
+    "bio_ja": "YukiはLINE Fukuokaのエンジニアであり、福岡のCommunityであるHAKATA.swiftの主催でもあります。Swiftコンパイラのような不思議なことを学ぶのが大好きで、学んだことを共有することも大好きです。趣味はオリジナルの猫の絵を描くことで、SNSには彼の今の気持ちを表現した猫の絵をよく上げたりしています。",
+    "job_title": "Engineer at LINE Fukuoka",
+    "job_title_ja": "Engineer at LINE Fukuoka",
+    "links": [
+      {
+        "name": "@___freddi___",
+        "url": "https://x.com/___freddi___"
+      }
+    ]
+  },
+  {
+    "name": "Alex Karp",
+    "image_name": "alex",
+    "bio": "Alex Karp is a Senior App Engineering Manager at Wayfair, his teams focusing on the very bottom parts of the conversion funnel in their iOS and Android apps: the checkout process, shipping information, and loyalty and financing programs. He lives near Boston with his girlfriend and adorable young cockapoo. In his free time, he brings back the 1920s via his love of dancing and teaching Lindy Hop.",
+    "bio_ja": "Alex KarpはWayfairのシニアアプリエンジニアリングマネージャーであり、彼のチームはiOSおよびAndroidアプリのコンバージョンファンネルの一番下の部分、つまり精算プロセス、出荷情報、ロイヤルティプログラムおよびファイナンスプログラムに注力しています。 ボストンの近くにガールフレンドと愛らしい若いコカプーと住んでいます。 暇な時は、ダンスとリンディホップを教えることへの愛を通して1920年代を呼び戻しています。",
+    "job_title": "Senior App Engineering Manager at Wayfair",
+    "job_title_ja": "Senior App Engineering Manager at Wayfair",
+    "links": [
+      {
+        "name": "@numberwizard68",
+        "url": "https://x.com/numberwizard68"
+      }
+    ]
+  },
+  {
+    "name": "Kentaro Matsumae",
+    "image_name": "kentaro",
+    "bio": "Kentaro works at Merpay as an iOS developer. He talked about CoreML on try! Swift Tokyo2018 and NYC2018, but his interest goes back to pure mobile app development. Recently, he loves building a mobile app using Flutter as well as iOS SDK.",
+    "bio_ja": "Kentaro は Merpay でiOS開発者として働いています。try! Swift Tokyo 2018 と NYC2018 で CoreML について話しましたが、彼の関心は純粋なモバイルアプリ開発に戻ります。 最近はiOS SDKと同様にFlutterを使用してモバイルアプリを構築するのにハマっています。",
+    "job_title": "iOS Developer at merpay",
+    "job_title_ja": "iOS Developer at merpay",
+    "links": [
+      {
+        "name": "@kenmaz",
+        "url": "https://x.com/kenmaz"
+      }
+    ]
+  },
+  {
+    "name": "Soaurabh Kakkar",
+    "image_name": "soaurabh",
+    "bio": "Soaurabh Kakkar is a Principal iOS engineer at Tokopedia, Indonesia’s technology unicorn. Apart from contributing to large scale consumer apps, he likes to experiment and co-invented a security algorithm that can be read on Google Patents. He has previously spoken on topics like HLS In-Depth, Myths about Application Architecture, Functional Paradigm at Swift India Conference and in company-wide talks. When he’s not programming, he spends time watching Cricket and playing Mortal Kombat on Xbox.",
+    "bio_ja": "Soaurabh Kakkarは、インドネシアのテクノロジーユニコーンであるTokopediaのプリンシパルiOSエンジニアです。大規模なコンシューマ向けアプリへの貢献とは別に、彼は実験し、Google特許で読むことができるセキュリティアルゴリズムを共同で発明しました。彼は以前、HLSの詳細、アプリケーションアーキテクチャに関する神話、Swift India Conferenceでの関数型パラダイム、全社的な講演などのトピックについて講演しました。プログラミングをしていないときは、クリケットを見て、XboxでMortal Kombatをプレイしています。",
+    "job_title": "Principal iOS Engineer at Tokopedia",
+    "job_title_ja": "Principal iOS Engineer at Tokopedia",
+    "links": [
+      {
+        "name": "@soaurabh",
+        "url": "https://x.com/soaurabh"
+      }
+    ]
+  }
+]
