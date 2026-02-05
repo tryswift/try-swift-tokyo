@@ -57,8 +57,7 @@ struct CfPRoutes: RouteCollection {
     organizer.get("proposals", ":proposalID", "edit", use: organizerEditProposalPage)
     organizer.post("proposals", ":proposalID", "edit", use: handleOrganizerEditProposal)
     organizer.post("proposals", ":proposalID", "delete", use: handleOrganizerDeleteProposal)
-    organizer.post(
-      "proposals", ":proposalID", "update-github", use: handleOrganizerUpdateGitHub)
+    organizer.post("proposals", "inline-add", use: handleOrganizerInlineAddProposal)
     organizer.post("proposals", ":proposalID", "accept", use: handleAcceptProposal)
     organizer.post("proposals", ":proposalID", "reject", use: handleRejectProposal)
     organizer.post("proposals", ":proposalID", "revert-status", use: handleRevertProposalStatus)
@@ -945,6 +944,7 @@ struct CfPRoutes: RouteCollection {
     }
 
     let csrfToken = csrfToken(from: req)
+    let addError = req.query[String.self, at: "add-error"]
     return HTMLResponse {
       CfPLayout(title: "Organizer - Proposals", user: user) {
         OrganizerProposalsPageView(
@@ -952,7 +952,8 @@ struct CfPRoutes: RouteCollection {
           proposals: proposals,
           conferencePath: conferencePath,
           conferences: conferences,
-          csrfToken: csrfToken
+          csrfToken: csrfToken,
+          addProposalError: addError
         )
       }
     }
@@ -1483,52 +1484,6 @@ struct CfPRoutes: RouteCollection {
     return req.redirect(to: "/organizer/proposals?deleted=true")
   }
 
-  // MARK: - Organizer Update GitHub
-
-  @Sendable
-  func handleOrganizerUpdateGitHub(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
-      throw Abort(.unauthorized, reason: "Admin access required")
-    }
-
-    guard let proposalIDString = req.parameters.get("proposalID"),
-      let proposalID = UUID(uuidString: proposalIDString)
-    else {
-      throw Abort(.badRequest, reason: "Invalid proposal ID")
-    }
-
-    guard
-      let proposal = try await Proposal.query(on: req.db)
-        .filter(\.$id == proposalID)
-        .first()
-    else {
-      throw Abort(.notFound, reason: "Proposal not found")
-    }
-
-    struct UpdateGitHubFormData: Content {
-      var githubUsername: String?
-    }
-
-    let formData = try req.content.decode(UpdateGitHubFormData.self)
-    let githubUsername =
-      formData.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-
-    if !githubUsername.isEmpty {
-      let resolvedID = try await resolveSpeakerID(
-        githubUsername: githubUsername, on: req.db)
-      proposal.$speaker.id = resolvedID
-      proposal.paperCallUsername = githubUsername
-    } else if proposal.$speaker.id != AddPaperCallImportUser.paperCallUserID {
-      let importUserID = try await resolveSpeakerID(githubUsername: nil, on: req.db)
-      proposal.$speaker.id = importUserID
-      proposal.paperCallUsername = nil
-    }
-
-    try await proposal.save(on: req.db)
-
-    return req.redirect(to: "/organizer/proposals/\(proposalID)/edit")
-  }
-
   // MARK: - Organizer New Proposal
 
   @Sendable
@@ -1683,6 +1638,107 @@ struct CfPRoutes: RouteCollection {
       }
     }
     return try await html.encodeResponse(for: req)
+  }
+
+  // MARK: - Organizer Inline Add Proposal
+
+  @Sendable
+  func handleOrganizerInlineAddProposal(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    struct InlineAddFormData: Content {
+      var conferenceId: UUID
+      var title: String
+      var abstract: String
+      var talkDetails: String
+      var talkDuration: String
+      var speakerName: String
+      var speakerEmail: String
+      var bio: String
+      var iconUrl: String?
+      var githubUsername: String?
+      var notesToOrganizers: String?
+    }
+
+    let formData: InlineAddFormData
+    do {
+      formData = try req.content.decode(InlineAddFormData.self)
+    } catch {
+      return redirectToProposalsWithError(req: req, error: "Invalid form data")
+    }
+
+    guard !formData.title.isEmpty else {
+      return redirectToProposalsWithError(req: req, error: "Title is required")
+    }
+    guard !formData.abstract.isEmpty else {
+      return redirectToProposalsWithError(req: req, error: "Abstract is required")
+    }
+    guard !formData.talkDetails.isEmpty else {
+      return redirectToProposalsWithError(req: req, error: "Talk details are required")
+    }
+    guard !formData.speakerName.isEmpty else {
+      return redirectToProposalsWithError(req: req, error: "Speaker name is required")
+    }
+    guard !formData.speakerEmail.isEmpty else {
+      return redirectToProposalsWithError(req: req, error: "Speaker email is required")
+    }
+    guard !formData.bio.isEmpty else {
+      return redirectToProposalsWithError(req: req, error: "Speaker bio is required")
+    }
+    guard let talkDuration = TalkDuration(rawValue: formData.talkDuration) else {
+      return redirectToProposalsWithError(req: req, error: "Please select a talk duration")
+    }
+
+    guard let conference = try await Conference.find(formData.conferenceId, on: req.db) else {
+      return redirectToProposalsWithError(req: req, error: "Conference not found")
+    }
+    guard let conferenceID = conference.id else {
+      return redirectToProposalsWithError(req: req, error: "Conference ID missing")
+    }
+
+    let speakerID: UUID
+    let githubUsername =
+      formData.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    do {
+      speakerID = try await resolveSpeakerID(
+        githubUsername: formData.githubUsername, on: req.db)
+    } catch {
+      return redirectToProposalsWithError(req: req, error: error.localizedDescription)
+    }
+
+    let proposal = Proposal(
+      conferenceID: conferenceID,
+      title: formData.title,
+      abstract: formData.abstract,
+      talkDetail: formData.talkDetails,
+      talkDuration: talkDuration,
+      speakerName: formData.speakerName,
+      speakerEmail: formData.speakerEmail,
+      bio: formData.bio,
+      iconURL: formData.iconUrl?.isEmpty == true ? nil : formData.iconUrl,
+      notes: formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers,
+      speakerID: speakerID
+    )
+
+    if !githubUsername.isEmpty {
+      proposal.paperCallUsername = githubUsername
+    }
+
+    try await proposal.save(on: req.db)
+
+    guard let proposalID = proposal.id else {
+      return req.redirect(to: "/organizer/proposals")
+    }
+
+    return req.redirect(to: "/organizer/proposals/\(proposalID)")
+  }
+
+  private func redirectToProposalsWithError(req: Request, error: String) -> Response {
+    let encodedError =
+      error.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "Unknown+error"
+    return req.redirect(to: "/organizer/proposals?add-error=\(encodedError)")
   }
 
   // MARK: - Timetable Editor

@@ -8,6 +8,7 @@ struct OrganizerProposalsPageView: HTML, Sendable {
   let conferencePath: String?
   let conferences: [ConferencePublicInfo]
   let csrfToken: String
+  let addProposalError: String?
 
   var body: some HTML {
     div(.class("container py-5")) {
@@ -15,6 +16,9 @@ struct OrganizerProposalsPageView: HTML, Sendable {
       renderHeader()
 
       if let user, user.role == .admin {
+        // Error message for inline add form
+        addProposalErrorAlert
+
         // Inline add proposal form (collapsible)
         renderAddProposalForm()
 
@@ -237,92 +241,184 @@ struct OrganizerProposalsPageView: HTML, Sendable {
   }
 
   @HTMLBuilder
+  private var addProposalErrorAlert: some HTML {
+    if let addProposalError {
+      div(.class("alert alert-danger alert-dismissible fade show mb-4")) {
+        strong { "Error: " }
+        HTMLText(addProposalError)
+        HTMLRaw(
+          """
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          """)
+      }
+    }
+  }
+
+  @HTMLBuilder
   private func renderAddProposalForm() -> some HTML {
     HTMLRaw(
       """
       <div class="collapse mb-4" id="addProposalForm">
-        <div class="card">
-          <div class="card-header d-flex justify-content-between align-items-center">
-            <strong>Add New Proposal</strong>
-            <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#addProposalForm"></button>
-          </div>
-          <div class="card-body p-4">
-            <form method="post" action="/organizer/proposals/new">
-              <input type="hidden" name="_csrf" value="\(csrfToken)">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold" for="inlineConferenceId">Conference *</label>
-                    <select class="form-select" name="conferenceId" id="inlineConferenceId" required>
-                      <option value="">Select conference...</option>
       """)
-    for conf in conferences {
-      option(.value(conf.id.uuidString)) {
-        HTMLText(conf.displayName)
+    div(.class("card")) {
+      div(.class("card-header d-flex justify-content-between align-items-center")) {
+        strong { "Add New Proposal" }
+        HTMLRaw(
+          """
+          <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#addProposalForm"></button>
+          """)
+      }
+      div(.class("card-body p-4")) {
+        addProposalFormContent
       }
     }
-    HTMLRaw(
-      """
-                    </select>
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold" for="inlineTitle">Title *</label>
-                    <input type="text" class="form-control" name="title" id="inlineTitle" required placeholder="Enter talk title">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold" for="inlineAbstract">Abstract *</label>
-                    <textarea class="form-control" name="abstract" id="inlineAbstract" rows="3" required placeholder="A brief summary of the talk"></textarea>
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold" for="inlineTalkDetails">Talk Details *</label>
-                    <textarea class="form-control" name="talkDetails" id="inlineTalkDetails" rows="3" required placeholder="Detailed description for reviewers"></textarea>
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold" for="inlineTalkDuration">Talk Duration *</label>
-                    <select class="form-select" name="talkDuration" id="inlineTalkDuration" required>
-                      <option value="">Choose duration...</option>
-                      <option value="20min">Regular Talk (20 min)</option>
-                      <option value="LT">Lightning Talk (5 min)</option>
-                      <option value="invited">Invited Talk</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold" for="inlineSpeakerName">Speaker Name *</label>
-                    <input type="text" class="form-control" name="speakerName" id="inlineSpeakerName" required placeholder="Speaker display name">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold" for="inlineSpeakerEmail">Speaker Email *</label>
-                    <input type="email" class="form-control" name="speakerEmail" id="inlineSpeakerEmail" required placeholder="speaker@email.com">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold" for="inlineBio">Speaker Bio *</label>
-                    <textarea class="form-control" name="bio" id="inlineBio" rows="3" required placeholder="Speaker biography"></textarea>
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold" for="inlineIconUrl">Profile Picture URL</label>
-                    <input type="url" class="form-control" name="iconUrl" id="inlineIconUrl" placeholder="https://example.com/photo.jpg">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold" for="inlineGithubUsername">GitHub Username</label>
-                    <input type="text" class="form-control" name="githubUsername" id="inlineGithubUsername" placeholder="e.g. octocat">
-                    <div class="form-text">If specified, the proposal will be linked to this GitHub user account. Leave blank to use the system import user.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label fw-semibold" for="inlineNotes">Notes for Organizers</label>
-                <textarea class="form-control" name="notesToOrganizers" id="inlineNotes" rows="2" placeholder="Any special requirements or additional information"></textarea>
-              </div>
-              <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg">Add Proposal</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      """)
+    HTMLRaw("</div>")
+  }
+
+  private var addProposalFormContent: some HTML {
+    form(
+      .method(.post),
+      .action("/organizer/proposals/inline-add")
+    ) {
+      input(.type(.hidden), .name("_csrf"), .value(csrfToken))
+      div(.class("row")) {
+        addProposalLeftColumn
+        addProposalRightColumn
+      }
+      addProposalNotesAndSubmit
+    }
+  }
+
+  private var addProposalLeftColumn: some HTML {
+    div(.class("col-md-6")) {
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineConferenceId")) {
+          "Conference *"
+        }
+        select(
+          .class("form-select"), .name("conferenceId"), .id("inlineConferenceId"), .required
+        ) {
+          option(.value("")) { "Select conference..." }
+          for conf in conferences {
+            option(.value(conf.id.uuidString)) {
+              HTMLText(conf.displayName)
+            }
+          }
+        }
+      }
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineTitle")) { "Title *" }
+        input(
+          .type(.text), .class("form-control"), .name("title"), .id("inlineTitle"),
+          .required, .placeholder("Enter talk title")
+        )
+      }
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineAbstract")) { "Abstract *" }
+        textarea(
+          .class("form-control"), .name("abstract"), .id("inlineAbstract"),
+          .custom(name: "rows", value: "3"), .required,
+          .placeholder("A brief summary of the talk (2-3 sentences)")
+        ) { "" }
+      }
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineTalkDetails")) {
+          "Talk Details *"
+        }
+        textarea(
+          .class("form-control"), .name("talkDetails"), .id("inlineTalkDetails"),
+          .custom(name: "rows", value: "3"), .required,
+          .placeholder("Detailed description for reviewers")
+        ) { "" }
+      }
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineTalkDuration")) {
+          "Talk Duration *"
+        }
+        select(
+          .class("form-select"), .name("talkDuration"), .id("inlineTalkDuration"), .required
+        ) {
+          option(.value("")) { "Choose duration..." }
+          for duration in TalkDuration.allCases {
+            option(.value(duration.rawValue)) {
+              HTMLText(duration.displayName)
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private var addProposalRightColumn: some HTML {
+    div(.class("col-md-6")) {
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineSpeakerName")) {
+          "Speaker Name *"
+        }
+        input(
+          .type(.text), .class("form-control"), .name("speakerName"),
+          .id("inlineSpeakerName"), .required, .placeholder("Speaker display name")
+        )
+      }
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineSpeakerEmail")) {
+          "Speaker Email *"
+        }
+        input(
+          .type(.email), .class("form-control"), .name("speakerEmail"),
+          .id("inlineSpeakerEmail"), .required, .placeholder("speaker@email.com")
+        )
+      }
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineBio")) { "Speaker Bio *" }
+        textarea(
+          .class("form-control"), .name("bio"), .id("inlineBio"),
+          .custom(name: "rows", value: "3"), .required,
+          .placeholder("Speaker biography")
+        ) { "" }
+      }
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineIconUrl")) {
+          "Profile Picture URL"
+        }
+        input(
+          .type(.url), .class("form-control"), .name("iconUrl"), .id("inlineIconUrl"),
+          .placeholder("https://example.com/photo.jpg")
+        )
+      }
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineGithubUsername")) {
+          "GitHub Username"
+        }
+        input(
+          .type(.text), .class("form-control"), .name("githubUsername"),
+          .id("inlineGithubUsername"), .placeholder("e.g. octocat")
+        )
+        div(.class("form-text")) {
+          "If specified, the proposal will be linked to this GitHub user account. "
+          "Leave blank to use the system import user."
+        }
+      }
+    }
+  }
+
+  @HTMLBuilder
+  private var addProposalNotesAndSubmit: some HTML {
+    div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("inlineNotes")) {
+        "Notes for Organizers"
+      }
+      textarea(
+        .class("form-control"), .name("notesToOrganizers"), .id("inlineNotes"),
+        .custom(name: "rows", value: "2"),
+        .placeholder("Any special requirements or additional information")
+      ) { "" }
+    }
+    div(.class("d-grid")) {
+      button(.type(.submit), .class("btn btn-primary btn-lg")) {
+        "Add Proposal"
+      }
+    }
   }
 
   @HTMLBuilder
