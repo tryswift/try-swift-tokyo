@@ -165,7 +165,7 @@ extension HomeSectionType {
           try! dataClient.fetchDay3(year)
         }
 
-      let allDays: [Conference] = [day1, day2] + (day3.map { [$0] } ?? [])
+      let allDays: [Conference] = [day1, day2, day3].compactMap { $0 }
       let columnCount = allDays.count
 
       Grid(alignment: .top, spacing: 16) {
