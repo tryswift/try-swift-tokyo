@@ -5,7 +5,6 @@ format:
 		--recursive \
 		./Android/ \
 		./App/ \
-		./CfPWebsite/ \
 		./DataClient/ \
 		./iOS/ \
 		./LocalizationGenerated/ \
