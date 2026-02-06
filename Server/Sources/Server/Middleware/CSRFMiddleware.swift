@@ -46,7 +46,7 @@ struct CSRFMiddleware: AsyncMiddleware {
           path: "/",
           isSecure: Environment.get("APP_ENV") == "production",
           isHTTPOnly: false,
-          sameSite: .lax
+          sameSite: .strict
         )
       }
 
