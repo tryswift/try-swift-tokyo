@@ -7,22 +7,19 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
   let conferences: [ConferencePublicInfo]
   let errorMessage: String?
   let csrfToken: String
-  let githubUpdated: Bool
 
   init(
     user: UserDTO?,
     proposal: ProposalDTO?,
     conferences: [ConferencePublicInfo],
     errorMessage: String? = nil,
-    csrfToken: String = "",
-    githubUpdated: Bool = false
+    csrfToken: String = ""
   ) {
     self.user = user
     self.proposal = proposal
     self.conferences = conferences
     self.errorMessage = errorMessage
     self.csrfToken = csrfToken
-    self.githubUpdated = githubUpdated
   }
 
   var body: some HTML {
@@ -31,10 +28,9 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
         if let proposal {
           pageHeader(proposal: proposal)
           importedAlert(proposal: proposal)
-          githubUpdatedAlert
           errorAlert
           editFormCard(proposal: proposal)
-          bottomCards(proposal: proposal)
+          deleteCard(proposal: proposal)
         } else {
           notFoundCard
         }
@@ -231,6 +227,7 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
     div(.class("col-md-8")) {
       speakerNameField(value: proposal.speakerName)
       speakerEmailField(value: proposal.speakerEmail)
+      githubUsernameField(proposal: proposal)
       speakerBioField(value: proposal.bio)
     }
   }
@@ -290,6 +287,32 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
     }
   }
 
+  private func githubUsernameField(proposal: ProposalDTO) -> some HTML {
+    let currentValue =
+      proposal.speakerUsername == "papercall-import" ? "" : proposal.speakerUsername
+    return div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("githubUsername")) {
+        "GitHub Username"
+      }
+      div(.class("input-group")) {
+        span(.class("input-group-text")) { "@" }
+        input(
+          .type(.text),
+          .class("form-control"),
+          .name("githubUsername"),
+          .id("githubUsername"),
+          .value(currentValue),
+          .placeholder("e.g. octocat")
+        )
+      }
+      div(.class("form-text")) {
+        "Link this proposal to a GitHub user account. "
+        "The user must have logged in at least once. "
+        "Leave blank to unlink."
+      }
+    }
+  }
+
   private func speakerIconField(iconURL: String?) -> some HTML {
     div(.class("col-md-4")) {
       div(.class("mb-3")) {
@@ -320,68 +343,6 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
         .class("rounded-circle border"),
         .style("width: 100px; height: 100px; object-fit: cover;")
       )
-    }
-  }
-
-  @HTMLBuilder
-  private var githubUpdatedAlert: some HTML {
-    if githubUpdated {
-      div(.class("alert alert-success alert-dismissible fade show mb-4")) {
-        strong { "Success! " }
-        "GitHub account association has been updated."
-        HTMLRaw(
-          """
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-          """)
-      }
-    }
-  }
-
-  @HTMLBuilder
-  private func bottomCards(proposal: ProposalDTO) -> some HTML {
-    githubUpdateCard(proposal: proposal)
-    deleteCard(proposal: proposal)
-  }
-
-  private func githubUpdateCard(proposal: ProposalDTO) -> some HTML {
-    let currentValue =
-      proposal.speakerUsername == "papercall-import" ? "" : proposal.speakerUsername
-    return div(.class("card mt-4")) {
-      div(.class("card-header")) {
-        strong { "GitHub Account" }
-      }
-      div(.class("card-body")) {
-        form(
-          .method(.post),
-          .action("/organizer/proposals/\(proposal.id.uuidString)/update-github")
-        ) {
-          input(.type(.hidden), .name("_csrf"), .value(csrfToken))
-          div(.class("mb-3")) {
-            label(.class("form-label fw-semibold"), .for("githubUsername")) {
-              "GitHub Username"
-            }
-            div(.class("input-group")) {
-              span(.class("input-group-text")) { "@" }
-              input(
-                .type(.text),
-                .class("form-control"),
-                .name("githubUsername"),
-                .id("githubUsername"),
-                .value(currentValue),
-                .placeholder("e.g. octocat")
-              )
-            }
-            div(.class("form-text")) {
-              "Link this proposal to a GitHub user account. "
-              "The user must have logged in at least once. "
-              "Leave blank to unlink."
-            }
-          }
-          button(.type(.submit), .class("btn btn-primary")) {
-            "Update GitHub ID"
-          }
-        }
-      }
     }
   }
 
