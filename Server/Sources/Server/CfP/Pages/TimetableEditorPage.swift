@@ -8,6 +8,7 @@ struct TimetableEditorPageView: HTML, Sendable {
   let acceptedProposals: [ProposalDTO]
   let slots: [ScheduleSlotDTO]
   let days: [CfPRoutes.DayInfo]
+  let csrfToken: String
 
   /// Generate JS object mapping dayNumber -> ISO date string
   private var dayDatesJSON: String {
@@ -543,6 +544,11 @@ struct TimetableEditorPageView: HTML, Sendable {
       HTMLRaw(
         """
         document.addEventListener('DOMContentLoaded', function() {
+          function getCsrfToken() {
+            var match = document.cookie.match(/(?:^|;\\s*)csrf_token=([^;]*)/);
+            return match ? decodeURIComponent(match[1]) : '';
+          }
+
           var conferenceId = '\(conference?.id.uuidString ?? "")';
           var dayDates = {\(dayDatesJSON)};
 
@@ -663,7 +669,7 @@ struct TimetableEditorPageView: HTML, Sendable {
           function apiCall(url, method, body) {
             var opts = {
               method: method,
-              headers: { 'Content-Type': 'application/json' }
+              headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': getCsrfToken() }
             };
             if (body) {
               opts.body = JSON.stringify(body);

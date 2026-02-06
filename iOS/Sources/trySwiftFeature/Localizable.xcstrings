@@ -158,6 +158,23 @@
         }
       }
     },
+    "hero-text-past" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Developers from all over the world gathered<br>for tips and tricks and the latest case studies of development using Swift.<br>Thank you to all the speakers and attendees who participated!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swiftを使った開発のコツや最新の事例を求めて<br>世界中から開発者が集いました。<br>ご参加いただいたすべてのスピーカーと参加者の皆さまに感謝いたします！"
+          }
+        }
+      }
+    },
     "hero-text-2024" : {
       "extractionState" : "manual",
       "localizations" : {

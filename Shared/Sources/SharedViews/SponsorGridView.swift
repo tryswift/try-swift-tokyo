@@ -45,8 +45,8 @@ public struct SponsorSectionView: View {
   public var body: some View {
     VStack(spacing: 16) {
       Text(plan.rawValue.localizedCapitalized)
-        .font(.title2.bold())
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .font(Font.title2.bold())
+        .frame(maxWidth: CGFloat.infinity, alignment: Alignment.leading)
 
       LazyVGrid(columns: gridColumns, spacing: 16) {
         ForEach(sponsors) { sponsor in
@@ -62,11 +62,11 @@ public struct SponsorSectionView: View {
   private var gridColumns: [GridItem] {
     switch plan {
     case .platinum:
-      return [GridItem(.flexible())]
+      return [GridItem(GridItem.Size.flexible())]
     case .gold, .silver, .bronze, .diversityAndInclusion, .community, .student:
-      return [GridItem(.flexible()), GridItem(.flexible())]
+      return [GridItem(GridItem.Size.flexible()), GridItem(GridItem.Size.flexible())]
     case .individual:
-      return [GridItem(.adaptive(minimum: 60, maximum: 100))]
+      return [GridItem(GridItem.Size.adaptive(minimum: 60, maximum: 100))]
     }
   }
 }
@@ -83,13 +83,13 @@ public struct SponsorCardView: View {
     VStack {
       RoundedRectangle(cornerRadius: 8)
         .fill(Color.secondary.opacity(0.1))
-        .aspectRatio(16 / 9, contentMode: .fit)
+        .aspectRatio(16 / 9, contentMode: ContentMode.fit)
         .overlay {
           if let name = sponsor.name {
             Text(name)
-              .font(.caption)
-              .foregroundStyle(.secondary)
-              .multilineTextAlignment(.center)
+              .font(Font.caption)
+              .foregroundStyle(Color.secondary)
+              .multilineTextAlignment(TextAlignment.center)
               .padding(8)
           }
         }
@@ -97,6 +97,7 @@ public struct SponsorCardView: View {
   }
 }
 
+#if !SKIP
 #Preview {
   SponsorGridView(
     sponsors: Sponsors(
@@ -115,3 +116,4 @@ public struct SponsorCardView: View {
     onSponsorTap: { _ in }
   )
 }
+#endif

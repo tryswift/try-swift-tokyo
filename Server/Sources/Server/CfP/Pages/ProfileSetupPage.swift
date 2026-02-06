@@ -6,15 +6,18 @@ struct ProfileSetupPageView: HTML, Sendable {
   let errorMessage: String?
   let successMessage: String?
   let returnTo: String?
+  let csrfToken: String
 
   init(
     user: UserDTO, errorMessage: String? = nil, successMessage: String? = nil,
-    returnTo: String? = nil
+    returnTo: String? = nil,
+    csrfToken: String = ""
   ) {
     self.user = user
     self.errorMessage = errorMessage
     self.successMessage = successMessage
     self.returnTo = returnTo
+    self.csrfToken = csrfToken
   }
 
   /// Check if required profile fields are missing
@@ -86,6 +89,7 @@ struct ProfileSetupPageView: HTML, Sendable {
 
   private var profileForm: some HTML {
     form(.method(.post), .action("/profile")) {
+      input(.type(.hidden), .name("_csrf"), .value(csrfToken))
       hiddenReturnTo
       displayNameField
       emailField

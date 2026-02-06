@@ -1,0 +1,538 @@
+{
+  "id": 1,
+  "title": "Day 1",
+  "title_ja": "1日目",
+  "date": "2019-03-21T09:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2019-03-21T08:30:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Registration & Breakfast",
+          "title_ja": "受付・朝食"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2019-03-21T09:45:00+09:00",
+      "sessions": [
+        {
+          "id": 2,
+          "title": "Opening Remarks",
+          "title_ja": "開会"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2019-03-21T10:00:00+09:00",
+      "sessions": [
+        {
+          "id": 3,
+          "title": "Native macOS application, or the world of AppKit",
+          "title_ja": "native macOS application、またはAppKitの世界",
+          "description": "Swift is the language which we cannot build native application in the iOS or macOS world without, but what is the native application? Is it the native application using Cocoa framework with Swift? To be proved native merits, programmers should know frameworks well, be familiar with Human Interface Guidelines and understand target OS well. By the way, we feel that the Marzipan is just around corner. In this talk, I'd like to talk about the essential point of view in building beautiful macOS native applications.",
+          "description_ja": "SwiftはiOSやmacOSなどの世界でネイティブアプリケーションを作るのに欠かせない言語ですが、さてnativeアプリケーションとはなんでしょうか？ SwiftからCocoaフレームワークを使えばネイティブアプリケーションなのでしょうか。ネイティブの真価を発揮するにはプログラマがFrameworkを知り尽くしHuman Interface Guidelinesに精通し、自身が対象OSの良き理解者である必要があります。そういえばMazipanの足音も聞こえてきましたね。美しいmacOSネイティブアプリケーションを作る上で欠かせない視点をお話しします。",
+          "speakers": [
+            {
+              "name": "1024jp",
+              "image_name": "1024jp",
+              "bio": "1024jp is hobby macOS developer/designer. Besides working as a professional academic researcher in real life, 1024jp invests entire leisure time in developing macOS applications by doing every process from coding to drawing icons. The most active project is CotEditor, a native macOS plain-text editor. CotEditor is currently one of the largest open-sourced macOS application written in Swift but has been developed by 1024jp alone since CotEditor was officially taken over from the ex-developer five years ago. Besides, 1024jp organizes also “macOS native,” a community for sharing knowledge about native macOS app development in Japan.",
+              "bio_ja": "1024jpは趣味ベースで活動しているmacOS開発者/デザイナーです。現実世界ではプロの学術研究者として生計を立てる傍ら、それ以外の人生の余暇時間すべてをmacOSアプリケーション開発に注いでいます。代表作はmacOSネイティブなプレーンテキストエディタ CotEditorです。CotEditorはSwiftで書かれたOSSのmacOSアプリケーションとしては世界最大規模ですが、5年前に前開発者から1024jpに正式に引き渡されて以来1024jpひとりによってモクモクと開発が続けられています。また最近では、人口の少ないネイティブmacOS開発の輪を広げるためにmacOS nativeというコミュニティを日本で主催しています。",
+              "job_title": "Developer/Designer of CotEditor",
+              "job_title_ja": "Developer/Designer of CotEditor",
+              "links": [
+                {
+                  "name": "@1024jp",
+                  "url": "https://x.com/1024jp"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2019-03-21T10:25:00+09:00",
+      "sessions": [
+        {
+          "id": 4,
+          "title": "Deep dive into Swift Literal",
+          "title_ja": "脱Swiftリテラル初心者",
+          "description": "In this talk, I'll talk about Swift Literals to your deeply understanding. By following the 'Literal Object' journey from Swift Code to SIL, and LLVM IR code, you can see how literals are handed over to the app as exact data from code string, with Intrinsic Protocols. Also, I'll focus on Literal exploitation using Intrinsic Protocols and new features for literals in Swift 5.0. By my talk, you will be a developer well known about Swift Literal.",
+          "description_ja": "皆さんのSwiftリテラルの深い理解への導きと、脱「リテラル初心者」の手助けをさせていただきます。Swift CodeからSIL、そしてLLVM IRコードまでの「リテラルオブジェクト」の旅を見て、コード上のただの文字列であるリテラルが「どのようにして私達（そしてアプリのユーザー）の手元にデータとして渡される準備が整うか」を、「Intrinsic Protocols（組み込みプロトコル）」とともに見ていきます。また、そこから「既存のIntrinsic Protocolsを利用したリテラル活用術」と、「Swift5.0 のリテラルのための新機能」にもフォーカスしていきます。一緒にSwiftのリテラルの世界を覗いて、Swiftリテラル初心者から大きな一歩を踏み出してみませんか？",
+          "speakers": [
+            {
+              "name": "Yuki Aki",
+              "image_name": "yuki",
+              "bio": "Yuki is an iOS Developer at LINE Fukuoka. From started intern, his Quority of Life and weight has increased so that he is in a diet. Reacently He reads Swiftc and SIL so much hard. When he's not coding, he likes to draw cat illustration.",
+              "bio_ja": "LINE Fukuokaでインターンシップエンジニアやっていて、4月から正式なエンジニアになります。インターン始めてからQOLが上がって10kg太りました、ダイエット辛いです。Swift歴は3月で1年になり、最近は周り影響でswiftcのコードやSILとか読んだりしてますが、周りよりも読めなくて辛いです。趣味は猫の絵を書くことですが、最近iPadを壊してとても辛いです。",
+              "job_title": "iOS Engineer at LINE Fukuoka",
+              "job_title_ja": "iOS Engineer at LINE Fukuoka",
+              "links": [
+                {
+                  "name": "@___freddi___",
+                  "url": "https://x.com/___freddi___"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2019-03-21T10:35:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "Color Contrast for Accessibility",
+          "title_ja": "アクセシビリティのためのカラーコントラスト",
+          "description": "How much text contrast is enough? Instead of quibbling over shades of gray, we can use an equation to evaluate relative luminance and ensure more of our users can experience our content. An overview of the science behind the equation, and an exploration of some edge cases.",
+          "description_ja": "テキストのコントラストはどれだけあれば十分でしょうか？グレースケールの色をいじり回すのではなく、式を使用して相対的な明るさを評価し、より多くのユーザーがコンテンツを体験できるようにします。方程式の背後にある科学の概要、およびいくつかのエッジケースを探求してみます。",
+          "speakers": [
+            {
+              "name": "Liz Marley",
+              "image_name": "liz_marley",
+              "bio": "Liz is a 13-year veteran of the Omni Group, now an iOS engineer at Nordstrom. She has also organized App Camp for Girls in Seattle several times. She speaks at conferences as an excuse to learn new things and hang out with other macOS and iOS developers. She hasn't written any books or hosted any podcasts...yet.",
+              "bio_ja": "LizはOmni Groupの13年間のベテランで、現在はNordstromのiOSエンジニアです。また、シアトルで女性のためのApp Campを数回開催しています。彼女はカンファレンスで新しいことを学び、他のmacOSやiOSの開発者との付き合いをする言い訳としてトークをよくします。ちなみに、彼女は本を書いたり、Podcastをホストしたことはありません。",
+              "job_title": "iOS Engineer at Nordstrom",
+              "job_title_ja": "iOS Engineer at Nordstrom",
+              "links": [
+                {
+                  "name": "@emarley",
+                  "url": "https://x.com/emarley"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2019-03-21T11:00:00+09:00",
+      "sessions": [
+        {
+          "id": 6,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2019-03-21T11:30:00+09:00",
+      "sessions": [
+        {
+          "id": 7,
+          "title": "Swift as Light",
+          "title_ja": "Swift Light",
+          "description": "The Glowforge 3D Laser Printer creates beautiful things out of wood, leather, acrylic and more. By leveraging Coregraphics and other iOS APIs, our app allows users to create and manipulate vector graphics which they can send to their Glowforge. In this talk, we will review how we built some of these features in Swift and how Swift helps to make our solutions more robust, elegant and safe.",
+          "description_ja": "Glowforgeの3Dレーザープリンターは木、革、アクリルなどから美しい製品を作り出します。Coregraphicsと他のiOS APIを利用することで、アプリのユーザーはGlowforgeに送ることができるベクターグラフィックを作成したり、操作したりすることができます。このトークではこれらの機能をSwiftを用いてどのように構築したか、そしてSwiftを用いることで私達のソリューションがどのようにより堅牢でエレガントで安全になったかを説明します。",
+          "speakers": [
+            {
+              "name": "Jon-Tait Beason",
+              "image_name": "jon_tait_beason",
+              "bio": "Jon-Tait Beason is a iOS software engineer at Glowforge, maker of The 3D Laser Printer. Having a background in education, he enjoys teaching and learning. To that end, he spends a lot of time hanging out in iOS communities where he learns from others and helps engineers who are starting out.",
+              "bio_ja": "Jon-Tait Beasonは、The 3D Laser Printerの製造元であるGlowforgeのiOSソフトウェアエンジニアです。彼は教育のバックグラウンドを持ち、教えることや学ぶことを楽しんでいます。なので、彼は他人から学んだり、初心者エンジニアを助けるiOSコミュニティによく出没しています。",
+              "job_title": "iOS Software engineer at Glowforge",
+              "job_title_ja": "iOS Software engineer at Glowforge",
+              "links": [
+                {
+                  "name": "@bugKrusha",
+                  "url": "https://x.com/bugKrusha"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2019-03-21T11:55:00+09:00",
+      "sessions": [
+        {
+          "id": 8,
+          "title": "Limited import clarification and its effect",
+          "title_ja": "限定的なimportの明示とその効果",
+          "description": "Import is able to explicitly specify submodules or specific elements.In this session, I will review the specifications of these imports and consider the impact on binary size and performance.",
+          "description_ja": "普段なんとなく書いているimportですがサブモジュールや特定の要素を明示的に指定することができます。このセッションではこれらのimportの仕様を振り返り、またバイナリサイズやパフォーマンスに与える影響を考えていきます。",
+          "speakers": [
+            {
+              "name": "Tomoya Hirano",
+              "image_name": "tomoya",
+              "bio": "Tomoya is iOS developer at DeNA and works on Pococha, which is live streaming app. He loves fox so much🦊💕",
+              "bio_ja": "株式会社ディー・エヌ・エーでライブ配信アプリPocochaを開発しています。キツネが大好き🦊💕",
+              "job_title": "iOS Developer at DeNA",
+              "job_title_ja": "iOS Developer at DeNA",
+              "links": [
+                {
+                  "name": "@noppefoxwolf",
+                  "url": "https://x.com/noppefoxwolf"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2019-03-21T12:05:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "Generics in protocol extension",
+          "title_ja": "protocol/extensionにジェネリクスを入れたい",
+          "description": "The protocol only handle existential type like associatedtype. For some protocol, when we give some functions in protocol extension, we must put a concrete type. Protocol extension will work like searching function based on type, so it's needed concrete type in somewhere. For example, for some type called A, sometimes we want to write extension using List[A] finaly. In this talk, I'd like to consider how to create generics by force from existential type like associatedtype by using Curry-Howard correspondence.",
+          "description_ja": "protocolはassociatedtypeといった、いわゆる存在型しか扱うことができない。あるprotocolに対してextensionで機能を与えるとき、associatedtypeには必ずなんらかの具体的な型を入れることが求められる。protocol/extensionは型に基づいて関数を探すような動きをするため、どこかでは具体的な型が必要となるが、たとえば任意の型AについてList[A]を最終的に利用するようなextensionを書きたい時がある。このトークでは、カリー＝ハワード同型対応を利用してassociatedtypeのような存在型からジェネリクスを無理やり生み出す方法について考察する。",
+          "speakers": [
+            {
+              "name": "Hikaru Yoshimura",
+              "image_name": "yu_yoshimura",
+              "bio": "Hikaru Yoshimura works as a Scala engineer. He used to study type systems when he was in the university so he can program using some functional languages a little bit. He sometimes brings the good parts of languages like Scala, Haskell or OCaml to Swift.",
+              "bio_ja": "普段、Scalaのエンジニアをしていますが大学時代は型システムの研究をしていて、いくつかの関数型プログラム言語をちょっと書くことができます。ScalaやHaskell、OCamlといったプログラム言語のよいエッセンスをSwiftにもってくる活動を時々やっています。",
+              "job_title": "Developer at Recruit Marketing Partners",
+              "job_title_ja": "Developer at Recruit Marketing Partners",
+              "links": [
+                {
+                  "name": "@_yyu_",
+                  "url": "https://x.com/_yyu_"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2019-03-21T12:30:00+09:00",
+      "sessions": [
+        {
+          "id": 10,
+          "title": "Introduction to Swift Keypaths",
+          "title_ja": "Keypath入門",
+          "description": "Keypaths were added in Swift 4. They're a fantastic feature but sometimes it feels difficult to find good situations for using them. However, when understood and used the right way, keypaths allow you to implement additional abstractions into your codebase that would be much harder with generics or protocols. In order to be able to do that, though, it is useful to intuitively understand when to apply the Keypath pattern.\n\nThis talk will first explain the different types of keypaths that exist and then go through real world examples to showcase how they can be leveraged in your own projects.",
+          "description_ja": "KeypathはSwift 4で追加された機能です。素晴らしい機能を持っていますが、時折使い所を見つけるのが難しく感じます。しかし、Keypathを理解して正しく使えた時、ジェネリクスやプロトコルによるさらなる抽象化を実装できます。ただし、これを行えるようにするには、Keypathのパターンをいつ適用するかの直感的な理解が役に立ちます。このトークでは、まず、存在するさまざまな種類のKeypathについて説明し、次に実際の例を通して、それらが自分のプロジェクトでどのように活用できるかを紹介します。",
+          "speakers": [
+            {
+              "name": "Benedikt Terhechte",
+              "image_name": "benedikt_terhechte",
+              "bio": "Benedikt works as a Senior iOS Developer at the professional network XING. In previous jobs he developed solutions for customers such as Disney or Daimler-Chrysler. As an Indie Mac developer, he launched successful apps such as PhotoDesk and Hirundo. Benedikt started investigating Swift right after the 2014 release and writes about it on his popular blog. He also initiated the Core Value and SourceKittenDaemon open source projects",
+              "bio_ja": "Benediktは、プロ向け求人サイトのXINGでシニアiOS開発者として働いています。以前の仕事で、DisneyやDaimler-Chryslerなどの顧客向けのソリューションを開発しました。 インディーズMac開発者として、PhotoDeskやHirundoなどの成功したアプリを立ち上げました。2014年のSwiftリリース直後に調査を開始し、それについて書いた記事は人気があります。また、Core ValueとSourceKittenDaemonというオープンソースプロジェクトを始めました",
+              "job_title": "Senior iOS Developer at XING",
+              "job_title_ja": "Senior iOS Developer at XING",
+              "links": [
+                {
+                  "name": "@terhechte",
+                  "url": "https://x.com/terhechte"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2019-03-21T13:00:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2019-03-21T14:30:00+09:00",
+      "sessions": [
+        {
+          "id": 12,
+          "title": "Discover memory leak with Testcase",
+          "title_ja": "テストケースでMemory Leakを発見する",
+          "description": "In Swift, memory are managed with ARC, so it's occurred memory-leak easily with bad code. How do you avoid memory-leak? Coding rules, Code review or QA as last bastion? Of course we are lazy, so we like something automated than effort or guts. As 4th way, I'd like to talk about test case implementation with Mirror.",
+          "description_ja": "SwiftはARCでメモリを管理しています。従って下手な書き方をすればメモリリークがいとも簡単に発生します。 どのようにメモリリークを防ぎますか？コーディング規約、コードレビュー、最後の砦のQA… 勿論、我々は怠惰なので、努力や根性よりも、自動的に動作するものを好みます。第四の方法として、Mirrorを使ったテストケースの実装を紹介します。",
+          "speakers": [
+            {
+              "name": "Nobuo Saito",
+              "image_name": "tarunon",
+              "bio": "Nobuo, a.k.a tarunon is working at Mercari. He likes to cook, play games and program. He doubled the time he plays games because he updated Splatoon before the release of the Smash Brothers SP.",
+              "bio_ja": "tarunonです。MercariのiOSエンジニアです。料理とゲームとプログラミングが好きです。スマブラSPの発売日前にSplatoonのアップデートを試してしまったので、ゲームをやる時間が2倍になってしまいました。大変です。",
+              "job_title": "iOS Tech Lead at Mercari",
+              "job_title_ja": "iOS Tech Lead at Mercari",
+              "links": [
+                {
+                  "name": "@tarunon",
+                  "url": "https://x.com/tarunon"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2019-03-21T14:55:00+09:00",
+      "sessions": [
+        {
+          "id": 13,
+          "title": "Graphics like Pixar using Swift",
+          "title_ja": "PixarのようなグラフィックをSwiftで実現する",
+          "description": "This is a talk about some of the hurdles faced when writing a simple Ray Tracer from scratch, using Swift.\n\nRay Tracing is the cornerstone of Pixar's infamous Renderman 3D rendering technology, which dominates the animated film industry. It works by physically modeling light rays and their interactions with objects and surfaces.\n\nWithin recent years there has been a renewed interest in real time Ray Tracing, with the advent of more powerful and specialized hardware such as NVIDIAs RTX. Even renowned programmer John Carmack has stated that 'all roads lead to Rome', when asked about the future of real time computer graphics and Ray Tracing.\n\nWhile I enjoy working with traditional graphics rasterizers, I have always been interested in physically modeling light, and have wanted to learn more about the processes involved. Here I talk about how I programmed a Ray Tracer that renders a simple scene from first principles. Given the timing, it also seemed like the perfect opportunity to test the versatility of Swift.",
+          "description_ja": "このトークでは、簡単な光線追跡をSwiftを使ってゼロから作る際に直面する障害についてお話します。光線追跡法は、アニメーションフィルム産業を席巻する、Pixarのあの悪名高いRendermanの3Dレンダリング技術の基礎となっています。これは、光線の物理モデルと、オブジェクトと表面の相互作用によるものです。\n\n昨今では、NVIDIAのRTXのような、より強力で特化したハードウェアによって、リアルタイムでの光線追跡の分野には新たな関心が寄せられています。\n著名なプログラマーであるJohn Carmackさえ、コンピューターグラフィックと光線追跡の未来について尋ねられた際、「全ての道はローマに続く」と述べています。\n\n私は、伝統的なグラフィックラスタライザーに取り組むのを楽しむ一方で、いつも、物理的にモデリングされた光に興味を持ち、それにまつわるプロセスについて学びたいと思ってきました。\n\nここでは、私がどのようにシンプルな場面を描画する光線追跡をプログラムしたかについて話します。これは、多芸なSwiftを試すのにいい機会となるでしょう。",
+          "speakers": [
+            {
+              "name": "Michael Petrie",
+              "image_name": "kapsy",
+              "bio": "My name is Michael Petrie, but everyone calls me Kapsy. I work for ZOZO Technologies and lead the iOS measurement framework team. I have a background in games and real time programming, using C and C++, and yearn for the day when we can all decide on a common ISA (Instruction Set Architecture) and be happy.",
+              "bio_ja": "Michael Petrieです。みんなからはKaspyと呼ばれています。ZOZO Technologiesで働いていて、iOS measurement frameworkチームをリードしています。CとC ++を使ったゲームとリアルタイムプログラミングのバックグラウンドを持っています。みんなが共通のISA（Instruction Set Architecture）を決めて幸せになれる日を切望しています。",
+              "job_title": "Lead iOS measurement framework team at ZOZO Technologies",
+              "job_title_ja": "Lead iOS measurement framework team at ZOZO Technologies",
+              "links": [
+                {
+                  "name": "@kapsy1312",
+                  "url": "https://x.com/kapsy1312"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2019-03-21T15:05:00+09:00",
+      "sessions": [
+        {
+          "id": 14,
+          "title": "So you want to build an ARKit app",
+          "title_ja": "ARKitのアプリを作ろう",
+          "description": "ARKit has shown how AR can be integrated into apps to make them more engaging and fun. If you are thinking about using ARKit in your app, this talk is for you. This talk covers challenges I experienced when building ARKit apps such as ensuring good app performance, positioning virtual objects and working with planes. Learn how to use ARKit to its full potential, keep your AR apps performant and deliver a polished end user experience.",
+          "description_ja": "ARKitはARをアプリに組み込んでより魅力的で楽しいものにする方法を示しました。もしあなたのアプリにARKitを使うことを考えているならこの話はあなたのためのものです。このトークではアプリのパフォーマンス確保や仮想オブジェクトの配置、平面の操作など、ARKitアプリを作る上で私が経験したチャレンジをお話します。ARKitを最大限活用し、ARアプリのパフォーマンスを維持し、洗練されたエンドユーザーエクスペリエンスを実現する方法を学びましょう。",
+          "speakers": [
+            {
+              "name": "Namrata Bandekar",
+              "image_name": "namrata_bandekar",
+              "bio": "Namrata is a Principal Software Engineer at Zynga building addictive games. She is also a member of the Ray Wenderlich Tutorial Team. She is the co-author of ARKit by Tutorials and one of the Tech Editors on the Android Apprentice book. Apart from building apps, she is passionate about travelling, scuba diving and hiking with her dog.",
+              "bio_ja": "NamrataはZyngaの中毒性のあるゲームを開発するプリンシパルソフトウェアエンジニアです。また、Ray Wenderlich Tutorial Teamのメンバーです。彼女は『ARKit by Tutorials』の共同執筆者であり、Android Apprentice本のTech Editorsの1人です。アプリを作る以外に、彼女は旅行、スキューバダイビング、​​犬とのハイキングに情熱を注いでいます。",
+              "job_title": "Principal Software Engineer at Zynga",
+              "job_title_ja": "Principal Software Engineer at Zynga",
+              "links": [
+                {
+                  "name": "@NamrataCodes",
+                  "url": "https://x.com/NamrataCodes"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "time": "2019-03-21T15:30:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "Introducing SourceKit-LSP",
+          "title_ja": "Introducing SourceKit-LSP",
+          "description": "Language Server Protocol (LSP) has attracted attention today, and some Language Server of various programming language has been developed. Swift is no exception. SourceKit-LSP was announced in 2018, and development is still continuing now. In this talk, I'd like to talk about the outline of LSP and future development environment using SourceKit-LSP.",
+          "description_ja": "Launguage Server Protocol(LSP)は近頃注目を集めており、様々なプログラミング言語のLanguage Serverが開発されています。\nSwiftも例外ではなく、2018年にはSourceKit-LSPが発表され、現在も開発が続いています。\nこのトークではLSPについての概要と、SourceKit-LSPを使った将来の開発環境についてお話したいと思います。",
+          "speakers": [
+            {
+              "name": "Ryo Izumi",
+              "image_name": "ryo",
+              "bio": "Ryo is an iOS Developer at Nohana. He likes to drink sake so much.",
+              "bio_ja": "株式会社ノハナでiOSエンジニアをしています。 お酒をよく飲みます。",
+              "job_title": "iOS Developer at Nohana",
+              "job_title_ja": "iOS Developer at Nohana",
+              "links": [
+                {
+                  "name": "@izm256",
+                  "url": "https://x.com/izm256"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2019-03-21T15:40:00+09:00",
+      "sessions": [
+        {
+          "id": 16,
+          "title": "Swift Server Update",
+          "title_ja": "Swift Server Update",
+          "description": "The Swift Server Work Group (SSWG) goal is to create a robust, healthy ecosystem for server application development with Swift. Its current focus is to encourage the development of high quality, well maintained libraries and tools that the community can reliably lean on. In this talk, we will review the latest development since the SSWG was announced Sept 2018, describe the incubation process and how to get involved, and dive into the details of some of the active projects and proposals the community and teams are working on.",
+          "description_ja": "The Swift Server Work Group (SSWG) の目的は、Swiftでのサーバーアプリケーション開発の安定した健全なエコシステムを作ることです。\n現在フォーカスしているのは、コミュニティが信頼できる高品質で十分にメンテナンスされたライブラリやツールの開発を促進することです。\nこのトークでは、2018年9月にSSWGが発表されて以降の最近の開発を振り返ります。\nオープンになっていなかったプロセスや参加する方法、コミュニティとチームが行なっているプロジェクトやプロポーザルの詳細について説明します。",
+          "speakers": [
+            {
+              "name": "Tom Doron",
+              "image_name": "tom_doron",
+              "bio": "Tom works at Apple where he is serving as a senior engineering manager focusing on core cloud technologies and open source libraries and frameworks.",
+              "bio_ja": "TomはAppleで働くシニアエンジニアリングマネージャで、主にクラウド技術の基幹とオープンソースのライブラリとフレームワークを担当しています。",
+              "job_title": "Senior Engineering Manager at Apple",
+              "job_title_ja": "Senior Engineering Manager at Apple",
+              "links": [
+                {
+                  "name": "@tomerdoron",
+                  "url": "https://x.com/tomerdoron"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2019-03-21T16:05:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "time": "2019-03-21T16:35:00+09:00",
+      "sessions": [
+        {
+          "id": 18,
+          "title": "Using C, C++ and Objective C frameworks in Swift apps",
+          "title_ja": "SwiftのアプリでCやC++、Objective-Cのフレームワークを使おう",
+          "description": "Swift is powerful, it is also relatively new. There are a lot of open source libraries that are written in C, C++ or Objective C. Is there a way to use them all to triple the opportunities to create more unique apps? Yes, we can! In this talk we will go through the basics to explain the relationship among C, C++ and Objective C and demonstrate how to set up the dependencies in a swift project.",
+          "description_ja": "Swiftは強力で、また、比較的新しい言語です。世の中にはC言語や、C++、Objective-Cで書かれたオープンソースライブラリが多くあります。ユニークなアプリを作るチャンスを3倍にするために、これを利用する手はないのでしょうか？ あります！ このトークでは、C、C++、Objective-Cの関係性を説明するための基本をなぞり、SwiftのプロジェクトにDependencyを追加する方法をデモします。",
+          "speakers": [
+            {
+              "name": "Cecilia Humlelu",
+              "image_name": "cecilia_humlelu",
+              "bio": "I am Cecilia, developer, miniature crafter,  acroyogis, and maybe something more. One thing that you might have not guessed about me: I was once a lift truck operator.",
+              "bio_ja": "Ceciliaです。開発者でもあり、ミニチュアクラフターやアクロヨガなどもしています。予想もしてないと思いますが、かつてリフトトラックの運転手でした。",
+              "job_title": "Developer at Spotify",
+              "job_title_ja": "Developer at Spotify",
+              "links": [
+                {
+                  "name": "@CeciliaHumlelu",
+                  "url": "https://x.com/CeciliaHumlelu"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "time": "2019-03-21T17:00:00+09:00",
+      "sessions": [
+        {
+          "id": 19,
+          "title": "MachObfuscator",
+          "title_ja": "MachObfuscator",
+          "description": "I will show you a completely new approach to iOS app obfuscation. MachObfuscator is an open-sourced binary obfuscator written in pure Swift.",
+          "description_ja": "iOSアプリの難読化に対するまったく新しいアプローチを紹介します。 MachObfuscatorはSwiftで書かれたオープンソースのバイナリ難読化ツールです。",
+          "speakers": [
+            {
+              "name": "Kamil Borzym",
+              "image_name": "kamil",
+              "bio": "Kamil is an iOS software developer. He is very curious of how things work internally, so he likes to decompile frameworks and apps.",
+              "bio_ja": "KamilはiOSソフトウェア開発者です。ものが中でどう動くのかに興味があって、フレームワークやアプリをデコンパイルするのが好きです。",
+              "job_title": "iOS software developer",
+              "job_title_ja": "iOS software developer",
+              "links": [
+                {
+                  "name": "@kam800",
+                  "url": "https://x.com/kam800"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "time": "2019-03-21T17:10:00+09:00",
+      "sessions": [
+        {
+          "id": 20,
+          "title": "Driving Engagement with Siri Shortcuts and NSUserActivity",
+          "title_ja": "Siri ShortcutsとNSUserActivityによるエンゲージメント推進",
+          "description": "NSUserActivity is an incredibly powerful tool which allows the developer to increase an app's visibility on devices. With the introduction of Siri Shortcuts, it's easier than ever to increase engagement with app features. We will explore how to add the power of SiriKit's voice-activated automation to make your app even more enjoyable for your users.",
+          "description_ja": "NSUserActivityは、開発者がデバイス上でのアプリの可視性を高めることができるとても強力なツールです。 Siri Shortcutsの導入により、アプリの機能とのエンゲージメントがこれまで以上に簡単になりました。 SiriKitの自動音声起動機能を追加して、ユーザーのアプリ体験をさらに楽しくする方法を探ります。",
+          "speakers": [
+            {
+              "name": "Nic Laughter",
+              "image_name": "nic_laughter",
+              "bio": "Nic Laughter is a technophile currently living in Utah. He has been writing code since 2015 and currently works as a software engineer generalist at Jane.com, primarily working on the main iOS app and occasionally contributing to the website and React Native seller app. He sometimes blogs on Medium, and in his spare time you can find him making music, playing video games, or hanging out with his family.",
+              "bio_ja": "Nic Laughterは現在ユタ州に住んでいる技術好きです。彼は2015年からコードを書いていて、現在はJane.comでソフトウェアエンジニアのゼネラリストとして働いています。主にメインのiOSアプリを開発し、時折WebサイトとReact Native製のセールスアプリにコントリビュートしています。時々Mediumにブログを書いていて、暇な時には音楽を作ったり、ビデオゲームをしたり、家族でのんびり過ごしています。",
+              "job_title": "Software engineer at Jane.com",
+              "job_title_ja": "Software engineer at Jane.com",
+              "links": [
+                {
+                  "name": "@nictheawesome",
+                  "url": "https://x.com/nictheawesome"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "time": "2019-03-21T17:35:00+09:00",
+      "sessions": [
+        {
+          "id": 21,
+          "title": "try Prototype!",
+          "title_ja": "try Prototype!",
+          "description": "Why do we really write code? I’ve been wondering: how long is code suppose to live, and just how disposable is it? If our end goal is to deliver great and useful features for our users, is it worth writing disposable code to get to robust code? As good programmers we hone our craft, but let’s look at how can we put all that knowledge to good use so we build the right things, rather than just building things right.",
+          "description_ja": "なぜ私たちはコードを書くのでしょう？私は疑問に思っていました。コードはどれくらいの期間存続すると想定されていて、どれだけ使い捨てられるのでしょう？最終目標がユーザーに優れた便利な機能を提供することである場合、堅牢なコードに到達するために使い捨てるコードを書く価値はあるのでしょうか？私たちは優れたプログラマーとして、技術に磨きをかけますが、ただ正しくものを構築するのではなく、正しいものを構築するためにこれらすべての知識をどのように活用できるかを見てみましょう。",
+          "speakers": [
+            {
+              "name": "Maxim Cramer",
+              "image_name": "maxim_cramer",
+              "bio": "Maxim is a Design Technologist at Autodesk, London. Having previously made iOS keyboards funky at SwiftKey, and contemporary art available at your fingertips with Artsy, she now prototypes exclusively to create the best experiences for VFX studios. She also makes technology accessible for entrepreneurs and startups through technical coaching at MENNENIA and Beluga Bean.",
+              "bio_ja": "MaximはロンドンにあるAutodeskのDesign Technologistです。SwiftKeyでイカしたiOSキーボードを作ったり、Artsyで指先で観れる現代アートを作ったあと、今はもっぱらVFXスタジオでの最高の体験を創造するためのプロトタイピングをしています。また、MENNENIAやBeluga Beanでの技術顧問を通じて、起業家やスタートアップが技術をより使いやすいものにしています。",
+              "job_title": "Principle Design Technologist at Autodesk",
+              "job_title_ja": "Principle Design Technologist at Autodesk",
+              "links": [
+                {
+                  "name": "@mennenia",
+                  "url": "https://x.com/mennenia"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "time": "2019-03-21T18:00:00+09:00",
+      "sessions": [
+        {
+          "id": 22,
+          "title": "Closing / Announcements",
+          "title_ja": "クロージング"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Abizer.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

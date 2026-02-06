@@ -7,19 +7,22 @@ struct EditProposalPageView: HTML, Sendable {
   let errorMessage: String?
   let successMessage: String?
   let language: CfPLanguage
+  let csrfToken: String
 
   init(
     user: UserDTO?,
     proposal: ProposalDTO?,
     errorMessage: String? = nil,
     successMessage: String? = nil,
-    language: CfPLanguage = .en
+    language: CfPLanguage = .en,
+    csrfToken: String = ""
   ) {
     self.user = user
     self.proposal = proposal
     self.errorMessage = errorMessage
     self.successMessage = successMessage
     self.language = language
+    self.csrfToken = csrfToken
   }
 
   var body: some HTML {
@@ -103,6 +106,7 @@ struct EditProposalPageView: HTML, Sendable {
     form(
       .method(.post), .action(language.path(for: "/my-proposals/\(proposal.id.uuidString)/edit"))
     ) {
+      input(.type(.hidden), .name("_csrf"), .value(csrfToken))
       titleField(value: proposal.title)
       abstractField(value: proposal.abstract)
       talkDetailsField(value: proposal.talkDetail)

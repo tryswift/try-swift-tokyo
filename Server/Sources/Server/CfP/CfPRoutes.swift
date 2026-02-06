@@ -7,29 +7,32 @@ import VaporElementary
 /// Routes for CfP SSR pages
 struct CfPRoutes: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
+    // Apply CSRF protection to all CfP routes
+    let csrf = routes.grouped(CSRFMiddleware())
+
     // English routes (default) - at root level
-    routes.get(use: homePage)
-    routes.get("guidelines", use: guidelinesPage)
-    routes.get("login", use: loginPage)
-    routes.get("login-page", use: loginPage)  // Backward compatibility
-    routes.get("submit", use: submitPage)
-    routes.get("submit-page", use: submitPage)  // Backward compatibility
-    routes.get("my-proposals", use: myProposalsPage)
-    routes.get("my-proposals-page", use: myProposalsPage)  // Backward compatibility
-    routes.get("my-proposals", ":proposalID", use: myProposalDetailPage)
-    routes.get("my-proposals", ":proposalID", "edit", use: editProposalPage)
-    routes.post("my-proposals", ":proposalID", "edit", use: handleEditProposal)
-    routes.post("my-proposals", ":proposalID", "withdraw", use: handleWithdrawProposal)
+    csrf.get(use: homePage)
+    csrf.get("guidelines", use: guidelinesPage)
+    csrf.get("login", use: loginPage)
+    csrf.get("login-page", use: loginPage)  // Backward compatibility
+    csrf.get("submit", use: submitPage)
+    csrf.get("submit-page", use: submitPage)  // Backward compatibility
+    csrf.get("my-proposals", use: myProposalsPage)
+    csrf.get("my-proposals-page", use: myProposalsPage)  // Backward compatibility
+    csrf.get("my-proposals", ":proposalID", use: myProposalDetailPage)
+    csrf.get("my-proposals", ":proposalID", "edit", use: editProposalPage)
+    csrf.post("my-proposals", ":proposalID", "edit", use: handleEditProposal)
+    csrf.post("my-proposals", ":proposalID", "withdraw", use: handleWithdrawProposal)
 
     // Profile setup page
-    routes.get("profile", use: profilePage)
-    routes.post("profile", use: handleUpdateProfile)
+    csrf.get("profile", use: profilePage)
+    csrf.post("profile", use: handleUpdateProfile)
 
-    routes.post("submit", use: handleSubmitProposal)
-    routes.get("logout", use: logout)
+    csrf.post("submit", use: handleSubmitProposal)
+    csrf.get("logout", use: logout)
 
     // Japanese routes
-    let ja = routes.grouped("ja")
+    let ja = csrf.grouped("ja")
     ja.get(use: homePageJa)
     ja.get("guidelines", use: guidelinesPageJa)
     ja.get("login", use: loginPageJa)
@@ -43,7 +46,7 @@ struct CfPRoutes: RouteCollection {
     ja.get("logout", use: logoutJa)
 
     // Organizer pages
-    let organizer = routes.grouped("organizer")
+    let organizer = csrf.grouped("organizer")
     organizer.get("proposals", use: organizerProposalsPage)
     organizer.get("proposals", "new", use: organizerNewProposalPage)
     organizer.post("proposals", "new", use: handleOrganizerNewProposal)
@@ -53,6 +56,8 @@ struct CfPRoutes: RouteCollection {
     organizer.get("proposals", ":proposalID", use: organizerProposalDetailPage)
     organizer.get("proposals", ":proposalID", "edit", use: organizerEditProposalPage)
     organizer.post("proposals", ":proposalID", "edit", use: handleOrganizerEditProposal)
+    organizer.post("proposals", ":proposalID", "delete", use: handleOrganizerDeleteProposal)
+    organizer.post("proposals", "inline-add", use: handleOrganizerInlineAddProposal)
     organizer.post("proposals", ":proposalID", "accept", use: handleAcceptProposal)
     organizer.post("proposals", ":proposalID", "reject", use: handleRejectProposal)
     organizer.post("proposals", ":proposalID", "revert-status", use: handleRevertProposalStatus)
@@ -252,6 +257,7 @@ struct CfPRoutes: RouteCollection {
       .sort(\.$year, .descending)
       .first()
 
+    let csrfToken = csrfToken(from: req)
     return HTMLResponse {
       CfPLayout(
         title: language == .ja ? "プロポーザルを提出" : "Submit Proposal",
@@ -264,7 +270,8 @@ struct CfPRoutes: RouteCollection {
           success: success,
           errorMessage: nil,
           openConference: openConference?.toPublicInfo(),
-          language: language
+          language: language,
+          csrfToken: csrfToken
         )
       }
     }
@@ -328,6 +335,7 @@ struct CfPRoutes: RouteCollection {
       }
     }
 
+    let csrfToken = csrfToken(from: req)
     return HTMLResponse {
       CfPLayout(
         title: proposal?.title ?? (language == .ja ? "プロポーザル詳細" : "Proposal Detail"),
@@ -337,7 +345,7 @@ struct CfPRoutes: RouteCollection {
       ) {
         MyProposalDetailPageView(
           user: user, proposal: proposal, language: language,
-          showUpdatedMessage: showUpdatedMessage)
+          showUpdatedMessage: showUpdatedMessage, csrfToken: csrfToken)
       }
     }
   }
@@ -350,13 +358,15 @@ struct CfPRoutes: RouteCollection {
 
     let returnTo = req.query[String.self, at: "returnTo"]
     let success = req.query[String.self, at: "success"] == "true"
+    let csrfToken = csrfToken(from: req)
 
     let html = HTMLResponse {
       CfPLayout(title: "Profile Setup", user: user) {
         ProfileSetupPageView(
           user: user,
           successMessage: success ? "Profile updated successfully!" : nil,
-          returnTo: returnTo
+          returnTo: returnTo,
+          csrfToken: csrfToken
         )
       }
     }
@@ -426,9 +436,11 @@ struct CfPRoutes: RouteCollection {
   private func renderProfilePageWithError(
     req: Request, user: UserDTO, error: String, returnTo: String?
   ) async throws -> Response {
+    let csrfToken = csrfToken(from: req)
     let html = HTMLResponse {
       CfPLayout(title: "Profile Setup", user: user) {
-        ProfileSetupPageView(user: user, errorMessage: error, returnTo: returnTo)
+        ProfileSetupPageView(
+          user: user, errorMessage: error, returnTo: returnTo, csrfToken: csrfToken)
       }
     }
     return try await html.encodeResponse(for: req)
@@ -615,6 +627,7 @@ struct CfPRoutes: RouteCollection {
     error: String,
     language: CfPLanguage
   ) async throws -> Response {
+    let csrfToken = csrfToken(from: req)
     let html = HTMLResponse {
       CfPLayout(
         title: language == .ja ? "プロポーザルを提出" : "Submit Proposal",
@@ -622,7 +635,8 @@ struct CfPRoutes: RouteCollection {
         language: language,
         currentPath: "/submit"
       ) {
-        SubmitPageView(user: user, success: false, errorMessage: error, language: language)
+        SubmitPageView(
+          user: user, success: false, errorMessage: error, language: language, csrfToken: csrfToken)
       }
     }
     return try await html.encodeResponse(for: req)
@@ -655,6 +669,7 @@ struct CfPRoutes: RouteCollection {
       }
     }
 
+    let csrfToken = csrfToken(from: req)
     return HTMLResponse {
       CfPLayout(
         title: language == .ja ? "プロポーザルを編集" : "Edit Proposal",
@@ -662,7 +677,8 @@ struct CfPRoutes: RouteCollection {
         language: language,
         currentPath: "/my-proposals"
       ) {
-        EditProposalPageView(user: user, proposal: proposal, language: language)
+        EditProposalPageView(
+          user: user, proposal: proposal, language: language, csrfToken: csrfToken)
       }
     }
   }
@@ -805,6 +821,7 @@ struct CfPRoutes: RouteCollection {
       speakerUsername: user.username,
       conference: proposal.conference
     )
+    let csrfToken = csrfToken(from: req)
     let html = HTMLResponse {
       CfPLayout(
         title: language == .ja ? "プロポーザルを編集" : "Edit Proposal",
@@ -813,7 +830,8 @@ struct CfPRoutes: RouteCollection {
         currentPath: "/my-proposals"
       ) {
         EditProposalPageView(
-          user: user, proposal: proposalDTO, errorMessage: error, language: language)
+          user: user, proposal: proposalDTO, errorMessage: error, language: language,
+          csrfToken: csrfToken)
       }
     }
     return try await html.encodeResponse(for: req)
@@ -897,7 +915,13 @@ struct CfPRoutes: RouteCollection {
 
     // Get proposals (filtered by conference if specified)
     var proposals: [ProposalDTO] = []
+    var conferences: [ConferencePublicInfo] = []
     if let user, user.role == .admin {
+      conferences = try await Conference.query(on: req.db)
+        .sort(\.$year, .descending)
+        .all()
+        .map { $0.toPublicInfo() }
+
       let query = Proposal.query(on: req.db)
         .with(\.$speaker)
         .with(\.$conference)
@@ -919,12 +943,17 @@ struct CfPRoutes: RouteCollection {
       }
     }
 
+    let csrfToken = csrfToken(from: req)
+    let addError = req.query[String.self, at: "add-error"]
     return HTMLResponse {
       CfPLayout(title: "Organizer - Proposals", user: user) {
         OrganizerProposalsPageView(
           user: user,
           proposals: proposals,
-          conferencePath: conferencePath
+          conferencePath: conferencePath,
+          conferences: conferences,
+          csrfToken: csrfToken,
+          addProposalError: addError
         )
       }
     }
@@ -953,9 +982,10 @@ struct CfPRoutes: RouteCollection {
       }
     }
 
+    let csrfToken = csrfToken(from: req)
     return HTMLResponse {
       CfPLayout(title: proposal?.title ?? "Proposal Detail", user: user) {
-        OrganizerProposalDetailPageView(user: user, proposal: proposal)
+        OrganizerProposalDetailPageView(user: user, proposal: proposal, csrfToken: csrfToken)
       }
     }
   }
@@ -1096,6 +1126,7 @@ struct CfPRoutes: RouteCollection {
       req.query[String.self, at: "error"]
       ?? (errorCount.map { $0 > 0 ? "\($0) rows had errors during import" : nil } ?? nil)
 
+    let csrfToken = csrfToken(from: req)
     return HTMLResponse {
       CfPLayout(title: "Import Speaker Candidates", user: user) {
         ImportSpeakersPageView(
@@ -1103,7 +1134,8 @@ struct CfPRoutes: RouteCollection {
           conferences: conferences,
           errorMessage: errorMessage,
           importedCount: importedCount,
-          skippedCount: skippedCount
+          skippedCount: skippedCount,
+          csrfToken: csrfToken
         )
       }
     }
@@ -1312,12 +1344,15 @@ struct CfPRoutes: RouteCollection {
       }
     }
 
+    let csrfToken = csrfToken(from: req)
+
     return HTMLResponse {
       CfPLayout(title: "Edit Proposal (Organizer)", user: user) {
         OrganizerEditProposalPageView(
           user: user,
           proposal: proposal,
-          conferences: conferences
+          conferences: conferences,
+          csrfToken: csrfToken
         )
       }
     }
@@ -1422,6 +1457,33 @@ struct CfPRoutes: RouteCollection {
     return req.redirect(to: "/organizer/proposals/\(proposalID)?updated=true")
   }
 
+  // MARK: - Organizer Delete Proposal
+
+  @Sendable
+  func handleOrganizerDeleteProposal(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    guard let proposalIDString = req.parameters.get("proposalID"),
+      let proposalID = UUID(uuidString: proposalIDString)
+    else {
+      throw Abort(.badRequest, reason: "Invalid proposal ID")
+    }
+
+    guard
+      let proposal = try await Proposal.query(on: req.db)
+        .filter(\.$id == proposalID)
+        .first()
+    else {
+      throw Abort(.notFound, reason: "Proposal not found")
+    }
+
+    try await proposal.delete(on: req.db)
+
+    return req.redirect(to: "/organizer/proposals?deleted=true")
+  }
+
   // MARK: - Organizer New Proposal
 
   @Sendable
@@ -1436,11 +1498,13 @@ struct CfPRoutes: RouteCollection {
         .map { $0.toPublicInfo() }
     }
 
+    let csrfToken = csrfToken(from: req)
     return HTMLResponse {
       CfPLayout(title: "Add Proposal", user: user) {
         OrganizerNewProposalPageView(
           user: user,
-          conferences: conferences
+          conferences: conferences,
+          csrfToken: csrfToken
         )
       }
     }
@@ -1562,16 +1626,119 @@ struct CfPRoutes: RouteCollection {
       .all()
       .map { $0.toPublicInfo() }
 
+    let csrfToken = csrfToken(from: req)
     let html = HTMLResponse {
       CfPLayout(title: "Add Proposal", user: user) {
         OrganizerNewProposalPageView(
           user: user,
           conferences: conferences,
-          errorMessage: error
+          errorMessage: error,
+          csrfToken: csrfToken
         )
       }
     }
     return try await html.encodeResponse(for: req)
+  }
+
+  // MARK: - Organizer Inline Add Proposal
+
+  @Sendable
+  func handleOrganizerInlineAddProposal(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    struct InlineAddFormData: Content {
+      var conferenceId: UUID
+      var title: String
+      var abstract: String
+      var talkDetails: String
+      var talkDuration: String
+      var speakerName: String
+      var speakerEmail: String
+      var bio: String
+      var iconUrl: String?
+      var githubUsername: String?
+      var notesToOrganizers: String?
+    }
+
+    let formData: InlineAddFormData
+    do {
+      formData = try req.content.decode(InlineAddFormData.self)
+    } catch {
+      return redirectToProposalsWithError(req: req, error: "Invalid form data")
+    }
+
+    guard !formData.title.isEmpty else {
+      return redirectToProposalsWithError(req: req, error: "Title is required")
+    }
+    guard !formData.abstract.isEmpty else {
+      return redirectToProposalsWithError(req: req, error: "Abstract is required")
+    }
+    guard !formData.talkDetails.isEmpty else {
+      return redirectToProposalsWithError(req: req, error: "Talk details are required")
+    }
+    guard !formData.speakerName.isEmpty else {
+      return redirectToProposalsWithError(req: req, error: "Speaker name is required")
+    }
+    guard !formData.speakerEmail.isEmpty else {
+      return redirectToProposalsWithError(req: req, error: "Speaker email is required")
+    }
+    guard !formData.bio.isEmpty else {
+      return redirectToProposalsWithError(req: req, error: "Speaker bio is required")
+    }
+    guard let talkDuration = TalkDuration(rawValue: formData.talkDuration) else {
+      return redirectToProposalsWithError(req: req, error: "Please select a talk duration")
+    }
+
+    guard let conference = try await Conference.find(formData.conferenceId, on: req.db) else {
+      return redirectToProposalsWithError(req: req, error: "Conference not found")
+    }
+    guard let conferenceID = conference.id else {
+      return redirectToProposalsWithError(req: req, error: "Conference ID missing")
+    }
+
+    let speakerID: UUID
+    let githubUsername =
+      formData.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    do {
+      speakerID = try await resolveSpeakerID(
+        githubUsername: formData.githubUsername, on: req.db)
+    } catch {
+      return redirectToProposalsWithError(req: req, error: error.localizedDescription)
+    }
+
+    let proposal = Proposal(
+      conferenceID: conferenceID,
+      title: formData.title,
+      abstract: formData.abstract,
+      talkDetail: formData.talkDetails,
+      talkDuration: talkDuration,
+      speakerName: formData.speakerName,
+      speakerEmail: formData.speakerEmail,
+      bio: formData.bio,
+      iconURL: formData.iconUrl?.isEmpty == true ? nil : formData.iconUrl,
+      notes: formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers,
+      speakerID: speakerID
+    )
+
+    if !githubUsername.isEmpty {
+      proposal.paperCallUsername = githubUsername
+    }
+
+    try await proposal.save(on: req.db)
+
+    guard let proposalID = proposal.id else {
+      return req.redirect(to: "/organizer/proposals")
+    }
+
+    return req.redirect(to: "/organizer/proposals/\(proposalID)")
+  }
+
+  private func redirectToProposalsWithError(req: Request, error: String) -> Response {
+    let encodedError =
+      error.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "Unknown+error"
+    return req.redirect(to: "/organizer/proposals?add-error=\(encodedError)")
   }
 
   // MARK: - Timetable Editor
@@ -1581,6 +1748,7 @@ struct CfPRoutes: RouteCollection {
     let user = try? await getAuthenticatedUser(req: req)
 
     guard let user, user.role == .admin else {
+      let csrfToken = csrfToken(from: req)
       return HTMLResponse {
         CfPLayout(title: "Timetable Editor", user: user) {
           TimetableEditorPageView(
@@ -1588,7 +1756,8 @@ struct CfPRoutes: RouteCollection {
             conference: nil,
             acceptedProposals: [],
             slots: [],
-            days: []
+            days: [],
+            csrfToken: csrfToken
           )
         }
       }
@@ -1641,6 +1810,7 @@ struct CfPRoutes: RouteCollection {
     let assignedProposalIDs = Set(slots.compactMap { $0.$proposal.id })
     let unassignedProposals = acceptedDTOs.filter { !assignedProposalIDs.contains($0.id) }
 
+    let csrfToken = csrfToken(from: req)
     return HTMLResponse {
       CfPLayout(title: "Timetable Editor", user: user) {
         TimetableEditorPageView(
@@ -1648,7 +1818,8 @@ struct CfPRoutes: RouteCollection {
           conference: conference.toPublicInfo(),
           acceptedProposals: unassignedProposals,
           slots: slotDTOs,
-          days: days
+          days: days,
+          csrfToken: csrfToken
         )
       }
     }
@@ -2125,6 +2296,11 @@ struct CfPRoutes: RouteCollection {
       throw Abort(.internalServerError, reason: "Import user ID missing")
     }
     return importUserID
+  }
+
+  /// Get CSRF token from cookie
+  private func csrfToken(from req: Request) -> String {
+    req.cookies["csrf_token"]?.string ?? ""
   }
 
   /// Get authenticated user from cookie or authorization header

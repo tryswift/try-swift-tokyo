@@ -1,0 +1,532 @@
+{
+  "id": 2,
+  "title": "Day 2",
+  "title_ja": "2日目",
+  "date": "2017-03-03T09:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2017-03-03T09:00:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Breakfast",
+          "title_ja": "受付・朝食"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2017-03-03T09:45:00+09:00",
+      "sessions": [
+        {
+          "id": 2,
+          "title": "Opening Remarks",
+          "title_ja": "開会"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2017-03-03T10:00:00+09:00",
+      "sessions": [
+        {
+          "id": 3,
+          "title": "The Two Sides of Writing Testable Code",
+          "title_ja": "テスト可能なコードを書くということの２つの側面",
+          "description": "There are precisely two things that make functions fully testable: the isolation of effects and the surfacing of 'co-effects'. We will explore a bit of the formal theory behind these two sides, and show how they lead to code that can be easily tested. We will also show how we do this at Kickstarter by diving into our recently open sourced codebase.",
+          "description_ja": "関数を完全にテスト可能にするためのものが２つあります。作用の分離と共作用を表面化です。この２つの側面の背景にある理論を探り、どのようにすればテスト容易なコードに導けるかを示します。また、最近オープンソース化されたコードベースを基にKickstarterで我々がどのように実践しているかも紹介します。",
+          "speakers": [
+            {
+              "name": "Brandon Williams",
+              "image_name": "brandon",
+              "bio": "Brandon did math for a very long time, and is now a developer at Kickstarter, contributing to iOS, Android, and web. He enjoys talking about functional programming and how to use it to better our craft as engineers.",
+              "bio_ja": "長年の間、数学の領域に携わり、現在はKickstarterでデベロッパーとしてiOS, Android, Webのプロジェクトに関わっています。関数型プログラミング そして エンジニアとして成果物の品質向上のために関数型プログラミングを利用する方法を話すことが大好きです。",
+              "links": [
+                {
+                  "name": "@mbrandonw",
+                  "url": "https://x.com/mbrandonw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2017-03-03T10:20:00+09:00",
+      "sessions": [
+        {
+          "id": 4,
+          "title": "Everything You Ever Wanted To Know About Sequence and Collection",
+          "title_ja": "誰もが知りたいSequenceとCollectionのすべて",
+          "description": "Let's take a deep dive into Sequence and Collection. We'll build a `LinkedList` implementation to explore Sequences and how Iterators interact with them. We'll talk about Collection, and its related protocols and types, like Index, Sliceable, and MutableCollection, and how they each interplay. By the end, you'll know more than you ever wanted to know about Sequence and Collection.",
+          "description_ja": "SequenceとCollectionについて深く掘り下げてみましょう。LinkedListを実装することでSequenceとIteratorがどのように相互作用するかを見ていきます。この講演ではCollectionと関連するプロトコルと型（Index、Sliceable、MutableCollectionなど）がそれぞれどのように相互作用するかについて説明します。最終的にSequenceとCollectionについて知りたかったこと以上のことがわかるようになるでしょう。",
+          "speakers": [
+            {
+              "name": "Soroush Khanlou",
+              "image_name": "soroush",
+              "bio": "Soroush Khanlou is a New York-based iOS consultant. He’s written apps for the New Yorker, David Chang’s Ando, Rap Genius, and non-profits like Urban Archive. He blogs about programming at khanlou.com, mostly making fun of view controllers. In his free time, he runs, bakes bread and pastries, and collects suitcases.",
+              "bio_ja": "ニューヨークに拠点を置くiOSコンサルタントです。New Yorker、David ChangのAndo、Rap GeniusやUrban Archiveのような非営利団体向けのアプリを作っています。 またkhanlou.comでプログラミングに関するブログを書いていて、主にビューコントローラをネタにしています。 自由な時間には、ランニングやパンとペストリーを焼いていて、スーツケースを集めています。",
+              "links": [
+                {
+                  "name": "@khanlou",
+                  "url": "https://x.com/khanlou"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2017-03-03T11:00:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2017-03-03T11:30:00+09:00",
+      "sessions": [
+        {
+          "id": 6,
+          "title": "Swift Outside the Box",
+          "title_ja": "様々な場面でSwiftを使う",
+          "description": "There are times when we want to use Swift on different platforms or in unconventional circumstance. However, for now it is hard because there are only a few libraries outside of Apple's platform. This talk will introduce practices using libraries written in C or Swift with server-side examples.",
+          "description_ja": "色々なプラットフォーム、様々な場面でSwiftを使いたいことがあります。しかし、現時点で、Apple以外のプラットフォームでは、ライブラリーが少ないなど、すぐ実用的に実装することが難しいことがあります。CのライブラリーやSwiftのライブラリーを使いながら、様々な場面でSwiftを実用的に使うための試みと、サーバーサイドにおける事例を紹介します。",
+          "speakers": [
+            {
+              "name": "Yusuke Ito",
+              "image_name": "YusukeIto",
+              "bio": "Yusuke Ito is an architect at Shiroyagi Corporation and an engineer at HANDS MEMORY, designing whole architecture and engineering of various web services. He started Cocoa in 2006, and has been working on the Apple platform after the iPhone Jailbreaking community in Japan. His personal project is creating Hi-Fi audio devices.",
+              "bio_ja": "白ヤギコーポレーションのアーキテクト、HANDS MEMORYのエンジニアです。iOS Appの設計・実装、サーバーサイドの設計と実装を行っています。2006年からCocoaを使い始め、日本のJailbreakコミュニティを経てAppleプラットフォーム上での開発をしています。プライベートでは、オーディオ機器の製作をしています。",
+              "links": [
+                {
+                  "name": "@novi_",
+                  "url": "https://x.com/novi_"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2017-03-03T11:50:00+09:00",
+      "sessions": [
+        {
+          "id": 7,
+          "title": "VR Innovation",
+          "title_ja": "VRの革新と新たなユーザー体験",
+          "description": "Virtual, augmented reality and 360-degree shooting technologies have reached beyond gamers or expensive pilot training rooms. Real-life applications have been realized in multiple industries and are already providing businesses with new channels to engage customers and provide them with new experiences. Let’s take a look at some exciting examples.",
+          "description_ja": "拡張現実（ＡＲ）と３６０度シューティング技術はゲーマーや高価なパイロット訓練室を超越しています。現実のアプリケーションは、顧客と接する新しいチャネルを提供し、新しい体験を提供し、すでに複数の業界で実現されています。では、いくつかのエキサイティングな事例を見ていきましょう。",
+          "speakers": [
+            {
+              "name": "Artis Birzins",
+              "image_name": "artiebe",
+              "links": [
+                {
+                  "name": "@artiebe",
+                  "url": "https://x.com/artiebe"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2017-03-03T12:05:00+09:00",
+      "sessions": [
+        {
+          "id": 8,
+          "title": "Document Indexing and App Search in iOS",
+          "title_ja": "iOSにおけるDocument IndexingとApp Search",
+          "description": "We, as programmers, are interested in promoting our product and want users to have only easy and pleasant experience. Nevertheless, there are thousands of new applications appearing on the App Store every day and even if the user has downloaded our app, it can be lost among dozens of others on the device. It is clear, though, that we do not want our users to forget about our product but use it regularly and actively. We can use a lot of tricks and stunts, one of them is the App Indexing feature, that we are using actively in Zalando. It shows great results and works brilliant for us, and made the app even more accessible and recognizable in Spotlight and Web. In my talk I am going to explain how we are using the App Search features for iOS in the Zalando application, present some other App Search features for different types of content, share experience and examples. This talk is intended to show different approaches, prevent developers from mistakes we made, and inspire with results we have.",
+          "description_ja": "私たちはプログラマとして、自分たちの製品のプロモーションに興味を持ち、ユーザには簡単で楽しい経験をしてほしいと考えています。それでもApp Storeには毎日無数の新しいアプリが登場し、ユーザが私たちのアプリをダウンロードしても、デバイス上の数十ものアプリの中で見失われる可能性があります。しかし当然ながら、ユーザが私たちのプロダクトを忘れずに定期的かつ積極的に使うことを望んでいます。私たちは多くのトリックや技を使えます。そのうちの1つはApp Indexing機能で、Zalandoで積極的に使っています。それは素晴らしい結果を示して見事に機能し、SpotlightやWebでアプリをより使いやすく、認識しやすくしました。この講演では、ZalandoのiOSアプリでApp Search機能をどのように使っているのかを説明し、さまざまなタイプのコンテンツ向けのApp Search機能を紹介し、経験と実例を共有します。私たちのさまざまなアプローチを示すことで、開発者が私たちのミスを防ぎ、成果をもたらしてほしいと考えています。",
+          "speakers": [
+            {
+              "name": "Kateryna Gridina",
+              "image_name": "kateryna",
+              "bio": "Software engineer at Zalando. Mobile development enthusiast, Swift nerd.",
+              "bio_ja": "Zalandoのソフトウェアエンジニアです。モバイル開発に熱心なSwiftマニアです。",
+              "links": [
+                {
+                  "name": "@gridNAka",
+                  "url": "https://x.com/gridNAka"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2017-03-03T12:30:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "Startup Swift",
+          "title_ja": "スタートアップのSwift",
+          "description": "Startup teams are tiny yet they must deliver significant product changes on a regular basis. This can lead to some pretty hastily written and rewritten code – luckily Swift’s got your back. In this talk I’ll share lessons learned over the past year picking up Swift while taking the Hey! VINA app from MVP to thousands of daily users, and what language features give you the flexibility to make bold moves, stay scrappy and deliver a stable app.",
+          "description_ja": "スタートアップのチームはまだ小さいですが定期的に重要なプロダクトの変更をする必要があります。そのため慌ててコードを書いては書き直してということになる可能性があります。幸いなことにあなたたちにはSwiftがついています。このトークではHey! VINAというアプリをMVP（Minimun Viable Product）から１日に数千ユーザーが使うアプリにするまでのここ１年でSwiftを習得した教訓と、どの言語の特徴が大胆に動きつつも不安定さを避け、安定してアプリを提供するための柔軟さをもたらしたかを紹介します。",
+          "speakers": [
+            {
+              "name": "Mo Kudeki",
+              "image_name": "mokudeki",
+              "bio": "Mo is the Lead iOS Engineer at VINA, an app that helps connect women for friendship and community. Before that, she worked on the Twitter iPhone app. As her alter ego DJ/producer/occasional mermaid dpeshMo, she spends nights/weekends crafting beats and connecting people via all the right house & techno vibes.",
+              "bio_ja": "VINAのリードiOSエンジニアとして、女性が友好関係を築いたりコミュニティ活動を行うことを支援するアプリを開発しています。前職ではTwitterのiPhoneアプリを担当していました。彼女の分身はDJ、プロデューサー、ときどきマーメイドのdpeshMoで、ライトハウスやテクノのビートを通して人と人を繋げることに週末の夜を使ってます。",
+              "links": [
+                {
+                  "name": "@kudeki",
+                  "url": "https://x.com/kudeki"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2017-03-03T13:00:00+09:00",
+      "sessions": [
+        {
+          "id": 10,
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2017-03-03T14:30:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "A Neatly Typed Message",
+          "title_ja": "きちんと型付けされたメッセージ",
+          "description": "The talk is about the readability of Swift code. I'll treat it not as a well-defined goal to achieve, but as a spectrum that you need to decide where to land on. Looking at the variations of popular Cocoa patterns and Swift language constructs we'll identify their readability tradeoffs and chances for improvement. We'll also learn some fine techniques to widen readability spectrum using the power of the Swift type system.",
+          "description_ja": "この講演はSwiftのコードの可読性に関するものです。達成するために明確に定義された目標ではなく、あなたが向かうべき方向性を決めるためのものです。普及しているCocoaパターンとSwift言語の構成概念の違いを見てみると、可読性のトレードオフと改善の可能性があることを確認していきます。 また、Swiftの型システムのパワーを使って、可読性を向上するためのテクニックを学んでいきます。",
+          "speakers": [
+            {
+              "name": "Krzysztof Siejkowski",
+              "image_name": "krzysztof",
+              "bio": "Krzysztof (or Chris) is an iOS developer at Polidea, a hardware-friendly software house in Warsaw, Poland. He's a co-organizer of Mobile Warsaw, a community for mobile developers, and a Swift enthusiast. A cultural anthropologist by training, he tries to see programming techniques from a humanistic perspective.",
+              "bio_ja": "ポーランドのワルシャワにあるハードウェアフレンドリなソフトウェアハウスであるPolideaでiOS開発者をしています。モバイル開発者向けコミュニティ Mobile Warsaw の共同主催者であり、Swiftの愛好家です。文化人類学者のため、人間中心主義的な観点からプログラミングのテクニックを観察するよう心がけています。",
+              "links": [
+                {
+                  "name": "@_siejkowski",
+                  "url": "https://x.com/_siejkowski"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2017-03-03T14:50:00+09:00",
+      "sessions": [
+        {
+          "id": 12,
+          "title": "App Transport Security for Busy Devs",
+          "title_ja": "忙しい人のためのApp Transport Security",
+          "description": "At WWDC 2016, Apple made an announcement that ATS(App Transport Security) will be required.  However, as you know, this is still not happening.  New keys related to ATS for Info.plist were introduced in iOS10, but the specification is different over every minor versions.  In this LT, I bet you will be able to master ATS, that specification is still vague and lack of information, in 5 min.",
+          "description_ja": "WWDC2016にてATS(App Transport Security)の必須化がアナウンスされました。しかしご存知の通り、必須化は延期されました。また、iOS10で新たなATSの設定を行うInfo.plistのキーが導入されましたが、iOS10のマイナーバージョンごとに仕様が異なります。このLTでは、制度も情報も仕様も混乱しているATSを5分でマスターしていただくことに挑戦します。",
+          "speakers": [
+            {
+              "name": "niwatako",
+              "image_name": "niwatako",
+              "links": [
+                {
+                  "name": "@niwatako",
+                  "url": "https://x.com/niwatako"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2017-03-03T15:05:00+09:00",
+      "sessions": [
+        {
+          "id": 13,
+          "title": "Color Me Surprised!: Architecting a Robust Color System with Swift",
+          "title_ja": "Swiftで堅牢なカラーシステムを構築する",
+          "description": "More companies than ever are redesigning their apps to appeal to vibrant, growing audiences. In this talk, we'll discuss strategies for architecting a robust color system capable of scaling to projects of all sizes. We'll walk through how these approaches can be utilized to rapidly iterate on design decisions and may be adapted to modify color palette themes at runtime. We'll conclude with a demonstration of how these skills can be extended to aid those with color vision concerns using the exciting new color filter accessibility features introduced in iOS 10.",
+          "description_ja": "これまで以上に多くの企業が、新しく増え続けるユーザーに今までよりも魅力的なアプリだとアピールするために、アプリを再設計しています。この講演ではあらゆる規模のプロジェクトにスケールできる堅牢なカラーシステムを構築するための戦略について議論します。これらのアプローチはデザイン上の決定を迅速に繰り返すのに役立ち、実行時にカラーパレットのテーマを変更するようなこともできるかもしれません。さらに、iOS 10で導入された新しいカラーフィルターのアクセシビリティ機能を使用して、色覚の問題を抱える人を支援することにも応用できることを示すデモンストレーションも行います。",
+          "speakers": [
+            {
+              "name": "Laura Ragone",
+              "image_name": "laura",
+              "bio": "Laura is an iOS Engineer at Meetup, where she just recently completed a full redesign and rewrite of the mobile app in Swift.  Though she holds a degree in mechanical engineering with a concentration in robotics, she pivoted after deciding that smartphones were doing a better job of taking over the world.  In her spare time, Laura writes Pebble watch apps from a couch in Brooklyn, NY alongside her basset hound Hollie.",
+              "bio_ja": "Meetup社のiOSエンジニアです。ちょうど最近Meetupアプリを完全に再デザインし、Swiftで書き直し終えたところです。ロボットにフォーカスした機械工学の学位をもっていますが、スマートフォンが世界を席巻すると判断し、iOSエンジニアにピボットしました。空き時間には、バセット・ハウンド犬のHollieのそばで、Brooklyn、NYのソファーからPebbleのウォッチアプリを書いています。",
+              "links": [
+                {
+                  "name": "@lauraggle",
+                  "url": "https://x.com/lauraggle"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2017-03-03T15:25:00+09:00",
+      "sessions": [
+        {
+          "id": 14,
+          "title": "Server-Side Swift Live Coding",
+          "title_ja": "サーバサイドSwiftの実例",
+          "description": "Do you know this web site? This is an interesting site where you can play with NSDateFormatter online. I got inspired from this site, and I made a similar one with NSURL. Thanks to Vapor and Bluemix, this kind of site can be surprisingly easy to make. Let's try it out!",
+          "description_ja": "http://nsdateformatter.com/ というサイトを知っていますか？オンライン上でNSDateFormatterを試せる面白いサイトです。私はこれの影響を受けてNSURL版( http://nsurl.serversideswift.net/ )を作成しました。また、自作のライブラリもブラウザ上で触れるようにしています。( https://stringfilter.herokuapp.com/ ) VaporやBluemixのおかげでこの種のサイトは驚くほど簡単に作れます。是非やってみましょう！",
+          "speakers": [
+            {
+              "name": "Tatsuya Tobioka",
+              "image_name": "tnantoka",
+              "links": [
+                {
+                  "name": "@tnantoka",
+                  "url": "https://x.com/tnantoka"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "time": "2017-03-03T15:35:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "Making Mock Objects More Useful",
+          "title_ja": "モックオブジェクトをより便利にする",
+          "description": "In Swift, we make mock objects by hand. Their design shapes the way we write unit tests. Can we make mock objects more powerful, so that our tests are more expressive? What can we learn from mocking libraries? Jon Reid will bring his background of writing the Objective-C library OCMockito and apply it to hand-made mocks in Swift.",
+          "description_ja": "Swiftでは、手作業でモックオブジェクトを作成します。その設計がどのようにユニットテストを書けば良いかという方針を決めています。テストをより表現力豊かにするようモックオブジェクトをより強力にすることはできるでしょうか？モックライブラリから何を学ぶことができるでしょうか？OCMockitoというObjective-C製のモックライブラリを書いてきた私の経験をSwiftの手作りモックに応用してみます。",
+          "speakers": [
+            {
+              "name": "Jon Reid",
+              "image_name": "jon",
+              "bio": "Jon Reid works as an iOS developer at American Express, with the made-up job title 'Code Janitor'. Jon is new to Swift, but has been doing Test Driven Development since 2001. He was born in Tokyo, once worked at Tohoku Gakuin University in Sendai, and is excited to return to Japan!",
+              "bio_ja": "American Expressで \"Code Janitor\" という職位でiOS開発をしています。Swiftは初心者ですが、2001年よりテスト駆動開発をしています。日本生まれで、仙台にある東北学院大学で一度働いたことがあり、日本に戻ってくることにワクワクしています！",
+              "links": [
+                {
+                  "name": "@qcoding",
+                  "url": "https://x.com/qcoding"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2017-03-03T16:00:00+09:00",
+      "sessions": [
+        {
+          "id": 16,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2017-03-03T16:30:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "Minimizing Decision Fatigue to Improve Team Productivity",
+          "title_ja": "チームの生産性を改善するために決断疲れを最小化する",
+          "description": "As software engineers we continuously make decisions with each line of code that we write. The amount of time and energy required for this determines if this process will allow us and our teams to work productively or if it will bog us down. In this talk, Derek shares his personal experiences on how to improve team efficiency by minimizing decision fatigue in our Swift development while at the same time improving our team's communication and collaboration.",
+          "description_ja": "ソフトウェアエンジニアとして、私たちは書いているコードの１行１行ごとに決断し続けています。 これに必要な時間とエネルギーの量はチームが生産的に働けるか、あるいは停滞させてしまうのかどうかを決定します。このトークではSwift開発における決断疲れを最小化し、チームの効率と同時にコミュニケーションとコラボレーションを改善する方法についての個人的な経験を共有します。",
+          "speakers": [
+            {
+              "name": "Derek Lee",
+              "image_name": "derek",
+              "bio": "Derek has been immersed in iOS development for the last 5 years and has most recently been practicing Lean Product Development as a full-stack software engineer at Pivotal Labs' Tokyo office. He’s most passionate about TDD, writing clean code, and object-oriented design. Outside of Pivotal he makes time for his pet project 'Groove Freedom': an iPad app he built to help drummers practice more effectively. For maintaining good work/life balance Derek can also be found drumming, lifting weights, practicing meditation and co-organizing the Tokyo iOS Meetup.",
+              "bio_ja": "Derekは過去5年間iOS開発に没頭しており、最近ではPivotal Labsの東京オフィスのフルスタックソフトウェアエンジニアとしてリーン製品開発を実践しています。 彼はTDDやきれいなコードを書くこと、オブジェクト指向の設計に誰よりも情熱的です。 Pivotalの外では、彼は彼のペットプロジェクト「Groove Freedom（ドラマーがより効果的に練習をするためのiPadアプリ）」のために時間を使っています。ワークライフバランスを維持するために、Derekはドラム演奏、ウェイトリフティング、瞑想、Tokyo iOS Meetupの共同オーガナイザーをしたりしています。",
+              "links": [
+                {
+                  "name": "@derekleerock",
+                  "url": "https://x.com/derekleerock"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "time": "2017-03-03T16:50:00+09:00",
+      "sessions": [
+        {
+          "id": 18,
+          "title": "Client-Side Deep Learning",
+          "title_ja": "Client-Side Deep Learning",
+          "description": "In iOS 10, the convolution neural network (CNN) API has been added as a part of Metal Performance Shaders framework.  You can now take advantage of GPU on iOS devices to run brazing fast CNN computation.  In other word, you can use outcome of cutting edge deep learning technologies on your device even while offline.  This LT will present you the quick overview of the implementation and its demo.",
+          "description_ja": "iOS 10よりMetal Performance Shadersフレームワークに畳み込みニューラルネットワーク（CNN）のAPIが追加され、iOSデバイスのGPUを利用して高速にCNNの計算を行えるようになりました。つまり「ユーザの手元で」「オフラインでも」昨今の進化がめざましいディープラーニングの成果を利用できるようになったのです！本LTでは実装のオーバービューと、デモをお見せしたいと思います。",
+          "speakers": [
+            {
+              "name": "Shuichi Tsutsumi",
+              "image_name": "shu223",
+              "links": [
+                {
+                  "name": "@shu223",
+                  "url": "https://x.com/shu223"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "time": "2017-03-03T17:05:00+09:00",
+      "sessions": [
+        {
+          "id": 19,
+          "title": "Lessons in Swift Error Handling and Resilience",
+          "title_ja": "Swiftでのエラーハンドリングとエラー耐性についての教訓",
+          "description": "When writing software, we like to think more about the happy path and less about potential failures. However, the more connected and the more persistent an app becomes, the more branched your code paths will become. In this talk, I will share some lessons learned dealing with various types of errors in Line to help your app become more resilient to them and to make 'unhappy paths' a little less gloomy for your users and for those who maintain it.",
+          "description_ja": "ソフトウェアを書いているとき、私たちはハッピーパス（例外やエラーが発生しない正常系のこと）についてはちゃんと考慮する一方、潜在的な障害についての考慮はおろそかになりがちです。しかしアプリが考えていたよりも長く、いろいろな状況で使われるようになると、コードはより複雑に分岐します。この講演では、あなたのアプリのエラー耐性を高めて少しでも'アンハッピーパス'がユーザーやアプリを保守する人たちにもたらす憂鬱を軽減するために、Lineで遭遇した様々なタイプのエラーに対処するために学んだ教訓を紹介します。",
+          "speakers": [
+            {
+              "name": "Christopher Rogers",
+              "image_name": "christopher",
+              "bio": "Christopher has been developing software at Line in Tokyo for 8 years, for iOS since iOS 4, and in Swift since 1.0.",
+              "bio_ja": "2009年から今のLINEでソフトウェア開発をしています。iOSはiOS 4から、Swiftは1.0から取り組んでいます。",
+              "links": [
+                {
+                  "name": "@christorogers",
+                  "url": "https://x.com/christorogers"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "time": "2017-03-03T17:30:00+09:00",
+      "sessions": [
+        {
+          "id": 20,
+          "title": "Scaling open source communities",
+          "title_ja": "オープンソースコミュニティをスケールさせる",
+          "description": "I'll be talking about the different stages of open source projects, how handling PRs and support change with scale and how to keep innovating with a bigger user base. With that in mind, I'll go into detail on how developers can solve those problems, in particular automating workflows, staying in closer contact with contributors and improving your product and documentation.",
+          "description_ja": "オープンソースプロジェクトのさまざまな段階についてお話しします。どのようにプルリクエストを処理するか、規模に応じてどのようにサポートを変えていくか、ユーザー数が拡大していく中でどのように革新を起こしつづけるかをお話しします。 それらを念頭に置き、開発者がどのように問題を解決するのか、具体的にはワークフローの自動化、コントリビュータとの密接な関わり合い、プロダクトやドキュメントの改善について詳しく説明します。 おととしfastlaneで多くのことを学びました。オープンソースコミュニティのスケーリングについていくつかブログを準備しはじめました。",
+          "speakers": [
+            {
+              "name": "Felix Krause",
+              "image_name": "felix",
+              "bio": "Felix has been building iOS apps for 4 years, before starting to work on iOS developer tools. He built fastlane during college, which got acquired by Twitter last year. Since then Felix works full-time on open source developer tools, mostly focused on mobile developers.",
+              "bio_ja": "iOS開発者のためのツールに取り組むまで4年間iOSアプリを作っていました。大学在学中にfastlaneを開発し、昨年Twitterによって買収されました。それ以来モバイル開発に重点を置いたオープンソースの開発ツールに取り組んでいます。",
+              "links": [
+                {
+                  "name": "@KrauseFx",
+                  "url": "https://x.com/KrauseFx"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "time": "2017-03-03T18:00:00+09:00",
+      "sessions": [
+        {
+          "id": 21,
+          "title": "👾 & ⌚",
+          "title_ja": "👾 & ⌚️",
+          "description": "This talk will tell you about the game development method that runs on watchOS 3.  Try remembering the nostalgic game that runs with the latest device.",
+          "description_ja": "このトークでは、watchOS 3上で動作するゲーム開発の手法についてお伝えします。最新デバイスで動く、懐かしのゲームに思いを馳せてみてください。",
+          "speakers": [
+            {
+              "name": "giginet",
+              "image_name": "giginet",
+              "links": [
+                {
+                  "name": "@giginet",
+                  "url": "https://x.com/giginet"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "time": "2017-03-03T18:10:00+09:00",
+      "sessions": [
+        {
+          "id": 22,
+          "title": "Why We Climb",
+          "title_ja": "なぜ登るのか",
+          "description": "Bouldering is chosen as an official event at the 2010 Tokyo Olympic.  Today, I would like to introduce that Bouldering is the best sports for Swift engineers.  Anyone who has never tried it, try by all means.",
+          "description_ja": "2010年の東京オリンピックでも正式種目に選ばれたボルダリング。今日は、ボルダリングは Swiftエンジニアにとって最適なスポーツであることを紹介したいと思います。今まで試したこともない人も、是非tryしてみてください。",
+          "speakers": [
+            {
+              "name": "TachibanaKaoru",
+              "image_name": "TachibanaKaoru",
+              "links": [
+                {
+                  "name": "@TachibanaKaoru",
+                  "url": "https://x.com/TachibanaKaoru"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "time": "2017-03-03T18:30:00+09:00",
+      "sessions": [
+        {
+          "id": 23,
+          "title": "Closing / Announcements",
+          "title_ja": "クロージング"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "time": "2017-03-03T19:00:00+09:00",
+      "sessions": [
+        {
+          "id": 24,
+          "title": "Party 🎉",
+          "title_ja": "Party 🎉"
+        }
+      ]
+    }
+  ]
+}

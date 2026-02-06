@@ -5,15 +5,18 @@ struct OrganizerNewProposalPageView: HTML, Sendable {
   let user: UserDTO?
   let conferences: [ConferencePublicInfo]
   let errorMessage: String?
+  let csrfToken: String
 
   init(
     user: UserDTO?,
     conferences: [ConferencePublicInfo],
-    errorMessage: String? = nil
+    errorMessage: String? = nil,
+    csrfToken: String = ""
   ) {
     self.user = user
     self.conferences = conferences
     self.errorMessage = errorMessage
+    self.csrfToken = csrfToken
   }
 
   var body: some HTML {
@@ -68,6 +71,7 @@ struct OrganizerNewProposalPageView: HTML, Sendable {
       .method(.post),
       .action("/organizer/proposals/new")
     ) {
+      input(.type(.hidden), .name("_csrf"), .value(csrfToken))
       conferenceField
       titleField
       abstractField

@@ -6,17 +6,20 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
   let proposal: ProposalDTO?
   let conferences: [ConferencePublicInfo]
   let errorMessage: String?
+  let csrfToken: String
 
   init(
     user: UserDTO?,
     proposal: ProposalDTO?,
     conferences: [ConferencePublicInfo],
-    errorMessage: String? = nil
+    errorMessage: String? = nil,
+    csrfToken: String = ""
   ) {
     self.user = user
     self.proposal = proposal
     self.conferences = conferences
     self.errorMessage = errorMessage
+    self.csrfToken = csrfToken
   }
 
   var body: some HTML {
@@ -27,6 +30,7 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
           importedAlert(proposal: proposal)
           errorAlert
           editFormCard(proposal: proposal)
+          deleteCard(proposal: proposal)
         } else {
           notFoundCard
         }
@@ -88,13 +92,13 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
       .method(.post),
       .action("/organizer/proposals/\(proposal.id.uuidString)/edit")
     ) {
+      input(.type(.hidden), .name("_csrf"), .value(csrfToken))
       conferenceField(proposal: proposal)
       titleField(value: proposal.title)
       abstractField(value: proposal.abstract)
       talkDetailsField(value: proposal.talkDetail)
       durationField(selected: proposal.talkDuration)
       speakerInfoSection(proposal: proposal)
-      githubUsernameField(value: proposal.speakerUsername)
       notesField(value: proposal.notes)
       submitButton
     }
@@ -223,6 +227,7 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
     div(.class("col-md-8")) {
       speakerNameField(value: proposal.speakerName)
       speakerEmailField(value: proposal.speakerEmail)
+      githubUsernameField(proposal: proposal)
       speakerBioField(value: proposal.bio)
     }
   }
@@ -282,6 +287,32 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
     }
   }
 
+  private func githubUsernameField(proposal: ProposalDTO) -> some HTML {
+    let currentValue =
+      proposal.speakerUsername == "papercall-import" ? "" : proposal.speakerUsername
+    return div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("githubUsername")) {
+        "GitHub Username"
+      }
+      div(.class("input-group")) {
+        span(.class("input-group-text")) { "@" }
+        input(
+          .type(.text),
+          .class("form-control"),
+          .name("githubUsername"),
+          .id("githubUsername"),
+          .value(currentValue),
+          .placeholder("e.g. octocat")
+        )
+      }
+      div(.class("form-text")) {
+        "Link this proposal to a GitHub user account. "
+        "The user must have logged in at least once. "
+        "Leave blank to unlink."
+      }
+    }
+  }
+
   private func speakerIconField(iconURL: String?) -> some HTML {
     div(.class("col-md-4")) {
       div(.class("mb-3")) {
@@ -315,22 +346,31 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
     }
   }
 
-  private func githubUsernameField(value: String) -> some HTML {
-    div(.class("mb-4")) {
-      label(.class("form-label fw-semibold"), .for("githubUsername")) {
-        "GitHub Username (Optional)"
+  private func deleteCard(proposal: ProposalDTO) -> some HTML {
+    div(.class("card mt-4 border-danger")) {
+      div(.class("card-header bg-danger text-white")) {
+        strong { "Danger Zone" }
       }
-      input(
-        .type(.text),
-        .class("form-control"),
-        .name("githubUsername"),
-        .id("githubUsername"),
-        .value(value == "papercall-import" ? "" : value),
-        .placeholder("e.g. octocat")
-      )
-      div(.class("form-text")) {
-        "If specified, the proposal will be linked to this GitHub user account. "
-        "Leave blank to keep the current association."
+      div(.class("card-body")) {
+        h5(.class("card-title text-danger")) { "Delete this proposal" }
+        p(.class("text-muted mb-3")) {
+          "Once deleted, this proposal cannot be recovered. "
+          "Any associated timetable slots will be unlinked."
+        }
+        form(
+          .method(.post),
+          .action("/organizer/proposals/\(proposal.id.uuidString)/delete"),
+          .custom(
+            name: "onsubmit",
+            value:
+              "return confirm('Are you sure you want to delete this proposal? This action cannot be undone.');"
+          )
+        ) {
+          input(.type(.hidden), .name("_csrf"), .value(csrfToken))
+          button(.type(.submit), .class("btn btn-danger")) {
+            "Delete Proposal"
+          }
+        }
       }
     }
   }

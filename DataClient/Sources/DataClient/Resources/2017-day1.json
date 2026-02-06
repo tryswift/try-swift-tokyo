@@ -1,0 +1,483 @@
+{
+  "id": 1,
+  "title": "Day 1",
+  "title_ja": "1日目",
+  "date": "2017-03-02T09:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2017-03-02T08:30:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Registration & Breakfast",
+          "title_ja": "受付・朝食"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2017-03-02T09:45:00+09:00",
+      "sessions": [
+        {
+          "id": 2,
+          "title": "Opening Remarks",
+          "title_ja": "開会"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2017-03-02T10:00:00+09:00",
+      "sessions": [
+        {
+          "id": 3,
+          "title": "Everything a Swift Developer Wanted to Know about Machine Learning But Was Afraid To Ask",
+          "title_ja": "Swift開発者が知りたかったけど聞きにくい機械学習のすべて",
+          "description": "The news says machine learning is the Next Big Thing.But machine learning is happening way _over there_, on servers, in universities and in big companies with big data. What is it really, and what does it mean for _over here_, on mobile, in Swift? Are we --gulp-- legacy tech?This talk will present a fast, concrete, down-to-earth survey of machine learning, from the perspective of iOS & Swift, summarizing the main techniques, tools, and learning resources. It'll outline how TensorFlow is like AVFoundation, how model training is like UI design, and how you can use iOS to gather big (enough) data and to exercise modern models using fast native code.",
+          "description_ja": "ニュースでは、機械学習は次の大きなものだと言っています。しかし機械学習は大学や大きな企業のサーバーの _あちら側_ でビッグデータとともに行われています。それはいったい何なのでしょうか？ _こちら側_ であるモバイル、Swiftにとって何を意味するのでしょうか？私たちはレガシーな技術を --がっついている-- のでしょうか？このトークではiOSとSwiftの観点から迅速で具体的で現実的な機械学習の調査し、主なテクニック、ツール、学習素材をまとめます。TensorFlowがAVFoundationのようなものであること、モデルトレーニングがUIデザインのようなものであること、そして高速なネイティブコードを使ってどのようにiOSで十分に大きいデータを収集し、最新のモデルのエクササイズができるということをお伝えします。",
+          "speakers": [
+            {
+              "name": "Alexis Gallagher",
+              "image_name": "alexis",
+              "bio": "Alexis is as an independent consultant, building all sorts of systems with Swift, Clojure, bash, a heartfelt sincerity, a nagging skepticism, and the motley wisdom from his past adventures in science, finance, and comedy. Twitter: @alexisgallagher",
+              "bio_ja": "コンサルタントとして独立し、科学、金融、コメディにおける経験からSwift、Clojure、bash、誠意、懐疑論など多彩であらゆる種類のシステムを構築しています。Twitter: @alexisgallagher",
+              "links": [
+                {
+                  "name": "@alexisgallagher",
+                  "url": "https://x.com/alexisgallagher"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2017-03-02T10:20:00+09:00",
+      "sessions": [
+        {
+          "id": 4,
+          "title": "Swift on Android",
+          "title_ja": "Swift on Android",
+          "description": "This talk will give you a conceptual understanding of how Swift works on Android and how you can use it. The first part of the talk focuses on how to make Swift (just the core language) work on Android, including an introduction to the Android NDK. The second part will focus on libraries and how to write (shippable) apps with Swift on Android. We will discuss both native Android APIs as well as the more tantalizing idea of how to do cross-platform development with Swift (e.g. iOS, Mac, Linux, Windows?).",
+          "description_ja": "この講演ではSwiftがAndroidでどのように動作するかという概念とどのようにすればSwiftをAndroidで動かせるかということをご説明します。前半はどのようにコア言語としてのSwiftをAndroidで動作させるのかということをAndroid NDKへの入門も含めてお話します。後半はAndroidでSwiftを使う際のライブラリや（リリース可能な）アプリの書き方をお話します。ネイティブのAndroid APIのことだけでなくSwiftでクロスプラットフォーム開発（iOS, Mac, Linux, Windows?）をするための興味深いアイデアについても議論したいと思います。",
+          "speakers": [
+            {
+              "name": "Eric Wing",
+              "image_name": "eric",
+              "bio": "Feeling he was living too extravagant of a lifestyle of ramen and subsidized bus passes, Eric Wing graduated (kicking and screaming) from the University of California at San Diego with a Masters degree n Computer Engineering just days before 9/11. In the following quest for free food, he worked a wide range of jobs in the field from automated testing on orbiting satellite systems to scientific visualization with a variety of different operating systems and programming languages. But in a stroke of genius (actually, it was more likely just a stroke), he figured out how he could work even harder for no money and started working on open source projects. He has been a contributor to projects such as SDL (Simple DirectMedia Layer), OpenSceneGraph, and LuaCocoa. And when he was offered a co-authorship of Beginning iPhone Games Development, how could he possibly refuse the idea of even more hard work for virtually no pay? Then in a flash of brilliance (or more likely electrocution performing an ill-advised hardware upgrade), he realized he could top himself doing startups with their relentless amount of work and possible financial losses. He became the Chief Architect for Corona SDK and then co-founder of Lanica building a native game engine for Appcelerator. And now he is working on his craziest endeavor yet, Blurrr SDK.",
+              "bio_ja": "ラーメンとバスの補助券がある暮らしはぜいたくすぎると感じて、9.11の直前にサンディエゴのカリフォルニア大学サンディエゴ校をコンピュータエンジニアリングの修士号を取得して（泣きわめいて）卒業しました。その後タダ飯を食べるために、軌道上の衛星システムの自動テストからさまざまな異なるオペレーティングシステムとプログラミング言語による科学的可視化まで、幅広い分野の仕事をしました。しかし天才なひらめきで（実際には脳卒中の可能性が高い）お金のためではないことにもっと一生懸命働けることがわかり、オープンソースプロジェクトに取り組みはじめました。SDL（Simple DirectMedia Layer）、OpenSceneGraph、LuaCocoaなどのプロジェクトに貢献してきました。そしてBeginning iPhone Games Developmentの共同開発を提案されたとき、どのようにして実質的に無報酬でさらに一生懸命働くのを拒んだのでしょうか？そのときは輝かしいひらめき（もしくは軽率なハードウェアアップグレードを行う感電）で、過酷な仕事量と財政的損失の可能性を秘めたスタートアップのトップに立つことができると気づきました。Corona SDKのチーフアーキテクトとなり、そしてAppceleratorのネイティブゲームエンジンを構築するLancelの共同設立者になりました。そして今は夢中でBlurrr SDKに取り組んでいます。",
+              "links": [
+                {
+                  "name": "@ewingfighter",
+                  "url": "https://x.com/ewingfighter"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2017-03-02T11:05:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2017-03-02T11:40:00+09:00",
+      "sessions": [
+        {
+          "id": 6,
+          "title": "Swift's Pointy Bits",
+          "title_ja": "SwiftのPointy Bits",
+          "description": "Swift offers remarkable performance while still providing safety through strong types, value semantics, and automatic memory management. For those times when you need to step outside those boundaries, however, Swift also offers tools to directly allocate and manipulate memory. This talk will explore the ins and outs of Swift’s take on pointers: typed and raw pointers and buffers, implicit bridging and casting, and some tips on how to stay safe while using unsafe APIs.",
+          "description_ja": "Swiftは、強い型付け、値セマンティクス、および自動メモリ管理により、安全性を提供しながらも優れたパフォーマンスを提供しています。これらの境界の外に出なければいけない場合でも、Swiftはメモリを直接割り当てて操作するツールも提供しています。 このトークでは、Swiftのポインタについてのすべて（型付けされたポインタと生のポインタとバッファ、暗黙的なブリッジングとキャスト、および安全でないAPIを使用しても安全を保つための秘訣）を説明します。",
+          "speakers": [
+            {
+              "name": "Nate Cook",
+              "image_name": "nate",
+              "bio": "Nate Cook is the creator of SwiftDoc.org and managing editor of NSHipster, where he writes on topics in Cocoa and Swift. Follow him on Twitter @nnnnnnnn",
+              "bio_ja": "SwiftDoc.orgの創設者でNSHipsterの編集長を務めています。CocoaやSwiftに関する話題を書いています。彼のTwitterアカウント@nnnnnnnnをフォローしましょう。",
+              "links": [
+                {
+                  "name": "@nnnnnnnn",
+                  "url": "https://x.com/nnnnnnnn"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2017-03-02T12:05:00+09:00",
+      "sessions": [
+        {
+          "id": 7,
+          "title": "3D Touch: Bring your apps to a new dimension",
+          "title_ja": "アプリを新次元に導く3D Touch",
+          "description": "In this talk, we’ll learn about what the 3D Touch APIs have to offer and best practices for using them. We’ll see what is provided out of the box and what customizations were added in iOS10. Throughout the talk, we'll explore some cool examples of how to add 3D Touch support to your apps today.",
+          "description_ja": "この講演では3DタッチAPIで何ができるか？そして3DタッチAPIを使うベストプラクティスを学びます。元々どのような機能があり、iOS10でどのようなカスタマイズが加えられたかを見ていきます。クールな事例を通してあなたのアプリを3Dタッチに対応させる方法を探っていきましょう。",
+          "speakers": [
+            {
+              "name": "Meghan Kane",
+              "image_name": "meghan",
+              "bio": "Meghan is an iOS developer at SoundCloud in Berlin. She is passionate about encouraging people to learn to code and breaking down any barriers to entry to the world of programming. When not coding, Meghan can usually be found cycling or playing board games.",
+              "bio_ja": "ベルリンにあるSoundCloudでiOSデベロッパをしています。みなさんがプログラミングを学ぶためのあらゆる障壁をなくすために情熱を注いでいます。コーディングをしていないときは、サイクリングをしたりボードゲームをしています。",
+              "links": [
+                {
+                  "name": "@meghafon",
+                  "url": "https://x.com/meghafon"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2017-03-02T12:30:00+09:00",
+      "sessions": [
+        {
+          "id": 8,
+          "title": "Pixels, process and passion",
+          "title_ja": "Pixcels、プロセスと情熱",
+          "description": "This talk will be about all the in-between stuff when it comes to building products. Focusing on the process rather than the outcome and letting passion and people be the driver. I will tell about my latest personal project and how i've learned to fall in love with problems rather than a solutions.",
+          "description_ja": "この講演では、プロダクトを作るようになる際に中間の要素について説明します。 結果ではなくプロセス、そして情熱と人を駆動力にすることに焦点を当てます。私は最新の個人的なプロジェクトと、どのように解決策ではなく問題に恋するようになったかをお話しします。",
+          "speakers": [
+            {
+              "name": "Rikke Møller Koblauch",
+              "image_name": "rikke",
+              "links": [
+                {
+                  "name": "@Rikkekoblauch",
+                  "url": "https://x.com/Rikkekoblauch"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2017-03-02T13:00:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2017-03-02T14:30:00+09:00",
+      "sessions": [
+        {
+          "id": 10,
+          "title": "Everyday Reactive",
+          "title_ja": "毎日リアクティブ",
+          "description": "In this talk, we'll walk through some practical uses of reactive programming in app development, using examples from my daily experiences. We'll explore tips and tricks for determining when reactive programming can be a potent tool, as well as scenarios to avoid that might threaten code quality and performance. The talk will focus on concepts in reactive programming, the code will show off different Swift reactive implementations.",
+          "description_ja": "この講演では、私の日々の経験からの例を使って、アプリ開発におけるリアクションプログラミングの実践的な使い方を紹介します。リアクティブプログラミングがどんなときに強力なツールになりえるのかを判断するヒントとともにコードの品質とパフォーマンスを脅かす可能性があるために避けるべきシナリオも紹介します。 このトークでは、様々なSwiftのリアクティブな実装を例示しながらリアクティブプログラミングの概念に焦点を当てていきます。",
+          "speakers": [
+            {
+              "name": "Agnes Vasarhelyi",
+              "image_name": "agnes",
+              "bio": "Agnes Vasarhelyi is an iOS developer at Ustream. She likes to build up software from streams of values and automate things in the meantime. Her blog tells you about reactive programming and her tweets about organizing community events.",
+              "bio_ja": "UstreamのiOSデベロッパーです。リアクティブプログラミングを用いてソフトウェアを開発することと、自動化が好きです。ブログではリアクティブプログラミングについて書いていて、Twitterでは運営するコミュニティのイベントについてツイートしています。",
+              "links": [
+                {
+                  "name": "@vasarhelyia",
+                  "url": "https://x.com/vasarhelyia"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2017-03-02T14:55:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "The Safety of Unsafe Swift",
+          "title_ja": "Unsafe Swiftの安全性",
+          "description": "Swift protects you from undefined behavior by not allowing direct memory access by default.  The Swift unsafe APIs help you construct code that is highly readable and only unsafe where it has to be.",
+          "description_ja": "Swiftは、デフォルトで直接メモリアクセスを許可しないことで、未定義の動作から保護します。 Swiftのunsafe系APIは、読みやすく、Unsafeでなくてはならない部分のみを書くのに役立ちます。",
+          "speakers": [
+            {
+              "name": "Ray Fix",
+              "image_name": "rayfix",
+              "links": [
+                {
+                  "name": "@rayfix",
+                  "url": "https://x.com/rayfix"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2017-03-02T15:05:00+09:00",
+      "sessions": [
+        {
+          "id": 12,
+          "title": "Tasting tests at Cookpad",
+          "title_ja": "クックパッドアプリのテストを味わう",
+          "description": "Quality and Tests often depend on the contexts for services and apps. Lets’s taste how we have tested our iOS app at Cookpad to guarantee the quality to the app. Especially, I’ll focus on automated tests. Not only challenge our several activities to growth our service but also convert Objective-C to Swift, ...etc. Development environment for iOS app also changes so swiftly. Meanwhile, we should growth our app and continue to release our app frequently.",
+          "description_ja": "品質やテストの話は往々にして提供するサービスやアプリのコンテキストに依存します。クックパッドのiOSアプリを題材にして、私たちが機能的な品質を保つためにどのようなテストを行ってきたかをお話します。特に、自動化されたテストに関してお話します。UIのリニューアルや様々な取り組みと変化だけではなく、Objective-CからSwiftへの書き換えなど、iOSを取り巻く環境は短い間に大きく変化しています。その中で、どのような取り組みにより最低限の不具合を防ぎ、iOSアプリをリリースし続けてきたのか。また、これにより得られた学びや、これからの取り組みに関してもお話しいたします。",
+          "speakers": [
+            {
+              "name": "Kazuaki Matsuo",
+              "image_name": "KazuakiMatsuo",
+              "bio": "Kazuaki MATSUO was the first test engineer to join Cookpad a few years ago. He has been focusing on testing and improving the quality of Cookpad's web services and iOS and Android mobile applications. He has been doing manual testing, test automation, working improving the development process... The \"cocoa\" used in his Twitter or GitHub account comes from the Cocoa framework, because of the influence he got from working on iOS applications at university.",
+              "bio_ja": "クックパッド株式会社に、テストエンジニアとして所属しています。最近はiOS/Androidとしたモバイルアプリを中心にテスト/品質という点で業務に関わっています。そこでは、手動/自動テストの構築や実施、その戦略を立てたり、テストだけではなく開発プロセスなどもっと大きな枠組みからサービスの品質を向上するために活動しています。実は、私のTwitterやGitHubなどで使っている\"cocoa\"は、大学の頃に日本でiPhoneが発売された頃にそのアプリ開発で影響を受けたCocoaフレームワークからきています。",
+              "links": [
+                {
+                  "name": "@Kazu_cocoa",
+                  "url": "https://x.com/Kazu_cocoa"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2017-03-02T15:25:00+09:00",
+      "sessions": [
+        {
+          "id": 13,
+          "title": "Isolating your Data Layer",
+          "title_ja": "データレイヤを分離する",
+          "description": "In a truly layered architecture (MVVM, Viper, etc), the data layer should be relegated to it's own layer - every other piece just wants the data.  Unfortunately with Core Data, and other technologies, such as Realm, the actual implementation details (threads, contexts) of this layer tend to leak into other layers or view logic.  This makes for an architecture the is harder to scale.  This can be solved using plain old swift objects (POSOs), paired with an understanding of what you lose, and how to overcome it. We will discuss how to move to POSOs while maintaining performance.",
+          "description_ja": "真の階層化アーキテクチャ(MVVM, Viper, etc)において、データ層は全てのデータを必要とする他の層よりも下層部に置くべきです。残念ながら、CoreData や Realmなどのような同類の技術において、このレイヤーの実際の実装の詳細（スレッドやコンテクスト）は他のレイヤーやViewのロジックに浸潤する傾向があります。これは、アーキテクチャのスケール化を難しくします。そんな場合は旧来のSwiftオブジェクト(POSOs)を利用すればよいかと。失うものと克服できるものをセットで理解すれば、これを解決する事が可能となります。パフォーマンスを維持しながらPOSOに移行する方法について説明します。",
+          "speakers": [
+            {
+              "name": "Jon Bott",
+              "image_name": "Herbal7ea",
+              "links": [
+                {
+                  "name": "@Herbal7ea",
+                  "url": "https://x.com/Herbal7ea"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2017-03-02T15:35:00+09:00",
+      "sessions": [
+        {
+          "id": 14,
+          "title": "Writing your UI Swiftly",
+          "title_ja": "UIをSwiftyに書く",
+          "description": "In this talk, we will explore how the structure and properties of the Swift Language make writing your application and UI code simpler. We will take a look at common pitfalls and challenges in building our UI layer and, for each one, we will examine a Swifty way to improve upon it. The talk will examine modeling view state with enums, useful 3rd party Swift libraries, unifying views via protocols, and more.",
+          "description_ja": "この講演では、Swiftの構造と特性がアプリとUIのコードをより完結に書けるようにしているかということを探っていきます。 私たちは、UIレイヤーを構築する際の一般的な落とし穴と課題を見ていき、それを改善するためのSwiftyな方法を検討します。 Enumを用いたビューの状態のモデリング、有用なサードパーティ製のSwiftライブラリ、プロトコルによるビューの統一などを見ていきます。",
+          "speakers": [
+            {
+              "name": "Sommer Panage",
+              "image_name": "sommer",
+              "bio": "Sommer Panage is currently the lead iOS developer at Chorus Fitness. Before taking on this role, she spent two years as a freelance iOS dev while pursing a career as professional circus artist and instructor. Previously, she worked as the head of Mobile Accessibility on iOS and Android at Twitter. Prior to Twitter, Sommer worked on the iOS team at Apple. She earned her BA in Psychology and MS in Computer Science at Stanford University. When she is not Swifting away, you can find her training rope, trapeze or handstands, running or even doing CrossFit. You can follow her on Twitter at @sommer.",
+              "bio_ja": "現在はChorus Fitness,のiOSリードデベロッパーです。 その前はプロのサーカスアーティストやインストラクターとしてキャリアを積みながら、フリーのiOSデベロッパーとして2年間働いていました。 以前はTwitterでiOSとAndroidでモバイルアクセシビリティの責任者でした。 Twitterの前は、AppleのiOSチームで働いていました。 スタンフォード大学で心理学の学士号とコンピュータサイエンスの修士号を取得しました。 Swiftから離れているときは、ロープ、ブランコ、逆立ちのトレーニングやランニング、CrossFitをしています。彼女のTwitterアカウント@sommerをフォローしましょう。",
+              "links": [
+                {
+                  "name": "@Sommer",
+                  "url": "https://x.com/Sommer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "time": "2017-03-02T16:00:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2017-03-02T16:30:00+09:00",
+      "sessions": [
+        {
+          "id": 16,
+          "title": "Building a Swift Web API and Application Together",
+          "title_ja": "SwiftのWeb APIとアプリをともに構築する",
+          "description": "In this talk, I'm going to share my experiences building a Web API in Swift to power a one of our iOS applications. I'll cover how we replaced some of our existing infrastructure and web services with Swift. We will explore what it takes to build a web service in Swift and how to design and consume an API that can evolve over years, leveraging hypermedia and declarative programming.",
+          "description_ja": "この講演では、私たちのiOSアプリの1つを動かすためにSwiftでWeb APIを構築した経験を共有します。既存のインフラとWebサービスをSwiftでどのように書きかえたのかを説明します。SwiftでのWebサービス構築に必要なことと、ハイパーメディアと宣言型プログラミングを活用して長年進化していけるAPIを設計し利用する方法を探ります。",
+          "speakers": [
+            {
+              "name": "Kyle Fuller",
+              "image_name": "kyle",
+              "bio": "Kyle Fuller started developing Swift the very day it was announced and he hasn’t looked back since. He’s an active contributor in the open-source Swift scene with more projects than he can count.",
+              "bio_ja": "Swiftが発表されたその日からSwift開発を始め、順調に歩みを進めています。非常に積極的なSwiftオープンソースコントリビューターとして、数え切れないほどのプロジェクトに関わっています。",
+              "links": [
+                {
+                  "name": "@kylefuller",
+                  "url": "https://x.com/kylefuller"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2017-03-02T16:50:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "Swift Chatbots for Fun and Profit",
+          "title_ja": "楽しく便利なSwiftチャットボット",
+          "description": "How I built a chatbot in Swift to create a custom, personalized language learning tool to help me learn Japanese, and why chatbots are a great, practical solution for building useful tools.",
+          "description_ja": "自分自身の日本語の学習を補助するために、パーソナライズされた言語学習ツールとしてチャットボットをSwiftで作りました。どうやったかをお話しします。",
+          "speakers": [
+            {
+              "name": "Ray Tsaihong",
+              "image_name": "rmundo",
+              "links": [
+                {
+                  "name": "@rmundo",
+                  "url": "https://x.com/rmundo"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "time": "2017-03-02T17:05:00+09:00",
+      "sessions": [
+        {
+          "id": 18,
+          "title": "Craft Collaborative Apps with Realm",
+          "title_ja": "Realmを使ってコラボレーションアプリを作る",
+          "description": "This talk will introduce into the open-source Realm Mobile Database and show how Realm Mobile Platforms completes it with server-side components. Using this allows you to treat synchronization and network as an implementation detail of your technology stack. Features like live collaboration, which would have been a major undertaking, become all of the sudden easily available to every developer. This talk shows you how you can build apps in a reactive manner on base of a database which takes care of the rest.",
+          "description_ja": "このトークでは、オープンソースのRealm Mobile Databaseを紹介し、サーバーサイドコンポーネントと合わせてRealm Mobile Platformsがどのように完成したかを示します。これを利用すると、テクノロジスタックの実装詳細として同期とネットワークを扱うことができます。 これまで大仕事だったライブコラボレーションのような機能を、不意にすべての開発者が簡単に利用できるようになったのです。このトークでは、残りのデータベースの部分をベースとしてリアクティブにアプリを構築する方法を示します。",
+          "speakers": [
+            {
+              "name": "Marius Rackwitz",
+              "image_name": "mrackwitz",
+              "bio": "Marius has been developing mobile & web applications ever since he graduated from university. In more recent years, he's shifted his focus towards mobile development, especially iOS and Objective-C, and since it came out a growing portion of Swift. With his work on the CocoaPods team, he hasn't forgotten about Ruby either. Since he joined Realm, he has also become more involved in the mobile community, presenting at many conferences.",
+              "bio_ja": "大学を卒業してからモバイル、ウェブアプリケーションを開発しています。最近はモバイル開発にフォーカスしており、特にiOSとObjective-C、そしてSwiftも増えてきました。CocoaPodsチームではRubyにも打ち込んでいます。Realmで働き始めてからは、多くのカンファレンスで講演を行うなど、モバイルコミュニティに積極的に関わっています。",
+              "links": [
+                {
+                  "name": "@mrackwitz",
+                  "url": "https://x.com/mrackwitz"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "time": "2017-03-02T17:30:00+09:00",
+      "sessions": [
+        {
+          "id": 19,
+          "title": "Building your own tools",
+          "title_ja": "独自のツールを構築する",
+          "description": "You want to build your apps using the least amount of code, quickly, with the largest impact. You do this by finding the right abstractions, which takes years of practice. The Artsy mobile team have multiple apps with Swift, but that is not the future of our applications. This talk covers the build up to using Swift, and how that triggered the discussion that lead to our usage of React Native.",
+          "description_ja": "あなたは、最小のコード量で、すばやく、最大限のインパクトがあるアプリケーション開発をしたいでしょう。これを適切な抽象化を習得することで実現できますが、これには長年の訓練が必要です。Artsyのモバイルチームには、複数のSwift製アプリがありますが、それは我々のアプリの未来ではありません。 このトークでは、Swiftの利用方法の構築とそれがReact Native導入につながる議論をどのように引き起こしたかについて説明します。",
+          "speakers": [
+            {
+              "name": "Orta Therox",
+              "image_name": "orta",
+              "bio": "Orta Therox is a developer at Artsy, where he’s helped move the company towards doing Open Source by Default. He’s helped run CocoaPods for the last 4 years and has been working on Danger for the last year.",
+              "bio_ja": "Artsyにて開発者をしており、Artsyでのソフトウェア開発を原則的にオープンソースとして行うことに貢献しました。この4年間、CocoaPodsの運営に携わり、昨年はDangerに注力していました。",
+              "links": [
+                {
+                  "name": "@orta",
+                  "url": "https://x.com/orta"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "time": "2017-03-02T18:00:00+09:00",
+      "sessions": [
+        {
+          "id": 20,
+          "title": "Providing Better Feedback in Real-time Object Detection Apps",
+          "title_ja": "リアルタイム物体検出アプリでよりよいフィードバックを提供する",
+          "description": "Recent advances in computer vision technology and computational resources have made it easier to build real-time object detection apps on iOS devices than before. However, implementing detection logics on devices itself is only a part of an app development. Combining it with user interaction and providing appropriate feedbacks are crucial for user-friendly apps. In this lightning talk, I would like to talk about real problems we have faced and solved to give better feedbacks while developing Wantedly People, an iOS app that scans business cards in camera instantly.",
+          "description_ja": "近年のコンピュータビジョン技術や計算資源の進歩により、リアルタイムな物体検出アプリケーションをiOS端末上で開発するのは以前よりも容易になりました。ですが、検出ロジックの実装は開発におけるほんの一部です。ユーザフレンドリーなアプリケーションとするためには、インタラクションとうまく組み合わせ、適切なフィードバックをユーザに与えることが不可欠です。このライトニングトークでは、カメラ中の名刺を即座にスキャンするWantedly PeopleというiOSアプリを開発するにあたって、より良いフィードバックを与える上で我々がどのような問題に直面したか、それをどう解決したかをお話します。",
+          "speakers": [
+            {
+              "name": "Shinichi Goto",
+              "image_name": "shingt",
+              "links": [
+                {
+                  "name": "@_shingt",
+                  "url": "https://x.com/_shingt"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "time": "2017-03-02T18:10:00+09:00",
+      "sessions": [
+        {
+          "id": 21,
+          "title": "How to be a UX Engineer",
+          "title_ja": "UXエンジニアという働き方",
+          "description": "Being a good coding skill engineer doesn't mean you can build up good services.  This talk will give you some idea about why engineers should think about UX and how to do that.",
+          "description_ja": "エンジニアとはいえどコーディングができるだけでは良いサービスを創り上げることはできません。このトークではエンジニアがUXを考えることの大切さ、その手法をご紹介します。",
+          "speakers": [
+            {
+              "name": "akatsuki174",
+              "image_name": "akatsuki174",
+              "links": [
+                {
+                  "name": "@akatsuki174",
+                  "url": "https://x.com/akatsuki174"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

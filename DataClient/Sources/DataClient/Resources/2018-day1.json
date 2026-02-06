@@ -1,0 +1,509 @@
+{
+  "id": 1,
+  "title": "Day 1",
+  "title_ja": "1日目",
+  "date": "2018-03-01T09:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2018-03-01T08:30:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "🍩 Registration & Breakfast",
+          "title_ja": "🍩 受付・朝食"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2018-03-01T09:45:00+09:00",
+      "sessions": [
+        {
+          "id": 2,
+          "title": "Opening Remarks",
+          "title_ja": "開会"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2018-03-01T10:00:00+09:00",
+      "sessions": [
+        {
+          "id": 3,
+          "title": "A Secret Swift Tour",
+          "title_ja": "裏 Swift Tour",
+          "description": "When you started learning Swift, maybe you played 'A Swift Tour', the official tutorial from Apple. But as time passed, you started to understand and get used to Swift. Let's play 'A Secret Swift Tour'.",
+          "description_ja": "Swift を学び始めるとき、Apple の公式チュートリアル 'A Swift Tour' に取り組んだ方も多いのではないでしょうか。 そして、時を経て、Swift に慣れ親しんだ今だからこそ理解し、得られるものがあります。もう少し深堀りした Swift の世界、'A Swift Tour' の裏面に取り組んでみましょう。",
+          "speakers": [
+            {
+              "name": "Yuka Ezura",
+              "image_name": "ezura",
+              "bio": "Yuka Ezura is an iOS engineer working at LINE. She belongs to the cloud AI platform “Clova” development team. At conferences and many study meetings, she presents topics focused on Swift language. She is also a personality at a web radio station mookmook radio.",
+              "bio_ja": "LINE の iOS エンジニア。クラウド AI プラットフォーム Clova 開発チームに所属。カンファレンスや勉強会で主に Swift を中心にしたテーマで発表している。また、web ラジオ局 mookmook radio でパーソナリティを務めている。",
+              "job_title": "iOS Engineer at LINE",
+              "job_title_ja": "iOS Engineer at LINE",
+              "links": [
+                {
+                  "name": "@eduraaa",
+                  "url": "https://x.com/eduraaa"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2018-03-01T10:25:00+09:00",
+      "sessions": [
+        {
+          "id": 4,
+          "title": "SIL for First Time Learners",
+          "title_ja": "SIL入門",
+          "description": "Swift compiler runs in multiple phases and one of the biggest one is SIL optimizations. The SIL optimizer performs all the important Swift-specific optimizations, so I believe that it’s quite valuable to have understanding about SIL as Swift developer. In this talk, we’ll go over basic idea of SIL with simple examples.",
+          "description_ja": "Swiftのコンパイラは複数のフェーズにわけて実行され、そのうちもっとも大きなものが SILの最適化です。SIL Optimizer はSwift特有のすべての最適化を担うので、SwiftのエンジニアがSILを理解しておくことは極めて重要だと考えます。このトークでは、SILの基礎を簡単な例を用いて説明します。",
+          "speakers": [
+            {
+              "name": "Yusuke Kita",
+              "image_name": "kita",
+              "bio": "Yusuke Kita is an iOS developer at Mercari. He works on the internationalization of the Mercari app. He's passionate about learning new technology. When not coding, you can find him cycling.",
+              "bio_ja": "メルカリのiOSエンジニア。iOSチームのMercariアプリの国際化に取り組んでいます。新しい技術を学ぶのが大好きです。コーディングしていないときは、サイクリングをしています。",
+              "job_title": "iOS Developer at Mercari",
+              "job_title_ja": "iOS Developer at Mercari",
+              "links": [
+                {
+                  "name": "@kitasuke",
+                  "url": "https://x.com/kitasuke"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2018-03-01T10:40:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "Exploring Clang Modules",
+          "title_ja": "Clang モジュールの探検",
+          "description": "Swift and Objective-C frameworks share the same underlying module system, based upon Clang Modules. They are intended to replace header files as a way of communicating the interface for a library, but they come with their own set of edge cases. We will examine how Clang modules are able to replace `#import` statements, some of the consequences of using modules, and how the design of Clang modules has influenced Swift's library story.",
+          "description_ja": "Swift や Objective-C のフレームワークは Clang モジュールをベースとした同じモジュールシステムを共有しています。ライブラリのインターフェースとやりとりすることでヘッダファイルを置き換えますが、それぞれにエッジケースが存在します。Clang モジュールの `#import` 文の置き換え方、モジュールを使うことによる影響、Clagnモジュールの設計がSwiftのライブラリにどう影響してきたかを調べてみます。",
+          "speakers": [
+            {
+              "name": "Samuel Giddins",
+              "image_name": "sam",
+              "bio": "Samuel is a developer well-versed in the rituals of writing developer tools that occasionally work. By day, Samuel works on making the mobile developer experience at Square less arduous; by night he can be found breaking Bundler and CocoaPods.\n\n Before this whole 'developer' thing, Samuel studied in the highly impractical Mathematics & Economics departments at University of Chicago, learning subjects such as 'numbers', 'social theory', and 'memes'.\n\nWhen not coding, Samuel is often in the kitchen, marveling at the fact that dinner smells better than it looks.",
+              "bio_ja": "Samuel は開発者向けツールを作ることに精通しています。日中は Square におけるモバイル開発者の負担を減らすような仕事をしている開発者で、夜はBundler と CocoaPods の Core Contributor です。 \n\n 開発者になる前は、シカゴ大学で数学や経済学の学科で、「数」、「社会理論」、「ミーム」のような科目を学んでしました。キッチンに立つことが多く、夕食が見た目よりもにおいの方が良いという事実に驚いています。",
+              "job_title": "Bundler & CocoaPods Core Team, Developer at Square",
+              "job_title_ja": "Bundler & CocoaPods Core Team, Developer at Square",
+              "links": [
+                {
+                  "name": "@segiddins",
+                  "url": "https://x.com/segiddins"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2018-03-01T11:00:00+09:00",
+      "sessions": [
+        {
+          "id": 6,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2018-03-01T11:40:00+09:00",
+      "sessions": [
+        {
+          "id": 7,
+          "title": "Getting to Know the Responder Chain",
+          "title_ja": "レスポンダチェーンを知ろう",
+          "description": "I'll provide an explanation about how the Responder Chain pattern works, how it exists in Apple's frameworks, and give some examples of how to take advantage of it.",
+          "description_ja": "レスポンダチェーンパターンの仕組み、Apple のフレームワークの仕組み、そしてその活用方法の例を紹介します。",
+          "speakers": [
+            {
+              "name": "Samuel Goodwin",
+              "image_name": "samuel",
+              "bio": "Samuel has worked on iOS since the SDK’s first release and has been in Amsterdam for the last 6 years running his company, Roundwall Software. He rides skateboards, plays bass guitar, and rides bikes.",
+              "bio_ja": "Samuel は、SDKの初期リリースからiOSに取り組んでおり、この6年間アムステルダムで Roundwall Software を経営しています。スケートボードに乗ったり、ベースギターを弾いたり、自転車にも乗ります。",
+              "job_title": "Founder of Roundwall Software",
+              "job_title_ja": "Founder of Roundwall Software",
+              "links": [
+                {
+                  "name": "@samuelgoodwin",
+                  "url": "https://x.com/samuelgoodwin"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2018-03-01T12:05:00+09:00",
+      "sessions": [
+        {
+          "id": 8,
+          "title": "Optimizing Swift code for separation of concerns and simplicity",
+          "title_ja": "関心の分離と単純化のためのSwiftコードの最適化",
+          "description": "Separating concerns in code is often seen as a premature optimization when code doesn’t need to be reused, but it has huge implications in our ability to comprehend what code does. Let’s explore examples of this in Swift in what I like to call 'separating what code does from how it does what it does'.",
+          "description_ja": "関心の分離は、コードが再利用されないときには時期尚早な最適化とみなされることがよくありますが、我々がコードが何をしているのかを理解することに対しては大きく影響します。Swiftにおけるこの実例を紹介します。",
+          "speakers": [
+            {
+              "name": "Javier Soto",
+              "image_name": "javi",
+              "bio": "Javier Soto. Spanish, iOS developer in the SF Bay Area for the past 5 years. Worked at Pebble and Twitter before, now at Twitch. Big fan of Swift. When not writing code, he's playing chess, solving Rubik's cubes or flying planes",
+              "bio_ja": "Javier Soto はスペイン出身で、SFのベイエリアで5年間iOSエンジニアをしています。以前は、 Pebble や Twitter で働いていて、今は Twitch にいます。Swift の大ファンです。コードを書いていないときは、チェスをしたり、ルービックキューブを解いたり、飛行機を飛ばしています。",
+              "job_title": "iOS Developer at Twitch",
+              "job_title_ja": "iOS Developer at Twitch",
+              "links": [
+                {
+                  "name": "@javi",
+                  "url": "https://x.com/javi"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2018-03-01T12:30:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "Should coders design?",
+          "title_ja": "コーダーがデザインすべきなのか",
+          "description": "Almost all software engineers unanimously agree that the world where designers code is a better world. In this talk I'd like to explore the opposite idea. I'd like to explore how being aware of core design principals will save you time, make your products more resilient to the real-life challenges, improve your communication with users, and help to make smarter, more delightful products.",
+          "description_ja": "ほとんどのソフトウェアエンジニアは、デザイナーがコーディングする世界がより良い世界であることに同意します。 このトークでは、反対の考えを探求したいと思います。 コアデザインの原則を知っていることによって、時間を節約し、よりプロダクトに実用的な課題に対する弾力性を持たせ、ユーザーとのコミュニケーションを改善し、スマートで楽しいプロダクトを作るのに役立つということを探究したいと思います。",
+          "speakers": [
+            {
+              "name": "Sash Zats",
+              "image_name": "sash",
+              "bio": "Sash is a software engineer at Facebook working on News Feed. He works on user interaction, animations and experiences that make people smile. Strong believer that, in the future, designers will code and engineers will design because there will be no distinction between two. Days since he broke the like button: 0.",
+              "bio_ja": "Sash はFacebookのソフトウェアエンジニアでニュースフィードを作っています。ユーザーインタラクションやアニメーション、ユーザー体験の向上で、人々に笑顔を与えます。近い将来、デザイナーがコーディングをし、エンジニアがデザインをするようになると確信しています。その壁が無くなるからです。毎日いいね!ボタンを押せるのは彼のおかげです。",
+              "job_title": "Software Engineer at Facebook",
+              "job_title_ja": "Software Engineer at Facebook",
+              "links": [
+                {
+                  "name": "@zats",
+                  "url": "https://x.com/zats"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2018-03-01T13:00:00+09:00",
+      "sessions": [
+        {
+          "id": 10,
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2018-03-01T14:30:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "Event driven networking for Swift",
+          "title_ja": "Event driven networking for Swift",
+          "description": "Everyone knows that Swift is the language of choice for building apps for iPhone, iPad, Mac, Apple Watch and Apple TV. Over the last couple of years, Swift has also emerged as a great language for developing server applications that run on Linux. Today, most high-scale environments run by companies like Apple, Facebook, Google, Netflix and Twitter use performance-optimized networking frameworks built in Java, C++ and other languages.  This talk will cover how the server infrastructure teams at Apple are using Swift in their development, leveraging years of experience writing high-performance, highly-scalable network applications.",
+          "description_ja": "Swift が iPhone, iPad, Mac, Apple Watch そして Apple TV のアプリを開発する言語として選ばれていることはみなさんご存知でしょう。この数年、Swift は Linux で動作するサーバーサイドアプリケーションを開発するのにも優れた言語としても浮上してきました。現在、Apple, Facebook, Google, Netflix, Twitter などの企業が運用する大規模な環境では、Java、C ++などの言語による、パフォーマンスに最適化されたネットワークフレームワークが使われています。このトークでは、Apple のサーバーインフラストラクチャーチームが長年の経験を活かし、どのように高性能でスケーラビリティの高いネットワークアプリケーションを作成して、どのように開発時にSwiftを利用しているかについて説明します。",
+          "speakers": [
+            {
+              "name": "Norman Maurer",
+              "image_name": "norman",
+              "bio": "Norman Maurer is a software engineer on the iCloud team at Apple.  He works on the asynchronous network frameworks that underly many of Apple's services.",
+              "bio_ja": "Norman Maurer は Apple の iCloud チームのソフトウェアエンジニアです。 Apple の多くのサービスの根底にある非同期ネットワークのフレームワークに取り組んでいます。",
+              "job_title": "Software Engineer at Apple",
+              "job_title_ja": "Software Engineer at Apple",
+              "links": [
+                {
+                  "name": "@normanmaurer",
+                  "url": "https://x.com/normanmaurer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2018-03-01T14:55:00+09:00",
+      "sessions": [
+        {
+          "id": 12,
+          "title": "The diamond of variance",
+          "title_ja": "変性のダイヤモンド",
+          "description": "Generics is always a confusing yet interesting topic in Swift language. Generics Manifesto did a great explanation on how Swift's type system is built for practicality more than principle. But if we look at the theory of 'diamond of variance', we can have another point of view about the completeness of a type system and how Swift generics fit in with the theory.This talk will explain what really is Variance, Covariance, Contravariance in Swift as well as the last amazing piece of above diamond: The Phantom Type.",
+          "description_ja": "ジェネリクスはSwift言語における悩みの種となっている面白いトピックです。Generics Manifest では、Swift の型システムが定義よりも実践に重きを置いて作られたかについて素晴らしい説明がされています。ですが、「変性のダイヤモンド」という理論では、型システムの完全性とSwiftのジェネリクスがいかにこの理論にフィットしているかを別の視点で見ることができます。このトークでは、Swiftにおける変性、共変性、反変性と、ダイヤモンドの上に輝く、Phantom Type について説明します。",
+          "speakers": [
+            {
+              "name": "Vu Nhat Minh",
+              "image_name": "orakaro",
+              "bio": "Orakaro is an iOS Engineer at Mercari currently working on Atte, the Japanese community classifieds app. Though he had years of backend web programming experiences using languages such as Python or Scala, he decided to move on as a native mobile engineer after figuring out that smartphone apps were doing a better job of impacting the world each and every day. He also enjoys digging around concepts and theories in functional programming, learning abstract algebra and excited to help bring those academy concepts closer to industry products.\n\nIn spare time Orakaro enjoys playing the ancient game of Go. He is a 2 dan amateur go player.",
+              "bio_ja": "Orakaroは、現在メルカリのiOSエンジニアで、日本の地域コミュニティアプリであるアッテに取り組んでいます。彼は何年にもわたり、PythonやScalaなどの言語を使用したバックエンドWebプログラミングの経験を持っていましたが、スマートフォンアプリが毎日世界に影響を与えるような素晴らしい仕事をしていることを知り、ネイティブモバイルエンジニアとして取り組むことにしました。また、関数プログラミングの概念や理論を掘り下げ、抽象代数を学び、そのアカデミックなコンセプトを業界のプロダクトに近づけることを楽しみにしています。\n\n時間のあるときには、囲碁を楽しんでいます。二段のアマチュアです。",
+              "job_title": "iOS Engineer at Mercari / Souzoh",
+              "job_title_ja": "iOS Engineer at Mercari / Souzoh",
+              "links": [
+                {
+                  "name": "@orakaro",
+                  "url": "https://x.com/orakaro"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2018-03-01T15:05:00+09:00",
+      "sessions": [
+        {
+          "id": 13,
+          "title": "SwiftyPi",
+          "title_ja": "SwiftyPi",
+          "description": "From mobile development to server-side applications, we are starting to see how flexible the Swift language can be. But there are more frontiers to explore, that unlock new possibilities for Swift developers. In this session, Kate will show you the Good, the Bad and the Ugly of how to set up your Swift Environment in order to develop on a Raspberry Pi.",
+          "description_ja": "モバイル開発からサーバーサイドアプリケーションまで、我々はSwift 言語に柔軟性を見出だし始めています。ですがまだSwiftには開拓されていない領域があり、Swiftエンジニアがその可能性を切り開くかもしれません。このトークでは、Kate が Raspberry Pi で Swift の開発環境を構築するにあたって良かったこと、悪かったことについてお話します。",
+          "speakers": [
+            {
+              "name": "Kate Castellano",
+              "image_name": "kate",
+              "bio": "Kate Castellano is a Venezuelan Informatics Engineer, specialized in Mobile Development. She started her career as an Android Developer but then decided to change to iOS Development, where she has been working for the past 6 years. One of her passions is to work towards the inclusion of more women in technology, therefore she was the co-organizer of Women Who Go Berlin chapter, Event-Manager for Berlin's Geekettes Mentorship Program and a mentor in Learn It Girl!. She currently works as a Senior iOS Developer for Clue and looks forward to join more organisations. When she is not organising events or coding, you can find her traveling or finding new musicals to sing along to.",
+              "bio_ja": "Kate Castellano はベネズエラ出身のモバイル開発が得意なソフトウェアエンジニアです。初めは Android アプリのエンジニアでしたが、仕事を始めて6年たった頃に、iOSの開発に移りました。テクノロジーに関わる女性を増やすことに高い意欲を持っており、Women Who Go Berlin chapter の共同主催者や、ベルリンの Geekettes Mentorship Program のイベントマネージャ、Learn It Girl! のメンターを務めていました。現在はClue のシニアiOSエンジニアで、さらに参画する組織を探しています。休みの日は旅行に出かけたり、新しいミュージカルを探しています。",
+              "job_title": "Senior iOS Developer at Clue",
+              "job_title_ja": "Senior iOS Developer at Clue",
+              "links": [
+                {
+                  "name": "@katecastellano",
+                  "url": "https://x.com/katecastellano"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2018-03-01T15:25:00+09:00",
+      "sessions": [
+        {
+          "id": 14,
+          "title": "Swift in my home",
+          "title_ja": "我が家を支えるSwiftの技術",
+          "description": "Swift is an indispensable technology for communication in our home. Various things are made utilizing Swift such as iOS client applications for childcare, Web server which receives the request, SlackBot, regularly executed tasks for my chores, and so on. I would like to introduce some selected use-cases among countless possibilities.",
+          "description_ja": "Swiftは我が家庭内のコミュニケーションには欠かせない技術となっています。育児用のiOSクライアントアプリ、そのリクエストを受け取るWebサーバー、ちょっと便利なSlackBot、妻が喜ぶ定期実行タスクなどなど、いろんなものがSwiftによって作られ活用されています。数え切れないほどある中で厳選した幾つかを紹介したいと思います。",
+          "speakers": [
+            {
+              "name": "Yuki Asai",
+              "image_name": "yukiasai",
+              "bio": "Yuki Asai develops iOS apps and server-side apps using Scala. He codes with Swift, Haskell, Ruby, and sometimes ReactNative.",
+              "bio_ja": "iOSアプリを開発したりScalaでサーバーアプリを開発したりしてます。得意な言語はSwift、Haskell、Ruby。あ、ReactNativeもやってます。",
+              "job_title": "iOS Developer at Recruit Marketing Partners",
+              "job_title_ja": "iOS Developer at Recruit Marketing Partners",
+              "links": [
+                {
+                  "name": "@yukiasai417",
+                  "url": "https://x.com/yukiasai417"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "time": "2018-03-01T15:35:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "UI Testing for Fun and Profit",
+          "title_ja": "UI Test の楽しさとメリット",
+          "description": "Many iOS developers are well-versed in unit testing their applications, but haven't started taking advantage of UI testing within Xcode. Follow me on my journey of implementing UI testing in my app, where I'll share my highlights and struggles of testing all the things.",
+          "description_ja": "多くのiOS開発者はユニットテストには精通していますが、Xcodeを使ったUIテストを行なっていない方が多いと思います。自分のアプリに UI テストを導入した際のハイライトと、すべてをテストすることの苦労を共有します。",
+          "speakers": [
+            {
+              "name": "Sarah Olson",
+              "image_name": "sarah",
+              "bio": "Sarah Olson is an iOS developer for Trello at Atlassian. She has over eighteen years of development experience in a variety of technologies, including iOS, Android, Java, and WordPress development. As Director of Women Who Code Twin Cities, she leads a variety of initiatives and events focused on creating a more inclusive tech culture. You can follow her on Twitter at @saraheolson.",
+              "bio_ja": "Sarah Olsonは Atlassian で Trello を作っている iOS 開発者です。 iOS, Android, Java, Wordpress を含む様々な技術領域で18年以上開発しています。 Women Who Code Twin Cities のディレクターとして、より包括的な技術文化の創造に着目した様々な構想やイベントを率いています。Twitter @saraheolson をフォローしましょう。",
+              "job_title": "iOS Developer at Trello",
+              "job_title_ja": "iOS Developer at Trello",
+              "links": [
+                {
+                  "name": "@saraheolson",
+                  "url": "https://x.com/saraheolson"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2018-03-01T16:00:00+09:00",
+      "sessions": [
+        {
+          "id": 16,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2018-03-01T16:30:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "Writing Blockchain Clients in Swift",
+          "title_ja": "ブロックチェーンのクライアントをSwiftで実装する",
+          "description": "An introduction to writing decentralized apps in Swift.",
+          "description_ja": "Swiftにおける分散アプリケーションの作成について紹介します。",
+          "speakers": [
+            {
+              "name": "Tamar Nachmany",
+              "image_name": "tamar",
+              "bio": "Tamar Nachmany has spent the past two years building Tumblr as an iOS engineer on Tumblr's Community, Messaging, and Core iOS teams. She is passionate about learning from technology communities around the world and has given talks about engineering and product design in Germany, Australia, Mexico, the United States, and soon Japan! When she is not writing software she teaches engineering, writes fiction, and organizes an art residency. She lives in New York.",
+              "bio_ja": "Tamar Nachmany はこの２年間、iOS エンジニアとして Tumblr のコミュニティ、メッセージ、コア iOS チームで Tumblr の開発を行ってきました。彼女は、世界中の技術コミュニティから学ぶことに対して情熱を持っており、エンジニアリングやプロダクトデザインのトークをこれまでドイツ、オーストラリア、メキシコ、アメリカで行ってきました。そしてもうすぐ日本でも！ソフトウェア以外では、エンジニアリングを教えたり、小説を書いたり、アートレジデンスを組織しています。ニューヨーク在住。",
+              "job_title": "iOS Engineer at Tumblr",
+              "job_title_ja": "iOS Engineer at Tumblr",
+              "links": [
+                {
+                  "name": "@tamarshmallows",
+                  "url": "https://x.com/tamarshmallows"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "time": "2018-03-01T16:50:00+09:00",
+      "sessions": [
+        {
+          "id": 18,
+          "title": "Protocol Oriented WebAPI Abstraction",
+          "title_ja": "Protocol Oriented WebAPI Abstraction",
+          "description": "Most applications interact with the server via the Web API. I'd like to show you how to define protocol-oriented API to appropriately design API communication as the foundation of the application and make it easier to repair or change libraries that will be needed in the future. I will also introduce you to the design of a type-safe API abstraction layer combined with RxSwift. I will also show you my AbstractionKit framework.",
+          "description_ja": "今やスタンドアロンで動くiOSアプリは数少なく、ほとんどのアプリではWebAPIを経由してサーバーと情報のやり取りを行います。アプリの動作の根幹となるAPI通信を適切に設計し、将来の改修や通信/マッピングライブラリの入れ替えなどをより容易にするためのプロトコル指向なAPI定義の仕方と、さらにそれとRxSwiftを組み合わせた型安全なAPI抽象レイヤーの設計について紹介します。また、ここで話す内容をフレームワーク化したAbstractionKitの紹介をします。",
+          "speakers": [
+            {
+              "name": "Yuya Hirayama",
+              "image_name": "hiragram",
+              "bio": "Yuya Hirayama is an iOS engineer at VASILY Inc. He likes the idea of protocol-oriented programming, and pursuing code that realizes type-safe operation with minimal local definition by protocol + protocol extension. Recently, he is pulled toward the strong appeal of server side Swift, focusing more on Swift itself rather than iOS development. Yuya Hirayama also develops a virtual currency service as a side project, including the iOS application and the back-end API using Swift. In addition, he actively speaks at 'iOS Discord' and organizes 'Discord Offline', the first offline event of the community.",
+              "bio_ja": "株式会社VASILY iOSアプリエンジニア プロトコル指向プログラミングの思想が好きで、プロトコル+プロトコル拡張によって局所の定義を最小限に型安全な動作を実現するコードを追求しています。 また、最近はiOS開発よりもよりSwiftそのものに注目できるサーバーサイドSwiftに強い魅力を感じ、サイドプロジェクトとして仮想通貨関連のサービスをiOSアプリからバックエンドのAPIまで通じてSwiftで開発しています。 iOS Discordでアクティブに発言したり、同コミュニティ初のオフラインイベントDiscord Offlineを主宰したりするなど、コミュニティ活動も精力的に行います。",
+              "job_title": "iOS Engineer at VASILY Inc.",
+              "job_title_ja": "iOS Engineer at VASILY Inc.",
+              "links": [
+                {
+                  "name": "@hiragram",
+                  "url": "https://x.com/hiragram"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "time": "2018-03-01T17:05:00+09:00",
+      "sessions": [
+        {
+          "id": 19,
+          "title": "👾",
+          "title_ja": "👾",
+          "description": "Many indie game developers never use Swift for making their games. Let's develop mobile games in Swift. This session introduces how to develop casual games in Swift using SpriteKit / Game Algorithm / Tools. Become an indie game developer!",
+          "description_ja": "インディーズゲームの開発者の多くは、開発にSwiftを使ったことがありません。Swiftでモバイルゲームを作ってみましょう。このトークでは、Swiftでカジュアルゲームを作る方法を紹介します。SpriteKitやゲームのアルゴリズム、ツールについてもお話します。インディーズゲームの開発者になりましょう！",
+          "speakers": [
+            {
+              "name": "Kohki Miki",
+              "image_name": "giginet",
+              "bio": "Kohki Miki (a.k.a @giginet) is a software engineer at Cookpad. He builds infrastructure for mobile development and works to improve productivity of mobile developers. Also, he builds fastlane tools, as a member of core contributors, and other useful development tools. \n \n He likes game development, so he creates some games and writes books about game development.",
+              "bio_ja": "クックパッドのエンジニア。業務ではモバイル向けの開発基盤に携わり、開発者の生産性向上のため尽力している。 OSS では幾つかの開発ツールをホストしているほか、 fastlane tools の Core Contributor でもある。\n \n 趣味はインディーゲーム開発。著書に「cocos2d-xで始めるゲーム開発」など",
+              "job_title": "Engineer at Cookpad",
+              "job_title_ja": "Engineer at Cookpad",
+              "links": [
+                {
+                  "name": "@giginet",
+                  "url": "https://x.com/giginet"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "time": "2018-03-01T17:30:00+09:00",
+      "sessions": [
+        {
+          "id": 20,
+          "title": "AST Meta-programming",
+          "title_ja": "AST メタプログラミング",
+          "description": "Swift has few  dynamic behavior at run time. I will explore ways to achieve code injection and aspect oriented programming using AST.",
+          "description_ja": "Swift にはランタイムにおける動的な振る舞いがほとんどありません。コード注入の実現方法や、AST を用いたアスペクト指向プログラミングについてお話します。",
+          "speakers": [
+            {
+              "name": "Katsumi Kishikawa",
+              "image_name": "katsumi",
+              "bio": "Katsumi Kishikawa is an iOS/macOS developer working at Realm. He’s a serial open source library developer, and has published some popular libraries on GitHub. He’s also made big contributions to the iOS developer community in Japan with his experience and knowledge.",
+              "bio_ja": "RealmのiOS/macOS開発者。オープンソースの開発を行ったり、有名なライブラリを自身のGitHubに公開している。日本においては、その経験と知識で、日本のiOS開発者コミュニティに大きく貢献している。",
+              "job_title": "Freelance Software Engineer",
+              "job_title_ja": "Freelance Software Engineer",
+              "links": [
+                {
+                  "name": "@k_katsumi",
+                  "url": "https://x.com/k_katsumi"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "time": "2018-03-01T18:00:00+09:00",
+      "sessions": [
+        {
+          "id": 21,
+          "title": "Closing / Announcements",
+          "title_ja": "クロージング"
+        }
+      ]
+    }
+  ]
+}

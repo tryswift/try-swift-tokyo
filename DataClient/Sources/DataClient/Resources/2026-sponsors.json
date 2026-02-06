@@ -52,6 +52,12 @@
             "name": "Runway",
             "imageName": "Sponsor/2026/2026_Runway",
             "link": "https://www.runway.team/"
+        },
+        {
+            "id": 8,
+            "name": "Mozilla",
+            "imageName": "2026_Mozilla",
+            "link": "https://www.mozilla.com/"
         }
     ],
     "silver": [
