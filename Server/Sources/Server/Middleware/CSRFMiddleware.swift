@@ -25,12 +25,20 @@ struct CSRFMiddleware: AsyncMiddleware {
       return try await next.respond(to: request)
     } else {
       // For non-POST requests, ensure csrf_token cookie exists
-      let response = try await next.respond(to: request)
-
+      // Generate the token BEFORE the route handler runs so that
+      // csrfToken(from:) can read it from the request cookie.
+      var needsSetCookie = false
       if request.cookies["csrf_token"]?.string == nil
         || request.cookies["csrf_token"]?.string.isEmpty == true
       {
         let token = generateCSRFToken()
+        request.cookies["csrf_token"] = HTTPCookies.Value(string: token)
+        needsSetCookie = true
+      }
+
+      let response = try await next.respond(to: request)
+
+      if needsSetCookie, let token = request.cookies["csrf_token"]?.string {
         response.cookies["csrf_token"] = HTTPCookies.Value(
           string: token,
           expires: Date().addingTimeInterval(86400 * 7),
