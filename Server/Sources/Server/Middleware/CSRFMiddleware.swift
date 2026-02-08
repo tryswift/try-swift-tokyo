@@ -24,13 +24,12 @@ struct CSRFMiddleware: AsyncMiddleware {
 
       return try await next.respond(to: request)
     } else {
-      // For non-POST requests, ensure csrf_token cookie exists
+      // For non-POST requests, ensure csrf_token cookie exists and is valid hex.
       // Generate the token BEFORE the route handler runs so that
       // csrfToken(from:) can read it from the request cookie.
+      let existingToken = request.cookies["csrf_token"]?.string ?? ""
       var needsSetCookie = false
-      if request.cookies["csrf_token"]?.string == nil
-        || request.cookies["csrf_token"]?.string.isEmpty == true
-      {
+      if existingToken.isEmpty || !isValidHexToken(existingToken) {
         let token = generateCSRFToken()
         request.cookies["csrf_token"] = HTTPCookies.Value(string: token)
         needsSetCookie = true
@@ -59,6 +58,10 @@ struct CSRFMiddleware: AsyncMiddleware {
     for i in 0..<32 {
       bytes[i] = UInt8.random(in: 0...255)
     }
-    return Data(bytes).base64EncodedString()
+    return bytes.map { String(format: "%02x", $0) }.joined()
+  }
+
+  private func isValidHexToken(_ token: String) -> Bool {
+    token.count == 64 && token.allSatisfy { $0.isHexDigit }
   }
 }
