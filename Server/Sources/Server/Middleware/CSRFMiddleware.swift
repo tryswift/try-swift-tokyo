@@ -51,6 +51,6 @@ struct CSRFMiddleware: AsyncMiddleware {
     for i in 0..<32 {
       bytes[i] = UInt8.random(in: 0...255)
     }
-    return Data(bytes).base64EncodedString()
+    return bytes.map { String(format: "%02x", $0) }.joined()
   }
 }

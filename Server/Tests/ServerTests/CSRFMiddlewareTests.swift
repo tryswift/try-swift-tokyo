@@ -168,6 +168,29 @@ struct CSRFMiddlewareTests {
     try await app.asyncShutdown()
   }
 
+  @Test("Generated CSRF token uses only hex characters (no base64 special chars)")
+  func generatedTokenIsHexSafe() async throws {
+    let app = try await makeApp()
+    do {
+      try await app.testing().test(.GET, "page") { response in
+        #expect(response.status == .ok)
+
+        let csrfCookie = response.headers.setCookie?["csrf_token"]
+        let token = csrfCookie?.string ?? ""
+        #expect(!token.isEmpty)
+        // Token should be 64 hex chars (32 bytes × 2 hex digits each)
+        #expect(token.count == 64)
+        // Token must only contain hex-safe characters (no +, /, =)
+        let hexCharSet = CharacterSet(charactersIn: "0123456789abcdef")
+        #expect(token.unicodeScalars.allSatisfy { hexCharSet.contains($0) })
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
   @Test("POST form field takes precedence over header when both present")
   func postFormFieldPrecedence() async throws {
     let app = try await makeApp()
