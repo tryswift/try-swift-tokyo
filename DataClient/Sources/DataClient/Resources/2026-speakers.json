@@ -66,5 +66,39 @@
         "name": "@koher"
       }
     ]
+  },
+  {
+    "name": "Natalia Panferova",
+    "image_name": "natalia_panferova",
+    "bio": "Natalia has been working in tech for over ten years, and most of her career has been dedicated to iOS development. She's worked in both small startups and large companies, and now she's focusing on her own projects at Nil Coalescing, a company she founded with her partner back in 2022. Right before that, she was part of the SwiftUI team at Apple, designing and building SwiftUI APIs.\n\nShe's very passionate about creating apps for Apple platforms and sharing her knowledge through her blog and books for Swift and SwiftUI developers. She lives in the South Island of New Zealand, and when she's not coding or writing, she loves going on nature walks with her partner and their two dogs.",
+    "bio_ja": "Nataliaはテック業界で10年以上の経験があり、そのほとんどを iOS 開発に携わってきました。スタートアップから大企業までさまざまな環境で働いた経験があり、現在は 2022 年にパートナーとともに設立した会社「Nil Coalescing」で自身のプロジェクトに取り組んでいます。その前は Apple の SwiftUI チームに所属し、SwiftUI の API の設計と実装に携わっていました。\n\nApple プラットフォーム向けのアプリ開発に強い情熱を持っており、ブログや Swift / SwiftUI 開発者向けの書籍を通じて知識を共有することにも力を入れています。ニュージーランド南島在住で、コーディングや執筆をしていないときは、パートナーと 2 匹の犬と一緒に自然の中を散歩するのが好きです。",
+    "job_title": "iOS Developer, Tech Blogger, Book Author",
+    "links": [
+      {
+        "url": "https://github.com/nataliapanferova",
+        "name": "@nataliapanferova"
+      },
+      {
+        "url": "https://x.com/natpanferova",
+        "name": "@natpanferova"
+      },
+      {
+        "url": "https://bsky.app/profile/natpanferova.bsky.social",
+        "name": "@natpanferova"
+      }
+    ]
+  },
+  {
+    "name": "Daniel Steinberg",
+    "image_name": "daniel_steinberg",
+    "bio": "Daniel is the author of more than a dozen books including the best selling books The Curious Case of the Async Cafe, A SwiftUI Kickstart, A Swift Kickstart, A Bread Baking Kickstart, and Dear Elena.\n\nDaniel presents iOS, SwiftUI, and Swift training and consults through his company Dim Sum Thinking.\n\nHe has written apps for the iPhone and the iPad since the SDKs first appeared and has written programs for the Mac all the way back to System 7. When he's not coding or talking about coding for the Mac, the iPhone, and the iPad he's probably cooking, baking bread, or hanging out with friends.",
+    "bio_ja": "Danielはこれまでに十数冊以上を執筆しており、その中にはベストセラーとなった『The Curious Case of the Async Cafe』『A SwiftUI Kickstart』『A Swift Kickstart』『A Bread Baking Kickstart』『Dear Elena』などがあります。\n\n自身の会社である Dim Sum Thinking を通じて、iOS・SwiftUI・Swift に関するトレーニングやコンサルティングを行っています。\n\niPhone と iPad の SDK が最初に公開された当初からこれらのデバイス向けのアプリを開発しており、Mac 向けのプログラムも System 7 の時代から書いてきました。Mac、iPhone、iPad 向けのコーディングやその話をしていないときは、たいてい料理をしたり、パンを焼いたり、友人たちと過ごしたりしています。",
+    "job_title": "Storyteller",
+    "links": [
+      {
+        "url": "https://linkedin.com/in/dimsumthinking",
+        "name": "@dimsumthinking"
+      }
+    ]
   }
 ]
