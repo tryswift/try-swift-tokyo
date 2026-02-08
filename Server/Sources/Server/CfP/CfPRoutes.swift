@@ -488,7 +488,8 @@ struct CfPRoutes: RouteCollection {
     }
 
     // Validate
-    guard !formData.githubUsername.isEmpty else {
+    let githubUsername = formData.githubUsername.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !githubUsername.isEmpty else {
       return try await renderSubmitPageWithError(
         req: req,
         user: user,
@@ -613,7 +614,7 @@ struct CfPRoutes: RouteCollection {
       iconURL: formData.iconUrl,
       notes: formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers,
       speakerID: user.id,
-      githubUsername: formData.githubUsername
+      githubUsername: githubUsername
     )
 
     try await proposal.save(on: req.db)
@@ -744,7 +745,8 @@ struct CfPRoutes: RouteCollection {
     }
 
     // 5. Validation
-    guard !formData.githubUsername.isEmpty else {
+    let githubUsername = formData.githubUsername.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !githubUsername.isEmpty else {
       return try await renderEditProposalPageWithError(
         req: req, user: user, proposal: proposal,
         error: language == .ja ? "GitHub IDは必須です" : "GitHub ID is required",
@@ -814,7 +816,7 @@ struct CfPRoutes: RouteCollection {
     proposal.abstract = formData.abstract
     proposal.talkDetail = formData.talkDetails
     proposal.talkDuration = talkDuration
-    proposal.githubUsername = formData.githubUsername
+    proposal.githubUsername = githubUsername
     proposal.speakerName = formData.speakerName
     proposal.speakerEmail = formData.speakerEmail
     proposal.bio = formData.bio

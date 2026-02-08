@@ -57,7 +57,8 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @OptionalField(key: "papercall_username")
   var paperCallUsername: String?
 
-  /// GitHub username of the speaker
+  /// GitHub username entered by the speaker at submission time (may differ from the
+  /// authenticated User username or PaperCall username)
   @OptionalField(key: "github_username")
   var githubUsername: String?
 
