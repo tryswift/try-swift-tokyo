@@ -57,6 +57,10 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @OptionalField(key: "papercall_username")
   var paperCallUsername: String?
 
+  /// GitHub username of the speaker
+  @OptionalField(key: "github_username")
+  var githubUsername: String?
+
   /// Proposal review status
   @Field(key: "status")
   var status: ProposalStatus
@@ -87,7 +91,8 @@ final class Proposal: Model, Content, @unchecked Sendable {
     iconURL: String? = nil,
     notes: String? = nil,
     speakerID: UUID,
-    status: ProposalStatus = .submitted
+    status: ProposalStatus = .submitted,
+    githubUsername: String? = nil
   ) {
     self.id = id
     self.$conference.id = conferenceID
@@ -102,6 +107,7 @@ final class Proposal: Model, Content, @unchecked Sendable {
     self.notes = notes
     self.$speaker.id = speakerID
     self.status = status
+    self.githubUsername = githubUsername
   }
 
   /// Convert to DTO for API responses
@@ -130,7 +136,8 @@ final class Proposal: Model, Content, @unchecked Sendable {
       speakerUsername: speakerUsername,
       status: status,
       createdAt: createdAt,
-      updatedAt: updatedAt
+      updatedAt: updatedAt,
+      githubUsername: githubUsername
     )
   }
 }

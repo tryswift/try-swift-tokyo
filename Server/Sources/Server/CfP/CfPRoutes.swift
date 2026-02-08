@@ -467,6 +467,7 @@ struct CfPRoutes: RouteCollection {
       var abstract: String
       var talkDetails: String
       var talkDuration: String
+      var githubUsername: String
       var speakerName: String
       var speakerEmail: String
       var bio: String
@@ -487,6 +488,14 @@ struct CfPRoutes: RouteCollection {
     }
 
     // Validate
+    guard !formData.githubUsername.isEmpty else {
+      return try await renderSubmitPageWithError(
+        req: req,
+        user: user,
+        error: language == .ja ? "GitHub IDは必須です" : "GitHub ID is required",
+        language: language
+      )
+    }
     guard !formData.title.isEmpty else {
       return try await renderSubmitPageWithError(
         req: req,
@@ -603,7 +612,8 @@ struct CfPRoutes: RouteCollection {
       bio: formData.bio,
       iconURL: formData.iconUrl,
       notes: formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers,
-      speakerID: user.id
+      speakerID: user.id,
+      githubUsername: formData.githubUsername
     )
 
     try await proposal.save(on: req.db)
@@ -714,6 +724,7 @@ struct CfPRoutes: RouteCollection {
       var abstract: String
       var talkDetails: String
       var talkDuration: String
+      var githubUsername: String
       var speakerName: String
       var speakerEmail: String
       var bio: String
@@ -733,6 +744,13 @@ struct CfPRoutes: RouteCollection {
     }
 
     // 5. Validation
+    guard !formData.githubUsername.isEmpty else {
+      return try await renderEditProposalPageWithError(
+        req: req, user: user, proposal: proposal,
+        error: language == .ja ? "GitHub IDは必須です" : "GitHub ID is required",
+        language: language
+      )
+    }
     guard !formData.title.isEmpty else {
       return try await renderEditProposalPageWithError(
         req: req, user: user, proposal: proposal,
@@ -796,6 +814,7 @@ struct CfPRoutes: RouteCollection {
     proposal.abstract = formData.abstract
     proposal.talkDetail = formData.talkDetails
     proposal.talkDuration = talkDuration
+    proposal.githubUsername = formData.githubUsername
     proposal.speakerName = formData.speakerName
     proposal.speakerEmail = formData.speakerEmail
     proposal.bio = formData.bio

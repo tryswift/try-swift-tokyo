@@ -240,9 +240,33 @@ struct EditProposalPageView: HTML, Sendable {
 
   private func speakerTextFields(proposal: ProposalDTO) -> some HTML {
     div(.class("col-md-8")) {
+      githubUsernameField(value: proposal.githubUsername ?? "")
       speakerNameField(value: proposal.speakerName)
       speakerEmailField(value: proposal.speakerEmail)
       speakerBioField(value: proposal.bio)
+    }
+  }
+
+  private func githubUsernameField(value: String) -> some HTML {
+    div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("githubUsername")) {
+        language == .ja ? "GitHub ID *" : "GitHub ID *"
+      }
+      input(
+        .type(.text),
+        .class("form-control"),
+        .name("githubUsername"),
+        .id("githubUsername"),
+        .required,
+        .value(value),
+        .placeholder(language == .ja ? "GitHubユーザー名" : "GitHub username"),
+        .custom(name: "oninput", value: "onGitHubUsernameInput(this.value)")
+      )
+      div(.class("form-text")) {
+        language == .ja
+          ? "GitHubのユーザー名を入力してください。プロフィール画像URLが空の場合、GitHubのアバターが自動設定されます。"
+          : "Enter your GitHub username. If profile picture URL is empty, your GitHub avatar will be auto-filled."
+      }
     }
   }
 
@@ -415,6 +439,14 @@ struct EditProposalPageView: HTML, Sendable {
           const preview = document.getElementById('iconPreview');
           if (url && url.trim() !== '') {
             preview.src = url;
+          }
+        }
+        function onGitHubUsernameInput(username) {
+          const iconUrlField = document.getElementById('iconUrl');
+          if (username && username.trim() !== '' && (!iconUrlField.value || iconUrlField.value.trim() === '')) {
+            const avatarUrl = 'https://github.com/' + username.trim() + '.png';
+            iconUrlField.value = avatarUrl;
+            updateIconPreview(avatarUrl);
           }
         }
       </script>
