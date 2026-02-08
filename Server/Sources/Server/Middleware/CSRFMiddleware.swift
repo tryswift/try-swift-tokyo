@@ -19,6 +19,11 @@ struct CSRFMiddleware: AsyncMiddleware {
       let submittedToken = formToken ?? headerToken
 
       guard let submittedToken, submittedToken == cookieToken else {
+        let formPrefix = formToken.map { String($0.prefix(8)) } ?? "nil"
+        let headerPrefix = headerToken.map { String($0.prefix(8)) } ?? "nil"
+        request.logger.warning(
+          "CSRF mismatch: cookie=\(String(cookieToken.prefix(8)))… form=\(formPrefix) header=\(headerPrefix)"
+        )
         throw Abort(.forbidden, reason: "CSRF token mismatch")
       }
 
