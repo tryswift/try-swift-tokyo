@@ -268,6 +268,67 @@ struct CSRFMiddlewareTests {
     try await app.asyncShutdown()
   }
 
+  @Test("POST with _csrf among other form fields passes through")
+  func postWithCsrfAmongOtherFields() async throws {
+    let app = try await makeApp()
+    do {
+      let token = "a1b3c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8"
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(
+            dictionaryLiteral: ("csrf_token", .init(string: token)))
+          req.headers.contentType = .urlEncodedForm
+          req.body = ByteBuffer(
+            string:
+              "_csrf=\(token)&title=Test+Talk&abstract=Some+abstract&talkDuration=invited"
+          )
+        }
+      ) { response in
+        #expect(response.status == .ok)
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
+  @Test("Full GET-then-POST flow: token from GET cookie works in subsequent POST")
+  func fullGetThenPostFlow() async throws {
+    let app = try await makeApp()
+    do {
+      // Step 1: GET to obtain a CSRF token
+      var csrfToken = ""
+      try await app.testing().test(.GET, "page") { response in
+        #expect(response.status == .ok)
+        let cookie = response.headers.setCookie?["csrf_token"]
+        csrfToken = cookie?.string ?? ""
+        #expect(!csrfToken.isEmpty)
+      }
+
+      // Step 2: POST with the token from step 1 in both cookie and form field
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(
+            dictionaryLiteral: ("csrf_token", .init(string: csrfToken)))
+          req.headers.contentType = .urlEncodedForm
+          req.body = ByteBuffer(
+            string:
+              "_csrf=\(csrfToken)&title=Test+Talk&talkDuration=invited"
+          )
+        }
+      ) { response in
+        #expect(response.status == .ok)
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
   @Test("Non-POST methods (PUT, DELETE, PATCH) are not blocked")
   func nonPostMethodsPass() async throws {
     let app = try await Application.make(.testing)
