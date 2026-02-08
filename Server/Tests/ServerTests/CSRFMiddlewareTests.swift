@@ -41,23 +41,54 @@ struct CSRFMiddlewareTests {
     try await app.asyncShutdown()
   }
 
-  @Test("GET request with existing csrf_token cookie does not overwrite it")
+  @Test("GET request with existing valid hex csrf_token cookie does not overwrite it")
   func getPreservesExistingCookie() async throws {
     let app = try await makeApp()
     do {
+      let validHexToken = String(repeating: "ab", count: 32)  // 64 hex chars
       try await app.testing().test(
         .GET, "page",
         beforeRequest: { req in
           req.headers.cookie = HTTPCookies(
-            dictionaryLiteral: ("csrf_token", .init(string: "existing-token")))
+            dictionaryLiteral: ("csrf_token", .init(string: validHexToken)))
         }
       ) { response in
         #expect(response.status == .ok)
 
-        // Should not set a new cookie since one already exists
+        // Should not set a new cookie since a valid hex token already exists
         let setCookieHeader = response.headers.setCookie
         let csrfCookie = setCookieHeader?["csrf_token"]
         #expect(csrfCookie == nil)
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
+  @Test("GET request with legacy base64 csrf_token cookie regenerates it")
+  func getRegeneratesLegacyBase64Cookie() async throws {
+    let app = try await makeApp()
+    do {
+      // Simulate a legacy base64 token containing +, /, =
+      let legacyBase64Token = "abc+def/ghi12345678901234567890=="
+      try await app.testing().test(
+        .GET, "page",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(
+            dictionaryLiteral: ("csrf_token", .init(string: legacyBase64Token)))
+        }
+      ) { response in
+        #expect(response.status == .ok)
+
+        // Should regenerate cookie since existing one is not valid hex
+        let csrfCookie = response.headers.setCookie?["csrf_token"]
+        #expect(csrfCookie != nil)
+        let newToken = csrfCookie?.string ?? ""
+        #expect(newToken.count == 64)
+        let hexCharSet = CharacterSet(charactersIn: "0123456789abcdef")
+        #expect(newToken.unicodeScalars.allSatisfy { hexCharSet.contains($0) })
       }
     } catch {
       try await app.asyncShutdown()
