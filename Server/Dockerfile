@@ -58,6 +58,7 @@ COPY --from=build /staging /app
 
 # Copy static assets (images)
 COPY ./Website/Assets/images ./Public/images
+COPY ./Server/Public/cfp ./Public/cfp
 
 ENV SWIFT_BACKTRACE=enable=yes,sanitize=yes,threads=all,images=all,interactive=no,swift-backtrace=./swift-backtrace-static
 

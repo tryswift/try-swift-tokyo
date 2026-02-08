@@ -23,7 +23,7 @@ struct CfPNavigation: HTML, Sendable {
           .href(language.path(for: "/"))
         ) {
           img(
-            .src("/images/riko.png"),
+            .src("/cfp/images/riko.png"),
             .alt("Riko"),
             .class("me-2"),
             .style("height: 28px; width: 28px;")
