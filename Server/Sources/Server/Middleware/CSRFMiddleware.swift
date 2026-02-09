@@ -9,13 +9,17 @@ struct CSRFMiddleware: AsyncMiddleware {
   func respond(to request: Request, chainingTo next: AsyncResponder) async throws -> Response {
     if request.method == .POST {
       // Validate CSRF token on POST requests
-      guard let cookieToken = request.cookies["csrf_token"]?.string, !cookieToken.isEmpty else {
+      guard
+        let rawCookieToken = request.cookies["csrf_token"]?.string,
+        !rawCookieToken.isEmpty
+      else {
         throw Abort(.forbidden, reason: "CSRF token missing")
       }
+      let cookieToken = normalizeToken(rawCookieToken)
 
       // Check form field first, then header
-      let formToken = try? request.content.get(String.self, at: "_csrf")
-      let headerToken = request.headers.first(name: "X-CSRF-Token")
+      let formToken = (try? request.content.get(String.self, at: "_csrf")).map(normalizeToken)
+      let headerToken = request.headers.first(name: "X-CSRF-Token").map(normalizeToken)
       let submittedToken = formToken ?? headerToken
 
       guard let submittedToken, submittedToken == cookieToken else {
@@ -32,7 +36,7 @@ struct CSRFMiddleware: AsyncMiddleware {
       // For non-POST requests, ensure csrf_token cookie exists and is valid hex.
       // Generate the token BEFORE the route handler runs so that
       // csrfToken(from:) can read it from the request cookie.
-      let existingToken = request.cookies["csrf_token"]?.string ?? ""
+      let existingToken = normalizeToken(request.cookies["csrf_token"]?.string ?? "")
       var needsSetCookie = false
       if existingToken.isEmpty || !isValidHexToken(existingToken) {
         let token = generateCSRFToken()
@@ -68,5 +72,13 @@ struct CSRFMiddleware: AsyncMiddleware {
 
   private func isValidHexToken(_ token: String) -> Bool {
     token.count == 64 && token.allSatisfy { $0.isHexDigit }
+  }
+
+  private func normalizeToken(_ token: String) -> String {
+    let trimmed = token.trimmingCharacters(in: .whitespacesAndNewlines)
+    if trimmed.first == "\"", trimmed.last == "\"", trimmed.count >= 2 {
+      return String(trimmed.dropFirst().dropLast())
+    }
+    return trimmed
   }
 }

@@ -199,6 +199,28 @@ struct CSRFMiddlewareTests {
     try await app.asyncShutdown()
   }
 
+  @Test("POST with quoted csrf_token cookie and matching form token passes through")
+  func postWithQuotedCookieTokenPasses() async throws {
+    let app = try await makeApp()
+    do {
+      let token = String(repeating: "ab", count: 32)  // 64 hex chars
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.replaceOrAdd(name: .cookie, value: "csrf_token=\"\(token)\"")
+          req.headers.contentType = .urlEncodedForm
+          req.body = ByteBuffer(string: "_csrf=\(token)")
+        }
+      ) { response in
+        #expect(response.status == .ok)
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
   @Test("Generated CSRF token uses only hex characters (no base64 special chars)")
   func generatedTokenIsHexSafe() async throws {
     let app = try await makeApp()
