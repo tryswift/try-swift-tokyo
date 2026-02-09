@@ -221,6 +221,53 @@ struct CSRFMiddlewareTests {
     try await app.asyncShutdown()
   }
 
+  @Test("POST with duplicate csrf_token cookies accepts any matching token")
+  func postWithDuplicateCookieTokensPasses() async throws {
+    let app = try await makeApp()
+    do {
+      let stale = String(repeating: "cd", count: 32)
+      let fresh = String(repeating: "ab", count: 32)
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.replaceOrAdd(
+            name: .cookie,
+            value: "csrf_token=\(stale); foo=bar; csrf_token=\(fresh)")
+          req.headers.contentType = .urlEncodedForm
+          req.body = ByteBuffer(string: "_csrf=\(fresh)")
+        }
+      ) { response in
+        #expect(response.status == .ok)
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
+  @Test("POST falls back to raw body parsing for _csrf when content decoder cannot decode")
+  func postFallbackRawBodyParsingPasses() async throws {
+    let app = try await makeApp()
+    do {
+      let token = String(repeating: "ab", count: 32)
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(dictionaryLiteral: ("csrf_token", .init(string: token)))
+          req.headers.contentType = .plainText
+          req.body = ByteBuffer(string: "_csrf=\(token)&title=hello")
+        }
+      ) { response in
+        #expect(response.status == .ok)
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
   @Test("Generated CSRF token uses only hex characters (no base64 special chars)")
   func generatedTokenIsHexSafe() async throws {
     let app = try await makeApp()
