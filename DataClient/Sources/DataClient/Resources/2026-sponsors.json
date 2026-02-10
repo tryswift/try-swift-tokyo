@@ -124,7 +124,14 @@
             "link": "https://tech.cybozu.io/"
         }
     ],
-    "community": [],
+    "community": [
+        {
+            "id": 1,
+            "name": "株式会社Qiita",
+            "imageName": "Sponsor/2026/2026_Qiita",
+            "link": "https://qiita.com/"
+        }
+    ],
     "individual": [
         {
             "id": 1,
