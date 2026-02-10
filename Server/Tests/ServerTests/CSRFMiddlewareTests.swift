@@ -268,6 +268,48 @@ struct CSRFMiddlewareTests {
     try await app.asyncShutdown()
   }
 
+  @Test("POST multipart body with file part falls back and extracts _csrf")
+  func postFallbackMultipartBodyParsingPasses() async throws {
+    let app = try await makeApp()
+    do {
+      let token = String(repeating: "ab", count: 32)
+      let boundary = "----WebKitFormBoundary7MA4YWxkTrZu0gW"
+      let normalizedBody = [
+        "--\(boundary)",
+        "Content-Disposition: form-data; name=\"_csrf\"",
+        "",
+        token,
+        "--\(boundary)",
+        "Content-Disposition: form-data; name=\"title\"",
+        "",
+        "Example Talk",
+        "--\(boundary)",
+        "Content-Disposition: form-data; name=\"file\"; filename=\"speakers.csv\"",
+        "Content-Type: text/csv",
+        "",
+        "name,topic",
+        "Alice,Swift Concurrency",
+        "--\(boundary)--",
+        "",
+      ].joined(separator: "\r\n")
+
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(dictionaryLiteral: ("csrf_token", .init(string: token)))
+          req.headers.contentType = .plainText
+          req.body = ByteBuffer(string: normalizedBody)
+        }
+      ) { response in
+        #expect(response.status == .ok)
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
   @Test("Generated CSRF token uses only hex characters (no base64 special chars)")
   func generatedTokenIsHexSafe() async throws {
     let app = try await makeApp()
