@@ -387,6 +387,24 @@ struct AuthController: RouteCollection {
       req.logger.info("Created new user: \(user.username)")
     }
 
+    // 8b. Re-associate proposals that reference this GitHub username
+    //     but are still pointing to the PaperCall import user (best-effort).
+    if let userID = user.id {
+      do {
+        try await Proposal.query(on: req.db)
+          .group(.or) { group in
+            group.filter(\.$paperCallUsername == user.username)
+            group.filter(\.$githubUsername == user.username)
+          }
+          .filter(\.$speaker.$id == AddPaperCallImportUser.paperCallUserID)
+          .set(\.$speaker.$id, to: userID)
+          .update()
+      } catch {
+        req.logger.warning(
+          "Failed to re-associate proposals for user \(user.username): \(error)")
+      }
+    }
+
     // 9. Generate JWT token
     guard let userID = user.id else {
       return req.redirect(to: "\(Self.frontendURL)/login-page?error=user_creation_failed")
