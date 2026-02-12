@@ -1310,11 +1310,12 @@ struct CfPRoutes: RouteCollection {
       throw Abort(.badRequest, reason: "Invalid proposal ID")
     }
 
-    guard let dbProposal = try await Proposal.query(on: req.db)
-      .filter(\.$id == proposalID)
-      .with(\.$speaker)
-      .with(\.$conference)
-      .first()
+    guard
+      let dbProposal = try await Proposal.query(on: req.db)
+        .filter(\.$id == proposalID)
+        .with(\.$speaker)
+        .with(\.$conference)
+        .first()
     else {
       throw Abort(.notFound, reason: "Proposal not found")
     }

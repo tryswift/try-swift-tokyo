@@ -91,7 +91,8 @@ enum EmailNotifier {
   ) async -> SendResult {
     guard let apiKey = Environment.get("EMAIL_API_KEY") else {
       logger.debug("EMAIL_API_KEY not configured, skipping email")
-      return SendResult(success: false, recipientEmail: email, error: "EMAIL_API_KEY not configured")
+      return SendResult(
+        success: false, recipientEmail: email, error: "EMAIL_API_KEY not configured")
     }
     guard let fromAddress = Environment.get("EMAIL_FROM_ADDRESS") else {
       logger.debug("EMAIL_FROM_ADDRESS not configured, skipping email")
