@@ -58,6 +58,13 @@ struct OrganizerProposalsPageView: HTML, Sendable {
             + Add Proposal
           </button>
           """)
+        // Send Emails button
+        a(
+          .class("btn btn-outline-info"),
+          .href("/organizer/emails")
+        ) {
+          "Send Emails"
+        }
         // Import button
         a(
           .class("btn btn-outline-primary"),

@@ -62,6 +62,12 @@ struct CfPRoutes: RouteCollection {
     organizer.post("proposals", ":proposalID", "reject", use: handleRejectProposal)
     organizer.post("proposals", ":proposalID", "revert-status", use: handleRevertProposalStatus)
 
+    // Email notifications
+    organizer.get("emails", use: organizerEmailsPage)
+    organizer.post("emails", "send", use: handleSendBulkEmails)
+    organizer.get("proposals", ":proposalID", "email", use: organizerEmailPreviewPage)
+    organizer.post("proposals", ":proposalID", "email", "send", use: handleSendProposalEmail)
+
     // Timetable editor
     organizer.get("timetable", use: timetableEditorPage)
     organizer.get("timetable", "api", "slots", use: getTimetableSlots)
@@ -1122,6 +1128,241 @@ struct CfPRoutes: RouteCollection {
     try await proposal.save(on: req.db)
 
     return req.redirect(to: "/organizer/proposals/\(proposalID)")
+  }
+
+  // MARK: - Email Notifications
+
+  @Sendable
+  func organizerEmailsPage(req: Request) async throws -> HTMLResponse {
+    let user = try? await getAuthenticatedUser(req: req)
+
+    let statusFilter = req.query[String.self, at: "status"] ?? "accepted"
+    let langParam = req.query[String.self, at: "lang"] ?? "en"
+    let language: CfPLanguage = langParam == "ja" ? .ja : .en
+    let emailType: EmailType = statusFilter == "rejected" ? .rejection : .acceptance
+
+    var proposals: [ProposalDTO] = []
+    if let user, user.role == .admin {
+      let targetStatus: ProposalStatus = statusFilter == "rejected" ? .rejected : .accepted
+      let dbProposals = try await Proposal.query(on: req.db)
+        .filter(\.$status == targetStatus)
+        .with(\.$speaker)
+        .with(\.$conference)
+        .sort(\.$createdAt, .descending)
+        .all()
+      proposals = try dbProposals.map {
+        try $0.toDTO(speakerUsername: $0.speaker.username, conference: $0.conference)
+      }
+    }
+
+    let preview = EmailTemplates.preview(type: emailType, language: language)
+    let csrfToken = csrfToken(from: req)
+    return HTMLResponse {
+      CfPLayout(title: "Email Notifications", user: user) {
+        OrganizerEmailsPageView(
+          user: user,
+          proposals: proposals,
+          statusFilter: statusFilter,
+          language: language,
+          emailType: emailType,
+          previewSubject: preview.subject,
+          previewBody: preview.body,
+          sendResults: nil,
+          csrfToken: csrfToken
+        )
+      }
+    }
+  }
+
+  @Sendable
+  func handleSendBulkEmails(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    struct BulkEmailForm: Content {
+      var status: String
+      var lang: String
+      var emailType: String
+    }
+
+    let formData = try req.content.decode(BulkEmailForm.self)
+    let language: CfPLanguage = formData.lang == "ja" ? .ja : .en
+    let emailType: EmailType = formData.emailType == "rejection" ? .rejection : .acceptance
+    let targetStatus: ProposalStatus = formData.status == "rejected" ? .rejected : .accepted
+
+    let dbProposals = try await Proposal.query(on: req.db)
+      .filter(\.$status == targetStatus)
+      .with(\.$speaker)
+      .with(\.$conference)
+      .sort(\.$createdAt, .descending)
+      .all()
+
+    let proposalDTOs = try dbProposals.map {
+      try $0.toDTO(speakerUsername: $0.speaker.username, conference: $0.conference)
+    }
+
+    let recipients = proposalDTOs.map {
+      (speakerName: $0.speakerName, speakerEmail: $0.speakerEmail, proposalTitle: $0.title)
+    }
+
+    let results = await EmailNotifier.sendBulkEmails(
+      proposals: recipients,
+      emailType: emailType,
+      language: language,
+      client: req.client,
+      logger: req.logger
+    )
+
+    let preview = EmailTemplates.preview(type: emailType, language: language)
+    let csrfToken = csrfToken(from: req)
+
+    let html = HTMLResponse {
+      CfPLayout(title: "Email Notifications", user: user) {
+        OrganizerEmailsPageView(
+          user: user,
+          proposals: proposalDTOs,
+          statusFilter: formData.status,
+          language: language,
+          emailType: emailType,
+          previewSubject: preview.subject,
+          previewBody: preview.body,
+          sendResults: results,
+          csrfToken: csrfToken
+        )
+      }
+    }
+    return try await html.encodeResponse(for: req)
+  }
+
+  @Sendable
+  func organizerEmailPreviewPage(req: Request) async throws -> HTMLResponse {
+    let user = try? await getAuthenticatedUser(req: req)
+    var proposal: ProposalDTO?
+
+    if let user, user.role == .admin {
+      if let proposalIDString = req.parameters.get("proposalID"),
+        let proposalID = UUID(uuidString: proposalIDString)
+      {
+        if let dbProposal = try await Proposal.query(on: req.db)
+          .filter(\.$id == proposalID)
+          .with(\.$speaker)
+          .with(\.$conference)
+          .first()
+        {
+          proposal = try dbProposal.toDTO(
+            speakerUsername: dbProposal.speaker.username,
+            conference: dbProposal.conference
+          )
+        }
+      }
+    }
+
+    let typeParam = req.query[String.self, at: "type"] ?? "acceptance"
+    let langParam = req.query[String.self, at: "lang"] ?? "en"
+    let language: CfPLanguage = langParam == "ja" ? .ja : .en
+    let emailType: EmailType = typeParam == "rejection" ? .rejection : .acceptance
+
+    let preview = EmailTemplates.preview(
+      type: emailType,
+      language: language,
+      speakerName: proposal?.speakerName ?? "Speaker Name",
+      proposalTitle: proposal?.title ?? "Proposal Title"
+    )
+
+    let sentParam = req.query[String.self, at: "sent"]
+    let errorParam = req.query[String.self, at: "emailError"]
+    var sendResult: EmailNotifier.SendResult?
+    if sentParam == "true" {
+      sendResult = EmailNotifier.SendResult(
+        success: true, recipientEmail: proposal?.speakerEmail ?? "", error: nil)
+    } else if let errorParam {
+      sendResult = EmailNotifier.SendResult(
+        success: false, recipientEmail: proposal?.speakerEmail ?? "", error: errorParam)
+    }
+
+    let csrfToken = csrfToken(from: req)
+    return HTMLResponse {
+      CfPLayout(title: "Send Email", user: user) {
+        OrganizerEmailPreviewPageView(
+          user: user,
+          proposal: proposal,
+          emailType: emailType,
+          language: language,
+          previewSubject: preview.subject,
+          previewBody: preview.body,
+          sendResult: sendResult,
+          csrfToken: csrfToken
+        )
+      }
+    }
+  }
+
+  @Sendable
+  func handleSendProposalEmail(req: Request) async throws -> Response {
+    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    guard let proposalIDString = req.parameters.get("proposalID"),
+      let proposalID = UUID(uuidString: proposalIDString)
+    else {
+      throw Abort(.badRequest, reason: "Invalid proposal ID")
+    }
+
+    guard let dbProposal = try await Proposal.query(on: req.db)
+      .filter(\.$id == proposalID)
+      .with(\.$speaker)
+      .with(\.$conference)
+      .first()
+    else {
+      throw Abort(.notFound, reason: "Proposal not found")
+    }
+
+    struct EmailForm: Content {
+      var emailType: String
+      var lang: String
+    }
+
+    let formData = try req.content.decode(EmailForm.self)
+    let language: CfPLanguage = formData.lang == "ja" ? .ja : .en
+    let emailType: EmailType = formData.emailType == "rejection" ? .rejection : .acceptance
+
+    let result: EmailNotifier.SendResult
+    switch emailType {
+    case .acceptance:
+      result = await EmailNotifier.sendAcceptanceEmail(
+        speakerName: dbProposal.speakerName,
+        speakerEmail: dbProposal.speakerEmail,
+        proposalTitle: dbProposal.title,
+        language: language,
+        client: req.client,
+        logger: req.logger
+      )
+    case .rejection:
+      result = await EmailNotifier.sendRejectionEmail(
+        speakerName: dbProposal.speakerName,
+        speakerEmail: dbProposal.speakerEmail,
+        proposalTitle: dbProposal.title,
+        language: language,
+        client: req.client,
+        logger: req.logger
+      )
+    }
+
+    let redirectURL: String
+    if result.success {
+      redirectURL =
+        "/organizer/proposals/\(proposalID)/email?type=\(formData.emailType)&lang=\(formData.lang)&sent=true"
+    } else {
+      let errorMsg =
+        (result.error ?? "Unknown error").addingPercentEncoding(
+          withAllowedCharacters: .urlQueryAllowed) ?? "Unknown"
+      redirectURL =
+        "/organizer/proposals/\(proposalID)/email?type=\(formData.emailType)&lang=\(formData.lang)&emailError=\(errorMsg)"
+    }
+
+    return req.redirect(to: redirectURL)
   }
 
   // MARK: - Import Speaker Candidates
