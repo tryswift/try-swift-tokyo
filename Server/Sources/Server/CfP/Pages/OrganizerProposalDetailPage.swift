@@ -70,6 +70,17 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
                   </form>
                   """)
               }
+              // Send Email button
+              if proposal.status == .accepted || proposal.status == .rejected {
+                a(
+                  .class("btn btn-outline-info"),
+                  .href(
+                    "/organizer/proposals/\(proposal.id.uuidString)/email?type=\(proposal.status == .accepted ? "acceptance" : "rejection")"
+                  )
+                ) {
+                  "Send Email"
+                }
+              }
               // Edit button
               a(
                 .class("btn btn-outline-primary"),
