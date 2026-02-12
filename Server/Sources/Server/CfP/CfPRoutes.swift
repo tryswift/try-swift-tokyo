@@ -1911,8 +1911,9 @@ struct CfPRoutes: RouteCollection {
     fractionalFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
     let plainFormatter = ISO8601DateFormatter()
     plainFormatter.formatOptions = [.withInternetDateTime]
-    guard let startTime = fractionalFormatter.date(from: body.startTime)
-      ?? plainFormatter.date(from: body.startTime)
+    guard
+      let startTime = fractionalFormatter.date(from: body.startTime)
+        ?? plainFormatter.date(from: body.startTime)
     else {
       throw Abort(.badRequest, reason: "Invalid start time format")
     }
@@ -2018,16 +2019,18 @@ struct CfPRoutes: RouteCollection {
       slot.day = day
     }
     if let startTimeStr = body.startTime {
-      guard let startTime = fractionalFormatter.date(from: startTimeStr)
-        ?? plainFormatter.date(from: startTimeStr)
+      guard
+        let startTime = fractionalFormatter.date(from: startTimeStr)
+          ?? plainFormatter.date(from: startTimeStr)
       else {
         throw Abort(.badRequest, reason: "Invalid startTime format")
       }
       slot.startTime = startTime
     }
     if let endTimeStr = body.endTime {
-      guard let endTime = fractionalFormatter.date(from: endTimeStr)
-        ?? plainFormatter.date(from: endTimeStr)
+      guard
+        let endTime = fractionalFormatter.date(from: endTimeStr)
+          ?? plainFormatter.date(from: endTimeStr)
       else {
         throw Abort(.badRequest, reason: "Invalid endTime format")
       }
