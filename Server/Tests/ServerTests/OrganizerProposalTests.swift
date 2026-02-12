@@ -322,6 +322,19 @@ struct ResolveSpeakerIDTests {
 
   // MARK: - Proposal re-association on login
 
+  /// Mirrors the bulk UPDATE in AuthController.githubCallback (step 8b).
+  private func reassociateProposals(for user: User, on db: Database) async throws {
+    guard let userID = user.id else { return }
+    try await Proposal.query(on: db)
+      .group(.or) { group in
+        group.filter(\.$paperCallUsername == user.username)
+        group.filter(\.$githubUsername == user.username)
+      }
+      .filter(\.$speaker.$id == AddPaperCallImportUser.paperCallUserID)
+      .set(\.$speaker.$id, to: userID)
+      .update()
+  }
+
   @Test("proposals with matching paperCallUsername are re-associated when user is created")
   func reassociateProposalsOnLogin() async throws {
     let app = try await makeTestApp()
@@ -332,7 +345,6 @@ struct ResolveSpeakerIDTests {
       .first()
     let conferenceID = try #require(conference?.id)
 
-    // Create a proposal assigned to import user with paperCallUsername set
     let proposal = Proposal(
       conferenceID: conferenceID,
       title: "Deferred Speaker Talk",
@@ -347,27 +359,46 @@ struct ResolveSpeakerIDTests {
     proposal.paperCallUsername = "futurespeaker"
     try await proposal.save(on: app.db)
 
-    // Simulate what the OAuth callback does: create a user with that username
     let newUser = User(githubID: 88888, username: "futurespeaker", role: .speaker)
     try await newUser.save(on: app.db)
-    let userID = try #require(newUser.id)
 
-    // Run re-association logic (same query as in AuthController)
-    let proposalsToReassociate = try await Proposal.query(on: app.db)
-      .group(.or) { group in
-        group.filter(\.$paperCallUsername == newUser.username)
-        group.filter(\.$githubUsername == newUser.username)
-      }
-      .filter(\.$speaker.$id == AddPaperCallImportUser.paperCallUserID)
-      .all()
-
-    for p in proposalsToReassociate {
-      p.$speaker.id = userID
-      try await p.save(on: app.db)
-    }
+    try await reassociateProposals(for: newUser, on: app.db)
 
     let updated = try await Proposal.find(proposal.id, on: app.db)
-    #expect(updated?.$speaker.id == userID)
+    #expect(updated?.$speaker.id == newUser.id)
+  }
+
+  @Test("proposals with matching githubUsername are re-associated when user is created")
+  func reassociateViaGithubUsername() async throws {
+    let app = try await makeTestApp()
+    defer { Task { try? await app.asyncShutdown() } }
+
+    let conference = try await Conference.query(on: app.db)
+      .filter(\.$path == "tryswift-tokyo-2026")
+      .first()
+    let conferenceID = try #require(conference?.id)
+
+    let proposal = Proposal(
+      conferenceID: conferenceID,
+      title: "GitHub Username Talk",
+      abstract: "Abstract",
+      talkDetail: "Detail",
+      talkDuration: .regular,
+      speakerName: "GH User",
+      speakerEmail: "ghuser@test.com",
+      bio: "Bio",
+      speakerID: AddPaperCallImportUser.paperCallUserID,
+      githubUsername: "ghonlyuser"
+    )
+    try await proposal.save(on: app.db)
+
+    let newUser = User(githubID: 44444, username: "ghonlyuser", role: .speaker)
+    try await newUser.save(on: app.db)
+
+    try await reassociateProposals(for: newUser, on: app.db)
+
+    let updated = try await Proposal.find(proposal.id, on: app.db)
+    #expect(updated?.$speaker.id == newUser.id)
   }
 
   @Test("proposals already assigned to a real user are not re-associated")
@@ -383,7 +414,6 @@ struct ResolveSpeakerIDTests {
     let existingUser = User(githubID: 11111, username: "existinguser", role: .speaker)
     try await existingUser.save(on: app.db)
 
-    // Proposal is assigned to existingUser, not the import user
     let proposal = Proposal(
       conferenceID: conferenceID,
       title: "Already Assigned Talk",
@@ -398,20 +428,10 @@ struct ResolveSpeakerIDTests {
     proposal.paperCallUsername = "sameusername"
     try await proposal.save(on: app.db)
 
-    // Another user logs in with the same paperCallUsername
     let anotherUser = User(githubID: 22222, username: "sameusername", role: .speaker)
     try await anotherUser.save(on: app.db)
 
-    // Run re-association (should find nothing because speaker_id != import user)
-    let proposalsToReassociate = try await Proposal.query(on: app.db)
-      .group(.or) { group in
-        group.filter(\.$paperCallUsername == anotherUser.username)
-        group.filter(\.$githubUsername == anotherUser.username)
-      }
-      .filter(\.$speaker.$id == AddPaperCallImportUser.paperCallUserID)
-      .all()
-
-    #expect(proposalsToReassociate.isEmpty)
+    try await reassociateProposals(for: anotherUser, on: app.db)
 
     let unchanged = try await Proposal.find(proposal.id, on: app.db)
     #expect(unchanged?.$speaker.id == existingUser.id)
@@ -427,7 +447,6 @@ struct ResolveSpeakerIDTests {
       .first()
     let conferenceID = try #require(conference?.id)
 
-    // Create two proposals for the same future speaker
     var proposalIDs: [UUID] = []
     for i in 1...2 {
       let proposal = Proposal(
@@ -450,23 +469,8 @@ struct ResolveSpeakerIDTests {
     try await newUser.save(on: app.db)
     let userID = try #require(newUser.id)
 
-    // Re-association
-    let proposalsToReassociate = try await Proposal.query(on: app.db)
-      .group(.or) { group in
-        group.filter(\.$paperCallUsername == newUser.username)
-        group.filter(\.$githubUsername == newUser.username)
-      }
-      .filter(\.$speaker.$id == AddPaperCallImportUser.paperCallUserID)
-      .all()
+    try await reassociateProposals(for: newUser, on: app.db)
 
-    for p in proposalsToReassociate {
-      p.$speaker.id = userID
-      try await p.save(on: app.db)
-    }
-
-    #expect(proposalsToReassociate.count == 2)
-
-    // Verify all are now assigned
     for proposalID in proposalIDs {
       let updated = try await Proposal.find(proposalID, on: app.db)
       #expect(updated?.$speaker.id == userID)
