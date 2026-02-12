@@ -7,6 +7,16 @@ enum EmailType: String, CaseIterable, Sendable {
 /// Bilingual email templates for speaker notifications
 enum EmailTemplates {
 
+  /// Escape HTML special characters to prevent XSS
+  private static func escapeHTML(_ string: String) -> String {
+    string
+      .replacingOccurrences(of: "&", with: "&amp;")
+      .replacingOccurrences(of: "<", with: "&lt;")
+      .replacingOccurrences(of: ">", with: "&gt;")
+      .replacingOccurrences(of: "\"", with: "&quot;")
+      .replacingOccurrences(of: "'", with: "&#39;")
+  }
+
   // MARK: - Acceptance Email
 
   enum Acceptance {
@@ -18,13 +28,15 @@ enum EmailTemplates {
     }
 
     static func body(_ lang: CfPLanguage, speakerName: String, proposalTitle: String) -> String {
+      let name = escapeHTML(speakerName)
+      let title = escapeHTML(proposalTitle)
       switch lang {
       case .en:
         return """
           <html><body style="font-family: sans-serif; line-height: 1.6; color: #333;">
-          <p>Dear \(speakerName),</p>
+          <p>Dear \(name),</p>
           <p>Congratulations! We are thrilled to inform you that your proposal \
-          &ldquo;<strong>\(proposalTitle)</strong>&rdquo; has been accepted \
+          &ldquo;<strong>\(title)</strong>&rdquo; has been accepted \
           for try! Swift Tokyo 2026!</p>
           <p>We will follow up with more details about the schedule, speaker benefits, \
           and logistics soon.</p>
@@ -35,8 +47,8 @@ enum EmailTemplates {
       case .ja:
         return """
           <html><body style="font-family: sans-serif; line-height: 1.6; color: #333;">
-          <p>\(speakerName) 様</p>
-          <p>おめでとうございます！「<strong>\(proposalTitle)</strong>」が \
+          <p>\(name) 様</p>
+          <p>おめでとうございます！「<strong>\(title)</strong>」が \
           try! Swift Tokyo 2026 に採択されましたことをお知らせいたします！</p>
           <p>スケジュール、スピーカー特典、ロジスティクスの詳細については、\
           後日改めてご連絡いたします。</p>
@@ -59,12 +71,14 @@ enum EmailTemplates {
     }
 
     static func body(_ lang: CfPLanguage, speakerName: String, proposalTitle: String) -> String {
+      let name = escapeHTML(speakerName)
+      let title = escapeHTML(proposalTitle)
       switch lang {
       case .en:
         return """
           <html><body style="font-family: sans-serif; line-height: 1.6; color: #333;">
-          <p>Dear \(speakerName),</p>
-          <p>Thank you for submitting your proposal &ldquo;<strong>\(proposalTitle)</strong>&rdquo; \
+          <p>Dear \(name),</p>
+          <p>Thank you for submitting your proposal &ldquo;<strong>\(title)</strong>&rdquo; \
           to try! Swift Tokyo 2026.</p>
           <p>After careful review by our selection committee, we regret to inform you \
           that your proposal was not selected for this year&rsquo;s conference.</p>
@@ -77,8 +91,8 @@ enum EmailTemplates {
       case .ja:
         return """
           <html><body style="font-family: sans-serif; line-height: 1.6; color: #333;">
-          <p>\(speakerName) 様</p>
-          <p>try! Swift Tokyo 2026 へのプロポーザル「<strong>\(proposalTitle)</strong>」の\
+          <p>\(name) 様</p>
+          <p>try! Swift Tokyo 2026 へのプロポーザル「<strong>\(title)</strong>」の\
           ご応募ありがとうございました。</p>
           <p>選考委員会による慎重な審査の結果、誠に残念ながら今回は採択に至らなかったことを\
           お知らせいたします。</p>

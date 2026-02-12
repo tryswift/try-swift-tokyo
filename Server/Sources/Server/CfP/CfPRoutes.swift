@@ -1136,14 +1136,26 @@ struct CfPRoutes: RouteCollection {
   func organizerEmailsPage(req: Request) async throws -> HTMLResponse {
     let user = try? await getAuthenticatedUser(req: req)
 
-    let statusFilter = req.query[String.self, at: "status"] ?? "accepted"
+    let rawStatus = req.query[String.self, at: "status"]
     let langParam = req.query[String.self, at: "lang"] ?? "en"
     let language: CfPLanguage = langParam == "ja" ? .ja : .en
-    let emailType: EmailType = statusFilter == "rejected" ? .rejection : .acceptance
+
+    // Normalize status filter to a known set of canonical values
+    let statusFilter: String
+    let emailType: EmailType
+    let targetStatus: ProposalStatus
+    if rawStatus == "rejected" {
+      statusFilter = "rejected"
+      emailType = .rejection
+      targetStatus = .rejected
+    } else {
+      statusFilter = "accepted"
+      emailType = .acceptance
+      targetStatus = .accepted
+    }
 
     var proposals: [ProposalDTO] = []
     if let user, user.role == .admin {
-      let targetStatus: ProposalStatus = statusFilter == "rejected" ? .rejected : .accepted
       let dbProposals = try await Proposal.query(on: req.db)
         .filter(\.$status == targetStatus)
         .with(\.$speaker)
@@ -1164,7 +1176,6 @@ struct CfPRoutes: RouteCollection {
           proposals: proposals,
           statusFilter: statusFilter,
           language: language,
-          emailType: emailType,
           previewSubject: preview.subject,
           previewBody: preview.body,
           sendResults: nil,
@@ -1183,13 +1194,14 @@ struct CfPRoutes: RouteCollection {
     struct BulkEmailForm: Content {
       var status: String
       var lang: String
-      var emailType: String
     }
 
     let formData = try req.content.decode(BulkEmailForm.self)
     let language: CfPLanguage = formData.lang == "ja" ? .ja : .en
-    let emailType: EmailType = formData.emailType == "rejection" ? .rejection : .acceptance
+
+    // Derive emailType from status to prevent mismatched template/status
     let targetStatus: ProposalStatus = formData.status == "rejected" ? .rejected : .accepted
+    let emailType: EmailType = targetStatus == .rejected ? .rejection : .acceptance
 
     let dbProposals = try await Proposal.query(on: req.db)
       .filter(\.$status == targetStatus)
@@ -1222,9 +1234,8 @@ struct CfPRoutes: RouteCollection {
         OrganizerEmailsPageView(
           user: user,
           proposals: proposalDTOs,
-          statusFilter: formData.status,
+          statusFilter: targetStatus == .rejected ? "rejected" : "accepted",
           language: language,
-          emailType: emailType,
           previewSubject: preview.subject,
           previewBody: preview.body,
           sendResults: results,
@@ -1320,14 +1331,20 @@ struct CfPRoutes: RouteCollection {
       throw Abort(.notFound, reason: "Proposal not found")
     }
 
+    // Only allow sending emails for accepted or rejected proposals
+    guard dbProposal.status == .accepted || dbProposal.status == .rejected else {
+      throw Abort(.badRequest, reason: "Can only send emails for accepted or rejected proposals")
+    }
+
     struct EmailForm: Content {
-      var emailType: String
       var lang: String
     }
 
     let formData = try req.content.decode(EmailForm.self)
     let language: CfPLanguage = formData.lang == "ja" ? .ja : .en
-    let emailType: EmailType = formData.emailType == "rejection" ? .rejection : .acceptance
+
+    // Derive email type from the proposal's actual status
+    let emailType: EmailType = dbProposal.status == .accepted ? .acceptance : .rejection
 
     let result: EmailNotifier.SendResult
     switch emailType {
@@ -1351,16 +1368,17 @@ struct CfPRoutes: RouteCollection {
       )
     }
 
+    let typeParam = emailType.rawValue
     let redirectURL: String
     if result.success {
       redirectURL =
-        "/organizer/proposals/\(proposalID)/email?type=\(formData.emailType)&lang=\(formData.lang)&sent=true"
+        "/organizer/proposals/\(proposalID)/email?type=\(typeParam)&lang=\(formData.lang)&sent=true"
     } else {
       let errorMsg =
         (result.error ?? "Unknown error").addingPercentEncoding(
           withAllowedCharacters: .urlQueryAllowed) ?? "Unknown"
       redirectURL =
-        "/organizer/proposals/\(proposalID)/email?type=\(formData.emailType)&lang=\(formData.lang)&emailError=\(errorMsg)"
+        "/organizer/proposals/\(proposalID)/email?type=\(typeParam)&lang=\(formData.lang)&emailError=\(errorMsg)"
     }
 
     return req.redirect(to: redirectURL)

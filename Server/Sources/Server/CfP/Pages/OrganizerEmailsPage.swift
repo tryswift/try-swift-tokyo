@@ -7,7 +7,6 @@ struct OrganizerEmailsPageView: HTML, Sendable {
   let proposals: [ProposalDTO]
   let statusFilter: String
   let language: CfPLanguage
-  let emailType: EmailType
   let previewSubject: String
   let previewBody: String
   let sendResults: [EmailNotifier.SendResult]?
@@ -62,27 +61,31 @@ struct OrganizerEmailsPageView: HTML, Sendable {
             div(.class("col-md-4")) {
               label(.class("form-label fw-semibold"), .for("statusFilter")) { "Status" }
               select(.class("form-select"), .name("status"), .id("statusFilter")) {
-                option(
-                  .value("accepted"),
-                  statusFilter == "accepted" ? .selected : .class("")
-                ) { "Accepted" }
-                option(
-                  .value("rejected"),
-                  statusFilter == "rejected" ? .selected : .class("")
-                ) { "Rejected" }
+                if statusFilter == "accepted" {
+                  option(.value("accepted"), .selected) { "Accepted" }
+                } else {
+                  option(.value("accepted")) { "Accepted" }
+                }
+                if statusFilter == "rejected" {
+                  option(.value("rejected"), .selected) { "Rejected" }
+                } else {
+                  option(.value("rejected")) { "Rejected" }
+                }
               }
             }
             div(.class("col-md-4")) {
               label(.class("form-label fw-semibold"), .for("langFilter")) { "Language" }
               select(.class("form-select"), .name("lang"), .id("langFilter")) {
-                option(
-                  .value("en"),
-                  language == .en ? .selected : .class("")
-                ) { "English" }
-                option(
-                  .value("ja"),
-                  language == .ja ? .selected : .class("")
-                ) { "日本語" }
+                if language == .en {
+                  option(.value("en"), .selected) { "English" }
+                } else {
+                  option(.value("en")) { "English" }
+                }
+                if language == .ja {
+                  option(.value("ja"), .selected) { "日本語" }
+                } else {
+                  option(.value("ja")) { "日本語" }
+                }
               }
             }
             div(.class("col-md-4")) {
@@ -141,7 +144,6 @@ struct OrganizerEmailsPageView: HTML, Sendable {
               <input type="hidden" name="_csrf" value="\(csrfToken)">
               <input type="hidden" name="status" value="\(statusFilter)">
               <input type="hidden" name="lang" value="\(language.rawValue)">
-              <input type="hidden" name="emailType" value="\(emailType.rawValue)">
               <button type="submit" class="btn btn-success">
                 Send to All \(proposals.count) Recipients
               </button>

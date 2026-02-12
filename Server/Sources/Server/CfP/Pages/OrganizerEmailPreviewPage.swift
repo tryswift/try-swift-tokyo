@@ -62,26 +62,35 @@ struct OrganizerEmailPreviewPageView: HTML, Sendable {
     div(.class("card mb-4")) {
       div(.class("card-body")) {
         form(.method(.get), .action("/organizer/proposals/\(proposal.id.uuidString)/email")) {
-          input(.type(.hidden), .name("type"), .value(emailType.rawValue))
           div(.class("row g-3 align-items-end")) {
             div(.class("col-md-5")) {
               label(.class("form-label fw-semibold"), .for("emailLang")) { "Language" }
               select(.class("form-select"), .name("lang"), .id("emailLang")) {
-                option(.value("en"), language == .en ? .selected : .class("")) { "English" }
-                option(.value("ja"), language == .ja ? .selected : .class("")) { "日本語" }
+                if language == .en {
+                  option(.value("en"), .selected) { "English" }
+                } else {
+                  option(.value("en")) { "English" }
+                }
+                if language == .ja {
+                  option(.value("ja"), .selected) { "日本語" }
+                } else {
+                  option(.value("ja")) { "日本語" }
+                }
               }
             }
             div(.class("col-md-5")) {
               label(.class("form-label fw-semibold"), .for("emailType")) { "Email Type" }
               select(.class("form-select"), .name("type"), .id("emailType")) {
-                option(
-                  .value("acceptance"),
-                  emailType == .acceptance ? .selected : .class("")
-                ) { "Acceptance" }
-                option(
-                  .value("rejection"),
-                  emailType == .rejection ? .selected : .class("")
-                ) { "Rejection" }
+                if emailType == .acceptance {
+                  option(.value("acceptance"), .selected) { "Acceptance" }
+                } else {
+                  option(.value("acceptance")) { "Acceptance" }
+                }
+                if emailType == .rejection {
+                  option(.value("rejection"), .selected) { "Rejection" }
+                } else {
+                  option(.value("rejection")) { "Rejection" }
+                }
               }
             }
             div(.class("col-md-2")) {
@@ -134,7 +143,6 @@ struct OrganizerEmailPreviewPageView: HTML, Sendable {
         action="/organizer/proposals/\(proposal.id.uuidString)/email/send" \
         onsubmit="return confirm('Send this email to \(proposal.speakerEmail)?');">
           <input type="hidden" name="_csrf" value="\(csrfToken)">
-          <input type="hidden" name="emailType" value="\(emailType.rawValue)">
           <input type="hidden" name="lang" value="\(language.rawValue)">
           <button type="submit" class="btn btn-success btn-lg">Send Email</button>
         </form>
