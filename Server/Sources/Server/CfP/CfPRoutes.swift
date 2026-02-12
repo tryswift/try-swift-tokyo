@@ -1908,7 +1908,7 @@ struct CfPRoutes: RouteCollection {
     }
 
     let formatter = ISO8601DateFormatter()
-    formatter.formatOptions = [.withInternetDateTime]
+    formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
     guard let startTime = formatter.date(from: body.startTime) else {
       throw Abort(.badRequest, reason: "Invalid start time format")
     }
@@ -1998,7 +1998,7 @@ struct CfPRoutes: RouteCollection {
 
     let body = try req.content.decode(UpdateSlotRequest.self)
     let formatter = ISO8601DateFormatter()
-    formatter.formatOptions = [.withInternetDateTime]
+    formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
 
     if let slotTypeStr = body.slotType {
       guard let slotType = SlotType(rawValue: slotTypeStr) else {
