@@ -1907,12 +1907,18 @@ struct CfPRoutes: RouteCollection {
       throw Abort(.badRequest, reason: "Invalid slot type")
     }
 
-    let formatter = ISO8601DateFormatter()
-    formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-    guard let startTime = formatter.date(from: body.startTime) else {
+    guard let startTime = parseISO8601(body.startTime) else {
       throw Abort(.badRequest, reason: "Invalid start time format")
     }
-    let endTime = body.endTime.flatMap { formatter.date(from: $0) }
+    let endTime: Date?
+    if let endTimeString = body.endTime {
+      guard let parsed = parseISO8601(endTimeString) else {
+        throw Abort(.badRequest, reason: "Invalid end time format")
+      }
+      endTime = parsed
+    } else {
+      endTime = nil
+    }
 
     // Get max sort_order for this day
     let maxOrder =
@@ -1997,8 +2003,6 @@ struct CfPRoutes: RouteCollection {
     }
 
     let body = try req.content.decode(UpdateSlotRequest.self)
-    let formatter = ISO8601DateFormatter()
-    formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
 
     if let slotTypeStr = body.slotType {
       guard let slotType = SlotType(rawValue: slotTypeStr) else {
@@ -2010,14 +2014,14 @@ struct CfPRoutes: RouteCollection {
       slot.day = day
     }
     if let startTimeStr = body.startTime {
-      guard let startTime = formatter.date(from: startTimeStr) else {
-        throw Abort(.badRequest, reason: "Invalid startTime format")
+      guard let startTime = parseISO8601(startTimeStr) else {
+        throw Abort(.badRequest, reason: "Invalid start time format")
       }
       slot.startTime = startTime
     }
     if let endTimeStr = body.endTime {
-      guard let endTime = formatter.date(from: endTimeStr) else {
-        throw Abort(.badRequest, reason: "Invalid endTime format")
+      guard let endTime = parseISO8601(endTimeStr) else {
+        throw Abort(.badRequest, reason: "Invalid end time format")
       }
       slot.endTime = endTime
     }
@@ -2245,6 +2249,15 @@ struct CfPRoutes: RouteCollection {
       date: dayDate,
       schedules: schedules
     )
+  }
+
+  /// Parse an ISO 8601 string, accepting both with and without fractional seconds.
+  private func parseISO8601(_ string: String) -> Date? {
+    let fractional = ISO8601DateFormatter()
+    fractional.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+    let plain = ISO8601DateFormatter()
+    plain.formatOptions = [.withInternetDateTime]
+    return fractional.date(from: string) ?? plain.date(from: string)
   }
 
   // MARK: - Timetable Helper Types
