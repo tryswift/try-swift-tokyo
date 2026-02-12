@@ -2290,19 +2290,16 @@ struct CfPRoutes: RouteCollection {
     let username = rawUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
     if !username.isEmpty {
-      guard
-        let user = try await User.query(on: db)
-          .filter(\.$username == username)
-          .first(),
+      if let user = try await User.query(on: db)
+        .filter(\.$username == username)
+        .first(),
         let userID = user.id
-      else {
-        throw Abort(
-          .badRequest,
-          reason:
-            "GitHub user '\(username)' not found. The user must have logged in at least once."
-        )
+      {
+        return userID
       }
-      return userID
+      // User not found in DB — fall through to return import user ID.
+      // The caller stores the username in paperCallUsername so the proposal
+      // can be re-associated when the user eventually logs in.
     }
 
     guard
