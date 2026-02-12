@@ -1907,12 +1907,18 @@ struct CfPRoutes: RouteCollection {
       throw Abort(.badRequest, reason: "Invalid slot type")
     }
 
-    let formatter = ISO8601DateFormatter()
-    formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-    guard let startTime = formatter.date(from: body.startTime) else {
+    let fractionalFormatter = ISO8601DateFormatter()
+    fractionalFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+    let plainFormatter = ISO8601DateFormatter()
+    plainFormatter.formatOptions = [.withInternetDateTime]
+    guard let startTime = fractionalFormatter.date(from: body.startTime)
+      ?? plainFormatter.date(from: body.startTime)
+    else {
       throw Abort(.badRequest, reason: "Invalid start time format")
     }
-    let endTime = body.endTime.flatMap { formatter.date(from: $0) }
+    let endTime = body.endTime.flatMap {
+      fractionalFormatter.date(from: $0) ?? plainFormatter.date(from: $0)
+    }
 
     // Get max sort_order for this day
     let maxOrder =
@@ -1997,8 +2003,10 @@ struct CfPRoutes: RouteCollection {
     }
 
     let body = try req.content.decode(UpdateSlotRequest.self)
-    let formatter = ISO8601DateFormatter()
-    formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+    let fractionalFormatter = ISO8601DateFormatter()
+    fractionalFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+    let plainFormatter = ISO8601DateFormatter()
+    plainFormatter.formatOptions = [.withInternetDateTime]
 
     if let slotTypeStr = body.slotType {
       guard let slotType = SlotType(rawValue: slotTypeStr) else {
@@ -2010,13 +2018,17 @@ struct CfPRoutes: RouteCollection {
       slot.day = day
     }
     if let startTimeStr = body.startTime {
-      guard let startTime = formatter.date(from: startTimeStr) else {
+      guard let startTime = fractionalFormatter.date(from: startTimeStr)
+        ?? plainFormatter.date(from: startTimeStr)
+      else {
         throw Abort(.badRequest, reason: "Invalid startTime format")
       }
       slot.startTime = startTime
     }
     if let endTimeStr = body.endTime {
-      guard let endTime = formatter.date(from: endTimeStr) else {
+      guard let endTime = fractionalFormatter.date(from: endTimeStr)
+        ?? plainFormatter.date(from: endTimeStr)
+      else {
         throw Abort(.badRequest, reason: "Invalid endTime format")
       }
       slot.endTime = endTime
