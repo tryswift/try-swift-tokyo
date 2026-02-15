@@ -18,6 +18,17 @@
         }
       }
     },
+    "3-21-3 Shibuya, Shibuya-ku, Tokyo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "東京都渋谷区渋谷3-21-3"
+          }
+        }
+      }
+    },
     "About" : {
       "extractionState" : "migrated",
       "localizations" : {
@@ -116,6 +127,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "2026年4月12日（日）〜 14日（火）<br><br>4/12：ワークショップ & TBD<br>4/13〜14：カンファレンス"
+          }
+        }
+      }
+    },
+    "Bellesalle Shinjuku Grand" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベルサール新宿グランド"
+          }
+        }
+      }
+    },
+    "Bellesalle Shinjuku Grand<br>Nishi-Shinjuku, Shinjuku-ku, Tokyo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベルサール新宿グランド<br>東京都新宿区西新宿"
           }
         }
       }
@@ -539,6 +572,61 @@
         }
       }
     },
+    "Mar. 1st - 3rd, 2018" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2018年3月1日（木） 〜 3（土）"
+          }
+        }
+      }
+    },
+    "Mar. 2nd - 4th, 2017" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2017年3月2日（木） 〜 4（土）"
+          }
+        }
+      }
+    },
+    "Mar. 18th - 20th, 2020 (Cancelled)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2020年3月18日（水） 〜 20（金）＊開催中止"
+          }
+        }
+      }
+    },
+    "Mar. 21st - 23rd, 2019" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2019年3月21日（木） 〜 23（土）"
+          }
+        }
+      }
+    },
+    "Mar. 22nd - 24th, 2024" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2024年3月22日（金） 〜 24日（日）"
+          }
+        }
+      }
+    },
     "Meet the Hosts" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -586,6 +674,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "〒190-0014<br>東京都立川市緑町3-3 N1"
+          }
+        }
+      }
+    },
+    "Nishi-Shinjuku, Shinjuku-ku, Tokyo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "東京都新宿区西新宿"
           }
         }
       }
@@ -785,6 +884,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "参加登録"
+          }
+        }
+      }
+    },
+    "Shibuya Stream Hall" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "渋谷ストリームホール"
+          }
+        }
+      }
+    },
+    "Shibuya Stream Hall<br>3-21-3 Shibuya, Shibuya-ku, Tokyo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "渋谷ストリームホール<br>東京都渋谷区渋谷3-21-3"
           }
         }
       }
@@ -1194,6 +1315,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "本法人は、個人情報の提供者から自己に関する個人情報の開示の請求があったときは、原則として遅滞なく開示します。また、自己に関する個人情報の訂正等の申し出があったときは、原則として遅滞なく訂正等を行います。"
+          }
+        }
+      }
+    },
+    "Workshop" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ワークショップ"
           }
         }
       }
