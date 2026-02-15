@@ -106,6 +106,29 @@
           ],
           "description": "This workshop is an experimental session that deliberately sets aside the App Store Review Guidelines in order to peer inside the \"black box\" of iOS. By intentionally using Private APIs and undocumented behaviors that are normally off-limits in everyday development, the goal is to gain a deeper understanding of how UIKit and SwiftUI actually work under the hood.\n\nThe workshop is run in a hackathon-style format, where all participants share a single SwiftUI-based repository and collaboratively add features to it.\n\nIn the first half, the instructor will perform live coding demonstrations that achieve UI customizations which would normally be impossible, using Private APIs such as the Objective-C runtime and Key-Value Coding (KVC). These changes will be pushed to the shared repository, and participants will pull and run them locally as the starting point.\n\nIn the second half, the workshop shifts to a hands-on format where participants write code themselves. Those who have specific features they want to try to implement can work on their own ideas, while others can choose from several themes proposed by the instructor. Along the way, intermediate results will be shared and discussed so that participants can exchange insights as they develop. At the end, everyone will present the hacks they worked on and the behaviors they discovered.\n\nThis workshop is not about learning techniques intended for App Store releases. However, understanding what happens behind the scenes of the frameworks and being able to reason about their behavior will strengthen your ability to solve difficult bugs and improve your skills in debugging and performance optimization. Step beyond everyday app development and explore the depths of iOS together through the world of the dynamic runtime.",
           "description_ja": "このワークショップは、iOSの「ブラックボックス」の中を覗くために、あえてApp Store審査ガイドラインを一旦脇に置く実験的なセッションです。通常の開発では禁止されているPrivate APIや非公開の動作を意図的に使用することで、UIKitやSwiftUIが内部でどのように動作しているかをより深く理解することを目指します。\n\nワークショップはハッカソン形式で進行し、参加者全員が1つのSwiftUIベースのリポジトリを共有し、協力して機能を追加していきます。\n\n前半では、インストラクターがObjective-CランタイムやKey-Value Coding（KVC）などのPrivate APIを使用して、通常では不可能なUIカスタマイズを実現するライブコーディングデモンストレーションを行います。これらの変更は共有リポジトリにプッシュされ、参加者はそれをローカルにプルして出発点として実行します。\n\n後半では、参加者自身がコードを書くハンズオン形式に移行します。実装したい特定の機能がある人は自分のアイデアに取り組み、それ以外の人はインストラクターが提案するいくつかのテーマから選ぶことができます。途中で中間結果を共有・議論し、参加者が開発を進めながら知見を交換できるようにします。最後に、全員が取り組んだハックと発見した動作を発表します。\n\nこのワークショップはApp Storeリリースを目的とした技術を学ぶものではありません。しかし、フレームワークの裏側で何が起きているかを理解し、その動作を推論できるようになることで、難しいバグを解決する能力が強化され、デバッグやパフォーマンス最適化のスキルが向上します。日常のアプリ開発を超えて、動的ランタイムの世界を通じてiOSの深層を一緒に探索しましょう。"
+        },
+        {
+          "title": "The road to your app is paved with App Intents",
+          "title_ja": "あなたのアプリへの道は、App Intentsによって切り拓かれる",
+          "speakers": [
+            {
+              "id": 5,
+              "name": "Daniel Steinberg",
+              "image_name": "daniel_steinberg",
+              "bio": "Daniel is the author of more than a dozen books including the best selling books The Curious Case of the Async Cafe, A SwiftUI Kickstart, A Swift Kickstart, A Bread Baking Kickstart, and Dear Elena.\n\nDaniel presents iOS, SwiftUI, and Swift training and consults through his company Dim Sum Thinking.\n\nHe has written apps for the iPhone and the iPad since the SDKs first appeared and has written programs for the Mac all the way back to System 7. When he's not coding or talking about coding for the Mac, the iPhone, and the iPad he's probably cooking, baking bread, or hanging out with friends.",
+              "bio_ja": "Danielはこれまでに十数冊以上を執筆しており、その中にはベストセラーとなった『The Curious Case of the Async Cafe』『A SwiftUI Kickstart』『A Swift Kickstart』『A Bread Baking Kickstart』『Dear Elena』などがあります。\n\n自身の会社である Dim Sum Thinking を通じて、iOS・SwiftUI・Swift に関するトレーニングやコンサルティングを行っています。\n\niPhone と iPad の SDK が最初に公開された当初からこれらのデバイス向けのアプリを開発しており、Mac 向けのプログラムも System 7 の時代から書いてきました。Mac、iPhone、iPad 向けのコーディングやその話をしていないときは、たいてい料理をしたり、パンを焼いたり、友人たちと過ごしたりしています。",
+              "job_title": "Storyteller",
+              "job_title_ja": "ストーリーテラー",
+              "links": [
+                {
+                  "url": "https://linkedin.com/in/dimsumthinking",
+                  "name": "@dimsumthinking"
+                }
+              ]
+            }
+          ],
+          "description": "Allow users to discover and more quickly access all that your app can do - sometimes without even opening your app. This fast moving talk demonstrates how and why to use App Intents to expose your app's functionality through Shortcuts, Spotlight, Siri, Widgets, and Controls. App Intents are clearly central to Apple's idea of how your app interacts with the system.",
+          "description_ja": "ユーザーがアプリを開かなくても、アプリが提供するあらゆる機能をより素早く発見し、アクセスできるようにする方法を紹介します。テンポよく進む本セッションでは、App Intentsを活用して、ショートカット、Spotlight、Siri、ウィジェット、コントロールを通じてアプリの機能をシステムに公開する方法と、その理由を解説します。App Intentsは、アプリがシステムとどのように連携すべきかというAppleの設計思想において、明確に中核を担う存在です。"
         }
       ]
     }
