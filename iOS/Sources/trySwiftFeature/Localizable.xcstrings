@@ -1,17 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "3-21-3 Shibuya, Shibuya-ku, Tokyo" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "東京都渋谷区渋谷3-21-3"
-          }
-        }
-      }
-    },
     "About" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -197,7 +186,7 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Swiftを使った開発のコツや最新の事例を求めて<br>世界中から開発者が集います。<br>日頃のSwiftの知識やスキルを披露し、協力しあうことを目的に、<br>2025年4月9日 - 11日の３日間開催します！"
           }
         }
@@ -370,17 +359,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "登録"
-          }
-        }
-      }
-    },
-    "Shibuya Stream Hall" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "渋谷ストリームホール"
           }
         }
       }
