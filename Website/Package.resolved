@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/twostraws/Ignite",
       "state" : {
-        "revision" : "5c16e8488354a9300d8656dd4639b24c312da871",
-        "version" : "0.6.2"
+        "revision" : "0954c7190185a22c86b662313c73bb1d412d8925",
+        "version" : "0.6.3"
       }
     },
     {
@@ -29,39 +29,12 @@
       }
     },
     {
-      "identity" : "skip",
+      "identity" : "opencombine",
       "kind" : "remoteSourceControl",
-      "location" : "https://source.skip.tools/skip.git",
+      "location" : "https://github.com/OpenCombine/OpenCombine.git",
       "state" : {
-        "revision" : "75951ff17083ee4bbab96fa8ffe311e1d5489e0b",
-        "version" : "1.7.1"
-      }
-    },
-    {
-      "identity" : "skip-foundation",
-      "kind" : "remoteSourceControl",
-      "location" : "https://source.skip.tools/skip-foundation.git",
-      "state" : {
-        "revision" : "6213f6612c7f77a13ef8172528c8ff1715530108",
-        "version" : "1.3.11"
-      }
-    },
-    {
-      "identity" : "skip-lib",
-      "kind" : "remoteSourceControl",
-      "location" : "https://source.skip.tools/skip-lib.git",
-      "state" : {
-        "revision" : "112874f0222f4815798c924e2b299ba23eb53111",
-        "version" : "1.3.8"
-      }
-    },
-    {
-      "identity" : "skip-unit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://source.skip.tools/skip-unit.git",
-      "state" : {
-        "revision" : "646b528c7c7bad2edb1e73747d6b280b54e128a2",
-        "version" : "1.5.0"
+        "revision" : "8576f0d579b27020beccbccc3ea6844f3ddfc2c2",
+        "version" : "0.14.0"
       }
     },
     {
