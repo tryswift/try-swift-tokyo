@@ -231,7 +231,7 @@ struct OrganizerProposalsPageView: HTML, Sendable {
             }
             tbody {
               for (index, proposal) in proposals.enumerated() {
-                OrganizerProposalRow(proposal: proposal, index: index + 1)
+                OrganizerProposalRow(proposal: proposal, index: index + 1, csrfToken: csrfToken)
               }
             }
           }
@@ -518,6 +518,7 @@ struct OrganizerProposalsPageView: HTML, Sendable {
 struct OrganizerProposalRow: HTML, Sendable {
   let proposal: ProposalDTO
   let index: Int
+  let csrfToken: String
 
   var body: some HTML {
     tr(
@@ -588,6 +589,7 @@ struct OrganizerProposalRow: HTML, Sendable {
             HTMLRaw(
               """
               <form method="post" action="/organizer/proposals/\(proposal.id)/accept" style="display:inline">
+                <input type="hidden" name="_csrf" value="\(csrfToken)">
                 <button type="submit" class="btn btn-sm btn-success">Accept</button>
               </form>
               """)
@@ -596,6 +598,7 @@ struct OrganizerProposalRow: HTML, Sendable {
             HTMLRaw(
               """
               <form method="post" action="/organizer/proposals/\(proposal.id)/reject" style="display:inline">
+                <input type="hidden" name="_csrf" value="\(csrfToken)">
                 <button type="submit" class="btn btn-sm btn-outline-danger">Reject</button>
               </form>
               """)
