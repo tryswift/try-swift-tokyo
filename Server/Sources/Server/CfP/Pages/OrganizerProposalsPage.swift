@@ -540,12 +540,12 @@ struct OrganizerProposalRow: HTML, Sendable {
           if let iconURL = proposal.iconURL {
             img(
               .src(iconURL),
-              .alt(proposal.speakerUsername),
+              .alt(proposal.speakerName),
               .class("rounded-circle me-2"),
               .style("width: 24px; height: 24px;")
             )
           }
-          HTMLText(proposal.speakerUsername)
+          HTMLText(proposal.speakerName)
         }
       }
       td(.class("align-middle")) {
