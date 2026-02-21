@@ -351,6 +351,41 @@ struct CSRFMiddlewareTests {
     try await app.asyncShutdown()
   }
 
+  @Test("POST with large form body (long bio/abstract) passes CSRF validation")
+  func postWithLargeFormBodyPasses() async throws {
+    let app = try await makeApp()
+    do {
+      let token = "a1b3c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8"
+      // Create a body larger than the default 16KB collect limit
+      let longBio = String(repeating: "This is a long speaker biography. ", count: 1000)
+      let longAbstract = String(repeating: "Detailed abstract content here. ", count: 500)
+      let encodedBio = longBio.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+      let encodedAbstract =
+        longAbstract.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+      let bodyString =
+        "_csrf=\(token)&title=Test+Talk&bio=\(encodedBio)&abstract=\(encodedAbstract)&talkDuration=invited"
+
+      // Verify the body exceeds 16KB
+      #expect(bodyString.utf8.count > 16_384, "Test body should exceed default 16KB collect limit")
+
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(
+            dictionaryLiteral: ("csrf_token", .init(string: token)))
+          req.headers.contentType = .urlEncodedForm
+          req.body = ByteBuffer(string: bodyString)
+        }
+      ) { response in
+        #expect(response.status == .ok)
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
   @Test("Non-POST methods (PUT, DELETE, PATCH) are not blocked")
   func nonPostMethodsPass() async throws {
     let app = try await Application.make(.testing)
