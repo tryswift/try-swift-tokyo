@@ -17,6 +17,15 @@ struct CSRFMiddleware: AsyncMiddleware {
       }
       let cookieToken = normalizeToken(rawCookieToken)
 
+      // Ensure the request body is fully collected before decoding.
+      // Without this, large form bodies (e.g. long bio/abstract fields)
+      // may still be streaming, causing content.get to fail silently.
+      // The default collect limit is only 16KB; use the app's configured max instead.
+      if request.body.data == nil {
+        let maxSize = request.application.routes.defaultMaxBodySize
+        _ = try? await request.body.collect(max: maxSize.value).get()
+      }
+
       // Check form field first, then header
       let formToken = (try? request.content.get(String.self, at: "_csrf")).map(normalizeToken)
       let headerToken = request.headers.first(name: "X-CSRF-Token").map(normalizeToken)
