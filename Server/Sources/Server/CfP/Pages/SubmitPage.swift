@@ -251,7 +251,8 @@ struct SubmitPageView: HTML, Sendable {
 
   @HTMLBuilder
   private var workshopFieldsSection: some HTML {
-    HTMLRaw("""
+    HTMLRaw(
+      """
       <div id="workshopFields" style="display: none;">
       """)
     div(.class("card bg-light mb-4")) {
@@ -350,7 +351,8 @@ struct SubmitPageView: HTML, Sendable {
         .name("workshop_prerequisites"),
         .id("workshop_prerequisites"),
         .placeholder(
-          language == .ja ? "例: Swift 1年以上の経験 / 基本的なiOSの知識"
+          language == .ja
+            ? "例: Swift 1年以上の経験 / 基本的なiOSの知識"
             : "e.g. Swift 1+ years experience / Basic iOS knowledge")
       )
     }
@@ -392,7 +394,8 @@ struct SubmitPageView: HTML, Sendable {
   private var workshopRequiredSoftwareField: some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("workshop_requiredSoftware")) {
-        language == .ja ? "事前にインストールが必要なツール・ソフトウェア"
+        language == .ja
+          ? "事前にインストールが必要なツール・ソフトウェア"
           : "Required Tools / Software to Install in Advance"
       }
       textarea(
@@ -401,7 +404,8 @@ struct SubmitPageView: HTML, Sendable {
         .id("workshop_requiredSoftware"),
         .custom(name: "rows", value: "2"),
         .placeholder(
-          language == .ja ? "例: Xcode バージョン、SDK、CLIツール等"
+          language == .ja
+            ? "例: Xcode バージョン、SDK、CLIツール等"
             : "e.g. Xcode version, SDKs, CLI tools, etc.")
       ) {}
     }
@@ -480,7 +484,8 @@ struct SubmitPageView: HTML, Sendable {
         .custom(name: "rows", value: "3"),
         .custom(name: "data-workshop-required", value: "true"),
         .placeholder(
-          language == .ja ? "なぜ try! Swift でこのワークショップを行いたいですか？"
+          language == .ja
+            ? "なぜ try! Swift でこのワークショップを行いたいですか？"
             : "Why this workshop at try! Swift?")
       ) {}
     }
@@ -498,7 +503,8 @@ struct SubmitPageView: HTML, Sendable {
         .custom(name: "rows", value: "3"),
         .custom(name: "data-workshop-required", value: "true"),
         .placeholder(
-          language == .ja ? "類似トピックとの差別化ポイント"
+          language == .ja
+            ? "類似トピックとの差別化ポイント"
             : "What differentiates this from similar topics?")
       ) {}
     }
@@ -515,7 +521,8 @@ struct SubmitPageView: HTML, Sendable {
         .id("workshop_potentialRisks"),
         .custom(name: "rows", value: "2"),
         .placeholder(
-          language == .ja ? "例: ビルド時間、ネットワーク依存、難易度等"
+          language == .ja
+            ? "例: ビルド時間、ネットワーク依存、難易度等"
             : "e.g. Build time, network dependency, difficulty, etc.")
       ) {}
     }
@@ -692,7 +699,8 @@ struct SubmitPageView: HTML, Sendable {
 
   @HTMLBuilder
   private var coInstructorFieldsSection: some HTML {
-    HTMLRaw("""
+    HTMLRaw(
+      """
       <div id="coInstructorFields" style="display: none;">
       """)
     div(.class("card bg-light mb-4")) {
@@ -710,24 +718,28 @@ struct SubmitPageView: HTML, Sendable {
         coInstructorBlock(index: 2)
 
         // Instructor 3 (initially hidden)
-        HTMLRaw("""
+        HTMLRaw(
+          """
           <div id="coInstructor3Block" style="display: none;">
           """)
         coInstructorBlock(index: 3)
         HTMLRaw("</div>")
 
         // Add/Remove buttons
-        HTMLRaw("""
+        HTMLRaw(
+          """
           <div class="d-flex gap-2 mt-3">
             <button type="button" class="btn btn-outline-secondary btn-sm" id="addInstructor3Btn" onclick="showInstructor3()">
           """)
         HTMLText(language == .ja ? "+ 講師3を追加" : "+ Add Instructor 3")
-        HTMLRaw("""
+        HTMLRaw(
+          """
             </button>
             <button type="button" class="btn btn-outline-danger btn-sm" id="removeInstructor3Btn" style="display: none;" onclick="hideInstructor3()">
           """)
         HTMLText(language == .ja ? "講師3を削除" : "Remove Instructor 3")
-        HTMLRaw("""
+        HTMLRaw(
+          """
             </button>
           </div>
           """)
@@ -756,7 +768,8 @@ struct SubmitPageView: HTML, Sendable {
             .id("\(prefix)_githubUsername"),
             .placeholder(language == .ja ? "GitHubユーザー名" : "GitHub username")
           )
-          HTMLRaw("""
+          HTMLRaw(
+            """
             <button class="btn btn-outline-primary" type="button" onclick="lookupCoInstructor(\(index))">Lookup</button>
             """)
         }
@@ -765,7 +778,8 @@ struct SubmitPageView: HTML, Sendable {
             ? "GitHubユーザー名を入力して「Lookup」を押すと、サインイン済みの場合は情報が自動入力されます。"
             : "Enter GitHub username and press 'Lookup' to auto-fill if the user has signed in before."
         }
-        HTMLRaw("""
+        HTMLRaw(
+          """
           <div id="\(prefix)_lookupStatus" class="form-text"></div>
           """)
       }

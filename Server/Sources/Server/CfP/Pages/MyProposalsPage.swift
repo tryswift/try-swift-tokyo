@@ -162,14 +162,15 @@ struct ProposalCard: HTML, Sendable {
             div {
               h5(.class("card-title mb-1 text-dark")) { HTMLText(proposal.title) }
               span(
-                .class({
-                  switch proposal.talkDuration {
-                  case .regular: return "badge bg-primary"
-                  case .workshop: return "badge bg-success"
-                  case .invited: return "badge bg-dark"
-                  case .lightning: return "badge bg-warning text-dark"
-                  }
-                }())
+                .class(
+                  {
+                    switch proposal.talkDuration {
+                    case .regular: return "badge bg-primary"
+                    case .workshop: return "badge bg-success"
+                    case .invited: return "badge bg-dark"
+                    case .lightning: return "badge bg-warning text-dark"
+                    }
+                  }())
               ) {
                 HTMLText(
                   language == .ja

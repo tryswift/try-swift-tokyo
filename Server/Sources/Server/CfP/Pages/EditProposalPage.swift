@@ -231,7 +231,8 @@ struct EditProposalPageView: HTML, Sendable {
   @HTMLBuilder
   private func workshopFieldsSection(details: WorkshopDetails?) -> some HTML {
     let isWorkshop = proposal?.talkDuration == .workshop
-    HTMLRaw("""
+    HTMLRaw(
+      """
       <div id="workshopFields" style="display: \(isWorkshop ? "block" : "none");">
       """)
     div(.class("card bg-light mb-4")) {
@@ -380,7 +381,8 @@ struct EditProposalPageView: HTML, Sendable {
   private func workshopRequiredSoftwareField(value: String?) -> some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("workshop_requiredSoftware")) {
-        language == .ja ? "事前にインストールが必要なツール・ソフトウェア"
+        language == .ja
+          ? "事前にインストールが必要なツール・ソフトウェア"
           : "Required Tools / Software to Install in Advance"
       }
       textarea(
@@ -634,7 +636,8 @@ struct EditProposalPageView: HTML, Sendable {
     let instructors = coInstructors ?? []
     let hasInstructor3 = instructors.count >= 2
 
-    HTMLRaw("""
+    HTMLRaw(
+      """
       <div id="coInstructorFields" style="display: \(isWorkshop ? "block" : "none");">
       """)
     div(.class("card bg-light mb-4")) {
@@ -651,24 +654,28 @@ struct EditProposalPageView: HTML, Sendable {
         coInstructorBlock(
           index: 2, instructor: instructors.count >= 1 ? instructors[0] : nil)
 
-        HTMLRaw("""
+        HTMLRaw(
+          """
           <div id="coInstructor3Block" style="display: \(hasInstructor3 ? "block" : "none");">
           """)
         coInstructorBlock(
           index: 3, instructor: instructors.count >= 2 ? instructors[1] : nil)
         HTMLRaw("</div>")
 
-        HTMLRaw("""
+        HTMLRaw(
+          """
           <div class="d-flex gap-2 mt-3">
             <button type="button" class="btn btn-outline-secondary btn-sm" id="addInstructor3Btn" style="display: \(hasInstructor3 ? "none" : "inline-block");" onclick="showInstructor3()">
           """)
         HTMLText(language == .ja ? "+ 講師3を追加" : "+ Add Instructor 3")
-        HTMLRaw("""
+        HTMLRaw(
+          """
             </button>
             <button type="button" class="btn btn-outline-danger btn-sm" id="removeInstructor3Btn" style="display: \(hasInstructor3 ? "inline-block" : "none");" onclick="hideInstructor3()">
           """)
         HTMLText(language == .ja ? "講師3を削除" : "Remove Instructor 3")
-        HTMLRaw("""
+        HTMLRaw(
+          """
             </button>
           </div>
           """)
@@ -696,11 +703,13 @@ struct EditProposalPageView: HTML, Sendable {
             .value(instructor?.githubUsername ?? ""),
             .placeholder(language == .ja ? "GitHubユーザー名" : "GitHub username")
           )
-          HTMLRaw("""
+          HTMLRaw(
+            """
             <button class="btn btn-outline-primary" type="button" onclick="lookupCoInstructor(\(index))">Lookup</button>
             """)
         }
-        HTMLRaw("""
+        HTMLRaw(
+          """
           <div id="\(prefix)_lookupStatus" class="form-text"></div>
           """)
       }

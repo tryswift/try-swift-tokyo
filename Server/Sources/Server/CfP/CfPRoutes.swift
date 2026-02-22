@@ -622,7 +622,8 @@ struct CfPRoutes: RouteCollection {
       else {
         return try await renderSubmitPageWithError(
           req: req, user: user,
-          error: language == .ja ? "参加者が持参するものは必須です"
+          error: language == .ja
+            ? "参加者が持参するものは必須です"
             : "Participant requirements are required",
           language: language)
       }
@@ -784,7 +785,7 @@ struct CfPRoutes: RouteCollection {
   @Sendable
   func lookupUserByGitHubUsername(req: Request) async throws -> Response {
     // Require authentication
-    guard let _ = try? await getAuthenticatedUser(req: req) else {
+    guard (try? await getAuthenticatedUser(req: req)) != nil else {
       throw Abort(.unauthorized)
     }
 
@@ -1043,7 +1044,8 @@ struct CfPRoutes: RouteCollection {
       else {
         return try await renderEditProposalPageWithError(
           req: req, user: user, proposal: proposal,
-          error: language == .ja ? "参加者が持参するものは必須です"
+          error: language == .ja
+            ? "参加者が持参するものは必須です"
             : "Participant requirements are required",
           language: language)
       }

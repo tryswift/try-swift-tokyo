@@ -52,14 +52,15 @@ struct MyProposalDetailPageView: HTML, Sendable {
               h1(.class("fw-bold mb-2")) { HTMLText(proposal.title) }
               div(.class("d-flex align-items-center gap-3")) {
                 span(
-                  .class({
-                    switch proposal.talkDuration {
-                    case .regular: return "badge bg-primary fs-6"
-                    case .workshop: return "badge bg-success fs-6"
-                    case .invited: return "badge bg-dark fs-6"
-                    case .lightning: return "badge bg-warning text-dark fs-6"
-                    }
-                  }())
+                  .class(
+                    {
+                      switch proposal.talkDuration {
+                      case .regular: return "badge bg-primary fs-6"
+                      case .workshop: return "badge bg-success fs-6"
+                      case .invited: return "badge bg-dark fs-6"
+                      case .lightning: return "badge bg-warning text-dark fs-6"
+                      }
+                    }())
                 ) {
                   HTMLText(
                     language == .ja
@@ -175,18 +176,28 @@ struct MyProposalDetailPageView: HTML, Sendable {
                   dd(.class("col-sm-9")) { HTMLText("\(workshop.numberOfTutors)") }
 
                   dt(.class("col-sm-3")) { language == .ja ? "主な学び" : "Key Takeaways" }
-                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.keyTakeaways) }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) {
+                    HTMLText(workshop.keyTakeaways)
+                  }
 
                   if let prerequisites = workshop.prerequisites, !prerequisites.isEmpty {
                     dt(.class("col-sm-3")) { language == .ja ? "前提条件" : "Prerequisites" }
-                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(prerequisites) }
+                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) {
+                      HTMLText(prerequisites)
+                    }
                   }
 
-                  dt(.class("col-sm-3")) { language == .ja ? "アジェンダ / スケジュール" : "Agenda / Schedule" }
-                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.agendaSchedule) }
+                  dt(.class("col-sm-3")) {
+                    language == .ja ? "アジェンダ / スケジュール" : "Agenda / Schedule"
+                  }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) {
+                    HTMLText(workshop.agendaSchedule)
+                  }
 
                   dt(.class("col-sm-3")) { language == .ja ? "参加者要件" : "Participant Requirements" }
-                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.participantRequirements) }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) {
+                    HTMLText(workshop.participantRequirements)
+                  }
 
                   if let software = workshop.requiredSoftware, !software.isEmpty {
                     dt(.class("col-sm-3")) { language == .ja ? "必要なソフトウェア" : "Required Software" }
@@ -194,25 +205,34 @@ struct MyProposalDetailPageView: HTML, Sendable {
                   }
 
                   dt(.class("col-sm-3")) { language == .ja ? "ネットワーク要件" : "Network Requirements" }
-                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.networkRequirements) }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) {
+                    HTMLText(workshop.networkRequirements)
+                  }
 
                   if !workshop.requiredFacilities.isEmpty {
                     dt(.class("col-sm-3")) { language == .ja ? "必要な設備" : "Required Facilities" }
                     dd(.class("col-sm-9")) {
-                      HTMLText(workshop.requiredFacilities.map(\.displayName).joined(separator: ", "))
+                      HTMLText(
+                        workshop.requiredFacilities.map(\.displayName).joined(separator: ", "))
                     }
                   }
 
                   if let facilityOther = workshop.facilityOther, !facilityOther.isEmpty {
                     dt(.class("col-sm-3")) { language == .ja ? "その他の設備" : "Other Facilities" }
-                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(facilityOther) }
+                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) {
+                      HTMLText(facilityOther)
+                    }
                   }
 
                   dt(.class("col-sm-3")) { language == .ja ? "動機" : "Motivation" }
-                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.motivation) }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) {
+                    HTMLText(workshop.motivation)
+                  }
 
                   dt(.class("col-sm-3")) { language == .ja ? "独自性" : "Uniqueness" }
-                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.uniqueness) }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) {
+                    HTMLText(workshop.uniqueness)
+                  }
 
                   if let risks = workshop.potentialRisks, !risks.isEmpty {
                     dt(.class("col-sm-3")) { language == .ja ? "潜在的リスク" : "Potential Risks" }
@@ -265,7 +285,9 @@ struct MyProposalDetailPageView: HTML, Sendable {
                       dd(.class("col-sm-9")) { HTMLText(sns) }
                     }
                     dt(.class("col-sm-3")) { language == .ja ? "自己紹介" : "Bio" }
-                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(instructor.bio) }
+                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) {
+                      HTMLText(instructor.bio)
+                    }
                   }
                 }
               }

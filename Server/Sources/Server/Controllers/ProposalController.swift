@@ -68,7 +68,8 @@ struct CreateProposalRequestContent: Content {
   func toRequest(defaultConferencePath: String, userRole: UserRole) throws -> CreateProposalRequest
   {
     guard let duration = TalkDuration(rawValue: talkDuration) else {
-      throw Abort(.badRequest, reason: "Invalid talk duration. Use '20min', 'LT', 'workshop', or 'invited'")
+      throw Abort(
+        .badRequest, reason: "Invalid talk duration. Use '20min', 'LT', 'workshop', or 'invited'")
     }
 
     // Validate that only invited speakers can submit invited talks
