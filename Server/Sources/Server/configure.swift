@@ -52,6 +52,7 @@ enum AppConfiguration {
     app.migrations.add(CreateScheduleSlot())
     app.migrations.add(AddScheduleSlotIndexes())
     app.migrations.add(AddProposalGitHubUsername())
+    app.migrations.add(AddProposalWorkshopFields())
 
     // Auto-migrate on startup (safe for production as Fluent tracks completed migrations)
     try await app.autoMigrate()

@@ -25,7 +25,7 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @Field(key: "talk_detail")
   var talkDetail: String
 
-  /// Talk duration (20min or LT)
+  /// Proposal type (20min, LT, workshop, or invited)
   @Field(key: "talk_duration")
   var talkDuration: TalkDuration
 
@@ -62,6 +62,14 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @OptionalField(key: "github_username")
   var githubUsername: String?
 
+  /// Workshop-specific details (JSON, only populated for workshop proposals)
+  @OptionalField(key: "workshop_details")
+  var workshopDetails: WorkshopDetails?
+
+  /// Co-instructors for workshop proposals (JSON array, up to 2 additional instructors)
+  @OptionalField(key: "co_instructors")
+  var coInstructors: [CoInstructor]?
+
   /// Proposal review status
   @Field(key: "status")
   var status: ProposalStatus
@@ -93,7 +101,9 @@ final class Proposal: Model, Content, @unchecked Sendable {
     notes: String? = nil,
     speakerID: UUID,
     status: ProposalStatus = .submitted,
-    githubUsername: String? = nil
+    githubUsername: String? = nil,
+    workshopDetails: WorkshopDetails? = nil,
+    coInstructors: [CoInstructor]? = nil
   ) {
     self.id = id
     self.$conference.id = conferenceID
@@ -109,6 +119,8 @@ final class Proposal: Model, Content, @unchecked Sendable {
     self.$speaker.id = speakerID
     self.status = status
     self.githubUsername = githubUsername
+    self.workshopDetails = workshopDetails
+    self.coInstructors = coInstructors
   }
 
   /// Convert to DTO for API responses
@@ -138,7 +150,9 @@ final class Proposal: Model, Content, @unchecked Sendable {
       status: status,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      githubUsername: githubUsername
+      githubUsername: githubUsername,
+      workshopDetails: workshopDetails,
+      coInstructors: coInstructors
     )
   }
 }

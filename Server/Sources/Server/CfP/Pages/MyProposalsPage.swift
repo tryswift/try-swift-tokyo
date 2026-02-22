@@ -162,15 +162,26 @@ struct ProposalCard: HTML, Sendable {
             div {
               h5(.class("card-title mb-1 text-dark")) { HTMLText(proposal.title) }
               span(
-                .class(
-                  proposal.talkDuration == .regular
-                    ? "badge bg-primary" : "badge bg-warning text-dark"
-                )
+                .class({
+                  switch proposal.talkDuration {
+                  case .regular: return "badge bg-primary"
+                  case .workshop: return "badge bg-success"
+                  case .invited: return "badge bg-dark"
+                  case .lightning: return "badge bg-warning text-dark"
+                  }
+                }())
               ) {
                 HTMLText(
                   language == .ja
-                    ? (proposal.talkDuration == .regular ? "レギュラートーク" : "ライトニングトーク")
-                    : proposal.talkDuration.rawValue)
+                    ? ({
+                      switch proposal.talkDuration {
+                      case .regular: return "レギュラートーク"
+                      case .workshop: return "ワークショップ"
+                      case .lightning: return "ライトニングトーク"
+                      case .invited: return "招待トーク"
+                      }
+                    }())
+                    : proposal.talkDuration.displayName)
               }
             }
             if let createdAt = proposal.createdAt {

@@ -52,14 +52,25 @@ struct MyProposalDetailPageView: HTML, Sendable {
               h1(.class("fw-bold mb-2")) { HTMLText(proposal.title) }
               div(.class("d-flex align-items-center gap-3")) {
                 span(
-                  .class(
-                    proposal.talkDuration == .regular
-                      ? "badge bg-primary fs-6" : "badge bg-warning text-dark fs-6"
-                  )
+                  .class({
+                    switch proposal.talkDuration {
+                    case .regular: return "badge bg-primary fs-6"
+                    case .workshop: return "badge bg-success fs-6"
+                    case .invited: return "badge bg-dark fs-6"
+                    case .lightning: return "badge bg-warning text-dark fs-6"
+                    }
+                  }())
                 ) {
                   HTMLText(
                     language == .ja
-                      ? (proposal.talkDuration == .regular ? "レギュラートーク" : "ライトニングトーク")
+                      ? ({
+                        switch proposal.talkDuration {
+                        case .regular: return "レギュラートーク"
+                        case .workshop: return "ワークショップ"
+                        case .lightning: return "ライトニングトーク"
+                        case .invited: return "招待トーク"
+                        }
+                      }())
                       : proposal.talkDuration.displayName)
                 }
                 span(.class("text-muted")) {
@@ -145,6 +156,118 @@ struct MyProposalDetailPageView: HTML, Sendable {
             div(.class("card-body")) {
               p(.class("mb-0"), .style("white-space: pre-wrap;")) {
                 HTMLText(proposal.talkDetail)
+              }
+            }
+          }
+
+          // Workshop details card (if applicable)
+          if let workshop = proposal.workshopDetails {
+            div(.class("card mb-4 border-success")) {
+              div(.class("card-header bg-success text-white")) {
+                strong { language == .ja ? "ワークショップ詳細" : "Workshop Details" }
+              }
+              div(.class("card-body")) {
+                dl(.class("row mb-0")) {
+                  dt(.class("col-sm-3")) { language == .ja ? "言語" : "Language" }
+                  dd(.class("col-sm-9")) { HTMLText(workshop.language.displayName) }
+
+                  dt(.class("col-sm-3")) { language == .ja ? "講師数" : "Number of Tutors" }
+                  dd(.class("col-sm-9")) { HTMLText("\(workshop.numberOfTutors)") }
+
+                  dt(.class("col-sm-3")) { language == .ja ? "主な学び" : "Key Takeaways" }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.keyTakeaways) }
+
+                  if let prerequisites = workshop.prerequisites, !prerequisites.isEmpty {
+                    dt(.class("col-sm-3")) { language == .ja ? "前提条件" : "Prerequisites" }
+                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(prerequisites) }
+                  }
+
+                  dt(.class("col-sm-3")) { language == .ja ? "アジェンダ / スケジュール" : "Agenda / Schedule" }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.agendaSchedule) }
+
+                  dt(.class("col-sm-3")) { language == .ja ? "参加者要件" : "Participant Requirements" }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.participantRequirements) }
+
+                  if let software = workshop.requiredSoftware, !software.isEmpty {
+                    dt(.class("col-sm-3")) { language == .ja ? "必要なソフトウェア" : "Required Software" }
+                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(software) }
+                  }
+
+                  dt(.class("col-sm-3")) { language == .ja ? "ネットワーク要件" : "Network Requirements" }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.networkRequirements) }
+
+                  if !workshop.requiredFacilities.isEmpty {
+                    dt(.class("col-sm-3")) { language == .ja ? "必要な設備" : "Required Facilities" }
+                    dd(.class("col-sm-9")) {
+                      HTMLText(workshop.requiredFacilities.map(\.displayName).joined(separator: ", "))
+                    }
+                  }
+
+                  if let facilityOther = workshop.facilityOther, !facilityOther.isEmpty {
+                    dt(.class("col-sm-3")) { language == .ja ? "その他の設備" : "Other Facilities" }
+                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(facilityOther) }
+                  }
+
+                  dt(.class("col-sm-3")) { language == .ja ? "動機" : "Motivation" }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.motivation) }
+
+                  dt(.class("col-sm-3")) { language == .ja ? "独自性" : "Uniqueness" }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.uniqueness) }
+
+                  if let risks = workshop.potentialRisks, !risks.isEmpty {
+                    dt(.class("col-sm-3")) { language == .ja ? "潜在的リスク" : "Potential Risks" }
+                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(risks) }
+                  }
+                }
+              }
+            }
+          }
+
+          // Co-instructors card (if applicable)
+          if let coInstructors = proposal.coInstructors, !coInstructors.isEmpty {
+            div(.class("card mb-4 border-success")) {
+              div(.class("card-header bg-success text-white")) {
+                strong {
+                  language == .ja ? "共同講師" : "Co-Instructors"
+                }
+              }
+              div(.class("card-body")) {
+                for (index, instructor) in coInstructors.enumerated() {
+                  if index > 0 {
+                    hr()
+                  }
+                  div(.class("d-flex align-items-center mb-3")) {
+                    if let iconURL = instructor.iconURL {
+                      img(
+                        .src(iconURL),
+                        .alt(instructor.name),
+                        .class("rounded-circle me-3"),
+                        .style("width: 48px; height: 48px;")
+                      )
+                    }
+                    div {
+                      h6(.class("mb-1 fw-bold")) { HTMLText(instructor.name) }
+                      p(.class("text-muted mb-0 small")) { HTMLText(instructor.email) }
+                    }
+                  }
+                  dl(.class("row mb-0")) {
+                    dt(.class("col-sm-3")) { "GitHub" }
+                    dd(.class("col-sm-9")) {
+                      a(
+                        .href("https://github.com/\(instructor.githubUsername)"),
+                        .target(.blank)
+                      ) {
+                        HTMLText(instructor.githubUsername)
+                      }
+                    }
+                    if let sns = instructor.sns, !sns.isEmpty {
+                      dt(.class("col-sm-3")) { "SNS" }
+                      dd(.class("col-sm-9")) { HTMLText(sns) }
+                    }
+                    dt(.class("col-sm-3")) { language == .ja ? "自己紹介" : "Bio" }
+                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(instructor.bio) }
+                  }
+                }
               }
             }
           }

@@ -147,7 +147,7 @@ struct OrganizerProposalsPageView: HTML, Sendable {
 
     // Duration stats row
     div(.class("row mb-4")) {
-      div(.class("col-md-4")) {
+      div(.class("col-md-3")) {
         div(
           .class("card bg-info text-white proposal-filter-card"),
           .data("filter", value: "20min"),
@@ -161,7 +161,7 @@ struct OrganizerProposalsPageView: HTML, Sendable {
           }
         }
       }
-      div(.class("col-md-4")) {
+      div(.class("col-md-3")) {
         let invitedCount = proposals.filter { $0.talkDuration == .invited }.count
         div(
           .class("card bg-dark text-white proposal-filter-card"),
@@ -176,7 +176,22 @@ struct OrganizerProposalsPageView: HTML, Sendable {
           }
         }
       }
-      div(.class("col-md-4")) {
+      div(.class("col-md-3")) {
+        let workshopCount = proposals.filter { $0.talkDuration == .workshop }.count
+        div(
+          .class("card bg-success text-white proposal-filter-card"),
+          .data("filter", value: "workshop"),
+          .data("filter-type", value: "duration"),
+          .style("cursor: pointer;"),
+          .role("button")
+        ) {
+          div(.class("card-body")) {
+            h3(.class("card-title mb-0")) { HTMLText("\(workshopCount)") }
+            p(.class("card-text mb-0")) { "Workshops" }
+          }
+        }
+      }
+      div(.class("col-md-3")) {
         div(
           .class("card bg-warning text-dark proposal-filter-card"),
           .data("filter", value: "LT"),
@@ -222,7 +237,7 @@ struct OrganizerProposalsPageView: HTML, Sendable {
                 th(.style("width: 4%")) { "#" }
                 th(.style("width: 22%")) { "Title" }
                 th(.style("width: 12%")) { "Speaker" }
-                th(.style("width: 8%")) { "Duration" }
+                th(.style("width: 8%")) { "Type" }
                 th(.style("width: 8%")) { "Status" }
                 th(.style("width: 12%")) { "Conference" }
                 th(.style("width: 12%")) { "Submitted" }
@@ -333,12 +348,12 @@ struct OrganizerProposalsPageView: HTML, Sendable {
       }
       div(.class("mb-3")) {
         label(.class("form-label fw-semibold"), .for("inlineTalkDuration")) {
-          "Talk Duration *"
+          "Type *"
         }
         select(
           .class("form-select"), .name("talkDuration"), .id("inlineTalkDuration"), .required
         ) {
-          option(.value("")) { "Choose duration..." }
+          option(.value("")) { "Choose type..." }
           for duration in TalkDuration.allCases {
             option(.value(duration.rawValue)) {
               HTMLText(duration.displayName)
@@ -550,10 +565,14 @@ struct OrganizerProposalRow: HTML, Sendable {
       }
       td(.class("align-middle")) {
         span(
-          .class(
-            proposal.talkDuration == .regular
-              ? "badge bg-primary" : "badge bg-warning text-dark"
-          )
+          .class({
+            switch proposal.talkDuration {
+            case .regular: return "badge bg-primary"
+            case .workshop: return "badge bg-success"
+            case .invited: return "badge bg-dark"
+            case .lightning: return "badge bg-warning text-dark"
+            }
+          }())
         ) {
           HTMLText(proposal.talkDuration.rawValue)
         }

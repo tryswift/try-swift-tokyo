@@ -187,12 +187,12 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
   private func durationField(selected: TalkDuration) -> some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("talkDuration")) {
-        "Talk Duration *"
+        "Type *"
       }
       select(
         .class("form-select"), .name("talkDuration"), .id("talkDuration"), .required
       ) {
-        option(.value("")) { "Choose duration..." }
+        option(.value("")) { "Choose type..." }
         for duration in TalkDuration.allCases {
           if duration == selected {
             option(.value(duration.rawValue), .selected) {

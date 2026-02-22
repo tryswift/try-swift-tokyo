@@ -29,10 +29,14 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
               }
               div(.class("d-flex align-items-center gap-3")) {
                 span(
-                  .class(
-                    proposal.talkDuration == .regular
-                      ? "badge bg-primary fs-6" : "badge bg-warning text-dark fs-6"
-                  )
+                  .class({
+                    switch proposal.talkDuration {
+                    case .regular: return "badge bg-primary fs-6"
+                    case .workshop: return "badge bg-success fs-6"
+                    case .invited: return "badge bg-dark fs-6"
+                    case .lightning: return "badge bg-warning text-dark fs-6"
+                    }
+                  }())
                 ) {
                   HTMLText(proposal.talkDuration.displayName)
                 }
@@ -152,6 +156,116 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
               div(.class("card-body")) {
                 p(.class("mb-0"), .style("white-space: pre-wrap;")) {
                   HTMLText(notes)
+                }
+              }
+            }
+          }
+
+          // Workshop details card (if applicable)
+          if let workshop = proposal.workshopDetails {
+            div(.class("card mb-4 border-success")) {
+              div(.class("card-header bg-success text-white")) {
+                strong { "Workshop Details" }
+              }
+              div(.class("card-body")) {
+                dl(.class("row mb-0")) {
+                  dt(.class("col-sm-3")) { "Language" }
+                  dd(.class("col-sm-9")) { HTMLText(workshop.language.displayName) }
+
+                  dt(.class("col-sm-3")) { "Number of Tutors" }
+                  dd(.class("col-sm-9")) { HTMLText("\(workshop.numberOfTutors)") }
+
+                  dt(.class("col-sm-3")) { "Key Takeaways" }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.keyTakeaways) }
+
+                  if let prerequisites = workshop.prerequisites, !prerequisites.isEmpty {
+                    dt(.class("col-sm-3")) { "Prerequisites" }
+                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(prerequisites) }
+                  }
+
+                  dt(.class("col-sm-3")) { "Agenda / Schedule" }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.agendaSchedule) }
+
+                  dt(.class("col-sm-3")) { "Participant Requirements" }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.participantRequirements) }
+
+                  if let software = workshop.requiredSoftware, !software.isEmpty {
+                    dt(.class("col-sm-3")) { "Required Software" }
+                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(software) }
+                  }
+
+                  dt(.class("col-sm-3")) { "Network Requirements" }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.networkRequirements) }
+
+                  if !workshop.requiredFacilities.isEmpty {
+                    dt(.class("col-sm-3")) { "Required Facilities" }
+                    dd(.class("col-sm-9")) {
+                      HTMLText(workshop.requiredFacilities.map(\.displayName).joined(separator: ", "))
+                    }
+                  }
+
+                  if let facilityOther = workshop.facilityOther, !facilityOther.isEmpty {
+                    dt(.class("col-sm-3")) { "Other Facilities" }
+                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(facilityOther) }
+                  }
+
+                  dt(.class("col-sm-3")) { "Motivation" }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.motivation) }
+
+                  dt(.class("col-sm-3")) { "Uniqueness" }
+                  dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(workshop.uniqueness) }
+
+                  if let risks = workshop.potentialRisks, !risks.isEmpty {
+                    dt(.class("col-sm-3")) { "Potential Risks" }
+                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(risks) }
+                  }
+                }
+              }
+            }
+          }
+
+          // Co-instructors card (if applicable)
+          if let coInstructors = proposal.coInstructors, !coInstructors.isEmpty {
+            div(.class("card mb-4 border-success")) {
+              div(.class("card-header bg-success text-white")) {
+                strong { "Co-Instructors" }
+              }
+              div(.class("card-body")) {
+                for (index, instructor) in coInstructors.enumerated() {
+                  if index > 0 {
+                    hr()
+                  }
+                  div(.class("d-flex align-items-center mb-3")) {
+                    if let iconURL = instructor.iconURL {
+                      img(
+                        .src(iconURL),
+                        .alt(instructor.name),
+                        .class("rounded-circle me-3"),
+                        .style("width: 48px; height: 48px;")
+                      )
+                    }
+                    div {
+                      h6(.class("mb-1 fw-bold")) { HTMLText(instructor.name) }
+                      p(.class("text-muted mb-0 small")) { HTMLText(instructor.email) }
+                    }
+                  }
+                  dl(.class("row mb-0")) {
+                    dt(.class("col-sm-3")) { "GitHub" }
+                    dd(.class("col-sm-9")) {
+                      a(
+                        .href("https://github.com/\(instructor.githubUsername)"),
+                        .target(.blank)
+                      ) {
+                        HTMLText(instructor.githubUsername)
+                      }
+                    }
+                    if let sns = instructor.sns, !sns.isEmpty {
+                      dt(.class("col-sm-3")) { "SNS" }
+                      dd(.class("col-sm-9")) { HTMLText(sns) }
+                    }
+                    dt(.class("col-sm-3")) { "Bio" }
+                    dd(.class("col-sm-9"), .style("white-space: pre-wrap;")) { HTMLText(instructor.bio) }
+                  }
                 }
               }
             }
