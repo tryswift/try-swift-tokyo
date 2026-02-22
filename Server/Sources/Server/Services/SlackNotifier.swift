@@ -16,7 +16,13 @@ enum SlackNotifier {
       return
     }
 
-    let durationText = talkDuration == "LT" ? "LT (5分)" : "20分"
+    let durationText: String
+    switch talkDuration {
+    case "LT": durationText = "LT (5min)"
+    case "workshop": durationText = "Workshop"
+    case "invited": durationText = "Invited (20min)"
+    default: durationText = "20min"
+    }
 
     let payload = SlackMessage(
       blocks: [
