@@ -473,7 +473,6 @@ struct CfPRoutes: RouteCollection {
       var githubUsername: String
       var speakerName: String
       var speakerEmail: String
-      var speakerSns: String?
       var bio: String
       var iconUrl: String
       var notesToOrganizers: String?
@@ -646,12 +645,22 @@ struct CfPRoutes: RouteCollection {
           language: language)
       }
 
+      let numberOfTutors = Int(tutorsStr) ?? 0
+      guard numberOfTutors > 0 else {
+        return try await renderSubmitPageWithError(
+          req: req, user: user,
+          error: language == .ja
+            ? "チューターの人数は1以上でなければなりません"
+            : "Number of tutors must be at least 1",
+          language: language)
+      }
+
       let facilities =
         formData.workshop_requiredFacilities?.compactMap { FacilityRequirement(rawValue: $0) } ?? []
 
       workshopDetails = WorkshopDetails(
         language: workshopLang,
-        numberOfTutors: Int(tutorsStr) ?? 0,
+        numberOfTutors: numberOfTutors,
         keyTakeaways: keyTakeaways,
         prerequisites: formData.workshop_prerequisites?.isEmpty == true
           ? nil : formData.workshop_prerequisites,
@@ -897,7 +906,6 @@ struct CfPRoutes: RouteCollection {
       var githubUsername: String
       var speakerName: String
       var speakerEmail: String
-      var speakerSns: String?
       var bio: String
       var iconUrl: String
       var notesToOrganizers: String?
@@ -1068,12 +1076,22 @@ struct CfPRoutes: RouteCollection {
           language: language)
       }
 
+      let numberOfTutors = Int(tutorsStr) ?? 0
+      guard numberOfTutors > 0 else {
+        return try await renderEditProposalPageWithError(
+          req: req, user: user, proposal: proposal,
+          error: language == .ja
+            ? "チューターの人数は1以上でなければなりません"
+            : "Number of tutors must be at least 1",
+          language: language)
+      }
+
       let facilities =
         formData.workshop_requiredFacilities?.compactMap { FacilityRequirement(rawValue: $0) } ?? []
 
       workshopDetails = WorkshopDetails(
         language: workshopLang,
-        numberOfTutors: Int(tutorsStr) ?? 0,
+        numberOfTutors: numberOfTutors,
         keyTakeaways: keyTakeaways,
         prerequisites: formData.workshop_prerequisites?.isEmpty == true
           ? nil : formData.workshop_prerequisites,
@@ -1094,29 +1112,33 @@ struct CfPRoutes: RouteCollection {
       // Build co-instructors
       var instructors: [CoInstructor] = []
       if let name = formData.coInstructor2_name, !name.isEmpty,
-        let ghUser = formData.coInstructor2_githubUsername, !ghUser.isEmpty
+        let ghUser = formData.coInstructor2_githubUsername, !ghUser.isEmpty,
+        let email = formData.coInstructor2_email, !email.isEmpty,
+        let bio = formData.coInstructor2_bio, !bio.isEmpty
       {
         instructors.append(
           CoInstructor(
             name: name,
-            email: formData.coInstructor2_email ?? "",
+            email: email,
             sns: formData.coInstructor2_sns?.isEmpty == true ? nil : formData.coInstructor2_sns,
             githubUsername: ghUser,
-            bio: formData.coInstructor2_bio ?? "",
+            bio: bio,
             iconURL: formData.coInstructor2_iconUrl?.isEmpty == true
               ? nil : formData.coInstructor2_iconUrl
           ))
       }
       if let name = formData.coInstructor3_name, !name.isEmpty,
-        let ghUser = formData.coInstructor3_githubUsername, !ghUser.isEmpty
+        let ghUser = formData.coInstructor3_githubUsername, !ghUser.isEmpty,
+        let email = formData.coInstructor3_email, !email.isEmpty,
+        let bio = formData.coInstructor3_bio, !bio.isEmpty
       {
         instructors.append(
           CoInstructor(
             name: name,
-            email: formData.coInstructor3_email ?? "",
+            email: email,
             sns: formData.coInstructor3_sns?.isEmpty == true ? nil : formData.coInstructor3_sns,
             githubUsername: ghUser,
-            bio: formData.coInstructor3_bio ?? "",
+            bio: bio,
             iconURL: formData.coInstructor3_iconUrl?.isEmpty == true
               ? nil : formData.coInstructor3_iconUrl
           ))

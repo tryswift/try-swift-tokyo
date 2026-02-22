@@ -558,7 +558,6 @@ struct SubmitPageView: HTML, Sendable {
       githubUsernameField
       speakerNameField
       speakerEmailField
-      speakerSnsField
       speakerBioField
     }
   }
@@ -622,22 +621,6 @@ struct SubmitPageView: HTML, Sendable {
           ? "プロポーザルに関するご連絡に使用します。"
           : "We'll use this to contact you about your proposal."
       }
-    }
-  }
-
-  private var speakerSnsField: some HTML {
-    div(.class("mb-3")) {
-      label(.class("form-label fw-semibold"), .for("speakerSns")) {
-        "SNS"
-      }
-      input(
-        .type(.text),
-        .class("form-control"),
-        .name("speakerSns"),
-        .id("speakerSns"),
-        .value(user?.url ?? ""),
-        .placeholder(language == .ja ? "例: @username" : "e.g. @username")
-      )
     }
   }
 
