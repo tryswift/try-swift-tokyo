@@ -2,6 +2,26 @@ import Fluent
 import SharedModels
 import Vapor
 
+/// Wrapper to store `[CoInstructor]` as a single JSONB column instead of JSONB[].
+/// Encodes/decodes as a plain JSON array for DB compatibility.
+struct CoInstructorsWrapper: Codable, Equatable, Sendable {
+  var items: [CoInstructor]
+
+  init(items: [CoInstructor]) {
+    self.items = items
+  }
+
+  init(from decoder: Decoder) throws {
+    let container = try decoder.singleValueContainer()
+    self.items = try container.decode([CoInstructor].self)
+  }
+
+  func encode(to encoder: Encoder) throws {
+    var container = encoder.singleValueContainer()
+    try container.encode(items)
+  }
+}
+
 /// Proposal model for CfP submissions
 final class Proposal: Model, Content, @unchecked Sendable {
   static let schema = "proposals"
@@ -66,9 +86,15 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @OptionalField(key: "workshop_details")
   var workshopDetails: WorkshopDetails?
 
-  /// Co-instructors for workshop proposals (JSON array, up to 2 additional instructors)
+  /// Co-instructors for workshop proposals (JSON, up to 2 additional instructors)
   @OptionalField(key: "co_instructors")
-  var coInstructors: [CoInstructor]?
+  var _coInstructors: CoInstructorsWrapper?
+
+  /// Convenience accessor for co-instructors as a plain array.
+  var coInstructors: [CoInstructor]? {
+    get { _coInstructors?.items }
+    set { _coInstructors = newValue.map { CoInstructorsWrapper(items: $0) } }
+  }
 
   /// Proposal review status
   @Field(key: "status")
@@ -120,7 +146,7 @@ final class Proposal: Model, Content, @unchecked Sendable {
     self.status = status
     self.githubUsername = githubUsername
     self.workshopDetails = workshopDetails
-    self.coInstructors = coInstructors
+    self._coInstructors = coInstructors.map { CoInstructorsWrapper(items: $0) }
   }
 
   /// Convert to DTO for API responses
