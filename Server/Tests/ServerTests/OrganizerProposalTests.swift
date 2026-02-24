@@ -487,8 +487,11 @@ struct CoInstructorsWrapperTests {
   @Test("round-trip encode/decode produces identical array")
   func roundTrip() throws {
     let instructors = [
-      CoInstructor(name: "Alice", email: "alice@example.com", githubUsername: "alice", bio: "Bio A"),
-      CoInstructor(name: "Bob", email: "bob@example.com", sns: "@bob", githubUsername: "bob", bio: "Bio B", iconURL: "https://example.com/bob.png"),
+      CoInstructor(
+        name: "Alice", email: "alice@example.com", githubUsername: "alice", bio: "Bio A"),
+      CoInstructor(
+        name: "Bob", email: "bob@example.com", sns: "@bob", githubUsername: "bob", bio: "Bio B",
+        iconURL: "https://example.com/bob.png"),
     ]
     let wrapper = CoInstructorsWrapper(items: instructors)
 
@@ -504,7 +507,7 @@ struct CoInstructorsWrapperTests {
   @Test("encodes as a plain JSON array, not a keyed object")
   func encodesAsArray() throws {
     let wrapper = CoInstructorsWrapper(items: [
-      CoInstructor(name: "Alice", email: "a@b.com", githubUsername: "alice", bio: "Bio"),
+      CoInstructor(name: "Alice", email: "a@b.com", githubUsername: "alice", bio: "Bio")
     ])
 
     let data = try JSONEncoder().encode(wrapper)
@@ -541,7 +544,7 @@ struct CoInstructorsWrapperTests {
     #expect(proposal.coInstructors == nil)
 
     let instructors = [
-      CoInstructor(name: "Test", email: "t@t.com", githubUsername: "test", bio: "Bio"),
+      CoInstructor(name: "Test", email: "t@t.com", githubUsername: "test", bio: "Bio")
     ]
     proposal.coInstructors = instructors
     #expect(proposal.coInstructors == instructors)
