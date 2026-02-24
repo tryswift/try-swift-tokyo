@@ -88,12 +88,12 @@ final class Proposal: Model, Content, @unchecked Sendable {
 
   /// Co-instructors for workshop proposals (JSON, up to 2 additional instructors)
   @OptionalField(key: "co_instructors")
-  var _coInstructors: CoInstructorsWrapper?
+  var coInstructorsStorage: CoInstructorsWrapper?
 
   /// Convenience accessor for co-instructors as a plain array.
   var coInstructors: [CoInstructor]? {
-    get { _coInstructors?.items }
-    set { _coInstructors = newValue.map { CoInstructorsWrapper(items: $0) } }
+    get { coInstructorsStorage?.items }
+    set { coInstructorsStorage = newValue.map { CoInstructorsWrapper(items: $0) } }
   }
 
   /// Proposal review status
@@ -146,7 +146,7 @@ final class Proposal: Model, Content, @unchecked Sendable {
     self.status = status
     self.githubUsername = githubUsername
     self.workshopDetails = workshopDetails
-    self._coInstructors = coInstructors.map { CoInstructorsWrapper(items: $0) }
+    self.coInstructorsStorage = coInstructors.map { CoInstructorsWrapper(items: $0) }
   }
 
   /// Convert to DTO for API responses
