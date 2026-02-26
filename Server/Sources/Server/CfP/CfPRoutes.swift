@@ -1859,9 +1859,8 @@ struct CfPRoutes: RouteCollection {
         throw Abort(.badRequest, reason: "Uniqueness is required")
       }
 
-      let numberOfTutors = Int(tutorsStr) ?? 0
-      guard numberOfTutors > 0 else {
-        throw Abort(.badRequest, reason: "Number of tutors must be at least 1")
+      guard let numberOfTutors = Int(tutorsStr), numberOfTutors > 0 else {
+        throw Abort(.badRequest, reason: "Number of tutors must be a valid number of at least 1")
       }
 
       let facilities =
@@ -2143,10 +2142,9 @@ struct CfPRoutes: RouteCollection {
           req: req, user: user, error: "Uniqueness is required")
       }
 
-      let numberOfTutors = Int(tutorsStr) ?? 0
-      guard numberOfTutors > 0 else {
+      guard let numberOfTutors = Int(tutorsStr), numberOfTutors > 0 else {
         return try await renderNewProposalPageWithError(
-          req: req, user: user, error: "Number of tutors must be at least 1")
+          req: req, user: user, error: "Number of tutors must be a valid number of at least 1")
       }
 
       let facilities =

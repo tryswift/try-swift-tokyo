@@ -816,7 +816,7 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
       <script>
         function updateIconPreview(url) {
           var preview = document.getElementById('iconPreview');
-          if (url && url.trim() !== '') { preview.src = url; }
+          if (preview && url && url.trim() !== '') { preview.src = url; }
         }
         document.addEventListener('DOMContentLoaded', function() {
           var typeSelect = document.getElementById('talkDuration');
