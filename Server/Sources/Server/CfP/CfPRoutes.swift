@@ -1161,7 +1161,7 @@ struct CfPRoutes: RouteCollection {
     proposal.notes =
       formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers
     proposal.workshopDetails = workshopDetails
-    proposal.coInstructors = coInstructors
+    proposal.coInstructors = coInstructors.map(CoInstructorList.init)
 
     try await proposal.save(on: req.db)
 
@@ -1398,7 +1398,7 @@ struct CfPRoutes: RouteCollection {
         escapeCSV(proposal.notes ?? ""),
         proposal.conference.displayName,
         proposal.createdAt.map { dateFormatter.string(from: $0) } ?? "",
-        escapeCSV(proposal.coInstructors?.map(\.name).joined(separator: "; ") ?? ""),
+        escapeCSV(proposal.coInstructors?.items.map(\.name).joined(separator: "; ") ?? ""),
       ]
       csv += columns.joined(separator: ",") + "\n"
     }
@@ -1414,14 +1414,21 @@ struct CfPRoutes: RouteCollection {
   }
 
   private func escapeCSV(_ value: String) -> String {
+    // Prevent CSV formula injection: prefix leading formula characters with
+    // a single-quote so spreadsheet applications treat the cell as text.
+    var sanitized = value
+    if let first = sanitized.first, "=+-@".contains(first) {
+      sanitized = "'" + sanitized
+    }
+
     let needsQuoting =
-      value.contains(",") || value.contains("\"") || value.contains("\n")
-      || value.contains("\r")
+      sanitized.contains(",") || sanitized.contains("\"") || sanitized.contains("\n")
+      || sanitized.contains("\r")
     if needsQuoting {
-      let escaped = value.replacingOccurrences(of: "\"", with: "\"\"")
+      let escaped = sanitized.replacingOccurrences(of: "\"", with: "\"\"")
       return "\"\(escaped)\""
     }
-    return value
+    return sanitized
   }
 
   // MARK: - Accept/Reject Proposals

@@ -2,26 +2,6 @@ import Fluent
 import SharedModels
 import Vapor
 
-/// Wrapper to store `[CoInstructor]` as a single JSONB column instead of JSONB[].
-/// Encodes/decodes as a plain JSON array for DB compatibility.
-struct CoInstructorsWrapper: Codable, Equatable, Sendable {
-  var items: [CoInstructor]
-
-  init(items: [CoInstructor]) {
-    self.items = items
-  }
-
-  init(from decoder: Decoder) throws {
-    let container = try decoder.singleValueContainer()
-    self.items = try container.decode([CoInstructor].self)
-  }
-
-  func encode(to encoder: Encoder) throws {
-    var container = encoder.singleValueContainer()
-    try container.encode(items)
-  }
-}
-
 /// Proposal model for CfP submissions
 final class Proposal: Model, Content, @unchecked Sendable {
   static let schema = "proposals"
@@ -86,15 +66,11 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @OptionalField(key: "workshop_details")
   var workshopDetails: WorkshopDetails?
 
-  /// Co-instructors for workshop proposals (JSON, up to 2 additional instructors)
+  /// Co-instructors for workshop proposals (JSON array, up to 2 additional instructors)
+  /// Wrapped in `CoInstructorList` so Fluent encodes a single JSONB value
+  /// instead of a PostgreSQL `jsonb[]` array.
   @OptionalField(key: "co_instructors")
-  var coInstructorsStorage: CoInstructorsWrapper?
-
-  /// Convenience accessor for co-instructors as a plain array.
-  var coInstructors: [CoInstructor]? {
-    get { coInstructorsStorage?.items }
-    set { coInstructorsStorage = newValue.map { CoInstructorsWrapper(items: $0) } }
-  }
+  var coInstructors: CoInstructorList?
 
   /// Proposal review status
   @Field(key: "status")
@@ -146,7 +122,7 @@ final class Proposal: Model, Content, @unchecked Sendable {
     self.status = status
     self.githubUsername = githubUsername
     self.workshopDetails = workshopDetails
-    self.coInstructorsStorage = coInstructors.map { CoInstructorsWrapper(items: $0) }
+    self.coInstructors = coInstructors.map(CoInstructorList.init)
   }
 
   /// Convert to DTO for API responses
@@ -178,7 +154,7 @@ final class Proposal: Model, Content, @unchecked Sendable {
       updatedAt: updatedAt,
       githubUsername: githubUsername,
       workshopDetails: workshopDetails,
-      coInstructors: coInstructors
+      coInstructors: coInstructors?.items
     )
   }
 }
