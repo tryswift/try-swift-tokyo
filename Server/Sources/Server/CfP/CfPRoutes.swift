@@ -1923,7 +1923,7 @@ struct CfPRoutes: RouteCollection {
               ? nil : formData.coInstructor3_iconUrl
           ))
       }
-      proposal.coInstructors = instructors.isEmpty ? nil : instructors
+      proposal.coInstructors = instructors.isEmpty ? nil : CoInstructorList(instructors)
     } else {
       // Clear workshop data if type changed away from workshop
       proposal.workshopDetails = nil
@@ -2933,7 +2933,7 @@ struct CfPRoutes: RouteCollection {
   }
 
   /// Get CSRF token from cookie
-  private func csrfToken(from req: Request) -> String {
+  func csrfToken(from req: Request) -> String {
     req.cookies["csrf_token"]?.string ?? ""
   }
 
