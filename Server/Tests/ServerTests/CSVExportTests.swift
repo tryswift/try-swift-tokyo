@@ -39,14 +39,21 @@ struct CSVExportTests {
   // The escapeCSV function is private in CfPRoutes, so we test the same logic here.
 
   private func escapeCSV(_ value: String) -> String {
+    // Prevent CSV formula injection: prefix leading formula characters with
+    // a single-quote so spreadsheet applications treat the cell as text.
+    var sanitized = value
+    if let first = sanitized.first, "=+-@".contains(first) {
+      sanitized = "'" + sanitized
+    }
+
     let needsQuoting =
-      value.contains(",") || value.contains("\"") || value.contains("\n")
-      || value.contains("\r")
+      sanitized.contains(",") || sanitized.contains("\"") || sanitized.contains("\n")
+      || sanitized.contains("\r")
     if needsQuoting {
-      let escaped = value.replacingOccurrences(of: "\"", with: "\"\"")
+      let escaped = sanitized.replacingOccurrences(of: "\"", with: "\"\"")
       return "\"\(escaped)\""
     }
-    return value
+    return sanitized
   }
 
   @Test("Simple string passes through unchanged")
