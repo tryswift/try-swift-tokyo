@@ -81,6 +81,32 @@ public enum FacilityRequirement: String, Codable, Sendable, Equatable, CaseItera
   }
 }
 
+/// Wrapper that encodes `[CoInstructor]` as a single JSON array value.
+///
+/// Fluent's PostgreSQL driver maps a bare Swift `[T]` property to
+/// `jsonb[]` (a PostgreSQL array of JSONB).  Wrapping the array in a
+/// `Codable` struct causes Fluent to treat it as a single `jsonb` column
+/// whose contents happen to be a JSON array – which is what the migration
+/// declares.
+public struct CoInstructorList: Codable, Sendable, Equatable {
+  public var items: [CoInstructor]
+
+  public init(_ items: [CoInstructor]) {
+    self.items = items
+  }
+
+  // Encode as a plain JSON array (not `{"items": [...]}`)
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.singleValueContainer()
+    self.items = try container.decode([CoInstructor].self)
+  }
+
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.singleValueContainer()
+    try container.encode(items)
+  }
+}
+
 /// Co-instructor details for workshop proposals
 public struct CoInstructor: Codable, Sendable, Equatable {
   public let name: String

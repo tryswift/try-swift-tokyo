@@ -1161,7 +1161,7 @@ struct CfPRoutes: RouteCollection {
     proposal.notes =
       formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers
     proposal.workshopDetails = workshopDetails
-    proposal.coInstructors = coInstructors
+    proposal.coInstructors = coInstructors.map(CoInstructorList.init)
 
     try await proposal.save(on: req.db)
 
@@ -1398,7 +1398,7 @@ struct CfPRoutes: RouteCollection {
         escapeCSV(proposal.notes ?? ""),
         proposal.conference.displayName,
         proposal.createdAt.map { dateFormatter.string(from: $0) } ?? "",
-        escapeCSV(proposal.coInstructors?.map(\.name).joined(separator: "; ") ?? ""),
+        escapeCSV(proposal.coInstructors?.items.map(\.name).joined(separator: "; ") ?? ""),
       ]
       csv += columns.joined(separator: ",") + "\n"
     }
