@@ -549,6 +549,15 @@ struct TimetableEditorPageView: HTML, Sendable {
             return match ? decodeURIComponent(match[1]) : '';
           }
 
+          // ============================================================
+          // Reload with active day preserved via URL hash
+          // ============================================================
+          function reloadWithDay() {
+            var activeDay = getActiveDay();
+            window.location.hash = 'day-' + activeDay;
+            window.location.reload();
+          }
+
           var conferenceId = '\(conference?.id.uuidString ?? "")';
           var dayDates = {\(dayDatesJSON)};
 
@@ -664,6 +673,20 @@ struct TimetableEditorPageView: HTML, Sendable {
           }
 
           // ============================================================
+          // Restore active tab from URL hash (e.g. #day-2)
+          // ============================================================
+          (function restoreTab() {
+            var hash = window.location.hash;
+            var match = hash.match(/^#day-(\\d+)$/);
+            if (!match) return;
+            var day = match[1];
+            var btn = document.getElementById('day-tab-' + day);
+            if (btn) {
+              btn.click();
+            }
+          })();
+
+          // ============================================================
           // API Helper
           // ============================================================
           function apiCall(url, method, body) {
@@ -751,10 +774,10 @@ struct TimetableEditorPageView: HTML, Sendable {
                     slotType: slotType,
                     place: null
                   }).then(function() {
-                    location.reload();
+                    reloadWithDay();
                   }).catch(function(err) {
                     alert('Failed to create slot: ' + err.message);
-                    location.reload();
+                    reloadWithDay();
                   });
                 }
               }
@@ -796,7 +819,7 @@ struct TimetableEditorPageView: HTML, Sendable {
               apiCall('/organizer/timetable/api/reorder', 'POST', reorderData)
                 .catch(function(err) {
                   alert('Failed to reorder: ' + err.message);
-                  location.reload();
+                  reloadWithDay();
                 });
             }
           }
@@ -813,7 +836,7 @@ struct TimetableEditorPageView: HTML, Sendable {
 
             apiCall('/organizer/timetable/api/slots/' + slotId + '/delete', 'POST', {})
               .then(function() {
-                location.reload();
+                reloadWithDay();
               })
               .catch(function(err) {
                 alert('Failed to delete slot: ' + err.message);
@@ -881,7 +904,7 @@ struct TimetableEditorPageView: HTML, Sendable {
 
             apiCall('/organizer/timetable/api/slots/' + slotId, 'POST', body)
               .then(function() {
-                location.reload();
+                reloadWithDay();
               })
               .catch(function(err) {
                 alert('Failed to update slot: ' + err.message);
@@ -919,7 +942,7 @@ struct TimetableEditorPageView: HTML, Sendable {
 
             apiCall('/organizer/timetable/api/slots', 'POST', body)
               .then(function() {
-                location.reload();
+                reloadWithDay();
               })
               .catch(function(err) {
                 alert('Failed to create slot: ' + err.message);
