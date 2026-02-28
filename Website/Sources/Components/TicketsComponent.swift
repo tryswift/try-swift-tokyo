@@ -24,7 +24,7 @@ struct TicketsComponent: HTML {
             title: String("Tickets", language: language),
             url: "https://luma.com/embed/event/evt-WHT17EaVs2of1Gs/simple"
           )
-          .aspectRatio(1.1)
+          .aspectRatio(1.0)
         }
         .hidden(.responsive(true, xLarge: false))
 
@@ -34,7 +34,7 @@ struct TicketsComponent: HTML {
             title: String("Tickets", language: language),
             url: "https://luma.com/embed/event/evt-WHT17EaVs2of1Gs/simple"
           )
-          .aspectRatio(0.95)
+          .aspectRatio(0.85)
         }
         .hidden(.responsive(true, large: false, xLarge: true))
 
@@ -44,7 +44,7 @@ struct TicketsComponent: HTML {
             title: String("Tickets", language: language),
             url: "https://luma.com/embed/event/evt-WHT17EaVs2of1Gs/simple"
           )
-          .aspectRatio(0.65)
+          .aspectRatio(0.50)
         }
         .hidden(.responsive(true, medium: false, large: true))
 
@@ -54,7 +54,7 @@ struct TicketsComponent: HTML {
             title: String("Tickets", language: language),
             url: "https://luma.com/embed/event/evt-WHT17EaVs2of1Gs/simple"
           )
-          .aspectRatio(0.3)
+          .aspectRatio(0.2)
         }
         .hidden(.responsive(false, medium: true))
       }

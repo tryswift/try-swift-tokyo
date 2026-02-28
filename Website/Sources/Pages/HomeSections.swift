@@ -12,6 +12,7 @@ enum HomeSectionType: String, CaseIterable {
   case workshop = "Workshop"
   case timetable = "Timetable"
   case sponsor = "Sponsor"
+  case events = "Events"
   case meetTheHosts = "Meet the Hosts"
   case meetTheOrganizers = "Meet the Organizers"
   case access = "Access"
@@ -45,7 +46,7 @@ extension HomeSectionType {
       ].contains(self)
     case .year2026:
       [
-        .about, .outline, .tickets, .cfp, .speaker, .workshop, .sponsor, .meetTheHosts,
+        .about, .outline, .tickets, .speaker, .workshop, .sponsor, .events, .meetTheHosts,
         .meetTheOrganizers, .access,
       ].contains(self)
     }
@@ -54,7 +55,7 @@ extension HomeSectionType {
   static func navigationItems(for year: ConferenceYear) -> [Self] {
     allCases.filter {
       $0.isAvailable(for: year)
-        && ![.meetTheHosts, .meetTheOrganizers].contains($0)
+        && ![.events, .meetTheHosts, .meetTheOrganizers].contains($0)
     }
   }
 }
@@ -138,6 +139,9 @@ extension HomeSectionType {
     case .cfp:
       SectionHeader(type: self, language: language)
       CallForProposalComponent(language: language)
+    case .events:
+      SectionHeader(type: self, language: language)
+      EventsComponent(year: year)
     case .meetTheHosts:
       let hosts = try! dataClient.fetchOrganizers(year: year)
         .filter { [6, 11].contains($0.id) }
