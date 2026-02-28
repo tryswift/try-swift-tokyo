@@ -351,6 +351,17 @@
         }
       }
     },
+    "Events" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "イベント"
+          }
+        }
+      }
+    },
     "FAQ" : {
       "extractionState" : "manual",
       "localizations" : {
