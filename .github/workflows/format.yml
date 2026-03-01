@@ -11,15 +11,27 @@ jobs:
     runs-on: ubuntu-latest
     container: swift:6.2
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout (non-fork PR)
+        uses: actions/checkout@v6
+        if: ${{ !github.event.pull_request.head.repo.fork }}
         with:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Format
-        run: swift format --ignore-unparsable-files --in-place --recursive ./App/ ./Server/ ./SharedModels/ ./iOS/ ./Website/
+      - name: Checkout (fork PR)
+        uses: actions/checkout@v6
+        if: ${{ github.event.pull_request.head.repo.fork }}
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Configure safe directory
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Format
+        run: swift format --ignore-unparsable-files --in-place --recursive ./App/ ./Server/ ./SharedModels/ ./iOS/ ./Website/
+      - name: Check diff (fork PR)
+        if: ${{ github.event.pull_request.head.repo.fork }}
+        run: git diff --exit-code
       - uses: stefanzweifel/git-auto-commit-action@v7
+        if: ${{ !github.event.pull_request.head.repo.fork }}
         with:
           commit_message: "[ci skip] Run swift-format"
         env:
