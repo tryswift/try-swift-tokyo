@@ -1,7 +1,7 @@
 import Ignite
 import SharedModels
 
-struct EventsComponent: HTML {
+struct CommunityEventsComponent: HTML {
   struct Event {
     let name: String
     let imageName: String
@@ -15,18 +15,18 @@ struct EventsComponent: HTML {
   let year: ConferenceYear
   let events: [Event]
 
-  init(year: ConferenceYear) {
+  init(year: ConferenceYear, language: SupportedLanguage) {
     self.year = year
 
     events = switch year {
     case .year2026: [
       Event(
-        name: "try! Swift Tokyo 2026 ハッカソン for Students",
+        name: String("try! Swift Tokyo 2026 Hackathon for Students", language: language),
         imageName: "event-2026-1",
         url: "https://connpass.com/event/383016/"
       ),
       Event(
-        name: "Sakura.swift #1",
+        name: String("Sakura.swift #1", language: language),
         imageName: "event-2026-2",
         url: "https://sakuraswift.connpass.com/event/385856/"
       ),

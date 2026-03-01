@@ -232,6 +232,17 @@
         }
       }
     },
+    "Community Events" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コミュニティイベント"
+          }
+        }
+      }
+    },
     "Contact us" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -347,17 +358,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "個人情報の開示および訂正等"
-          }
-        }
-      }
-    },
-    "Events" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "イベント"
           }
         }
       }
@@ -899,6 +899,17 @@
         }
       }
     },
+    "Sakura.swift #1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sakura.swift #1"
+          }
+        }
+      }
+    },
     "Shibuya Stream Hall" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1241,6 +1252,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "try! Swiftは2016年に東京で始まったSwiftの国際カンファレンスです。東京の他、ニューヨーク、ベンガルール、サンノゼでも開催実績があり、2018年にはAppleのSwiftNIOチームが世界に先駆けてSwiftNIOを発表したり、2019年にはWWDCでSwiftのコミュニティとして紹介されたことがあります。<br><br>カンファレンスでは、世界中から集まった選りすぐりのエキスパートが集まり、Swiftに関するトピックについて20分間のプレゼンテーションを行います。iOS、iPadOS、SwiftUI、visionOSをはじめとしたApple Platformのトピックはもちろん、Open-Source Swift、Swift on Serverなどの様々なSwiftに関するトピックについて発表を行います。<br><br>また、try! Swiftでは、登壇したスピーカーに１対１で質問できるオフィスアワーの時間を設けており、トークの内容で不明だった点を聞くことができます。"
+          }
+        }
+      }
+    },
+    "try! Swift Tokyo 2026 Hackathon for Students" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "try! Swift Tokyo 2026 ハッカソン for Students"
           }
         }
       }
