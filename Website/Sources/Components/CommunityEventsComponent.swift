@@ -1,7 +1,7 @@
 import Ignite
 import SharedModels
 
-struct EventsComponent: HTML {
+struct CommunityEventsComponent: HTML {
   struct Event {
     let name: String
     let imageName: String
