@@ -141,7 +141,7 @@ extension HomeSectionType {
       CallForProposalComponent(language: language)
     case .communityEvents:
       SectionHeader(type: self, language: language)
-      CommunityEventsComponent(year: year)
+      CommunityEventsComponent(year: year, language: language)
     case .meetTheHosts:
       let hosts = try! dataClient.fetchOrganizers(year: year)
         .filter { [6, 11].contains($0.id) }
