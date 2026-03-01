@@ -55,7 +55,7 @@ extension HomeSectionType {
   static func navigationItems(for year: ConferenceYear) -> [Self] {
     allCases.filter {
       $0.isAvailable(for: year)
-        && ![.communityEvents, .meetTheHosts, .meetTheOrganizers].contains($0)
+        && ![.meetTheHosts, .meetTheOrganizers].contains($0)
     }
   }
 }
