@@ -232,6 +232,17 @@
         }
       }
     },
+    "Community Events" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コミュニティイベント"
+          }
+        }
+      }
+    },
     "Contact us" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -347,17 +358,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "個人情報の開示および訂正等"
-          }
-        }
-      }
-    },
-    "Events" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "イベント"
           }
         }
       }
