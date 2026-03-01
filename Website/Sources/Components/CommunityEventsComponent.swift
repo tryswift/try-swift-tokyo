@@ -18,21 +18,23 @@ struct CommunityEventsComponent: HTML {
   init(year: ConferenceYear, language: SupportedLanguage) {
     self.year = year
 
-    events = switch year {
-    case .year2026: [
-      Event(
-        name: String("try! Swift Tokyo 2026 Hackathon for Students", language: language),
-        imageName: "event-2026-1",
-        url: "https://connpass.com/event/383016/"
-      ),
-      Event(
-        name: String("Sakura.swift #1", language: language),
-        imageName: "event-2026-2",
-        url: "https://sakuraswift.connpass.com/event/385856/"
-      ),
-    ]
-    default: []
-    }
+    events =
+      switch year {
+      case .year2026:
+        [
+          Event(
+            name: String("try! Swift Tokyo 2026 Hackathon for Students", language: language),
+            imageName: "event-2026-1",
+            url: "https://connpass.com/event/383016/"
+          ),
+          Event(
+            name: String("Sakura.swift #1", language: language),
+            imageName: "event-2026-2",
+            url: "https://sakuraswift.connpass.com/event/385856/"
+          ),
+        ]
+      default: []
+      }
   }
 
   var body: some HTML {
