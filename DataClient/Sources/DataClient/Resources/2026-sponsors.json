@@ -58,6 +58,13 @@
             "name": "Mozilla",
             "imageName": "2026_Mozilla",
             "link": "https://www.mozilla.com/"
+        },
+        {
+            "id": 9,
+            "name": "株式会社MIXI",
+            "imageName": "Sponsor/2026/2026_MIXI",
+            "link": "https://mixi.co.jp/en/",
+            "japanese_link": "https://mixi.co.jp"
         }
     ],
     "silver": [
@@ -108,6 +115,13 @@
             "name": "野村ホールディングス株式会社",
             "imageName": "Sponsor/2026/2026_NOMURA",
             "link": "https://www.nomura.co.jp/fic/recruit/"
+        },
+        {
+            "id": 2,
+            "name": "株式会社MIXI",
+            "imageName": "Sponsor/2026/2026_MIXI",
+            "link": "https://mixi.co.jp/en/",
+            "japanese_link": "https://mixi.co.jp"
         }
     ],
     "student": [
@@ -129,6 +143,13 @@
             "name": "サイボウズ株式会社",
             "imageName": "Sponsor/2026/2026_cybozu",
             "link": "https://tech.cybozu.io/"
+        },
+        {
+            "id": 4,
+            "name": "株式会社MIXI",
+            "imageName": "Sponsor/2026/2026_MIXI",
+            "link": "https://mixi.co.jp/en/",
+            "japanese_link": "https://mixi.co.jp"
         }
     ],
     "community": [
