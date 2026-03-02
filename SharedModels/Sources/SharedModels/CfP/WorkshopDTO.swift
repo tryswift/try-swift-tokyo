@@ -81,13 +81,13 @@ public enum FacilityRequirement: String, Codable, Sendable, Equatable, CaseItera
   }
 }
 
-/// Wrapper that encodes `[CoInstructor]` as a single JSON array value.
+/// Wrapper that encodes `[CoInstructor]` as a single JSONB value.
 ///
 /// Fluent's PostgreSQL driver maps a bare Swift `[T]` property to
-/// `jsonb[]` (a PostgreSQL array of JSONB).  Wrapping the array in a
-/// `Codable` struct causes Fluent to treat it as a single `jsonb` column
-/// whose contents happen to be a JSON array – which is what the migration
-/// declares.
+/// `jsonb[]` (a PostgreSQL array of JSONB).  Even when using
+/// `singleValueContainer`, the driver still sees the top-level array
+/// and encodes it as `jsonb[]`.  Using a keyed container (`{"items": [...]}`)
+/// forces the driver to treat it as a single `jsonb` object.
 public struct CoInstructorList: Codable, Sendable, Equatable {
   public var items: [CoInstructor]
 
@@ -95,15 +95,18 @@ public struct CoInstructorList: Codable, Sendable, Equatable {
     self.items = items
   }
 
-  // Encode as a plain JSON array (not `{"items": [...]}`)
+  // Decode both `{"items": [...]}` (new format) and bare `[...]` (legacy format)
   public init(from decoder: Decoder) throws {
-    let container = try decoder.singleValueContainer()
-    self.items = try container.decode([CoInstructor].self)
+    if let keyed = try? decoder.container(keyedBy: CodingKeys.self) {
+      self.items = try keyed.decode([CoInstructor].self, forKey: .items)
+    } else {
+      let single = try decoder.singleValueContainer()
+      self.items = try single.decode([CoInstructor].self)
+    }
   }
 
-  public func encode(to encoder: Encoder) throws {
-    var container = encoder.singleValueContainer()
-    try container.encode(items)
+  private enum CodingKeys: String, CodingKey {
+    case items
   }
 }
 
