@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/twostraws/Ignite",
       "state" : {
-        "revision" : "0954c7190185a22c86b662313c73bb1d412d8925",
-        "version" : "0.6.3"
+        "revision" : "483639878feacd5be186c78caebe7a21b9fd4459",
+        "version" : "0.6.4"
       }
     },
     {
