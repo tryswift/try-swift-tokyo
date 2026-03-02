@@ -79,6 +79,13 @@
             "name": "野村ホールディングス株式会社",
             "imageName": "Sponsor/2026/2026_NOMURA",
             "link": "https://www.nomura.co.jp/fic/recruit/"
+        },
+        {
+            "id": 4,
+            "name": "株式会社マネーフォワード",
+            "imageName": "Sponsor/2026/2026_MoneyForward",
+            "link": "https://corp.moneyforward.com/en/",
+            "japanese_link": "https://corp.moneyforward.com/"
         }
     ],
     "bronze": [
