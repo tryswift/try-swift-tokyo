@@ -32,13 +32,18 @@ struct CommunityEventsComponent: HTML {
             imageName: "event-2026-2",
             url: "https://sakuraswift.connpass.com/event/385856/"
           ),
+          Event(
+            name: "集まれSwift好き！Swift愛好会 vol.98",
+            imageName: "event-2026-3",
+            url: "https://love-swift.connpass.com/event/385566/"
+          ),
         ]
       default: []
       }
   }
 
   var body: some HTML {
-    CenterAlignedGrid(events, columns: 2) { event in
+    CenterAlignedGrid(events, columns: 3) { event in
       VStack(alignment: .center) {
         let image = Image(event.imageFilename, description: event.name)
           .resizable()
