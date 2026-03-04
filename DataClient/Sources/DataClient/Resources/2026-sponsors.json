@@ -158,6 +158,12 @@
             "name": "株式会社Qiita",
             "imageName": "Sponsor/2026/2026_Qiita",
             "link": "https://qiita.com/"
+        },
+        {
+            "id": 2,
+            "name": "クラスメソッド株式会社",
+            "imageName": "Sponsor/2026/2026_classmethod",
+            "link": "https://classmethod.jp/"
         }
     ],
     "individual": [
