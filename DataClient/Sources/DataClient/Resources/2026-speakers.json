@@ -89,6 +89,32 @@
     ]
   },
   {
+    "name": "Paul Hudson",
+    "image_name": "paul_hudson",
+    "bio": "Paul is the author of Hacking with Swift, Pro Swift, Swift Design Patterns, Testing Swift, Swift Interview Challenges, and more. Suffice it to say, he quite likes Swift. And coffee. (But mostly Swift.) (And coffee.)",
+    "bio_ja": "Paulは「Hacking with Swift」「Pro Swift」「Swift Design Patterns」「Testing Swift」「Swift Interview Challenges」などの著者です。簡単に言うと、Swiftが大好きです。そしてコーヒーも。（でも主にSwiftが。）（いや、コーヒーも同じくらい。）",
+    "job_title": "Creator at Hacking with Swift",
+    "job_title_ja": "Hacking with Swift クリエイター",
+    "links": [
+      {
+        "url": "https://x.com/twostraws",
+        "name": "@twostraws"
+      },
+      {
+        "url": "https://github.com/twostraws",
+        "name": "@twostraws"
+      }
+    ]
+  },
+  {
+    "name": "Nishant Bhasin",
+    "image_name": "nishant_bhasin",
+    "bio": "Engineering Manager at Mozilla working on Firefox for iOS. Previously a Staff Engineer leading major architectural initiatives in Swift and SwiftUI. Over a decade of experience building and scaling mobile applications with a focus on performance, privacy, and usability. I am passionate about mentorship, open source collaboration, and helping engineers grow through real, impactful contributions. I continue to support global contributors and guide new developers through their first open source experience while ensuring Firefox for iOS maintains the quality and reliability expected from a product used by millions.",
+    "bio_ja": "Nishant BhasinはMozillaのEngineering Managerで、Firefox for iOSの開発に携わっています。以前はStaff Engineerとして、SwiftやSwiftUIを用いた大規模なアーキテクチャ改善プロジェクトをリードしてきました。パフォーマンス、プライバシー、ユーザビリティを重視したモバイルアプリ開発において、10年以上の経験を持っています。メンタリングやオープンソースでの協働、そしてエンジニアが実際に価値のある貢献を通して成長できる環境づくりに強い関心を持っています。世界中のコントリビューターを支援しながら、初めてオープンソースに参加する開発者をサポートしつつ、何百万人ものユーザーに使われるFirefox for iOSに求められる品質と信頼性を維持することに取り組んでいます。",
+    "job_title": "Engineering Manager at Mozilla",
+    "links": []
+  },
+  {
     "name": "Daniel Steinberg",
     "image_name": "daniel_steinberg",
     "bio": "Daniel is the author of more than a dozen books including the best selling books The Curious Case of the Async Cafe, A SwiftUI Kickstart, A Swift Kickstart, A Bread Baking Kickstart, and Dear Elena.\n\nDaniel presents iOS, SwiftUI, and Swift training and consults through his company Dim Sum Thinking.\n\nHe has written apps for the iPhone and the iPad since the SDKs first appeared and has written programs for the Mac all the way back to System 7. When he's not coding or talking about coding for the Mac, the iPhone, and the iPad he's probably cooking, baking bread, or hanging out with friends.",
@@ -98,6 +124,194 @@
       {
         "url": "https://linkedin.com/in/dimsumthinking",
         "name": "@dimsumthinking"
+      }
+    ]
+  },
+
+  {
+    "name": "Adam Lyttle",
+    "image_name": "adam_lyttle",
+    "bio": "Adam Lyttle is an indie iOS developer who builds apps for fun and profit (and shares the entire process in public). What began as a creative challenge to ship one app per month evolved into a sustainable indie business, taking him from significant personal debt to generating consistent revenue from his apps. Adam has created dozens of iOS apps and has been involved in multiple successful business exits. He is the creator of Apps by Adam Lyttle, a YouTube channel with over 30,000 subscribers, where he publishes practical, experience-driven content on Swift, StoreKit, App Store optimization, onboarding, and subscription design. One of his paywall implementations has been widely adopted by the indie developer community. Alongside YouTube, Adam actively shares lessons and experiments on X, where he has built a community of over 47,000 developers and makers by openly discussing what works, what fails, and what changes as Apple’s platform evolves. He is passionate about ethical monetization, App Store compliance, and helping developers build sustainable businesses through clear, honest product design.",
+    "bio_ja": "Adam Lyttleは、楽しさと収益の両方を目的にアプリを開発し、そのプロセスを公開しているインディーiOS開発者です。毎月1本アプリをリリースするという創作チャレンジから始まり、現在では持続可能なインディービジネスへと発展。個人的な多額の負債を抱えた状態から、アプリによる安定した収益を生み出すまでに至りました。これまでに数十本のiOSアプリを開発し、複数の事業売却にも関わっています。YouTubeチャンネル「Apps by Adam Lyttle」（登録者3万人以上）では、Swift、StoreKit、App Store最適化、オンボーディング、サブスクリプション設計などについて、実体験に基づいた実践的な内容を発信しています。彼が公開したペイウォール実装の一つは、インディー開発者コミュニティでも広く採用されています。さらにXでは、Appleプラットフォームの進化の中で「何がうまくいくのか」「何が失敗するのか」「何が変わっていくのか」を率直に共有し、47,000人以上の開発者やクリエイターからなるコミュニティを築いています。倫理的なマネタイズ、App Storeポリシーへの準拠、そして誠実で分かりやすいプロダクト設計を通じて、開発者が持続可能なビジネスを築くことを支援することに情熱を注いでいます。",
+    "job_title": "Indie Developer",
+    "links": [
+      {
+        "url": "https://github.com/adamlyttleapps",
+        "name": "@adamlyttleapps"
+      }
+    ]
+  },
+  {
+    "name": "Mateusz Zając",
+    "image_name": "mateusz_zajac",
+    "bio": "Mateusz is an Engineering Manager at Google and an iOS veteran with over 10 years of experience shipping high-performance mobile apps. He specializes in the intersection of fluid UX and deep tech—currently obsessed with pushing the limits of on-device AI and MLX Swift on Apple Silicon. He believes the best AI features are the ones that happen instantly and privately. Based in Kraków, he spends his time away from the keyboard running or building LEGOs with his two kids.",
+    "bio_ja": "Mateusz ZającはGoogleのEngineering Managerであり、10年以上にわたり高性能なモバイルアプリを世に送り出してきたiOSエンジニアです。流れるようなUXとディープテックの交差点を専門としており、現在はApple Silicon上でのオンデバイスAIやMLX Swiftの可能性を押し広げることに夢中です。最高のAI機能とは「瞬時に動作し、プライバシーを守るもの」だと信じています。ポーランド・クラクフ在住。キーボードから離れた時間は、ランニングをしたり、2人の子どもとLEGOを組み立てたりして過ごしています。",
+    "job_title": "Engineering Manager at Google",
+    "links": [
+      {
+        "url": "https://github.com/matteozajac",
+        "name": "@matteozajac"
+      }
+    ]
+  },
+  {
+    "name": "kishikawa katsumi",
+    "image_name": "kishikawa_katsumi",
+    "bio": "Katsumi Kishikawa is a software engineer specializing in mobile app development. While the role of humans in software development continues to evolve, he believes that the core joy of programming remains unchanged. He finds embedded programming particularly rewarding because it allows developers to build everything themselves, making the essence of programming especially clear and enjoyable.",
+    "bio_ja": "モバイルアプリ開発を専門とするソフトウェアエンジニア。ソフトウェア開発における人間の役割は変化し続けていますが、プログラミングの楽しさの本質は変わらないと考えています。特に組み込みプログラミングは、その気になればすべてを自分で書けるため、プログラミングの楽しさをより純粋に感じられる分野だと感じています。",
+    "job_title": "Software Engineer",
+    "links": [
+      {
+        "url": "https://github.com/kishikawakatsumi",
+        "name": "@kishikawakatsumi"
+      },
+      {
+        "url": "https://kishikawakatsumi.com/",
+        "name": "kishikawakatsumi.com"
+      }
+    ]
+  },
+  {
+    "name": "Yusuke Kita",
+    "image_name": "yusuke_kita",
+    "bio": "Yusuke Kita is a software engineer at newmo working on automated testing for mobility service applications. He is passionate about improving code quality and building reliable software systems.",
+    "bio_ja": "newmoのソフトウェアエンジニア。モビリティサービスアプリの自動テストの推進に取り組んでいます。コード品質の向上に情熱を持っています。",
+    "job_title": "Software Engineer at newmo",
+    "links": [
+      {
+        "url": "https://x.com/kitasuke",
+        "name": "@kitasuke"
+      }
+    ]
+  },
+  {
+    "name": "Kazushi Oenoki",
+    "image_name": "kazushi_oenoki",
+    "bio": "Kazushi Oenoki is an iOS and macOS app developer known for creating apps such as FirstSeed Calendar and FirstSeed Tasks for Apple platforms. His apps have been featured as App of the Day in more than 150 countries and regions on the App Store. He has deep experience integrating CloudKit, Core Data, AppKit, UIKit, and SwiftUI. Currently, he is developing a rich text note app built on CRDT, tackling advanced challenges such as multi-device editing, diff highlighting, and run-based formatting.",
+    "bio_ja": "iOS / macOS アプリ開発者。「FirstSeed Calendar」「FirstSeed Tasks」など Apple プラットフォーム向けアプリを開発。これらのアプリは世界150以上の国・地域で App Store の「App of the Day」に選出されています。CloudKit / Core Data / AppKit / UIKit / SwiftUI を統合したアプリ開発に精通。現在は CRDT を基盤としたリッチテキストノートアプリを開発中で、複数端末編集・差分ハイライト・Runベースのフォーマット対応など高度な要件に挑戦しています。",
+    "job_title": "iOS and macOS App Developer",
+    "links": [
+      {
+        "url": "https://github.com/kazushi-oenoki",
+        "name": "@kazushi-oenoki"
+      }
+    ]
+  },
+  {
+    "name": "Satsuki Hashiba",
+    "image_name": "satsuki_hashiba",
+    "bio": "Satsuki works at LY Corporation, where she contributes to the development of LINE, Japan’s largest communication app. She enjoys reading, knitting, and gaming, and happily embraces an indoor-oriented lifestyle—much like her beloved cat.",
+    "bio_ja": "Satsuki HashibaはLY Corporationで働き、日本最大級のコミュニケーションアプリであるLINEの開発に携わっています。読書、編み物、ゲームが趣味で、愛猫と同じくインドアな生活を楽しんでいます。",
+    "job_title": "Developer at LY Corporation",
+    "links": []
+  },
+  {
+    "name": "Akira Fukunaga",
+    "image_name": "akira_fukunaga",
+    "bio": "Akira Fukunaga is an iOS app developer with over 7 years of experience. He currently works on the Mobile Foundation Team at SmartNews and previously worked at Mercari. Outside of coding, he enjoys motorcycling, camping, and bouldering.",
+    "bio_ja": "Akira Fukunagaは7年以上の経験を持つiOSアプリ開発者です。現在はSmartNewsのMobile Foundation Teamで開発に携わっており、以前はMercariで働いていました。趣味はバイク、キャンプ、ボルダリングです。",
+    "job_title": "iOS App Developer at SmartNews",
+    "links": [
+      {
+        "url": "https://github.com/kagemiku",
+        "name": "@kagemiku"
+      }
+    ]
+  },
+  {
+    "name": "Ryo Tsuzukihashi",
+    "image_name": "ryo_tsuzukihashi",
+    "bio": "Ryo Tsuzukihashi started indie development in 2016. After joining Yahoo Japan as a new graduate in 2019, he worked on the PayPay Flea Market app and grew through LeanXP-style pair programming. In 2023 he joined DeNA and contributed to the development of the live communication app Pococha, including test-driven development practices and short video features. Since 2024 he has been working at ZOZO on the ZOZOTOWN iOS app, tackling large-scale refactoring and SwiftUI adoption. As an indie developer, he actively experiments with AI tools such as Claude Code and has worked on iOS, Android, and SaaS applications. He has extensive experience with Firebase as a BaaS and has released more than 50 apps so far.",
+    "bio_ja": "2016年から個人開発を開始。2019年に新卒でヤフー株式会社へ入社し、PayPayフリマの立ち上げ期からチームに参加。LeanXPのペアプログラミングを通して経験を積みました。2023年にDeNAへ移り、ライブコミュニケーションアプリ「Pococha」のiOSアプリ開発に従事し、テスト駆動開発やショート動画投稿機能の開発などに関わりました。2024年からはZOZOでZOZOTOWNのiOSアプリ開発を担当し、大規模アプリのリファクタリングやSwiftUI化などモダンな開発にも取り組んでいます。個人開発ではAI（Claude Code）を活用し、iOSだけでなくAndroidやSaaSアプリの開発にも挑戦。BaaSとしてFirebaseを活用し、これまでに50以上のアプリをリリースしています。",
+    "job_title": "iOS App Developer at ZOZO",
+    "links": []
+  },
+  {
+    "name": "Kohki Miki",
+    "image_name": "giginet",
+    "bio": "giginet is a Mobile DevOps Engineer working for LY Corporation. He develops developer tools primarily for iOS, maintains open-source software, and creates build tools called Scipio.",
+    "bio_ja": "Kohki Miki（giginet）はLY Corporationで働くMobile DevOps Engineerです。主にiOS向けの開発者ツールを開発しており、オープンソースソフトウェアのメンテナンスや、Scipioというビルドツールの開発も行っています。",
+    "job_title": "Mobile DevOps Engineer at LY Corporation",
+    "links": [
+      {
+        "url": "https://github.com/giginet",
+        "name": "@giginet"
+      },
+      {
+        "url": "https://x.com/giginet",
+        "name": "@giginet"
+      }
+    ]
+  },
+  {
+    "name": "freddi(Yuki Aki)",
+    "image_name": "yuki",
+    "bio": "Freddi (Yuki Aki) is an engineer who also travels the world as a travel YouTuber, sharing his experiences across different countries and cultures.",
+    "bio_ja": "旅行系YouTuberとして世界を回っているエンジニア",
+    "job_title": "Engineer",
+    "links": [
+      {
+        "url": "https://github.com/freddi-kit",
+        "name": "@freddi-kit"
+      },
+      {
+        "name": "@___freddi___",
+        "url": "https://x.com/___freddi___"
+      }
+    ]
+  },
+  {
+    "name": "matsuji",
+    "image_name": "matsuji",
+    "bio": "matsuji is an iOS app developer based in Japan. In his professional work, he contributes to the development of globally deployed large-scale applications. Outside of work, he develops open-source software and releases independent apps. He also enjoys playing the board game Go.",
+    "bio_ja": "日本でiOSアプリ開発をしています。仕事としてグローバルに展開されている大規模なアプリの開発をしている一方、個人としてOSSを開発したり個人でアプリをリリースしたりしています。ボードゲームの囲碁が好きです。",
+    "job_title": "iOS App Developer",
+    "links": []
+  },
+  {
+    "name": "Lil Ossa",
+    "image_name": "lil_ossa",
+    "bio": "Osama is an iOS engineer at Classmethod in Japan, and he's also a breakdancer who came in second place at the World Breakdancing Championship in Germany in 2007. In the breakdance world, he is known as 'Lil Ossa'. He has a passion for beer, dance, and building iOS apps. He enjoys sharing his unique experiences in iOS development at conferences such as try! Swift Tokyo 2024, Swiftable 2023, and iOSDC Japan 2022.",
+    "bio_ja": "Osamaは日本のクラスメソッドで働くiOSエンジニアです。2007年にはドイツで開催された世界ブレイクダンス選手権で準優勝したブレイクダンサーでもあり、ダンスの世界では「Lil Ossa」として知られています。ビールとダンス、そしてiOSアプリ開発をこよなく愛しています。try! Swift Tokyo 2024、Swiftable 2023、iOSDC Japan 2022などのカンファレンスで、ユニークなiOS開発の経験を共有することを楽しんでいます。",
+    "job_title": "iOS Engineer at Classmethod",
+    "links": [
+      {
+        "url": "https://github.com/littleossa",
+        "name": "@littleossa"
+      },
+      {
+        "url": "https://x.com/littleossa",
+        "name": "@littleossa"
+      }
+    ]
+  },
+  {
+    "name": "Shinichiro Oba",
+    "image_name": "shinichiro_oba",
+    "bio": "Shinichiro Oba is a programmer who loves Apple and LEGO. At work, he develops large-scale applications using The Composable Architecture (TCA). In his spare time, he enjoys exploring low-level technologies such as Embedded Swift and FPGA. He is also the author of books including \"Introduction to LEGO MINDSTORMS NXT.\"",
+    "bio_ja": "AppleとLEGOが大好きなプログラマー。仕事ではTCA（The Composable Architecture）を用いた大規模アプリ開発に携わりながら、趣味ではEmbedded SwiftやFPGAなどの低レイヤー技術にも取り組んでいます。著書に『入門LEGO MINDSTORMS NXT』などがあります。",
+    "job_title": "Programmer",
+    "links": [
+      {
+        "url": "https://github.com/bricklife",
+        "name": "@bricklife"
+      },
+      {
+        "name": "@ooba",
+        "url": "https://x.com/ooba"
+      }
+    ]
+  },
+  {
+    "name": "Wataru Nishimoto",
+    "image_name": "wataru_nishimoto",
+    "bio": "Wataru Nishimoto is an iOS app engineer.",
+    "bio_ja": "Wataru NishimotoはiOSアプリエンジニアです。",
+    "job_title": "iOS App Engineer",
+    "links": [
+      {
+        "url": "https://github.com/watura",
+        "name": "@watura"
       }
     ]
   }
