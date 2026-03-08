@@ -744,18 +744,20 @@ struct TimetableEditorPageView: HTML, Sendable {
 
                   var slotType = (talkDuration === 'LT') ? 'lightning_talk' : 'talk';
 
+                  var BUFFER_MS = 5 * 60000; // 5 minutes
+                  var dropIndex = evt.newIndex;
                   var startTime = timeInputToISO('10:00', dayNum);
                   var slotCards = list.querySelectorAll('.slot-card');
-                  if (slotCards.length > 0) {
-                    var lastCard = slotCards[slotCards.length - 1];
-                    var timeEl = lastCard.querySelector('.slot-time');
+
+                  if (dropIndex > 0 && slotCards.length > 0) {
+                    var prevIndex = Math.min(dropIndex - 1, slotCards.length - 1);
+                    var prevCard = slotCards[prevIndex];
+                    var timeEl = prevCard.querySelector('.slot-time');
                     if (timeEl) {
-                      var lastEnd = timeEl.getAttribute('data-end');
-                      if (!lastEnd) {
-                        lastEnd = timeEl.getAttribute('data-start');
-                      }
-                      if (lastEnd) {
-                        startTime = lastEnd;
+                      var prevEnd = timeEl.getAttribute('data-end');
+                      if (!prevEnd) { prevEnd = timeEl.getAttribute('data-start'); }
+                      if (prevEnd) {
+                        startTime = new Date(new Date(prevEnd).getTime() + BUFFER_MS).toISOString();
                       }
                     }
                   }
