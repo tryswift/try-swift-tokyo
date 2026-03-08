@@ -68,7 +68,7 @@
           "speakers": [
             {
               "name": "Yusuke Kita",
-              "image_name": "kita",
+              "image_name": "yusuke_kita",
               "bio": "Yusuke Kita is an iOS developer at Mercari. He works on the internationalization of the Mercari app. He's passionate about learning new technology. When not coding, you can find him cycling.",
               "bio_ja": "メルカリのiOSエンジニア。iOSチームのMercariアプリの国際化に取り組んでいます。新しい技術を学ぶのが大好きです。コーディングしていないときは、サイクリングをしています。",
               "job_title": "iOS Developer at Mercari",

@@ -112,7 +112,7 @@
             },
             {
               "name": "Shinichiro Oba",
-              "image_name": "Shinichiro Oba",
+              "image_name": "shinichiro_oba",
               "bio": "Shinichiro is a software engineer and works on improvements of DevOps and DevEx in various teams. He also contributes some open-sourced swift projects.",
               "bio_ja": "Shinichiroはソフトウェアエンジニアで、様々なチームでDevOpsとDevExの改善に取り組んでいます。オープンソースのSwiftプロジェクトにも貢献しています。",
               "links": [
@@ -194,7 +194,7 @@
             },
             {
               "name": "Yusuke Kita",
-              "image_name": "Yusuke Kita",
+              "image_name": "yusuke_kita",
               "bio": "He is a software engineer and works on improvements of DevOps and DevEx in various teams. He also contributes some open-sourced swift projects.",
               "bio_ja": "ソフトウェアエンジニアで、様々なチームでDevOpsとDevExの改善に取り組んでいます。オープンソースのSwiftプロジェクトにも貢献しています。",
               "links": [
