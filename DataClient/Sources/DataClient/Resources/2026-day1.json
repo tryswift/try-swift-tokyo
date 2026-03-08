@@ -14,7 +14,7 @@
             {
               "id": 1,
               "name": "Paul Hudson",
-              "image_name": "paul_hudson",
+              "image_name": "Speaker/2026/2026_Speaker_PaulHudson",
               "bio": "Paul is the author of Hacking with Swift, Pro Swift, Swift Design Patterns, Testing Swift, Swift Interview Challenges, and more. Suffice it to say, he quite likes Swift. And coffee. (But mostly Swift.) (And coffee.)",
               "bio_ja": "Paulは「Hacking with Swift」「Pro Swift」「Swift Design Patterns」「Testing Swift」「Swift Interview Challenges」などの著者です。簡単に言うと、Swiftが大好きです。そしてコーヒーも。（でも主にSwiftが。）（いや、コーヒーも同じくらい。）",
               "job_title": "Creator at Hacking with Swift",
@@ -41,7 +41,7 @@
             {
               "id": 4,
               "name": "Victor Baro",
-              "image_name": "victor_baro",
+              "image_name": "Workshop/2026/2026_VictorBaro",
               "bio": "Victor Baro is an iOS developer with ~10 years of experience across startups and large organizations. He is the co-founder and CEO of Panels, a digital comics reading app, and works hands-on as a full stack developer with a strong focus on UI, interaction, and animation.",
               "bio_ja": "Victor Baroは、スタートアップから大企業まで約10年の経験を持つiOSデベロッパーです。デジタルコミック読書アプリ「Panels」の共同創業者兼CEOであり、UI、インタラクション、アニメーションに重点を置いたフルスタック開発者として実務に携わっています。",
               "job_title": "Co-founder & iOS Developer",
@@ -68,7 +68,7 @@
             {
               "id": 2,
               "name": "Vistar",
-              "image_name": "vistar",
+              "image_name": "Workshop/2026/2026_Vistar",
               "bio": "I primarily work on Apple platform app development and research the core APIs of the operating system.",
               "bio_ja": "主にAppleプラットフォームのアプリ開発と、オペレーティングシステムのコアAPIの研究に取り組んでいます。",
               "job_title": "iOS Developer",
@@ -87,7 +87,7 @@
             {
               "id": 3,
               "name": "Kazuki Nakashima",
-              "image_name": "kazuki_nakashima",
+              "image_name": "Workshop/2026/2026_KazukiNakashima",
               "bio": "iOS Application Development",
               "bio_ja": "iOSアプリケーション開発",
               "job_title": "iOS Developer",
@@ -114,7 +114,7 @@
             {
               "id": 5,
               "name": "Daniel Steinberg",
-              "image_name": "daniel_steinberg",
+              "image_name": "Speaker/2026/2026_DanielSteinberg",
               "bio": "Daniel is the author of more than a dozen books including the best selling books The Curious Case of the Async Cafe, A SwiftUI Kickstart, A Swift Kickstart, A Bread Baking Kickstart, and Dear Elena.\n\nDaniel presents iOS, SwiftUI, and Swift training and consults through his company Dim Sum Thinking.\n\nHe has written apps for the iPhone and the iPad since the SDKs first appeared and has written programs for the Mac all the way back to System 7. When he's not coding or talking about coding for the Mac, the iPhone, and the iPad he's probably cooking, baking bread, or hanging out with friends.",
               "bio_ja": "Danielはこれまでに十数冊以上を執筆しており、その中にはベストセラーとなった『The Curious Case of the Async Cafe』『A SwiftUI Kickstart』『A Swift Kickstart』『A Bread Baking Kickstart』『Dear Elena』などがあります。\n\n自身の会社である Dim Sum Thinking を通じて、iOS・SwiftUI・Swift に関するトレーニングやコンサルティングを行っています。\n\niPhone と iPad の SDK が最初に公開された当初からこれらのデバイス向けのアプリを開発しており、Mac 向けのプログラムも System 7 の時代から書いてきました。Mac、iPhone、iPad 向けのコーディングやその話をしていないときは、たいてい料理をしたり、パンを焼いたり、友人たちと過ごしたりしています。",
               "job_title": "Storyteller",
