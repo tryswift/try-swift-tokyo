@@ -1923,7 +1923,7 @@ struct CfPRoutes: RouteCollection {
               ? nil : formData.coInstructor3_iconUrl
           ))
       }
-      proposal.coInstructors = instructors.isEmpty ? nil : instructors
+      proposal.coInstructors = instructors.isEmpty ? nil : CoInstructorList(instructors)
     } else {
       // Clear workshop data if type changed away from workshop
       proposal.workshopDetails = nil

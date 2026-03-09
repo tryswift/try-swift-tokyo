@@ -37,5 +37,8 @@ enum AppRoutes {
 
     // Register CfP SSR pages
     try app.register(collection: CfPRoutes())
+
+    // Register Workshop registration pages
+    try app.register(collection: WorkshopRoutes())
   }
 }
