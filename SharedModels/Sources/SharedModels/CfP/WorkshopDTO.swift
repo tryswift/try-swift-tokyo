@@ -95,6 +95,12 @@ public struct CoInstructorList: Codable, Sendable, Equatable {
     self.items = items
   }
 
+  // Always encode using the keyed `{"items": [...]}` format.
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(items, forKey: .items)
+  }
+
   // Decode both `{"items": [...]}` (new format) and bare `[...]` (legacy format)
   public init(from decoder: Decoder) throws {
     if let keyed = try? decoder.container(keyedBy: CodingKeys.self) {
