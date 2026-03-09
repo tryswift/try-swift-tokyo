@@ -50,7 +50,8 @@ struct WorkshopVerifyPageView: HTML, Sendable {
                     .class("form-control form-control-lg"),
                     .id("email"),
                     .name("email"),
-                    .custom(name: "placeholder",
+                    .custom(
+                      name: "placeholder",
                       value: language == .ja ? "your@email.com" : "your@email.com"),
                     .required
                   )

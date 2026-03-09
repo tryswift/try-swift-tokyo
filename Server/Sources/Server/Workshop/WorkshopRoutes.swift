@@ -124,15 +124,16 @@ struct WorkshopRoutes: RouteCollection {
         .filter(\.$firstChoice.$id == regID)
         .count()
 
-      results.append(FetchedWorkshop(
-        registrationID: regID,
-        proposalTitle: proposal.title,
-        speakerName: proposal.speakerName,
-        abstract: proposal.abstract,
-        capacity: registration.capacity,
-        applicationCount: appCount,
-        lumaEventID: registration.lumaEventID
-      ))
+      results.append(
+        FetchedWorkshop(
+          registrationID: regID,
+          proposalTitle: proposal.title,
+          speakerName: proposal.speakerName,
+          abstract: proposal.abstract,
+          capacity: registration.capacity,
+          applicationCount: appCount,
+          lumaEventID: registration.lumaEventID
+        ))
     }
 
     return results
@@ -209,7 +210,8 @@ struct WorkshopRoutes: RouteCollection {
   {
     let user = try? await getAuthenticatedUser(req: req)
     let workshops = try await fetchWorkshops(on: req.db)
-    let hasLotteryRun = try await WorkshopApplication.query(on: req.db)
+    let hasLotteryRun =
+      try await WorkshopApplication.query(on: req.db)
       .filter(\.$status != .pending)
       .count() > 0
 
@@ -277,9 +279,9 @@ struct WorkshopRoutes: RouteCollection {
     }
 
     // Check if already applied
-    if let _ = try await WorkshopApplication.query(on: req.db)
+    if (try await WorkshopApplication.query(on: req.db)
       .filter(\.$email == email)
-      .first()
+      .first()) != nil
     {
       let html = try await renderWorkshopApplyPage(
         req: req, language: language,
@@ -367,9 +369,9 @@ struct WorkshopRoutes: RouteCollection {
     let email = payload.subject.value
 
     // Check for duplicate application
-    if let _ = try await WorkshopApplication.query(on: req.db)
+    if (try await WorkshopApplication.query(on: req.db)
       .filter(\.$email == email)
-      .first()
+      .first()) != nil
     {
       let html = try await renderWorkshopApplyPage(
         req: req, language: language,
@@ -540,14 +542,15 @@ struct WorkshopRoutes: RouteCollection {
     if let user, user.role == .admin {
       let workshops = try await fetchWorkshops(on: req.db)
       for ws in workshops {
-        workshopInfos.append(.init(
-          registrationID: ws.registrationID,
-          proposalTitle: ws.proposalTitle,
-          speakerName: ws.speakerName,
-          capacity: ws.capacity,
-          applicationCount: ws.applicationCount,
-          lumaEventID: ws.lumaEventID
-        ))
+        workshopInfos.append(
+          .init(
+            registrationID: ws.registrationID,
+            proposalTitle: ws.proposalTitle,
+            speakerName: ws.speakerName,
+            capacity: ws.capacity,
+            applicationCount: ws.applicationCount,
+            lumaEventID: ws.lumaEventID
+          ))
       }
     }
 
@@ -681,17 +684,18 @@ struct WorkshopRoutes: RouteCollection {
           nil
         }
 
-      rows.append(.init(
-        id: id,
-        email: app.email,
-        applicantName: app.applicantName,
-        firstChoice: firstTitle ?? "Unknown",
-        secondChoice: secondTitle,
-        thirdChoice: thirdTitle,
-        status: app.status,
-        assignedWorkshop: assignedTitle,
-        createdAt: app.createdAt.map { dateFormatter.string(from: $0) } ?? "-"
-      ))
+      rows.append(
+        .init(
+          id: id,
+          email: app.email,
+          applicantName: app.applicantName,
+          firstChoice: firstTitle ?? "Unknown",
+          secondChoice: secondTitle,
+          thirdChoice: thirdTitle,
+          status: app.status,
+          assignedWorkshop: assignedTitle,
+          createdAt: app.createdAt.map { dateFormatter.string(from: $0) } ?? "-"
+        ))
     }
 
     let filteredRows = rows
@@ -740,7 +744,8 @@ struct WorkshopRoutes: RouteCollection {
       .with(\.$proposal)
       .all()
 
-    let lotteryRun = try await WorkshopApplication.query(on: req.db)
+    let lotteryRun =
+      try await WorkshopApplication.query(on: req.db)
       .filter(\.$status != .pending)
       .count() > 0
 
@@ -755,13 +760,14 @@ struct WorkshopRoutes: RouteCollection {
 
       let ticketsSent = winners.allSatisfy { $0.lumaGuestID != nil }
 
-      results.append(.init(
-        workshopTitle: workshop.proposal.title,
-        capacity: workshop.capacity,
-        winners: winners.map { LotteryWinner(name: $0.applicantName, email: $0.email) },
-        lumaEventID: workshop.lumaEventID,
-        ticketsSent: !winners.isEmpty && ticketsSent
-      ))
+      results.append(
+        .init(
+          workshopTitle: workshop.proposal.title,
+          capacity: workshop.capacity,
+          winners: winners.map { LotteryWinner(name: $0.applicantName, email: $0.email) },
+          lumaEventID: workshop.lumaEventID,
+          ticketsSent: !winners.isEmpty && ticketsSent
+        ))
     }
 
     return HTMLResponse {
