@@ -141,19 +141,6 @@
     ]
   },
   {
-    "name": "Mateusz Zając",
-    "image_name": "Speaker/2026/2026_MateuszZajac",
-    "bio": "Mateusz is an Engineering Manager at Google and an iOS veteran with over 10 years of experience shipping high-performance mobile apps. He specializes in the intersection of fluid UX and deep tech—currently obsessed with pushing the limits of on-device AI and MLX Swift on Apple Silicon. He believes the best AI features are the ones that happen instantly and privately. Based in Kraków, he spends his time away from the keyboard running or building LEGOs with his two kids.",
-    "bio_ja": "Mateusz ZającはGoogleのEngineering Managerであり、10年以上にわたり高性能なモバイルアプリを世に送り出してきたiOSエンジニアです。流れるようなUXとディープテックの交差点を専門としており、現在はApple Silicon上でのオンデバイスAIやMLX Swiftの可能性を押し広げることに夢中です。最高のAI機能とは「瞬時に動作し、プライバシーを守るもの」だと信じています。ポーランド・クラクフ在住。キーボードから離れた時間は、ランニングをしたり、2人の子どもとLEGOを組み立てたりして過ごしています。",
-    "job_title": "Engineering Manager at Google",
-    "links": [
-      {
-        "url": "https://github.com/matteozajac",
-        "name": "@matteozajac"
-      }
-    ]
-  },
-  {
     "name": "kishikawa katsumi",
     "image_name": "Speaker/2026/2026_KishikawaKatsumi",
     "bio": "Katsumi Kishikawa is a software engineer specializing in mobile app development. While the role of humans in software development continues to evolve, he believes that the core joy of programming remains unchanged. He finds embedded programming particularly rewarding because it allows developers to build everything themselves, making the essence of programming especially clear and enjoyable.",
