@@ -12,88 +12,89 @@ enum LotteryService {
   /// 4. For still-unassigned, try third choice
   /// 5. Mark remaining as lost
   static func runLottery(on database: Database) async throws -> LotteryResult {
-    // Fetch all workshops with their capacity
-    let workshops = try await WorkshopRegistration.query(on: database)
-      .with(\.$proposal)
-      .all()
+    try await database.transaction { tx in
+      // Fetch all workshops with their capacity
+      let workshops = try await WorkshopRegistration.query(on: tx)
+        .with(\.$proposal)
+        .all()
 
-    // Build capacity tracker: workshopID -> remaining slots
-    var remainingCapacity: [UUID: Int] = [:]
-    for workshop in workshops {
-      guard let id = workshop.id else { continue }
-      remainingCapacity[id] = workshop.capacity
-    }
-
-    // Fetch all pending applications
-    let applications = try await WorkshopApplication.query(on: database)
-      .filter(\.$status == .pending)
-      .all()
-
-    // Shuffle for fairness
-    var shuffled = applications.shuffled()
-
-    var assigned: [(application: WorkshopApplication, workshopID: UUID)] = []
-    var unassigned: [WorkshopApplication] = []
-
-    // Round 1: First choice
-    var stillUnassigned: [WorkshopApplication] = []
-    for app in shuffled {
-      let choiceID = app.$firstChoice.id
-      if let remaining = remainingCapacity[choiceID], remaining > 0 {
-        remainingCapacity[choiceID] = remaining - 1
-        assigned.append((application: app, workshopID: choiceID))
-      } else {
-        stillUnassigned.append(app)
+      // Build capacity tracker: workshopID -> remaining slots
+      var remainingCapacity: [UUID: Int] = [:]
+      for workshop in workshops {
+        guard let id = workshop.id else { continue }
+        remainingCapacity[id] = workshop.capacity
       }
-    }
 
-    // Round 2: Second choice
-    shuffled = stillUnassigned.shuffled()
-    stillUnassigned = []
-    for app in shuffled {
-      if let choiceID = app.$secondChoice.id,
-        let remaining = remainingCapacity[choiceID], remaining > 0
-      {
-        remainingCapacity[choiceID] = remaining - 1
-        assigned.append((application: app, workshopID: choiceID))
-      } else {
-        stillUnassigned.append(app)
+      // Fetch all pending applications
+      let applications = try await WorkshopApplication.query(on: tx)
+        .filter(\.$status == .pending)
+        .all()
+
+      // Shuffle for fairness
+      var shuffled = applications.shuffled()
+
+      var assigned: [(application: WorkshopApplication, workshopID: UUID)] = []
+
+      // Round 1: First choice
+      var stillUnassigned: [WorkshopApplication] = []
+      for app in shuffled {
+        let choiceID = app.$firstChoice.id
+        if let remaining = remainingCapacity[choiceID], remaining > 0 {
+          remainingCapacity[choiceID] = remaining - 1
+          assigned.append((application: app, workshopID: choiceID))
+        } else {
+          stillUnassigned.append(app)
+        }
       }
-    }
 
-    // Round 3: Third choice
-    shuffled = stillUnassigned.shuffled()
-    stillUnassigned = []
-    for app in shuffled {
-      if let choiceID = app.$thirdChoice.id,
-        let remaining = remainingCapacity[choiceID], remaining > 0
-      {
-        remainingCapacity[choiceID] = remaining - 1
-        assigned.append((application: app, workshopID: choiceID))
-      } else {
-        stillUnassigned.append(app)
+      // Round 2: Second choice
+      shuffled = stillUnassigned.shuffled()
+      stillUnassigned = []
+      for app in shuffled {
+        if let choiceID = app.$secondChoice.id,
+          let remaining = remainingCapacity[choiceID], remaining > 0
+        {
+          remainingCapacity[choiceID] = remaining - 1
+          assigned.append((application: app, workshopID: choiceID))
+        } else {
+          stillUnassigned.append(app)
+        }
       }
+
+      // Round 3: Third choice
+      shuffled = stillUnassigned.shuffled()
+      stillUnassigned = []
+      for app in shuffled {
+        if let choiceID = app.$thirdChoice.id,
+          let remaining = remainingCapacity[choiceID], remaining > 0
+        {
+          remainingCapacity[choiceID] = remaining - 1
+          assigned.append((application: app, workshopID: choiceID))
+        } else {
+          stillUnassigned.append(app)
+        }
+      }
+
+      let unassigned = stillUnassigned
+
+      // Save results
+      for (app, workshopID) in assigned {
+        app.$assignedWorkshop.id = workshopID
+        app.status = .won
+        try await app.save(on: tx)
+      }
+
+      for app in unassigned {
+        app.status = .lost
+        try await app.save(on: tx)
+      }
+
+      return LotteryResult(
+        totalApplications: applications.count,
+        assigned: assigned.count,
+        unassigned: unassigned.count
+      )
     }
-
-    unassigned = stillUnassigned
-
-    // Save results
-    for (app, workshopID) in assigned {
-      app.$assignedWorkshop.id = workshopID
-      app.status = .won
-      try await app.save(on: database)
-    }
-
-    for app in unassigned {
-      app.status = .lost
-      try await app.save(on: database)
-    }
-
-    return LotteryResult(
-      totalApplications: applications.count,
-      assigned: assigned.count,
-      unassigned: unassigned.count
-    )
   }
 }
 

@@ -61,22 +61,6 @@ struct WorkshopRoutes: RouteCollection {
     req.cookies["csrf_token"]?.string ?? ""
   }
 
-  private func getAuthenticatedUser(req: Request) async throws -> UserDTO? {
-    let token: String?
-    if let cookieToken = req.cookies["cfp_token"]?.string, !cookieToken.isEmpty {
-      token = cookieToken
-    } else if let authHeader = req.headers.bearerAuthorization?.token {
-      token = authHeader
-    } else {
-      return nil
-    }
-    guard let token else { return nil }
-    let payload = try await req.jwt.verify(token, as: UserJWTPayload.self)
-    guard let userID = payload.userID else { return nil }
-    guard let user = try await User.find(userID, on: req.db) else { return nil }
-    return try user.toDTO()
-  }
-
   /// Fetched workshop data used across multiple pages
   struct FetchedWorkshop: Sendable {
     let registrationID: UUID
@@ -95,7 +79,6 @@ struct WorkshopRoutes: RouteCollection {
       .filter(\.$talkDuration == .workshop)
       .filter(\.$status == .accepted)
       .with(\.$speaker)
-      .with(\.$conference)
       .sort(\.$title)
       .all()
 
@@ -104,7 +87,7 @@ struct WorkshopRoutes: RouteCollection {
     for proposal in proposals {
       guard let proposalID = proposal.id else { continue }
 
-      // Get or create registration
+      // Find or create registration (with retry on unique constraint violation)
       let registration: WorkshopRegistration
       if let existing = try await WorkshopRegistration.query(on: db)
         .filter(\.$proposal.$id == proposalID)
@@ -112,10 +95,19 @@ struct WorkshopRoutes: RouteCollection {
       {
         registration = existing
       } else {
-        // Auto-create registration with default capacity
         let newReg = WorkshopRegistration(proposalID: proposalID, capacity: 30)
-        try await newReg.save(on: db)
-        registration = newReg
+        do {
+          try await newReg.save(on: db)
+          registration = newReg
+        } catch {
+          // Unique constraint violation from concurrent request — re-fetch
+          guard
+            let existing = try await WorkshopRegistration.query(on: db)
+              .filter(\.$proposal.$id == proposalID)
+              .first()
+          else { throw error }
+          registration = existing
+        }
       }
 
       guard let regID = registration.id else { continue }
@@ -208,7 +200,7 @@ struct WorkshopRoutes: RouteCollection {
   private func renderWorkshopListPage(req: Request, language: CfPLanguage) async throws
     -> HTMLResponse
   {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     let workshops = try await fetchWorkshops(on: req.db)
     let hasLotteryRun =
       try await WorkshopApplication.query(on: req.db)
@@ -245,7 +237,7 @@ struct WorkshopRoutes: RouteCollection {
   private func renderWorkshopApplyPage(
     req: Request, language: CfPLanguage, errorMessage: String? = nil
   ) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     return HTMLResponse {
       CfPLayout(
         title: language == .ja ? "チケット確認" : "Verify Ticket",
@@ -312,7 +304,7 @@ struct WorkshopRoutes: RouteCollection {
     let token = try await req.jwt.sign(payload)
 
     // Show workshop selection form
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     let workshops = try await fetchWorkshops(on: req.db)
     let workshopOptions = workshops.map {
       WorkshopOption(
@@ -422,7 +414,7 @@ struct WorkshopRoutes: RouteCollection {
         nil as String?
       }
 
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     let html = HTMLResponse {
       CfPLayout(
         title: language == .ja ? "申し込み完了" : "Application Complete",
@@ -453,10 +445,23 @@ struct WorkshopRoutes: RouteCollection {
     return reg.proposal.title
   }
 
+  /// Build a title cache for all workshop registrations to avoid N+1 queries
+  private func buildTitleCache(on db: Database) async throws -> [UUID: String] {
+    let registrations = try await WorkshopRegistration.query(on: db)
+      .with(\.$proposal)
+      .all()
+    var cache: [UUID: String] = [:]
+    for reg in registrations {
+      guard let id = reg.id else { continue }
+      cache[id] = reg.proposal.title
+    }
+    return cache
+  }
+
   private func renderWorkshopStatusPage(
     req: Request, language: CfPLanguage, application: WorkshopStatusPageView.ApplicationInfo? = nil
   ) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     return HTMLResponse {
       CfPLayout(
         title: language == .ja ? "申し込み状況" : "Application Status",
@@ -535,7 +540,7 @@ struct WorkshopRoutes: RouteCollection {
 
   @Sendable
   func organizerWorkshopsPage(req: Request) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     let successMessage = req.query[String.self, at: "success"]
 
     var workshopInfos: [OrganizerWorkshopsPageView.WorkshopInfo] = []
@@ -573,7 +578,7 @@ struct WorkshopRoutes: RouteCollection {
 
   @Sendable
   func handleSetCapacity(req: Request) async throws -> Response {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     guard let user, user.role == .admin else {
       throw Abort(.forbidden)
     }
@@ -587,6 +592,10 @@ struct WorkshopRoutes: RouteCollection {
     }
     let form = try req.content.decode(CapacityForm.self)
 
+    guard form.capacity >= 1, form.capacity <= 1000 else {
+      throw Abort(.badRequest, reason: "Capacity must be between 1 and 1000")
+    }
+
     guard let registration = try await WorkshopRegistration.find(registrationID, on: req.db) else {
       throw Abort(.notFound)
     }
@@ -599,7 +608,7 @@ struct WorkshopRoutes: RouteCollection {
 
   @Sendable
   func handleCreateLumaEvent(req: Request) async throws -> Response {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     guard let user, user.role == .admin else {
       throw Abort(.forbidden)
     }
@@ -617,12 +626,19 @@ struct WorkshopRoutes: RouteCollection {
       throw Abort(.notFound)
     }
 
+    guard registration.lumaEventID == nil else {
+      return req.redirect(
+        to:
+          "/organizer/workshops?success=Luma event already exists: \(registration.lumaEventID ?? "")"
+      )
+    }
+
     let proposal = registration.proposal
     let eventResponse = try await LumaClient.createEvent(
       name: "try! Swift Tokyo 2026 Workshop: \(proposal.title)",
       descriptionMd: proposal.abstract,
-      startAt: "2026-04-13T09:00:00+09:00",
-      endAt: "2026-04-13T17:00:00+09:00",
+      startAt: Environment.get("WORKSHOP_DEFAULT_START_AT") ?? "2026-04-13T09:00:00+09:00",
+      endAt: Environment.get("WORKSHOP_DEFAULT_END_AT") ?? "2026-04-13T17:00:00+09:00",
       client: req.client,
       logger: req.logger
     )
@@ -635,7 +651,7 @@ struct WorkshopRoutes: RouteCollection {
 
   @Sendable
   func organizerApplicationsPage(req: Request) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     guard let user, user.role == .admin else {
       return HTMLResponse {
         CfPLayout(title: "Applications", user: user, language: .en) {
@@ -660,29 +676,16 @@ struct WorkshopRoutes: RouteCollection {
     dateFormatter.dateStyle = .medium
     dateFormatter.timeStyle = .short
 
+    let titleCache = try await buildTitleCache(on: req.db)
+
     var rows: [OrganizerApplicationsPageView.ApplicationRow] = []
     for app in applications {
       guard let id = app.id else { continue }
 
-      let firstTitle = try await workshopTitle(for: app.$firstChoice.id, on: req.db)
-      let secondTitle: String? =
-        if let secondID = app.$secondChoice.id {
-          try await workshopTitle(for: secondID, on: req.db)
-        } else {
-          nil
-        }
-      let thirdTitle: String? =
-        if let thirdID = app.$thirdChoice.id {
-          try await workshopTitle(for: thirdID, on: req.db)
-        } else {
-          nil
-        }
-      let assignedTitle: String? =
-        if let assignedID = app.$assignedWorkshop.id {
-          try await workshopTitle(for: assignedID, on: req.db)
-        } else {
-          nil
-        }
+      let firstTitle = titleCache[app.$firstChoice.id]
+      let secondTitle = app.$secondChoice.id.flatMap { titleCache[$0] }
+      let thirdTitle = app.$thirdChoice.id.flatMap { titleCache[$0] }
+      let assignedTitle = app.$assignedWorkshop.id.flatMap { titleCache[$0] }
 
       rows.append(
         .init(
@@ -698,7 +701,19 @@ struct WorkshopRoutes: RouteCollection {
         ))
     }
 
-    let filteredRows = rows
+    let filteredRows: [OrganizerApplicationsPageView.ApplicationRow]
+    if let workshopFilter, let filterUUID = UUID(uuidString: workshopFilter) {
+      let filteredIDs = Set(
+        applications.filter { app in
+          app.$firstChoice.id == filterUUID
+            || app.$secondChoice.id == filterUUID
+            || app.$thirdChoice.id == filterUUID
+        }.compactMap { $0.id }
+      )
+      filteredRows = rows.filter { filteredIDs.contains($0.id) }
+    } else {
+      filteredRows = rows
+    }
 
     let workshops = try await fetchWorkshops(on: req.db)
     let workshopList = workshops.map {
@@ -723,7 +738,7 @@ struct WorkshopRoutes: RouteCollection {
 
   @Sendable
   func handleRunLottery(req: Request) async throws -> Response {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     guard let user, user.role == .admin else {
       throw Abort(.forbidden)
     }
@@ -738,7 +753,10 @@ struct WorkshopRoutes: RouteCollection {
 
   @Sendable
   func organizerResultsPage(req: Request) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
+    guard let user, user.role == .admin else {
+      throw Abort(.forbidden)
+    }
 
     let workshops = try await WorkshopRegistration.query(on: req.db)
       .with(\.$proposal)
@@ -784,7 +802,7 @@ struct WorkshopRoutes: RouteCollection {
 
   @Sendable
   func handleSendTickets(req: Request) async throws -> Response {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     guard let user, user.role == .admin else {
       throw Abort(.forbidden)
     }

@@ -2939,22 +2939,6 @@ struct CfPRoutes: RouteCollection {
 
   /// Get authenticated user from cookie or authorization header
   func getAuthenticatedUser(req: Request) async throws -> UserDTO? {
-    // Try to get token from cookie first, then Authorization header
-    let token: String?
-    if let cookieToken = req.cookies["cfp_token"]?.string, !cookieToken.isEmpty {
-      token = cookieToken
-    } else if let authHeader = req.headers.bearerAuthorization?.token {
-      token = authHeader
-    } else {
-      return nil
-    }
-
-    guard let token else { return nil }
-
-    let payload = try await req.jwt.verify(token, as: UserJWTPayload.self)
-    guard let userID = payload.userID else { return nil }
-    guard let user = try await User.find(userID, on: req.db) else { return nil }
-
-    return try user.toDTO()
+    try await req.authenticatedUser()
   }
 }

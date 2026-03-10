@@ -17,7 +17,15 @@ enum LumaClient {
       throw Abort(.internalServerError, reason: "Luma API not configured")
     }
 
-    let lumaEventID = eventID ?? Environment.get("LUMA_EVENT_ID") ?? "evt-WHT17EaVs2of1Gs"
+    let lumaEventID: String
+    if let explicitEventID = eventID {
+      lumaEventID = explicitEventID
+    } else if let configuredEventID = Environment.get("LUMA_EVENT_ID") {
+      lumaEventID = configuredEventID
+    } else {
+      logger.error("LUMA_EVENT_ID not configured and no eventID provided")
+      throw Abort(.internalServerError, reason: "Luma event ID not configured")
+    }
     let url =
       "\(baseURL)/event/get-guest?event_id=\(lumaEventID)&id=\(email.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? email)"
 
