@@ -122,12 +122,6 @@ extension HomeSectionType {
         .filter { $0.speakers?.isEmpty == false }
 
       WorkshopComponent(workshops: workshops, year: year, language: language)
-
-      Text(String("And more...!", language: language))
-        .horizontalAlignment(.center)
-        .font(.title3)
-        .foregroundStyle(.dimGray)
-        .margin(.top, .px(32))
     case .cfp:
       SectionHeader(type: self, language: language)
       CallForProposalComponent(language: language)
@@ -206,11 +200,6 @@ extension HomeSectionType {
           .horizontalAlignment(.center)
           .margin(.bottom, .px(96))
         }
-      }
-
-      if year == ConferenceYear.latest {
-        CallForSponsorsComponent(language: language)
-          .margin(.top, .px(32))
       }
     case .meetTheOrganizers:
       let organizers = try! dataClient.fetchOrganizers(year: year)
