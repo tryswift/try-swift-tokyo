@@ -155,18 +155,30 @@
     "community": [
         {
             "id": 1,
+            "name": "サイフォン合同会社",
+            "imageName": "Sponsor/2025/2025_SCIVONE",
+            "link": "https://www.scivone.com"
+        },
+        {
+            "id": 2,
+            "name": "DroidKaigi Association",
+            "imageName": "Sponsor/2025/2025_DroidKaigi",
+            "link": "https://droidkaigi.jp/"
+        },
+        {
+            "id": 3,
             "name": "株式会社Qiita",
             "imageName": "Sponsor/2026/2026_Qiita",
             "link": "https://qiita.com/"
         },
         {
-            "id": 2,
+            "id": 4,
             "name": "クラスメソッド株式会社",
             "imageName": "Sponsor/2026/2026_classmethod",
             "link": "https://classmethod.jp/"
         },
         {
-            "id": 3,
+            "id": 5,
             "name": "Goodnotes Limited",
             "imageName": "Sponsor/2026/2026_goodnotes",
             "link": "https://www.goodnotes.com",
