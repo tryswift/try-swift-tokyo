@@ -164,6 +164,13 @@
             "name": "クラスメソッド株式会社",
             "imageName": "Sponsor/2026/2026_classmethod",
             "link": "https://classmethod.jp/"
+        },
+        {
+            "id": 3,
+            "name": "Goodnotes Limited",
+            "imageName": "Sponsor/2026/2026_goodnotes",
+            "link": "https://www.goodnotes.com",
+            "japanese_link": "https://www.goodnotes.com/jp"
         }
     ],
     "individual": [
