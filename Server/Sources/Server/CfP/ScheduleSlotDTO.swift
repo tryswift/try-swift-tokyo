@@ -98,3 +98,19 @@ struct TimetableExportLink: Codable, Sendable {
   let name: String
   let url: String
 }
+
+/// Export format matching DataClient Speaker JSON structure (2026-speakers.json)
+struct SpeakerExportDTO: Codable, Sendable {
+  let name: String
+  let imageName: String
+  let bio: String?
+  let bioJa: String?
+  let jobTitle: String?
+  let jobTitleJa: String?
+  let links: [SpeakerExportLink]
+}
+
+struct SpeakerExportLink: Codable, Sendable {
+  let url: String
+  let name: String
+}
