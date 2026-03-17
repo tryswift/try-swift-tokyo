@@ -107,7 +107,14 @@
             "name": "サイボウズ株式会社",
             "imageName": "Sponsor/2026/2026_cybozu",
             "link": "https://tech.cybozu.io/"
-        }
+        },
+        {
+            "id": 3,
+            "name": "株式会社ミラティブ",
+            "imageName": "Sponsor/2026/2026_Mirrative",
+            "link": "https://www.mirrativ.co.jp/en",
+            "japanese_link": "https://www.mirrativ.co.jp/"
+        },
     ],
     "diversity": [
         {
