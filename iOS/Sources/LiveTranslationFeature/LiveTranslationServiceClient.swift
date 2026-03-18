@@ -87,7 +87,12 @@ extension LiveTranslationServiceClient: DependencyKey {
               return
             }
 
-            var lastState: StoreState?
+            var lastChatCount = 0
+            var lastConnected = false
+            var lastLangCount = 0
+            var lastDstLangCode: String?
+            var lastRoomTitle: String?
+            var lastErrorMessage: String?
             while !Task.isCancelled {
               let state = StoreState(
                 isConnected: store.isConnected,
@@ -97,11 +102,24 @@ extension LiveTranslationServiceClient: DependencyKey {
                 roomTitle: store.roomTitle,
                 lastErrorMessage: store.lastErrorMessage
               )
-              if state != lastState {
+              let changed =
+                state.isConnected != lastConnected
+                || state.chatList.count != lastChatCount
+                || state.chatList.last?.id != store.chatList.last?.id
+                || state.supportLanguages.count != lastLangCount
+                || state.dstLangCode != lastDstLangCode
+                || state.roomTitle != lastRoomTitle
+                || state.lastErrorMessage != lastErrorMessage
+              if changed {
                 continuation.yield(state)
-                lastState = state
+                lastChatCount = state.chatList.count
+                lastConnected = state.isConnected
+                lastLangCount = state.supportLanguages.count
+                lastDstLangCode = state.dstLangCode
+                lastRoomTitle = state.roomTitle
+                lastErrorMessage = state.lastErrorMessage
               }
-              try? await Task.sleep(for: .milliseconds(100))
+              try? await Task.sleep(for: .milliseconds(250))
             }
             continuation.finish()
           }

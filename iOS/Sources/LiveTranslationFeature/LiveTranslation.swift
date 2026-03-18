@@ -89,9 +89,12 @@ public struct LiveTranslation: Sendable {
         }
 
       case .view(.disconnectStream):
-        return .run { _ in
-          await liveTranslationServiceClient.disconnect()
-        }
+        return .merge(
+          .cancel(id: observationTaskId),
+          .run { _ in
+            await liveTranslationServiceClient.disconnect()
+          }
+        )
 
       case .view(.selectLangCode(let langCode)):
         state.$selectedLangCode.withLock { $0 = langCode }
