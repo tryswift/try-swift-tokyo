@@ -190,6 +190,12 @@
             "imageName": "Sponsor/2026/2026_goodnotes",
             "link": "https://www.goodnotes.com",
             "japanese_link": "https://www.goodnotes.com/jp"
+        },
+        {
+            "id": 6,
+            "name": "Wendy Labs Inc.",
+            "imageName": "Sponsor/2026/2026_wendy",
+            "link": "https://wendy.sh"
         }
     ],
     "individual": [
