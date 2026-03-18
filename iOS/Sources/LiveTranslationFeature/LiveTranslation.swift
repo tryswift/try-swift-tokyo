@@ -80,7 +80,7 @@ public struct LiveTranslation: Sendable {
           for await storeState in liveTranslationServiceClient.stateStream() {
             await send(.storeStateUpdated(storeState))
           }
-        }.cancellable(id: observationTaskId)
+        }.cancellable(id: observationTaskId, cancelInFlight: true)
 
       case .view(.connectStream):
         return .run { [state] send in
@@ -154,6 +154,9 @@ public struct LiveTranslation: Sendable {
           let fallbackCode =
             langList.contains(where: { $0.languageCode == deviceCode }) ? deviceCode : "en"
           state.$selectedLangCode.withLock { $0 = fallbackCode }
+          return .run { _ in
+            await liveTranslationServiceClient.requestTranslationLanguage(fallbackCode)
+          }
         }
         return .none
 

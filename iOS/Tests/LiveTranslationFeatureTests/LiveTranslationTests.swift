@@ -8,7 +8,7 @@ import Testing
 @MainActor
 struct LiveTranslationTests {
   @Test
-  func validateSelectedLangCode_validCode() async {
+  func validateSelectedLangCode_validCode() async throws {
     @Shared(.selectedLangCode) var selectedLangCode = "ja"
     let state = LiveTranslation.State()
 
@@ -17,12 +17,12 @@ struct LiveTranslationTests {
     }
     store.exhaustivity = .off
 
-    let langList = makeLangList(["en", "ja", "ko"])
+    let langList = try makeLangList(["en", "ja", "ko"])
     await store.send(.validateSelectedLangCode(langList))
   }
 
   @Test
-  func validateSelectedLangCode_invalidCode_fallbackToEn() async {
+  func validateSelectedLangCode_invalidCode_fallbackToEn() async throws {
     @Shared(.selectedLangCode) var selectedLangCode = "xx"
     let state = LiveTranslation.State()
 
@@ -31,19 +31,19 @@ struct LiveTranslationTests {
     }
     store.exhaustivity = .off
 
-    let langList = makeLangList(["en", "ja", "ko"])
+    let langList = try makeLangList(["en", "ja", "ko"])
     await store.send(.validateSelectedLangCode(langList)) {
       $0.$selectedLangCode.withLock { $0 = "en" }
     }
   }
 }
 
-private func makeLangList(_ codes: [String]) -> [LanguageItemEntity] {
-  codes.enumerated().compactMap { index, code in
+private func makeLangList(_ codes: [String]) throws -> [LanguageItemEntity] {
+  try codes.enumerated().map { index, code in
     let json = """
       {"langId":\(index),"languageCode":"\(code)","languageLocal":"\(code)"}
       """
-    return try? JSONDecoder().decode(
+    return try JSONDecoder().decode(
       LanguageItemEntity.self,
       from: Data(json.utf8)
     )

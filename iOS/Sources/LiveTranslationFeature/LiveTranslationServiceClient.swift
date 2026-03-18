@@ -81,7 +81,7 @@ extension LiveTranslationServiceClient: DependencyKey {
       },
       stateStream: {
         AsyncStream { continuation in
-          Task { @MainActor in
+          let task = Task { @MainActor in
             guard let store = ref.store else {
               continuation.finish()
               return
@@ -104,6 +104,9 @@ extension LiveTranslationServiceClient: DependencyKey {
               try? await Task.sleep(for: .milliseconds(100))
             }
             continuation.finish()
+          }
+          continuation.onTermination = { _ in
+            task.cancel()
           }
         }
       }
