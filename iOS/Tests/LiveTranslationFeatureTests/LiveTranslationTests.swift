@@ -1,5 +1,5 @@
 import ComposableArchitecture
-import LiveTranslationSDK_iOS
+import LiveTranslationSDK
 import Testing
 
 @testable import LiveTranslationFeature
@@ -38,13 +38,13 @@ struct LiveTranslationTests {
   }
 }
 
-private func makeLangList(_ codes: [String]) -> [LanguageEntity.Response.LanguageItem] {
+private func makeLangList(_ codes: [String]) -> [LanguageItemEntity] {
   codes.enumerated().compactMap { index, code in
     let json = """
-      {"langID":\(index),"language":"\(code)","langCode":"\(code)","langORG":"\(code)","langLocal":"\(code)","isSupportLangSet":true}
+      {"langId":\(index),"languageCode":"\(code)","languageLocal":"\(code)"}
       """
     return try? JSONDecoder().decode(
-      LanguageEntity.Response.LanguageItem.self,
+      LanguageItemEntity.self,
       from: Data(json.utf8)
     )
   }

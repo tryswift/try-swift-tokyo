@@ -188,23 +188,34 @@ public struct ScheduleView: View {
     .navigationTitle(Text("Schedule", bundle: .module))
     .searchable(text: $store.searchText, isPresented: $store.isSearchBarPresented)
     .toolbar {
+#if os(iOS)
       ToolbarItem(placement: .topBarTrailing) {
-        Menu {
-          ForEach(ConferenceYear.allCases, id: \.self) { year in
-            Button {
-              send(.yearSelected(year))
-            } label: {
-              if year == store.selectedYear {
-                Label(String(year.rawValue), systemImage: "checkmark")
-              } else {
-                Text(String(year.rawValue))
-              }
-            }
-          }
+        timeTravelMenu()
+      }
+#elseif os(macOS)
+      ToolbarItem(placement: .primaryAction) {
+        timeTravelMenu()
+      }
+#endif
+    }
+  }
+
+  @ViewBuilder
+  func timeTravelMenu() -> some View {
+    Menu {
+      ForEach(ConferenceYear.allCases, id: \.self) { year in
+        Button {
+          send(.yearSelected(year))
         } label: {
-          Label(String(store.selectedYear.rawValue), systemImage: "calendar")
+          if year == store.selectedYear {
+            Label(String(year.rawValue), systemImage: "checkmark")
+          } else {
+            Text(String(year.rawValue))
+          }
         }
       }
+    } label: {
+      Label(String(store.selectedYear.rawValue), systemImage: "calendar")
     }
   }
 

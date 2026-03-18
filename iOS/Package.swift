@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
   name: "iOS",
   defaultLocalization: "en",
-  platforms: [.iOS(.v26), .macOS(.v15), .watchOS(.v26), .tvOS(.v26), .visionOS(.v26)],
+  platforms: [.iOS(.v26), .macOS(.v26), .watchOS(.v26), .tvOS(.v26), .visionOS(.v26)],
   products: [
     .library(
       name: "AppFeature",
@@ -23,7 +23,7 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.21.0"),
     .package(url: "https://github.com/maiyama18/LicensesPlugin", from: "0.2.0"),
-    .package(url: "https://github.com/flitto/rtt_sdk", branch: "0.1.5"),
+    .package(url: "https://github.com/flitto/rtt_sdk", branch: "0.1.8"),
     .package(name: "SharedModels", path: "../SharedModels"),
     .package(name: "DataClient", path: "../DataClient"),
   ],
@@ -64,11 +64,7 @@ let package = Package(
         "BuildConfig",
         "DependencyExtra",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        .product(
-          name: "rtt-sdk",
-          package: "rtt_sdk",
-          condition: .when(platforms: [.iOS, .visionOS])
-        ),
+        .product(name: "LiveTranslationSDK", package: "rtt_sdk"),
       ]
     ),
     .target(

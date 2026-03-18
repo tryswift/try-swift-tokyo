@@ -15,7 +15,7 @@
 		D583D7CA2B9B634800B94F73 /* ClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D583D7C92B9B634800B94F73 /* ClipApp.swift */; };
 		D583D7CE2B9B634B00B94F73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D583D7CD2B9B634B00B94F73 /* Assets.xcassets */; };
 		D583D7D12B9B634B00B94F73 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D583D7D02B9B634B00B94F73 /* Preview Assets.xcassets */; };
-		D583D7D62B9B634B00B94F73 /* Clip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = D583D7C72B9B634800B94F73 /* Clip.app */; platformFilters = (ios, macos, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D583D7D62B9B634B00B94F73 /* Clip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = D583D7C72B9B634800B94F73 /* Clip.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D583D7DC2B9B639900B94F73 /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = D583D7DB2B9B639900B94F73 /* AppFeature */; };
 /* End PBXBuildFile section */
 
@@ -275,10 +275,7 @@
 /* Begin PBXTargetDependency section */
 		D583D7D52B9B634B00B94F73 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilters = (
-				ios,
-				macos,
-			);
+			platformFilter = ios;
 			target = D583D7C62B9B634800B94F73 /* Clip */;
 			targetProxy = D583D7D42B9B634B00B94F73 /* PBXContainerItemProxy */;
 		};
@@ -443,6 +440,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 26.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.tryswift.tokyo.App;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -485,6 +483,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 26.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.tryswift.tokyo.App;
 				PRODUCT_NAME = "$(TARGET_NAME)";

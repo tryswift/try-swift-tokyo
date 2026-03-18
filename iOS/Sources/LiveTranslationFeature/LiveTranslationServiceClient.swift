@@ -1,7 +1,7 @@
 import Dependencies
 import DependenciesMacros
 import Foundation
-@preconcurrency import LiveTranslationSDK_iOS
+@preconcurrency import LiveTranslationSDK
 
 extension DependencyValues {
   public var liveTranslationServiceClient: LiveTranslationServiceClient {
@@ -14,36 +14,98 @@ extension DependencyValues {
   }
 }
 
+public struct StoreState: Equatable, Sendable {
+  public var isConnected: Bool
+  public var chatList: [ChatItemEntity]
+  public var supportLanguages: [LanguageItemEntity]
+  public var dstLangCode: String?
+  public var roomTitle: String?
+  public var lastErrorMessage: String?
+
+  public init(
+    isConnected: Bool = false,
+    chatList: [ChatItemEntity] = [],
+    supportLanguages: [LanguageItemEntity] = [],
+    dstLangCode: String? = nil,
+    roomTitle: String? = nil,
+    lastErrorMessage: String? = nil
+  ) {
+    self.isConnected = isConnected
+    self.chatList = chatList
+    self.supportLanguages = supportLanguages
+    self.dstLangCode = dstLangCode
+    self.roomTitle = roomTitle
+    self.lastErrorMessage = lastErrorMessage
+  }
+}
+
 @DependencyClient
 public struct LiveTranslationServiceClient: Sendable {
-  public var langSet: @Sendable (String?) async throws -> LanguageEntity.Response.LangSet
-  public var langList: @Sendable () async throws -> [LanguageEntity.Response.LanguageItem]
-  public var chatRoomInfo: @Sendable (String) async throws -> ChatRoomEntity.Make.Response
-  public var chatConnection:
-    @Sendable (String) -> AsyncThrowingStream<RealTimeEntity.ChatStream, any Error> = { _ in .never
-    }
-  public var requestBatchTranslation:
-    @Sendable ([RealTimeEntity.Translation.Request.ContentData]) async -> Void
+  public var connect: @Sendable (_ interactionKey: String, _ dstLangCode: String?) async -> Void
+  public var disconnect: @Sendable () async -> Void
+  public var requestTranslationLanguage: @Sendable (_ langCode: String) async -> Void
+  public var stateStream: @Sendable () -> AsyncStream<StoreState> = { .never }
 }
 
 extension LiveTranslationServiceClient: DependencyKey {
   public static let liveValue: Self = {
-    let service = LiveTranslationService()
+    final class Ref: @unchecked Sendable {
+      @MainActor var store: ChatAudienceStore?
+    }
+    let ref = Ref()
+
     return Self(
-      langSet: { langCode in
-        try await service.getLangSet(.init(langCode: langCode ?? LanguageCodeFunctor.deviceCode))
+      connect: { interactionKey, dstLangCode in
+        await MainActor.run {
+          if let existing = ref.store {
+            existing.connect()
+          } else {
+            let store = ChatAudienceStore(
+              interactionKey: interactionKey,
+              dstLangCode: dstLangCode
+            )
+            ref.store = store
+            store.connect()
+          }
+        }
       },
-      langList: {
-        try await service.getLangList()
+      disconnect: {
+        await MainActor.run {
+          ref.store?.disconnect()
+        }
       },
-      chatRoomInfo: { roomNumber in
-        try await service.getChatRoomInfo(.init(interactionKey: roomNumber))
+      requestTranslationLanguage: { langCode in
+        await MainActor.run {
+          ref.store?.requestTranslationLanguage(langCode)
+        }
       },
-      chatConnection: { roomNumber in
-        service.chatConnection(.init(interactionKey: roomNumber))
-      },
-      requestBatchTranslation: { array in
-        await service.requestBatchTranslation(.init(data: array))
+      stateStream: {
+        AsyncStream { continuation in
+          Task { @MainActor in
+            guard let store = ref.store else {
+              continuation.finish()
+              return
+            }
+
+            var lastState: StoreState?
+            while !Task.isCancelled {
+              let state = StoreState(
+                isConnected: store.isConnected,
+                chatList: store.chatList,
+                supportLanguages: store.supportLanguages,
+                dstLangCode: store.dstLangCode,
+                roomTitle: store.roomTitle,
+                lastErrorMessage: store.lastErrorMessage
+              )
+              if state != lastState {
+                continuation.yield(state)
+                lastState = state
+              }
+              try? await Task.sleep(for: .milliseconds(100))
+            }
+            continuation.finish()
+          }
+        }
       }
     )
   }()
