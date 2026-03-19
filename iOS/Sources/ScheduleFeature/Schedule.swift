@@ -188,15 +188,15 @@ public struct ScheduleView: View {
     .navigationTitle(Text("Schedule", bundle: .module))
     .searchable(text: $store.searchText, isPresented: $store.isSearchBarPresented)
     .toolbar {
-#if os(macOS)
-      ToolbarItem(placement: .primaryAction) {
-        timeTravelMenu()
-      }
-#else
-      ToolbarItem(placement: .topBarTrailing) {
-        timeTravelMenu()
-      }
-#endif
+      #if os(macOS)
+        ToolbarItem(placement: .primaryAction) {
+          timeTravelMenu()
+        }
+      #else
+        ToolbarItem(placement: .topBarTrailing) {
+          timeTravelMenu()
+        }
+      #endif
     }
   }
 

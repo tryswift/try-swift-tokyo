@@ -216,7 +216,7 @@ public struct GuidanceView: View {
       .navigationTitle(Text("Venue", bundle: .module))
     }
     #if !os(macOS)
-    .lookAroundViewer(isPresented: $store.isLookAroundPresented, scene: $store.lookAround)
+      .lookAroundViewer(isPresented: $store.isLookAroundPresented, scene: $store.lookAround)
     #endif
     .onAppear {
       send(.onAppear)
