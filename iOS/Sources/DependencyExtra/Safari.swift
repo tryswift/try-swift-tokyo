@@ -3,6 +3,9 @@ import Dependencies
 #if canImport(SafariServices) && canImport(SwiftUI)
   import SafariServices
   import SwiftUI
+  #if canImport(AppKit)
+    import AppKit
+  #endif
 
   extension DependencyValues {
     /// A dependency that opens a URL in SFSafariViewController.
@@ -25,6 +28,10 @@ import Dependencies
           #if os(iOS)
             let vc = SFSafariViewController(url: url)
             UIApplication.shared.firstKeyWindow?.rootViewController?.present(vc, animated: true)
+            continuation.yield(true)
+            continuation.finish()
+          #elseif os(macOS)
+            NSWorkspace.shared.open(url)
             continuation.yield(true)
             continuation.finish()
           #else

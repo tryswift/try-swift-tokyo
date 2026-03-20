@@ -81,38 +81,34 @@ extension LiveTranslationServiceClient: DependencyKey {
               return
             }
 
-            @Sendable func snapshot() -> StoreState {
-              MainActor.assumeIsolated {
-                StoreState(
-                  isConnected: store.isConnected,
-                  chatList: store.chatList,
-                  supportLanguages: store.supportLanguages,
-                  dstLangCode: store.dstLangCode,
-                  roomTitle: store.roomTitle,
-                  lastErrorMessage: store.lastErrorMessage
-                )
-              }
+            func snapshot() -> StoreState {
+              StoreState(
+                isConnected: store.isConnected,
+                chatList: store.chatList,
+                supportLanguages: store.supportLanguages,
+                dstLangCode: store.dstLangCode,
+                roomTitle: store.roomTitle,
+                lastErrorMessage: store.lastErrorMessage
+              )
             }
 
             continuation.yield(snapshot())
 
             func observe() {
               withObservationTracking {
-                MainActor.assumeIsolated {
-                  _ = store.isConnected
-                  _ = store.chatList
-                  _ = store.supportLanguages
-                  _ = store.dstLangCode
-                  _ = store.roomTitle
-                  _ = store.lastErrorMessage
-                }
+                _ = store.isConnected
+                _ = store.chatList
+                _ = store.supportLanguages
+                _ = store.dstLangCode
+                _ = store.roomTitle
+                _ = store.lastErrorMessage
               } onChange: {
-                continuation.yield(snapshot())
                 Task { @MainActor in
                   guard !Task.isCancelled else {
                     continuation.finish()
                     return
                   }
+                  continuation.yield(snapshot())
                   observe()
                 }
               }
