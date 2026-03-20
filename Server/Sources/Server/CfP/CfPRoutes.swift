@@ -1,3 +1,4 @@
+import DataClient
 import Fluent
 import JWT
 import SharedModels
@@ -1378,7 +1379,7 @@ struct CfPRoutes: RouteCollection {
 
     // Build CSV
     var csv =
-      "ID,Title,Abstract,Talk Details,Type,Status,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At,Co-Instructors\n"
+      "ID,Title,Title (JA),Abstract,Abstract (JA),Talk Details,Type,Status,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At,Co-Instructors\n"
 
     let dateFormatter = ISO8601DateFormatter()
 
@@ -1386,7 +1387,9 @@ struct CfPRoutes: RouteCollection {
       let columns = [
         proposal.id?.uuidString ?? "",
         escapeCSV(proposal.title),
+        escapeCSV(proposal.titleJA ?? ""),
         escapeCSV(proposal.abstract),
+        escapeCSV(proposal.abstractJA ?? ""),
         escapeCSV(proposal.talkDetail),
         proposal.talkDuration.rawValue,
         proposal.status.rawValue,
@@ -1760,6 +1763,9 @@ struct CfPRoutes: RouteCollection {
       var iconUrl: String
       var githubUsername: String?
       var notesToOrganizers: String?
+      // Japanese fields
+      var titleJA: String?
+      var abstractJA: String?
       // Workshop fields
       var workshop_language: String?
       var workshop_numberOfTutors: String?
@@ -1941,6 +1947,8 @@ struct CfPRoutes: RouteCollection {
     proposal.bio = formData.bio
     proposal.iconURL = formData.iconUrl.isEmpty ? nil : formData.iconUrl
     proposal.notes = formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers
+    proposal.titleJA = formData.titleJA?.isEmpty == true ? nil : formData.titleJA
+    proposal.abstractJA = formData.abstractJA?.isEmpty == true ? nil : formData.abstractJA
 
     try await proposal.save(on: req.db)
 
@@ -2018,6 +2026,9 @@ struct CfPRoutes: RouteCollection {
       var iconUrl: String?
       var githubUsername: String?
       var notesToOrganizers: String?
+      // Japanese fields
+      var titleJA: String?
+      var abstractJA: String?
       // Workshop fields
       var workshop_language: String?
       var workshop_numberOfTutors: String?
@@ -2225,6 +2236,8 @@ struct CfPRoutes: RouteCollection {
       iconURL: formData.iconUrl?.isEmpty == true ? nil : formData.iconUrl,
       notes: formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers,
       speakerID: speakerID,
+      titleJA: formData.titleJA?.isEmpty == true ? nil : formData.titleJA,
+      abstractJA: formData.abstractJA?.isEmpty == true ? nil : formData.abstractJA,
       workshopDetails: workshopDetails,
       coInstructors: coInstructors
     )
@@ -2284,6 +2297,8 @@ struct CfPRoutes: RouteCollection {
       var iconUrl: String?
       var githubUsername: String?
       var notesToOrganizers: String?
+      var titleJA: String?
+      var abstractJA: String?
     }
 
     let formData: InlineAddFormData
@@ -2343,7 +2358,9 @@ struct CfPRoutes: RouteCollection {
       bio: formData.bio,
       iconURL: formData.iconUrl?.isEmpty == true ? nil : formData.iconUrl,
       notes: formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers,
-      speakerID: speakerID
+      speakerID: speakerID,
+      titleJA: formData.titleJA?.isEmpty == true ? nil : formData.titleJA,
+      abstractJA: formData.abstractJA?.isEmpty == true ? nil : formData.abstractJA
     )
 
     if !githubUsername.isEmpty {
@@ -2775,6 +2792,12 @@ struct CfPRoutes: RouteCollection {
       .sort(\.$sortOrder)
       .all()
 
+    // Load speaker data from DataClient for image/bio/link matching
+    let conferenceYear = ConferenceYear(rawValue: conference.year)
+    let knownSpeakers = conferenceYear.flatMap { try? DataClient.liveValue.fetchSpeakers($0) } ?? []
+    let speakerMap = Dictionary(
+      knownSpeakers.map { ($0.name, $0) }, uniquingKeysWith: { first, _ in first })
+
     // Group slots by start_time
     var schedulesByTime: [(time: Date, slots: [ScheduleSlot])] = []
     var currentTime: Date?
@@ -2798,25 +2821,31 @@ struct CfPRoutes: RouteCollection {
     let schedules = schedulesByTime.map { group -> TimetableExportSchedule in
       let sessions = group.slots.map { slot -> TimetableExportSession in
         if let proposal = slot.proposal {
+          let matched = speakerMap[proposal.speakerName]
+          let fallbackImageName =
+            proposal.speakerName.lowercased().replacingOccurrences(of: " ", with: "_")
           return TimetableExportSession(
             title: proposal.title,
-            titleJa: nil,
+            titleJa: proposal.titleJA,
             summary: String(proposal.abstract.prefix(200)),
-            summaryJa: nil,
+            summaryJa: proposal.abstractJA.map { String($0.prefix(200)) },
             speakers: [
               TimetableExportSpeaker(
                 name: proposal.speakerName,
-                imageName:
-                  proposal.speakerName.lowercased().replacingOccurrences(of: " ", with: "_"),
+                imageName: matched?.imageName ?? fallbackImageName,
                 bio: proposal.bio,
-                bioJa: nil,
-                links: []
+                bioJa: matched?.bioJa,
+                jobTitle: matched?.jobTitle,
+                jobTitleJa: matched?.jobTitleJa,
+                links: matched?.links?.map {
+                  TimetableExportLink(name: $0.name, url: $0.url.absoluteString)
+                } ?? []
               )
             ],
             place: slot.place,
             placeJa: slot.placeJa,
             description: proposal.abstract,
-            descriptionJa: nil
+            descriptionJa: proposal.abstractJA
           )
         } else {
           return TimetableExportSession(

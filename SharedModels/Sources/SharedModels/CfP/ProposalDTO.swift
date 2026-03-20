@@ -58,6 +58,10 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
   public let updatedAt: Date?
   /// GitHub username of the speaker
   public let githubUsername: String?
+  /// Japanese title (translated by organizer)
+  public let titleJA: String?
+  /// Japanese abstract (translated by organizer)
+  public let abstractJA: String?
   /// Workshop-specific details (only for workshop proposals)
   public let workshopDetails: WorkshopDetails?
   /// Co-instructors for workshop proposals (up to 2 additional instructors)
@@ -83,6 +87,8 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
     createdAt: Date? = nil,
     updatedAt: Date? = nil,
     githubUsername: String? = nil,
+    titleJA: String? = nil,
+    abstractJA: String? = nil,
     workshopDetails: WorkshopDetails? = nil,
     coInstructors: [CoInstructor]? = nil
   ) {
@@ -105,6 +111,8 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
     self.createdAt = createdAt
     self.updatedAt = updatedAt
     self.githubUsername = githubUsername
+    self.titleJA = titleJA
+    self.abstractJA = abstractJA
     self.workshopDetails = workshopDetails
     self.coInstructors = coInstructors
   }
@@ -123,6 +131,8 @@ public struct CreateProposalRequest: Codable, Sendable {
   public let bio: String
   public let iconURL: String?
   public let notes: String?
+  public let titleJA: String?
+  public let abstractJA: String?
   public let workshopDetails: WorkshopDetails?
   public let coInstructors: [CoInstructor]?
 
@@ -137,6 +147,8 @@ public struct CreateProposalRequest: Codable, Sendable {
     bio: String,
     iconURL: String? = nil,
     notes: String? = nil,
+    titleJA: String? = nil,
+    abstractJA: String? = nil,
     workshopDetails: WorkshopDetails? = nil,
     coInstructors: [CoInstructor]? = nil
   ) {
@@ -150,6 +162,8 @@ public struct CreateProposalRequest: Codable, Sendable {
     self.bio = bio
     self.iconURL = iconURL
     self.notes = notes
+    self.titleJA = titleJA
+    self.abstractJA = abstractJA
     self.workshopDetails = workshopDetails
     self.coInstructors = coInstructors
   }
@@ -166,6 +180,8 @@ public struct UpdateProposalRequest: Codable, Sendable {
   public let bio: String?
   public let iconURL: String?
   public let notes: String?
+  public let titleJA: String?
+  public let abstractJA: String?
   public let workshopDetails: WorkshopDetails?
   public let coInstructors: [CoInstructor]?
 
@@ -179,6 +195,8 @@ public struct UpdateProposalRequest: Codable, Sendable {
     bio: String? = nil,
     iconURL: String? = nil,
     notes: String? = nil,
+    titleJA: String? = nil,
+    abstractJA: String? = nil,
     workshopDetails: WorkshopDetails? = nil,
     coInstructors: [CoInstructor]? = nil
   ) {
@@ -191,6 +209,8 @@ public struct UpdateProposalRequest: Codable, Sendable {
     self.bio = bio
     self.iconURL = iconURL
     self.notes = notes
+    self.titleJA = titleJA
+    self.abstractJA = abstractJA
     self.workshopDetails = workshopDetails
     self.coInstructors = coInstructors
   }

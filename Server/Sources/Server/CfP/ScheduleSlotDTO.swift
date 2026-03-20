@@ -71,6 +71,8 @@ struct TimetableExportSpeaker: Codable, Sendable {
   let imageName: String
   let bio: String?
   let bioJa: String?
+  let jobTitle: String?
+  let jobTitleJa: String?
   let links: [TimetableExportLink]
 }
 

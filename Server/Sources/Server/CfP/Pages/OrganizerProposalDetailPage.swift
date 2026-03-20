@@ -136,6 +136,27 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
             }
           }
 
+          // Japanese translation card (if any)
+          if proposal.titleJA != nil || proposal.abstractJA != nil {
+            div(.class("card mb-4 border-info")) {
+              div(.class("card-header bg-info text-white")) {
+                strong { "Japanese Translation" }
+              }
+              div(.class("card-body")) {
+                if let titleJA = proposal.titleJA, !titleJA.isEmpty {
+                  h6(.class("fw-bold mb-2")) { "Title (Japanese)" }
+                  p(.class("mb-3")) { HTMLText(titleJA) }
+                }
+                if let abstractJA = proposal.abstractJA, !abstractJA.isEmpty {
+                  h6(.class("fw-bold mb-2")) { "Abstract (Japanese)" }
+                  p(.class("mb-0"), .style("white-space: pre-wrap;")) {
+                    HTMLText(abstractJA)
+                  }
+                }
+              }
+            }
+          }
+
           // Talk details card
           div(.class("card mb-4")) {
             div(.class("card-header")) {

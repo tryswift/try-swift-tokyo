@@ -16,12 +16,14 @@ let package = Package(
     .package(url: "https://github.com/vapor/jwt.git", from: "5.1.0"),
     .package(url: "https://github.com/vapor-community/vapor-elementary.git", from: "0.2.0"),
     .package(name: "SharedModels", path: "../SharedModels"),
+    .package(name: "DataClient", path: "../DataClient"),
   ],
   targets: [
     .executableTarget(
       name: "Server",
       dependencies: [
         .product(name: "SharedModels", package: "SharedModels"),
+        .product(name: "DataClient", package: "DataClient"),
         .product(name: "Vapor", package: "vapor"),
         .product(name: "Fluent", package: "fluent"),
         .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),

@@ -74,7 +74,9 @@ struct OrganizerNewProposalPageView: HTML, Sendable {
       input(.type(.hidden), .name("_csrf"), .value(csrfToken))
       conferenceField
       titleField
+      titleJAField
       abstractField
+      abstractJAField
       talkDetailsField
       durationField
       workshopFieldsSection
@@ -118,6 +120,24 @@ struct OrganizerNewProposalPageView: HTML, Sendable {
     }
   }
 
+  private var titleJAField: some HTML {
+    div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("titleJA")) {
+        "Title (Japanese)"
+      }
+      input(
+        .type(.text),
+        .class("form-control"),
+        .name("titleJA"),
+        .id("titleJA"),
+        .placeholder("日本語タイトル")
+      )
+      div(.class("form-text")) {
+        "Optional. Japanese translation of the title for the website and app."
+      }
+    }
+  }
+
   private var abstractField: some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("abstract")) {
@@ -133,6 +153,24 @@ struct OrganizerNewProposalPageView: HTML, Sendable {
       ) { "" }
       div(.class("form-text")) {
         "This will be shown to the audience if the talk is accepted."
+      }
+    }
+  }
+
+  private var abstractJAField: some HTML {
+    div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("abstractJA")) {
+        "Abstract (Japanese)"
+      }
+      textarea(
+        .class("form-control"),
+        .name("abstractJA"),
+        .id("abstractJA"),
+        .custom(name: "rows", value: "3"),
+        .placeholder("日本語アブストラクト")
+      ) { "" }
+      div(.class("form-text")) {
+        "Optional. Japanese translation of the abstract for the website and app."
       }
     }
   }
