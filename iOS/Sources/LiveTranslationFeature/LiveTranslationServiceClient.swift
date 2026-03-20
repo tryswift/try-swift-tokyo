@@ -57,16 +57,10 @@ extension LiveTranslationServiceClient: DependencyKey {
     return Self(
       connect: { interactionKey, dstLangCode in
         await MainActor.run {
-          if let existing = ref.store {
-            existing.connect()
-          } else {
-            let store = ChatAudienceStore(
-              interactionKey: interactionKey,
-              dstLangCode: dstLangCode
-            )
-            ref.store = store
-            store.connect()
+          if ref.store == nil {
+            ref.store = ChatAudienceStore()
           }
+          ref.store?.connect(interactionKey: interactionKey, dstLangCode: dstLangCode)
         }
       },
       disconnect: {
