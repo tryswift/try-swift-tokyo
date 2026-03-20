@@ -109,7 +109,7 @@ struct OrganizerWorkshopsPageView: HTML, Sendable {
         <td colspan="2">
           <form method="post" action="/organizer/workshops/\(ws.registrationID.uuidString)/luma-event" class="d-flex gap-1 align-items-center">
             <input type="hidden" name="_csrf" value="\(csrfToken)">
-            <input type="text" name="luma_event_id" value="\(escapeHTML(ws.lumaEventID ?? ""))" class="form-control form-control-sm" style="min-width: 160px;" placeholder="Luma Event ID">
+            <input type="text" name="luma_event_id" value="\(escapeHTML(ws.lumaEventID ?? ""))" class="form-control form-control-sm" style="min-width: 160px;" placeholder="Luma Event ID" aria-label="Luma Event ID">
             <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
         """
       if ws.lumaEventID == nil {

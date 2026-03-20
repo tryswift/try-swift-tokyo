@@ -672,6 +672,21 @@ struct WorkshopRoutes: RouteCollection {
     }
 
     let trimmed = form.luma_event_id.trimmingCharacters(in: .whitespacesAndNewlines)
+
+    if !trimmed.isEmpty {
+      let maxLength = 128
+      let allowedCharacters = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "-_"))
+      guard trimmed.count <= maxLength,
+        trimmed.unicodeScalars.allSatisfy({ allowedCharacters.contains($0) })
+      else {
+        throw Abort(
+          .badRequest,
+          reason:
+            "Invalid Luma event ID. Use only letters, numbers, '-' and '_', maximum \(maxLength) characters."
+        )
+      }
+    }
+
     registration.lumaEventID = trimmed.isEmpty ? nil : trimmed
     try await registration.save(on: req.db)
 
