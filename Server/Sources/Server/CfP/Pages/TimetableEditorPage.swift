@@ -755,9 +755,16 @@ struct TimetableEditorPageView: HTML, Sendable {
                     var timeEl = prevCard.querySelector('.slot-time');
                     if (timeEl) {
                       var prevEnd = timeEl.getAttribute('data-end');
-                      if (!prevEnd) { prevEnd = timeEl.getAttribute('data-start'); }
+                      var prevStart = timeEl.getAttribute('data-start');
+                      var prevSlotBtn = prevCard.querySelector('.edit-slot-btn');
+                      var prevSlotType = prevSlotBtn ? prevSlotBtn.getAttribute('data-slot-type') : '';
+                      var isPrevTalk = (prevSlotType === 'talk' || prevSlotType === 'lightning_talk');
                       if (prevEnd) {
-                        startTime = new Date(new Date(prevEnd).getTime() + BUFFER_MS).toISOString();
+                        startTime = isPrevTalk
+                          ? new Date(new Date(prevEnd).getTime() + BUFFER_MS).toISOString()
+                          : prevEnd;
+                      } else if (prevStart) {
+                        startTime = prevStart;
                       }
                     }
                   }
