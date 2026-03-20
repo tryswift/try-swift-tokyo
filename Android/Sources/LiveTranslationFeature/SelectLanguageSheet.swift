@@ -22,7 +22,7 @@ struct SelectLanguageSheet: View {
       }
       .navigationTitle("Select Language")
       #if os(iOS) || SKIP
-      .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
+        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
       #endif
     }
   }

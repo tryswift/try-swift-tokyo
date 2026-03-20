@@ -45,35 +45,35 @@ public struct LiveTranslationScreen: View {
       }
       .navigationTitle("Live Translation")
       #if os(iOS) || SKIP
-      .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
+        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
       #endif
       #if os(iOS) || SKIP
-      .toolbar {
-        if !viewModel.isConnected && !viewModel.roomNumber.isEmpty {
-          ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
-            Button {
-              viewModel.connect()
-            } label: {
-              Image(systemName: "arrow.trianglehead.2.clockwise")
+        .toolbar {
+          if !viewModel.isConnected && !viewModel.roomNumber.isEmpty {
+            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+              Button {
+                viewModel.connect()
+              } label: {
+                Image(systemName: "arrow.trianglehead.2.clockwise")
+              }
+            }
+          }
+          ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+            HStack {
+              Button {
+                viewModel.isShowingSpeedControl = !viewModel.isShowingSpeedControl
+              } label: {
+                Image(systemName: "speedometer")
+              }
+              Button {
+                viewModel.isShowingLanguageSheet = true
+              } label: {
+                Text(viewModel.selectedLangTitle)
+                Image(systemName: "globe")
+              }
             }
           }
         }
-        ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-          HStack {
-            Button {
-              viewModel.isShowingSpeedControl = !viewModel.isShowingSpeedControl
-            } label: {
-              Image(systemName: "speedometer")
-            }
-            Button {
-              viewModel.isShowingLanguageSheet = true
-            } label: {
-              Text(viewModel.selectedLangTitle)
-              Image(systemName: "globe")
-            }
-          }
-        }
-      }
       #endif
       .sheet(isPresented: $viewModel.isShowingLanguageSheet) {
         SelectLanguageSheet(
@@ -193,7 +193,7 @@ public struct LiveTranslationScreen: View {
 }
 
 #if !SKIP
-#Preview {
-  LiveTranslationScreen()
-}
+  #Preview {
+    LiveTranslationScreen()
+  }
 #endif

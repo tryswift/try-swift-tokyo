@@ -49,7 +49,7 @@ public struct SponsorsScreen: View {
 }
 
 #if !SKIP
-#Preview {
-  SponsorsScreen()
-}
+  #Preview {
+    SponsorsScreen()
+  }
 #endif
