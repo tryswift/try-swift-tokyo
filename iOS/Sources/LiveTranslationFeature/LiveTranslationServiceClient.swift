@@ -83,38 +83,38 @@ extension LiveTranslationServiceClient: DependencyKey {
             }
 
             func snapshot() -> StoreState {
-              StoreState(
-                isConnected: store.isConnected,
-                chatList: store.chatList,
-                supportLanguages: store.supportLanguages,
-                dstLangCode: store.dstLangCode,
-                roomTitle: store.roomTitle,
-                lastErrorMessage: store.lastErrorMessage
-              )
+              MainActor.assumeIsolated {
+                StoreState(
+                  isConnected: store.isConnected,
+                  chatList: store.chatList,
+                  supportLanguages: store.supportLanguages,
+                  dstLangCode: store.dstLangCode,
+                  roomTitle: store.roomTitle,
+                  lastErrorMessage: store.lastErrorMessage
+                )
+              }
             }
 
             continuation.yield(snapshot())
 
-            func observe() {
-              withObservationTracking {
-                _ = store.isConnected
-                _ = store.chatList
-                _ = store.supportLanguages
-                _ = store.dstLangCode
-                _ = store.roomTitle
-                _ = store.lastErrorMessage
-              } onChange: {
-                Task { @MainActor in
-                  guard !Task.isCancelled else {
-                    continuation.finish()
-                    return
+            while !Task.isCancelled {
+              await withCheckedContinuation { resume in
+                withObservationTracking {
+                  MainActor.assumeIsolated {
+                    _ = store.isConnected
+                    _ = store.chatList
+                    _ = store.supportLanguages
+                    _ = store.dstLangCode
+                    _ = store.roomTitle
+                    _ = store.lastErrorMessage
                   }
-                  continuation.yield(snapshot())
-                  observe()
+                } onChange: {
+                  resume.resume()
                 }
               }
+              continuation.yield(snapshot())
             }
-            observe()
+            continuation.finish()
           }
           continuation.onTermination = { _ in
             task.cancel()
