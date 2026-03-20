@@ -86,7 +86,10 @@ public struct LiveTranslation: Sendable {
         return .run { [state] send in
           await liveTranslationServiceClient.connect(
             state.roomNumber, state.selectedLangCode)
-        }
+          for await storeState in liveTranslationServiceClient.stateStream() {
+            await send(.storeStateUpdated(storeState))
+          }
+        }.cancellable(id: observationTaskId, cancelInFlight: true)
 
       case .view(.disconnectStream):
         return .merge(
