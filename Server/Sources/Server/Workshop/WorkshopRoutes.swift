@@ -49,6 +49,8 @@ struct WorkshopRoutes: RouteCollection {
     organizer.post("workshops", ":registrationID", "capacity", use: handleSetCapacity)
     organizer.post(
       "workshops", ":registrationID", "create-luma-event", use: handleCreateLumaEvent)
+    organizer.post(
+      "workshops", ":registrationID", "luma-event", use: handleSetLumaEvent)
     organizer.get("workshops", "applications", use: organizerApplicationsPage)
     organizer.post("workshops", "lottery", use: handleRunLottery)
     organizer.get("workshops", "results", use: organizerResultsPage)
@@ -647,6 +649,33 @@ struct WorkshopRoutes: RouteCollection {
     try await registration.save(on: req.db)
 
     return req.redirect(to: "/organizer/workshops?success=Luma event created: \(eventResponse.id)")
+  }
+
+  @Sendable
+  func handleSetLumaEvent(req: Request) async throws -> Response {
+    let user = try? await req.authenticatedUser()
+    guard let user, user.role == .admin else {
+      throw Abort(.forbidden)
+    }
+
+    guard let registrationID = req.parameters.get("registrationID", as: UUID.self) else {
+      throw Abort(.badRequest)
+    }
+
+    struct LumaEventForm: Content {
+      let luma_event_id: String
+    }
+    let form = try req.content.decode(LumaEventForm.self)
+
+    guard let registration = try await WorkshopRegistration.find(registrationID, on: req.db) else {
+      throw Abort(.notFound)
+    }
+
+    let trimmed = form.luma_event_id.trimmingCharacters(in: .whitespacesAndNewlines)
+    registration.lumaEventID = trimmed.isEmpty ? nil : trimmed
+    try await registration.save(on: req.db)
+
+    return req.redirect(to: "/organizer/workshops?success=Luma event ID updated")
   }
 
   @Sendable
