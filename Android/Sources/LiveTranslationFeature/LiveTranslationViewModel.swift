@@ -58,6 +58,8 @@ public final class LiveTranslationViewModel {
   #if SKIP
   private let scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
   private var chatJob: Job? = nil
+  private var connectionStateJob: Job? = nil
+  private var languagesJob: Job? = nil
   private var tts: TextToSpeech? = nil
   private var ttsReady: Bool = false
   #endif
@@ -72,15 +74,20 @@ public final class LiveTranslationViewModel {
 
   public func connect() {
     #if SKIP
+    // Guard against duplicate connections
+    if chatJob != nil { return }
+
     // Observe connection state
-    scope.launch {
+    connectionStateJob?.cancel()
+    connectionStateJob = scope.launch {
       ChatGuestSdk.isConnected.collectLatest { connected in
         self.isConnected = connected
       }
     }
 
     // Observe supported languages
-    scope.launch {
+    languagesJob?.cancel()
+    languagesJob = scope.launch {
       ChatGuestSdk.supportLanguages.collectLatest { languages in
         self.supportedLanguages = languages.map { lang in
           LanguageItem(langCode: lang.languageCode, langTitle: lang.languageLocal)
@@ -121,9 +128,15 @@ public final class LiveTranslationViewModel {
     #if SKIP
     chatJob?.cancel()
     chatJob = nil
+    connectionStateJob?.cancel()
+    connectionStateJob = nil
+    languagesJob?.cancel()
+    languagesJob = nil
+    tts?.stop()
     ChatGuestSdk.disconnectChat()
     #endif
     isConnected = false
+    speakingItemId = nil
   }
 
   public func selectLanguage(_ langCode: String, title: String) {
@@ -139,14 +152,19 @@ public final class LiveTranslationViewModel {
   public func speakText(_ text: String, itemId: String) {
     #if SKIP
     if tts == nil {
+      let textToSpeak = text
+      let itemIdToSpeak = itemId
       let context = ProcessInfo.processInfo.androidContext
       tts = TextToSpeech(context) { status in
         if status == TextToSpeech.SUCCESS {
           self.ttsReady = true
-          self.performSpeak(text, langCode: self.selectedLangCode, rate: self.speechRate)
+          self.speakingItemId = itemIdToSpeak
+          self.performSpeak(textToSpeak, langCode: self.selectedLangCode, rate: self.speechRate)
+        } else {
+          self.ttsReady = false
+          self.speakingItemId = nil
         }
       }
-      speakingItemId = itemId
     } else if ttsReady {
       speakingItemId = itemId
       performSpeak(text, langCode: selectedLangCode, rate: speechRate)
@@ -178,12 +196,18 @@ public final class LiveTranslationViewModel {
   private func performSpeak(_ text: String, langCode: String, rate: Double) {
     tts?.setLanguage(java.util.Locale(langCode))
     tts?.setSpeechRate(Float(rate))
-    tts?.speak(text, TextToSpeech.QUEUE_FLUSH, nil, nil)
 
-    // Listen for completion
-    tts?.setOnUtteranceCompletedListener { _ in
-      self.speakingItemId = nil
-    }
+    let utteranceId = "tts_\(System.currentTimeMillis())"
+    tts?.setOnUtteranceProgressListener(object : android.speech.tts.UtteranceProgressListener() {
+      override func onStart(_ id: String) {}
+      override func onDone(_ id: String) {
+        self.speakingItemId = nil
+      }
+      override func onError(_ id: String) {
+        self.speakingItemId = nil
+      }
+    })
+    tts?.speak(text, TextToSpeech.QUEUE_FLUSH, nil, utteranceId)
   }
 
   private func handleChatData(_ data: ChatDataEntity) {

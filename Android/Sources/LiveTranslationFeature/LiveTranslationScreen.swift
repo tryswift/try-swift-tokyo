@@ -41,6 +41,7 @@ public struct LiveTranslationScreen: View {
       }
       .onDisappear {
         viewModel.disconnect()
+        viewModel.cleanup()
       }
       .navigationTitle("Live Translation")
       #if os(iOS) || SKIP
