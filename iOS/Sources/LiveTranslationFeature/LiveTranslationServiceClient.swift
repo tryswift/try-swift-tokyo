@@ -2,6 +2,7 @@ import Dependencies
 import DependenciesMacros
 import Foundation
 import LiveTranslationSDK
+import Observation
 
 extension DependencyValues {
   public var liveTranslationServiceClient: LiveTranslationServiceClient {

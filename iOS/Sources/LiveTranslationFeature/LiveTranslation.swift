@@ -92,6 +92,7 @@ public struct LiveTranslation: Sendable {
         }.cancellable(id: observationTaskId, cancelInFlight: true)
 
       case .view(.disconnectStream):
+        state.isConnected = false
         return .merge(
           .cancel(id: observationTaskId),
           .run { _ in
