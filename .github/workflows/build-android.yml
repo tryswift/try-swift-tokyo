@@ -1,0 +1,48 @@
+name: Build Android
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "Android/**"
+      - "SharedModels/**"
+      - "DataClient/**"
+      - ".github/workflows/build-android.yml"
+  push:
+    paths:
+      - "Android/**"
+      - "SharedModels/**"
+      - "DataClient/**"
+      - ".github/workflows/build-android.yml"
+
+jobs:
+  build:
+    name: Build Android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "6.2"
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v5
+        with:
+          key: spm-android-${{ runner.os }}-swift-6.2-${{ hashFiles('Android/Package.resolved', 'Android/Package.swift') }}
+          restore-keys: spm-android-${{ runner.os }}-swift-6.2-
+          path: Android/.build
+
+      - name: Build
+        run: |
+          cd Android
+          swift build
