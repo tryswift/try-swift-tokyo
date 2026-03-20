@@ -87,23 +87,43 @@ extension LiveTranslationServiceClient: DependencyKey {
               return
             }
 
-            var lastState: StoreState?
-            while !Task.isCancelled {
-              let state = StoreState(
-                isConnected: store.isConnected,
-                chatList: store.chatList,
-                supportLanguages: store.supportLanguages,
-                dstLangCode: store.dstLangCode,
-                roomTitle: store.roomTitle,
-                lastErrorMessage: store.lastErrorMessage
-              )
-              if state != lastState {
-                continuation.yield(state)
-                lastState = state
+            @Sendable func snapshot() -> StoreState {
+              MainActor.assumeIsolated {
+                StoreState(
+                  isConnected: store.isConnected,
+                  chatList: store.chatList,
+                  supportLanguages: store.supportLanguages,
+                  dstLangCode: store.dstLangCode,
+                  roomTitle: store.roomTitle,
+                  lastErrorMessage: store.lastErrorMessage
+                )
               }
-              try? await Task.sleep(for: .milliseconds(250))
             }
-            continuation.finish()
+
+            continuation.yield(snapshot())
+
+            func observe() {
+              withObservationTracking {
+                MainActor.assumeIsolated {
+                  _ = store.isConnected
+                  _ = store.chatList
+                  _ = store.supportLanguages
+                  _ = store.dstLangCode
+                  _ = store.roomTitle
+                  _ = store.lastErrorMessage
+                }
+              } onChange: {
+                continuation.yield(snapshot())
+                Task { @MainActor in
+                  guard !Task.isCancelled else {
+                    continuation.finish()
+                    return
+                  }
+                  observe()
+                }
+              }
+            }
+            observe()
           }
           continuation.onTermination = { _ in
             task.cancel()
