@@ -6,6 +6,7 @@ Fetches guests with "Individual Sponsor" tickets from the Luma API,
 downloads their avatar images, and updates sponsor JSON + xcassets.
 """
 
+import argparse
 import json
 import os
 import re
@@ -244,6 +245,18 @@ def set_github_output(name, value):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Sync Individual Sponsors from Luma")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Fetch and analyze data without writing any files",
+    )
+    args = parser.parse_args()
+    dry_run = args.dry_run
+
+    if dry_run:
+        print("[DRY RUN] No files will be modified\n")
+
     print("Fetching Individual Sponsor guests from Luma...")
     luma_sponsors = fetch_individual_sponsors()
     print(f"Found {len(luma_sponsors)} Individual Sponsor registrations")
@@ -265,7 +278,8 @@ def main():
             continue
         if name_lower in existing_names:
             print(f"  Skipping (name exists): {s['name']}")
-            synced[guest_id] = {"name": s["name"], "status": "existing"}
+            if not dry_run:
+                synced[guest_id] = {"name": s["name"], "status": "existing"}
             continue
         if not s["name"]:
             print(f"  Skipping (no name): guest_id={guest_id}")
@@ -288,42 +302,51 @@ def main():
 
     if not new_sponsors:
         print("No new sponsors to add.")
-        set_github_output("has_changes", "false")
-        save_synced_guests(synced)
+        if not dry_run:
+            set_github_output("has_changes", "false")
+            save_synced_guests(synced)
         return
 
-    print(f"\nAdding {len(new_sponsors)} new sponsors:")
+    print(f"\nWould add {len(new_sponsors)} new sponsors:" if dry_run else f"\nAdding {len(new_sponsors)} new sponsors:")
     summary_lines = []
 
     for s in new_sponsors:
         print(f"  - {s['name']} (image_key: {s['image_key']})")
+        if s.get("social_link"):
+            print(f"    link: {s['social_link']}")
+        if s.get("icon_url"):
+            print(f"    icon: {s['icon_url']}")
+
         line = f"- **{s['name']}**"
         if s.get("social_link"):
             line += f" ({s['social_link']})"
 
-        try:
-            create_imageset(s["image_key"], s["icon_url"])
-            print(f"    Image downloaded successfully")
-        except Exception as e:
-            print(f"    ERROR downloading image: {e}", file=sys.stderr)
-            line += " (IMAGE DOWNLOAD FAILED)"
+        if not dry_run:
+            try:
+                create_imageset(s["image_key"], s["icon_url"])
+                print(f"    Image downloaded successfully")
+            except Exception as e:
+                print(f"    ERROR downloading image: {e}", file=sys.stderr)
+                line += " (IMAGE DOWNLOAD FAILED)"
 
         summary_lines.append(line)
-        synced[s["guest_id"]] = {
-            "name": s["name"],
-            "image_key": s["image_key"],
-            "status": "added",
-        }
+        if not dry_run:
+            synced[s["guest_id"]] = {
+                "name": s["name"],
+                "image_key": s["image_key"],
+                "status": "added",
+            }
 
-    update_sponsors_json(new_sponsors)
-    print("\nUpdated sponsor JSON files")
+    if not dry_run:
+        update_sponsors_json(new_sponsors)
+        print("\nUpdated sponsor JSON files")
 
-    save_synced_guests(synced)
+        save_synced_guests(synced)
 
-    set_github_output("has_changes", "true")
-    set_github_output("new_sponsors", "\n".join(summary_lines))
+        set_github_output("has_changes", "true")
+        set_github_output("new_sponsors", "\n".join(summary_lines))
 
-    print("\nSync complete!")
+    print("\n[DRY RUN] Complete! No files were modified." if dry_run else "\nSync complete!")
 
 
 if __name__ == "__main__":
