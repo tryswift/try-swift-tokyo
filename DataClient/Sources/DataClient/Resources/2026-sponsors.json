@@ -190,6 +190,12 @@
             "imageName": "Sponsor/2026/2026_goodnotes",
             "link": "https://www.goodnotes.com",
             "japanese_link": "https://www.goodnotes.com/jp"
+        },
+        {
+            "id": 6,
+            "name": "Wendy Labs Inc.",
+            "imageName": "Sponsor/2026/2026_wendy",
+            "link": "https://wendy.sh"
         }
     ],
     "individual": [
@@ -342,6 +348,18 @@
             "name": "alt9800",
             "imageName": "Individual/2026/2026_alt9800",
             "link": "https://x.com/alt9800"
+        },
+        {
+            "id": 26,
+            "name": "umakoz",
+            "imageName": "Individual/2026/2026_umakoz",
+            "link": "https://x.com/umakoz"
+        },
+        {
+            "id": 27,
+            "name": "jollyjoester",
+            "imageName": "Individual/2026/2026_jollyjoester",
+            "link": "https://x.com/jollyjoester"
         }
     ]
 }
