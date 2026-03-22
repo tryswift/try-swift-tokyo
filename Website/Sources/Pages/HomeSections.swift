@@ -12,6 +12,7 @@ enum HomeSectionType: String, CaseIterable {
   case workshop = "Workshop"
   case timetable = "Timetable"
   case sponsor = "Sponsor"
+  case communityEvents = "Community Events"
   case meetTheHosts = "Meet the Hosts"
   case meetTheOrganizers = "Meet the Organizers"
   case access = "Access"
@@ -45,7 +46,7 @@ extension HomeSectionType {
       ].contains(self)
     case .year2026:
       [
-        .about, .outline, .tickets, .cfp, .speaker, .workshop, .sponsor, .meetTheHosts,
+        .about, .outline, .tickets, .speaker, .workshop, .sponsor, .communityEvents, .meetTheHosts,
         .meetTheOrganizers, .access,
       ].contains(self)
     }
@@ -107,14 +108,6 @@ extension HomeSectionType {
           }
       }
 
-      if year == .year2026 {
-        Text(String("And more...!", language: language))
-          .horizontalAlignment(.center)
-          .font(.title3)
-          .foregroundStyle(.dimGray)
-          .margin(.top, .px(32))
-      }
-
       Alert {
         ForEach(speakers) { speaker in
           SpeakerModal(year: year, speaker: speaker, language: language)
@@ -129,15 +122,12 @@ extension HomeSectionType {
         .filter { $0.speakers?.isEmpty == false }
 
       WorkshopComponent(workshops: workshops, year: year, language: language)
-
-      Text(String("And more...!", language: language))
-        .horizontalAlignment(.center)
-        .font(.title3)
-        .foregroundStyle(.dimGray)
-        .margin(.top, .px(32))
     case .cfp:
       SectionHeader(type: self, language: language)
       CallForProposalComponent(language: language)
+    case .communityEvents:
+      SectionHeader(type: self, language: language)
+      CommunityEventsComponent(year: year, language: language)
     case .meetTheHosts:
       let hosts = try! dataClient.fetchOrganizers(year: year)
         .filter { [6, 11].contains($0.id) }
@@ -210,11 +200,6 @@ extension HomeSectionType {
           .horizontalAlignment(.center)
           .margin(.bottom, .px(96))
         }
-      }
-
-      if year == ConferenceYear.latest {
-        CallForSponsorsComponent(language: language)
-          .margin(.top, .px(32))
       }
     case .meetTheOrganizers:
       let organizers = try! dataClient.fetchOrganizers(year: year)

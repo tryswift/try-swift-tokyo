@@ -26,13 +26,15 @@ struct SectionListComponent: HTML {
 
     ForEach(dataSource) { sectionType in
       Section {
-        Text(String(sectionType.title, language: language))
-          .horizontalAlignment(.center)
-          .font(.title2)
-          .fontWeight(.bold)
-          .foregroundStyle(.bootstrapPurple)
-          .margin(.top, .px(80))
-          .margin(.bottom, .px(16))
+        if !sectionType.title.isEmpty {
+          Text(String(sectionType.title, language: language))
+            .horizontalAlignment(.center)
+            .font(.title2)
+            .fontWeight(.bold)
+            .foregroundStyle(.bootstrapPurple)
+            .margin(.top, .px(80))
+            .margin(.bottom, .px(16))
+        }
 
         let description = String(sectionType.description, language: language)
         Text(markdown: description)

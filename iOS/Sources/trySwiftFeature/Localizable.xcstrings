@@ -158,23 +158,6 @@
         }
       }
     },
-    "hero-text-past" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Developers from all over the world gathered<br>for tips and tricks and the latest case studies of development using Swift.<br>Thank you to all the speakers and attendees who participated!"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Swiftを使った開発のコツや最新の事例を求めて<br>世界中から開発者が集いました。<br>ご参加いただいたすべてのスピーカーと参加者の皆さまに感謝いたします！"
-          }
-        }
-      }
-    },
     "hero-text-2024" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -203,7 +186,7 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Swiftを使った開発のコツや最新の事例を求めて<br>世界中から開発者が集います。<br>日頃のSwiftの知識やスキルを披露し、協力しあうことを目的に、<br>2025年4月9日 - 11日の３日間開催します！"
           }
         }
@@ -222,6 +205,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Swiftを使った開発のコツや最新の事例を求めて<br>世界中から開発者が集います。<br>日頃のSwiftの知識やスキルを披露し、協力しあうことを目的に、<br>2026年4月12日 - 14日の３日間開催します！"
+          }
+        }
+      }
+    },
+    "hero-text-past" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Developers from all over the world gathered<br>for tips and tricks and the latest case studies of development using Swift.<br>Thank you to all the speakers and attendees who participated!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swiftを使った開発のコツや最新の事例を求めて<br>世界中から開発者が集いました。<br>ご参加いただいたすべてのスピーカーと参加者の皆さまに感謝いたします！"
           }
         }
       }
@@ -420,50 +420,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "会場周辺の宿泊施設情報"
-          }
-        }
-      }
-    },
-    "3-21-3 Shibuya, Shibuya-ku, Tokyo" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "東京都渋谷区渋谷3-21-3"
-          }
-        }
-      }
-    },
-    "Mar. 22nd - 24th, 2024" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "2024年3月22日（金） 〜 24日（日）"
-          }
-        }
-      }
-    },
-    "Shibuya Stream Hall" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "渋谷ストリームホール"
-          }
-        }
-      }
-    },
-    "Shibuya Stream Hall<br>3-21-3 Shibuya, Shibuya-ku, Tokyo" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "渋谷ストリームホール<br>東京都渋谷区渋谷3-21-3"
           }
         }
       }

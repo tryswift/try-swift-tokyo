@@ -41,10 +41,6 @@ struct SpeakerModal: HTML {
 }
 
 extension Speaker {
-  var imageFilename: String {
-    ImagePath.resolve(imageName)
-  }
-
   var modalId: String {
     name.replacingOccurrences(of: "'", with: "")
   }

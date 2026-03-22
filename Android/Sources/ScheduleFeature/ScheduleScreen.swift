@@ -33,7 +33,7 @@ public struct ScheduleScreen: View {
         SessionDetailView(session: session)
           .navigationTitle("Session")
           #if os(iOS) || SKIP
-          .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
+            .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
           #endif
       }
     }
@@ -90,7 +90,7 @@ public struct ScheduleScreen: View {
 }
 
 #if !SKIP
-#Preview {
-  ScheduleScreen()
-}
+  #Preview {
+    ScheduleScreen()
+  }
 #endif

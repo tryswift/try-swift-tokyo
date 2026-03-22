@@ -549,6 +549,15 @@ struct TimetableEditorPageView: HTML, Sendable {
             return match ? decodeURIComponent(match[1]) : '';
           }
 
+          // ============================================================
+          // Reload with active day preserved via URL hash
+          // ============================================================
+          function reloadWithDay() {
+            var activeDay = getActiveDay();
+            window.location.hash = 'day-' + activeDay;
+            window.location.reload();
+          }
+
           var conferenceId = '\(conference?.id.uuidString ?? "")';
           var dayDates = {\(dayDatesJSON)};
 
@@ -664,6 +673,20 @@ struct TimetableEditorPageView: HTML, Sendable {
           }
 
           // ============================================================
+          // Restore active tab from URL hash (e.g. #day-2)
+          // ============================================================
+          (function restoreTab() {
+            var hash = window.location.hash;
+            var match = hash.match(/^#day-(\\d+)$/);
+            if (!match) return;
+            var day = match[1];
+            var btn = document.getElementById('day-tab-' + day);
+            if (btn) {
+              btn.click();
+            }
+          })();
+
+          // ============================================================
           // API Helper
           // ============================================================
           function apiCall(url, method, body) {
@@ -721,18 +744,27 @@ struct TimetableEditorPageView: HTML, Sendable {
 
                   var slotType = (talkDuration === 'LT') ? 'lightning_talk' : 'talk';
 
+                  var BUFFER_MS = 5 * 60000; // 5 minutes
+                  var dropIndex = evt.newIndex;
                   var startTime = timeInputToISO('10:00', dayNum);
                   var slotCards = list.querySelectorAll('.slot-card');
-                  if (slotCards.length > 0) {
-                    var lastCard = slotCards[slotCards.length - 1];
-                    var timeEl = lastCard.querySelector('.slot-time');
+
+                  if (dropIndex > 0 && slotCards.length > 0) {
+                    var prevIndex = Math.min(dropIndex - 1, slotCards.length - 1);
+                    var prevCard = slotCards[prevIndex];
+                    var timeEl = prevCard.querySelector('.slot-time');
                     if (timeEl) {
-                      var lastEnd = timeEl.getAttribute('data-end');
-                      if (!lastEnd) {
-                        lastEnd = timeEl.getAttribute('data-start');
-                      }
-                      if (lastEnd) {
-                        startTime = lastEnd;
+                      var prevEnd = timeEl.getAttribute('data-end');
+                      var prevStart = timeEl.getAttribute('data-start');
+                      var prevSlotBtn = prevCard.querySelector('.edit-slot-btn');
+                      var prevSlotType = prevSlotBtn ? prevSlotBtn.getAttribute('data-slot-type') : '';
+                      var isPrevTalk = (prevSlotType === 'talk' || prevSlotType === 'lightning_talk');
+                      if (prevEnd) {
+                        startTime = isPrevTalk
+                          ? new Date(new Date(prevEnd).getTime() + BUFFER_MS).toISOString()
+                          : prevEnd;
+                      } else if (prevStart) {
+                        startTime = prevStart;
                       }
                     }
                   }
@@ -751,10 +783,10 @@ struct TimetableEditorPageView: HTML, Sendable {
                     slotType: slotType,
                     place: null
                   }).then(function() {
-                    location.reload();
+                    reloadWithDay();
                   }).catch(function(err) {
                     alert('Failed to create slot: ' + err.message);
-                    location.reload();
+                    reloadWithDay();
                   });
                 }
               }
@@ -796,7 +828,7 @@ struct TimetableEditorPageView: HTML, Sendable {
               apiCall('/organizer/timetable/api/reorder', 'POST', reorderData)
                 .catch(function(err) {
                   alert('Failed to reorder: ' + err.message);
-                  location.reload();
+                  reloadWithDay();
                 });
             }
           }
@@ -813,7 +845,7 @@ struct TimetableEditorPageView: HTML, Sendable {
 
             apiCall('/organizer/timetable/api/slots/' + slotId + '/delete', 'POST', {})
               .then(function() {
-                location.reload();
+                reloadWithDay();
               })
               .catch(function(err) {
                 alert('Failed to delete slot: ' + err.message);
@@ -881,7 +913,7 @@ struct TimetableEditorPageView: HTML, Sendable {
 
             apiCall('/organizer/timetable/api/slots/' + slotId, 'POST', body)
               .then(function() {
-                location.reload();
+                reloadWithDay();
               })
               .catch(function(err) {
                 alert('Failed to update slot: ' + err.message);
@@ -919,7 +951,7 @@ struct TimetableEditorPageView: HTML, Sendable {
 
             apiCall('/organizer/timetable/api/slots', 'POST', body)
               .then(function() {
-                location.reload();
+                reloadWithDay();
               })
               .catch(function(err) {
                 alert('Failed to create slot: ' + err.message);

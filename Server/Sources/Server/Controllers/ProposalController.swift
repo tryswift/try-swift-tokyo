@@ -23,6 +23,8 @@ struct ProposalDTOContent: Content {
   let status: String
   let createdAt: Date?
   let updatedAt: Date?
+  let workshopDetails: WorkshopDetails?
+  let coInstructors: [CoInstructor]?
 
   init(from dto: ProposalDTO) {
     self.id = dto.id
@@ -43,6 +45,8 @@ struct ProposalDTOContent: Content {
     self.status = dto.status.rawValue
     self.createdAt = dto.createdAt
     self.updatedAt = dto.updatedAt
+    self.workshopDetails = dto.workshopDetails
+    self.coInstructors = dto.coInstructors
   }
 }
 
@@ -58,11 +62,14 @@ struct CreateProposalRequestContent: Content {
   let bio: String
   let iconURL: String?
   let notes: String?
+  let workshopDetails: WorkshopDetails?
+  let coInstructors: [CoInstructor]?
 
   func toRequest(defaultConferencePath: String, userRole: UserRole) throws -> CreateProposalRequest
   {
     guard let duration = TalkDuration(rawValue: talkDuration) else {
-      throw Abort(.badRequest, reason: "Invalid talk duration. Use '20min', 'LT', or 'invited'")
+      throw Abort(
+        .badRequest, reason: "Invalid talk duration. Use '20min', 'LT', 'workshop', or 'invited'")
     }
 
     // Validate that only invited speakers can submit invited talks
@@ -80,7 +87,9 @@ struct CreateProposalRequestContent: Content {
       speakerEmail: speakerEmail,
       bio: bio,
       iconURL: iconURL,
-      notes: notes
+      notes: notes,
+      workshopDetails: workshopDetails,
+      coInstructors: coInstructors
     )
   }
 }

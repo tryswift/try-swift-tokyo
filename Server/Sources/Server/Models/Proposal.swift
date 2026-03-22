@@ -25,7 +25,7 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @Field(key: "talk_detail")
   var talkDetail: String
 
-  /// Talk duration (20min or LT)
+  /// Proposal type (20min, LT, workshop, or invited)
   @Field(key: "talk_duration")
   var talkDuration: TalkDuration
 
@@ -57,6 +57,21 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @OptionalField(key: "papercall_username")
   var paperCallUsername: String?
 
+  /// GitHub username entered by the speaker at submission time (may differ from the
+  /// authenticated User username or PaperCall username)
+  @OptionalField(key: "github_username")
+  var githubUsername: String?
+
+  /// Workshop-specific details (JSON, only populated for workshop proposals)
+  @OptionalField(key: "workshop_details")
+  var workshopDetails: WorkshopDetails?
+
+  /// Co-instructors for workshop proposals (JSON array, up to 2 additional instructors)
+  /// Wrapped in `CoInstructorList` so Fluent encodes a single JSONB value
+  /// instead of a PostgreSQL `jsonb[]` array.
+  @OptionalField(key: "co_instructors")
+  var coInstructors: CoInstructorList?
+
   /// Proposal review status
   @Field(key: "status")
   var status: ProposalStatus
@@ -87,7 +102,10 @@ final class Proposal: Model, Content, @unchecked Sendable {
     iconURL: String? = nil,
     notes: String? = nil,
     speakerID: UUID,
-    status: ProposalStatus = .submitted
+    status: ProposalStatus = .submitted,
+    githubUsername: String? = nil,
+    workshopDetails: WorkshopDetails? = nil,
+    coInstructors: [CoInstructor]? = nil
   ) {
     self.id = id
     self.$conference.id = conferenceID
@@ -102,6 +120,9 @@ final class Proposal: Model, Content, @unchecked Sendable {
     self.notes = notes
     self.$speaker.id = speakerID
     self.status = status
+    self.githubUsername = githubUsername
+    self.workshopDetails = workshopDetails
+    self.coInstructors = coInstructors.map(CoInstructorList.init)
   }
 
   /// Convert to DTO for API responses
@@ -130,7 +151,10 @@ final class Proposal: Model, Content, @unchecked Sendable {
       speakerUsername: speakerUsername,
       status: status,
       createdAt: createdAt,
-      updatedAt: updatedAt
+      updatedAt: updatedAt,
+      githubUsername: githubUsername,
+      workshopDetails: workshopDetails,
+      coInstructors: coInstructors?.items
     )
   }
 }

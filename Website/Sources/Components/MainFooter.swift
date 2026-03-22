@@ -26,7 +26,7 @@ struct MainFooter: HTML {
       Text {
         InlineForEach(ConferenceYear.allCases.filter { $0 != year }) { year in
           Link(
-            String("\(year.rawValue)", language: language),
+            String(year.rawValue),
             target: Home(year: year, language: language)
           )
           .role(.light)

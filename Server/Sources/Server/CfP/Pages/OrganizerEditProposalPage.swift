@@ -98,6 +98,8 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
       abstractField(value: proposal.abstract)
       talkDetailsField(value: proposal.talkDetail)
       durationField(selected: proposal.talkDuration)
+      workshopFieldsSection(proposal: proposal)
+      coInstructorFieldsSection(proposal: proposal)
       speakerInfoSection(proposal: proposal)
       notesField(value: proposal.notes)
       submitButton
@@ -187,12 +189,12 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
   private func durationField(selected: TalkDuration) -> some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("talkDuration")) {
-        "Talk Duration *"
+        "Type *"
       }
       select(
         .class("form-select"), .name("talkDuration"), .id("talkDuration"), .required
       ) {
-        option(.value("")) { "Choose duration..." }
+        option(.value("")) { "Choose type..." }
         for duration in TalkDuration.allCases {
           if duration == selected {
             option(.value(duration.rawValue), .selected) {
@@ -205,6 +207,386 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
           }
         }
       }
+    }
+  }
+
+  // MARK: - Workshop Fields
+
+  @HTMLBuilder
+  private func workshopFieldsSection(proposal: ProposalDTO) -> some HTML {
+    let isWorkshop = proposal.talkDuration == .workshop
+    let details = proposal.workshopDetails
+
+    HTMLRaw(
+      """
+      <div id="workshopFields" style="display: \(isWorkshop ? "block" : "none");">
+      """)
+    div(.class("card bg-light mb-4")) {
+      div(.class("card-body")) {
+        h5(.class("card-title mb-3")) { "Workshop Details" }
+
+        // Language
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold")) { "Language *" }
+          div {
+            for lang in WorkshopLanguage.allCases {
+              div(.class("form-check form-check-inline")) {
+                if lang == details?.language {
+                  input(
+                    .type(.radio), .class("form-check-input"),
+                    .name("workshop_language"),
+                    .id("workshop_language_\(lang.rawValue)"),
+                    .value(lang.rawValue),
+                    .custom(name: "data-workshop-required", value: "true"),
+                    .checked
+                  )
+                } else {
+                  input(
+                    .type(.radio), .class("form-check-input"),
+                    .name("workshop_language"),
+                    .id("workshop_language_\(lang.rawValue)"),
+                    .value(lang.rawValue),
+                    .custom(name: "data-workshop-required", value: "true")
+                  )
+                }
+                label(
+                  .class("form-check-label"), .for("workshop_language_\(lang.rawValue)")
+                ) {
+                  HTMLText(lang.displayName)
+                }
+              }
+            }
+          }
+        }
+
+        // Number of Tutors
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_numberOfTutors")) {
+            "Number of Tutors *"
+          }
+          input(
+            .type(.number), .class("form-control"),
+            .name("workshop_numberOfTutors"),
+            .id("workshop_numberOfTutors"),
+            .custom(name: "min", value: "0"),
+            .custom(name: "data-workshop-required", value: "true"),
+            .value(details.map { "\($0.numberOfTutors)" } ?? "")
+          )
+        }
+
+        // Key Takeaways
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_keyTakeaways")) {
+            "Key Takeaways *"
+          }
+          textarea(
+            .class("form-control"), .name("workshop_keyTakeaways"),
+            .id("workshop_keyTakeaways"),
+            .custom(name: "rows", value: "3"),
+            .custom(name: "data-workshop-required", value: "true")
+          ) { HTMLText(details?.keyTakeaways ?? "") }
+        }
+
+        // Prerequisites
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_prerequisites")) {
+            "Prerequisites"
+          }
+          input(
+            .type(.text), .class("form-control"),
+            .name("workshop_prerequisites"), .id("workshop_prerequisites"),
+            .value(details?.prerequisites ?? "")
+          )
+        }
+
+        // Agenda & Schedule
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_agendaSchedule")) {
+            "Agenda & Schedule *"
+          }
+          textarea(
+            .class("form-control"), .name("workshop_agendaSchedule"),
+            .id("workshop_agendaSchedule"),
+            .custom(name: "rows", value: "4"),
+            .custom(name: "data-workshop-required", value: "true")
+          ) { HTMLText(details?.agendaSchedule ?? "") }
+        }
+
+        // Participant Requirements
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_participantRequirements")) {
+            "What Participants Need to Bring *"
+          }
+          textarea(
+            .class("form-control"), .name("workshop_participantRequirements"),
+            .id("workshop_participantRequirements"),
+            .custom(name: "rows", value: "2"),
+            .custom(name: "data-workshop-required", value: "true")
+          ) { HTMLText(details?.participantRequirements ?? "") }
+        }
+
+        // Required Software
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_requiredSoftware")) {
+            "Required Tools / Software to Install in Advance"
+          }
+          textarea(
+            .class("form-control"), .name("workshop_requiredSoftware"),
+            .id("workshop_requiredSoftware"),
+            .custom(name: "rows", value: "2")
+          ) { HTMLText(details?.requiredSoftware ?? "") }
+        }
+
+        // Network Requirements
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_networkRequirements")) {
+            "Network Requirements *"
+          }
+          textarea(
+            .class("form-control"), .name("workshop_networkRequirements"),
+            .id("workshop_networkRequirements"),
+            .custom(name: "rows", value: "2"),
+            .custom(name: "data-workshop-required", value: "true")
+          ) { HTMLText(details?.networkRequirements ?? "") }
+        }
+
+        // Facilities
+        workshopFacilitiesField(
+          selected: details?.requiredFacilities ?? [],
+          otherValue: details?.facilityOther
+        )
+
+        // Motivation
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_motivation")) {
+            "Motivation *"
+          }
+          textarea(
+            .class("form-control"), .name("workshop_motivation"),
+            .id("workshop_motivation"),
+            .custom(name: "rows", value: "3"),
+            .custom(name: "data-workshop-required", value: "true")
+          ) { HTMLText(details?.motivation ?? "") }
+        }
+
+        // Uniqueness
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_uniqueness")) {
+            "Uniqueness *"
+          }
+          textarea(
+            .class("form-control"), .name("workshop_uniqueness"),
+            .id("workshop_uniqueness"),
+            .custom(name: "rows", value: "3"),
+            .custom(name: "data-workshop-required", value: "true")
+          ) { HTMLText(details?.uniqueness ?? "") }
+        }
+
+        // Potential Risks
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_potentialRisks")) {
+            "Potential Risks or Concerns"
+          }
+          textarea(
+            .class("form-control"), .name("workshop_potentialRisks"),
+            .id("workshop_potentialRisks"),
+            .custom(name: "rows", value: "2")
+          ) { HTMLText(details?.potentialRisks ?? "") }
+        }
+      }
+    }
+    HTMLRaw("</div>")
+  }
+
+  private func workshopFacilitiesField(
+    selected: [FacilityRequirement], otherValue: String?
+  ) -> some HTML {
+    div(.class("mb-3")) {
+      label(.class("form-label fw-semibold")) {
+        "Required Facilities / Equipment"
+      }
+      div {
+        for facility in FacilityRequirement.allCases {
+          div(.class("form-check")) {
+            if selected.contains(facility) {
+              input(
+                .type(.checkbox), .class("form-check-input"),
+                .name("workshop_requiredFacilities"),
+                .id("facility_\(facility.rawValue)"),
+                .value(facility.rawValue), .checked
+              )
+            } else {
+              input(
+                .type(.checkbox), .class("form-check-input"),
+                .name("workshop_requiredFacilities"),
+                .id("facility_\(facility.rawValue)"),
+                .value(facility.rawValue)
+              )
+            }
+            label(.class("form-check-label"), .for("facility_\(facility.rawValue)")) {
+              HTMLText(facility.displayName)
+            }
+          }
+        }
+        div(.class("form-check")) {
+          if otherValue != nil {
+            input(
+              .type(.checkbox), .class("form-check-input"),
+              .name("workshop_hasFacilityOther"), .id("facility_other_check"),
+              .value("true"), .checked,
+              .custom(name: "onchange", value: "toggleFacilityOther(this.checked)")
+            )
+          } else {
+            input(
+              .type(.checkbox), .class("form-check-input"),
+              .name("workshop_hasFacilityOther"), .id("facility_other_check"),
+              .value("true"),
+              .custom(name: "onchange", value: "toggleFacilityOther(this.checked)")
+            )
+          }
+          label(.class("form-check-label"), .for("facility_other_check")) { "Other" }
+        }
+        input(
+          .type(.text), .class("form-control mt-2"),
+          .name("workshop_facilityOther"), .id("workshop_facilityOther"),
+          .style(otherValue != nil ? "" : "display: none;"),
+          .value(otherValue ?? "")
+        )
+      }
+    }
+  }
+
+  // MARK: - Co-Instructor Fields
+
+  @HTMLBuilder
+  private func coInstructorFieldsSection(proposal: ProposalDTO) -> some HTML {
+    let isWorkshop = proposal.talkDuration == .workshop
+    let instructors = proposal.coInstructors ?? []
+    let hasInstructor3 = instructors.count >= 2
+
+    HTMLRaw(
+      """
+      <div id="coInstructorFields" style="display: \(isWorkshop ? "block" : "none");">
+      """)
+    div(.class("card bg-light mb-4")) {
+      div(.class("card-body")) {
+        h5(.class("card-title mb-3")) { "Co-Instructors" }
+        p(.class("text-muted small mb-3")) {
+          "You can register up to 3 instructors for a workshop (including the main speaker)."
+        }
+
+        coInstructorBlock(
+          index: 2, instructor: instructors.count >= 1 ? instructors[0] : nil)
+
+        HTMLRaw(
+          """
+          <div id="coInstructor3Block" style="display: \(hasInstructor3 ? "block" : "none");">
+          """)
+        coInstructorBlock(
+          index: 3, instructor: instructors.count >= 2 ? instructors[1] : nil)
+        HTMLRaw("</div>")
+
+        HTMLRaw(
+          """
+          <div class="d-flex gap-2 mt-3">
+            <button type="button" class="btn btn-outline-secondary btn-sm" id="addInstructor3Btn" style="display: \(hasInstructor3 ? "none" : "inline-block");" onclick="showInstructor3()">
+          """)
+        HTMLText("+ Add Instructor 3")
+        HTMLRaw(
+          """
+            </button>
+            <button type="button" class="btn btn-outline-danger btn-sm" id="removeInstructor3Btn" style="display: \(hasInstructor3 ? "inline-block" : "none");" onclick="hideInstructor3()">
+          """)
+        HTMLText("Remove Instructor 3")
+        HTMLRaw(
+          """
+            </button>
+          </div>
+          """)
+      }
+    }
+    HTMLRaw("</div>")
+  }
+
+  private func coInstructorBlock(index: Int, instructor: CoInstructor?) -> some HTML {
+    let prefix = "coInstructor\(index)"
+    let labelPrefix = "Instructor \(index)"
+
+    return div(.class("border rounded p-3 mb-3")) {
+      h6(.class("fw-semibold mb-3")) { HTMLText(labelPrefix) }
+
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("\(prefix)_githubUsername")) {
+          HTMLText("\(labelPrefix): GitHub *")
+        }
+        div(.class("input-group")) {
+          input(
+            .type(.text), .class("form-control"),
+            .name("\(prefix)_githubUsername"),
+            .id("\(prefix)_githubUsername"),
+            .value(instructor?.githubUsername ?? ""),
+            .placeholder("GitHub username")
+          )
+          HTMLRaw(
+            """
+            <button class="btn btn-outline-primary" type="button" onclick="lookupCoInstructor(\(index))">Lookup</button>
+            """)
+        }
+        HTMLRaw(
+          """
+          <div id="\(prefix)_lookupStatus" class="form-text"></div>
+          """)
+      }
+
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("\(prefix)_name")) {
+          HTMLText("\(labelPrefix): Name *")
+        }
+        input(
+          .type(.text), .class("form-control"),
+          .name("\(prefix)_name"), .id("\(prefix)_name"),
+          .value(instructor?.name ?? "")
+        )
+      }
+
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("\(prefix)_email")) {
+          HTMLText("\(labelPrefix): Email *")
+        }
+        input(
+          .type(.email), .class("form-control"),
+          .name("\(prefix)_email"), .id("\(prefix)_email"),
+          .value(instructor?.email ?? "")
+        )
+      }
+
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("\(prefix)_sns")) {
+          HTMLText("\(labelPrefix): SNS")
+        }
+        input(
+          .type(.text), .class("form-control"),
+          .name("\(prefix)_sns"), .id("\(prefix)_sns"),
+          .value(instructor?.sns ?? "")
+        )
+      }
+
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("\(prefix)_bio")) {
+          HTMLText("\(labelPrefix): Short Bio *")
+        }
+        textarea(
+          .class("form-control"),
+          .name("\(prefix)_bio"), .id("\(prefix)_bio"),
+          .custom(name: "rows", value: "2")
+        ) { HTMLText(instructor?.bio ?? "") }
+      }
+
+      input(
+        .type(.hidden),
+        .name("\(prefix)_iconUrl"), .id("\(prefix)_iconUrl"),
+        .value(instructor?.iconURL ?? "")
+      )
     }
   }
 
@@ -433,10 +815,68 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
       """
       <script>
         function updateIconPreview(url) {
-          const preview = document.getElementById('iconPreview');
-          if (url && url.trim() !== '') {
-            preview.src = url;
+          var preview = document.getElementById('iconPreview');
+          if (preview && url && url.trim() !== '') { preview.src = url; }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+          var typeSelect = document.getElementById('talkDuration');
+          if (typeSelect) {
+            typeSelect.addEventListener('change', function() {
+              toggleWorkshopFields(this.value === 'workshop');
+            });
           }
+        });
+        function toggleWorkshopFields(show) {
+          var workshopFields = document.getElementById('workshopFields');
+          var coInstructorFields = document.getElementById('coInstructorFields');
+          if (workshopFields) {
+            workshopFields.style.display = show ? 'block' : 'none';
+            workshopFields.querySelectorAll('[data-workshop-required]').forEach(function(el) {
+              if (show) { el.setAttribute('required', ''); } else { el.removeAttribute('required'); }
+            });
+          }
+          if (coInstructorFields) { coInstructorFields.style.display = show ? 'block' : 'none'; }
+        }
+        function showInstructor3() {
+          document.getElementById('coInstructor3Block').style.display = 'block';
+          document.getElementById('addInstructor3Btn').style.display = 'none';
+          document.getElementById('removeInstructor3Btn').style.display = 'inline-block';
+        }
+        function hideInstructor3() {
+          document.getElementById('coInstructor3Block').style.display = 'none';
+          document.getElementById('addInstructor3Btn').style.display = 'inline-block';
+          document.getElementById('removeInstructor3Btn').style.display = 'none';
+          ['_githubUsername', '_name', '_email', '_sns', '_bio', '_iconUrl'].forEach(function(suffix) {
+            var el = document.getElementById('coInstructor3' + suffix);
+            if (el) el.value = '';
+          });
+        }
+        function toggleFacilityOther(show) {
+          document.getElementById('workshop_facilityOther').style.display = show ? 'block' : 'none';
+        }
+        async function lookupCoInstructor(index) {
+          var prefix = 'coInstructor' + index;
+          var usernameField = document.getElementById(prefix + '_githubUsername');
+          var statusDiv = document.getElementById(prefix + '_lookupStatus');
+          var username = usernameField ? usernameField.value.trim() : '';
+          if (!username) { statusDiv.innerHTML = '<span class="text-danger">Please enter a GitHub username.</span>'; return; }
+          statusDiv.innerHTML = '<span class="text-muted">Looking up...</span>';
+          try {
+            var response = await fetch('/api/user-lookup/' + encodeURIComponent(username));
+            if (response.ok) {
+              var data = await response.json();
+              if (data.name) document.getElementById(prefix + '_name').value = data.name;
+              if (data.email) document.getElementById(prefix + '_email').value = data.email;
+              if (data.bio) document.getElementById(prefix + '_bio').value = data.bio;
+              if (data.avatarURL) document.getElementById(prefix + '_iconUrl').value = data.avatarURL;
+              statusDiv.innerHTML = '<span class="text-success">User found! Info pre-filled.</span>';
+            } else if (response.status === 404) {
+              document.getElementById(prefix + '_iconUrl').value = 'https://github.com/' + username + '.png';
+              statusDiv.innerHTML = '<span class="text-warning">User not found. Please fill in manually.</span>';
+            } else {
+              statusDiv.innerHTML = '<span class="text-danger">Lookup failed.</span>';
+            }
+          } catch (e) { statusDiv.innerHTML = '<span class="text-danger">Lookup error.</span>'; }
         }
       </script>
       """)

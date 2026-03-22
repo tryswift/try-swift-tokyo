@@ -23,7 +23,7 @@ struct CfPNavigation: HTML, Sendable {
           .href(language.path(for: "/"))
         ) {
           img(
-            .src("/images/riko.png"),
+            .src("/cfp/images/riko.png"),
             .alt("Riko"),
             .class("me-2"),
             .style("height: 28px; width: 28px;")
@@ -57,6 +57,11 @@ struct CfPNavigation: HTML, Sendable {
                 language == .ja ? "応募する" : "Submit"
               }
             }
+            li(.class("nav-item")) {
+              a(.class("nav-link text-white"), .href(language.path(for: "/workshops"))) {
+                language == .ja ? "ワークショップ" : "Workshops"
+              }
+            }
 
             if let user {
               li(.class("nav-item")) {
@@ -73,6 +78,11 @@ struct CfPNavigation: HTML, Sendable {
                 li(.class("nav-item")) {
                   a(.class("nav-link text-info fw-bold"), .href("/organizer/timetable")) {
                     "📅 Timetable"
+                  }
+                }
+                li(.class("nav-item")) {
+                  a(.class("nav-link text-success fw-bold"), .href("/organizer/workshops")) {
+                    "🎓 Workshops"
                   }
                 }
               }

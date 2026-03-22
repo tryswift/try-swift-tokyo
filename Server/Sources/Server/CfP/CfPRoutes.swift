@@ -31,6 +31,9 @@ struct CfPRoutes: RouteCollection {
     csrf.post("submit", use: handleSubmitProposal)
     csrf.get("logout", use: logout)
 
+    // User lookup API (for co-instructor prefill)
+    csrf.get("api", "user-lookup", ":username", use: lookupUserByGitHubUsername)
+
     // Japanese routes
     let ja = csrf.grouped("ja")
     ja.get(use: homePageJa)
@@ -467,11 +470,39 @@ struct CfPRoutes: RouteCollection {
       var abstract: String
       var talkDetails: String
       var talkDuration: String
+      var githubUsername: String
       var speakerName: String
       var speakerEmail: String
       var bio: String
       var iconUrl: String
       var notesToOrganizers: String?
+      // Workshop fields
+      var workshop_language: String?
+      var workshop_numberOfTutors: String?
+      var workshop_keyTakeaways: String?
+      var workshop_prerequisites: String?
+      var workshop_agendaSchedule: String?
+      var workshop_participantRequirements: String?
+      var workshop_requiredSoftware: String?
+      var workshop_networkRequirements: String?
+      var workshop_requiredFacilities: [String]?
+      var workshop_facilityOther: String?
+      var workshop_motivation: String?
+      var workshop_uniqueness: String?
+      var workshop_potentialRisks: String?
+      // Co-instructor fields
+      var coInstructor2_githubUsername: String?
+      var coInstructor2_name: String?
+      var coInstructor2_email: String?
+      var coInstructor2_sns: String?
+      var coInstructor2_bio: String?
+      var coInstructor2_iconUrl: String?
+      var coInstructor3_githubUsername: String?
+      var coInstructor3_name: String?
+      var coInstructor3_email: String?
+      var coInstructor3_sns: String?
+      var coInstructor3_bio: String?
+      var coInstructor3_iconUrl: String?
     }
 
     let formData: ProposalFormData
@@ -486,83 +517,200 @@ struct CfPRoutes: RouteCollection {
       )
     }
 
-    // Validate
+    // Validate basic fields
+    let githubUsername = formData.githubUsername.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !githubUsername.isEmpty else {
+      return try await renderSubmitPageWithError(
+        req: req, user: user,
+        error: language == .ja ? "GitHub IDは必須です" : "GitHub ID is required",
+        language: language)
+    }
     guard !formData.title.isEmpty else {
       return try await renderSubmitPageWithError(
-        req: req,
-        user: user,
+        req: req, user: user,
         error: language == .ja ? "タイトルは必須です" : "Title is required",
-        language: language
-      )
+        language: language)
     }
     guard !formData.abstract.isEmpty else {
       return try await renderSubmitPageWithError(
-        req: req,
-        user: user,
+        req: req, user: user,
         error: language == .ja ? "概要は必須です" : "Abstract is required",
-        language: language
-      )
+        language: language)
     }
     guard !formData.talkDetails.isEmpty else {
       return try await renderSubmitPageWithError(
-        req: req,
-        user: user,
+        req: req, user: user,
         error: language == .ja ? "トークの詳細は必須です" : "Talk details are required",
-        language: language
-      )
+        language: language)
     }
     guard !formData.speakerName.isEmpty else {
       return try await renderSubmitPageWithError(
-        req: req,
-        user: user,
+        req: req, user: user,
         error: language == .ja ? "スピーカー名は必須です" : "Speaker name is required",
-        language: language
-      )
+        language: language)
     }
     guard !formData.speakerEmail.isEmpty else {
       return try await renderSubmitPageWithError(
-        req: req,
-        user: user,
+        req: req, user: user,
         error: language == .ja ? "スピーカーメールは必須です" : "Speaker email is required",
-        language: language
-      )
+        language: language)
     }
     guard !formData.bio.isEmpty else {
       return try await renderSubmitPageWithError(
-        req: req,
-        user: user,
+        req: req, user: user,
         error: language == .ja ? "スピーカー自己紹介は必須です" : "Speaker bio is required",
-        language: language
-      )
+        language: language)
     }
     guard !formData.iconUrl.isEmpty else {
       return try await renderSubmitPageWithError(
-        req: req,
-        user: user,
+        req: req, user: user,
         error: language == .ja ? "プロフィール画像URLは必須です" : "Profile picture URL is required",
-        language: language
-      )
+        language: language)
     }
 
     guard let talkDuration = TalkDuration(rawValue: formData.talkDuration) else {
       return try await renderSubmitPageWithError(
-        req: req,
-        user: user,
-        error: language == .ja ? "トーク時間を選択してください" : "Please select a talk duration",
-        language: language
-      )
+        req: req, user: user,
+        error: language == .ja ? "タイプを選択してください" : "Please select a type",
+        language: language)
     }
 
     // Validate that only invited speakers can submit invited talks
     if talkDuration.isInvitedOnly && !user.role.isInvitedSpeaker {
       return try await renderSubmitPageWithError(
-        req: req,
-        user: user,
+        req: req, user: user,
         error: language == .ja
           ? "招待スピーカーセッションは招待スピーカーのみが提出できます"
           : "Only invited speakers can submit invited talks",
-        language: language
+        language: language)
+    }
+
+    // Workshop-specific validation and data building
+    var workshopDetails: WorkshopDetails?
+    var coInstructors: [CoInstructor]?
+
+    if talkDuration.isWorkshop {
+      guard let langStr = formData.workshop_language, !langStr.isEmpty,
+        let workshopLang = WorkshopLanguage(rawValue: langStr)
+      else {
+        return try await renderSubmitPageWithError(
+          req: req, user: user,
+          error: language == .ja ? "使用する言語を選択してください" : "Please select a workshop language",
+          language: language)
+      }
+      guard let tutorsStr = formData.workshop_numberOfTutors, !tutorsStr.isEmpty else {
+        return try await renderSubmitPageWithError(
+          req: req, user: user,
+          error: language == .ja ? "チューターの人数は必須です" : "Number of tutors is required",
+          language: language)
+      }
+      guard let keyTakeaways = formData.workshop_keyTakeaways, !keyTakeaways.isEmpty else {
+        return try await renderSubmitPageWithError(
+          req: req, user: user,
+          error: language == .ja ? "学べることは必須です" : "Key takeaways are required",
+          language: language)
+      }
+      guard let agenda = formData.workshop_agendaSchedule, !agenda.isEmpty else {
+        return try await renderSubmitPageWithError(
+          req: req, user: user,
+          error: language == .ja ? "アジェンダ・スケジュールは必須です" : "Agenda & schedule is required",
+          language: language)
+      }
+      guard let participantReqs = formData.workshop_participantRequirements,
+        !participantReqs.isEmpty
+      else {
+        return try await renderSubmitPageWithError(
+          req: req, user: user,
+          error: language == .ja
+            ? "参加者が持参するものは必須です"
+            : "Participant requirements are required",
+          language: language)
+      }
+      guard let networkReqs = formData.workshop_networkRequirements, !networkReqs.isEmpty else {
+        return try await renderSubmitPageWithError(
+          req: req, user: user,
+          error: language == .ja ? "ネットワーク要件は必須です" : "Network requirements are required",
+          language: language)
+      }
+      guard let motivation = formData.workshop_motivation, !motivation.isEmpty else {
+        return try await renderSubmitPageWithError(
+          req: req, user: user,
+          error: language == .ja ? "動機は必須です" : "Motivation is required",
+          language: language)
+      }
+      guard let uniqueness = formData.workshop_uniqueness, !uniqueness.isEmpty else {
+        return try await renderSubmitPageWithError(
+          req: req, user: user,
+          error: language == .ja ? "ユニークな点は必須です" : "Uniqueness is required",
+          language: language)
+      }
+
+      let numberOfTutors = Int(tutorsStr) ?? 0
+      guard numberOfTutors > 0 else {
+        return try await renderSubmitPageWithError(
+          req: req, user: user,
+          error: language == .ja
+            ? "チューターの人数は1以上でなければなりません"
+            : "Number of tutors must be at least 1",
+          language: language)
+      }
+
+      let facilities =
+        formData.workshop_requiredFacilities?.compactMap { FacilityRequirement(rawValue: $0) } ?? []
+
+      workshopDetails = WorkshopDetails(
+        language: workshopLang,
+        numberOfTutors: numberOfTutors,
+        keyTakeaways: keyTakeaways,
+        prerequisites: formData.workshop_prerequisites?.isEmpty == true
+          ? nil : formData.workshop_prerequisites,
+        agendaSchedule: agenda,
+        participantRequirements: participantReqs,
+        requiredSoftware: formData.workshop_requiredSoftware?.isEmpty == true
+          ? nil : formData.workshop_requiredSoftware,
+        networkRequirements: networkReqs,
+        requiredFacilities: facilities,
+        facilityOther: formData.workshop_facilityOther?.isEmpty == true
+          ? nil : formData.workshop_facilityOther,
+        motivation: motivation,
+        uniqueness: uniqueness,
+        potentialRisks: formData.workshop_potentialRisks?.isEmpty == true
+          ? nil : formData.workshop_potentialRisks
       )
+
+      // Build co-instructors
+      var instructors: [CoInstructor] = []
+      if let name = formData.coInstructor2_name, !name.isEmpty,
+        let ghUser = formData.coInstructor2_githubUsername, !ghUser.isEmpty
+      {
+        instructors.append(
+          CoInstructor(
+            name: name,
+            email: formData.coInstructor2_email ?? "",
+            sns: formData.coInstructor2_sns?.isEmpty == true ? nil : formData.coInstructor2_sns,
+            githubUsername: ghUser,
+            bio: formData.coInstructor2_bio ?? "",
+            iconURL: formData.coInstructor2_iconUrl?.isEmpty == true
+              ? nil : formData.coInstructor2_iconUrl
+          ))
+      }
+      if let name = formData.coInstructor3_name, !name.isEmpty,
+        let ghUser = formData.coInstructor3_githubUsername, !ghUser.isEmpty
+      {
+        instructors.append(
+          CoInstructor(
+            name: name,
+            email: formData.coInstructor3_email ?? "",
+            sns: formData.coInstructor3_sns?.isEmpty == true ? nil : formData.coInstructor3_sns,
+            githubUsername: ghUser,
+            bio: formData.coInstructor3_bio ?? "",
+            iconURL: formData.coInstructor3_iconUrl?.isEmpty == true
+              ? nil : formData.coInstructor3_iconUrl
+          ))
+      }
+      if !instructors.isEmpty {
+        coInstructors = instructors
+      }
     }
 
     // Find current open conference
@@ -573,22 +721,18 @@ struct CfPRoutes: RouteCollection {
         .first()
     else {
       return try await renderSubmitPageWithError(
-        req: req,
-        user: user,
+        req: req, user: user,
         error: language == .ja
           ? "現在プロポーザルの募集は行っていません。次回のカンファレンスをお待ちください。"
           : "The Call for Proposals is not currently open. Please check back later for the next conference.",
-        language: language
-      )
+        language: language)
     }
 
     guard let conferenceID = conference.id else {
       return try await renderSubmitPageWithError(
-        req: req,
-        user: user,
+        req: req, user: user,
         error: language == .ja ? "カンファレンスの設定エラー" : "Conference configuration error",
-        language: language
-      )
+        language: language)
     }
 
     // Create proposal
@@ -603,7 +747,10 @@ struct CfPRoutes: RouteCollection {
       bio: formData.bio,
       iconURL: formData.iconUrl,
       notes: formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers,
-      speakerID: user.id
+      speakerID: user.id,
+      githubUsername: githubUsername,
+      workshopDetails: workshopDetails,
+      coInstructors: coInstructors
     )
 
     try await proposal.save(on: req.db)
@@ -640,6 +787,48 @@ struct CfPRoutes: RouteCollection {
       }
     }
     return try await html.encodeResponse(for: req)
+  }
+
+  // MARK: - User Lookup API
+
+  @Sendable
+  func lookupUserByGitHubUsername(req: Request) async throws -> Response {
+    // Require authentication
+    guard (try? await getAuthenticatedUser(req: req)) != nil else {
+      throw Abort(.unauthorized)
+    }
+
+    guard let username = req.parameters.get("username") else {
+      throw Abort(.badRequest, reason: "Username is required")
+    }
+
+    guard
+      let user = try await User.query(on: req.db)
+        .filter(\.$username == username)
+        .first()
+    else {
+      return Response(status: .notFound)
+    }
+
+    struct UserLookupResponse: Content {
+      let name: String?
+      let email: String?
+      let bio: String?
+      let avatarURL: String?
+    }
+
+    let lookupResponse = UserLookupResponse(
+      name: user.displayName,
+      email: user.email,
+      bio: user.bio,
+      avatarURL: user.avatarURL
+    )
+
+    let encoder = JSONEncoder()
+    let data = try encoder.encode(lookupResponse)
+    var headers = HTTPHeaders()
+    headers.contentType = .json
+    return Response(status: .ok, headers: headers, body: .init(data: data))
   }
 
   // MARK: - Edit Proposal
@@ -714,11 +903,39 @@ struct CfPRoutes: RouteCollection {
       var abstract: String
       var talkDetails: String
       var talkDuration: String
+      var githubUsername: String
       var speakerName: String
       var speakerEmail: String
       var bio: String
       var iconUrl: String
       var notesToOrganizers: String?
+      // Workshop fields
+      var workshop_language: String?
+      var workshop_numberOfTutors: String?
+      var workshop_keyTakeaways: String?
+      var workshop_prerequisites: String?
+      var workshop_agendaSchedule: String?
+      var workshop_participantRequirements: String?
+      var workshop_requiredSoftware: String?
+      var workshop_networkRequirements: String?
+      var workshop_requiredFacilities: [String]?
+      var workshop_facilityOther: String?
+      var workshop_motivation: String?
+      var workshop_uniqueness: String?
+      var workshop_potentialRisks: String?
+      // Co-instructor fields
+      var coInstructor2_githubUsername: String?
+      var coInstructor2_name: String?
+      var coInstructor2_email: String?
+      var coInstructor2_sns: String?
+      var coInstructor2_bio: String?
+      var coInstructor2_iconUrl: String?
+      var coInstructor3_githubUsername: String?
+      var coInstructor3_name: String?
+      var coInstructor3_email: String?
+      var coInstructor3_sns: String?
+      var coInstructor3_bio: String?
+      var coInstructor3_iconUrl: String?
     }
 
     let formData: EditFormData
@@ -733,6 +950,14 @@ struct CfPRoutes: RouteCollection {
     }
 
     // 5. Validation
+    let githubUsername = formData.githubUsername.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !githubUsername.isEmpty else {
+      return try await renderEditProposalPageWithError(
+        req: req, user: user, proposal: proposal,
+        error: language == .ja ? "GitHub IDは必須です" : "GitHub ID is required",
+        language: language
+      )
+    }
     guard !formData.title.isEmpty else {
       return try await renderEditProposalPageWithError(
         req: req, user: user, proposal: proposal,
@@ -791,17 +1016,152 @@ struct CfPRoutes: RouteCollection {
       )
     }
 
+    // Workshop-specific validation and data building
+    var workshopDetails: WorkshopDetails?
+    var coInstructors: [CoInstructor]?
+
+    if talkDuration.isWorkshop {
+      guard let langStr = formData.workshop_language, !langStr.isEmpty,
+        let workshopLang = WorkshopLanguage(rawValue: langStr)
+      else {
+        return try await renderEditProposalPageWithError(
+          req: req, user: user, proposal: proposal,
+          error: language == .ja ? "使用する言語を選択してください" : "Please select a workshop language",
+          language: language)
+      }
+      guard let tutorsStr = formData.workshop_numberOfTutors, !tutorsStr.isEmpty else {
+        return try await renderEditProposalPageWithError(
+          req: req, user: user, proposal: proposal,
+          error: language == .ja ? "チューターの人数は必須です" : "Number of tutors is required",
+          language: language)
+      }
+      guard let keyTakeaways = formData.workshop_keyTakeaways, !keyTakeaways.isEmpty else {
+        return try await renderEditProposalPageWithError(
+          req: req, user: user, proposal: proposal,
+          error: language == .ja ? "学べることは必須です" : "Key takeaways are required",
+          language: language)
+      }
+      guard let agenda = formData.workshop_agendaSchedule, !agenda.isEmpty else {
+        return try await renderEditProposalPageWithError(
+          req: req, user: user, proposal: proposal,
+          error: language == .ja ? "アジェンダ・スケジュールは必須です" : "Agenda & schedule is required",
+          language: language)
+      }
+      guard let participantReqs = formData.workshop_participantRequirements,
+        !participantReqs.isEmpty
+      else {
+        return try await renderEditProposalPageWithError(
+          req: req, user: user, proposal: proposal,
+          error: language == .ja
+            ? "参加者が持参するものは必須です"
+            : "Participant requirements are required",
+          language: language)
+      }
+      guard let networkReqs = formData.workshop_networkRequirements, !networkReqs.isEmpty else {
+        return try await renderEditProposalPageWithError(
+          req: req, user: user, proposal: proposal,
+          error: language == .ja ? "ネットワーク要件は必須です" : "Network requirements are required",
+          language: language)
+      }
+      guard let motivation = formData.workshop_motivation, !motivation.isEmpty else {
+        return try await renderEditProposalPageWithError(
+          req: req, user: user, proposal: proposal,
+          error: language == .ja ? "動機は必須です" : "Motivation is required",
+          language: language)
+      }
+      guard let uniqueness = formData.workshop_uniqueness, !uniqueness.isEmpty else {
+        return try await renderEditProposalPageWithError(
+          req: req, user: user, proposal: proposal,
+          error: language == .ja ? "ユニークな点は必須です" : "Uniqueness is required",
+          language: language)
+      }
+
+      let numberOfTutors = Int(tutorsStr) ?? 0
+      guard numberOfTutors > 0 else {
+        return try await renderEditProposalPageWithError(
+          req: req, user: user, proposal: proposal,
+          error: language == .ja
+            ? "チューターの人数は1以上でなければなりません"
+            : "Number of tutors must be at least 1",
+          language: language)
+      }
+
+      let facilities =
+        formData.workshop_requiredFacilities?.compactMap { FacilityRequirement(rawValue: $0) } ?? []
+
+      workshopDetails = WorkshopDetails(
+        language: workshopLang,
+        numberOfTutors: numberOfTutors,
+        keyTakeaways: keyTakeaways,
+        prerequisites: formData.workshop_prerequisites?.isEmpty == true
+          ? nil : formData.workshop_prerequisites,
+        agendaSchedule: agenda,
+        participantRequirements: participantReqs,
+        requiredSoftware: formData.workshop_requiredSoftware?.isEmpty == true
+          ? nil : formData.workshop_requiredSoftware,
+        networkRequirements: networkReqs,
+        requiredFacilities: facilities,
+        facilityOther: formData.workshop_facilityOther?.isEmpty == true
+          ? nil : formData.workshop_facilityOther,
+        motivation: motivation,
+        uniqueness: uniqueness,
+        potentialRisks: formData.workshop_potentialRisks?.isEmpty == true
+          ? nil : formData.workshop_potentialRisks
+      )
+
+      // Build co-instructors
+      var instructors: [CoInstructor] = []
+      if let name = formData.coInstructor2_name, !name.isEmpty,
+        let ghUser = formData.coInstructor2_githubUsername, !ghUser.isEmpty,
+        let email = formData.coInstructor2_email, !email.isEmpty,
+        let bio = formData.coInstructor2_bio, !bio.isEmpty
+      {
+        instructors.append(
+          CoInstructor(
+            name: name,
+            email: email,
+            sns: formData.coInstructor2_sns?.isEmpty == true ? nil : formData.coInstructor2_sns,
+            githubUsername: ghUser,
+            bio: bio,
+            iconURL: formData.coInstructor2_iconUrl?.isEmpty == true
+              ? nil : formData.coInstructor2_iconUrl
+          ))
+      }
+      if let name = formData.coInstructor3_name, !name.isEmpty,
+        let ghUser = formData.coInstructor3_githubUsername, !ghUser.isEmpty,
+        let email = formData.coInstructor3_email, !email.isEmpty,
+        let bio = formData.coInstructor3_bio, !bio.isEmpty
+      {
+        instructors.append(
+          CoInstructor(
+            name: name,
+            email: email,
+            sns: formData.coInstructor3_sns?.isEmpty == true ? nil : formData.coInstructor3_sns,
+            githubUsername: ghUser,
+            bio: bio,
+            iconURL: formData.coInstructor3_iconUrl?.isEmpty == true
+              ? nil : formData.coInstructor3_iconUrl
+          ))
+      }
+      if !instructors.isEmpty {
+        coInstructors = instructors
+      }
+    }
+
     // 6. Update proposal
     proposal.title = formData.title
     proposal.abstract = formData.abstract
     proposal.talkDetail = formData.talkDetails
     proposal.talkDuration = talkDuration
+    proposal.githubUsername = githubUsername
     proposal.speakerName = formData.speakerName
     proposal.speakerEmail = formData.speakerEmail
     proposal.bio = formData.bio
     proposal.iconURL = formData.iconUrl
     proposal.notes =
       formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers
+    proposal.workshopDetails = workshopDetails
+    proposal.coInstructors = coInstructors.map(CoInstructorList.init)
 
     try await proposal.save(on: req.db)
 
@@ -1018,7 +1378,7 @@ struct CfPRoutes: RouteCollection {
 
     // Build CSV
     var csv =
-      "ID,Title,Abstract,Talk Details,Duration,Status,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At\n"
+      "ID,Title,Abstract,Talk Details,Type,Status,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At,Co-Instructors\n"
 
     let dateFormatter = ISO8601DateFormatter()
 
@@ -1038,6 +1398,7 @@ struct CfPRoutes: RouteCollection {
         escapeCSV(proposal.notes ?? ""),
         proposal.conference.displayName,
         proposal.createdAt.map { dateFormatter.string(from: $0) } ?? "",
+        escapeCSV(proposal.coInstructors?.items.map(\.name).joined(separator: "; ") ?? ""),
       ]
       csv += columns.joined(separator: ",") + "\n"
     }
@@ -1053,14 +1414,21 @@ struct CfPRoutes: RouteCollection {
   }
 
   private func escapeCSV(_ value: String) -> String {
+    // Prevent CSV formula injection: prefix leading formula characters with
+    // a single-quote so spreadsheet applications treat the cell as text.
+    var sanitized = value
+    if let first = sanitized.first, "=+-@".contains(first) {
+      sanitized = "'" + sanitized
+    }
+
     let needsQuoting =
-      value.contains(",") || value.contains("\"") || value.contains("\n")
-      || value.contains("\r")
+      sanitized.contains(",") || sanitized.contains("\"") || sanitized.contains("\n")
+      || sanitized.contains("\r")
     if needsQuoting {
-      let escaped = value.replacingOccurrences(of: "\"", with: "\"\"")
+      let escaped = sanitized.replacingOccurrences(of: "\"", with: "\"\"")
       return "\"\(escaped)\""
     }
-    return value
+    return sanitized
   }
 
   // MARK: - Accept/Reject Proposals
@@ -1392,6 +1760,33 @@ struct CfPRoutes: RouteCollection {
       var iconUrl: String
       var githubUsername: String?
       var notesToOrganizers: String?
+      // Workshop fields
+      var workshop_language: String?
+      var workshop_numberOfTutors: String?
+      var workshop_keyTakeaways: String?
+      var workshop_prerequisites: String?
+      var workshop_agendaSchedule: String?
+      var workshop_participantRequirements: String?
+      var workshop_requiredSoftware: String?
+      var workshop_networkRequirements: String?
+      var workshop_requiredFacilities: [String]?
+      var workshop_facilityOther: String?
+      var workshop_motivation: String?
+      var workshop_uniqueness: String?
+      var workshop_potentialRisks: String?
+      // Co-instructor fields
+      var coInstructor2_githubUsername: String?
+      var coInstructor2_name: String?
+      var coInstructor2_email: String?
+      var coInstructor2_sns: String?
+      var coInstructor2_bio: String?
+      var coInstructor2_iconUrl: String?
+      var coInstructor3_githubUsername: String?
+      var coInstructor3_name: String?
+      var coInstructor3_email: String?
+      var coInstructor3_sns: String?
+      var coInstructor3_bio: String?
+      var coInstructor3_iconUrl: String?
     }
 
     let formData: OrganizerEditFormData
@@ -1438,6 +1833,101 @@ struct CfPRoutes: RouteCollection {
       let importUserID = try await resolveSpeakerID(githubUsername: nil, on: req.db)
       proposal.$speaker.id = importUserID
       proposal.paperCallUsername = nil
+    }
+
+    // Workshop-specific validation and data building
+    if talkDuration.isWorkshop {
+      guard let langStr = formData.workshop_language, !langStr.isEmpty,
+        let workshopLang = WorkshopLanguage(rawValue: langStr)
+      else {
+        throw Abort(.badRequest, reason: "Please select a workshop language")
+      }
+      guard let tutorsStr = formData.workshop_numberOfTutors, !tutorsStr.isEmpty else {
+        throw Abort(.badRequest, reason: "Number of tutors is required")
+      }
+      guard let keyTakeaways = formData.workshop_keyTakeaways, !keyTakeaways.isEmpty else {
+        throw Abort(.badRequest, reason: "Key takeaways are required")
+      }
+      guard let agenda = formData.workshop_agendaSchedule, !agenda.isEmpty else {
+        throw Abort(.badRequest, reason: "Agenda & schedule is required")
+      }
+      guard let participantReqs = formData.workshop_participantRequirements,
+        !participantReqs.isEmpty
+      else {
+        throw Abort(.badRequest, reason: "Participant requirements are required")
+      }
+      guard let networkReqs = formData.workshop_networkRequirements, !networkReqs.isEmpty else {
+        throw Abort(.badRequest, reason: "Network requirements are required")
+      }
+      guard let motivation = formData.workshop_motivation, !motivation.isEmpty else {
+        throw Abort(.badRequest, reason: "Motivation is required")
+      }
+      guard let uniqueness = formData.workshop_uniqueness, !uniqueness.isEmpty else {
+        throw Abort(.badRequest, reason: "Uniqueness is required")
+      }
+
+      guard let numberOfTutors = Int(tutorsStr), numberOfTutors > 0 else {
+        throw Abort(.badRequest, reason: "Number of tutors must be a valid number of at least 1")
+      }
+
+      let facilities =
+        formData.workshop_requiredFacilities?.compactMap { FacilityRequirement(rawValue: $0) } ?? []
+
+      proposal.workshopDetails = WorkshopDetails(
+        language: workshopLang,
+        numberOfTutors: numberOfTutors,
+        keyTakeaways: keyTakeaways,
+        prerequisites: formData.workshop_prerequisites?.isEmpty == true
+          ? nil : formData.workshop_prerequisites,
+        agendaSchedule: agenda,
+        participantRequirements: participantReqs,
+        requiredSoftware: formData.workshop_requiredSoftware?.isEmpty == true
+          ? nil : formData.workshop_requiredSoftware,
+        networkRequirements: networkReqs,
+        requiredFacilities: facilities,
+        facilityOther: formData.workshop_facilityOther?.isEmpty == true
+          ? nil : formData.workshop_facilityOther,
+        motivation: motivation,
+        uniqueness: uniqueness,
+        potentialRisks: formData.workshop_potentialRisks?.isEmpty == true
+          ? nil : formData.workshop_potentialRisks
+      )
+
+      // Build co-instructors
+      var instructors: [CoInstructor] = []
+      if let name = formData.coInstructor2_name, !name.isEmpty,
+        let ghUser = formData.coInstructor2_githubUsername, !ghUser.isEmpty
+      {
+        instructors.append(
+          CoInstructor(
+            name: name,
+            email: formData.coInstructor2_email ?? "",
+            sns: formData.coInstructor2_sns?.isEmpty == true ? nil : formData.coInstructor2_sns,
+            githubUsername: ghUser,
+            bio: formData.coInstructor2_bio ?? "",
+            iconURL: formData.coInstructor2_iconUrl?.isEmpty == true
+              ? nil : formData.coInstructor2_iconUrl
+          ))
+      }
+      if let name = formData.coInstructor3_name, !name.isEmpty,
+        let ghUser = formData.coInstructor3_githubUsername, !ghUser.isEmpty
+      {
+        instructors.append(
+          CoInstructor(
+            name: name,
+            email: formData.coInstructor3_email ?? "",
+            sns: formData.coInstructor3_sns?.isEmpty == true ? nil : formData.coInstructor3_sns,
+            githubUsername: ghUser,
+            bio: formData.coInstructor3_bio ?? "",
+            iconURL: formData.coInstructor3_iconUrl?.isEmpty == true
+              ? nil : formData.coInstructor3_iconUrl
+          ))
+      }
+      proposal.coInstructors = instructors.isEmpty ? nil : CoInstructorList(instructors)
+    } else {
+      // Clear workshop data if type changed away from workshop
+      proposal.workshopDetails = nil
+      proposal.coInstructors = nil
     }
 
     // Update proposal
@@ -1528,6 +2018,33 @@ struct CfPRoutes: RouteCollection {
       var iconUrl: String?
       var githubUsername: String?
       var notesToOrganizers: String?
+      // Workshop fields
+      var workshop_language: String?
+      var workshop_numberOfTutors: String?
+      var workshop_keyTakeaways: String?
+      var workshop_prerequisites: String?
+      var workshop_agendaSchedule: String?
+      var workshop_participantRequirements: String?
+      var workshop_requiredSoftware: String?
+      var workshop_networkRequirements: String?
+      var workshop_requiredFacilities: [String]?
+      var workshop_facilityOther: String?
+      var workshop_motivation: String?
+      var workshop_uniqueness: String?
+      var workshop_potentialRisks: String?
+      // Co-instructor fields
+      var coInstructor2_githubUsername: String?
+      var coInstructor2_name: String?
+      var coInstructor2_email: String?
+      var coInstructor2_sns: String?
+      var coInstructor2_bio: String?
+      var coInstructor2_iconUrl: String?
+      var coInstructor3_githubUsername: String?
+      var coInstructor3_name: String?
+      var coInstructor3_email: String?
+      var coInstructor3_sns: String?
+      var coInstructor3_bio: String?
+      var coInstructor3_iconUrl: String?
     }
 
     let formData: NewProposalFormData
@@ -1590,6 +2107,111 @@ struct CfPRoutes: RouteCollection {
         req: req, user: user, error: error.localizedDescription)
     }
 
+    // Workshop-specific validation and data building
+    var workshopDetails: WorkshopDetails?
+    var coInstructors: [CoInstructor]?
+
+    if talkDuration.isWorkshop {
+      guard let langStr = formData.workshop_language, !langStr.isEmpty,
+        let workshopLang = WorkshopLanguage(rawValue: langStr)
+      else {
+        return try await renderNewProposalPageWithError(
+          req: req, user: user, error: "Please select a workshop language")
+      }
+      guard let tutorsStr = formData.workshop_numberOfTutors, !tutorsStr.isEmpty else {
+        return try await renderNewProposalPageWithError(
+          req: req, user: user, error: "Number of tutors is required")
+      }
+      guard let keyTakeaways = formData.workshop_keyTakeaways, !keyTakeaways.isEmpty else {
+        return try await renderNewProposalPageWithError(
+          req: req, user: user, error: "Key takeaways are required")
+      }
+      guard let agenda = formData.workshop_agendaSchedule, !agenda.isEmpty else {
+        return try await renderNewProposalPageWithError(
+          req: req, user: user, error: "Agenda & schedule is required")
+      }
+      guard let participantReqs = formData.workshop_participantRequirements,
+        !participantReqs.isEmpty
+      else {
+        return try await renderNewProposalPageWithError(
+          req: req, user: user, error: "Participant requirements are required")
+      }
+      guard let networkReqs = formData.workshop_networkRequirements, !networkReqs.isEmpty else {
+        return try await renderNewProposalPageWithError(
+          req: req, user: user, error: "Network requirements are required")
+      }
+      guard let motivation = formData.workshop_motivation, !motivation.isEmpty else {
+        return try await renderNewProposalPageWithError(
+          req: req, user: user, error: "Motivation is required")
+      }
+      guard let uniqueness = formData.workshop_uniqueness, !uniqueness.isEmpty else {
+        return try await renderNewProposalPageWithError(
+          req: req, user: user, error: "Uniqueness is required")
+      }
+
+      guard let numberOfTutors = Int(tutorsStr), numberOfTutors > 0 else {
+        return try await renderNewProposalPageWithError(
+          req: req, user: user, error: "Number of tutors must be a valid number of at least 1")
+      }
+
+      let facilities =
+        formData.workshop_requiredFacilities?.compactMap { FacilityRequirement(rawValue: $0) } ?? []
+
+      workshopDetails = WorkshopDetails(
+        language: workshopLang,
+        numberOfTutors: numberOfTutors,
+        keyTakeaways: keyTakeaways,
+        prerequisites: formData.workshop_prerequisites?.isEmpty == true
+          ? nil : formData.workshop_prerequisites,
+        agendaSchedule: agenda,
+        participantRequirements: participantReqs,
+        requiredSoftware: formData.workshop_requiredSoftware?.isEmpty == true
+          ? nil : formData.workshop_requiredSoftware,
+        networkRequirements: networkReqs,
+        requiredFacilities: facilities,
+        facilityOther: formData.workshop_facilityOther?.isEmpty == true
+          ? nil : formData.workshop_facilityOther,
+        motivation: motivation,
+        uniqueness: uniqueness,
+        potentialRisks: formData.workshop_potentialRisks?.isEmpty == true
+          ? nil : formData.workshop_potentialRisks
+      )
+
+      // Build co-instructors
+      var instructors: [CoInstructor] = []
+      if let name = formData.coInstructor2_name, !name.isEmpty,
+        let ghUser = formData.coInstructor2_githubUsername, !ghUser.isEmpty
+      {
+        instructors.append(
+          CoInstructor(
+            name: name,
+            email: formData.coInstructor2_email ?? "",
+            sns: formData.coInstructor2_sns?.isEmpty == true ? nil : formData.coInstructor2_sns,
+            githubUsername: ghUser,
+            bio: formData.coInstructor2_bio ?? "",
+            iconURL: formData.coInstructor2_iconUrl?.isEmpty == true
+              ? nil : formData.coInstructor2_iconUrl
+          ))
+      }
+      if let name = formData.coInstructor3_name, !name.isEmpty,
+        let ghUser = formData.coInstructor3_githubUsername, !ghUser.isEmpty
+      {
+        instructors.append(
+          CoInstructor(
+            name: name,
+            email: formData.coInstructor3_email ?? "",
+            sns: formData.coInstructor3_sns?.isEmpty == true ? nil : formData.coInstructor3_sns,
+            githubUsername: ghUser,
+            bio: formData.coInstructor3_bio ?? "",
+            iconURL: formData.coInstructor3_iconUrl?.isEmpty == true
+              ? nil : formData.coInstructor3_iconUrl
+          ))
+      }
+      if !instructors.isEmpty {
+        coInstructors = instructors
+      }
+    }
+
     // Create proposal
     let proposal = Proposal(
       conferenceID: conferenceID,
@@ -1602,7 +2224,9 @@ struct CfPRoutes: RouteCollection {
       bio: formData.bio,
       iconURL: formData.iconUrl?.isEmpty == true ? nil : formData.iconUrl,
       notes: formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers,
-      speakerID: speakerID
+      speakerID: speakerID,
+      workshopDetails: workshopDetails,
+      coInstructors: coInstructors
     )
 
     if !githubUsername.isEmpty {
@@ -1886,12 +2510,18 @@ struct CfPRoutes: RouteCollection {
       throw Abort(.badRequest, reason: "Invalid slot type")
     }
 
-    let formatter = ISO8601DateFormatter()
-    formatter.formatOptions = [.withInternetDateTime]
-    guard let startTime = formatter.date(from: body.startTime) else {
+    guard let startTime = parseISO8601(body.startTime) else {
       throw Abort(.badRequest, reason: "Invalid start time format")
     }
-    let endTime = body.endTime.flatMap { formatter.date(from: $0) }
+    let endTime: Date?
+    if let endTimeString = body.endTime {
+      guard let parsed = parseISO8601(endTimeString) else {
+        throw Abort(.badRequest, reason: "Invalid end time format")
+      }
+      endTime = parsed
+    } else {
+      endTime = nil
+    }
 
     // Get max sort_order for this day
     let maxOrder =
@@ -1976,8 +2606,6 @@ struct CfPRoutes: RouteCollection {
     }
 
     let body = try req.content.decode(UpdateSlotRequest.self)
-    let formatter = ISO8601DateFormatter()
-    formatter.formatOptions = [.withInternetDateTime]
 
     if let slotTypeStr = body.slotType {
       guard let slotType = SlotType(rawValue: slotTypeStr) else {
@@ -1989,14 +2617,14 @@ struct CfPRoutes: RouteCollection {
       slot.day = day
     }
     if let startTimeStr = body.startTime {
-      guard let startTime = formatter.date(from: startTimeStr) else {
-        throw Abort(.badRequest, reason: "Invalid startTime format")
+      guard let startTime = parseISO8601(startTimeStr) else {
+        throw Abort(.badRequest, reason: "Invalid start time format")
       }
       slot.startTime = startTime
     }
     if let endTimeStr = body.endTime {
-      guard let endTime = formatter.date(from: endTimeStr) else {
-        throw Abort(.badRequest, reason: "Invalid endTime format")
+      guard let endTime = parseISO8601(endTimeStr) else {
+        throw Abort(.badRequest, reason: "Invalid end time format")
       }
       slot.endTime = endTime
     }
@@ -2226,6 +2854,15 @@ struct CfPRoutes: RouteCollection {
     )
   }
 
+  /// Parse an ISO 8601 string, accepting both with and without fractional seconds.
+  private func parseISO8601(_ string: String) -> Date? {
+    let fractional = ISO8601DateFormatter()
+    fractional.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+    let plain = ISO8601DateFormatter()
+    plain.formatOptions = [.withInternetDateTime]
+    return fractional.date(from: string) ?? plain.date(from: string)
+  }
+
   // MARK: - Timetable Helper Types
 
   struct DayInfo: Sendable {
@@ -2269,19 +2906,16 @@ struct CfPRoutes: RouteCollection {
     let username = rawUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
     if !username.isEmpty {
-      guard
-        let user = try await User.query(on: db)
-          .filter(\.$username == username)
-          .first(),
+      if let user = try await User.query(on: db)
+        .filter(\.$username == username)
+        .first(),
         let userID = user.id
-      else {
-        throw Abort(
-          .badRequest,
-          reason:
-            "GitHub user '\(username)' not found. The user must have logged in at least once."
-        )
+      {
+        return userID
       }
-      return userID
+      // User not found in DB — fall through to return import user ID.
+      // The caller stores the username in paperCallUsername so the proposal
+      // can be re-associated when the user eventually logs in.
     }
 
     guard
@@ -2305,22 +2939,6 @@ struct CfPRoutes: RouteCollection {
 
   /// Get authenticated user from cookie or authorization header
   func getAuthenticatedUser(req: Request) async throws -> UserDTO? {
-    // Try to get token from cookie first, then Authorization header
-    let token: String?
-    if let cookieToken = req.cookies["cfp_token"]?.string, !cookieToken.isEmpty {
-      token = cookieToken
-    } else if let authHeader = req.headers.bearerAuthorization?.token {
-      token = authHeader
-    } else {
-      return nil
-    }
-
-    guard let token else { return nil }
-
-    let payload = try await req.jwt.verify(token, as: UserJWTPayload.self)
-    guard let userID = payload.userID else { return nil }
-    guard let user = try await User.find(userID, on: req.db) else { return nil }
-
-    return try user.toDTO()
+    try await req.authenticatedUser()
   }
 }

@@ -16,8 +16,11 @@ extension View {
       } else {
         self
       }
+    #elseif os(visionOS)
+      self.glassBackgroundEffect(
+        in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+      )
     #else
-      // visionOS / watchOS / tvOS など：何もしない（コンパイルも通る）
       self
     #endif
   }
@@ -33,6 +36,8 @@ extension View {
       } else {
         self
       }
+    #elseif os(visionOS)
+      self.glassBackgroundEffect(in: shape)
     #else
       self
     #endif

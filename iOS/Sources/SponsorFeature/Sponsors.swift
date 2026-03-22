@@ -70,13 +70,12 @@ public struct SponsorsListView: View {
   }
 
   public var body: some View {
-    NavigationView {
+    NavigationStack {
       root
         .onAppear {
           send(.onAppear)
         }
     }
-    .navigationViewStyle(.stack)
   }
 
   @ViewBuilder var root: some View {

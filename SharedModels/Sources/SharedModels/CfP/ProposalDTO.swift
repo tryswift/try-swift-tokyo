@@ -1,17 +1,20 @@
 import Foundation
 
-/// Talk duration options
+/// Proposal type (formerly "Talk Duration")
 public enum TalkDuration: String, Codable, Sendable, Equatable, CaseIterable {
   case regular = "20min"
   case lightning = "LT"
+  case workshop = "workshop"
   case invited = "invited"
 
   public var displayName: String {
     switch self {
     case .regular:
-      return "20 minutes"
+      return "Regular Talk (20 min)"
     case .lightning:
       return "Lightning Talk (5 min)"
+    case .workshop:
+      return "Workshop"
     case .invited:
       return "Invited Talk (20 min)"
     }
@@ -20,6 +23,10 @@ public enum TalkDuration: String, Codable, Sendable, Equatable, CaseIterable {
   /// Whether this duration is only available for invited speakers
   public var isInvitedOnly: Bool {
     self == .invited
+  }
+
+  public var isWorkshop: Bool {
+    self == .workshop
   }
 }
 
@@ -49,6 +56,12 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
   public let status: ProposalStatus
   public let createdAt: Date?
   public let updatedAt: Date?
+  /// GitHub username of the speaker
+  public let githubUsername: String?
+  /// Workshop-specific details (only for workshop proposals)
+  public let workshopDetails: WorkshopDetails?
+  /// Co-instructors for workshop proposals (up to 2 additional instructors)
+  public let coInstructors: [CoInstructor]?
 
   public init(
     id: UUID,
@@ -68,7 +81,10 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
     speakerUsername: String,
     status: ProposalStatus = .submitted,
     createdAt: Date? = nil,
-    updatedAt: Date? = nil
+    updatedAt: Date? = nil,
+    githubUsername: String? = nil,
+    workshopDetails: WorkshopDetails? = nil,
+    coInstructors: [CoInstructor]? = nil
   ) {
     self.id = id
     self.conferenceId = conferenceId
@@ -88,6 +104,9 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
     self.status = status
     self.createdAt = createdAt
     self.updatedAt = updatedAt
+    self.githubUsername = githubUsername
+    self.workshopDetails = workshopDetails
+    self.coInstructors = coInstructors
   }
 }
 
@@ -104,6 +123,8 @@ public struct CreateProposalRequest: Codable, Sendable {
   public let bio: String
   public let iconURL: String?
   public let notes: String?
+  public let workshopDetails: WorkshopDetails?
+  public let coInstructors: [CoInstructor]?
 
   public init(
     conferencePath: String,
@@ -115,7 +136,9 @@ public struct CreateProposalRequest: Codable, Sendable {
     speakerEmail: String,
     bio: String,
     iconURL: String? = nil,
-    notes: String? = nil
+    notes: String? = nil,
+    workshopDetails: WorkshopDetails? = nil,
+    coInstructors: [CoInstructor]? = nil
   ) {
     self.conferencePath = conferencePath
     self.title = title
@@ -127,6 +150,8 @@ public struct CreateProposalRequest: Codable, Sendable {
     self.bio = bio
     self.iconURL = iconURL
     self.notes = notes
+    self.workshopDetails = workshopDetails
+    self.coInstructors = coInstructors
   }
 }
 
@@ -141,6 +166,8 @@ public struct UpdateProposalRequest: Codable, Sendable {
   public let bio: String?
   public let iconURL: String?
   public let notes: String?
+  public let workshopDetails: WorkshopDetails?
+  public let coInstructors: [CoInstructor]?
 
   public init(
     title: String? = nil,
@@ -151,7 +178,9 @@ public struct UpdateProposalRequest: Codable, Sendable {
     speakerEmail: String? = nil,
     bio: String? = nil,
     iconURL: String? = nil,
-    notes: String? = nil
+    notes: String? = nil,
+    workshopDetails: WorkshopDetails? = nil,
+    coInstructors: [CoInstructor]? = nil
   ) {
     self.title = title
     self.abstract = abstract
@@ -162,5 +191,7 @@ public struct UpdateProposalRequest: Codable, Sendable {
     self.bio = bio
     self.iconURL = iconURL
     self.notes = notes
+    self.workshopDetails = workshopDetails
+    self.coInstructors = coInstructors
   }
 }

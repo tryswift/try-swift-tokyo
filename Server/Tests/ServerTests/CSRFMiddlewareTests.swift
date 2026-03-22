@@ -41,23 +41,54 @@ struct CSRFMiddlewareTests {
     try await app.asyncShutdown()
   }
 
-  @Test("GET request with existing csrf_token cookie does not overwrite it")
+  @Test("GET request with existing valid hex csrf_token cookie does not overwrite it")
   func getPreservesExistingCookie() async throws {
     let app = try await makeApp()
     do {
+      let validHexToken = String(repeating: "ab", count: 32)  // 64 hex chars
       try await app.testing().test(
         .GET, "page",
         beforeRequest: { req in
           req.headers.cookie = HTTPCookies(
-            dictionaryLiteral: ("csrf_token", .init(string: "existing-token")))
+            dictionaryLiteral: ("csrf_token", .init(string: validHexToken)))
         }
       ) { response in
         #expect(response.status == .ok)
 
-        // Should not set a new cookie since one already exists
+        // Should not set a new cookie since a valid hex token already exists
         let setCookieHeader = response.headers.setCookie
         let csrfCookie = setCookieHeader?["csrf_token"]
         #expect(csrfCookie == nil)
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
+  @Test("GET request with legacy base64 csrf_token cookie regenerates it")
+  func getRegeneratesLegacyBase64Cookie() async throws {
+    let app = try await makeApp()
+    do {
+      // Simulate a legacy base64 token containing +, /, =
+      let legacyBase64Token = "abc+def/ghi12345678901234567890=="
+      try await app.testing().test(
+        .GET, "page",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(
+            dictionaryLiteral: ("csrf_token", .init(string: legacyBase64Token)))
+        }
+      ) { response in
+        #expect(response.status == .ok)
+
+        // Should regenerate cookie since existing one is not valid hex
+        let csrfCookie = response.headers.setCookie?["csrf_token"]
+        #expect(csrfCookie != nil)
+        let newToken = csrfCookie?.string ?? ""
+        #expect(newToken.count == 64)
+        let hexCharSet = CharacterSet(charactersIn: "0123456789abcdef")
+        #expect(newToken.unicodeScalars.allSatisfy { hexCharSet.contains($0) })
       }
     } catch {
       try await app.asyncShutdown()
@@ -168,6 +199,51 @@ struct CSRFMiddlewareTests {
     try await app.asyncShutdown()
   }
 
+  @Test("POST with quoted csrf_token cookie and matching form token passes through")
+  func postWithQuotedCookieTokenPasses() async throws {
+    let app = try await makeApp()
+    do {
+      let token = String(repeating: "ab", count: 32)  // 64 hex chars
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.replaceOrAdd(name: .cookie, value: "csrf_token=\"\(token)\"")
+          req.headers.contentType = .urlEncodedForm
+          req.body = ByteBuffer(string: "_csrf=\(token)")
+        }
+      ) { response in
+        #expect(response.status == .ok)
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
+  @Test("Generated CSRF token uses only hex characters (no base64 special chars)")
+  func generatedTokenIsHexSafe() async throws {
+    let app = try await makeApp()
+    do {
+      try await app.testing().test(.GET, "page") { response in
+        #expect(response.status == .ok)
+
+        let csrfCookie = response.headers.setCookie?["csrf_token"]
+        let token = csrfCookie?.string ?? ""
+        #expect(!token.isEmpty)
+        // Token should be 64 hex chars (32 bytes × 2 hex digits each)
+        #expect(token.count == 64)
+        // Token must only contain hex-safe characters (no +, /, =)
+        let hexCharSet = CharacterSet(charactersIn: "0123456789abcdef")
+        #expect(token.unicodeScalars.allSatisfy { hexCharSet.contains($0) })
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
   @Test("POST form field takes precedence over header when both present")
   func postFormFieldPrecedence() async throws {
     let app = try await makeApp()
@@ -206,6 +282,102 @@ struct CSRFMiddlewareTests {
         }
       ) { response in
         #expect(response.status == .forbidden)
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
+  @Test("POST with _csrf among other form fields passes through")
+  func postWithCsrfAmongOtherFields() async throws {
+    let app = try await makeApp()
+    do {
+      let token = "a1b3c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8"
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(
+            dictionaryLiteral: ("csrf_token", .init(string: token)))
+          req.headers.contentType = .urlEncodedForm
+          req.body = ByteBuffer(
+            string:
+              "_csrf=\(token)&title=Test+Talk&abstract=Some+abstract&talkDuration=invited"
+          )
+        }
+      ) { response in
+        #expect(response.status == .ok)
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
+  @Test("Full GET-then-POST flow: token from GET cookie works in subsequent POST")
+  func fullGetThenPostFlow() async throws {
+    let app = try await makeApp()
+    do {
+      // Step 1: GET to obtain a CSRF token
+      var csrfToken = ""
+      try await app.testing().test(.GET, "page") { response in
+        #expect(response.status == .ok)
+        let cookie = response.headers.setCookie?["csrf_token"]
+        csrfToken = cookie?.string ?? ""
+        #expect(!csrfToken.isEmpty)
+      }
+
+      // Step 2: POST with the token from step 1 in both cookie and form field
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(
+            dictionaryLiteral: ("csrf_token", .init(string: csrfToken)))
+          req.headers.contentType = .urlEncodedForm
+          req.body = ByteBuffer(
+            string:
+              "_csrf=\(csrfToken)&title=Test+Talk&talkDuration=invited"
+          )
+        }
+      ) { response in
+        #expect(response.status == .ok)
+      }
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
+  @Test("POST with large form body (long bio/abstract) passes CSRF validation")
+  func postWithLargeFormBodyPasses() async throws {
+    let app = try await makeApp()
+    do {
+      let token = "a1b3c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8"
+      // Create a body larger than the default 16KB collect limit
+      let longBio = String(repeating: "This is a long speaker biography. ", count: 1000)
+      let longAbstract = String(repeating: "Detailed abstract content here. ", count: 500)
+      let encodedBio = longBio.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+      let encodedAbstract =
+        longAbstract.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+      let bodyString =
+        "_csrf=\(token)&title=Test+Talk&bio=\(encodedBio)&abstract=\(encodedAbstract)&talkDuration=invited"
+
+      // Verify the body exceeds 16KB
+      #expect(bodyString.utf8.count > 16_384, "Test body should exceed default 16KB collect limit")
+
+      try await app.testing().test(
+        .POST, "action",
+        beforeRequest: { req in
+          req.headers.cookie = HTTPCookies(
+            dictionaryLiteral: ("csrf_token", .init(string: token)))
+          req.headers.contentType = .urlEncodedForm
+          req.body = ByteBuffer(string: bodyString)
+        }
+      ) { response in
+        #expect(response.status == .ok)
       }
     } catch {
       try await app.asyncShutdown()

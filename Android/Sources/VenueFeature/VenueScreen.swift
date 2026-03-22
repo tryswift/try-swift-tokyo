@@ -128,7 +128,8 @@ public struct VenueScreen: View {
           .foregroundStyle(Color.secondary)
       }
 
-      ForEach(Array(selectedOption.directions.enumerated()), id: \.offset) { (index: Int, direction: String) in
+      ForEach(Array(selectedOption.directions.enumerated()), id: \.offset) {
+        (index: Int, direction: String) in
         HStack(alignment: VerticalAlignment.top, spacing: 12) {
           Circle()
             .fill(selectedOption.lineColor)
@@ -190,7 +191,7 @@ public struct VenueScreen: View {
 }
 
 #if !SKIP
-#Preview {
-  VenueScreen()
-}
+  #Preview {
+    VenueScreen()
+  }
 #endif
