@@ -10,6 +10,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 import sys
 import tempfile
 import unicodedata
@@ -18,12 +19,8 @@ from pathlib import Path
 import requests
 from PIL import Image
 
-# Configuration
+# Constants
 LUMA_API_BASE = "https://public-api.luma.com/v1"
-LUMA_API_KEY = os.environ["LUMA_API_KEY"]
-LUMA_EVENT_ID = os.environ["LUMA_EVENT_ID"]
-LUMA_EVENT_SLUG = os.environ["LUMA_EVENT_SLUG"]
-YEAR = os.environ["YEAR"]
 TICKET_TYPE_NAME = "Individual Sponsor"
 SOCIAL_URL_PREFIXES = {
     "twitter": "https://x.com/",
@@ -32,16 +29,50 @@ SOCIAL_URL_PREFIXES = {
     "instagram": "https://instagram.com/",
 }
 IMAGE_SIZE = (512, 512)
+MAX_IMAGE_BYTES = 10 * 1024 * 1024  # 10 MB
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-SPONSORS_JSON_PATHS = [
-    REPO_ROOT / f"DataClient/Sources/DataClient/Resources/{YEAR}-sponsors.json",
-    REPO_ROOT / f"iOS/Sources/DataClient/Resources/{YEAR}-sponsors.json",
-]
-XCASSETS_DIR = (
-    REPO_ROOT / f"iOS/Sources/SponsorFeature/Media.xcassets/Individual/{YEAR}"
-)
-SYNCED_GUESTS_PATH = REPO_ROOT / f".github/luma-synced-guests-{LUMA_EVENT_SLUG}.json"
+
+# Configured in main()
+LUMA_API_KEY = ""
+LUMA_EVENT_ID = ""
+YEAR = ""
+SPONSORS_JSON_PATHS = []
+XCASSETS_DIR = Path()
+SYNCED_GUESTS_PATH = Path()
+
+
+def load_config():
+    """Load configuration from environment variables."""
+    global LUMA_API_KEY, LUMA_EVENT_ID, YEAR
+    global SPONSORS_JSON_PATHS, XCASSETS_DIR, SYNCED_GUESTS_PATH
+
+    missing = []
+    for var in ("LUMA_API_KEY", "LUMA_EVENT_ID", "LUMA_EVENT_SLUG", "YEAR"):
+        if var not in os.environ:
+            missing.append(var)
+    if missing:
+        print(f"Error: Missing required environment variables: {', '.join(missing)}", file=sys.stderr)
+        sys.exit(1)
+
+    LUMA_API_KEY = os.environ["LUMA_API_KEY"]
+    LUMA_EVENT_ID = os.environ["LUMA_EVENT_ID"]
+    slug = os.environ["LUMA_EVENT_SLUG"]
+    YEAR = os.environ["YEAR"]
+
+    SPONSORS_JSON_PATHS = [
+        REPO_ROOT / f"DataClient/Sources/DataClient/Resources/{YEAR}-sponsors.json",
+        REPO_ROOT / f"iOS/Sources/DataClient/Resources/{YEAR}-sponsors.json",
+    ]
+    XCASSETS_DIR = (
+        REPO_ROOT / f"iOS/Sources/SponsorFeature/Media.xcassets/Individual/{YEAR}"
+    )
+    SYNCED_GUESTS_PATH = REPO_ROOT / f".github/luma-synced-guests-{slug}.json"
+
+
+def validate_https_url(url):
+    """Return True if url uses the https scheme."""
+    return isinstance(url, str) and url.startswith("https://")
 
 
 def fetch_individual_sponsors():
@@ -63,6 +94,7 @@ def fetch_individual_sponsors():
             f"{LUMA_API_BASE}/event/get-guests",
             headers=headers,
             params=params,
+            timeout=30,
         )
         resp.raise_for_status()
         data = resp.json()
@@ -102,12 +134,14 @@ def fetch_individual_sponsors():
                 elif q_type in SOCIAL_URL_PREFIXES:
                     if not social_link:
                         prefix = SOCIAL_URL_PREFIXES[q_type]
-                        social_link = value if value.startswith("http") else f"{prefix}{value}"
+                        link = value if value.startswith("http") else f"{prefix}{value}"
+                        if validate_https_url(link):
+                            social_link = link
                 elif q_type == "url" and any(
                     kw in label
                     for kw in ["social", "sns", "link", "url", "website", "リンク", "ウェブ"]
                 ):
-                    if not social_link:
+                    if not social_link and validate_https_url(value):
                         social_link = value
 
             sponsors.append(
@@ -173,14 +207,28 @@ def sanitize_image_key(name):
 
 def download_and_convert_image(url, dest_path):
     """Download image from URL and save as 512x512 PNG."""
-    resp = requests.get(url, timeout=30)
+    if not validate_https_url(url):
+        raise ValueError(f"Only HTTPS URLs are allowed: {url}")
+
+    resp = requests.get(url, timeout=30, stream=True)
     resp.raise_for_status()
+
     content_type = resp.headers.get("content-type", "")
     if content_type and not content_type.startswith("image/"):
         raise ValueError(f"URL is not an image (content-type: {content_type})")
 
+    content_length = resp.headers.get("content-length")
+    if content_length and int(content_length) > MAX_IMAGE_BYTES:
+        raise ValueError(f"Image too large: {content_length} bytes (max {MAX_IMAGE_BYTES})")
+
     with tempfile.NamedTemporaryFile(suffix=".tmp", delete=False) as tmp:
-        tmp.write(resp.content)
+        downloaded = 0
+        for chunk in resp.iter_content(chunk_size=8192):
+            downloaded += len(chunk)
+            if downloaded > MAX_IMAGE_BYTES:
+                os.unlink(tmp.name)
+                raise ValueError(f"Image exceeds {MAX_IMAGE_BYTES} bytes during download")
+            tmp.write(chunk)
         tmp_path = tmp.name
 
     try:
@@ -204,7 +252,13 @@ def create_imageset(image_key, icon_url):
     imageset_dir.mkdir(parents=True, exist_ok=True)
 
     dest_image = imageset_dir / f"{image_key}.png"
-    download_and_convert_image(icon_url, dest_image)
+    try:
+        download_and_convert_image(icon_url, dest_image)
+    except Exception:
+        # Clean up partially created imageset on failure
+        if imageset_dir.exists():
+            shutil.rmtree(imageset_dir)
+        raise
 
     contents = {
         "images": [{"filename": f"{image_key}.png", "idiom": "universal"}],
@@ -263,6 +317,8 @@ def main():
     )
     args = parser.parse_args()
     dry_run = args.dry_run
+
+    load_config()
 
     if dry_run:
         print("[DRY RUN] No files will be modified\n")
@@ -329,6 +385,7 @@ def main():
 
     print(f"\nWould add {len(new_sponsors)} new sponsors:" if dry_run else f"\nAdding {len(new_sponsors)} new sponsors:")
     summary_lines = []
+    added_sponsors = []
 
     for s in new_sponsors:
         print(f"  - {s['name']} (image_key: {s['image_key']})")
@@ -345,26 +402,31 @@ def main():
             try:
                 create_imageset(s["image_key"], s["icon_url"])
                 print(f"    Image downloaded successfully")
+                added_sponsors.append(s)
+                summary_lines.append(line)
+                synced[s["guest_id"]] = {
+                    "name": s["name"],
+                    "image_key": s["image_key"],
+                    "status": "added",
+                }
             except Exception as e:
                 print(f"    ERROR downloading image: {e}", file=sys.stderr)
-                line += " (IMAGE DOWNLOAD FAILED)"
-
-        summary_lines.append(line)
-        if not dry_run:
-            synced[s["guest_id"]] = {
-                "name": s["name"],
-                "image_key": s["image_key"],
-                "status": "added",
-            }
+                print(f"    Skipping this sponsor (will retry on next run)")
+        else:
+            summary_lines.append(line)
 
     if not dry_run:
-        update_sponsors_json(new_sponsors)
-        print("\nUpdated sponsor JSON files")
+        if added_sponsors:
+            update_sponsors_json(added_sponsors)
+            print(f"\nUpdated sponsor JSON files ({len(added_sponsors)} added)")
+        else:
+            print("\nNo sponsors were successfully added (all image downloads failed)")
 
         save_synced_guests(synced)
 
-        set_github_output("has_changes", "true")
-        set_github_output("new_sponsors", "\n".join(summary_lines))
+        set_github_output("has_changes", "true" if added_sponsors else "false")
+        if summary_lines:
+            set_github_output("new_sponsors", "\n".join(summary_lines))
 
     print("\n[DRY RUN] Complete! No files were modified." if dry_run else "\nSync complete!")
 

@@ -9,6 +9,10 @@ permissions:
   contents: write
   pull-requests: write
 
+concurrency:
+  group: luma-sponsor-sync-qydkgwtf
+  cancel-in-progress: true
+
 jobs:
   sync:
     runs-on: ubuntu-latest
