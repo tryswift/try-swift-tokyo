@@ -39,20 +39,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Report swift-format status on auto-commit
         if: steps.auto-commit.outputs.changes_detected == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          curl -sf -X POST \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/check-runs" \
-            -d '{
-              "name": "swift-format",
-              "head_sha": "'"$(git rev-parse HEAD)"'",
-              "status": "completed",
-              "conclusion": "success",
-              "output": {
-                "title": "swift-format",
-                "summary": "Code was auto-formatted by CI."
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'swift-format',
+              head_sha: '${{ steps.auto-commit.outputs.commit_hash }}',
+              status: 'completed',
+              conclusion: 'success',
+              output: {
+                title: 'swift-format',
+                summary: 'Code was auto-formatted by CI.'
               }
-            }'
+            });
