@@ -144,7 +144,7 @@ public struct Guidance: Sendable {
     else {
       return nil
     }
-    guard let lookAroundScene = try await mapKitClient.lookAround(.init(placemark: geoLocation))
+    guard let lookAroundScene = try await mapKitClient.lookAround(geoLocation)
     else {
       return (origin, destination, route, nil)
     }
@@ -169,7 +169,7 @@ public struct Guidance: Sendable {
       print("[Error] Reverse Geocode failed", polylineOrigin)
       return nil
     }
-    guard let lookAroundScene = try await mapKitClient.lookAround(.init(placemark: geoLocation))
+    guard let lookAroundScene = try await mapKitClient.lookAround(geoLocation)
     else {
       print("[Error] Look around scene not found", geoLocation)
       return (origin, route, nil)
