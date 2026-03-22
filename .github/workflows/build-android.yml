@@ -58,4 +58,9 @@ jobs:
       - name: Build
         run: |
           cd Android
-          swift build 2>&1
+          swift build -v 2>&1 | tee /tmp/build.log || true
+          echo "---LAST 100 LINES---"
+          tail -100 /tmp/build.log
+          echo "---ERRORS---"
+          grep -i -E "error|fatal|exception|failed|cannot|unable" /tmp/build.log || echo "no error patterns found"
+          exit $(grep -c "Build complete!" /tmp/build.log | xargs test 0 -lt && echo 0 || echo 1)
