@@ -9,6 +9,9 @@ jobs:
   swift_format:
     name: swift-format
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: write
     container: swift:6.2
     steps:
       - name: Checkout (non-fork PR)
