@@ -10,9 +10,9 @@ on:
       - "SharedModels/**"
       - "trySwiftTokyo.xcworkspace/xcshareddata/swiftpm/Package.resolved"
       - ".github/workflows/deploy_website.yml"
-      - "MyLibrary/Sources/SponsorFeature/Media.xcassets/**"
-      - "MyLibrary/Sources/ScheduleFeature/Media.xcassets/**"
-      - "MyLibrary/Sources/DataClient/Resources/**"
+      - "iOS/Sources/SponsorFeature/Media.xcassets/**"
+      - "iOS/Sources/ScheduleFeature/Media.xcassets/**"
+      - "DataClient/Sources/DataClient/Resources/**"
   workflow_dispatch:
 
 permissions:
