@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://source.skip.tools/skip-foundation.git",
       "state" : {
-        "revision" : "f4ad2ee57aa176d7580a3a739ab94adbedd98ba0",
-        "version" : "1.3.13"
+        "revision" : "eebb0a36da5fcdff86d4baebf3817134e817dfd4",
+        "version" : "1.3.15"
       }
     },
     {
