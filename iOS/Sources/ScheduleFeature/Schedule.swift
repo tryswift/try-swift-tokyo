@@ -75,6 +75,7 @@ public struct Schedule {
     @CasePathable
     public enum View {
       case onAppear
+      case onDisappear
       case disclosureTapped(Session)
       case yearSelected(ConferenceYear)
       case daySelected(Days)
@@ -159,6 +160,8 @@ public struct Schedule {
           }
           .cancellable(id: CancelID.timer, cancelInFlight: true)
         )
+      case .view(.onDisappear):
+        return .cancel(id: CancelID.timer)
       case .view(.yearSelected(let year)):
         state.selectedYear = year
         state.selectedDay = .day1
@@ -304,6 +307,9 @@ public struct ScheduleView: View {
     .onAppear(perform: {
       send(.onAppear)
     })
+    .onDisappear(perform: {
+      send(.onDisappear)
+    })
     .navigationTitle(Text("Schedule", bundle: .module))
     .searchable(text: $store.searchText, isPresented: $store.isSearchBarPresented)
     .toolbar {
@@ -445,7 +451,8 @@ public struct ScheduleView: View {
       Text(conference.date, style: .date)
         .font(.title2)
         .accessibilityAddTraits(.isHeader)
-      ForEach(Array(conference.schedules.enumerated()), id: \.element) { index, schedule in
+      ForEach(conference.schedules.indices, id: \.self) { index in
+        let schedule = conference.schedules[index]
         VStack(alignment: .leading, spacing: 4) {
           HStack(spacing: 6) {
             Text(
@@ -569,7 +576,7 @@ public struct ScheduleView: View {
   }
 
   private var liveBadge: some View {
-    Text("LIVE")
+    Text("LIVE", bundle: .module)
       .font(.caption2.bold())
       .foregroundStyle(.white)
       .padding(.horizontal, 6)

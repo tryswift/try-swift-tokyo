@@ -79,6 +79,10 @@ public final class ScheduleViewModel {
 
   public init() {}
 
+  deinit {
+    timerTask?.cancel()
+  }
+
   public func loadSchedules() {
     isLoading = true
     errorMessage = nil
@@ -100,7 +104,8 @@ public final class ScheduleViewModel {
     timerTask = Task { @MainActor [weak self] in
       while !Task.isCancelled {
         try? await Task.sleep(for: .seconds(30))
-        self?.currentTime = Date()
+        guard let self else { break }
+        self.currentTime = Date()
       }
     }
   }

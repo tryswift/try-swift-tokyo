@@ -28,13 +28,16 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay3 = { @Sendable _ in .mock3 }
       $0[DataClient.self].fetchVideos = { @Sendable _ in [.mock1] }
     }
-    await store.send(.view(.onAppear))
+    await store.send(.view(.onAppear)) {
+      $0.currentTime = $0.currentTime  // date dependency returns current date
+    }
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
       $0.day2 = .mock2
       $0.day3 = .mock3
       $0.videoMetadata = ["session1": .mock1]
     }
+    await store.send(.view(.onDisappear))
   }
 
   @Test
@@ -52,8 +55,11 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay3 = { @Sendable _ in .mock3 }
       $0[DataClient.self].fetchVideos = { @Sendable _ in [] }
     }
-    await store.send(.view(.onAppear))
+    await store.send(.view(.onAppear)) {
+      $0.currentTime = $0.currentTime
+    }
     await store.receive(\.fetchResponse.failure)
+    await store.send(.view(.onDisappear))
   }
 
   @Test
@@ -71,13 +77,16 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay3 = { @Sendable _ in throw NotFound() }
       $0[DataClient.self].fetchVideos = { @Sendable _ in [.mock1] }
     }
-    await store.send(.view(.onAppear))
+    await store.send(.view(.onAppear)) {
+      $0.currentTime = $0.currentTime
+    }
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
       $0.day2 = .mock2
       $0.day3 = nil
       $0.videoMetadata = ["session1": .mock1]
     }
+    await store.send(.view(.onDisappear))
   }
 
   @Test
@@ -108,13 +117,16 @@ struct ScheduleTests {
       $0.day3 = nil
       $0.videoMetadata = [:]
     }
-    await store.receive(\.view.onAppear)
+    await store.receive(\.view.onAppear) {
+      $0.currentTime = $0.currentTime
+    }
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
       $0.day2 = .mock2
       $0.day3 = nil
       $0.videoMetadata = ["session1": .mock1]
     }
+    await store.send(.view(.onDisappear))
   }
 
   @Test
