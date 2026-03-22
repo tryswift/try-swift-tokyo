@@ -229,7 +229,7 @@ struct LiveTranslationTests {
       $0.speakingItemId = "item-789"
     }
 
-    await store.receive(.view(.speechDidFinish)) {
+    await store.receive(\.view) {
       $0.speakingItemId = nil
     }
 
@@ -255,7 +255,7 @@ struct LiveTranslationTests {
     store.exhaustivity = .off
 
     await store.send(.view(.selectLangCode("ko")))
-    await store.receive(.changeLangCode("ko")) {
+    await store.receive(\.changeLangCode) {
       $0.$selectedLangCode.withLock { $0 = "ko" }
     }
   }
