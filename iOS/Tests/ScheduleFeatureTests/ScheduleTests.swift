@@ -127,7 +127,7 @@ struct ScheduleTests {
   func searchResults_emptyForNoMatch() async {
     var state = Schedule.State()
     state.allSessions = [
-      .init(year: .year2026, session: .mock1, searchCorpus: "session1 speaker1"),
+      .init(year: .year2026, session: .mock1, searchCorpus: "session1 speaker1")
     ]
     state.isSearchBarPresented = true
     state.searchText = "nonexistent"
@@ -140,7 +140,7 @@ struct ScheduleTests {
   func searchResults_caseInsensitive() async {
     var state = Schedule.State()
     state.allSessions = [
-      .init(year: .year2026, session: .mock1, searchCorpus: "swift concurrency deep dive"),
+      .init(year: .year2026, session: .mock1, searchCorpus: "swift concurrency deep dive")
     ]
     state.isSearchBarPresented = true
     state.searchText = "SWIFT"
@@ -152,7 +152,7 @@ struct ScheduleTests {
   func isShowingSearchResults_falseWhenSearchBarDismissed() async {
     var state = Schedule.State()
     state.allSessions = [
-      .init(year: .year2026, session: .mock1, searchCorpus: "session1"),
+      .init(year: .year2026, session: .mock1, searchCorpus: "session1")
     ]
     state.isSearchBarPresented = false
     state.searchText = "session1"
