@@ -1,7 +1,7 @@
-# fly.production.toml - Fly.io configuration for trySwiftCfP Server (Production)
-# Deploy from project root: fly deploy --config fly.production.toml
+# fly.student.production.toml - Fly.io configuration for Student Scholarship Server (Production)
+# Deploy from project root: fly deploy --config fly.student.production.toml
 
-app = 'tryswift-cfp-api-prod'
+app = 'tryswift-student-api-prod'
 primary_region = 'nrt'
 
 [build]
@@ -9,7 +9,7 @@ primary_region = 'nrt'
 
 [env]
   LOG_LEVEL = 'info'
-  APP_MODE = 'cfp'
+  APP_MODE = 'student'
 
 [http_service]
   internal_port = 8080

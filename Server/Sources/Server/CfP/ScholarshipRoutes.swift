@@ -120,7 +120,7 @@ struct ScholarshipRoutes: RouteCollection {
   private func renderScholarshipInfoPage(req: Request, language: CfPLanguage) async throws
     -> HTMLResponse
   {
-    let user = try? await CfPRoutes().getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
 
     // Get budget info
     let conference = try await Conference.query(on: req.db)
@@ -179,7 +179,7 @@ struct ScholarshipRoutes: RouteCollection {
   private func renderScholarshipApplyPage(req: Request, language: CfPLanguage) async throws
     -> HTMLResponse
   {
-    let user = try? await CfPRoutes().getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     let success = req.query[String.self, at: "success"] == "true"
 
     let conference = try await Conference.query(on: req.db)
@@ -187,7 +187,7 @@ struct ScholarshipRoutes: RouteCollection {
       .sort(\.$year, .descending)
       .first()
 
-    let csrfToken = CfPRoutes().csrfToken(from: req)
+    let csrfToken = req.csrfToken
 
     // Get budget info for remaining budget display
     var remaining: Int?
@@ -231,7 +231,7 @@ struct ScholarshipRoutes: RouteCollection {
   private func renderMyScholarshipApplicationPage(
     req: Request, language: CfPLanguage
   ) async throws -> HTMLResponse {
-    let user = try? await CfPRoutes().getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     var application: ScholarshipApplicationDTO?
 
     if let user {
@@ -248,7 +248,7 @@ struct ScholarshipRoutes: RouteCollection {
       }
     }
 
-    let csrfToken = CfPRoutes().csrfToken(from: req)
+    let csrfToken = req.csrfToken
     return HTMLResponse {
       CfPLayout(
         title: language == .ja ? "マイスカラシップ申請" : "My Scholarship Application",
@@ -271,7 +271,7 @@ struct ScholarshipRoutes: RouteCollection {
   private func processScholarshipApply(req: Request, language: CfPLanguage) async throws
     -> Response
   {
-    guard let user = try? await CfPRoutes().getAuthenticatedUser(req: req) else {
+    guard let user = try? await req.authenticatedUser() else {
       return req.redirect(
         to: "/api/v1/auth/github?returnTo=\(language.path(for: "/scholarship/apply"))")
     }
@@ -569,7 +569,7 @@ struct ScholarshipRoutes: RouteCollection {
       .filter(\.$isOpen == true)
       .sort(\.$year, .descending)
       .first()
-    let csrfToken = CfPRoutes().csrfToken(from: req)
+    let csrfToken = req.csrfToken
 
     // Get budget info for remaining budget display
     var remaining: Int?
@@ -616,7 +616,7 @@ struct ScholarshipRoutes: RouteCollection {
   private func processWithdrawApplication(req: Request, language: CfPLanguage) async throws
     -> Response
   {
-    guard let user = try? await CfPRoutes().getAuthenticatedUser(req: req) else {
+    guard let user = try? await req.authenticatedUser() else {
       return req.redirect(
         to: "/api/v1/auth/github?returnTo=\(language.path(for: "/scholarship/my-application"))")
     }
@@ -646,7 +646,7 @@ struct ScholarshipRoutes: RouteCollection {
 
   @Sendable
   func organizerScholarshipsPage(req: Request) async throws -> HTMLResponse {
-    let user = try? await CfPRoutes().getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     var applications: [ScholarshipApplicationDTO] = []
     let conferencePath = req.query[String.self, at: "conference"]
 
@@ -720,7 +720,7 @@ struct ScholarshipRoutes: RouteCollection {
 
   @Sendable
   func organizerScholarshipDetailPage(req: Request) async throws -> HTMLResponse {
-    let user = try? await CfPRoutes().getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     var application: ScholarshipApplicationDTO?
 
     if let user, user.role == .admin {
@@ -745,7 +745,7 @@ struct ScholarshipRoutes: RouteCollection {
       throw Abort(.notFound, reason: "Application not found")
     }
 
-    let csrfToken = CfPRoutes().csrfToken(from: req)
+    let csrfToken = req.csrfToken
     return HTMLResponse {
       CfPLayout(
         title: application.name,
@@ -763,7 +763,7 @@ struct ScholarshipRoutes: RouteCollection {
 
   @Sendable
   func organizerExportScholarshipsCSV(req: Request) async throws -> Response {
-    guard let user = try? await CfPRoutes().getAuthenticatedUser(req: req), user.role == .admin
+    guard let user = try? await req.authenticatedUser(), user.role == .admin
     else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
@@ -833,7 +833,7 @@ struct ScholarshipRoutes: RouteCollection {
 
   @Sendable
   func handleApproveScholarship(req: Request) async throws -> Response {
-    guard let user = try? await CfPRoutes().getAuthenticatedUser(req: req), user.role == .admin
+    guard let user = try? await req.authenticatedUser(), user.role == .admin
     else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
@@ -878,7 +878,7 @@ struct ScholarshipRoutes: RouteCollection {
 
   @Sendable
   func handleRejectScholarship(req: Request) async throws -> Response {
-    guard let user = try? await CfPRoutes().getAuthenticatedUser(req: req), user.role == .admin
+    guard let user = try? await req.authenticatedUser(), user.role == .admin
     else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
@@ -911,7 +911,7 @@ struct ScholarshipRoutes: RouteCollection {
 
   @Sendable
   func handleRevertScholarshipStatus(req: Request) async throws -> Response {
-    guard let user = try? await CfPRoutes().getAuthenticatedUser(req: req), user.role == .admin
+    guard let user = try? await req.authenticatedUser(), user.role == .admin
     else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
@@ -937,7 +937,7 @@ struct ScholarshipRoutes: RouteCollection {
 
   @Sendable
   func organizerScholarshipBudgetPage(req: Request) async throws -> HTMLResponse {
-    let user = try? await CfPRoutes().getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
 
     var budget: ScholarshipBudget?
     var approvedTotal = 0
@@ -967,7 +967,7 @@ struct ScholarshipRoutes: RouteCollection {
       }
     }
 
-    let csrfToken = CfPRoutes().csrfToken(from: req)
+    let csrfToken = req.csrfToken
     return HTMLResponse {
       CfPLayout(title: "Organizer - Scholarship Budget", user: user) {
         OrganizerScholarshipBudgetPageView(
@@ -985,7 +985,7 @@ struct ScholarshipRoutes: RouteCollection {
 
   @Sendable
   func handleUpdateScholarshipBudget(req: Request) async throws -> Response {
-    guard let user = try? await CfPRoutes().getAuthenticatedUser(req: req), user.role == .admin
+    guard let user = try? await req.authenticatedUser(), user.role == .admin
     else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }

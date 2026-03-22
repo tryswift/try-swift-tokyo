@@ -1,10 +1,16 @@
 import Elementary
 import SharedModels
+import Vapor
 
 struct CfPNavigation: HTML, Sendable {
   let user: UserDTO?
   let language: CfPLanguage
   let currentPath: String
+
+  /// Base URL for scholarship pages (e.g. "https://student.tryswift.jp" on CfP app, empty on student app)
+  private static let scholarshipBaseURL: String = Environment.get("SCHOLARSHIP_BASE_URL") ?? ""
+  /// Base URL for CfP pages (e.g. "https://cfp.tryswift.jp" on student app, empty on CfP app)
+  private static let cfpBaseURL: String = Environment.get("CFP_BASE_URL") ?? ""
 
   init(user: UserDTO?, language: CfPLanguage = .en, currentPath: String = "/") {
     self.user = user
@@ -58,7 +64,10 @@ struct CfPNavigation: HTML, Sendable {
               }
             }
             li(.class("nav-item")) {
-              a(.class("nav-link text-white"), .href(language.path(for: "/scholarship"))) {
+              a(
+                .class("nav-link text-white"),
+                .href("\(Self.scholarshipBaseURL)\(language.path(for: "/scholarship"))")
+              ) {
                 language == .ja ? "奨学金" : "Scholarship"
               }
             }
@@ -81,7 +90,10 @@ struct CfPNavigation: HTML, Sendable {
                   }
                 }
                 li(.class("nav-item")) {
-                  a(.class("nav-link text-success fw-bold"), .href("/organizer/scholarships")) {
+                  a(
+                    .class("nav-link text-success fw-bold"),
+                    .href("\(Self.scholarshipBaseURL)/organizer/scholarships")
+                  ) {
                     "🎓 Scholarships"
                   }
                 }

@@ -436,10 +436,12 @@ struct AuthController: RouteCollection {
     response.headers.replaceOrAdd(name: .location, value: returnTo)
 
     // Set HTTP-only cookie for authentication
+    // Use .tryswift.jp domain so cookies work across subdomains (cfp, student)
     response.cookies["cfp_token"] = HTTPCookies.Value(
       string: token,
       expires: Date().addingTimeInterval(86400 * 7),  // 7 days
       maxAge: 86400 * 7,
+      domain: Self.getCookieDomain(),
       path: "/",
       isSecure: Environment.get("APP_ENV") == "production",
       isHTTPOnly: true,
@@ -451,6 +453,7 @@ struct AuthController: RouteCollection {
       string: user.username,
       expires: Date().addingTimeInterval(86400 * 7),
       maxAge: 86400 * 7,
+      domain: Self.getCookieDomain(),
       path: "/",
       isSecure: Environment.get("APP_ENV") == "production",
       isHTTPOnly: false,
@@ -505,6 +508,7 @@ struct AuthController: RouteCollection {
       "tryswift-cfp-website.fly.dev",
       "tryswift.jp",
       "cfp.tryswift.jp",
+      "student.tryswift.jp",
       "localhost",
     ]
 

@@ -98,7 +98,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func loginPage(req: Request) async throws -> Response {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     let error = req.query[String.self, at: "error"]
 
     // If user is logged in and profile is incomplete, redirect to profile setup
@@ -206,7 +206,7 @@ struct CfPRoutes: RouteCollection {
   // MARK: - Shared Render Methods
 
   private func renderHomePage(req: Request, language: CfPLanguage) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     return HTMLResponse {
       CfPLayout(
         title: language == .ja ? "プロポーザル募集" : "Call for Proposals",
@@ -222,7 +222,7 @@ struct CfPRoutes: RouteCollection {
   private func renderGuidelinesPage(req: Request, language: CfPLanguage) async throws
     -> HTMLResponse
   {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     return HTMLResponse {
       CfPLayout(
         title: language == .ja ? "応募ガイドライン" : "Submission Guidelines",
@@ -236,7 +236,7 @@ struct CfPRoutes: RouteCollection {
   }
 
   private func renderLoginPage(req: Request, language: CfPLanguage) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     let error = req.query[String.self, at: "error"]
     return HTMLResponse {
       CfPLayout(
@@ -251,7 +251,7 @@ struct CfPRoutes: RouteCollection {
   }
 
   private func renderSubmitPage(req: Request, language: CfPLanguage) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     let success = req.query[String.self, at: "success"] == "true"
 
     // Check if there's an open conference
@@ -260,7 +260,7 @@ struct CfPRoutes: RouteCollection {
       .sort(\.$year, .descending)
       .first()
 
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
     return HTMLResponse {
       CfPLayout(
         title: language == .ja ? "プロポーザルを提出" : "Submit Proposal",
@@ -283,7 +283,7 @@ struct CfPRoutes: RouteCollection {
   private func renderMyProposalsPage(req: Request, language: CfPLanguage) async throws
     -> HTMLResponse
   {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     var proposals: [ProposalDTO] = []
     let showWithdrawnMessage = req.query[String.self, at: "withdrawn"] == "true"
 
@@ -315,7 +315,7 @@ struct CfPRoutes: RouteCollection {
   private func renderMyProposalDetailPage(req: Request, language: CfPLanguage) async throws
     -> HTMLResponse
   {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     var proposal: ProposalDTO?
     let showUpdatedMessage = req.query[String.self, at: "updated"] == "true"
 
@@ -338,7 +338,7 @@ struct CfPRoutes: RouteCollection {
       }
     }
 
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
     return HTMLResponse {
       CfPLayout(
         title: proposal?.title ?? (language == .ja ? "プロポーザル詳細" : "Proposal Detail"),
@@ -355,13 +355,13 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func profilePage(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req) else {
+    guard let user = try? await req.authenticatedUser() else {
       return req.redirect(to: "/api/v1/auth/github?returnTo=/profile")
     }
 
     let returnTo = req.query[String.self, at: "returnTo"]
     let success = req.query[String.self, at: "success"] == "true"
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
 
     let html = HTMLResponse {
       CfPLayout(title: "Profile Setup", user: user) {
@@ -380,7 +380,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func handleUpdateProfile(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req) else {
+    guard let user = try? await req.authenticatedUser() else {
       return req.redirect(to: "/api/v1/auth/github?returnTo=/profile")
     }
 
@@ -439,7 +439,7 @@ struct CfPRoutes: RouteCollection {
   private func renderProfilePageWithError(
     req: Request, user: UserDTO, error: String, returnTo: String?
   ) async throws -> Response {
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
     let html = HTMLResponse {
       CfPLayout(title: "Profile Setup", user: user) {
         ProfileSetupPageView(
@@ -460,7 +460,7 @@ struct CfPRoutes: RouteCollection {
   }
 
   private func processSubmitProposal(req: Request, language: CfPLanguage) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req) else {
+    guard let user = try? await req.authenticatedUser() else {
       return req.redirect(to: "/api/v1/auth/github?returnTo=\(language.path(for: "/submit"))")
     }
 
@@ -774,7 +774,7 @@ struct CfPRoutes: RouteCollection {
     error: String,
     language: CfPLanguage
   ) async throws -> Response {
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
     let html = HTMLResponse {
       CfPLayout(
         title: language == .ja ? "プロポーザルを提出" : "Submit Proposal",
@@ -794,7 +794,7 @@ struct CfPRoutes: RouteCollection {
   @Sendable
   func lookupUserByGitHubUsername(req: Request) async throws -> Response {
     // Require authentication
-    guard (try? await getAuthenticatedUser(req: req)) != nil else {
+    guard (try? await req.authenticatedUser()) != nil else {
       throw Abort(.unauthorized)
     }
 
@@ -836,7 +836,7 @@ struct CfPRoutes: RouteCollection {
   private func renderEditProposalPage(req: Request, language: CfPLanguage) async throws
     -> HTMLResponse
   {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     var proposal: ProposalDTO?
 
     if let user {
@@ -858,7 +858,7 @@ struct CfPRoutes: RouteCollection {
       }
     }
 
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
     return HTMLResponse {
       CfPLayout(
         title: language == .ja ? "プロポーザルを編集" : "Edit Proposal",
@@ -874,7 +874,7 @@ struct CfPRoutes: RouteCollection {
 
   private func processEditProposal(req: Request, language: CfPLanguage) async throws -> Response {
     // 1. Authentication check
-    guard let user = try? await getAuthenticatedUser(req: req) else {
+    guard let user = try? await req.authenticatedUser() else {
       return req.redirect(to: "/api/v1/auth/github?returnTo=\(language.path(for: "/my-proposals"))")
     }
 
@@ -1181,7 +1181,7 @@ struct CfPRoutes: RouteCollection {
       speakerUsername: user.username,
       conference: proposal.conference
     )
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
     let html = HTMLResponse {
       CfPLayout(
         title: language == .ja ? "プロポーザルを編集" : "Edit Proposal",
@@ -1203,7 +1203,7 @@ struct CfPRoutes: RouteCollection {
     -> Response
   {
     // 1. Authentication check
-    guard let user = try? await getAuthenticatedUser(req: req) else {
+    guard let user = try? await req.authenticatedUser() else {
       return req.redirect(to: "/api/v1/auth/github?returnTo=\(language.path(for: "/my-proposals"))")
     }
 
@@ -1270,7 +1270,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func organizerProposalsPage(req: Request) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     let conferencePath = req.query[String.self, at: "conference"]
 
     // Get proposals (filtered by conference if specified)
@@ -1303,7 +1303,7 @@ struct CfPRoutes: RouteCollection {
       }
     }
 
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
     let addError = req.query[String.self, at: "add-error"]
     return HTMLResponse {
       CfPLayout(title: "Organizer - Proposals", user: user) {
@@ -1321,7 +1321,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func organizerProposalDetailPage(req: Request) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     var proposal: ProposalDTO?
 
     if let user, user.role == .admin {
@@ -1342,7 +1342,7 @@ struct CfPRoutes: RouteCollection {
       }
     }
 
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
     return HTMLResponse {
       CfPLayout(title: proposal?.title ?? "Proposal Detail", user: user) {
         OrganizerProposalDetailPageView(user: user, proposal: proposal, csrfToken: csrfToken)
@@ -1352,7 +1352,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func organizerExportProposalsCSV(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -1451,7 +1451,7 @@ struct CfPRoutes: RouteCollection {
   private func changeProposalStatus(req: Request, newStatus: ProposalStatus) async throws
     -> Response
   {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -1475,7 +1475,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func organizerImportPage(req: Request) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
 
     // Get available conferences for selection
     var conferences: [ConferencePublicInfo] = []
@@ -1494,7 +1494,7 @@ struct CfPRoutes: RouteCollection {
       req.query[String.self, at: "error"]
       ?? (errorCount.map { $0 > 0 ? "\($0) rows had errors during import" : nil } ?? nil)
 
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
     return HTMLResponse {
       CfPLayout(title: "Import Speaker Candidates", user: user) {
         ImportSpeakersPageView(
@@ -1511,7 +1511,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func handleImportCSV(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -1685,7 +1685,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func organizerEditProposalPage(req: Request) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     var proposal: ProposalDTO?
     var conferences: [ConferencePublicInfo] = []
 
@@ -1712,7 +1712,7 @@ struct CfPRoutes: RouteCollection {
       }
     }
 
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
 
     return HTMLResponse {
       CfPLayout(title: "Edit Proposal (Organizer)", user: user) {
@@ -1728,7 +1728,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func handleOrganizerEditProposal(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -1951,7 +1951,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func handleOrganizerDeleteProposal(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -1978,7 +1978,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func organizerNewProposalPage(req: Request) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
     var conferences: [ConferencePublicInfo] = []
 
     if let user, user.role == .admin {
@@ -1988,7 +1988,7 @@ struct CfPRoutes: RouteCollection {
         .map { $0.toPublicInfo() }
     }
 
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
     return HTMLResponse {
       CfPLayout(title: "Add Proposal", user: user) {
         OrganizerNewProposalPageView(
@@ -2002,7 +2002,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func handleOrganizerNewProposal(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -2250,7 +2250,7 @@ struct CfPRoutes: RouteCollection {
       .all()
       .map { $0.toPublicInfo() }
 
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
     let html = HTMLResponse {
       CfPLayout(title: "Add Proposal", user: user) {
         OrganizerNewProposalPageView(
@@ -2268,7 +2268,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func handleOrganizerInlineAddProposal(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -2369,10 +2369,10 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func timetableEditorPage(req: Request) async throws -> HTMLResponse {
-    let user = try? await getAuthenticatedUser(req: req)
+    let user = try? await req.authenticatedUser()
 
     guard let user, user.role == .admin else {
-      let csrfToken = csrfToken(from: req)
+      let csrfToken = req.csrfToken
       return HTMLResponse {
         CfPLayout(title: "Timetable Editor", user: user) {
           TimetableEditorPageView(
@@ -2434,7 +2434,7 @@ struct CfPRoutes: RouteCollection {
     let assignedProposalIDs = Set(slots.compactMap { $0.$proposal.id })
     let unassignedProposals = acceptedDTOs.filter { !assignedProposalIDs.contains($0.id) }
 
-    let csrfToken = csrfToken(from: req)
+    let csrfToken = req.csrfToken
     return HTMLResponse {
       CfPLayout(title: "Timetable Editor", user: user) {
         TimetableEditorPageView(
@@ -2451,7 +2451,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func getTimetableSlots(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -2487,7 +2487,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func createSlot(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -2570,7 +2570,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func updateSlot(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -2644,7 +2644,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func deleteSlot(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -2665,7 +2665,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func reorderSlots(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -2690,7 +2690,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func exportTimetableJSON(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -2715,7 +2715,7 @@ struct CfPRoutes: RouteCollection {
 
   @Sendable
   func exportAllTimetableJSON(req: Request) async throws -> Response {
-    guard let user = try? await getAuthenticatedUser(req: req), user.role == .admin else {
+    guard let user = try? await req.authenticatedUser(), user.role == .admin else {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
@@ -2932,29 +2932,4 @@ struct CfPRoutes: RouteCollection {
     return importUserID
   }
 
-  /// Get CSRF token from cookie
-  func csrfToken(from req: Request) -> String {
-    req.cookies["csrf_token"]?.string ?? ""
-  }
-
-  /// Get authenticated user from cookie or authorization header
-  func getAuthenticatedUser(req: Request) async throws -> UserDTO? {
-    // Try to get token from cookie first, then Authorization header
-    let token: String?
-    if let cookieToken = req.cookies["cfp_token"]?.string, !cookieToken.isEmpty {
-      token = cookieToken
-    } else if let authHeader = req.headers.bearerAuthorization?.token {
-      token = authHeader
-    } else {
-      return nil
-    }
-
-    guard let token else { return nil }
-
-    let payload = try await req.jwt.verify(token, as: UserJWTPayload.self)
-    guard let userID = payload.userID else { return nil }
-    guard let user = try await User.find(userID, on: req.db) else { return nil }
-
-    return try user.toDTO()
-  }
 }

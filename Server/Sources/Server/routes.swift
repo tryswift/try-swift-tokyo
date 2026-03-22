@@ -1,8 +1,24 @@
 import Vapor
 
+/// Controls which routes are registered based on the deployment target.
+/// - `cfp`: CfP routes only (cfp.tryswift.jp)
+/// - `student`: Scholarship routes only (student.tryswift.jp)
+/// - `all`: Both (local development)
+enum AppMode: String {
+  case cfp
+  case student
+  case all
+
+  static var current: AppMode {
+    AppMode(rawValue: Environment.get("APP_MODE") ?? "all") ?? .all
+  }
+}
+
 enum AppRoutes {
   /// Register all routes for the application
   static func register(_ app: Application) throws {
+    let mode = AppMode.current
+
     // Serve static files for CfP (images, CSS, JS)
     // FileMiddleware maps request paths directly to filesystem paths
     // e.g., /cfp/images/riko.png -> Public/cfp/images/riko.png
@@ -16,7 +32,6 @@ enum AppRoutes {
       )
     )
 
-    // Root endpoint - handled by CfPRoutes for production
     // Status endpoint for monitoring
     app.get("status") { req in
       return ["status": "ok", "service": "trySwiftCfP"]
@@ -27,18 +42,20 @@ enum AppRoutes {
       return ["status": "healthy", "service": "trySwiftCfP"]
     }
 
-    // API version prefix
+    // API version prefix — auth is always needed
     let api = app.grouped("api", "v1")
-
-    // Register API controllers
     try api.register(collection: AuthController())
-    try api.register(collection: ConferenceController())
-    try api.register(collection: ProposalController())
 
-    // Register CfP SSR pages
-    try app.register(collection: CfPRoutes())
+    // CfP-specific routes
+    if mode == .cfp || mode == .all {
+      try api.register(collection: ConferenceController())
+      try api.register(collection: ProposalController())
+      try app.register(collection: CfPRoutes())
+    }
 
-    // Register Scholarship SSR pages
-    try app.register(collection: ScholarshipRoutes())
+    // Scholarship-specific routes
+    if mode == .student || mode == .all {
+      try app.register(collection: ScholarshipRoutes())
+    }
   }
 }
