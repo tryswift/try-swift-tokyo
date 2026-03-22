@@ -157,7 +157,7 @@ struct ScholarshipInfoPageView: HTML, Sendable {
       } else {
         a(
           .class("btn btn-dark btn-lg"),
-          .href("/api/v1/auth/github?returnTo=\(language.path(for: "/scholarship"))")
+          .href(AuthURL.login(returnTo: language.path(for: "/scholarship")))
         ) {
           language == .ja ? "GitHubでログインして申請" : "Sign in with GitHub to Apply"
         }

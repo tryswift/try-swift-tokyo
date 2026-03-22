@@ -68,7 +68,7 @@ struct LoginPageView: HTML, Sendable {
                     ? "GitHubアカウントでログインして、トークプロポーザルの提出と管理ができます。"
                     : "Connect your GitHub account to submit and manage your talk proposals."
                 }
-                a(.class("btn btn-dark btn-lg"), .href("/api/v1/auth/github")) {
+                a(.class("btn btn-dark btn-lg"), .href(AuthURL.login(returnTo: "/"))) {
                   language == .ja ? "GitHubでログイン" : "Sign in with GitHub"
                 }
                 p(.class("text-muted small mt-4 mb-0")) {

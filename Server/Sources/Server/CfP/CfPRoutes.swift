@@ -356,7 +356,7 @@ struct CfPRoutes: RouteCollection {
   @Sendable
   func profilePage(req: Request) async throws -> Response {
     guard let user = try? await req.authenticatedUser() else {
-      return req.redirect(to: "/api/v1/auth/github?returnTo=/profile")
+      return req.redirect(to: AuthURL.login(returnTo: "/profile"))
     }
 
     let returnTo = req.query[String.self, at: "returnTo"]
@@ -381,7 +381,7 @@ struct CfPRoutes: RouteCollection {
   @Sendable
   func handleUpdateProfile(req: Request) async throws -> Response {
     guard let user = try? await req.authenticatedUser() else {
-      return req.redirect(to: "/api/v1/auth/github?returnTo=/profile")
+      return req.redirect(to: AuthURL.login(returnTo: "/profile"))
     }
 
     // Decode form data
@@ -461,7 +461,7 @@ struct CfPRoutes: RouteCollection {
 
   private func processSubmitProposal(req: Request, language: CfPLanguage) async throws -> Response {
     guard let user = try? await req.authenticatedUser() else {
-      return req.redirect(to: "/api/v1/auth/github?returnTo=\(language.path(for: "/submit"))")
+      return req.redirect(to: AuthURL.login(returnTo: language.path(for: "/submit")))
     }
 
     // Decode form data
@@ -875,7 +875,7 @@ struct CfPRoutes: RouteCollection {
   private func processEditProposal(req: Request, language: CfPLanguage) async throws -> Response {
     // 1. Authentication check
     guard let user = try? await req.authenticatedUser() else {
-      return req.redirect(to: "/api/v1/auth/github?returnTo=\(language.path(for: "/my-proposals"))")
+      return req.redirect(to: AuthURL.login(returnTo: language.path(for: "/my-proposals")))
     }
 
     // 2. Get proposal ID
@@ -1204,7 +1204,7 @@ struct CfPRoutes: RouteCollection {
   {
     // 1. Authentication check
     guard let user = try? await req.authenticatedUser() else {
-      return req.redirect(to: "/api/v1/auth/github?returnTo=\(language.path(for: "/my-proposals"))")
+      return req.redirect(to: AuthURL.login(returnTo: language.path(for: "/my-proposals")))
     }
 
     // 2. Get proposal ID

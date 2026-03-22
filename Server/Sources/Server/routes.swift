@@ -3,10 +3,12 @@ import Vapor
 /// Controls which routes are registered based on the deployment target.
 /// - `cfp`: CfP routes only (cfp.tryswift.jp)
 /// - `student`: Scholarship routes only (student.tryswift.jp)
-/// - `all`: Both (local development)
+/// - `auth`: Auth service only (auth.tryswift.jp)
+/// - `all`: Everything (local development)
 enum AppMode: String {
   case cfp
   case student
+  case auth
   case all
 
   static var current: AppMode {
@@ -42,9 +44,13 @@ enum AppRoutes {
       return ["status": "healthy", "service": "trySwiftCfP"]
     }
 
-    // API version prefix — auth is always needed
+    // API version prefix
     let api = app.grouped("api", "v1")
-    try api.register(collection: AuthController())
+
+    // Auth routes — registered on auth app and in local dev (all)
+    if mode == .auth || mode == .all {
+      try api.register(collection: AuthController())
+    }
 
     // CfP-specific routes
     if mode == .cfp || mode == .all {

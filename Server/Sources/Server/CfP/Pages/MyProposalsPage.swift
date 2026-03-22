@@ -131,7 +131,7 @@ struct MyProposalsPageView: HTML, Sendable {
             }
             a(
               .class("btn btn-dark"),
-              .href("/api/v1/auth/github?returnTo=\(language.path(for: "/my-proposals"))")
+              .href(AuthURL.login(returnTo: language.path(for: "/my-proposals")))
             ) {
               language == .ja ? "GitHubでログイン" : "Sign in with GitHub"
             }

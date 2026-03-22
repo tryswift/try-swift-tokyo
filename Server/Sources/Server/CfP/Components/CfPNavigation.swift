@@ -115,7 +115,7 @@ struct CfPNavigation: HTML, Sendable {
               }
             } else {
               li(.class("nav-item ms-2")) {
-                a(.class("btn btn-sm btn-light"), .href("/api/v1/auth/github")) {
+                a(.class("btn btn-sm btn-light"), .href(AuthURL.login(returnTo: "/"))) {
                   language == .ja ? "GitHubでログイン" : "Login with GitHub"
                 }
               }

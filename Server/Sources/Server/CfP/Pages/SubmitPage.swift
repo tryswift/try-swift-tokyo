@@ -872,7 +872,7 @@ struct SubmitPageView: HTML, Sendable {
         }
         a(
           .class("btn btn-dark"),
-          .href("/api/v1/auth/github?returnTo=\(language.path(for: "/submit"))")
+          .href(AuthURL.login(returnTo: language.path(for: "/submit")))
         ) {
           language == .ja ? "GitHubでログイン" : "Sign in with GitHub"
         }

@@ -509,6 +509,7 @@ struct AuthController: RouteCollection {
       "tryswift.jp",
       "cfp.tryswift.jp",
       "student.tryswift.jp",
+      "auth.tryswift.jp",
       "localhost",
     ]
 

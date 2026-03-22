@@ -272,8 +272,7 @@ struct ScholarshipRoutes: RouteCollection {
     -> Response
   {
     guard let user = try? await req.authenticatedUser() else {
-      return req.redirect(
-        to: "/api/v1/auth/github?returnTo=\(language.path(for: "/scholarship/apply"))")
+      return req.redirect(to: AuthURL.login(returnTo: language.path(for: "/scholarship/apply")))
     }
 
     // Decode form data
@@ -618,7 +617,7 @@ struct ScholarshipRoutes: RouteCollection {
   {
     guard let user = try? await req.authenticatedUser() else {
       return req.redirect(
-        to: "/api/v1/auth/github?returnTo=\(language.path(for: "/scholarship/my-application"))")
+        to: AuthURL.login(returnTo: language.path(for: "/scholarship/my-application")))
     }
 
     // Find the user's application
