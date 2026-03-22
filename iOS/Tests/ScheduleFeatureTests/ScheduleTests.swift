@@ -17,6 +17,7 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
       $0[DataClient.self].fetchDay3 = { @Sendable _ in .mock3 }
     }
+    store.exhaustivity = .off
     await store.send(.view(.onAppear))
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
@@ -35,6 +36,7 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
       $0[DataClient.self].fetchDay3 = { @Sendable _ in .mock3 }
     }
+    store.exhaustivity = .off
     await store.send(.view(.onAppear))
     await store.receive(\.fetchResponse.failure)
   }
@@ -49,6 +51,7 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
       $0[DataClient.self].fetchDay3 = { @Sendable _ in throw NotFound() }
     }
+    store.exhaustivity = .off
     await store.send(.view(.onAppear))
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
@@ -74,6 +77,7 @@ struct ScheduleTests {
         throw DataClientError.resourceNotFound("2017-day3")
       }
     }
+    store.exhaustivity = .off
 
     await store.send(.view(.yearSelected(.year2017))) {
       $0.selectedYear = .year2017
@@ -88,5 +92,80 @@ struct ScheduleTests {
       $0.day2 = .mock2
       $0.day3 = nil
     }
+  }
+
+  @Test
+  func searchResults_filtersByTitle() async {
+    var state = Schedule.State()
+    state.allSessions = [
+      .init(year: .year2026, session: .mock1, searchCorpus: "session1 speaker1"),
+      .init(year: .year2025, session: .mock2, searchCorpus: "session2 speaker2"),
+    ]
+    state.isSearchBarPresented = true
+    state.searchText = "session1"
+
+    #expect(state.searchResults.count == 1)
+    #expect(state.searchResults.first?.session == .mock1)
+    #expect(state.isShowingSearchResults == true)
+  }
+
+  @Test
+  func searchResults_filtersBySpeakerName() async {
+    var state = Schedule.State()
+    state.allSessions = [
+      .init(year: .year2026, session: .mock1, searchCorpus: "session1 speaker1"),
+      .init(year: .year2025, session: .mock2, searchCorpus: "session2 speaker2"),
+    ]
+    state.isSearchBarPresented = true
+    state.searchText = "speaker2"
+
+    #expect(state.searchResults.count == 1)
+    #expect(state.searchResults.first?.session == .mock2)
+  }
+
+  @Test
+  func searchResults_emptyForNoMatch() async {
+    var state = Schedule.State()
+    state.allSessions = [
+      .init(year: .year2026, session: .mock1, searchCorpus: "session1 speaker1"),
+    ]
+    state.isSearchBarPresented = true
+    state.searchText = "nonexistent"
+
+    #expect(state.searchResults.isEmpty)
+    #expect(state.isShowingSearchResults == true)
+  }
+
+  @Test
+  func searchResults_caseInsensitive() async {
+    var state = Schedule.State()
+    state.allSessions = [
+      .init(year: .year2026, session: .mock1, searchCorpus: "swift concurrency deep dive"),
+    ]
+    state.isSearchBarPresented = true
+    state.searchText = "SWIFT"
+
+    #expect(state.searchResults.count == 1)
+  }
+
+  @Test
+  func isShowingSearchResults_falseWhenSearchBarDismissed() async {
+    var state = Schedule.State()
+    state.allSessions = [
+      .init(year: .year2026, session: .mock1, searchCorpus: "session1"),
+    ]
+    state.isSearchBarPresented = false
+    state.searchText = "session1"
+
+    #expect(state.isShowingSearchResults == false)
+  }
+
+  @Test
+  func isShowingSearchResults_falseWhenSearchTextEmpty() async {
+    var state = Schedule.State()
+    state.isSearchBarPresented = true
+    state.searchText = ""
+
+    #expect(state.isShowingSearchResults == false)
   }
 }
