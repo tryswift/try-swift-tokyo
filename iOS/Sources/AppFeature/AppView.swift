@@ -30,7 +30,7 @@ public struct AppReducer {
 
   @ObservableState
   public struct State: Equatable {
-    var schedule = Schedule.State()
+    var schedule = ScheduleFeature.Schedule.State()
     var liveTranslation = LiveTranslation.State()
     var guidance = Guidance.State()
     var sponsors = SponsorsList.State()
@@ -52,7 +52,7 @@ public struct AppReducer {
   }
 
   public enum Action {
-    case schedule(Schedule.Action)
+    case schedule(ScheduleFeature.Schedule.Action)
     case liveTranslation(LiveTranslation.Action)
     case guidance(Guidance.Action)
     case sponsors(SponsorsList.Action)
@@ -72,7 +72,7 @@ public struct AppReducer {
 
   public var body: some ReducerOf<Self> {
     Scope(state: \.schedule, action: \.schedule) {
-      Schedule()
+      ScheduleFeature.Schedule()
     }
     Scope(state: \.liveTranslation, action: \.liveTranslation) {
       LiveTranslation()
@@ -97,7 +97,7 @@ public struct AppReducer {
       switch action {
       case .sidebarItemSelected(let item):
         state.selectedSidebarItem = item
-        let targetDay: Schedule.Days
+        let targetDay: ScheduleFeature.Schedule.Days
         let targetYear: ConferenceYear
         switch item {
         case .day1:
