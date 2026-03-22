@@ -9,8 +9,7 @@ import SharedModels
 public struct MapKitClient: Sendable {
   public var mapRoute: @Sendable (MKMapItem, MKMapItem) async throws -> MKRoute?
   public var lookAround: @Sendable (MKMapItem) async throws -> MKLookAroundScene?
-  public var reverseGeocodeLocation:
-    @Sendable (CLLocationCoordinate2D) async throws -> [MKMapItem]
+  public var reverseGeocodeLocation: @Sendable (CLLocationCoordinate2D) async throws -> [MKMapItem]
   public var localSearch: @Sendable (String, MKCoordinateRegion) async throws -> [MKMapItem]
 }
 
