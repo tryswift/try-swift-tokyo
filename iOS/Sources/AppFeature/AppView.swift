@@ -102,10 +102,18 @@ public struct AppReducer {
         let targetDay: Schedule.Days
         let targetYear: ConferenceYear
         switch item {
-        case .day1: targetDay = .day1; targetYear = .latest
-        case .day2: targetDay = .day2; targetYear = .latest
-        case .day3: targetDay = .day3; targetYear = .latest
-        case .pastYear(let year): targetDay = .day1; targetYear = year
+        case .day1:
+          targetDay = .day1
+          targetYear = .latest
+        case .day2:
+          targetDay = .day2
+          targetYear = .latest
+        case .day3:
+          targetDay = .day3
+          targetYear = .latest
+        case .pastYear(let year):
+          targetDay = .day1
+          targetYear = year
         default: return .none
         }
         state.schedule.selectedDay = targetDay
@@ -241,18 +249,26 @@ public struct AppView: View {
       }
 
       Section {
-        Button { store.send(.openExternalLink(.codeOfConduct)) } label: {
+        Button {
+          store.send(.openExternalLink(.codeOfConduct))
+        } label: {
           Label(String(localized: "Code of Conduct", bundle: .module), systemImage: "doc.text")
         }
-        Button { store.send(.openExternalLink(.privacyPolicy)) } label: {
+        Button {
+          store.send(.openExternalLink(.privacyPolicy))
+        } label: {
           Label(String(localized: "Privacy Policy", bundle: .module), systemImage: "hand.raised")
         }
         Label(String(localized: "Acknowledgements", bundle: .module), systemImage: "heart")
           .tag(SidebarItem.acknowledgements)
-        Button { store.send(.openExternalLink(.luma)) } label: {
+        Button {
+          store.send(.openExternalLink(.luma))
+        } label: {
           Label(String(localized: "Luma", bundle: .module), systemImage: "ticket")
         }
-        Button { store.send(.openExternalLink(.website)) } label: {
+        Button {
+          store.send(.openExternalLink(.website))
+        } label: {
           Label(
             String(localized: "try! Swift Website", bundle: .module), systemImage: "safari")
         }
