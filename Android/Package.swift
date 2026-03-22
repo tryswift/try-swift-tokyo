@@ -23,6 +23,16 @@ let package = Package(
         "SponsorFeature",
         "VenueFeature",
         "AboutFeature",
+        "LiveTranslationFeature",
+        .product(name: "SkipUI", package: "skip-ui"),
+        .product(name: "SkipFoundation", package: "skip-foundation"),
+        .product(name: "SkipModel", package: "skip-model"),
+      ],
+      plugins: [.plugin(name: "skipstone", package: "skip")]
+    ),
+    .target(
+      name: "LiveTranslationFeature",
+      dependencies: [
         .product(name: "SkipUI", package: "skip-ui"),
         .product(name: "SkipFoundation", package: "skip-foundation"),
         .product(name: "SkipModel", package: "skip-model"),

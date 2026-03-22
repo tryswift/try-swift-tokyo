@@ -1,0 +1,42 @@
+name: Build Android
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "Android/**"
+      - "SharedModels/**"
+      - "DataClient/**"
+      - ".github/workflows/build-android.yml"
+  push:
+    paths:
+      - "Android/**"
+      - "SharedModels/**"
+      - "DataClient/**"
+      - ".github/workflows/build-android.yml"
+
+jobs:
+  build:
+    name: Build Android
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Skip
+        uses: skiptools/actions/setup-skip@v1
+        with:
+          gradle-version: current
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v5
+        with:
+          key: spm-android-${{ runner.os }}-${{ hashFiles('Android/Package.resolved', 'Android/Package.swift') }}
+          restore-keys: spm-android-${{ runner.os }}-
+          path: Android/.build
+
+      - name: Build
+        run: |
+          cd Android
+          swift build

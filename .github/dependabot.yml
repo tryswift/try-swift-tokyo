@@ -27,6 +27,15 @@ updates:
       - "dependencies"
       - "CfP"
 
+  # Android app - Swift Package Manager
+  - package-ecosystem: "swift"
+    directory: "/Android"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "Android"
+
   # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"

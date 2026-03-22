@@ -22,6 +22,7 @@ skip:
     - SponsorFeature
     - VenueFeature
     - AboutFeature
+    - LiveTranslationFeature
 
 # Resource handling
 resources:

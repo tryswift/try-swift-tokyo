@@ -1,5 +1,4 @@
 import ComposableArchitecture
-import LiveTranslationSDK_iOS
 import Testing
 
 @testable import LiveTranslationFeature
@@ -17,8 +16,7 @@ struct LiveTranslationTests {
     }
     store.exhaustivity = .off
 
-    let langList = makeLangList(["en", "ja", "ko"])
-    await store.send(.validateSelectedLangCode(langList))
+    await store.send(.validateSelectedLangCode(["en", "ja", "ko"]))
   }
 
   @Test
@@ -28,24 +26,13 @@ struct LiveTranslationTests {
 
     let store = TestStore(initialState: state) {
       LiveTranslation()
+    } withDependencies: {
+      $0.liveTranslationServiceClient.requestTranslationLanguage = { _ in }
     }
     store.exhaustivity = .off
 
-    let langList = makeLangList(["en", "ja", "ko"])
-    await store.send(.validateSelectedLangCode(langList)) {
+    await store.send(.validateSelectedLangCode(["en", "ja", "ko"])) {
       $0.$selectedLangCode.withLock { $0 = "en" }
     }
-  }
-}
-
-private func makeLangList(_ codes: [String]) -> [LanguageEntity.Response.LanguageItem] {
-  codes.enumerated().compactMap { index, code in
-    let json = """
-      {"langID":\(index),"language":"\(code)","langCode":"\(code)","langORG":"\(code)","langLocal":"\(code)","isSupportLangSet":true}
-      """
-    return try? JSONDecoder().decode(
-      LanguageEntity.Response.LanguageItem.self,
-      from: Data(json.utf8)
-    )
   }
 }

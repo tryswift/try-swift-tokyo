@@ -26,7 +26,7 @@ jobs:
       - name: Configure safe directory
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Format
-        run: swift format --ignore-unparsable-files --in-place --recursive ./App/ ./Server/ ./SharedModels/ ./iOS/ ./Website/
+        run: swift format --ignore-unparsable-files --in-place --recursive ./Android/ ./App/ ./Server/ ./SharedModels/ ./iOS/ ./Website/
       - name: Check diff (fork PR)
         if: ${{ github.event.pull_request.head.repo.fork }}
         run: git diff --exit-code
