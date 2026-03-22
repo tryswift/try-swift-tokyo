@@ -110,6 +110,15 @@
       }
     },
     {
+      "identity" : "opencombine",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/OpenCombine/OpenCombine.git",
+      "state" : {
+        "revision" : "8576f0d579b27020beccbccc3ea6844f3ddfc2c2",
+        "version" : "0.14.0"
+      }
+    },
+    {
       "identity" : "postgres-kit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/postgres-kit.git",
@@ -393,8 +402,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/vapor.git",
       "state" : {
-        "revision" : "6d06e13021c299aa3300986f4eb5bb143d17ac9b",
-        "version" : "4.121.2"
+        "revision" : "a8db2dbda8b3cdc8a61bd35128590bd296e85563",
+        "version" : "4.121.3"
       }
     },
     {
