@@ -7,6 +7,9 @@ import SharedModels
 
 @DependencyClient
 public struct MapKitClient: Sendable {
+  public enum Error: Swift.Error {
+    case invalidLocation
+  }
   public var mapRoute: @Sendable (MKMapItem, MKMapItem) async throws -> MKRoute?
   public var lookAround: @Sendable (MKMapItem) async throws -> MKLookAroundScene?
   public var reverseGeocodeLocation: @Sendable (CLLocationCoordinate2D) async throws -> [MKMapItem]
@@ -33,7 +36,7 @@ extension MapKitClient: DependencyKey {
     reverseGeocodeLocation: { location in
       let clLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
       guard let request = MKReverseGeocodingRequest(location: clLocation) else {
-        return []
+        throw Error.invalidLocation
       }
       return try await request.mapItems
     },
