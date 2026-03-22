@@ -1455,44 +1455,47 @@ struct CfPRoutes: RouteCollection {
       throw Abort(.unauthorized, reason: "Admin access required")
     }
 
-    let conferencePath = req.query[String.self, at: "conference"]
-
-    let query = Proposal.query(on: req.db)
-      .filter(\.$status == .accepted)
-      .with(\.$speaker)
-      .with(\.$conference)
-      .sort(\.$speakerName, .ascending)
-
-    if let conferencePath {
-      if let conference = try await Conference.query(on: req.db)
-        .filter(\.$path == conferencePath)
-        .first(),
-        let conferenceID = conference.id
-      {
-        query.filter(\.$conference.$id == conferenceID)
+    let conference: Conference
+    if let conferencePath = req.query[String.self, at: "conference"] {
+      guard
+        let found = try await Conference.query(on: req.db)
+          .filter(\.$path == conferencePath)
+          .first()
+      else {
+        throw Abort(.notFound, reason: "Conference not found")
       }
+      conference = found
     } else {
-      if let conference = try await Conference.query(on: req.db)
-        .sort(\.$year, .descending)
-        .first(),
-        let conferenceID = conference.id
-      {
-        query.filter(\.$conference.$id == conferenceID)
+      guard
+        let found = try await Conference.query(on: req.db)
+          .sort(\.$year, .descending)
+          .first()
+      else {
+        throw Abort(.notFound, reason: "No conferences available")
       }
+      conference = found
     }
 
-    let proposals = try await query.all()
+    guard let conferenceID = conference.id else {
+      throw Abort(.internalServerError, reason: "Conference has no ID")
+    }
+
+    let proposals = try await Proposal.query(on: req.db)
+      .filter(\.$status == .accepted)
+      .filter(\.$conference.$id == conferenceID)
+      .sort(\.$speakerName, .ascending)
+      .all()
 
     let speakers = proposals.map { proposal -> SpeakerExportDTO in
       let imageName = proposal.speakerName
         .lowercased()
         .replacingOccurrences(of: " ", with: "_")
 
-      var links: [SpeakerExportLink] = []
+      var links: [TimetableExportLink] = []
       if let githubUsername = proposal.githubUsername, !githubUsername.isEmpty {
-        links.append(SpeakerExportLink(
-          url: "https://github.com/\(githubUsername)",
-          name: "@\(githubUsername)"
+        links.append(TimetableExportLink(
+          name: "@\(githubUsername)",
+          url: "https://github.com/\(githubUsername)"
         ))
       }
 
@@ -1507,7 +1510,8 @@ struct CfPRoutes: RouteCollection {
       )
     }
 
-    return try encodeTimetableResponse(speakers, filename: "speakers.json")
+    return try encodeTimetableResponse(
+      speakers, filename: "\(conference.year)-speakers.json")
   }
 
   // MARK: - Accept/Reject Proposals

@@ -107,10 +107,5 @@ struct SpeakerExportDTO: Codable, Sendable {
   let bioJa: String?
   let jobTitle: String?
   let jobTitleJa: String?
-  let links: [SpeakerExportLink]
-}
-
-struct SpeakerExportLink: Codable, Sendable {
-  let url: String
-  let name: String
+  let links: [TimetableExportLink]
 }

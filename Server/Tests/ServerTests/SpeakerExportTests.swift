@@ -43,7 +43,7 @@ struct SpeakerExportTests {
       jobTitle: "Lead Engineer at Company",
       jobTitleJa: "株式会社○○ リードエンジニア",
       links: [
-        SpeakerExportLink(url: "https://github.com/janesmith", name: "@janesmith")
+        TimetableExportLink(name: "@janesmith", url: "https://github.com/janesmith")
       ]
     )
 
@@ -85,20 +85,6 @@ struct SpeakerExportTests {
     #expect(json["links"] as? [[String: Any]] != nil)
   }
 
-  @Test("SpeakerExportLink round-trip preserves data")
-  func linkRoundTrip() throws {
-    let link = SpeakerExportLink(url: "https://github.com/example", name: "@example")
-
-    let encoder = JSONEncoder()
-    let decoder = JSONDecoder()
-
-    let data = try encoder.encode(link)
-    let decoded = try decoder.decode(SpeakerExportLink.self, from: data)
-
-    #expect(decoded.url == "https://github.com/example")
-    #expect(decoded.name == "@example")
-  }
-
   @Test("Speaker array encodes matching 2026-speakers.json format")
   func speakerArrayMatchesFormat() throws {
     let speakers = [
@@ -110,7 +96,7 @@ struct SpeakerExportTests {
         jobTitle: "Engineer",
         jobTitleJa: "エンジニア",
         links: [
-          SpeakerExportLink(url: "https://github.com/alice", name: "@alice")
+          TimetableExportLink(name: "@alice", url: "https://github.com/alice")
         ]
       ),
       SpeakerExportDTO(
