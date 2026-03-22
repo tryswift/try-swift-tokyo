@@ -11,7 +11,10 @@ enum LotteryService {
   /// 3. For unassigned applicants, try second choice
   /// 4. For still-unassigned, try third choice
   /// 5. Mark remaining as lost
-  static func runLottery(on database: Database) async throws -> LotteryResult {
+  static func runLottery(
+    on database: Database,
+    shuffle: (@Sendable ([WorkshopApplication]) -> [WorkshopApplication])? = nil
+  ) async throws -> LotteryResult {
     try await database.transaction { tx in
       // Fetch all workshops with their capacity
       let workshops = try await WorkshopRegistration.query(on: tx)
@@ -31,7 +34,8 @@ enum LotteryService {
         .all()
 
       // Shuffle for fairness
-      var shuffled = applications.shuffled()
+      let doShuffle = shuffle ?? { $0.shuffled() }
+      var shuffled = doShuffle(applications)
 
       var assigned: [(application: WorkshopApplication, workshopID: UUID)] = []
 
@@ -48,7 +52,7 @@ enum LotteryService {
       }
 
       // Round 2: Second choice
-      shuffled = stillUnassigned.shuffled()
+      shuffled = doShuffle(stillUnassigned)
       stillUnassigned = []
       for app in shuffled {
         if let choiceID = app.$secondChoice.id,
@@ -62,7 +66,7 @@ enum LotteryService {
       }
 
       // Round 3: Third choice
-      shuffled = stillUnassigned.shuffled()
+      shuffled = doShuffle(stillUnassigned)
       stillUnassigned = []
       for app in shuffled {
         if let choiceID = app.$thirdChoice.id,
