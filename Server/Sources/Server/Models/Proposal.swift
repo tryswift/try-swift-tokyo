@@ -62,6 +62,14 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @OptionalField(key: "github_username")
   var githubUsername: String?
 
+  /// Japanese title (translated by organizer)
+  @OptionalField(key: "title_ja")
+  var titleJA: String?
+
+  /// Japanese abstract (translated by organizer)
+  @OptionalField(key: "abstract_ja")
+  var abstractJA: String?
+
   /// Workshop-specific details (JSON, only populated for workshop proposals)
   @OptionalField(key: "workshop_details")
   var workshopDetails: WorkshopDetails?
@@ -104,6 +112,8 @@ final class Proposal: Model, Content, @unchecked Sendable {
     speakerID: UUID,
     status: ProposalStatus = .submitted,
     githubUsername: String? = nil,
+    titleJA: String? = nil,
+    abstractJA: String? = nil,
     workshopDetails: WorkshopDetails? = nil,
     coInstructors: [CoInstructor]? = nil
   ) {
@@ -121,6 +131,8 @@ final class Proposal: Model, Content, @unchecked Sendable {
     self.$speaker.id = speakerID
     self.status = status
     self.githubUsername = githubUsername
+    self.titleJA = titleJA
+    self.abstractJA = abstractJA
     self.workshopDetails = workshopDetails
     self.coInstructors = coInstructors.map(CoInstructorList.init)
   }
@@ -153,6 +165,8 @@ final class Proposal: Model, Content, @unchecked Sendable {
       createdAt: createdAt,
       updatedAt: updatedAt,
       githubUsername: githubUsername,
+      titleJA: titleJA,
+      abstractJA: abstractJA,
       workshopDetails: workshopDetails,
       coInstructors: coInstructors?.items
     )

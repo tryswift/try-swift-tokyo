@@ -329,11 +329,28 @@ struct OrganizerProposalsPageView: HTML, Sendable {
         )
       }
       div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineTitleJA")) { "Title (Japanese)" }
+        input(
+          .type(.text), .class("form-control"), .name("titleJA"), .id("inlineTitleJA"),
+          .placeholder("日本語タイトル")
+        )
+      }
+      div(.class("mb-3")) {
         label(.class("form-label fw-semibold"), .for("inlineAbstract")) { "Abstract *" }
         textarea(
           .class("form-control"), .name("abstract"), .id("inlineAbstract"),
           .custom(name: "rows", value: "3"), .required,
           .placeholder("A brief summary of the talk (2-3 sentences)")
+        ) { "" }
+      }
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineAbstractJA")) {
+          "Abstract (Japanese)"
+        }
+        textarea(
+          .class("form-control"), .name("abstractJA"), .id("inlineAbstractJA"),
+          .custom(name: "rows", value: "3"),
+          .placeholder("日本語アブストラクト")
         ) { "" }
       }
       div(.class("mb-3")) {

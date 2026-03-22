@@ -55,6 +55,7 @@ enum AppConfiguration {
     app.migrations.add(AddProposalWorkshopFields())
     app.migrations.add(CreateWorkshopRegistration())
     app.migrations.add(CreateWorkshopApplication())
+    app.migrations.add(AddProposalJapaneseFields())
 
     // Auto-migrate on startup (safe for production as Fluent tracks completed migrations)
     try await app.autoMigrate()

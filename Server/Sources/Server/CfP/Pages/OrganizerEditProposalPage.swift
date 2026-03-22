@@ -95,7 +95,9 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
       input(.type(.hidden), .name("_csrf"), .value(csrfToken))
       conferenceField(proposal: proposal)
       titleField(value: proposal.title)
+      titleJAField(value: proposal.titleJA)
       abstractField(value: proposal.abstract)
+      abstractJAField(value: proposal.abstractJA)
       talkDetailsField(value: proposal.talkDetail)
       durationField(selected: proposal.talkDuration)
       workshopFieldsSection(proposal: proposal)
@@ -144,6 +146,25 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
     }
   }
 
+  private func titleJAField(value: String?) -> some HTML {
+    div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("titleJA")) {
+        "Title (Japanese)"
+      }
+      input(
+        .type(.text),
+        .class("form-control"),
+        .name("titleJA"),
+        .id("titleJA"),
+        .value(value ?? ""),
+        .placeholder("日本語タイトル")
+      )
+      div(.class("form-text")) {
+        "Optional. Japanese translation of the title for the website and app."
+      }
+    }
+  }
+
   private func abstractField(value: String) -> some HTML {
     div(.class("mb-3")) {
       label(.class("form-label fw-semibold"), .for("abstract")) {
@@ -161,6 +182,28 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
       }
       div(.class("form-text")) {
         "This will be shown to the audience if the talk is accepted."
+      }
+    }
+  }
+
+  private func abstractJAField(value: String?) -> some HTML {
+    div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("abstractJA")) {
+        "Abstract (Japanese)"
+      }
+      textarea(
+        .class("form-control"),
+        .name("abstractJA"),
+        .id("abstractJA"),
+        .custom(name: "rows", value: "3"),
+        .placeholder("日本語アブストラクト")
+      ) {
+        if let value {
+          HTMLText(value)
+        }
+      }
+      div(.class("form-text")) {
+        "Optional. Japanese translation of the abstract for the website and app."
       }
     }
   }

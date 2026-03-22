@@ -65,6 +65,8 @@ private struct CreateTestLotterySchema: AsyncMigration {
       .field("github_username", .string)
       .field("workshop_details", .json)
       .field("co_instructors", .json)
+      .field("title_ja", .string)
+      .field("abstract_ja", .string)
       .field("created_at", .datetime)
       .field("updated_at", .datetime)
       .create()

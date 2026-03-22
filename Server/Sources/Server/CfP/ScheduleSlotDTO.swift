@@ -71,7 +71,27 @@ struct TimetableExportSpeaker: Codable, Sendable {
   let imageName: String
   let bio: String?
   let bioJa: String?
+  let jobTitle: String?
+  let jobTitleJa: String?
   let links: [TimetableExportLink]
+
+  init(
+    name: String,
+    imageName: String,
+    bio: String? = nil,
+    bioJa: String? = nil,
+    jobTitle: String? = nil,
+    jobTitleJa: String? = nil,
+    links: [TimetableExportLink]
+  ) {
+    self.name = name
+    self.imageName = imageName
+    self.bio = bio
+    self.bioJa = bioJa
+    self.jobTitle = jobTitle
+    self.jobTitleJa = jobTitleJa
+    self.links = links
+  }
 }
 
 struct TimetableExportLink: Codable, Sendable {

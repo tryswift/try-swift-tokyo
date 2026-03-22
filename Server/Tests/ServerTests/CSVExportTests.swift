@@ -11,26 +11,26 @@ struct CSVExportTests {
   @Test("CSV header includes Status column")
   func csvHeaderIncludesStatus() {
     let expectedHeader =
-      "ID,Title,Abstract,Talk Details,Duration,Status,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At"
+      "ID,Title,Title (JA),Abstract,Abstract (JA),Talk Details,Type,Status,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At,Co-Instructors"
 
     // Verify "Status" is in the header
     #expect(expectedHeader.contains("Status"))
 
-    // Verify Status comes after Duration
+    // Verify Status comes after Type
     let columns = expectedHeader.split(separator: ",").map(String.init)
-    let durationIndex = columns.firstIndex(of: "Duration")
+    let typeIndex = columns.firstIndex(of: "Type")
     let statusIndex = columns.firstIndex(of: "Status")
-    #expect(durationIndex != nil)
+    #expect(typeIndex != nil)
     #expect(statusIndex != nil)
-    #expect(statusIndex == durationIndex! + 1)
+    #expect(statusIndex == typeIndex! + 1)
   }
 
-  @Test("CSV header has 14 columns")
+  @Test("CSV header has 17 columns")
   func csvHeaderColumnCount() {
     let header =
-      "ID,Title,Abstract,Talk Details,Duration,Status,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At"
+      "ID,Title,Title (JA),Abstract,Abstract (JA),Talk Details,Type,Status,Speaker Name,Speaker Email,Speaker Username,Bio,Icon URL,Notes,Conference,Submitted At,Co-Instructors"
     let columns = header.split(separator: ",")
-    #expect(columns.count == 14)
+    #expect(columns.count == 17)
   }
 
   // MARK: - escapeCSV Logic
