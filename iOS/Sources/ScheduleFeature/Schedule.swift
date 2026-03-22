@@ -45,7 +45,18 @@ public struct Schedule {
     var day2: Conference?
     var day3: Conference?
     var videoMetadata: [String: VideoMetadata] = [:]
+    var currentTime: Date = .distantPast
     @Presents var destination: Destination.State?
+
+    var liveScheduleIndex: Int? {
+      guard selectedYear == .latest else { return nil }
+      let conference: Conference? = switch selectedDay {
+      case .day1: day1
+      case .day2: day2
+      case .day3: day3
+      }
+      return conference?.liveScheduleIndex(at: currentTime)
+    }
 
     public init() {}
   }
@@ -58,6 +69,7 @@ public struct Schedule {
     case fetchResponse(Result<SchedulesResponse, Error>)
     case allSessionsLoaded([SearchableSession])
     case delegate(Delegate)
+    case timerTicked
 
     @CasePathable
     public enum View {
@@ -82,7 +94,11 @@ public struct Schedule {
     case detail(ScheduleDetail)
   }
 
+  private enum CancelID { case timer }
+
   @Dependency(DataClient.self) var dataClient
+  @Dependency(\.continuousClock) var clock
+  @Dependency(\.date) var date
 
   public init() {}
 
@@ -91,6 +107,7 @@ public struct Schedule {
     Reduce { state, action in
       switch action {
       case .view(.onAppear):
+        state.currentTime = date.now
         let year = state.selectedYear
         let shouldLoadAllSessions = state.allSessions.isEmpty
         let dataClient = dataClient
@@ -133,7 +150,13 @@ public struct Schedule {
               }
               await send(.allSessionsLoaded(results))
             }
-            : .none
+            : .none,
+          .run { [clock] send in
+            for await _ in clock.timer(interval: .seconds(30)) {
+              await send(.timerTicked)
+            }
+          }
+          .cancellable(id: CancelID.timer, cancelInFlight: true)
         )
       case .view(.yearSelected(let year)):
         state.selectedYear = year
@@ -183,6 +206,9 @@ public struct Schedule {
         return .none
       case .fetchResponse(.failure(let error)):
         logger.error("Failed to fetch schedules: \(error)")
+        return .none
+      case .timerTicked:
+        state.currentTime = date.now
         return .none
       case .binding, .path, .destination, .delegate:
         return .none
@@ -418,15 +444,20 @@ public struct ScheduleView: View {
       Text(conference.date, style: .date)
         .font(.title2)
         .accessibilityAddTraits(.isHeader)
-      ForEach(conference.schedules, id: \.self) { schedule in
+      ForEach(Array(conference.schedules.enumerated()), id: \.element) { index, schedule in
         VStack(alignment: .leading, spacing: 4) {
-          Text(
-            schedule.time.formatted(date: .omitted, time: .shortened)
-              + (schedule.endTime.map { " - " + $0.formatted(date: .omitted, time: .shortened) }
-                ?? "")
-          )
-          .font(.subheadline.bold())
-          .accessibilityAddTraits(.isHeader)
+          HStack(spacing: 6) {
+            Text(
+              schedule.time.formatted(date: .omitted, time: .shortened)
+                + (schedule.endTime.map { " - " + $0.formatted(date: .omitted, time: .shortened) }
+                  ?? "")
+            )
+            .font(.subheadline.bold())
+            .accessibilityAddTraits(.isHeader)
+            if store.liveScheduleIndex == index {
+              liveBadge
+            }
+          }
           ForEach(schedule.sessions, id: \.self) { session in
             if session.description != nil {
               Button {
@@ -534,6 +565,15 @@ public struct ScheduleView: View {
     }
     let formatter = ListFormatter()
     return formatter.string(from: givenNames)!
+  }
+
+  private var liveBadge: some View {
+    Text("LIVE")
+      .font(.caption2.bold())
+      .foregroundStyle(.white)
+      .padding(.horizontal, 6)
+      .padding(.vertical, 2)
+      .background(.red, in: Capsule())
   }
 
   private var labelColor: Color {

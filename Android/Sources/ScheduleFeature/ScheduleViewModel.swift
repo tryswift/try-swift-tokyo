@@ -38,6 +38,8 @@ public final class ScheduleViewModel {
   public var searchText: String = ""
   public var isSearchBarPresented: Bool = false
   public var allSearchableSessions: [SearchableSession] = []
+  public var currentTime: Date = Date()
+  private var timerTask: Task<Void, Never>?
 
   public static let availableYears: [Int] = ConferenceYear.allCases.map { $0.rawValue }.reversed()
 
@@ -51,6 +53,10 @@ public final class ScheduleViewModel {
 
   public var hasDay3: Bool {
     day3 != nil
+  }
+
+  public var liveScheduleIndex: Int? {
+    currentConference?.liveScheduleIndex(at: currentTime)
   }
 
   public var searchResults: [SearchableSession] {
@@ -86,6 +92,17 @@ public final class ScheduleViewModel {
     }
 
     isLoading = false
+    startTimer()
+  }
+
+  private func startTimer() {
+    timerTask?.cancel()
+    timerTask = Task { @MainActor [weak self] in
+      while !Task.isCancelled {
+        try? await Task.sleep(for: .seconds(30))
+        self?.currentTime = Date()
+      }
+    }
   }
 
   public func selectYear(_ year: Int) {

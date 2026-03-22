@@ -12,6 +12,27 @@ public struct Conference: Codable, Equatable, Hashable, Sendable {
     self.date = date
     self.schedules = schedules
   }
+
+  /// Returns the index of the currently-live schedule slot, if any.
+  /// End time is inferred from the next slot's start time.
+  /// The last slot uses `lastSlotDuration` (default: 60 minutes).
+  public func liveScheduleIndex(
+    at now: Date,
+    lastSlotDuration: TimeInterval = 3600
+  ) -> Int? {
+    for (index, schedule) in schedules.enumerated() {
+      let endTime: Date
+      if index + 1 < schedules.count {
+        endTime = schedules[index + 1].time
+      } else {
+        endTime = schedule.time.addingTimeInterval(lastSlotDuration)
+      }
+      if now >= schedule.time && now < endTime {
+        return index
+      }
+    }
+    return nil
+  }
 }
 
 public struct Schedule: Codable, Equatable, Hashable, Sendable {
