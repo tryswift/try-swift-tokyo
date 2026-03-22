@@ -6,6 +6,8 @@ import SwiftUI
 
 @Reducer
 public struct Organizers {
+  public init() {}
+
   @ObservableState
   public struct State: Equatable {
     var organizers = IdentifiedArrayOf<Organizer>()
@@ -68,6 +70,10 @@ extension Organizers.Destination.State: Equatable {}
 public struct OrganizersView: View {
 
   public var store: StoreOf<Organizers>
+
+  public init(store: StoreOf<Organizers>) {
+    self.store = store
+  }
 
   public var body: some View {
     ScrollView {
