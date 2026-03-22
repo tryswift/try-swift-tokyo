@@ -95,11 +95,20 @@ public struct SponsorsListView: View {
               Button {
                 send(.sponsorTapped(sponsor))
               } label: {
-                Image(sponsor.imageName, bundle: .module)
-                  .resizable()
-                  .aspectRatio(contentMode: .fit)
-                  .frame(maxWidth: 300)
-                  .padding()
+                VStack(spacing: 8) {
+                  Image(sponsor.imageName, bundle: .module)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 300)
+                  if plan.showsName, let name = sponsor.name {
+                    Text(name)
+                      .font(plan.nameFont)
+                      .foregroundStyle(.secondary)
+                      .lineLimit(1)
+                      .minimumScaleFactor(0.7)
+                  }
+                }
+                .padding()
               }
               .glassEffectIfAvailable(.clear.interactive(), in: .rect(cornerRadius: 16))
               .accessibilityAddTraits(.isLink)
@@ -136,6 +145,28 @@ extension Plan {
       return 2
     case .individual:
       return 4
+    }
+  }
+
+  var nameFont: Font {
+    switch self {
+    case .platinum:
+      return .headline
+    case .gold, .silver:
+      return .subheadline
+    case .bronze, .diversityAndInclusion, .community, .student:
+      return .caption
+    case .individual:
+      return .caption2
+    }
+  }
+
+  var showsName: Bool {
+    switch self {
+    case .individual:
+      return false
+    default:
+      return true
     }
   }
 }

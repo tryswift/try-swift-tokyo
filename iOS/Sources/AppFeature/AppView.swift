@@ -3,13 +3,33 @@ import Foundation
 import GuidanceFeature
 import LiveTranslationFeature
 import ScheduleFeature
+import SharedModels
 import SponsorFeature
 import SwiftUI
 import TipKit
 import trySwiftFeature
 
+// MARK: - Sidebar Types
+
+public enum SidebarItem: Hashable, Sendable {
+  case day1, day2, day3
+  case liveTranslation
+  case venue
+  case sponsors
+  case organizers
+  case acknowledgements
+  case pastYear(ConferenceYear)
+}
+
+// MARK: - AppReducer
+
 @Reducer
 public struct AppReducer {
+
+  public enum ExternalLink: Equatable, Sendable {
+    case codeOfConduct, privacyPolicy, luma, website
+  }
+
   @ObservableState
   public struct State: Equatable {
     var schedule = Schedule.State()
@@ -17,6 +37,16 @@ public struct AppReducer {
     var guidance = Guidance.State()
     var sponsors = SponsorsList.State()
     var trySwift = TrySwift.State()
+
+    // Sidebar
+    var selectedSidebarItem: SidebarItem? = .day1
+
+    // Sidebar detail: standalone Organizers with profile navigation
+    var sidebarOrganizers = Organizers.State()
+    @Presents var sidebarProfile: Profile.State?
+
+    // Sidebar detail: standalone Acknowledgements
+    var sidebarAcknowledgements = Acknowledgements.State()
 
     public init() {
       try? Tips.configure([.displayFrequency(.immediate)])
@@ -29,6 +59,15 @@ public struct AppReducer {
     case guidance(Guidance.Action)
     case sponsors(SponsorsList.Action)
     case trySwift(TrySwift.Action)
+
+    // Sidebar
+    case sidebarItemSelected(SidebarItem?)
+    case openExternalLink(ExternalLink)
+
+    // Sidebar detail
+    case sidebarOrganizers(Organizers.Action)
+    case sidebarProfile(PresentationAction<Profile.Action>)
+    case sidebarAcknowledgements(Acknowledgements.Action)
   }
 
   public init() {}
@@ -49,26 +88,104 @@ public struct AppReducer {
     Scope(state: \.trySwift, action: \.trySwift) {
       TrySwift()
     }
+    Scope(state: \.sidebarOrganizers, action: \.sidebarOrganizers) {
+      Organizers()
+    }
+    Scope(state: \.sidebarAcknowledgements, action: \.sidebarAcknowledgements) {
+      Acknowledgements()
+    }
+
+    Reduce { state, action in
+      switch action {
+      case .sidebarItemSelected(let item):
+        state.selectedSidebarItem = item
+        let targetDay: Schedule.Days
+        let targetYear: ConferenceYear
+        switch item {
+        case .day1: targetDay = .day1; targetYear = .latest
+        case .day2: targetDay = .day2; targetYear = .latest
+        case .day3: targetDay = .day3; targetYear = .latest
+        case .pastYear(let year): targetDay = .day1; targetYear = year
+        default: return .none
+        }
+        state.schedule.selectedDay = targetDay
+        if state.schedule.selectedYear != targetYear {
+          state.schedule.selectedYear = targetYear
+          state.schedule.day1 = nil
+          state.schedule.day2 = nil
+          state.schedule.day3 = nil
+          return .send(.schedule(.view(.onAppear)))
+        }
+        return .none
+
+      case .openExternalLink(let link):
+        switch link {
+        case .codeOfConduct:
+          return .send(.trySwift(.view(.codeOfConductTapped)))
+        case .privacyPolicy:
+          return .send(.trySwift(.view(.privacyPolicyTapped)))
+        case .luma:
+          return .send(.trySwift(.view(.ticketTapped)))
+        case .website:
+          return .send(.trySwift(.view(.websiteTapped)))
+        }
+
+      case .sidebarOrganizers(.delegate(.organizerTapped(let organizer))):
+        state.sidebarProfile = .init(organizer: organizer)
+        return .none
+
+      case .schedule, .liveTranslation, .guidance, .sponsors, .trySwift,
+        .sidebarOrganizers, .sidebarProfile, .sidebarAcknowledgements:
+        return .none
+      }
+    }
+    .ifLet(\.$sidebarProfile, action: \.sidebarProfile) {
+      Profile()
+    }
   }
 }
 
+// MARK: - AppView
+
 public struct AppView: View {
-  var store: StoreOf<AppReducer>
+  @Bindable var store: StoreOf<AppReducer>
+  @State private var isPastYearsExpanded = false
+
+  #if !os(macOS)
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  #endif
 
   public init(store: StoreOf<AppReducer>) {
     self.store = store
   }
 
   public var body: some View {
+    #if os(macOS)
+      sidebarLayout
+    #else
+      if horizontalSizeClass == .regular {
+        sidebarLayout
+      } else {
+        tabLayout
+      }
+    #endif
+  }
+
+  // MARK: iPhone TabView
+
+  @ViewBuilder
+  var tabLayout: some View {
     TabView {
       ScheduleView(store: store.scope(state: \.schedule, action: \.schedule))
         .tabItem {
           Label(String(localized: "Schedule", bundle: .module), systemImage: "calendar")
         }
-      LiveTranslationView(store: store.scope(state: \.liveTranslation, action: \.liveTranslation))
-        .tabItem {
-          Label(String(localized: "Translation", bundle: .module), systemImage: "text.bubble")
-        }
+      LiveTranslationView(
+        store: store.scope(state: \.liveTranslation, action: \.liveTranslation)
+      )
+      .tabItem {
+        Label(String(localized: "Translation", bundle: .module), systemImage: "text.bubble")
+      }
       GuidanceView(store: store.scope(state: \.guidance, action: \.guidance))
         .tabItem {
           Label(String(localized: "Venue", bundle: .module), systemImage: "map")
@@ -83,6 +200,121 @@ public struct AppView: View {
           Text("About", bundle: .module)
         }
     }
+  }
+
+  // MARK: Sidebar Layout (macOS / iPad)
+
+  @ViewBuilder
+  var sidebarLayout: some View {
+    NavigationSplitView {
+      sidebarContent
+    } detail: {
+      detailContent
+    }
+  }
+
+  @ViewBuilder
+  var sidebarContent: some View {
+    List(
+      selection: Binding(
+        get: { store.selectedSidebarItem },
+        set: { store.send(.sidebarItemSelected($0)) }
+      )
+    ) {
+      Section {
+        Label(String(localized: "Day 1", bundle: .module), systemImage: "1.circle")
+          .tag(SidebarItem.day1)
+        Label(String(localized: "Day 2", bundle: .module), systemImage: "2.circle")
+          .tag(SidebarItem.day2)
+        Label(String(localized: "Day 3", bundle: .module), systemImage: "3.circle")
+          .tag(SidebarItem.day3)
+        Label(String(localized: "Translation", bundle: .module), systemImage: "text.bubble")
+          .tag(SidebarItem.liveTranslation)
+        Label(String(localized: "Venue", bundle: .module), systemImage: "map")
+          .tag(SidebarItem.venue)
+        Label(String(localized: "Sponsors", bundle: .module), systemImage: "building.2")
+          .tag(SidebarItem.sponsors)
+        Label(String(localized: "Organizers", bundle: .module), systemImage: "person.3")
+          .tag(SidebarItem.organizers)
+      } header: {
+        Text("try! Swift Tokyo \(String(ConferenceYear.latest.rawValue))")
+      }
+
+      Section {
+        Button { store.send(.openExternalLink(.codeOfConduct)) } label: {
+          Label(String(localized: "Code of Conduct", bundle: .module), systemImage: "doc.text")
+        }
+        Button { store.send(.openExternalLink(.privacyPolicy)) } label: {
+          Label(String(localized: "Privacy Policy", bundle: .module), systemImage: "hand.raised")
+        }
+        Label(String(localized: "Acknowledgements", bundle: .module), systemImage: "heart")
+          .tag(SidebarItem.acknowledgements)
+        Button { store.send(.openExternalLink(.luma)) } label: {
+          Label(String(localized: "Luma", bundle: .module), systemImage: "ticket")
+        }
+        Button { store.send(.openExternalLink(.website)) } label: {
+          Label(
+            String(localized: "try! Swift Website", bundle: .module), systemImage: "safari")
+        }
+      }
+
+      Section(isExpanded: $isPastYearsExpanded) {
+        ForEach(pastYears, id: \.self) { year in
+          Label("Tokyo \(String(year.rawValue))", systemImage: "calendar")
+            .tag(SidebarItem.pastYear(year))
+        }
+      } header: {
+        Text("Past try! Swift")
+      }
+    }
+    .listStyle(.sidebar)
+    .navigationTitle("try! Swift")
+  }
+
+  @ViewBuilder
+  var detailContent: some View {
+    if let item = store.selectedSidebarItem {
+      switch item {
+      case .day1, .day2, .day3, .pastYear:
+        ScheduleView(store: store.scope(state: \.schedule, action: \.schedule))
+      case .liveTranslation:
+        LiveTranslationView(
+          store: store.scope(state: \.liveTranslation, action: \.liveTranslation))
+      case .venue:
+        GuidanceView(store: store.scope(state: \.guidance, action: \.guidance))
+      case .sponsors:
+        SponsorsListView(store: store.scope(state: \.sponsors, action: \.sponsors))
+      case .organizers:
+        NavigationStack {
+          OrganizersView(
+            store: store.scope(state: \.sidebarOrganizers, action: \.sidebarOrganizers)
+          )
+          .navigationDestination(
+            item: $store.scope(state: \.sidebarProfile, action: \.sidebarProfile)
+          ) { profileStore in
+            ProfileView(store: profileStore)
+          }
+        }
+      case .acknowledgements:
+        NavigationStack {
+          AcknowledgementsView(
+            store: store.scope(
+              state: \.sidebarAcknowledgements, action: \.sidebarAcknowledgements))
+        }
+      }
+    } else {
+      ContentUnavailableView {
+        Label("try! Swift Tokyo", systemImage: "swift")
+      } description: {
+        Text("Select an item from the sidebar")
+      }
+    }
+  }
+
+  private var pastYears: [ConferenceYear] {
+    ConferenceYear.allCases
+      .filter { $0 != .latest }
+      .sorted { $0.rawValue > $1.rawValue }
   }
 }
 

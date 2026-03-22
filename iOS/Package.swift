@@ -36,6 +36,7 @@ let package = Package(
         "ScheduleFeature",
         "SponsorFeature",
         "trySwiftFeature",
+        .product(name: "SharedModels", package: "SharedModels"),
       ]
     ),
     .target(
