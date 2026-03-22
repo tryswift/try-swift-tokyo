@@ -9,22 +9,20 @@ import SwiftUI
 import TipKit
 import trySwiftFeature
 
-// MARK: - Sidebar Types
-
-public enum SidebarItem: Hashable, Sendable {
-  case day1, day2, day3
-  case liveTranslation
-  case venue
-  case sponsors
-  case organizers
-  case acknowledgements
-  case pastYear(ConferenceYear)
-}
-
 // MARK: - AppReducer
 
 @Reducer
 public struct AppReducer {
+
+  public enum SidebarItem: Hashable, Sendable {
+    case day1, day2, day3
+    case liveTranslation
+    case venue
+    case sponsors
+    case organizers
+    case acknowledgements
+    case pastYear(ConferenceYear)
+  }
 
   public enum ExternalLink: Equatable, Sendable {
     case codeOfConduct, privacyPolicy, luma, website
@@ -116,15 +114,10 @@ public struct AppReducer {
           targetYear = year
         default: return .none
         }
-        state.schedule.selectedDay = targetDay
-        if state.schedule.selectedYear != targetYear {
-          state.schedule.selectedYear = targetYear
-          state.schedule.day1 = nil
-          state.schedule.day2 = nil
-          state.schedule.day3 = nil
-          return .send(.schedule(.view(.onAppear)))
-        }
-        return .none
+        return .merge(
+          .send(.schedule(.view(.yearSelected(targetYear)))),
+          .send(.schedule(.view(.daySelected(targetDay))))
+        )
 
       case .openExternalLink(let link):
         switch link {
@@ -140,6 +133,14 @@ public struct AppReducer {
 
       case .sidebarOrganizers(.delegate(.organizerTapped(let organizer))):
         state.sidebarProfile = .init(organizer: organizer)
+        return .none
+
+      case .schedule(.view(.yearSelected(let year))):
+        if year == .latest {
+          state.selectedSidebarItem = .day1
+        } else {
+          state.selectedSidebarItem = .pastYear(year)
+        }
         return .none
 
       case .schedule, .liveTranslation, .guidance, .sponsors, .trySwift,
@@ -231,19 +232,19 @@ public struct AppView: View {
     ) {
       Section {
         Label(String(localized: "Day 1", bundle: .module), systemImage: "1.circle")
-          .tag(SidebarItem.day1)
+          .tag(AppReducer.SidebarItem.day1)
         Label(String(localized: "Day 2", bundle: .module), systemImage: "2.circle")
-          .tag(SidebarItem.day2)
+          .tag(AppReducer.SidebarItem.day2)
         Label(String(localized: "Day 3", bundle: .module), systemImage: "3.circle")
-          .tag(SidebarItem.day3)
+          .tag(AppReducer.SidebarItem.day3)
         Label(String(localized: "Translation", bundle: .module), systemImage: "text.bubble")
-          .tag(SidebarItem.liveTranslation)
+          .tag(AppReducer.SidebarItem.liveTranslation)
         Label(String(localized: "Venue", bundle: .module), systemImage: "map")
-          .tag(SidebarItem.venue)
+          .tag(AppReducer.SidebarItem.venue)
         Label(String(localized: "Sponsors", bundle: .module), systemImage: "building.2")
-          .tag(SidebarItem.sponsors)
+          .tag(AppReducer.SidebarItem.sponsors)
         Label(String(localized: "Organizers", bundle: .module), systemImage: "person.3")
-          .tag(SidebarItem.organizers)
+          .tag(AppReducer.SidebarItem.organizers)
       } header: {
         Text("try! Swift Tokyo \(String(ConferenceYear.latest.rawValue))")
       }
@@ -260,7 +261,7 @@ public struct AppView: View {
           Label(String(localized: "Privacy Policy", bundle: .module), systemImage: "hand.raised")
         }
         Label(String(localized: "Acknowledgements", bundle: .module), systemImage: "heart")
-          .tag(SidebarItem.acknowledgements)
+          .tag(AppReducer.SidebarItem.acknowledgements)
         Button {
           store.send(.openExternalLink(.luma))
         } label: {
@@ -277,7 +278,7 @@ public struct AppView: View {
       Section(isExpanded: $isPastYearsExpanded) {
         ForEach(pastYears, id: \.self) { year in
           Label("Tokyo \(String(year.rawValue))", systemImage: "calendar")
-            .tag(SidebarItem.pastYear(year))
+            .tag(AppReducer.SidebarItem.pastYear(year))
         }
       } header: {
         Text("Past try! Swift")

@@ -8,12 +8,12 @@ import TipKit
 
 @Reducer
 public struct Schedule {
-  enum Days: LocalizedStringKey, Equatable, CaseIterable, Identifiable {
+  public enum Days: LocalizedStringKey, Equatable, CaseIterable, Identifiable, Sendable {
     case day1 = "Day 1"
     case day2 = "Day 2"
     case day3 = "Day 3"
 
-    var id: Self { self }
+    public var id: Self { self }
   }
 
   public struct SchedulesResponse: Equatable {
@@ -50,6 +50,7 @@ public struct Schedule {
       case onAppear
       case disclosureTapped(Session)
       case yearSelected(ConferenceYear)
+      case daySelected(Days)
     }
   }
 
@@ -86,6 +87,9 @@ public struct Schedule {
         state.day2 = nil
         state.day3 = nil
         return .send(.view(.onAppear))
+      case .view(.daySelected(let day)):
+        state.selectedDay = day
+        return .none
       case .view(.disclosureTapped(let session)):
         guard let description = session.description, let speakers = session.speakers else {
           return .none
