@@ -1,20 +1,21 @@
+import Combine
 import SwiftUI
 import YouTubePlayerKit
 
 struct VideoPlayerView: View {
   let videoId: String
-  var seekTime: TimeInterval?
+  var seekRequest: VideoDetail.SeekRequest?
   var onTimeUpdate: (TimeInterval) -> Void
 
   @State private var player: YouTubePlayer
 
   init(
     videoId: String,
-    seekTime: TimeInterval? = nil,
+    seekRequest: VideoDetail.SeekRequest? = nil,
     onTimeUpdate: @escaping (TimeInterval) -> Void
   ) {
     self.videoId = videoId
-    self.seekTime = seekTime
+    self.seekRequest = seekRequest
     self.onTimeUpdate = onTimeUpdate
     self._player = State(
       initialValue: YouTubePlayer(
@@ -41,10 +42,10 @@ struct VideoPlayerView: View {
     }
     .aspectRatio(16.0 / 9.0, contentMode: .fit)
     .clipShape(RoundedRectangle(cornerRadius: 12))
-    .onChange(of: seekTime) { _, newValue in
-      if let time = newValue {
+    .onChange(of: seekRequest) { _, newValue in
+      if let request = newValue {
         Task {
-          let measurement = Measurement<UnitDuration>(value: time, unit: .seconds)
+          let measurement = Measurement<UnitDuration>(value: request.time, unit: .seconds)
           try? await player.seek(to: measurement, allowSeekAhead: true)
           try? await player.play()
         }

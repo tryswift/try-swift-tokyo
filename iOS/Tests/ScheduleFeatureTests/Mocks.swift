@@ -70,6 +70,13 @@ extension Session {
   )
 }
 
+extension VideoMetadata {
+  static let mock1 = Self(
+    sessionTitle: "session1",
+    youtubeVideoId: "abc123def45"
+  )
+}
+
 extension Speaker {
   static let mock1 = Self(
     name: "speaker1",

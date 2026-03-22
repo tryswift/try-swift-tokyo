@@ -26,12 +26,14 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay1 = { @Sendable _ in .mock1 }
       $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
       $0[DataClient.self].fetchDay3 = { @Sendable _ in .mock3 }
+      $0[DataClient.self].fetchVideos = { @Sendable _ in [.mock1] }
     }
     await store.send(.view(.onAppear))
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
       $0.day2 = .mock2
       $0.day3 = .mock3
+      $0.videoMetadata = ["session1": .mock1]
     }
   }
 
@@ -48,6 +50,7 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay1 = { @Sendable _ in throw FetchError() }
       $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
       $0[DataClient.self].fetchDay3 = { @Sendable _ in .mock3 }
+      $0[DataClient.self].fetchVideos = { @Sendable _ in [] }
     }
     await store.send(.view(.onAppear))
     await store.receive(\.fetchResponse.failure)
@@ -66,12 +69,14 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay1 = { @Sendable _ in .mock1 }
       $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
       $0[DataClient.self].fetchDay3 = { @Sendable _ in throw NotFound() }
+      $0[DataClient.self].fetchVideos = { @Sendable _ in [.mock1] }
     }
     await store.send(.view(.onAppear))
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
       $0.day2 = .mock2
       $0.day3 = nil
+      $0.videoMetadata = ["session1": .mock1]
     }
   }
 
@@ -92,6 +97,7 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay3 = { @Sendable _ in
         throw DataClientError.resourceNotFound("2017-day3")
       }
+      $0[DataClient.self].fetchVideos = { @Sendable _ in [.mock1] }
     }
 
     await store.send(.view(.yearSelected(.year2017))) {
@@ -100,12 +106,14 @@ struct ScheduleTests {
       $0.day1 = nil
       $0.day2 = nil
       $0.day3 = nil
+      $0.videoMetadata = [:]
     }
     await store.receive(\.view.onAppear)
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
       $0.day2 = .mock2
       $0.day3 = nil
+      $0.videoMetadata = ["session1": .mock1]
     }
   }
 

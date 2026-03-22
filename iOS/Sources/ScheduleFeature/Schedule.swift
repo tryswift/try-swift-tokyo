@@ -170,7 +170,8 @@ public struct Schedule {
         state.day2 = response.day2
         state.day3 = response.day3
         state.videoMetadata = Dictionary(
-          uniqueKeysWithValues: response.videos.map { ($0.sessionTitle, $0) }
+          response.videos.map { ($0.sessionTitle, $0) },
+          uniquingKeysWith: { first, _ in first }
         )
         return .none
       case .allSessionsLoaded(let sessions):
@@ -239,7 +240,7 @@ public struct ScheduleView: View {
         }
       case .videoDetail:
         if let store = store.scope(state: \.videoDetail, action: \.videoDetail) {
-          VideoDetailView(store: store)
+          VideoDetailView(store: store, speakerImageBundle: .module)
         }
       }
     }

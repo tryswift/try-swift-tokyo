@@ -14,6 +14,8 @@ Usage:
 
 Environment:
     YOUTUBE_API_KEY: YouTube Data API v3 key (required for playlist/video metadata)
+
+Requires: Python 3.10+ (uses list[dict] and X | None syntax)
 """
 
 import argparse

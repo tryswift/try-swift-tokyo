@@ -6,6 +6,7 @@ struct AboutTabView: View {
   let session: Session
   let videoMetadata: VideoMetadata
   let conferenceYear: ConferenceYear
+  var speakerImageBundle: Bundle = .main
   var onChapterTapped: (Chapter) -> Void
   var onResourceTapped: (URL) -> Void
   var onSnsTapped: (URL) -> Void
@@ -58,7 +59,7 @@ struct AboutTabView: View {
         ForEach(speakers, id: \.self) { speaker in
           VStack(spacing: 12) {
             HStack(alignment: .top, spacing: 12) {
-              Image(speaker.imageName)
+              Image(speaker.imageName, bundle: speakerImageBundle)
                 .resizable()
                 .aspectRatio(1.0, contentMode: .fit)
                 .frame(width: 56)

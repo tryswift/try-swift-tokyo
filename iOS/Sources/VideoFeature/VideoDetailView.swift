@@ -6,9 +6,11 @@ import SwiftUI
 public struct VideoDetailView: View {
 
   @Bindable public var store: StoreOf<VideoDetail>
+  let speakerImageBundle: Bundle
 
-  public init(store: StoreOf<VideoDetail>) {
+  public init(store: StoreOf<VideoDetail>, speakerImageBundle: Bundle = .main) {
     self.store = store
+    self.speakerImageBundle = speakerImageBundle
   }
 
   public var body: some View {
@@ -17,7 +19,7 @@ public struct VideoDetailView: View {
         // Video Player
         VideoPlayerView(
           videoId: store.videoMetadata.youtubeVideoId,
-          seekTime: store.seekTime,
+          seekRequest: store.seekRequest,
           onTimeUpdate: { time in
             send(.playerTimeUpdated(time))
           }
@@ -62,6 +64,7 @@ public struct VideoDetailView: View {
         session: store.session,
         videoMetadata: store.videoMetadata,
         conferenceYear: store.conferenceYear,
+        speakerImageBundle: speakerImageBundle,
         onChapterTapped: { chapter in
           send(.chapterTapped(chapter))
         },

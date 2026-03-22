@@ -16,6 +16,11 @@ public struct VideoDetail: Sendable {
     #endif
   }
 
+  public struct SeekRequest: Equatable, Sendable {
+    public var time: TimeInterval
+    public var id: UUID = UUID()
+  }
+
   @ObservableState
   public struct State: Equatable {
     public var session: Session
@@ -23,7 +28,7 @@ public struct VideoDetail: Sendable {
     public var conferenceYear: ConferenceYear
     public var selectedTab: Tab = .about
     public var currentTime: TimeInterval = 0
-    public var seekTime: TimeInterval?
+    public var seekRequest: SeekRequest?
     public var activeTranscriptEntryId: Int?
 
     public init(
@@ -65,11 +70,11 @@ public struct VideoDetail: Sendable {
         return .none
 
       case .view(.transcriptEntryTapped(let entry)):
-        state.seekTime = entry.startTime
+        state.seekRequest = .init(time: entry.startTime)
         return .none
 
       case .view(.chapterTapped(let chapter)):
-        state.seekTime = chapter.startTime
+        state.seekRequest = .init(time: chapter.startTime)
         return .none
 
       case .view(.resourceTapped(let url)):
