@@ -50,11 +50,12 @@ public struct Schedule {
 
     var liveScheduleIndex: Int? {
       guard selectedYear == .latest else { return nil }
-      let conference: Conference? = switch selectedDay {
-      case .day1: day1
-      case .day2: day2
-      case .day3: day3
-      }
+      let conference: Conference? =
+        switch selectedDay {
+        case .day1: day1
+        case .day2: day2
+        case .day3: day3
+        }
       return conference?.liveScheduleIndex(at: currentTime)
     }
 
