@@ -23,7 +23,7 @@ struct CoInstructorListPostgresTests {
         email: "test@example.com",
         githubUsername: "testuser",
         bio: "A test instructor"
-      ),
+      )
     ])
 
     // Encode via PostgresEncodable
