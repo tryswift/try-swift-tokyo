@@ -25,6 +25,12 @@ LUMA_EVENT_ID = os.environ["LUMA_EVENT_ID"]
 LUMA_EVENT_SLUG = os.environ["LUMA_EVENT_SLUG"]
 YEAR = os.environ["YEAR"]
 TICKET_TYPE_NAME = "Individual Sponsor"
+SOCIAL_URL_PREFIXES = {
+    "twitter": "https://x.com/",
+    "github": "https://github.com/",
+    "linkedin": "https://linkedin.com/in/",
+    "instagram": "https://instagram.com/",
+}
 IMAGE_SIZE = (512, 512)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -93,9 +99,10 @@ def fetch_individual_sponsors():
                 ):
                     icon_url = value
                 # Social link: twitter, github, linkedin, or url with social keywords
-                elif q_type in ("twitter", "github", "linkedin", "instagram"):
+                elif q_type in SOCIAL_URL_PREFIXES:
                     if not social_link:
-                        social_link = value
+                        prefix = SOCIAL_URL_PREFIXES[q_type]
+                        social_link = value if value.startswith("http") else f"{prefix}{value}"
                 elif q_type == "url" and any(
                     kw in label
                     for kw in ["social", "sns", "link", "url", "website", "リンク", "ウェブ"]
@@ -140,6 +147,7 @@ def sanitize_image_key(name):
     Examples (YEAR=2026):
       "Oka Yuji" -> "2026_OkaYuji"
       "문스콧 - Moon Scott" -> "2026_MoonScott"
+      "綾木良太" -> "2026_綾木良太"
     """
     # Remove parenthetical nicknames
     cleaned = re.sub(r"\s*\(.*?\)\s*", " ", name).strip()
@@ -150,7 +158,7 @@ def sanitize_image_key(name):
     latin_words = [w for w in words if re.match(r"[A-Za-z]", w)]
     if latin_words:
         words = latin_words
-    # Capitalize and remove non-alphanumeric
+    # Capitalize and remove non-alphanumeric (Latin + extended Latin)
     parts = []
     for w in words:
         cleaned_w = re.sub(r"[^A-Za-z0-9\u00C0-\u024F]", "", w)
@@ -158,9 +166,8 @@ def sanitize_image_key(name):
             parts.append(cleaned_w[0].upper() + cleaned_w[1:])
     result = "".join(parts)
     if not result:
-        ascii_name = unicodedata.normalize("NFKD", name)
-        ascii_name = ascii_name.encode("ascii", "ignore").decode("ascii")
-        result = re.sub(r"[^A-Za-z0-9]", "", ascii_name)
+        # Fallback: keep CJK and other unicode characters as-is
+        result = re.sub(r"[\s\-()]", "", name).strip()
     return f"{YEAR}_{result}" if result else None
 
 
@@ -168,6 +175,9 @@ def download_and_convert_image(url, dest_path):
     """Download image from URL and save as 512x512 PNG."""
     resp = requests.get(url, timeout=30)
     resp.raise_for_status()
+    content_type = resp.headers.get("content-type", "")
+    if content_type and not content_type.startswith("image/"):
+        raise ValueError(f"URL is not an image (content-type: {content_type})")
 
     with tempfile.NamedTemporaryFile(suffix=".tmp", delete=False) as tmp:
         tmp.write(resp.content)
@@ -268,6 +278,15 @@ def main():
         s["name"].lower() for s in sponsors_data.get("individual", [])
     }
 
+    def find_existing_match(name_lower):
+        """Check if name matches any existing sponsor (exact or partial)."""
+        if name_lower in existing_names:
+            return name_lower
+        for existing in existing_names:
+            if existing in name_lower or name_lower in existing:
+                return existing
+        return None
+
     new_sponsors = []
     for s in luma_sponsors:
         guest_id = s["guest_id"]
@@ -276,8 +295,9 @@ def main():
         if guest_id in synced:
             print(f"  Skipping (already synced): {s['name']}")
             continue
-        if name_lower in existing_names:
-            print(f"  Skipping (name exists): {s['name']}")
+        matched = find_existing_match(name_lower)
+        if matched:
+            print(f"  Skipping (name exists: '{matched}'): {s['name']}")
             if not dry_run:
                 synced[guest_id] = {"name": s["name"], "status": "existing"}
             continue
