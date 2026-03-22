@@ -1493,10 +1493,11 @@ struct CfPRoutes: RouteCollection {
 
       var links: [TimetableExportLink] = []
       if let githubUsername = proposal.githubUsername, !githubUsername.isEmpty {
-        links.append(TimetableExportLink(
-          name: "@\(githubUsername)",
-          url: "https://github.com/\(githubUsername)"
-        ))
+        links.append(
+          TimetableExportLink(
+            name: "@\(githubUsername)",
+            url: "https://github.com/\(githubUsername)"
+          ))
       }
 
       return SpeakerExportDTO(
