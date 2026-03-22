@@ -8,16 +8,25 @@ import Testing
 @Suite
 @MainActor
 struct ScheduleTests {
+
+  /// A non-empty sentinel so the `allSessions.isEmpty` guard in onAppear
+  /// skips the search-preload effect — keeping these tests focused on fetch behavior.
+  static let preloadedSessions: [ScheduleFeature.Schedule.SearchableSession] = [
+    .init(year: .year2026, session: .mock1, searchCorpus: "session1 speaker1")
+  ]
+
   @Test
   func fetchData_success() async {
-    let store = TestStore(initialState: Schedule.State()) {
+    var state = Schedule.State()
+    state.allSessions = Self.preloadedSessions
+
+    let store = TestStore(initialState: state) {
       Schedule()
     } withDependencies: {
       $0[DataClient.self].fetchDay1 = { @Sendable _ in .mock1 }
       $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
       $0[DataClient.self].fetchDay3 = { @Sendable _ in .mock3 }
     }
-    store.exhaustivity = .off
     await store.send(.view(.onAppear))
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
@@ -29,14 +38,17 @@ struct ScheduleTests {
   @Test
   func fetchData_failure() async {
     struct FetchError: Equatable, Error {}
-    let store = TestStore(initialState: Schedule.State()) {
+
+    var state = Schedule.State()
+    state.allSessions = Self.preloadedSessions
+
+    let store = TestStore(initialState: state) {
       Schedule()
     } withDependencies: {
       $0[DataClient.self].fetchDay1 = { @Sendable _ in throw FetchError() }
       $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
       $0[DataClient.self].fetchDay3 = { @Sendable _ in .mock3 }
     }
-    store.exhaustivity = .off
     await store.send(.view(.onAppear))
     await store.receive(\.fetchResponse.failure)
   }
@@ -44,14 +56,17 @@ struct ScheduleTests {
   @Test
   func fetchData_withoutDay3() async {
     struct NotFound: Equatable, Error {}
-    let store = TestStore(initialState: Schedule.State()) {
+
+    var state = Schedule.State()
+    state.allSessions = Self.preloadedSessions
+
+    let store = TestStore(initialState: state) {
       Schedule()
     } withDependencies: {
       $0[DataClient.self].fetchDay1 = { @Sendable _ in .mock1 }
       $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
       $0[DataClient.self].fetchDay3 = { @Sendable _ in throw NotFound() }
     }
-    store.exhaustivity = .off
     await store.send(.view(.onAppear))
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
@@ -67,6 +82,7 @@ struct ScheduleTests {
     state.day1 = .mock1
     state.day2 = .mock2
     state.day3 = .mock3
+    state.allSessions = Self.preloadedSessions
 
     let store = TestStore(initialState: state) {
       Schedule()
@@ -77,7 +93,6 @@ struct ScheduleTests {
         throw DataClientError.resourceNotFound("2017-day3")
       }
     }
-    store.exhaustivity = .off
 
     await store.send(.view(.yearSelected(.year2017))) {
       $0.selectedYear = .year2017
@@ -91,6 +106,48 @@ struct ScheduleTests {
       $0.day1 = .mock1
       $0.day2 = .mock2
       $0.day3 = nil
+    }
+  }
+
+  @Test
+  func allSessionsLoaded_onFirstAppear() async {
+    let store = TestStore(initialState: Schedule.State()) {
+      Schedule()
+    } withDependencies: {
+      $0[DataClient.self].fetchDay1 = { @Sendable _ in .mock1 }
+      $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
+      $0[DataClient.self].fetchDay3 = { @Sendable _ in
+        throw DataClientError.resourceNotFound("day3")
+      }
+    }
+
+    await store.send(.view(.onAppear))
+    await store.receive(\.fetchResponse.success) {
+      $0.day1 = .mock1
+      $0.day2 = .mock2
+      $0.day3 = nil
+    }
+
+    // Each year loads day1 (.mock1) and day2 (.mock2), day3 throws resourceNotFound.
+    // Each conference mock has 2 sessions (mock1, mock2), both with description != nil.
+    // 7 years × 2 days × 2 sessions = 28 SearchableSession entries.
+    let expectedSessions: [ScheduleFeature.Schedule.SearchableSession] = ConferenceYear.allCases.flatMap { year in
+      [Conference.mock1, .mock2].flatMap { conference in
+        conference.schedules.flatMap { schedule in
+          schedule.sessions.compactMap { session -> ScheduleFeature.Schedule.SearchableSession? in
+            guard session.description != nil else { return nil }
+            var parts: [String] = [session.title]
+            if let speakers = session.speakers {
+              parts.append(contentsOf: speakers.map(\.name))
+            }
+            return .init(year: year, session: session, searchCorpus: parts.joined(separator: " ").lowercased())
+          }
+        }
+      }
+    }
+
+    await store.receive(\.allSessionsLoaded) {
+      $0.allSessions = expectedSessions
     }
   }
 

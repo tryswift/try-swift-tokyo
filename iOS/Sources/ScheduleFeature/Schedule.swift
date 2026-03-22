@@ -94,11 +94,18 @@ public struct Schedule {
             ? .run { send in
               var results: [SearchableSession] = []
               for year in ConferenceYear.allCases {
-                let conferences: [Conference] = [
-                  try? dataClient.fetchDay1(year),
-                  try? dataClient.fetchDay2(year),
-                  try? dataClient.fetchDay3(year),
-                ].compactMap { $0 }
+                var conferences: [Conference] = []
+                for fetch in [dataClient.fetchDay1, dataClient.fetchDay2, dataClient.fetchDay3] {
+                  do {
+                    conferences.append(try fetch(year))
+                  } catch is DataClientError {
+                    // Resource not found for this year/day — expected
+                  } catch let error as DecodingError {
+                    assertionFailure(error.localizedDescription)
+                  } catch {
+                    print(error)  // TODO: replace to Logger API
+                  }
+                }
                 for conference in conferences {
                   for schedule in conference.schedules {
                     for session in schedule.sessions {
@@ -307,6 +314,7 @@ public struct ScheduleView: View {
             .aspectRatio(contentMode: .fit)
             .clipShape(Circle())
             .frame(width: 44)
+            .accessibilityElement(children: .ignore)
             .accessibilityIgnoresInvertColors()
         }
       } else {
@@ -315,6 +323,7 @@ public struct ScheduleView: View {
           .aspectRatio(contentMode: .fit)
           .clipShape(Circle())
           .frame(width: 44)
+          .accessibilityElement(children: .ignore)
           .accessibilityIgnoresInvertColors()
       }
       VStack(alignment: .leading, spacing: 2) {
