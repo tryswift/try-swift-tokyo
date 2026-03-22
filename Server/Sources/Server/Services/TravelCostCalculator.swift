@@ -166,8 +166,16 @@ enum TravelCostCalculator {
       return nil
     }
 
+    guard
+      let encodedFrom = fromStation.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+      let encodedTo = toStation.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+    else {
+      logger.warning("Failed to percent-encode station names")
+      return nil
+    }
+
     let url =
-      "https://api-public.odpt.org/api/v4/odpt:RailwayFare?odpt:fromStation=\(fromStation)&odpt:toStation=\(toStation)&acl:consumerKey=\(apiKey)"
+      "https://api-public.odpt.org/api/v4/odpt:RailwayFare?odpt:fromStation=\(encodedFrom)&odpt:toStation=\(encodedTo)&acl:consumerKey=\(apiKey)"
 
     do {
       let response = try await client.get(URI(string: url))

@@ -35,7 +35,7 @@ struct OrganizerScholarshipsPageView: HTML, Sendable {
       div(.class("d-flex gap-2")) {
         a(
           .class("btn btn-outline-secondary"),
-          .href(language.path(for: "/organizer/scholarships/budget"))
+          .href(language.path(for: "/organizer/scholarship-budget"))
         ) {
           language == .ja ? "予算管理" : "Budget Management"
         }

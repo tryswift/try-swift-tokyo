@@ -119,3 +119,23 @@ public struct ScholarshipApplicationDTO: Codable, Sendable, Equatable, Identifia
     self.updatedAt = updatedAt
   }
 }
+
+/// Wrapper for `[String]` to encode/decode as a single JSON array value
+/// (avoids Fluent treating bare `[String]` as PostgreSQL `jsonb[]`)
+public struct PurposeList: Codable, Sendable, Equatable {
+  public var items: [String]
+
+  public init(_ items: [String]) {
+    self.items = items
+  }
+
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.singleValueContainer()
+    self.items = try container.decode([String].self)
+  }
+
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.singleValueContainer()
+    try container.encode(items)
+  }
+}

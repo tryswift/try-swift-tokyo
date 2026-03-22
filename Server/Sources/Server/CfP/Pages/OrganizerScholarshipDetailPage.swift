@@ -95,7 +95,7 @@ struct OrganizerScholarshipDetailPageView: HTML, Sendable {
       if application.status == .approved || application.status == .rejected {
         HTMLRaw(
           """
-          <form method="post" action="\(language.path(for: "/organizer/scholarships/\(application.id)/revert-status"))">
+          <form method="post" action="\(language.path(for: "/organizer/scholarships/\(application.id)/revert"))">
             <input type="hidden" name="_csrf" value="\(csrfToken)">
             <button type="submit" class="btn btn-outline-secondary">
           """)
@@ -434,7 +434,7 @@ struct OrganizerScholarshipDetailPageView: HTML, Sendable {
       div(.class("card-body")) {
         form(
           .method(.post),
-          .action(language.path(for: "/organizer/scholarships/\(application.id)/review"))
+          .action(language.path(for: "/organizer/scholarships/\(application.id)/approve"))
         ) {
           input(.type(.hidden), .name("_csrf"), .value(csrfToken))
 

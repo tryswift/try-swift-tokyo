@@ -41,7 +41,7 @@ final class ScholarshipApplication: Model, Content, @unchecked Sendable {
 
   /// Purposes stored as JSON array of ScholarshipPurpose raw values
   @Field(key: "purposes")
-  var purposes: [String]
+  var purposes: PurposeList
 
   @Field(key: "language_preference")
   var languagePreference: String
@@ -123,7 +123,7 @@ final class ScholarshipApplication: Model, Content, @unchecked Sendable {
     currentYear: String,
     portfolio: String? = nil,
     githubAccount: String? = nil,
-    purposes: [String],
+    purposes: PurposeList,
     languagePreference: String,
     existingTicketInfo: String? = nil,
     supportType: ScholarshipSupportType,
@@ -190,7 +190,7 @@ final class ScholarshipApplication: Model, Content, @unchecked Sendable {
       currentYear: currentYear,
       portfolio: portfolio,
       githubAccount: githubAccount,
-      purposes: purposes,
+      purposes: purposes.items,
       languagePreference: languagePreference,
       existingTicketInfo: existingTicketInfo,
       supportType: supportType,

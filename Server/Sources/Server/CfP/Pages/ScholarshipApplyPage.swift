@@ -882,7 +882,7 @@ struct ScholarshipApplyPageView: HTML, Sendable {
           }
           resultDiv.innerHTML = '<span class="text-muted">Estimating...</span>';
           try {
-            var response = await fetch('/scholarship/api/travel-cost?city=' + encodeURIComponent(city));
+            var response = await fetch('/scholarship/api/travel-cost?from=' + encodeURIComponent(city));
             if (response.ok) {
               var data = await response.json();
               var html = '<strong>' + (data.city || city) + ' (' + (data.cityJa || '') + ')</strong><br>';

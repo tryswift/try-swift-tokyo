@@ -280,37 +280,51 @@ struct ScholarshipRoutes: RouteCollection {
     struct ScholarshipFormData: Content {
       var name: String
       var email: String
-      var schoolAndFaculty: String
-      var currentYear: String
+      var school_and_faculty: String
+      var current_year: String
       var portfolio: String?
-      var githubAccount: String?
-      var purposes: [String]?
-      var languagePreference: String
-      var existingTicketInfo: String?
-      var supportType: String
+      var github_account: String?
+      var language_preference: String
+      var existing_ticket_info: String?
+      var support_type: String
       // Travel fields
-      var originCity: String?
-      var transportationMethods: [String]?
-      var estimatedRoundTripCost: String?
+      var origin_city: String?
+      var transportation_methods: [String]?
+      var estimated_round_trip_cost: String?
       // Accommodation fields
-      var accommodationType: String?
-      var reservationStatus: String?
-      var accommodationName: String?
-      var accommodationAddress: String?
-      var checkInDate: String?
-      var checkOutDate: String?
-      var estimatedAccommodationCost: String?
+      var accommodation_type: String?
+      var reservation_status: String?
+      var accommodation_name: String?
+      var accommodation_address: String?
+      var check_in_date: String?
+      var check_out_date: String?
+      var estimated_accommodation_cost: String?
       // Financial
-      var totalEstimatedCost: String?
-      var desiredSupportAmount: String?
-      var selfPaymentInfo: String?
+      var total_estimated_cost: String?
+      var desired_support_amount: String?
+      var self_payment_info: String?
       // Agreements
-      var agreedTravelRegulations: String?
-      var agreedApplicationConfirmation: String?
-      var agreedPrivacy: String?
-      var agreedCodeOfConduct: String?
+      var agreed_travel_regulations: String?
+      var agreed_application_confirmation: String?
+      var agreed_privacy: String?
+      var agreed_code_of_conduct: String?
       // Additional
-      var additionalComments: String?
+      var additional_comments: String?
+
+      // purposes[] requires a CodingKey since bracket syntax isn't a valid Swift identifier
+      var purposes: [String]?
+      enum CodingKeys: String, CodingKey {
+        case name, email, portfolio, purposes = "purposes[]"
+        case school_and_faculty, current_year, github_account
+        case language_preference, existing_ticket_info, support_type
+        case origin_city, transportation_methods, estimated_round_trip_cost
+        case accommodation_type, reservation_status, accommodation_name
+        case accommodation_address, check_in_date, check_out_date
+        case estimated_accommodation_cost, total_estimated_cost
+        case desired_support_amount, self_payment_info
+        case agreed_travel_regulations, agreed_application_confirmation
+        case agreed_privacy, agreed_code_of_conduct, additional_comments
+      }
     }
 
     let formData: ScholarshipFormData
@@ -338,19 +352,19 @@ struct ScholarshipRoutes: RouteCollection {
         error: language == .ja ? "メールアドレスは必須です" : "Email address is required",
         language: language)
     }
-    guard !formData.schoolAndFaculty.isEmpty else {
+    guard !formData.school_and_faculty.isEmpty else {
       return try await renderScholarshipApplyPageWithError(
         req: req, user: user,
         error: language == .ja ? "学校名・学部は必須です" : "School and faculty is required",
         language: language)
     }
-    guard !formData.currentYear.isEmpty else {
+    guard !formData.current_year.isEmpty else {
       return try await renderScholarshipApplyPageWithError(
         req: req, user: user,
         error: language == .ja ? "学年は必須です" : "Current year is required",
         language: language)
     }
-    guard !formData.languagePreference.isEmpty else {
+    guard !formData.language_preference.isEmpty else {
       return try await renderScholarshipApplyPageWithError(
         req: req, user: user,
         error: language == .ja ? "言語の選択は必須です" : "Language preference is required",
@@ -358,7 +372,7 @@ struct ScholarshipRoutes: RouteCollection {
     }
 
     // Validate support type
-    guard let supportType = ScholarshipSupportType(rawValue: formData.supportType) else {
+    guard let supportType = ScholarshipSupportType(rawValue: formData.support_type) else {
       return try await renderScholarshipApplyPageWithError(
         req: req, user: user,
         error: language == .ja ? "サポート種別を選択してください" : "Please select a support type",
@@ -371,7 +385,7 @@ struct ScholarshipRoutes: RouteCollection {
 
     if supportType == .ticketAndTravel {
       // Travel validation
-      guard let originCity = formData.originCity, !originCity.isEmpty else {
+      guard let originCity = formData.origin_city, !originCity.isEmpty else {
         return try await renderScholarshipApplyPageWithError(
           req: req, user: user,
           error: language == .ja ? "出発地は必須です" : "Origin city is required",
@@ -379,9 +393,9 @@ struct ScholarshipRoutes: RouteCollection {
       }
 
       let transportMethods =
-        formData.transportationMethods?.compactMap { TransportMethod(rawValue: $0) } ?? []
+        formData.transportation_methods?.compactMap { TransportMethod(rawValue: $0) } ?? []
 
-      guard let costStr = formData.estimatedRoundTripCost,
+      guard let costStr = formData.estimated_round_trip_cost,
         let roundTripCost = Int(costStr), roundTripCost > 0
       else {
         return try await renderScholarshipApplyPageWithError(
@@ -397,13 +411,13 @@ struct ScholarshipRoutes: RouteCollection {
       )
 
       // Accommodation validation
-      if let accTypeStr = formData.accommodationType, !accTypeStr.isEmpty,
+      if let accTypeStr = formData.accommodation_type, !accTypeStr.isEmpty,
         let accType = AccommodationType(rawValue: accTypeStr)
       {
         let resStatus =
-          formData.reservationStatus.flatMap { ReservationStatus(rawValue: $0) } ?? .notYet
+          formData.reservation_status.flatMap { ReservationStatus(rawValue: $0) } ?? .notYet
 
-        guard let accCostStr = formData.estimatedAccommodationCost,
+        guard let accCostStr = formData.estimated_accommodation_cost,
           let accCost = Int(accCostStr), accCost > 0
         else {
           return try await renderScholarshipApplyPageWithError(
@@ -416,19 +430,19 @@ struct ScholarshipRoutes: RouteCollection {
         accommodationDetails = AccommodationDetails(
           accommodationType: accType,
           reservationStatus: resStatus,
-          accommodationName: formData.accommodationName?.isEmpty == true
-            ? nil : formData.accommodationName,
-          accommodationAddress: formData.accommodationAddress?.isEmpty == true
-            ? nil : formData.accommodationAddress,
-          checkInDate: formData.checkInDate?.isEmpty == true ? nil : formData.checkInDate,
-          checkOutDate: formData.checkOutDate?.isEmpty == true ? nil : formData.checkOutDate,
+          accommodationName: formData.accommodation_name?.isEmpty == true
+            ? nil : formData.accommodation_name,
+          accommodationAddress: formData.accommodation_address?.isEmpty == true
+            ? nil : formData.accommodation_address,
+          checkInDate: formData.check_in_date?.isEmpty == true ? nil : formData.check_in_date,
+          checkOutDate: formData.check_out_date?.isEmpty == true ? nil : formData.check_out_date,
           estimatedCost: accCost
         )
       }
     }
 
     // Check all 4 agreement checkboxes
-    guard formData.agreedTravelRegulations == "on" || formData.agreedTravelRegulations == "true"
+    guard formData.agreed_travel_regulations == "on" || formData.agreed_travel_regulations == "true"
     else {
       return try await renderScholarshipApplyPageWithError(
         req: req, user: user,
@@ -436,8 +450,8 @@ struct ScholarshipRoutes: RouteCollection {
           : "You must agree to the travel regulations",
         language: language)
     }
-    guard formData.agreedApplicationConfirmation == "on"
-      || formData.agreedApplicationConfirmation == "true"
+    guard formData.agreed_application_confirmation == "on"
+      || formData.agreed_application_confirmation == "true"
     else {
       return try await renderScholarshipApplyPageWithError(
         req: req, user: user,
@@ -445,14 +459,14 @@ struct ScholarshipRoutes: RouteCollection {
           : "You must confirm the application details",
         language: language)
     }
-    guard formData.agreedPrivacy == "on" || formData.agreedPrivacy == "true" else {
+    guard formData.agreed_privacy == "on" || formData.agreed_privacy == "true" else {
       return try await renderScholarshipApplyPageWithError(
         req: req, user: user,
         error: language == .ja ? "プライバシーポリシーへの同意は必須です"
           : "You must agree to the privacy policy",
         language: language)
     }
-    guard formData.agreedCodeOfConduct == "on" || formData.agreedCodeOfConduct == "true" else {
+    guard formData.agreed_code_of_conduct == "on" || formData.agreed_code_of_conduct == "true" else {
       return try await renderScholarshipApplyPageWithError(
         req: req, user: user,
         error: language == .ja ? "行動規範への同意は必須です"
@@ -498,8 +512,8 @@ struct ScholarshipRoutes: RouteCollection {
     }
 
     // Financial fields
-    let totalEstimatedCost = formData.totalEstimatedCost.flatMap { Int($0) }
-    let desiredSupportAmount = formData.desiredSupportAmount.flatMap { Int($0) }
+    let totalEstimatedCost = formData.total_estimated_cost.flatMap { Int($0) }
+    let desiredSupportAmount = formData.desired_support_amount.flatMap { Int($0) }
 
     // Create ScholarshipApplication model and save
     let application = ScholarshipApplication(
@@ -507,27 +521,27 @@ struct ScholarshipRoutes: RouteCollection {
       applicantID: user.id,
       email: formData.email,
       name: formData.name,
-      schoolAndFaculty: formData.schoolAndFaculty,
-      currentYear: formData.currentYear,
+      schoolAndFaculty: formData.school_and_faculty,
+      currentYear: formData.current_year,
       portfolio: formData.portfolio?.isEmpty == true ? nil : formData.portfolio,
-      githubAccount: formData.githubAccount?.isEmpty == true ? nil : formData.githubAccount,
-      purposes: formData.purposes ?? [],
-      languagePreference: formData.languagePreference,
-      existingTicketInfo: formData.existingTicketInfo?.isEmpty == true
-        ? nil : formData.existingTicketInfo,
+      githubAccount: formData.github_account?.isEmpty == true ? nil : formData.github_account,
+      purposes: PurposeList(formData.purposes ?? []),
+      languagePreference: formData.language_preference,
+      existingTicketInfo: formData.existing_ticket_info?.isEmpty == true
+        ? nil : formData.existing_ticket_info,
       supportType: supportType,
       travelDetails: travelDetails,
       accommodationDetails: accommodationDetails,
       totalEstimatedCost: totalEstimatedCost,
       desiredSupportAmount: desiredSupportAmount,
-      selfPaymentInfo: formData.selfPaymentInfo?.isEmpty == true
-        ? nil : formData.selfPaymentInfo,
+      selfPaymentInfo: formData.self_payment_info?.isEmpty == true
+        ? nil : formData.self_payment_info,
       agreedTravelRegulations: true,
       agreedApplicationConfirmation: true,
       agreedPrivacy: true,
       agreedCodeOfConduct: true,
-      additionalComments: formData.additionalComments?.isEmpty == true
-        ? nil : formData.additionalComments
+      additionalComments: formData.additional_comments?.isEmpty == true
+        ? nil : formData.additional_comments
     )
 
     try await application.save(on: req.db)
@@ -535,8 +549,8 @@ struct ScholarshipRoutes: RouteCollection {
     // Send Slack notification
     await SlackNotifier.notifyNewScholarshipApplication(
       name: formData.name,
-      school: formData.schoolAndFaculty,
-      supportType: formData.supportType,
+      school: formData.school_and_faculty,
+      supportType: formData.support_type,
       client: req.client,
       logger: req.logger
     )
@@ -798,8 +812,8 @@ struct ScholarshipRoutes: RouteCollection {
       columns.append(escapeCSV(app.languagePreference))
       columns.append(escapeCSV(app.portfolio ?? ""))
       columns.append(escapeCSV(app.githubAccount ?? ""))
-      columns.append(escapeCSV(app.purposes.joined(separator: "; ")))
-      columns.append(app.conference.displayName)
+      columns.append(escapeCSV(app.purposes.items.joined(separator: "; ")))
+      columns.append(escapeCSV(app.conference.displayName))
       columns.append(app.createdAt.map { dateFormatter.string(from: $0) } ?? "")
       columns.append(escapeCSV(app.organizerNotes ?? ""))
       csv += columns.joined(separator: ",") + "\n"
@@ -836,16 +850,25 @@ struct ScholarshipRoutes: RouteCollection {
 
     // Decode approved amount from form
     struct ApproveFormData: Content {
-      var approvedAmount: String?
-      var organizerNotes: String?
+      var approved_amount: String
+      var organizer_notes: String?
     }
 
-    let formData = try? req.content.decode(ApproveFormData.self)
-    let approvedAmount = formData?.approvedAmount.flatMap { Int($0) }
+    let formData: ApproveFormData
+    do {
+      formData = try req.content.decode(ApproveFormData.self)
+    } catch {
+      throw Abort(.badRequest, reason: "Approved amount is required")
+    }
+
+    let trimmedAmount = formData.approved_amount.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !trimmedAmount.isEmpty, let approvedAmount = Int(trimmedAmount) else {
+      throw Abort(.badRequest, reason: "Approved amount must be a valid number")
+    }
 
     application.status = .approved
     application.approvedAmount = approvedAmount
-    if let notes = formData?.organizerNotes, !notes.isEmpty {
+    if let notes = formData.organizer_notes, !notes.isEmpty {
       application.organizerNotes = notes
     }
     try await application.save(on: req.db)
@@ -872,13 +895,13 @@ struct ScholarshipRoutes: RouteCollection {
 
     // Decode optional organizer notes from form
     struct RejectFormData: Content {
-      var organizerNotes: String?
+      var organizer_notes: String?
     }
 
     let formData = try? req.content.decode(RejectFormData.self)
 
     application.status = .rejected
-    if let notes = formData?.organizerNotes, !notes.isEmpty {
+    if let notes = formData?.organizer_notes, !notes.isEmpty {
       application.organizerNotes = notes
     }
     try await application.save(on: req.db)
@@ -968,9 +991,8 @@ struct ScholarshipRoutes: RouteCollection {
     }
 
     struct BudgetFormData: Content {
-      var conferenceId: UUID
-      var totalBudget: String
-      var notes: String?
+      var total_budget: String
+      var budget_notes: String?
     }
 
     let formData: BudgetFormData
@@ -981,25 +1003,36 @@ struct ScholarshipRoutes: RouteCollection {
         to: "/organizer/scholarship-budget?error=Invalid+form+data")
     }
 
-    guard let totalBudget = Int(formData.totalBudget), totalBudget >= 0 else {
+    guard let totalBudget = Int(formData.total_budget), totalBudget >= 0 else {
       return req.redirect(
         to: "/organizer/scholarship-budget?error=Invalid+budget+amount")
     }
 
+    // Use the current open conference
+    guard let openConference = try await Conference.query(on: req.db)
+      .filter(\.$isOpen == true)
+      .sort(\.$year, .descending)
+      .first(),
+      let conferenceID = openConference.id
+    else {
+      return req.redirect(
+        to: "/organizer/scholarship-budget?error=No+open+conference")
+    }
+
     // Find or create budget for this conference
     let existing = try await ScholarshipBudget.query(on: req.db)
-      .filter(\.$conference.$id == formData.conferenceId)
+      .filter(\.$conference.$id == conferenceID)
       .first()
 
     if let existing {
       existing.totalBudget = totalBudget
-      existing.notes = formData.notes?.isEmpty == true ? nil : formData.notes
+      existing.notes = formData.budget_notes?.isEmpty == true ? nil : formData.budget_notes
       try await existing.save(on: req.db)
     } else {
       let budget = ScholarshipBudget(
-        conferenceID: formData.conferenceId,
+        conferenceID: conferenceID,
         totalBudget: totalBudget,
-        notes: formData.notes?.isEmpty == true ? nil : formData.notes
+        notes: formData.budget_notes?.isEmpty == true ? nil : formData.budget_notes
       )
       try await budget.save(on: req.db)
     }

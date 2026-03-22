@@ -123,7 +123,7 @@ struct OrganizerScholarshipBudgetPageView: HTML, Sendable {
       div(.class("card-body")) {
         form(
           .method(.post),
-          .action(language.path(for: "/organizer/scholarships/budget"))
+          .action(language.path(for: "/organizer/scholarship-budget"))
         ) {
           input(.type(.hidden), .name("_csrf"), .value(csrfToken))
 
