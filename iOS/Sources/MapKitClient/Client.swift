@@ -10,7 +10,7 @@ public struct MapKitClient: Sendable {
   public var mapRoute: @Sendable (MKMapItem, MKMapItem) async throws -> MKRoute?
   public var lookAround: @Sendable (MKMapItem) async throws -> MKLookAroundScene?
   public var reverseGeocodeLocation:
-    @Sendable (CLLocationCoordinate2D) async throws -> [MKPlacemark]
+    @Sendable (CLLocationCoordinate2D) async throws -> [MKMapItem]
   public var localSearch: @Sendable (String, MKCoordinateRegion) async throws -> [MKMapItem]
 }
 
@@ -32,11 +32,11 @@ extension MapKitClient: DependencyKey {
       return try await sceneRequest.scene
     },
     reverseGeocodeLocation: { location in
-      let geoCoder = CLGeocoder()
-      return try await geoCoder.reverseGeocodeLocation(
-        .init(latitude: location.latitude, longitude: location.longitude)
-      )
-      .map(MKPlacemark.init(placemark:))
+      let clLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+      guard let request = MKReverseGeocodingRequest(location: clLocation) else {
+        return []
+      }
+      return try await request.mapItems
     },
     localSearch: { naturalLanguageQuery, region in
       let request = MKLocalSearch.Request()
