@@ -62,7 +62,11 @@ struct ConferenceLiveTests {
   @Test
   func customLastSlotDuration() {
     // With 120s duration, last slot ends at 3000 + 120 = 3120
-    #expect(conference.liveScheduleIndex(at: Date(timeIntervalSince1970: 3100), lastSlotDuration: 120) == 2)
-    #expect(conference.liveScheduleIndex(at: Date(timeIntervalSince1970: 3200), lastSlotDuration: 120) == nil)
+    #expect(
+      conference.liveScheduleIndex(at: Date(timeIntervalSince1970: 3100), lastSlotDuration: 120)
+        == 2)
+    #expect(
+      conference.liveScheduleIndex(at: Date(timeIntervalSince1970: 3200), lastSlotDuration: 120)
+        == nil)
   }
 }
