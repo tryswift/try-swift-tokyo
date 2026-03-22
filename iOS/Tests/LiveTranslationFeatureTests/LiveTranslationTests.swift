@@ -26,6 +26,8 @@ struct LiveTranslationTests {
 
     let store = TestStore(initialState: state) {
       LiveTranslation()
+    } withDependencies: {
+      $0.liveTranslationServiceClient.requestTranslationLanguage = { _ in }
     }
     store.exhaustivity = .off
 
