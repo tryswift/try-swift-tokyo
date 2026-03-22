@@ -1,18 +1,19 @@
 import AboutFeature
+import LiveTranslationFeature
 import ScheduleFeature
 import SponsorFeature
 import SwiftUI
 import VenueFeature
 
 #if !SKIP
-@main
-struct TrySwiftTokyoApp: App {
-  var body: some Scene {
-    WindowGroup {
-      ContentView()
+  @main
+  struct TrySwiftTokyoApp: App {
+    var body: some Scene {
+      WindowGroup {
+        ContentView()
+      }
     }
   }
-}
 #endif
 
 public struct ContentView: View {
@@ -28,23 +29,29 @@ public struct ContentView: View {
         }
         .tag(0)
 
+      LiveTranslationScreen()
+        .tabItem {
+          Label("Translation", systemImage: "text.bubble")
+        }
+        .tag(1)
+
       SponsorsScreen()
         .tabItem {
           Label("Sponsors", systemImage: "building.2")
         }
-        .tag(1)
+        .tag(2)
 
       VenueScreen()
         .tabItem {
           Label("Venue", systemImage: "map")
         }
-        .tag(2)
+        .tag(3)
 
       AboutScreen()
         .tabItem {
           Label("About", systemImage: "info.circle")
         }
-        .tag(3)
+        .tag(4)
     }
   }
 }

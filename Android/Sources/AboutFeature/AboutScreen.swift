@@ -173,29 +173,29 @@ struct OrganizerDetailSheet: View {
       }
       .navigationTitle("Profile")
       #if os(iOS) || SKIP
-      .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
-      .toolbar {
-        ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
-          Button("Done") {
-            dismiss()
+        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
+        .toolbar {
+          ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
+            Button("Done") {
+              dismiss()
+            }
           }
         }
-      }
       #else
-      .toolbar {
-        ToolbarItem(placement: ToolbarItemPlacement.automatic) {
-          Button("Done") {
-            dismiss()
+        .toolbar {
+          ToolbarItem(placement: ToolbarItemPlacement.automatic) {
+            Button("Done") {
+              dismiss()
+            }
           }
         }
-      }
       #endif
     }
   }
 }
 
 #if !SKIP
-#Preview {
-  AboutScreen()
-}
+  #Preview {
+    AboutScreen()
+  }
 #endif
