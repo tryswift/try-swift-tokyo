@@ -6,6 +6,26 @@ const FLITTO_DEMO_PW = process.env.FLITTO_DEMO_PW ?? "";
 
 export { expect };
 
+/** Enter the 6-digit room code on the given page and join the room */
+async function enterRoomCode(page: Page): Promise<void> {
+  await page.goto("/");
+  await page.waitForLoadState("networkidle");
+
+  const digitInputs = page.locator("input");
+  await digitInputs.first().waitFor({ state: "visible", timeout: 15_000 });
+
+  const digits = FLITTO_ROOM_NUMBER.split("");
+  for (let i = 0; i < digits.length; i++) {
+    await digitInputs.nth(i).fill(digits[i]);
+  }
+
+  const joinButton = page.getByRole("button", { name: /join room/i });
+  await joinButton.click();
+
+  await page.waitForLoadState("networkidle");
+  await page.waitForTimeout(3_000);
+}
+
 /** Login to the host dashboard and enter the room */
 async function loginAndEnterRoom(browser: Browser): Promise<Page> {
   const context = await browser.newContext({
@@ -45,28 +65,11 @@ async function loginAndEnterRoom(browser: Browser): Promise<Page> {
   return page;
 }
 
-/** Join the audience room by entering the 6-digit code */
+/** Join the audience room by entering the 6-digit code (new browser context) */
 async function joinAudienceRoom(browser: Browser): Promise<Page> {
   const context = await browser.newContext();
   const page = await context.newPage();
-
-  await page.goto("/");
-  await page.waitForLoadState("networkidle");
-
-  const digitInputs = page.locator("input");
-  await digitInputs.first().waitFor({ state: "visible", timeout: 15_000 });
-
-  const digits = FLITTO_ROOM_NUMBER.split("");
-  for (let i = 0; i < digits.length; i++) {
-    await digitInputs.nth(i).fill(digits[i]);
-  }
-
-  const joinButton = page.getByRole("button", { name: /join room/i });
-  await joinButton.click();
-
-  await page.waitForLoadState("networkidle");
-  await page.waitForTimeout(3_000);
-
+  await enterRoomCode(page);
   return page;
 }
 
@@ -78,26 +81,12 @@ export const test = base.extend<{
   // Audience fixture: enters 6-digit room code and joins the room
   roomPage: async ({ page }, use) => {
     if (!FLITTO_ROOM_NUMBER) {
-      throw new Error("FLITTO_ROOM_NUMBER must be set in .env");
+      throw new Error(
+        "FLITTO_ROOM_NUMBER must be set in environment variables (or .env locally)"
+      );
     }
 
-    await page.goto("/");
-    await page.waitForLoadState("networkidle");
-
-    const digitInputs = page.locator("input");
-    await digitInputs.first().waitFor({ state: "visible", timeout: 15_000 });
-
-    const digits = FLITTO_ROOM_NUMBER.split("");
-    for (let i = 0; i < digits.length; i++) {
-      await digitInputs.nth(i).fill(digits[i]);
-    }
-
-    const joinButton = page.getByRole("button", { name: /join room/i });
-    await joinButton.click();
-
-    await page.waitForLoadState("networkidle");
-    await page.waitForTimeout(3_000);
-
+    await enterRoomCode(page);
     await use(page);
   },
 

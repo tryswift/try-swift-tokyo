@@ -129,6 +129,10 @@ test.describe("Live Translation - Chat Reception", () => {
         "Once the presentation begins, the translation will be displayed on the page."
       );
       await expect(subtitle).toBeVisible();
+    } else {
+      // Room is streaming - verify at least one chat item is visible
+      const chatItems = page.locator('[class*="chat"], [class*="message"], li');
+      await expect(chatItems.first()).toBeVisible({ timeout: 10_000 });
     }
 
     // Take a screenshot for manual review

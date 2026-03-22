@@ -5,12 +5,20 @@ on:
     paths:
       - "e2e/**"
       - ".github/workflows/e2e-live-translation.yml"
+  pull_request:
+    paths:
+      - "e2e/**"
+      - ".github/workflows/e2e-live-translation.yml"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   test:
     name: Playwright E2E Tests
     runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     defaults:
       run:
         working-directory: e2e

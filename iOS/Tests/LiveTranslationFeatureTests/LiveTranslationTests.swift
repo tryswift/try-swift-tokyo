@@ -3,16 +3,17 @@ import Testing
 
 @testable import LiveTranslationFeature
 
-@Suite
+@Suite(.serialized)
 @MainActor
 struct LiveTranslationTests {
 
-  // MARK: - Existing: Validate Selected Lang Code
+  // MARK: - Validate Selected Lang Code
 
   @Test
   func validateSelectedLangCode_validCode() async {
-    @Shared(.selectedLangCode) var selectedLangCode = "ja"
     let state = LiveTranslation.State()
+    // Capture the current code (set by device locale, typically "en" on CI)
+    let initialCode = state.selectedLangCode
 
     let store = TestStore(initialState: state) {
       LiveTranslation()
@@ -20,6 +21,8 @@ struct LiveTranslationTests {
     store.exhaustivity = .off
 
     await store.send(.validateSelectedLangCode(["en", "ja", "ko"]))
+    // Assert the valid code was NOT overwritten by the fallback logic
+    store.state.$selectedLangCode.withLock { #expect($0 == initialCode) }
   }
 
   @Test
@@ -46,16 +49,17 @@ struct LiveTranslationTests {
 
     let store = TestStore(initialState: state) {
       LiveTranslation()
+    } withDependencies: {
+      $0.liveTranslationServiceClient.requestTranslationLanguage = { _ in }
     }
     store.exhaustivity = .off
 
-    let langList = makeLangList(["ja", "ko"])
-    await store.send(.validateSelectedLangCode(langList)) {
+    await store.send(.validateSelectedLangCode(["ja", "ko"])) {
       $0.$selectedLangCode.withLock { $0 = "en" }
     }
   }
 
-  // MARK: - Group 1: Pure State Mutations
+  // MARK: - Pure State Mutations
 
   @Test
   func setSelectedLanguageSheet_true() async {
@@ -161,7 +165,7 @@ struct LiveTranslationTests {
     }
   }
 
-  // MARK: - Group 2: Dependency Mocking
+  // MARK: - Dependency Mocking
 
   @Test
   func onAppear_setsRoomNumber() async {
@@ -169,15 +173,8 @@ struct LiveTranslationTests {
       LiveTranslation()
     } withDependencies: {
       $0.buildConfig.liveTranslationRoomNumber = { "ROOM-42" }
-      $0.liveTranslationServiceClient.langSet = { @Sendable _ in
-        throw CancellationError()
-      }
-      $0.liveTranslationServiceClient.langList = { @Sendable in
-        throw CancellationError()
-      }
-      $0.liveTranslationServiceClient.chatRoomInfo = { @Sendable _ in
-        throw CancellationError()
-      }
+      $0.liveTranslationServiceClient.connect = { _, _ in }
+      $0.liveTranslationServiceClient.stateStream = { .never }
     }
     store.exhaustivity = .off
 
@@ -229,6 +226,9 @@ struct LiveTranslationTests {
       $0.speakingItemId = "item-789"
     }
 
+    // Note: Using \.view (broad match) because Action.View is not @CasePathable,
+    // so \.view.speechDidFinish is unavailable. The state assertion below confirms
+    // that the received action was indeed .view(.speechDidFinish).
     await store.receive(\.view) {
       $0.speakingItemId = nil
     }
@@ -241,66 +241,47 @@ struct LiveTranslationTests {
   }
 
   @Test
-  func selectLangCode_sendsChangeLangCode() async {
+  func selectLangCode_updatesCodeAndRequestsTranslation() async {
     @Shared(.selectedLangCode) var selectedLangCode = "en"
+    let requestedLang = LockIsolated<String?>(nil)
 
     let store = TestStore(initialState: LiveTranslation.State()) {
       LiveTranslation()
     } withDependencies: {
-      $0.liveTranslationServiceClient.langSet = { @Sendable _ in
-        throw CancellationError()
+      $0.liveTranslationServiceClient.requestTranslationLanguage = { @Sendable langCode in
+        requestedLang.setValue(langCode)
       }
-      $0.liveTranslationServiceClient.requestBatchTranslation = { @Sendable _ in }
     }
     store.exhaustivity = .off
 
-    await store.send(.view(.selectLangCode("ko")))
-    await store.receive(\.changeLangCode) {
-      $0.$selectedLangCode.withLock { $0 = "ko" }
-    }
-  }
-
-  @Test
-  func changeLangCode_updatesSelectedLangCode() async {
-    @Shared(.selectedLangCode) var selectedLangCode = "en"
-    let langSetCalled = LockIsolated<String?>(nil)
-
-    let store = TestStore(initialState: LiveTranslation.State()) {
-      LiveTranslation()
-    } withDependencies: {
-      $0.liveTranslationServiceClient.langSet = { @Sendable langCode in
-        langSetCalled.setValue(langCode)
-        throw CancellationError()
-      }
-      $0.liveTranslationServiceClient.requestBatchTranslation = { @Sendable _ in }
-    }
-    store.exhaustivity = .off
-
-    await store.send(.changeLangCode("ko")) {
+    await store.send(.view(.selectLangCode("ko"))) {
       $0.$selectedLangCode.withLock { $0 = "ko" }
     }
 
-    langSetCalled.withValue {
-      #expect($0 == "ko")
-    }
+    requestedLang.withValue { #expect($0 == "ko") }
   }
 
-  // MARK: - Group 3: Stream Connection
+  // MARK: - Stream Connection
 
   @Test
-  func disconnectStream_cancelsConnectTask() async {
-    let store = TestStore(initialState: LiveTranslation.State()) {
+  func disconnectStream_setsNotConnectedAndDisconnects() async {
+    let disconnectCalled = LockIsolated(false)
+    var state = LiveTranslation.State()
+    state.isConnected = true
+
+    let store = TestStore(initialState: state) {
       LiveTranslation()
     } withDependencies: {
-      $0.liveTranslationServiceClient.chatConnection = { @Sendable _ in
-        AsyncThrowingStream { continuation in
-          continuation.onTermination = { _ in }
-        }
+      $0.liveTranslationServiceClient.disconnect = { @Sendable in
+        disconnectCalled.setValue(true)
       }
     }
     store.exhaustivity = .off
 
-    await store.send(.view(.connectStream))
-    await store.send(.view(.disconnectStream))
+    await store.send(.view(.disconnectStream)) {
+      $0.isConnected = false
+    }
+
+    disconnectCalled.withValue { #expect($0 == true) }
   }
 }

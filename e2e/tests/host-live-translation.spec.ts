@@ -10,7 +10,7 @@ test.describe("Host - Login", () => {
     await expect(page.getByText("Test")).toBeVisible();
 
     await page.screenshot({
-      path: "test-results/host-room-entered.png",
+      path: "test-results/host-login-verified.png",
       fullPage: true,
     });
   });
@@ -57,7 +57,7 @@ test.describe("Host - Streaming", () => {
 });
 
 test.describe("Host-to-Audience E2E", () => {
-  test("should deliver host audio stream to audience view", async ({
+  test("should keep audience view connected while host is streaming", async ({
     hostAndAudiencePages,
   }) => {
     const { host, audience } = hostAndAudiencePages;
