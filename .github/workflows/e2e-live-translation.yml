@@ -1,0 +1,47 @@
+name: E2E Live Translation
+
+on:
+  push:
+    paths:
+      - "e2e/**"
+      - ".github/workflows/e2e-live-translation.yml"
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Playwright E2E Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: e2e
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: e2e/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        run: npx playwright test
+        env:
+          FLITTO_DEMO_ID: ${{ secrets.FLITTO_DEMO_ID }}
+          FLITTO_DEMO_PW: ${{ secrets.FLITTO_DEMO_PW }}
+          FLITTO_ROOM_NUMBER: ${{ secrets.FLITTO_ROOM_NUMBER }}
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: e2e/playwright-report/
+          retention-days: 14
