@@ -19,7 +19,7 @@ on:
 jobs:
   build:
     name: Build Android
-    runs-on: ubuntu-latest
+    runs-on: macos-15
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -32,16 +32,11 @@ jobs:
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v5
         with:
-          key: spm-android-${{ runner.os }}-swift-6.2-${{ hashFiles('Android/Package.resolved', 'Android/Package.swift') }}
-          restore-keys: spm-android-${{ runner.os }}-swift-6.2-
+          key: spm-android-${{ runner.os }}-${{ hashFiles('Android/Package.resolved', 'Android/Package.swift') }}
+          restore-keys: spm-android-${{ runner.os }}-
           path: Android/.build
 
       - name: Build
         run: |
           cd Android
-          swift build 2>/tmp/stderr.log || {
-            echo "=== STDERR OUTPUT ==="
-            cat /tmp/stderr.log
-            echo "=== END STDERR ==="
-            exit 1
-          }
+          swift build
