@@ -24,22 +24,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Setup Swift
-        uses: swift-actions/setup-swift@v2
-        with:
-          swift-version: "6.2"
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: "temurin"
-          java-version: "17"
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+      - name: Setup Skip
+        uses: skiptools/actions/setup-skip@v1
         with:
           gradle-version: current
-          add-job-summary: never
 
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v5
@@ -48,19 +36,7 @@ jobs:
           restore-keys: spm-android-${{ runner.os }}-swift-6.2-
           path: Android/.build
 
-      - name: Check environment
-        run: |
-          echo "ANDROID_HOME=$ANDROID_HOME"
-          echo "JAVA_HOME=$JAVA_HOME"
-          which gradle || echo "gradle not in PATH"
-          gradle --version || echo "gradle version failed"
-
       - name: Build
         run: |
           cd Android
-          swift build -v 2>&1 | tee /tmp/build.log || true
-          echo "---LAST 100 LINES---"
-          tail -100 /tmp/build.log
-          echo "---ERRORS---"
-          grep -i -E "error|fatal|exception|failed|cannot|unable" /tmp/build.log || echo "no error patterns found"
-          exit $(grep -c "Build complete!" /tmp/build.log | xargs test 0 -lt && echo 0 || echo 1)
+          swift build
