@@ -131,20 +131,23 @@ struct ScheduleTests {
     // Each year loads day1 (.mock1) and day2 (.mock2), day3 throws resourceNotFound.
     // Each conference mock has 2 sessions (mock1, mock2), both with description != nil.
     // 7 years × 2 days × 2 sessions = 28 SearchableSession entries.
-    let expectedSessions: [ScheduleFeature.Schedule.SearchableSession] = ConferenceYear.allCases.flatMap { year in
-      [Conference.mock1, .mock2].flatMap { conference in
-        conference.schedules.flatMap { schedule in
-          schedule.sessions.compactMap { session -> ScheduleFeature.Schedule.SearchableSession? in
-            guard session.description != nil else { return nil }
-            var parts: [String] = [session.title]
-            if let speakers = session.speakers {
-              parts.append(contentsOf: speakers.map(\.name))
+    let expectedSessions: [ScheduleFeature.Schedule.SearchableSession] = ConferenceYear.allCases
+      .flatMap { year in
+        [Conference.mock1, .mock2].flatMap { conference in
+          conference.schedules.flatMap { schedule in
+            schedule.sessions.compactMap { session -> ScheduleFeature.Schedule.SearchableSession? in
+              guard session.description != nil else { return nil }
+              var parts: [String] = [session.title]
+              if let speakers = session.speakers {
+                parts.append(contentsOf: speakers.map(\.name))
+              }
+              return .init(
+                year: year, session: session,
+                searchCorpus: parts.joined(separator: " ").lowercased())
             }
-            return .init(year: year, session: session, searchCorpus: parts.joined(separator: " ").lowercased())
           }
         }
       }
-    }
 
     await store.receive(\.allSessionsLoaded) {
       $0.allSessions = expectedSessions
