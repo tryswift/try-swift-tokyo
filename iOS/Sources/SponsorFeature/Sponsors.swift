@@ -76,7 +76,7 @@ public struct SponsorsListView: View {
           send(.onAppear)
         }
     }
-    .navigationViewStyle(.stack)
+    .navigationViewStyle(.automatic)
   }
 
   @ViewBuilder var root: some View {
