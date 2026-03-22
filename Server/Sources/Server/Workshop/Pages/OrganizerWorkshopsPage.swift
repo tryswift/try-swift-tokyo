@@ -105,21 +105,25 @@ struct OrganizerWorkshopsPageView: HTML, Sendable {
       let badgeClass = ws.applicationCount > ws.capacity ? "badge bg-danger" : "badge bg-secondary"
       html += "<td><span class=\"\(badgeClass)\">\(ws.applicationCount)</span></td>"
 
-      if let lumaID = ws.lumaEventID {
-        html +=
-          "<td><span class=\"badge bg-success\">\(escapeHTML(lumaID))</span></td>"
-        html += "<td></td>"
-      } else {
-        html += "<td><span class=\"text-muted\">Not created</span></td>"
+      html += """
+        <td colspan="2">
+          <form method="post" action="/organizer/workshops/\(ws.registrationID.uuidString)/luma-event" class="d-flex gap-1 align-items-center">
+            <input type="hidden" name="_csrf" value="\(csrfToken)">
+            <input type="text" name="luma_event_id" value="\(escapeHTML(ws.lumaEventID ?? ""))" class="form-control form-control-sm" style="min-width: 160px;" placeholder="Luma Event ID" aria-label="Luma Event ID">
+            <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
+        """
+      if ws.lumaEventID == nil {
         html += """
-          <td>
-            <form method="post" action="/organizer/workshops/\(ws.registrationID.uuidString)/create-luma-event" class="d-inline">
-              <input type="hidden" name="_csrf" value="\(csrfToken)">
-              <button type="submit" class="btn btn-sm btn-outline-success">Create Luma Event</button>
-            </form>
-          </td>
+          </form>
+          <form method="post" action="/organizer/workshops/\(ws.registrationID.uuidString)/create-luma-event" class="d-inline">
+            <input type="hidden" name="_csrf" value="\(csrfToken)">
+            <button type="submit" class="btn btn-sm btn-outline-success">Create</button>
+          </form>
           """
+      } else {
+        html += "</form>"
       }
+      html += "</td>"
       html += "</tr>"
     }
 
