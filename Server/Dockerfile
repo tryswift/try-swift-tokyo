@@ -12,6 +12,9 @@ WORKDIR /build
 # Copy SharedModels package (CfP types shared with iOS)
 COPY ./SharedModels ./SharedModels
 
+# Copy DataClient package (speaker data for timetable export)
+COPY ./DataClient ./DataClient
+
 # Copy Server package manifest
 COPY ./Server/Package.swift ./Server/Package.swift
 

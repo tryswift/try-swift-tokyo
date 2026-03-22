@@ -6,6 +6,7 @@ on:
     paths:
       - "Server/**"
       - "MyLibrary/Sources/SharedModels/**"
+      - "DataClient/**"
       - "fly.toml"
   workflow_dispatch:
 
