@@ -306,7 +306,9 @@ struct LotteryServiceTests {
       firstChoiceID: regID0, secondChoiceID: regID1, thirdChoiceID: regID2)
     try await applicant.save(on: app.db)
 
-    let result = try await LotteryService.runLottery(on: app.db)
+    // Use deterministic ordering (insertion order) so fillers fill workshops 0 and 1
+    // before the applicant is processed, ensuring the applicant falls through to choice 3
+    let result = try await LotteryService.runLottery(on: app.db, shuffle: { $0 })
 
     #expect(result.totalApplications == 3)
     #expect(result.assigned == 3)
