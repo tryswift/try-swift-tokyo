@@ -42,7 +42,7 @@ public struct LiveTranslation: Sendable {
   public enum Action: BindableAction, ViewAction {
     case binding(BindingAction<State>)
     case storeStateUpdated(StoreState)
-    case validateSelectedLangCode([LanguageItemEntity])
+    case validateSelectedLangCode([String])
     case view(View)
 
     public enum View {
@@ -148,18 +148,18 @@ public struct LiveTranslation: Sendable {
         if storeState.supportLanguages != previousLanguages
           && !storeState.supportLanguages.isEmpty
         {
-          return .send(.validateSelectedLangCode(storeState.supportLanguages))
+          return .send(.validateSelectedLangCode(storeState.supportLanguages.map(\.languageCode)))
         }
         return .none
 
-      case .validateSelectedLangCode(let langList):
+      case .validateSelectedLangCode(let langCodes):
         let currentCode = state.selectedLangCode
-        let isValid = langList.contains { $0.languageCode == currentCode }
+        let isValid = langCodes.contains(currentCode)
         if !isValid {
           let deviceCode =
             Locale.autoupdatingCurrent.language.languageCode?.identifier ?? "en"
           let fallbackCode =
-            langList.contains(where: { $0.languageCode == deviceCode }) ? deviceCode : "en"
+            langCodes.contains(deviceCode) ? deviceCode : "en"
           state.$selectedLangCode.withLock { $0 = fallbackCode }
           return .run { _ in
             await liveTranslationServiceClient.requestTranslationLanguage(fallbackCode)
