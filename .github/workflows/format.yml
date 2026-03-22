@@ -26,13 +26,27 @@ jobs:
       - name: Configure safe directory
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Format
-        run: swift format --ignore-unparsable-files --in-place --recursive ./Android/ ./App/ ./Server/ ./SharedModels/ ./iOS/ ./Website/
+        run: swift format --ignore-unparsable-files --in-place --recursive ./Android/ ./App/ ./DataClient/ ./iOS/ ./LocalizationGenerated/ ./Server/ ./Shared/ ./SharedModels/ ./Website/
       - name: Check diff (fork PR)
         if: ${{ github.event.pull_request.head.repo.fork }}
         run: git diff --exit-code
       - uses: stefanzweifel/git-auto-commit-action@v7
+        id: auto-commit
         if: ${{ !github.event.pull_request.head.repo.fork }}
         with:
           commit_message: "[ci skip] Run swift-format"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Report swift-format status on auto-commit
+        if: steps.auto-commit.outputs.changes_detected == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api repos/${{ github.repository }}/check-runs \
+            --method POST \
+            -f name="swift-format" \
+            -f head_sha="$(git rev-parse HEAD)" \
+            -f status=completed \
+            -f conclusion=success \
+            -f "output[title]=swift-format" \
+            -f "output[summary]=Code was auto-formatted by CI."
