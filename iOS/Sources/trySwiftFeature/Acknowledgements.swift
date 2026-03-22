@@ -4,6 +4,8 @@ import SwiftUI
 
 @Reducer
 public struct Acknowledgements: Sendable {
+  public init() {}
+
   @ObservableState
   public struct State: Equatable {
     var packages = LicensesPlugin.licenses
@@ -30,6 +32,10 @@ public struct Acknowledgements: Sendable {
 public struct AcknowledgementsView: View {
 
   @Bindable public var store: StoreOf<Acknowledgements>
+
+  public init(store: StoreOf<Acknowledgements>) {
+    self.store = store
+  }
   public var body: some View {
     List {
       ForEach(LicensesPlugin.licenses) { license in
