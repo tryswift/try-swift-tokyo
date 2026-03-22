@@ -41,6 +41,18 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @Field(key: "bio")
   var bio: String
 
+  /// Speaker bio in Japanese
+  @OptionalField(key: "bio_ja")
+  var bioJa: String?
+
+  /// Speaker job title
+  @OptionalField(key: "job_title")
+  var jobTitle: String?
+
+  /// Speaker job title in Japanese
+  @OptionalField(key: "job_title_ja")
+  var jobTitleJa: String?
+
   /// Speaker icon/avatar URL
   @OptionalField(key: "icon_url")
   var iconURL: String?
@@ -107,6 +119,9 @@ final class Proposal: Model, Content, @unchecked Sendable {
     speakerName: String,
     speakerEmail: String,
     bio: String,
+    bioJa: String? = nil,
+    jobTitle: String? = nil,
+    jobTitleJa: String? = nil,
     iconURL: String? = nil,
     notes: String? = nil,
     speakerID: UUID,
@@ -126,6 +141,9 @@ final class Proposal: Model, Content, @unchecked Sendable {
     self.speakerName = speakerName
     self.speakerEmail = speakerEmail
     self.bio = bio
+    self.bioJa = bioJa
+    self.jobTitle = jobTitle
+    self.jobTitleJa = jobTitleJa
     self.iconURL = iconURL
     self.notes = notes
     self.$speaker.id = speakerID
@@ -157,6 +175,9 @@ final class Proposal: Model, Content, @unchecked Sendable {
       speakerName: speakerName,
       speakerEmail: speakerEmail,
       bio: bio,
+      bioJa: bioJa,
+      jobTitle: jobTitle,
+      jobTitleJa: jobTitleJa,
       iconURL: iconURL,
       notes: notes,
       speakerID: $speaker.id,

@@ -557,6 +557,9 @@ struct OrganizerNewProposalPageView: HTML, Sendable {
       speakerNameField
       speakerEmailField
       speakerBioField
+      speakerBioJaField
+      speakerJobTitleField
+      speakerJobTitleJaField
     }
   }
 
@@ -608,6 +611,51 @@ struct OrganizerNewProposalPageView: HTML, Sendable {
         .required,
         .placeholder("Speaker biography")
       ) { "" }
+    }
+  }
+
+  private var speakerBioJaField: some HTML {
+    div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("bioJa")) {
+        "Speaker Bio (Japanese)"
+      }
+      textarea(
+        .class("form-control"),
+        .name("bioJa"),
+        .id("bioJa"),
+        .custom(name: "rows", value: "3"),
+        .placeholder("スピーカーの経歴（日本語）")
+      ) { "" }
+    }
+  }
+
+  private var speakerJobTitleField: some HTML {
+    div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("jobTitle")) {
+        "Job Title"
+      }
+      input(
+        .type(.text),
+        .class("form-control"),
+        .name("jobTitle"),
+        .id("jobTitle"),
+        .placeholder("e.g. Senior Engineer at Company")
+      )
+    }
+  }
+
+  private var speakerJobTitleJaField: some HTML {
+    div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("jobTitleJa")) {
+        "Job Title (Japanese)"
+      }
+      input(
+        .type(.text),
+        .class("form-control"),
+        .name("jobTitleJa"),
+        .id("jobTitleJa"),
+        .placeholder("例: 株式会社○○ シニアエンジニア")
+      )
     }
   }
 

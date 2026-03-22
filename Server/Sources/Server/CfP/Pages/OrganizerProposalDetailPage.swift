@@ -121,6 +121,18 @@ struct OrganizerProposalDetailPageView: HTML, Sendable {
               }
               h6(.class("fw-bold mb-2")) { "Bio" }
               p(.class("mb-0")) { HTMLText(proposal.bio) }
+              if let bioJa = proposal.bioJa, !bioJa.isEmpty {
+                h6(.class("fw-bold mb-2 mt-3")) { "Bio (Japanese)" }
+                p(.class("mb-0")) { HTMLText(bioJa) }
+              }
+              if let jobTitle = proposal.jobTitle, !jobTitle.isEmpty {
+                h6(.class("fw-bold mb-2 mt-3")) { "Job Title" }
+                p(.class("mb-0")) { HTMLText(jobTitle) }
+              }
+              if let jobTitleJa = proposal.jobTitleJa, !jobTitleJa.isEmpty {
+                h6(.class("fw-bold mb-2 mt-3")) { "Job Title (Japanese)" }
+                p(.class("mb-0")) { HTMLText(jobTitleJa) }
+              }
             }
           }
 

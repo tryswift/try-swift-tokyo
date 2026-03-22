@@ -55,6 +55,7 @@ struct CfPRoutes: RouteCollection {
     organizer.get("proposals", "new", use: organizerNewProposalPage)
     organizer.post("proposals", "new", use: handleOrganizerNewProposal)
     organizer.get("proposals", "export", use: organizerExportProposalsCSV)
+    organizer.get("proposals", "speakers-export", use: exportSpeakersJSON)
     organizer.get("proposals", "import", use: organizerImportPage)
     organizer.post("proposals", "import", use: handleImportCSV)
     organizer.get("proposals", ":proposalID", use: organizerProposalDetailPage)
@@ -475,6 +476,9 @@ struct CfPRoutes: RouteCollection {
       var speakerName: String
       var speakerEmail: String
       var bio: String
+      var bioJa: String?
+      var jobTitle: String?
+      var jobTitleJa: String?
       var iconUrl: String
       var notesToOrganizers: String?
       // Workshop fields
@@ -746,6 +750,9 @@ struct CfPRoutes: RouteCollection {
       speakerName: formData.speakerName,
       speakerEmail: formData.speakerEmail,
       bio: formData.bio,
+      bioJa: formData.bioJa?.isEmpty == true ? nil : formData.bioJa,
+      jobTitle: formData.jobTitle?.isEmpty == true ? nil : formData.jobTitle,
+      jobTitleJa: formData.jobTitleJa?.isEmpty == true ? nil : formData.jobTitleJa,
       iconURL: formData.iconUrl,
       notes: formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers,
       speakerID: user.id,
@@ -908,6 +915,9 @@ struct CfPRoutes: RouteCollection {
       var speakerName: String
       var speakerEmail: String
       var bio: String
+      var bioJa: String?
+      var jobTitle: String?
+      var jobTitleJa: String?
       var iconUrl: String
       var notesToOrganizers: String?
       // Workshop fields
@@ -1158,6 +1168,9 @@ struct CfPRoutes: RouteCollection {
     proposal.speakerName = formData.speakerName
     proposal.speakerEmail = formData.speakerEmail
     proposal.bio = formData.bio
+    proposal.bioJa = formData.bioJa?.isEmpty == true ? nil : formData.bioJa
+    proposal.jobTitle = formData.jobTitle?.isEmpty == true ? nil : formData.jobTitle
+    proposal.jobTitleJa = formData.jobTitleJa?.isEmpty == true ? nil : formData.jobTitleJa
     proposal.iconURL = formData.iconUrl
     proposal.notes =
       formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers
@@ -1432,6 +1445,74 @@ struct CfPRoutes: RouteCollection {
       return "\"\(escaped)\""
     }
     return sanitized
+  }
+
+  // MARK: - Export Speakers JSON
+
+  @Sendable
+  func exportSpeakersJSON(req: Request) async throws -> Response {
+    guard let user = try await req.authenticatedUser(), user.role == .admin else {
+      throw Abort(.unauthorized, reason: "Admin access required")
+    }
+
+    let conference: Conference
+    if let conferencePath = req.query[String.self, at: "conference"] {
+      guard
+        let found = try await Conference.query(on: req.db)
+          .filter(\.$path == conferencePath)
+          .first()
+      else {
+        throw Abort(.notFound, reason: "Conference not found")
+      }
+      conference = found
+    } else {
+      guard
+        let found = try await Conference.query(on: req.db)
+          .sort(\.$year, .descending)
+          .first()
+      else {
+        throw Abort(.notFound, reason: "No conferences available")
+      }
+      conference = found
+    }
+
+    guard let conferenceID = conference.id else {
+      throw Abort(.internalServerError, reason: "Conference has no ID")
+    }
+
+    let proposals = try await Proposal.query(on: req.db)
+      .filter(\.$status == .accepted)
+      .filter(\.$conference.$id == conferenceID)
+      .sort(\.$speakerName, .ascending)
+      .all()
+
+    let speakers = proposals.map { proposal -> SpeakerExportDTO in
+      let imageName = proposal.speakerName
+        .lowercased()
+        .replacingOccurrences(of: " ", with: "_")
+
+      var links: [TimetableExportLink] = []
+      if let githubUsername = proposal.githubUsername, !githubUsername.isEmpty {
+        links.append(
+          TimetableExportLink(
+            name: "@\(githubUsername)",
+            url: "https://github.com/\(githubUsername)"
+          ))
+      }
+
+      return SpeakerExportDTO(
+        name: proposal.speakerName,
+        imageName: imageName,
+        bio: proposal.bio,
+        bioJa: proposal.bioJa,
+        jobTitle: proposal.jobTitle,
+        jobTitleJa: proposal.jobTitleJa,
+        links: links
+      )
+    }
+
+    return try encodeTimetableResponse(
+      speakers, filename: "\(conference.year)-speakers.json")
   }
 
   // MARK: - Accept/Reject Proposals
@@ -1760,6 +1841,9 @@ struct CfPRoutes: RouteCollection {
       var speakerName: String
       var speakerEmail: String
       var bio: String
+      var bioJa: String?
+      var jobTitle: String?
+      var jobTitleJa: String?
       var iconUrl: String
       var githubUsername: String?
       var notesToOrganizers: String?
@@ -1945,6 +2029,9 @@ struct CfPRoutes: RouteCollection {
     proposal.speakerName = formData.speakerName
     proposal.speakerEmail = formData.speakerEmail
     proposal.bio = formData.bio
+    proposal.bioJa = formData.bioJa?.isEmpty == true ? nil : formData.bioJa
+    proposal.jobTitle = formData.jobTitle?.isEmpty == true ? nil : formData.jobTitle
+    proposal.jobTitleJa = formData.jobTitleJa?.isEmpty == true ? nil : formData.jobTitleJa
     proposal.iconURL = formData.iconUrl.isEmpty ? nil : formData.iconUrl
     proposal.notes = formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers
     proposal.titleJA = formData.titleJA?.isEmpty == true ? nil : formData.titleJA
@@ -2023,6 +2110,9 @@ struct CfPRoutes: RouteCollection {
       var speakerName: String
       var speakerEmail: String
       var bio: String
+      var bioJa: String?
+      var jobTitle: String?
+      var jobTitleJa: String?
       var iconUrl: String?
       var githubUsername: String?
       var notesToOrganizers: String?
@@ -2233,6 +2323,9 @@ struct CfPRoutes: RouteCollection {
       speakerName: formData.speakerName,
       speakerEmail: formData.speakerEmail,
       bio: formData.bio,
+      bioJa: formData.bioJa?.isEmpty == true ? nil : formData.bioJa,
+      jobTitle: formData.jobTitle?.isEmpty == true ? nil : formData.jobTitle,
+      jobTitleJa: formData.jobTitleJa?.isEmpty == true ? nil : formData.jobTitleJa,
       iconURL: formData.iconUrl?.isEmpty == true ? nil : formData.iconUrl,
       notes: formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers,
       speakerID: speakerID,
@@ -2294,6 +2387,9 @@ struct CfPRoutes: RouteCollection {
       var speakerName: String
       var speakerEmail: String
       var bio: String
+      var bioJa: String?
+      var jobTitle: String?
+      var jobTitleJa: String?
       var iconUrl: String?
       var githubUsername: String?
       var notesToOrganizers: String?
@@ -2356,6 +2452,9 @@ struct CfPRoutes: RouteCollection {
       speakerName: formData.speakerName,
       speakerEmail: formData.speakerEmail,
       bio: formData.bio,
+      bioJa: formData.bioJa?.isEmpty == true ? nil : formData.bioJa,
+      jobTitle: formData.jobTitle?.isEmpty == true ? nil : formData.jobTitle,
+      jobTitleJa: formData.jobTitleJa?.isEmpty == true ? nil : formData.jobTitleJa,
       iconURL: formData.iconUrl?.isEmpty == true ? nil : formData.iconUrl,
       notes: formData.notesToOrganizers?.isEmpty == true ? nil : formData.notesToOrganizers,
       speakerID: speakerID,
@@ -2839,9 +2938,9 @@ struct CfPRoutes: RouteCollection {
                 name: proposal.speakerName,
                 imageName: matched?.imageName ?? fallbackImageName,
                 bio: proposal.bio,
-                bioJa: matched?.bioJa,
-                jobTitle: matched?.jobTitle,
-                jobTitleJa: matched?.jobTitleJa,
+                bioJa: proposal.bioJa ?? matched?.bioJa,
+                jobTitle: proposal.jobTitle ?? matched?.jobTitle,
+                jobTitleJa: proposal.jobTitleJa ?? matched?.jobTitleJa,
                 links: matched?.links?.map {
                   TimetableExportLink(name: $0.name, url: $0.url.absoluteString)
                 } ?? []

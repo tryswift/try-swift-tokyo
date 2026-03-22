@@ -16,6 +16,9 @@ struct ProposalDTOContent: Content {
   let speakerName: String
   let speakerEmail: String
   let bio: String
+  let bioJa: String?
+  let jobTitle: String?
+  let jobTitleJa: String?
   let iconURL: String?
   let notes: String?
   let speakerID: UUID
@@ -38,6 +41,9 @@ struct ProposalDTOContent: Content {
     self.speakerName = dto.speakerName
     self.speakerEmail = dto.speakerEmail
     self.bio = dto.bio
+    self.bioJa = dto.bioJa
+    self.jobTitle = dto.jobTitle
+    self.jobTitleJa = dto.jobTitleJa
     self.iconURL = dto.iconURL
     self.notes = dto.notes
     self.speakerID = dto.speakerID
@@ -60,6 +66,9 @@ struct CreateProposalRequestContent: Content {
   let speakerName: String
   let speakerEmail: String
   let bio: String
+  let bioJa: String?
+  let jobTitle: String?
+  let jobTitleJa: String?
   let iconURL: String?
   let notes: String?
   let workshopDetails: WorkshopDetails?
@@ -86,6 +95,9 @@ struct CreateProposalRequestContent: Content {
       speakerName: speakerName,
       speakerEmail: speakerEmail,
       bio: bio,
+      bioJa: bioJa,
+      jobTitle: jobTitle,
+      jobTitleJa: jobTitleJa,
       iconURL: iconURL,
       notes: notes,
       workshopDetails: workshopDetails,
@@ -198,6 +210,9 @@ struct ProposalController: RouteCollection {
       speakerName: createRequest.speakerName,
       speakerEmail: createRequest.speakerEmail,
       bio: createRequest.bio,
+      bioJa: createRequest.bioJa,
+      jobTitle: createRequest.jobTitle,
+      jobTitleJa: createRequest.jobTitleJa,
       iconURL: createRequest.iconURL,
       notes: createRequest.notes,
       speakerID: userID

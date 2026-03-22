@@ -654,6 +654,9 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
       speakerEmailField(value: proposal.speakerEmail)
       githubUsernameField(proposal: proposal)
       speakerBioField(value: proposal.bio)
+      speakerBioJaField(value: proposal.bioJa ?? "")
+      speakerJobTitleField(value: proposal.jobTitle ?? "")
+      speakerJobTitleJaField(value: proposal.jobTitleJa ?? "")
     }
   }
 
@@ -709,6 +712,55 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
       ) {
         HTMLText(value)
       }
+    }
+  }
+
+  private func speakerBioJaField(value: String) -> some HTML {
+    div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("bioJa")) {
+        "Speaker Bio (Japanese)"
+      }
+      textarea(
+        .class("form-control"),
+        .name("bioJa"),
+        .id("bioJa"),
+        .custom(name: "rows", value: "3"),
+        .placeholder("スピーカーの経歴（日本語）")
+      ) {
+        HTMLText(value)
+      }
+    }
+  }
+
+  private func speakerJobTitleField(value: String) -> some HTML {
+    div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("jobTitle")) {
+        "Job Title"
+      }
+      input(
+        .type(.text),
+        .class("form-control"),
+        .name("jobTitle"),
+        .id("jobTitle"),
+        .value(value),
+        .placeholder("e.g. Senior Engineer at Company")
+      )
+    }
+  }
+
+  private func speakerJobTitleJaField(value: String) -> some HTML {
+    div(.class("mb-3")) {
+      label(.class("form-label fw-semibold"), .for("jobTitleJa")) {
+        "Job Title (Japanese)"
+      }
+      input(
+        .type(.text),
+        .class("form-control"),
+        .name("jobTitleJa"),
+        .id("jobTitleJa"),
+        .value(value),
+        .placeholder("例: 株式会社○○ シニアエンジニア")
+      )
     }
   }
 
