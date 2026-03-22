@@ -22,6 +22,12 @@ public struct Schedule {
     var day3: Conference?
   }
 
+  public struct SearchableSession: Equatable, Hashable {
+    var year: ConferenceYear
+    var session: Session
+    var searchCorpus: String
+  }
+
   @ObservableState
   public struct State: Equatable {
 
@@ -30,6 +36,7 @@ public struct Schedule {
     var selectedDay: Days = .day1
     var searchText: String = ""
     var isSearchBarPresented: Bool = false
+    var allSessions: [SearchableSession] = []
     var day1: Conference?
     var day2: Conference?
     var day3: Conference?
@@ -44,6 +51,7 @@ public struct Schedule {
     case destination(PresentationAction<Destination.Action>)
     case view(View)
     case fetchResponse(Result<SchedulesResponse, Error>)
+    case allSessionsLoaded([SearchableSession])
 
     @CasePathable
     public enum View {
@@ -71,14 +79,48 @@ public struct Schedule {
       switch action {
       case .view(.onAppear):
         let year = state.selectedYear
-        return .send(
-          .fetchResponse(
-            Result {
-              let day1 = try dataClient.fetchDay1(year)
-              let day2 = try dataClient.fetchDay2(year)
-              let day3 = try? dataClient.fetchDay3(year)
-              return .init(day1: day1, day2: day2, day3: day3)
-            }))
+        let shouldLoadAllSessions = state.allSessions.isEmpty
+        let dataClient = dataClient
+        return .merge(
+          .send(
+            .fetchResponse(
+              Result {
+                let day1 = try dataClient.fetchDay1(year)
+                let day2 = try dataClient.fetchDay2(year)
+                let day3 = try? dataClient.fetchDay3(year)
+                return .init(day1: day1, day2: day2, day3: day3)
+              })),
+          shouldLoadAllSessions
+            ? .run { send in
+              var results: [SearchableSession] = []
+              for year in ConferenceYear.allCases {
+                var conferences: [Conference] = []
+                for fetch in [dataClient.fetchDay1, dataClient.fetchDay2, dataClient.fetchDay3] {
+                  do {
+                    conferences.append(try fetch(year))
+                  } catch is DataClientError {
+                    // Resource not found for this year/day — expected
+                  } catch let error as DecodingError {
+                    assertionFailure(error.localizedDescription)
+                  } catch {
+                    print(error)  // TODO: replace to Logger API
+                  }
+                }
+                for conference in conferences {
+                  for schedule in conference.schedules {
+                    for session in schedule.sessions {
+                      guard session.description != nil else { continue }
+                      let corpus = Schedule.buildSearchCorpus(session: session)
+                      results.append(
+                        SearchableSession(year: year, session: session, searchCorpus: corpus))
+                    }
+                  }
+                }
+              }
+              await send(.allSessionsLoaded(results))
+            }
+            : .none
+        )
       case .view(.yearSelected(let year)):
         state.selectedYear = year
         state.selectedDay = .day1
@@ -106,6 +148,9 @@ public struct Schedule {
         state.day2 = response.day2
         state.day3 = response.day3
         return .none
+      case .allSessionsLoaded(let sessions):
+        state.allSessions = sessions
+        return .none
       case .fetchResponse(.failure(let error as DecodingError)):
         assertionFailure(error.localizedDescription)
         return .none
@@ -118,6 +163,31 @@ public struct Schedule {
     }
     .forEach(\.path, action: \.path)
     .ifLet(\.$destination, action: \.destination)
+  }
+
+  private static func buildSearchCorpus(session: Session) -> String {
+    var parts: [String] = [session.title]
+    if let titleJa = session.titleJa { parts.append(titleJa) }
+    if let summary = session.summary { parts.append(summary) }
+    if let summaryJa = session.summaryJa { parts.append(summaryJa) }
+    if let speakers = session.speakers {
+      for speaker in speakers {
+        parts.append(speaker.name)
+      }
+    }
+    return parts.joined(separator: " ").lowercased()
+  }
+}
+
+extension Schedule.State {
+  var searchResults: [Schedule.SearchableSession] {
+    let query = searchText.lowercased().trimmingCharacters(in: .whitespaces)
+    guard !query.isEmpty else { return [] }
+    return allSessions.filter { $0.searchCorpus.contains(query) }
+  }
+
+  var isShowingSearchResults: Bool {
+    isSearchBarPresented && !searchText.trimmingCharacters(in: .whitespaces).isEmpty
   }
 }
 
@@ -148,6 +218,33 @@ public struct ScheduleView: View {
 
   @ViewBuilder
   var root: some View {
+    Group {
+      if store.isShowingSearchResults {
+        searchResultsList
+      } else {
+        normalScheduleContent
+      }
+    }
+    .onAppear(perform: {
+      send(.onAppear)
+    })
+    .navigationTitle(Text("Schedule", bundle: .module))
+    .searchable(text: $store.searchText, isPresented: $store.isSearchBarPresented)
+    .toolbar {
+      #if os(macOS)
+        ToolbarItem(placement: .primaryAction) {
+          timeTravelMenu()
+        }
+      #else
+        ToolbarItem(placement: .topBarTrailing) {
+          timeTravelMenu()
+        }
+      #endif
+    }
+  }
+
+  @ViewBuilder
+  var normalScheduleContent: some View {
     ScrollView {
       Picker("Days", selection: $store.selectedDay) {
         Text(Schedule.Days.day1.rawValue, bundle: .module)
@@ -182,21 +279,68 @@ public struct ScheduleView: View {
         }
       }
     }
-    .onAppear(perform: {
-      send(.onAppear)
-    })
-    .navigationTitle(Text("Schedule", bundle: .module))
-    .searchable(text: $store.searchText, isPresented: $store.isSearchBarPresented)
-    .toolbar {
-      #if os(macOS)
-        ToolbarItem(placement: .primaryAction) {
-          timeTravelMenu()
+  }
+
+  @ViewBuilder
+  var searchResultsList: some View {
+    let results = store.searchResults
+    if results.isEmpty {
+      ContentUnavailableView.search(text: store.searchText)
+    } else {
+      ScrollView {
+        LazyVStack(alignment: .leading, spacing: 12) {
+          ForEach(results, id: \.self) { result in
+            Button {
+              send(.disclosureTapped(result.session))
+            } label: {
+              searchResultRow(result: result)
+                .padding()
+            }
+            .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
+          }
         }
-      #else
-        ToolbarItem(placement: .topBarTrailing) {
-          timeTravelMenu()
+        .padding()
+      }
+    }
+  }
+
+  @ViewBuilder
+  func searchResultRow(result: Schedule.SearchableSession) -> some View {
+    HStack(spacing: 8) {
+      if let speakers = result.session.speakers {
+        ForEach(speakers.prefix(2), id: \.self) { speaker in
+          Image(speaker.imageName, bundle: .module)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .clipShape(Circle())
+            .frame(width: 44)
+            .accessibilityElement(children: .ignore)
+            .accessibilityIgnoresInvertColors()
         }
-      #endif
+      } else {
+        Image(.tokyo)
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+          .clipShape(Circle())
+          .frame(width: 44)
+          .accessibilityElement(children: .ignore)
+          .accessibilityIgnoresInvertColors()
+      }
+      VStack(alignment: .leading, spacing: 2) {
+        Text(LocalizedStringKey(result.session.title), bundle: .module)
+          .font(.body)
+          .multilineTextAlignment(.leading)
+        if let speakers = result.session.speakers {
+          Text(ListFormatter.localizedString(byJoining: speakers.map(\.name)))
+            .font(.caption)
+            .foregroundStyle(labelColor)
+        }
+        Text(String(result.year.rawValue))
+          .font(.caption2)
+          .foregroundStyle(secondaryLabelColor)
+      }
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .accessibilityElement(children: .combine)
     }
   }
 
