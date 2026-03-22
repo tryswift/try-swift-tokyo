@@ -39,4 +39,9 @@ jobs:
       - name: Build
         run: |
           cd Android
-          swift build
+          swift build 2>/tmp/stderr.log || {
+            echo "=== STDERR OUTPUT ==="
+            cat /tmp/stderr.log
+            echo "=== END STDERR ==="
+            exit 1
+          }
