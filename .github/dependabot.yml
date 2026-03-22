@@ -35,6 +35,10 @@ updates:
     labels:
       - "dependencies"
       - "Android"
+    groups:
+      skip-tools:
+        patterns:
+          - "source.skip.tools/*"
 
   # GitHub Actions
   - package-ecosystem: "github-actions"
