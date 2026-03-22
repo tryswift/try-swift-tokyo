@@ -49,6 +49,9 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
   /// Speaker email at time of submission
   public let speakerEmail: String
   public let bio: String
+  public let bioJa: String?
+  public let jobTitle: String?
+  public let jobTitleJa: String?
   public let iconURL: String?
   public let notes: String?
   public let speakerID: UUID
@@ -79,6 +82,9 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
     speakerName: String,
     speakerEmail: String,
     bio: String,
+    bioJa: String? = nil,
+    jobTitle: String? = nil,
+    jobTitleJa: String? = nil,
     iconURL: String? = nil,
     notes: String? = nil,
     speakerID: UUID,
@@ -103,6 +109,9 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
     self.speakerName = speakerName
     self.speakerEmail = speakerEmail
     self.bio = bio
+    self.bioJa = bioJa
+    self.jobTitle = jobTitle
+    self.jobTitleJa = jobTitleJa
     self.iconURL = iconURL
     self.notes = notes
     self.speakerID = speakerID
@@ -129,6 +138,9 @@ public struct CreateProposalRequest: Codable, Sendable {
   public let speakerName: String
   public let speakerEmail: String
   public let bio: String
+  public let bioJa: String?
+  public let jobTitle: String?
+  public let jobTitleJa: String?
   public let iconURL: String?
   public let notes: String?
   public let titleJA: String?
@@ -145,6 +157,9 @@ public struct CreateProposalRequest: Codable, Sendable {
     speakerName: String,
     speakerEmail: String,
     bio: String,
+    bioJa: String? = nil,
+    jobTitle: String? = nil,
+    jobTitleJa: String? = nil,
     iconURL: String? = nil,
     notes: String? = nil,
     titleJA: String? = nil,
@@ -160,6 +175,9 @@ public struct CreateProposalRequest: Codable, Sendable {
     self.speakerName = speakerName
     self.speakerEmail = speakerEmail
     self.bio = bio
+    self.bioJa = bioJa
+    self.jobTitle = jobTitle
+    self.jobTitleJa = jobTitleJa
     self.iconURL = iconURL
     self.notes = notes
     self.titleJA = titleJA
@@ -178,6 +196,9 @@ public struct UpdateProposalRequest: Codable, Sendable {
   public let speakerName: String?
   public let speakerEmail: String?
   public let bio: String?
+  public let bioJa: String?
+  public let jobTitle: String?
+  public let jobTitleJa: String?
   public let iconURL: String?
   public let notes: String?
   public let titleJA: String?
@@ -193,6 +214,9 @@ public struct UpdateProposalRequest: Codable, Sendable {
     speakerName: String? = nil,
     speakerEmail: String? = nil,
     bio: String? = nil,
+    bioJa: String? = nil,
+    jobTitle: String? = nil,
+    jobTitleJa: String? = nil,
     iconURL: String? = nil,
     notes: String? = nil,
     titleJA: String? = nil,
@@ -207,6 +231,9 @@ public struct UpdateProposalRequest: Codable, Sendable {
     self.speakerName = speakerName
     self.speakerEmail = speakerEmail
     self.bio = bio
+    self.bioJa = bioJa
+    self.jobTitle = jobTitle
+    self.jobTitleJa = jobTitleJa
     self.iconURL = iconURL
     self.notes = notes
     self.titleJA = titleJA

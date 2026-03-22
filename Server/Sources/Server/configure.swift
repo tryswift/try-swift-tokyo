@@ -56,6 +56,7 @@ enum AppConfiguration {
     app.migrations.add(CreateWorkshopRegistration())
     app.migrations.add(CreateWorkshopApplication())
     app.migrations.add(AddProposalJapaneseFields())
+    app.migrations.add(AddProposalSpeakerDetails())
 
     // Auto-migrate on startup (safe for production as Fluent tracks completed migrations)
     try await app.autoMigrate()

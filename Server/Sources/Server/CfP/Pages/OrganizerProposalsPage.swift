@@ -73,6 +73,15 @@ struct OrganizerProposalsPageView: HTML, Sendable {
         ) {
           "Export CSV"
         }
+        // Export Speakers JSON button
+        a(
+          .class("btn btn-outline-success"),
+          .href(
+            "/organizer/proposals/speakers-export\(conferencePath.map { "?conference=\($0)" } ?? "")"
+          )
+        ) {
+          "Export Speakers JSON"
+        }
       }
     }
   }
@@ -408,6 +417,34 @@ struct OrganizerProposalsPageView: HTML, Sendable {
           .custom(name: "rows", value: "3"), .required,
           .placeholder("Speaker biography")
         ) { "" }
+      }
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineBioJa")) {
+          "Speaker Bio (Japanese)"
+        }
+        textarea(
+          .class("form-control"), .name("bioJa"), .id("inlineBioJa"),
+          .custom(name: "rows", value: "3"),
+          .placeholder("スピーカーの経歴（日本語）")
+        ) { "" }
+      }
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineJobTitle")) {
+          "Job Title"
+        }
+        input(
+          .type(.text), .class("form-control"), .name("jobTitle"), .id("inlineJobTitle"),
+          .placeholder("e.g. Senior Engineer at Company")
+        )
+      }
+      div(.class("mb-3")) {
+        label(.class("form-label fw-semibold"), .for("inlineJobTitleJa")) {
+          "Job Title (Japanese)"
+        }
+        input(
+          .type(.text), .class("form-control"), .name("jobTitleJa"), .id("inlineJobTitleJa"),
+          .placeholder("例: 株式会社○○ シニアエンジニア")
+        )
       }
       div(.class("mb-3")) {
         label(.class("form-label fw-semibold"), .for("inlineIconUrl")) {
