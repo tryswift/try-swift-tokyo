@@ -19,20 +19,22 @@ from PIL import Image
 
 # Configuration
 LUMA_API_BASE = "https://public-api.luma.com/v1"
-LUMA_EVENT_ID = os.environ.get("LUMA_EVENT_ID", "evt-WHT17EaVs2of1Gs")
 LUMA_API_KEY = os.environ["LUMA_API_KEY"]
+LUMA_EVENT_ID = os.environ["LUMA_EVENT_ID"]
+LUMA_EVENT_SLUG = os.environ["LUMA_EVENT_SLUG"]
+YEAR = os.environ["YEAR"]
 TICKET_TYPE_NAME = "Individual Sponsor"
 IMAGE_SIZE = (512, 512)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 SPONSORS_JSON_PATHS = [
-    REPO_ROOT / "DataClient/Sources/DataClient/Resources/2026-sponsors.json",
-    REPO_ROOT / "iOS/Sources/DataClient/Resources/2026-sponsors.json",
+    REPO_ROOT / f"DataClient/Sources/DataClient/Resources/{YEAR}-sponsors.json",
+    REPO_ROOT / f"iOS/Sources/DataClient/Resources/{YEAR}-sponsors.json",
 ]
 XCASSETS_DIR = (
-    REPO_ROOT / "iOS/Sources/SponsorFeature/Media.xcassets/Individual/2026"
+    REPO_ROOT / f"iOS/Sources/SponsorFeature/Media.xcassets/Individual/{YEAR}"
 )
-SYNCED_GUESTS_PATH = REPO_ROOT / ".github/luma-synced-guests.json"
+SYNCED_GUESTS_PATH = REPO_ROOT / f".github/luma-synced-guests-{LUMA_EVENT_SLUG}.json"
 
 
 def fetch_individual_sponsors():
@@ -134,7 +136,7 @@ def save_synced_guests(synced):
 def sanitize_image_key(name):
     """Convert a display name to an xcassets-safe image key.
 
-    Examples:
+    Examples (YEAR=2026):
       "Oka Yuji" -> "2026_OkaYuji"
       "문스콧 - Moon Scott" -> "2026_MoonScott"
     """
@@ -158,7 +160,7 @@ def sanitize_image_key(name):
         ascii_name = unicodedata.normalize("NFKD", name)
         ascii_name = ascii_name.encode("ascii", "ignore").decode("ascii")
         result = re.sub(r"[^A-Za-z0-9]", "", ascii_name)
-    return f"2026_{result}" if result else None
+    return f"{YEAR}_{result}" if result else None
 
 
 def download_and_convert_image(url, dest_path):
@@ -216,7 +218,7 @@ def update_sponsors_json(new_sponsors):
             entry = {
                 "id": max_id,
                 "name": sponsor["name"],
-                "imageName": f"Individual/2026/{sponsor['image_key']}",
+                "imageName": f"Individual/{YEAR}/{sponsor['image_key']}",
             }
             if sponsor.get("social_link"):
                 entry["link"] = sponsor["social_link"]

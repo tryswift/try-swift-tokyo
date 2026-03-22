@@ -29,6 +29,8 @@ jobs:
         env:
           LUMA_API_KEY: ${{ secrets.LUMA_API_KEY }}
           LUMA_EVENT_ID: "evt-WHT17EaVs2of1Gs"
+          LUMA_EVENT_SLUG: "qydkgwtf"
+          YEAR: "2026"
         run: python .github/scripts/sync_luma_sponsors.py
 
       - name: Create Pull Request
@@ -44,6 +46,6 @@ jobs:
             ${{ steps.sync.outputs.new_sponsors }}
 
             Please review the sponsor names, images, and links before merging.
-          branch: luma-sponsor-sync
+          branch: luma-sponsor-sync-qydkgwtf
           delete-branch: true
           labels: sponsors,automated
