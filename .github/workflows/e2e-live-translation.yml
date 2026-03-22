@@ -40,6 +40,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run Playwright tests
+        if: env.FLITTO_ROOM_NUMBER != ''
         run: npx playwright test
         env:
           FLITTO_DEMO_ID: ${{ secrets.FLITTO_DEMO_ID }}
