@@ -5,14 +5,14 @@ import SwiftUI
 import VenueFeature
 
 #if !SKIP
-@main
-struct TrySwiftTokyoApp: App {
-  var body: some Scene {
-    WindowGroup {
-      ContentView()
+  @main
+  struct TrySwiftTokyoApp: App {
+    var body: some Scene {
+      WindowGroup {
+        ContentView()
+      }
     }
   }
-}
 #endif
 
 public struct ContentView: View {
