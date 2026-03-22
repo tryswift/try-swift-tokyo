@@ -48,7 +48,14 @@ jobs:
           restore-keys: spm-android-${{ runner.os }}-swift-6.2-
           path: Android/.build
 
+      - name: Check environment
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          echo "JAVA_HOME=$JAVA_HOME"
+          which gradle || echo "gradle not in PATH"
+          gradle --version || echo "gradle version failed"
+
       - name: Build
         run: |
           cd Android
-          swift build
+          swift build 2>&1
