@@ -2794,7 +2794,12 @@ struct CfPRoutes: RouteCollection {
 
     // Load speaker data from DataClient for image/bio/link matching
     let conferenceYear = ConferenceYear(rawValue: conference.year)
-    let knownSpeakers = conferenceYear.flatMap { try? DataClient.liveValue.fetchSpeakers($0) } ?? []
+    let knownSpeakers: [Speaker] = await withCheckedContinuation { continuation in
+      DispatchQueue.global().async {
+        let speakers = conferenceYear.flatMap { try? DataClient.liveValue.fetchSpeakers($0) } ?? []
+        continuation.resume(returning: speakers)
+      }
+    }
     let speakerMap = Dictionary(
       knownSpeakers.map { ($0.name, $0) }, uniquingKeysWith: { first, _ in first })
 
