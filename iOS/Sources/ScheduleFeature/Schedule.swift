@@ -441,7 +441,7 @@ public struct ScheduleView: View {
               if hasVideo {
                 Image(systemName: "play.circle.fill")
                   .font(.caption)
-                  .foregroundStyle(.white, .accent)
+                  .foregroundStyle(.white, Color.accentColor)
               }
             }
           }
