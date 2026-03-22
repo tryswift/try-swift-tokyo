@@ -46,7 +46,7 @@ public struct SessionRowView: View {
     .background(Color.secondary.opacity(0.1))
     .clipShape(RoundedRectangle(cornerRadius: 12))
     #if !SKIP
-    .contentShape(Rectangle())
+      .contentShape(Rectangle())
     #endif
     .onTapGesture {
       onTap?()
@@ -98,32 +98,32 @@ public struct SpeakerAvatarView: View {
 }
 
 #if !SKIP
-#Preview {
-  VStack(spacing: 16) {
-    SessionRowView(
-      session: Session(
-        title: "Swift Concurrency Deep Dive",
-        summary: "Learn about async/await and actors",
-        speakers: [
-          Speaker(name: "John Doe", imageName: "john", bio: "iOS Developer")
-        ],
-        place: "Main Hall",
-        description: "Full description here",
-        requirements: nil
+  #Preview {
+    VStack(spacing: 16) {
+      SessionRowView(
+        session: Session(
+          title: "Swift Concurrency Deep Dive",
+          summary: "Learn about async/await and actors",
+          speakers: [
+            Speaker(name: "John Doe", imageName: "john", bio: "iOS Developer")
+          ],
+          place: "Main Hall",
+          description: "Full description here",
+          requirements: nil
+        )
       )
-    )
 
-    SessionRowView(
-      session: Session(
-        title: "Lunch Break",
-        summary: nil,
-        speakers: nil,
-        place: nil,
-        description: nil,
-        requirements: nil
+      SessionRowView(
+        session: Session(
+          title: "Lunch Break",
+          summary: nil,
+          speakers: nil,
+          place: nil,
+          description: nil,
+          requirements: nil
+        )
       )
-    )
+    }
+    .padding()
   }
-  .padding()
-}
 #endif
