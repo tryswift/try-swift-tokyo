@@ -95,27 +95,27 @@ public struct SessionDetailView: View {
 }
 
 #if !SKIP
-#Preview {
-  NavigationStack {
-    SessionDetailView(
-      session: Session(
-        title: "Building Cross-Platform Apps with Skip",
-        summary: "Learn how to share Swift code between iOS and Android",
-        speakers: [
-          Speaker(
-            name: "Jane Smith",
-            imageName: "jane",
-            bio: "Senior iOS Developer with 10 years of experience"
-          )
-        ],
-        place: "Main Hall",
-        description:
-          "In this session, we'll explore how Skip enables you to write SwiftUI code that runs on both iOS and Android. You'll learn about the architecture, limitations, and best practices.",
-        requirements: "Basic knowledge of SwiftUI and Swift"
+  #Preview {
+    NavigationStack {
+      SessionDetailView(
+        session: Session(
+          title: "Building Cross-Platform Apps with Skip",
+          summary: "Learn how to share Swift code between iOS and Android",
+          speakers: [
+            Speaker(
+              name: "Jane Smith",
+              imageName: "jane",
+              bio: "Senior iOS Developer with 10 years of experience"
+            )
+          ],
+          place: "Main Hall",
+          description:
+            "In this session, we'll explore how Skip enables you to write SwiftUI code that runs on both iOS and Android. You'll learn about the architecture, limitations, and best practices.",
+          requirements: "Basic knowledge of SwiftUI and Swift"
+        )
       )
-    )
-    .navigationTitle("Session")
-    .navigationBarTitleDisplayMode(.inline)
+      .navigationTitle("Session")
+      .navigationBarTitleDisplayMode(.inline)
+    }
   }
-}
 #endif

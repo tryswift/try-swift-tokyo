@@ -98,22 +98,22 @@ public struct SponsorCardView: View {
 }
 
 #if !SKIP
-#Preview {
-  SponsorGridView(
-    sponsors: Sponsors(
-      platinum: [Sponsor(id: 1, name: "Platinum Sponsor", imageName: "platinum")],
-      gold: [
-        Sponsor(id: 2, name: "Gold A", imageName: "gold_a"),
-        Sponsor(id: 3, name: "Gold B", imageName: "gold_b"),
-      ],
-      silver: [],
-      bronze: [],
-      diversity: [],
-      student: [],
-      community: [],
-      individual: []
-    ),
-    onSponsorTap: { _ in }
-  )
-}
+  #Preview {
+    SponsorGridView(
+      sponsors: Sponsors(
+        platinum: [Sponsor(id: 1, name: "Platinum Sponsor", imageName: "platinum")],
+        gold: [
+          Sponsor(id: 2, name: "Gold A", imageName: "gold_a"),
+          Sponsor(id: 3, name: "Gold B", imageName: "gold_b"),
+        ],
+        silver: [],
+        bronze: [],
+        diversity: [],
+        student: [],
+        community: [],
+        individual: []
+      ),
+      onSponsorTap: { _ in }
+    )
+  }
 #endif
