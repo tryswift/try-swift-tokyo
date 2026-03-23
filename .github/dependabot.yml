@@ -40,6 +40,15 @@ updates:
         patterns:
           - "source.skip.tools/*"
 
+  # E2E Tests - npm
+  - package-ecosystem: "npm"
+    directory: "/e2e"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "E2E"
+
   # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"

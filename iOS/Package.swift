@@ -21,7 +21,7 @@ let package = Package(
       targets: ["trySwiftFeature"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.21.0"),
+    .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.25.0"),
     .package(url: "https://github.com/maiyama18/LicensesPlugin", from: "0.2.0"),
     .package(url: "https://github.com/flitto/rtt_sdk", from: "0.1.9"),
     .package(name: "SharedModels", path: "../SharedModels"),
