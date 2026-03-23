@@ -53,6 +53,7 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
       libjemalloc2 \
       ca-certificates \
       tzdata \
+      libcurl4 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
