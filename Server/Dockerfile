@@ -60,6 +60,10 @@ WORKDIR /app
 
 COPY --from=build /staging /app
 
+# Fail the image build if the runtime image is still missing shared libraries.
+RUN ldd /app/Server | tee /tmp/server-ldd.txt \
+    && ! grep -q "not found" /tmp/server-ldd.txt
+
 # Copy static assets (images)
 COPY ./Website/Assets/images ./Public/images
 COPY ./Server/Public/cfp ./Public/cfp
