@@ -35,7 +35,9 @@ enum GitHubOAuth {
         Environment.get("GITHUB_INVITED_SPEAKER_TEAM") ?? "tokyo-2026-speaker"
     }
 
-    private static func environmentValue(primary: String, legacy: String, default defaultValue: String)
+    private static func environmentValue(
+      primary: String, legacy: String, default defaultValue: String
+    )
       -> String
     {
       Environment.get(primary) ?? Environment.get(legacy) ?? defaultValue
