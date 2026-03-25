@@ -287,11 +287,22 @@ struct WorkshopRoutes: RouteCollection {
     }
 
     // Verify Luma ticket
-    guard
-      let guest = try await LumaClient.getGuest(
-        email: email, client: req.client, logger: req.logger),
-      guest.hasTicket
-    else {
+    let guest: LumaGuest?
+    do {
+      guest = try await LumaClient.getGuest(
+        email: email, client: req.client, logger: req.logger)
+    } catch {
+      req.logger.error("Luma API error during ticket verification: \(error)")
+      let html = try await renderWorkshopApplyPage(
+        req: req, language: language,
+        errorMessage: language == .ja
+          ? "チケット確認サービスに接続できませんでした。しばらくしてからもう一度お試しください。"
+          : "Could not connect to the ticket verification service. Please try again later."
+      )
+      return try await html.encodeResponse(for: req)
+    }
+
+    guard let guest, guest.hasTicket else {
       let html = try await renderWorkshopApplyPage(
         req: req, language: language,
         errorMessage: language == .ja
