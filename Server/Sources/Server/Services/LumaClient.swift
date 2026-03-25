@@ -34,8 +34,11 @@ enum LumaClient {
     }
 
     guard response.status == .ok else {
-      logger.info("Luma get-guest returned status \(response.status.code) for email: \(email)")
-      return nil
+      if response.status == .notFound {
+        return nil
+      }
+      logger.error("Luma get-guest returned status \(response.status.code) for email: \(email)")
+      throw Abort(.badGateway, reason: "Luma API returned \(response.status.code)")
     }
 
     return try response.content.decode(LumaGuest.self)

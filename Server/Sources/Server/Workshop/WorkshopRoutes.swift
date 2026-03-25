@@ -288,7 +288,7 @@ struct WorkshopRoutes: RouteCollection {
 
     // Verify Luma ticket (skip if Luma API is not configured)
     let guestName: String
-    if Environment.get("LUMA_API_KEY") != nil {
+    if let lumaApiKey = Environment.get("LUMA_API_KEY"), !lumaApiKey.isEmpty {
       let guest: LumaGuest?
       do {
         guest = try await LumaClient.getGuest(
@@ -304,7 +304,17 @@ struct WorkshopRoutes: RouteCollection {
         return try await html.encodeResponse(for: req)
       }
 
-      guard let guest, guest.hasTicket else {
+      guard let guest else {
+        let html = try await renderWorkshopApplyPage(
+          req: req, language: language,
+          errorMessage: language == .ja
+            ? "このメールアドレスでtry! Swift Tokyo 2026のチケットが見つかりませんでした。"
+            : "No try! Swift Tokyo 2026 ticket found for this email address."
+        )
+        return try await html.encodeResponse(for: req)
+      }
+
+      guard guest.hasTicket else {
         let html = try await renderWorkshopApplyPage(
           req: req, language: language,
           errorMessage: language == .ja
@@ -315,7 +325,7 @@ struct WorkshopRoutes: RouteCollection {
       }
       guestName = guest.displayName
     } else {
-      req.logger.info("LUMA_API_KEY not configured, skipping ticket verification")
+      req.logger.debug("LUMA_API_KEY not configured, skipping ticket verification")
       guestName = ""
     }
 
