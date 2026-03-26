@@ -1,6 +1,444 @@
 {
   "id": 3,
   "title": "Day 2",
-  "date": "2026-04-14T12:00:00+09:00",
-  "schedules": []
+  "title_ja": "Day 2",
+  "date": "2026-04-14T00:00:00+09:00",
+  "schedules": [
+    {
+      "time": "2026-04-13T07:30:00+09:00",
+      "sessions": [
+        {
+          "title": "🏃Run & Walk the Park",
+          "title_ja": "🏃Run & Walk the Park",
+          "description": "Join us again on the final morning of the conference for “Run & Walk the Park” at [Showa Kinen Park](https://maps.apple/p/r4DeFqIu9NQCMa).\nMove your body, enjoy the spring air, and ease into the day while reflecting on the experience so far.\n\nRun or walk alongside fellow participants from around the world—share thoughts, revisit highlights, and deepen connections as the event comes to a close.\n**No registration is required—anyone with a conference ticket is welcome to join.**",
+          "description_ja": "カンファレンス最終日の朝も、[昭和記念公園](https://maps.apple/p/r4DeFqIu9NQCMa)で「Run & Walk the Park」を開催します。\n春の空気の中で軽く体を動かしながら、イベントの余韻を感じつつ一日をスタートしましょう。\n\n世界中から集まる参加者とともに、公園内を走ったり歩いたりしながら、これまでの体験を振り返ったり、新たなつながりを深めたりできる時間です。\n**事前申し込みは不要ですので、カンファレンスチケットをお持ちの方であればどなたでも気軽にご参加いただけます。**",
+          "place": "Showa Kinen Park",
+          "place_ja": "昭和記念公園"
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T09:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Morning Chat",
+          "title_ja": "モーニングチャット"
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T09:45:00+09:00",
+      "sessions": [
+        {
+          "title": "Opening",
+          "title_ja": "オープニング"
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T10:00:00+09:00",
+      "sessions": [
+        {
+          "title": "The hidden power of Async Sequences",
+          "title_ja": "Async Sequenceの隠された力",
+          "description": "AsyncSequence has been with us since Apple tried to gently nudge us away from Combine. Over the last few years they've become much more powerful and even legacy APIs such as NotificationCenter have embraced it. We'll look at this powerful protocol and some of the concrete types that conform to it and how to consuming sequences fits in nicely with async await.",
+          "description_ja": "AsyncSequenceは、AppleがCombineからの移行をそっと促し始めた頃から私たちの手元にあります。ここ数年で大幅に強化され、NotificationCenterのようなレガシーAPIもAsyncSequenceを採用するようになりました。この強力なプロトコルと、それに準拠する具体的な型のいくつかを見ていきながら、シーケンスの消費がasync awaitとどのようにうまく組み合わさるかを探ります。",
+          "summary": "AsyncSequence has been with us since Apple tried to gently nudge us away from Combine. Over the last few years they've become much more powerful and even legacy APIs such as NotificationCenter have em",
+          "summary_ja": "AsyncSequenceは、AppleがCombineからの移行をそっと促し始めた頃から私たちの手元にあります。ここ数年で大幅に強化され、NotificationCenterのようなレガシーAPIもAsyncSequenceを採用するようになりました。",
+          "speakers": [
+            {
+              "name": "Daniel Steinberg",
+              "image_name": "Speaker/2026/2026_DanielSteinberg",
+              "bio": "Daniel is the author of more than a dozen books including the best selling books The Curious Case of the Async Cafe, A SwiftUI Kickstart, A Swift Kickstart, A Bread Baking Kickstart, and Dear Elena.\n\nDaniel presents iOS, SwiftUI, and Swift training and consults through his company Dim Sum Thinking.\n\nHe has written apps for the iPhone and the iPad since the SDKs first appeared and has written programs for the Mac all the way back to System 7. When he's not coding or talking about coding for the Mac, the iPhone, and the iPad he's probably cooking, baking bread, or hanging out with friends.",
+              "bio_ja": "Danielはこれまでに十数冊以上を執筆しており、その中にはベストセラーとなった『The Curious Case of the Async Cafe』『A SwiftUI Kickstart』『A Swift Kickstart』『A Bread Baking Kickstart』『Dear Elena』などがあります。\n\n自身の会社である Dim Sum Thinking を通じて、iOS・SwiftUI・Swift に関するトレーニングやコンサルティングを行っています。\n\niPhone と iPad の SDK が最初に公開された当初からこれらのデバイス向けのアプリを開発しており、Mac 向けのプログラムも System 7 の時代から書いてきました。Mac、iPhone、iPad 向けのコーディングやその話をしていないときは、たいてい料理をしたり、パンを焼いたり、友人たちと過ごしたりしています。",
+              "job_title": "Storyteller",
+              "links": [
+                {
+                  "url": "https://linkedin.com/in/dimsumthinking",
+                  "name": "@dimsumthinking"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T10:25:00+09:00",
+      "sessions": [
+        {
+          "title": "⚡️Hacking Final Cut Pro with Swift",
+          "title_ja": "⚡️SwiftでFinal Cut Proをハックする",
+          "description": "Video editing can feel a bit tedious and intimidating. But with your Swift knowledge, you can make video editing with Final Cut Pro more accessible, more creative, and take your videos to a higher quality. In this talk, let's learn about the options, knowledge, and practical methods for building video editing tools for Final Cut Pro. Why not try video editing with Swift?",
+          "description_ja": "ちょっとめんどくさく、敷居が高いと思ってしまう動画編集。でも、皆さんのSwiftの知識でFinal Cut Proによる動画編集をより身近でクリエイティブに、そして皆さんの動画をハイクオリティにすることができます。このトークで、自分たちでFinal Cut Pro向けの動画編集用のツールを作るための選択肢、知識、実際の作り方を学びましょう。みなさんもSwiftで動画編集をやってみませんか？",
+          "summary": "Video editing can feel a bit tedious and intimidating. But with your Swift knowledge, you can make video editing with Final Cut Pro more accessible and creative. In this talk, let's learn about build",
+          "summary_ja": "ちょっとめんどくさく、敷居が高いと思ってしまう動画編集。でも、皆さんのSwiftの知識でFinal Cut Proによる動画編集をより身近でクリエイティブに、そして皆さんの動画をハイクオリティにすることができます。",
+          "speakers": [
+            {
+              "name": "freddi(Yuki Aki)",
+              "image_name": "Speaker/2026/2026_YukiAki",
+              "bio": "Freddi (Yuki Aki) is an engineer who also travels the world as a travel YouTuber, sharing his experiences across different countries and cultures.",
+              "bio_ja": "旅行系YouTuberとして世界を回っているエンジニア",
+              "job_title": "Engineer",
+              "links": [
+                {
+                  "url": "https://github.com/freddi-kit",
+                  "name": "@freddi-kit"
+                },
+                {
+                  "name": "@___freddi___",
+                  "url": "https://x.com/___freddi___"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T10:35:00+09:00",
+      "sessions": [
+        {
+          "title": "Why is SwiftUI like that?",
+          "title_ja": "SwiftUIってなんでこうなるの？",
+          "description": "We all know how SwiftUI code looks when it runs, but have you ever wondered why it looks that way? In this talk I'll show you how you can get a closer look at the inner workings of SwiftUI, and how to use that knowledge to write faster, smarter code.",
+          "description_ja": "SwiftUIコードが実行されたときの見た目は誰もが知っていますが、なぜそのように見えるのか考えたことはありますか？このトークでは、SwiftUIの内部動作をより深く観察する方法と、その知識を活用してより速く、より賢いコードを書く方法をお見せします。",
+          "summary": "We all know how SwiftUI code looks when it runs, but have you ever wondered why it looks that way? In this talk I'll show you how you can get a closer look at the inner workings of SwiftUI, and how to",
+          "summary_ja": "SwiftUIコードが実行されたときの見た目は誰もが知っていますが、なぜそのように見えるのか考えたことはありますか？このトークでは、SwiftUIの内部動作を深く観察し、その知識でより速く賢いコードを書く方法をお見せします。",
+          "speakers": [
+            {
+              "name": "Paul Hudson",
+              "image_name": "Speaker/2026/2026_Speaker_PaulHudson",
+              "bio": "Paul is the author of Hacking with Swift, Pro Swift, Swift Design Patterns, Testing Swift, Swift Interview Challenges, and more. Suffice it to say, he quite likes Swift. And coffee. (But mostly Swift.) (And coffee.)",
+              "bio_ja": "Paulは「Hacking with Swift」「Pro Swift」「Swift Design Patterns」「Testing Swift」「Swift Interview Challenges」などの著者です。簡単に言うと、Swiftが大好きです。そしてコーヒーも。（でも主にSwiftが。）（いや、コーヒーも同じくらい。）",
+              "job_title": "Creator at Hacking with Swift",
+              "job_title_ja": "Hacking with Swift クリエイター",
+              "links": [
+                {
+                  "url": "https://x.com/twostraws",
+                  "name": "@twostraws"
+                },
+                {
+                  "url": "https://github.com/twostraws",
+                  "name": "@twostraws"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T11:00:00+09:00",
+      "sessions": [
+        {
+          "title": "☕️Break",
+          "title_ja": "☕️休憩"
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T11:30:00+09:00",
+      "sessions": [
+        {
+          "title": "Learn by Building: Bare-Metal Programming with Embedded Swift",
+          "title_ja": "作って学ぶ、Embedded Swiftベアメタルプログラミング",
+          "description": "How do you write software in a world without an OS? In iOS applications, you simply add @main and execution starts automatically from there—but in a world without an OS, you must prepare the execution environment yourself before you can call even the first function. However, this isn't needless hardship—it offers the primal joy of software development: writing everything in Swift and learning how computers fundamentally work.",
+          "description_ja": "OSの無い世界でソフトウェアを書くにはどうすればいいでしょうか。iOSアプリケーションでは@mainをつければ自動的にそこから処理が開始しますが、OSの無い世界では自分で実行環境を準備して、はじめて最初の関数を呼べます。しかしそれはただ不要な苦労をしているわけではなく、すべてをSwiftで書き、コンピュータの動作原理を学ぶというソフトウェア開発の原始的な楽しさを与えてくれます。",
+          "summary": "How do you write software in a world without an OS? In iOS, @main starts everything automatically, but without an OS, you must prepare the execution environment yourself. This isn't needless hardship",
+          "summary_ja": "OSの無い世界でソフトウェアを書くにはどうすればいいでしょうか。iOSアプリケーションでは@mainをつければ自動的にそこから処理が開始しますが、OSの無い世界では自分で実行環境を準備して、はじめて最初の関数を呼べます。しかしそれはすべてをSwiftで書き、コンピュータの動作原理を学ぶという原始的な楽しさを与えてくれます。",
+          "speakers": [
+            {
+              "name": "kishikawa katsumi",
+              "image_name": "Speaker/2026/2026_KishikawaKatsumi",
+              "bio": "Katsumi Kishikawa is a software engineer specializing in mobile app development. While the role of humans in software development continues to evolve, he believes that the core joy of programming remains unchanged. He finds embedded programming particularly rewarding because it allows developers to build everything themselves, making the essence of programming especially clear and enjoyable.",
+              "bio_ja": "モバイルアプリ開発を専門とするソフトウェアエンジニア。ソフトウェア開発における人間の役割は変化し続けていますが、プログラミングの楽しさの本質は変わらないと考えています。特に組み込みプログラミングは、その気になればすべてを自分で書けるため、プログラミングの楽しさをより純粋に感じられる分野だと感じています。",
+              "job_title": "Software Engineer",
+              "links": [
+                {
+                  "url": "https://github.com/kishikawakatsumi",
+                  "name": "@kishikawakatsumi"
+                },
+                {
+                  "url": "https://kishikawakatsumi.com/",
+                  "name": "kishikawakatsumi.com"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T11:55:00+09:00",
+      "sessions": [
+        {
+          "title": "⚡️Getting Started with Embedded Swift Programming from ¥0",
+          "title_ja": "⚡️０円から始めるEmbedded Swiftプログラミング",
+          "description": "Embedded Swift is a project that enables programming for embedded devices and IoT using the Swift you love.\nI've introduced Embedded Swift at various events, and I often receive comments like 'I don't know how to get started' or 'Please recommend a device.'\nIn this lightning talk, aimed at developers interested in Embedded Swift but unsure where to begin, I'll introduce ways to set up your environment and get started easily—for anywhere from ¥0 to about ¥1,000—covering as much as time allows.",
+          "description_ja": "Embedded Swiftは、みなさんが大好きなSwiftで組込み機器やIoTのプログラミングを可能にするプロジェクトです。\nこれまで様々な場でEmbedded Swiftの紹介をしてきましたが、よく「どうやって始めたらいいかわからない」「オススメのデバイスを教えて欲しい」というコメントをもらいます。\nこのLTでは、Embedded Swiftに興味はあるもののどこから手を付ければいいかわからない開発者を対象に、0円から1000円程度で環境構築できて手軽に始められる方法を、時間の許す限り紹介します。",
+          "summary": "Embedded Swift is a project that enables programming for embedded devices and IoT in Swift. Aimed at developers interested but unsure where to begin, this lightning talk introduces ways to get started",
+          "summary_ja": "Embedded Swiftは、みなさんが大好きなSwiftで組込み機器やIoTのプログラミングを可能にするプロジェクトです。このLTでは、Embedded Swiftに興味はあるもののどこから手を付ければいいかわからない開発者を対象に、0円から1000円程度で手軽に始められる方法を紹介します。",
+          "speakers": [
+            {
+              "name": "Shinichiro Oba",
+              "image_name": "Speaker/2026/2026_ShinichiroOba",
+              "bio": "Shinichiro Oba is a programmer who loves Apple and LEGO. At work, he develops large-scale applications using The Composable Architecture (TCA). In his spare time, he enjoys exploring low-level technologies such as Embedded Swift and FPGA. He is also the author of books including \"Introduction to LEGO MINDSTORMS NXT.\"",
+              "bio_ja": "AppleとLEGOが大好きなプログラマー。仕事ではTCA（The Composable Architecture）を用いた大規模アプリ開発に携わりながら、趣味ではEmbedded SwiftやFPGAなどの低レイヤー技術にも取り組んでいます。著書に『入門LEGO MINDSTORMS NXT』などがあります。",
+              "job_title": "Programmer",
+              "links": [
+                {
+                  "url": "https://github.com/bricklife",
+                  "name": "@bricklife"
+                },
+                {
+                  "name": "@ooba",
+                  "url": "https://x.com/ooba"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T12:05:00+09:00",
+      "sessions": [
+        {
+          "title": "Practical CRDT: Building a Rich Text Synchronization Model with Core Data and CloudKit",
+          "title_ja": "実践CRDT：Core DataとCloudKitによるリッチテキスト同期モデルの構築",
+          "description": "CRDT is a data structure that allows data to be merged without any conflicts, even when edited simultaneously on multiple devices. For example, you can add notes on your iPhone while simultaneously refining them on your Mac.\n\nHow do you achieve such a 'non-stop editing experience'? In this presentation, I'll share insights gained from building a data structure—using Apple technologies such as Core Data and CloudKit—that maintains text entered in Markdown as rich text while enabling natural synchronization across multiple devices including iPhone, iPad, and Mac.",
+          "description_ja": "CRDTとは、複数のデバイスで同時に編集しても一切の衝突（コンフリクト）を起こさずにデータを統合できるデータ構造です。 例えばiPhoneでメモを書き足しながら、同時にMacで推敲できます。\n\nそんな「止まらない編集体験」をどう実現するか。 本発表では、Markdownで入力したテキストをリッチテキストとして保持しつつ、iPhone・iPad・Mac など複数端末間で自然な同期を実現するためのデータ構造を、Core DataやCloudKitなどアップルの技術を用いて構築する過程で得た知見を紹介します。",
+          "summary": "CRDT is a data structure that allows data to be merged without any conflicts, even when edited simultaneously on multiple devices. This talk shares insights from building a rich text synchronization m",
+          "summary_ja": "CRDTとは、複数のデバイスで同時に編集しても一切の衝突（コンフリクト）を起こさずにデータを統合できるデータ構造です。本発表では、Core DataやCloudKitを用いて複数端末間で自然なリッチテキスト同期を実現するためのデータ構造の構築から得た知見を紹介します。",
+          "speakers": [
+            {
+              "name": "Kazushi Oenoki",
+              "image_name": "Speaker/2026/2026_KazushiOenoki",
+              "bio": "Kazushi Oenoki is an iOS and macOS app developer known for creating apps such as FirstSeed Calendar and FirstSeed Tasks for Apple platforms. His apps have been featured as App of the Day in more than 150 countries and regions on the App Store. He has deep experience integrating CloudKit, Core Data, AppKit, UIKit, and SwiftUI. Currently, he is developing a rich text note app built on CRDT, tackling advanced challenges such as multi-device editing, diff highlighting, and run-based formatting.",
+              "bio_ja": "iOS / macOS アプリ開発者。「FirstSeed Calendar」「FirstSeed Tasks」など Apple プラットフォーム向けアプリを開発。これらのアプリは世界150以上の国・地域で App Store の「App of the Day」に選出されています。CloudKit / Core Data / AppKit / UIKit / SwiftUI を統合したアプリ開発に精通。現在は CRDT を基盤としたリッチテキストノートアプリを開発中で、複数端末編集・差分ハイライト・Runベースのフォーマット対応など高度な要件に挑戦しています。",
+              "job_title": "iOS and macOS App Developer",
+              "links": [
+                {
+                  "url": "https://github.com/kazushi-oenoki",
+                  "name": "@kazushi-oenoki"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T12:30:00+09:00",
+      "sessions": [
+        {
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T14:00:00+09:00",
+      "sessions": [
+        {
+          "title": "The Evolution of SwiftUI: An Insider's View",
+          "title_ja": "進化し続けるSwiftUI：内部から見たその変化",
+          "description": "SwiftUI has been evolving rapidly since its introduction, with major API changes shaping how we build apps today. In this talk, I will share an insider's perspective on what drives these changes, drawing on my experience as a former engineer on the SwiftUI team at Apple and as an iOS developer who has used SwiftUI in production since day one. You will learn how and why SwiftUI evolves, how to evaluate when to move from older APIs to newer ones, and why embracing these changes is essential for building robust SwiftUI apps.",
+          "description_ja": "SwiftUIは登場以来急速に進化を続けており、主要なAPI変更が今日のアプリ構築方法を形作っています。このトークでは、AppleのSwiftUIチームの元エンジニアとして、また初日からSwiftUIをプロダクションで使ってきたiOS開発者としての経験を活かし、これらの変更を推進する要因についてインサイダーの視点を共有します。SwiftUIがどのように、そしてなぜ進化するのか、古いAPIから新しいAPIへの移行をどう判断するか、そしてこれらの変化を受け入れることが堅牢なSwiftUIアプリの構築に不可欠である理由を学べるでしょう。",
+          "summary": "SwiftUI has been evolving rapidly since its introduction, with major API changes shaping how we build apps today. In this talk, I will share an insider's perspective on what drives these changes, draw",
+          "summary_ja": "SwiftUIは登場以来急速に進化を続けており、主要なAPI変更が今日のアプリ構築方法を形作っています。このトークでは、AppleのSwiftUIチームの元エンジニアとしての経験を活かし、これらの変更を推進する要因についてインサイダーの視点を共有します。",
+          "speakers": [
+            {
+              "name": "Natalia Panferova",
+              "image_name": "Speaker/2026/2026_NataliaPanferova",
+              "bio": "Natalia has been working in tech for over ten years, and most of her career has been dedicated to iOS development. She's worked in both small startups and large companies, and now she's focusing on her own projects at Nil Coalescing, a company she founded with her partner back in 2022. Right before that, she was part of the SwiftUI team at Apple, designing and building SwiftUI APIs.\n\nShe's very passionate about creating apps for Apple platforms and sharing her knowledge through her blog and books for Swift and SwiftUI developers. She lives in the South Island of New Zealand, and when she's not coding or writing, she loves going on nature walks with her partner and their two dogs.",
+              "bio_ja": "Nataliaはテック業界で10年以上の経験があり、そのほとんどを iOS 開発に携わってきました。スタートアップから大企業までさまざまな環境で働いた経験があり、現在は 2022 年にパートナーとともに設立した会社「Nil Coalescing」で自身のプロジェクトに取り組んでいます。その前は Apple の SwiftUI チームに所属し、SwiftUI の API の設計と実装に携わっていました。\n\nApple プラットフォーム向けのアプリ開発に強い情熱を持っており、ブログや Swift / SwiftUI 開発者向けの書籍を通じて知識を共有することにも力を入れています。ニュージーランド南島在住で、コーディングや執筆をしていないときは、パートナーと 2 匹の犬と一緒に自然の中を散歩するのが好きです。",
+              "job_title": "iOS Developer, Tech Blogger, Book Author",
+              "links": [
+                {
+                  "url": "https://github.com/nataliapanferova",
+                  "name": "@nataliapanferova"
+                },
+                {
+                  "url": "https://x.com/natpanferova",
+                  "name": "@natpanferova"
+                },
+                {
+                  "url": "https://bsky.app/profile/natpanferova.bsky.social",
+                  "name": "@natpanferova"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T14:25:00+09:00",
+      "sessions": [
+        {
+          "title": "⚡️Play 🀄 on swiftc!",
+          "title_ja": "⚡️swiftcで🀄を打とう！",
+          "description": "Mahjong is a popular game played by everyone. In Japan, it's played daily everywhere. Yes, even in the Swift compiler.\nThis time, let's use Swift's compile-time calculations to determine mahjong wins. This talk will show you the magic of the type system!",
+          "description_ja": "麻雀はみんながプレイする人気のゲームです。日本では毎日あちこちで打たれています。そう、Swiftコンパイラの中でさえも。\n今回は、Swiftのコンパイル時計算を使って麻雀のアガリを判定しましょう。このトークは型システムの魔法をお見せします！",
+          "summary": "Mahjong is a popular game played by everyone. In Japan, it's played daily everywhere. Yes, even in the Swift compiler.\nThis time, let's use Swift's compile-time calculations to determine mahjong wins.",
+          "summary_ja": "麻雀はみんながプレイする人気のゲームです。日本では毎日あちこちで打たれています。そう、Swiftコンパイラの中でさえも。今回は、Swiftのコンパイル時計算を使って麻雀のアガリを判定しましょう。",
+          "speakers": [
+            {
+              "name": "giginet(Kohki Miki)",
+              "image_name": "Speaker/2026/2026_KohkiMiki",
+              "bio": "giginet is a Mobile DevOps Engineer working for LY Corporation. He develops developer tools primarily for iOS, maintains open-source software, and creates build tools called Scipio.",
+              "bio_ja": "Kohki Miki（giginet）はLY Corporationで働くMobile DevOps Engineerです。主にiOS向けの開発者ツールを開発しており、オープンソースソフトウェアのメンテナンスや、Scipioというビルドツールの開発も行っています。",
+              "job_title": "Mobile DevOps Engineer at LY Corporation",
+              "links": [
+                {
+                  "url": "https://github.com/giginet",
+                  "name": "@giginet"
+                },
+                {
+                  "url": "https://x.com/giginet",
+                  "name": "@giginet"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T14:35:00+09:00",
+      "sessions": [
+        {
+          "title": "Let AI Generate XCUITest Code: Ensuring Quality with Structured Layers",
+          "title_ja": "XCUITestコード生成をAIに任せる：構造化レイヤーで品質を担保する",
+          "description": "When you let AI write XCUITests, issues like incorrect Accessibility Identifiers, missed steps, and inconsistent code styles frequently occur. In this session, I'll introduce a design that enables AI to generate accurate test code using three structured layers: Scenarios (step definitions), Code Templates (code patterns), and Definitions (Accessibility Identifiers and timeout values).",
+          "description_ja": "AIにXCUITestを書かせると「間違ったAccessibility Identifier」「ステップ漏れ」「バラバラなコードスタイル」が頻発します。本セッションでは、Scenarios（手順定義）・Code Templates（コードパターン）・Definitions（Accessibility Identifier・タイムアウト値）という3つの構造化レイヤーで、AIが正確なテストコードを生成できるようにする設計を紹介します。",
+          "summary": "When you let AI write XCUITests, incorrect Accessibility Identifiers, missed steps, and inconsistent code styles frequently occur. This session introduces a design using three structured layers—Scen",
+          "summary_ja": "AIにXCUITestを書かせると「間違ったAccessibility Identifier」「ステップ漏れ」「バラバラなコードスタイル」が頻発します。本セッションでは、3つの構造化レイヤーで、AIが正確なテストコードを生成できるようにする設計を紹介します。",
+          "speakers": [
+            {
+              "name": "Yusuke Kita",
+              "image_name": "Speaker/2026/2026_YusukeKita",
+              "bio": "Yusuke Kita is a software engineer at newmo working on automated testing for mobility service applications. He is passionate about improving code quality and building reliable software systems.",
+              "bio_ja": "newmoのソフトウェアエンジニア。モビリティサービスアプリの自動テストの推進に取り組んでいます。コード品質の向上に情熱を持っています。",
+              "job_title": "Software Engineer at newmo",
+              "links": [
+                {
+                  "url": "https://x.com/kitasuke",
+                  "name": "@kitasuke"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T15:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T15:35:00+09:00",
+      "sessions": [
+        {
+          "title": "How Swift's Type System Guides AI Agents",
+          "title_ja": "Swiftの型システムはAIエージェントをどう導くのか",
+          "description": "When AI agents write code, compiler feedback is critical to quality. Swift's type system expresses information that most other languages leave out of their types (such as error possibilities and data race safety), giving the compiler more to feed back to the agent. This talk explores how Swift's type system gives AI agents an advantage.",
+          "description_ja": "AIエージェントがコードを書くとき、コンパイラからのフィードバックは品質に不可欠です。Swiftの型システムは、他の多くの言語が型に含めない情報（エラーの可能性やデータ競合の安全性など）を表現し、コンパイラがエージェントにフィードバックできる情報を増やします。このトークでは、Swiftの型システムがAIエージェントにどのような優位性を与えるかを探ります。",
+          "summary": "When AI agents write code, compiler feedback is critical to quality. Swift's type system expresses information that most other languages leave out of their types (such as error possibilities and data ",
+          "summary_ja": "AIエージェントがコードを書くとき、コンパイラからのフィードバックは品質に不可欠です。Swiftの型システムは、他の多くの言語が型に含めない情報を表現し、コンパイラがエージェントにフィードバックできる情報を増やします。",
+          "speakers": [
+            {
+              "name": "Yuta Koshizawa",
+              "image_name": "Speaker/2026/2026_YutaKoshizawa",
+              "bio": "Yuta is a software engineer specializing in iOS, Swift, and real-time image recognition. He is the author of 'Heart of Swift,' a widely read online Swift book in Japan. He also regularly hosts an online study group called 'Swift Zoomin''.",
+              "bio_ja": "iOS、Swift、リアルタイム画像認識を専門とするソフトウェアエンジニアです。日本で広く読まれているオンラインSwift本「Heart of Swift」の著者です。また、「Swift Zoomin'」というオンライン勉強会を定期的に開催しています。",
+              "job_title": "Chief Engineer at Qoncept",
+              "links": [
+                {
+                  "url": "https://x.com/koher",
+                  "name": "@koher"
+                },
+                {
+                  "url": "https://github.com/koher",
+                  "name": "@koher"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T16:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Zero-Downtime Migration: Moving a Massive, Historic iOS App from CocoaPods to SPM and Tuist without Stopping Feature Delivery",
+          "title_ja": "ゼロダウンタイム移行：機能開発を止めずに、巨大なレガシーiOSアプリをCocoaPodsからSPMとTuistへ",
+          "description": "To ensure business continuity ahead of the 2026 CocoaPods sunset, our mobile team migrated external dependencies and the multi-module project generation process of a 14-year-old iOS application with over 500,000 lines of mixed Objective-C and Swift code. The project involved decoupling 60+ external dependencies and 70+ internal modules from a legacy CocoaPods setup that was deeply intertwined with the app's structure. In just six months, a foundation team of two engineers achieved a \"zero-downtime\" transition to Tuist and SPM without disrupting the ongoing feature delivery of the wider development team. This session explores the strategy for large-scale automation, solutions for complex dependency graphs, and the custom \"guard rail\" tools that protected the production environment during this high-risk shift.",
+          "description_ja": "2026年のCocoaPodsサンセットに先立ちビジネス継続性を確保するため、私たちのモバイルチームは、50万行以上のObjective-CとSwiftが混在する14年の歴史を持つiOSアプリケーションの外部依存関係とマルチモジュールプロジェクト生成プロセスを移行しました。このプロジェクトでは、アプリの構造と深く結びついたレガシーなCocoaPods設定から、60以上の外部依存関係と70以上の内部モジュールを分離する必要がありました。わずか6ヶ月で、2人のエンジニアからなるファウンデーションチームが、開発チーム全体の機能開発を中断することなく、TuistとSPMへの「ゼロダウンタイム」移行を達成しました。このセッションでは、大規模自動化の戦略、複雑な依存関係グラフの解決策、そしてこのハイリスクな移行中にプロダクション環境を保護したカスタム「ガードレール」ツールについて解説します。",
+          "summary": "To ensure business continuity ahead of the 2026 CocoaPods sunset, our mobile team migrated external dependencies and the multi-module project generation process of a 14-year-old iOS application with o",
+          "summary_ja": "2026年のCocoaPodsサンセットに先立ち、50万行以上のObjective-CとSwiftが混在する14年の歴史を持つiOSアプリケーションを、CocoaPodsからTuistとSPMへ、機能開発を止めることなく移行しました。",
+          "speakers": [
+            {
+              "name": "Akira Fukunaga",
+              "image_name": "Speaker/2026/2026_AkiraFukunaga",
+              "bio": "Akira Fukunaga is an iOS app developer with over 7 years of experience. He currently works on the Mobile Foundation Team at SmartNews and previously worked at Mercari. Outside of coding, he enjoys motorcycling, camping, and bouldering.",
+              "bio_ja": "Akira Fukunagaは7年以上の経験を持つiOSアプリ開発者です。現在はSmartNewsのMobile Foundation Teamで開発に携わっており、以前はMercariで働いていました。趣味はバイク、キャンプ、ボルダリングです。",
+              "job_title": "iOS App Developer at SmartNews",
+              "links": [
+                {
+                  "url": "https://github.com/kagemiku",
+                  "name": "@kagemiku"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T16:25:00+09:00",
+      "sessions": [
+        {
+          "title": "Designing App Store Onboarding",
+          "title_ja": "App Storeを前提としたオンボーディング設計",
+          "description": "Most onboarding flows are designed as linear walkthroughs that explain features users already expect. In this talk, I’ll argue that we’re doing onboarding wrong — and that instead of explaining functionality, we should focus on delivering small, meaningful experiences that create emotional impact early.\n\nUsing a real-world observation as a framing device, I’ll show how effective onboarding is built around repeated moments of value, each paired with lightweight opportunities to continue or subscribe. The technical focus is on how to implement this approach in SwiftUI, structure onboarding state, and introduce monetization progressively while remaining compliant with App Store guidelines.",
+          "description_ja": "多くのオンボーディングフローは、ユーザーがすでに期待している機能を説明するリニアなウォークスルーとして設計されています。このトークでは、私たちはオンボーディングのやり方を間違えている―機能を説明するのではなく、初期段階で感情的なインパクトを生む小さくて意味のある体験を提供することに集中すべきだと主張します。\n\n実世界の観察をフレーミングデバイスとして使い、効果的なオンボーディングが価値ある瞬間の繰り返しを中心に構築され、それぞれに継続またはサブスクライブの軽量な機会が組み合わされる様子を示します。技術的な焦点は、SwiftUIでこのアプローチを実装する方法、オンボーディングのステート構造、App Storeガイドラインに準拠しつつ段階的にマネタイズを導入する方法です。",
+          "summary": "Most onboarding flows are designed as linear walkthroughs that explain features users already expect. In this talk, I’ll argue that we’re doing onboarding wrong — and that instead of explaining functi",
+          "summary_ja": "多くのオンボーディングフローは、ユーザーがすでに期待している機能を説明するリニアなウォークスルーとして設計されています。このトークでは、機能説明ではなく、初期段階で感情的なインパクトを生む小さくて意味のある体験の提供に集中すべきだと主張します。",
+          "speakers": [
+            {
+              "name": "Adam Lyttle",
+              "image_name": "Speaker/2026/2026_AdamLyttle",
+              "bio": "Adam Lyttle is an indie iOS developer who builds apps for fun and profit (and shares the entire process in public). What began as a creative challenge to ship one app per month evolved into a sustainable indie business, taking him from significant personal debt to generating consistent revenue from his apps. Adam has created dozens of iOS apps and has been involved in multiple successful business exits. He is the creator of Apps by Adam Lyttle, a YouTube channel with over 30,000 subscribers, where he publishes practical, experience-driven content on Swift, StoreKit, App Store optimization, onboarding, and subscription design. One of his paywall implementations has been widely adopted by the indie developer community. Alongside YouTube, Adam actively shares lessons and experiments on X, where he has built a community of over 47,000 developers and makers by openly discussing what works, what fails, and what changes as Apple’s platform evolves. He is passionate about ethical monetization, App Store compliance, and helping developers build sustainable businesses through clear, honest product design.",
+              "bio_ja": "Adam Lyttleは、楽しさと収益の両方を目的にアプリを開発し、そのプロセスを公開しているインディーiOS開発者です。毎月1本アプリをリリースするという創作チャレンジから始まり、現在では持続可能なインディービジネスへと発展。個人的な多額の負債を抱えた状態から、アプリによる安定した収益を生み出すまでに至りました。これまでに数十本のiOSアプリを開発し、複数の事業売却にも関わっています。YouTubeチャンネル「Apps by Adam Lyttle」（登録者3万人以上）では、Swift、StoreKit、App Store最適化、オンボーディング、サブスクリプション設計などについて、実体験に基づいた実践的な内容を発信しています。彼が公開したペイウォール実装の一つは、インディー開発者コミュニティでも広く採用されています。さらにXでは、Appleプラットフォームの進化の中で「何がうまくいくのか」「何が失敗するのか」「何が変わっていくのか」を率直に共有し、47,000人以上の開発者やクリエイターからなるコミュニティを築いています。倫理的なマネタイズ、App Storeポリシーへの準拠、そして誠実で分かりやすいプロダクト設計を通じて、開発者が持続可能なビジネスを築くことを支援することに情熱を注いでいます。",
+              "job_title": "Indie Developer",
+              "links": [
+                {
+                  "url": "https://github.com/adamlyttleapps",
+                  "name": "@adamlyttleapps"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T16:45:00+09:00",
+      "sessions": [
+        {
+          "title": "Closing",
+          "title_ja": "クロージング"
+        }
+      ]
+    }
+  ]
 }
