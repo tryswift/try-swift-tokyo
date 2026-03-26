@@ -2,6 +2,7 @@ import SwiftUI
 
 public struct LiveTranslationScreen: View {
   @State private var viewModel = LiveTranslationViewModel()
+  @Environment(\.scenePhase) private var scenePhase
 
   private let scrollContentBottomID: String = "atBottom"
 
@@ -42,6 +43,18 @@ public struct LiveTranslationScreen: View {
       .onDisappear {
         viewModel.disconnect()
         viewModel.cleanup()
+      }
+      .onChange(of: scenePhase) { oldPhase, newPhase in
+        switch newPhase {
+        case .active:
+          if !viewModel.isConnected && !viewModel.roomNumber.isEmpty {
+            viewModel.connect()
+          }
+        case .background:
+          viewModel.disconnect()
+        default:
+          break
+        }
       }
       .navigationTitle("Live Translation")
       #if os(iOS) || SKIP

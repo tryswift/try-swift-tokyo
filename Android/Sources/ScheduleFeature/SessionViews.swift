@@ -106,6 +106,7 @@ public struct SpeakerAvatarView: View {
 /// A detailed view for displaying session information on Android.
 public struct SessionDetailView: View {
   let session: Session
+  @Environment(\.openURL) private var openURL
 
   public init(session: Session) {
     self.session = session
@@ -157,6 +158,20 @@ public struct SessionDetailView: View {
           VStack(alignment: HorizontalAlignment.leading, spacing: 4) {
             Text(speaker.name)
               .font(Font.headline)
+
+            if let links = speaker.links, !links.isEmpty {
+              HStack(spacing: 8) {
+                ForEach(links, id: \.url) { link in
+                  Button {
+                    openURL(link.url)
+                  } label: {
+                    Text(link.name)
+                      .font(Font.caption)
+                  }
+                  .buttonStyle(.bordered)
+                }
+              }
+            }
 
             if let bio = speaker.bio {
               Text(bio)
