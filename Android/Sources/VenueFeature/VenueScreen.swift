@@ -51,6 +51,7 @@ public enum TransportOption: String, CaseIterable, Identifiable {
 
 public struct VenueScreen: View {
   @State private var selectedOption: TransportOption = .tachikawa
+  @Environment(\.openURL) private var openURL
 
   public init() {}
 
@@ -172,21 +173,11 @@ public struct VenueScreen: View {
   }
 
   private func openInMaps() {
-    // Coordinates for Tachikawa Stage Garden
     let latitude = 35.704748
     let longitude = 139.411955
-
-    // Create a Google Maps URL for Android
     let googleMapsURL = URL(
       string: "https://www.google.com/maps/search/?api=1&query=\(latitude),\(longitude)")!
-
-    #if os(iOS)
-      // On iOS, we could use Apple Maps
-      // Skip will handle this for Android using Google Maps
-    #endif
-
-    // For now, just print - Skip will handle platform-specific behavior
-    print("Opening maps at: \(latitude), \(longitude)")
+    openURL(googleMapsURL)
   }
 }
 

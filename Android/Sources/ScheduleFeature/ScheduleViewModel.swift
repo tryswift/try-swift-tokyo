@@ -10,15 +10,36 @@ public enum ScheduleDay: String, CaseIterable, Identifiable {
   public var id: String { rawValue }
 }
 
+public struct SearchableSession: Equatable, Hashable {
+  public var year: Int
+  public var session: Session
+  public var searchCorpus: String
+
+  public static func == (lhs: SearchableSession, rhs: SearchableSession) -> Bool {
+    lhs.year == rhs.year && lhs.session == rhs.session
+  }
+
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(year)
+    hasher.combine(session)
+  }
+}
+
 @Observable
 public final class ScheduleViewModel {
   public var selectedDay: ScheduleDay = .day1
+  public var selectedYear: Int = 2026
   public var day1: Conference?
   public var day2: Conference?
   public var day3: Conference?
   public var isLoading = false
   public var errorMessage: String?
   public var selectedSession: Session?
+  public var searchText: String = ""
+  public var isSearchBarPresented: Bool = false
+  public var allSearchableSessions: [SearchableSession] = []
+
+  public static let availableYears: [Int] = [2026, 2025, 2024, 2020, 2019, 2018, 2017]
 
   public var currentConference: Conference? {
     switch selectedDay {
@@ -28,6 +49,28 @@ public final class ScheduleViewModel {
     }
   }
 
+  public var hasDay3: Bool {
+    day3 != nil
+  }
+
+  public var searchResults: [SearchableSession] {
+    let query = searchText.lowercased()
+      .trimmingCharacters(in: CharacterSet.whitespaces)
+    guard !query.isEmpty else { return [] }
+    var results: [SearchableSession] = []
+    for s in allSearchableSessions {
+      if s.searchCorpus.contains(query) {
+        results.append(s)
+      }
+    }
+    return results
+  }
+
+  public var isShowingSearchResults: Bool {
+    isSearchBarPresented
+      && !searchText.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty
+  }
+
   public init() {}
 
   public func loadSchedules() {
@@ -35,14 +78,56 @@ public final class ScheduleViewModel {
     errorMessage = nil
 
     do {
-      day1 = try loadConference(fileName: "2026-day1")
-      day2 = try loadConference(fileName: "2026-day2")
-      day3 = try loadConference(fileName: "2026-day3")
+      day1 = try loadConference(fileName: "\(selectedYear)-day1")
+      day2 = try? loadConference(fileName: "\(selectedYear)-day2")
+      day3 = try? loadConference(fileName: "\(selectedYear)-day3")
     } catch {
       errorMessage = error.localizedDescription
     }
 
     isLoading = false
+  }
+
+  public func selectYear(_ year: Int) {
+    selectedYear = year
+    selectedDay = .day1
+    day1 = nil
+    day2 = nil
+    day3 = nil
+    loadSchedules()
+  }
+
+  public func loadAllSessions() {
+    var results: [SearchableSession] = []
+    for year in ScheduleViewModel.availableYears {
+      for dayNum in 1...3 {
+        let fileName = "\(year)-day\(dayNum)"
+        guard let conference = try? loadConference(fileName: fileName) else { continue }
+        for schedule in conference.schedules {
+          for session in schedule.sessions {
+            guard session.description != nil else { continue }
+            let corpus = ScheduleViewModel.buildSearchCorpus(session: session)
+            results.append(
+              SearchableSession(
+                year: year, session: session, searchCorpus: corpus))
+          }
+        }
+      }
+    }
+    allSearchableSessions = results
+  }
+
+  private static func buildSearchCorpus(session: Session) -> String {
+    var parts: [String] = [session.title]
+    if let titleJa = session.titleJa { parts.append(titleJa) }
+    if let summary = session.summary { parts.append(summary) }
+    if let summaryJa = session.summaryJa { parts.append(summaryJa) }
+    if let speakers = session.speakers {
+      for speaker in speakers {
+        parts.append(speaker.name)
+      }
+    }
+    return parts.joined(separator: " ").lowercased()
   }
 
   private func loadConference(fileName: String) throws -> Conference {
