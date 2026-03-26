@@ -37,11 +37,15 @@ enum LumaClient {
       if response.status == .notFound {
         return nil
       }
-      logger.error("Luma get-guest returned status \(response.status.code) for email: \(email)")
+      let body = response.body.map { String(buffer: $0) } ?? "no body"
+      let truncatedBody = body.count > 1000 ? String(body.prefix(1000)) + "… (truncated)" : body
+      logger.error(
+        "Luma get-guest returned status \(response.status.code) for email: \(email) - \(truncatedBody)"
+      )
       throw Abort(.badGateway, reason: "Luma API returned \(response.status.code)")
     }
 
-    return try response.content.decode(LumaGuest.self)
+    return try response.content.decode(LumaGetGuestResponse.self).guest
   }
 
   /// Create a new event on Luma
@@ -117,16 +121,18 @@ enum LumaClient {
 
 // MARK: - Luma API Models
 
+/// Wrapper for GET /event/get-guest response
+private struct LumaGetGuestResponse: Content, Sendable {
+  let guest: LumaGuest
+}
+
 struct LumaGuest: Content, Sendable {
   let id: String?
-  let email: String?
-  let name: LumaName?
+  let user_email: String?
+  let user_name: String?
+  let user_first_name: String?
+  let user_last_name: String?
   let approval_status: String?
-
-  struct LumaName: Content, Sendable {
-    let first: String?
-    let last: String?
-  }
 
   /// Check if guest has an approved ticket
   var hasTicket: Bool {
@@ -134,7 +140,8 @@ struct LumaGuest: Content, Sendable {
   }
 
   var displayName: String {
-    [name?.first, name?.last].compactMap { $0 }.joined(separator: " ")
+    if let name = user_name, !name.isEmpty { return name }
+    return [user_first_name, user_last_name].compactMap { $0 }.joined(separator: " ")
   }
 }
 
