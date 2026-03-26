@@ -11,9 +11,9 @@ public enum ScheduleDay: String, CaseIterable, Identifiable {
 }
 
 public struct SearchableSession: Equatable, Hashable {
-  public var year: Int
-  public var session: Session
-  public var searchCorpus: String
+  public let year: Int
+  public let session: Session
+  public let searchCorpus: String
 
   public static func == (lhs: SearchableSession, rhs: SearchableSession) -> Bool {
     lhs.year == rhs.year && lhs.session == rhs.session
@@ -28,7 +28,7 @@ public struct SearchableSession: Equatable, Hashable {
 @Observable
 public final class ScheduleViewModel {
   public var selectedDay: ScheduleDay = .day1
-  public var selectedYear: Int = 2026
+  public var selectedYear: Int = ConferenceYear.latest.rawValue
   public var day1: Conference?
   public var day2: Conference?
   public var day3: Conference?
@@ -39,7 +39,7 @@ public final class ScheduleViewModel {
   public var isSearchBarPresented: Bool = false
   public var allSearchableSessions: [SearchableSession] = []
 
-  public static let availableYears: [Int] = [2026, 2025, 2024, 2020, 2019, 2018, 2017]
+  public static let availableYears: [Int] = ConferenceYear.allCases.map { $0.rawValue }.reversed()
 
   public var currentConference: Conference? {
     switch selectedDay {
@@ -98,6 +98,7 @@ public final class ScheduleViewModel {
   }
 
   public func loadAllSessions() {
+    guard allSearchableSessions.isEmpty else { return }
     var results: [SearchableSession] = []
     for year in ScheduleViewModel.availableYears {
       for dayNum in 1...3 {
