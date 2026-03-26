@@ -37,7 +37,11 @@ enum LumaClient {
       if response.status == .notFound {
         return nil
       }
-      logger.error("Luma get-guest returned status \(response.status.code) for email: \(email)")
+      let body = response.body.map { String(buffer: $0) } ?? "no body"
+      let truncatedBody = body.count > 1000 ? String(body.prefix(1000)) + "… (truncated)" : body
+      logger.error(
+        "Luma get-guest returned status \(response.status.code) for email: \(email) - \(truncatedBody)"
+      )
       throw Abort(.badGateway, reason: "Luma API returned \(response.status.code)")
     }
 

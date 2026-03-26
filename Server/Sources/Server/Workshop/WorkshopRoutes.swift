@@ -286,9 +286,12 @@ struct WorkshopRoutes: RouteCollection {
       return try await html.encodeResponse(for: req)
     }
 
-    // Verify Luma ticket (skip if Luma API is not configured)
+    // Verify Luma ticket
     let guestName: String
-    if let lumaApiKey = Environment.get("LUMA_API_KEY"), !lumaApiKey.isEmpty {
+    if Environment.get("SKIP_LUMA_VERIFICATION") == "true" {
+      req.logger.debug("Luma ticket verification skipped (SKIP_LUMA_VERIFICATION=true)")
+      guestName = ""
+    } else if let lumaApiKey = Environment.get("LUMA_API_KEY"), !lumaApiKey.isEmpty {
       let guest: LumaGuest?
       do {
         guest = try await LumaClient.getGuest(
@@ -304,17 +307,7 @@ struct WorkshopRoutes: RouteCollection {
         return try await html.encodeResponse(for: req)
       }
 
-      guard let guest else {
-        let html = try await renderWorkshopApplyPage(
-          req: req, language: language,
-          errorMessage: language == .ja
-            ? "このメールアドレスでtry! Swift Tokyo 2026のチケットが見つかりませんでした。"
-            : "No try! Swift Tokyo 2026 ticket found for this email address."
-        )
-        return try await html.encodeResponse(for: req)
-      }
-
-      guard guest.hasTicket else {
+      guard let guest, guest.hasTicket else {
         let html = try await renderWorkshopApplyPage(
           req: req, language: language,
           errorMessage: language == .ja
@@ -325,8 +318,13 @@ struct WorkshopRoutes: RouteCollection {
       }
       guestName = guest.displayName
     } else {
-      req.logger.debug("LUMA_API_KEY not configured, skipping ticket verification")
-      guestName = ""
+      let html = try await renderWorkshopApplyPage(
+        req: req, language: language,
+        errorMessage: language == .ja
+          ? "チケット確認サービスが設定されていません。"
+          : "Ticket verification service is not configured."
+      )
+      return try await html.encodeResponse(for: req)
     }
 
     // Generate verify token
