@@ -33,7 +33,6 @@ struct TimetableComponent: HTML {
                         .cornerRadius(imageSize / 2)
                     }
                   }
-                  .padding(.all, .px(8))
                 } else {
                   Image.defaultImage
                     .resizable()
@@ -88,7 +87,7 @@ struct SessionDetailModal: HTML {
       id: session.modalId,
       body: {
         if let description = session.localizedDescription(for: language), !description.isEmpty {
-          Text(description.convertNewlines())
+          Text(markdown: description.convertNewlines())
             .font(.lead)
             .foregroundStyle(.dimGray)
             .margin(.horizontal, .px(16))
@@ -116,7 +115,14 @@ struct SessionDetailModal: HTML {
 
 extension Session {
   var modalId: String {
-    title.replacingOccurrences(of: "'", with: "")
+    // Generate a compact, unique ID using FNV-1a (64-bit) hash of title + description.
+    let combined = title + (description ?? "")
+    var hash: UInt64 = 14_695_981_039_346_656_037
+    for byte in combined.utf8 {
+      hash ^= UInt64(byte)
+      hash = hash &* 1_099_511_628_211
+    }
+    return "modal-\(String(hash, radix: 16))"
   }
 
   var hasDescription: Bool {
