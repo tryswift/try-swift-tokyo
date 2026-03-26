@@ -286,23 +286,51 @@ struct WorkshopRoutes: RouteCollection {
       return try await html.encodeResponse(for: req)
     }
 
-    // Verify Luma ticket
-    guard
-      let guest = try await LumaClient.getGuest(
-        email: email, client: req.client, logger: req.logger),
-      guest.hasTicket
-    else {
-      let html = try await renderWorkshopApplyPage(
-        req: req, language: language,
-        errorMessage: language == .ja
-          ? "このメールアドレスでtry! Swift Tokyo 2026のチケットが見つかりませんでした。"
-          : "No try! Swift Tokyo 2026 ticket found for this email address."
-      )
-      return try await html.encodeResponse(for: req)
+    // Verify Luma ticket (skip if Luma API is not configured)
+    let guestName: String
+    if let lumaApiKey = Environment.get("LUMA_API_KEY"), !lumaApiKey.isEmpty {
+      let guest: LumaGuest?
+      do {
+        guest = try await LumaClient.getGuest(
+          email: email, client: req.client, logger: req.logger)
+      } catch {
+        req.logger.error("Luma API error during ticket verification: \(error)")
+        let html = try await renderWorkshopApplyPage(
+          req: req, language: language,
+          errorMessage: language == .ja
+            ? "チケット確認サービスに接続できませんでした。しばらくしてからもう一度お試しください。"
+            : "Could not connect to the ticket verification service. Please try again later."
+        )
+        return try await html.encodeResponse(for: req)
+      }
+
+      guard let guest else {
+        let html = try await renderWorkshopApplyPage(
+          req: req, language: language,
+          errorMessage: language == .ja
+            ? "このメールアドレスでtry! Swift Tokyo 2026のチケットが見つかりませんでした。"
+            : "No try! Swift Tokyo 2026 ticket found for this email address."
+        )
+        return try await html.encodeResponse(for: req)
+      }
+
+      guard guest.hasTicket else {
+        let html = try await renderWorkshopApplyPage(
+          req: req, language: language,
+          errorMessage: language == .ja
+            ? "このメールアドレスでtry! Swift Tokyo 2026のチケットが見つかりませんでした。"
+            : "No try! Swift Tokyo 2026 ticket found for this email address."
+        )
+        return try await html.encodeResponse(for: req)
+      }
+      guestName = guest.displayName
+    } else {
+      req.logger.debug("LUMA_API_KEY not configured, skipping ticket verification")
+      guestName = ""
     }
 
     // Generate verify token
-    let payload = WorkshopVerifyPayload(email: email, name: guest.displayName)
+    let payload = WorkshopVerifyPayload(email: email, name: guestName)
     let token = try await req.jwt.sign(payload)
 
     // Show workshop selection form
@@ -323,7 +351,7 @@ struct WorkshopRoutes: RouteCollection {
         WorkshopSelectPageView(
           workshops: workshopOptions,
           email: email,
-          applicantName: guest.displayName,
+          applicantName: guestName,
           verifyToken: token,
           language: language,
           csrfToken: csrfToken(from: req),
