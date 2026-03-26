@@ -5,7 +5,7 @@
   "date": "2026-04-14T00:00:00+09:00",
   "schedules": [
     {
-      "time": "2026-04-13T07:30:00+09:00",
+      "time": "2026-04-14T07:30:00+09:00",
       "sessions": [
         {
           "title": "🏃Run & Walk the Park",
@@ -18,7 +18,7 @@
       ]
     },
     {
-      "time": "2026-04-13T09:00:00+09:00",
+      "time": "2026-04-14T09:00:00+09:00",
       "sessions": [
         {
           "title": "Morning Chat",
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "time": "2026-04-13T09:45:00+09:00",
+      "time": "2026-04-14T09:45:00+09:00",
       "sessions": [
         {
           "title": "Opening",
@@ -36,7 +36,7 @@
       ]
     },
     {
-      "time": "2026-04-13T10:00:00+09:00",
+      "time": "2026-04-14T10:00:00+09:00",
       "sessions": [
         {
           "title": "The hidden power of Async Sequences",
@@ -64,7 +64,7 @@
       ]
     },
     {
-      "time": "2026-04-13T10:25:00+09:00",
+      "time": "2026-04-14T10:25:00+09:00",
       "sessions": [
         {
           "title": "⚡️Hacking Final Cut Pro with Swift",
@@ -96,7 +96,7 @@
       ]
     },
     {
-      "time": "2026-04-13T10:35:00+09:00",
+      "time": "2026-04-14T10:35:00+09:00",
       "sessions": [
         {
           "title": "Why is SwiftUI like that?",
@@ -129,7 +129,7 @@
       ]
     },
     {
-      "time": "2026-04-13T11:00:00+09:00",
+      "time": "2026-04-14T11:00:00+09:00",
       "sessions": [
         {
           "title": "☕️Break",
@@ -138,7 +138,7 @@
       ]
     },
     {
-      "time": "2026-04-13T11:30:00+09:00",
+      "time": "2026-04-14T11:30:00+09:00",
       "sessions": [
         {
           "title": "Learn by Building: Bare-Metal Programming with Embedded Swift",
@@ -170,7 +170,7 @@
       ]
     },
     {
-      "time": "2026-04-13T11:55:00+09:00",
+      "time": "2026-04-14T11:55:00+09:00",
       "sessions": [
         {
           "title": "⚡️Getting Started with Embedded Swift Programming from ¥0",
@@ -202,7 +202,7 @@
       ]
     },
     {
-      "time": "2026-04-13T12:05:00+09:00",
+      "time": "2026-04-14T12:05:00+09:00",
       "sessions": [
         {
           "title": "Practical CRDT: Building a Rich Text Synchronization Model with Core Data and CloudKit",
@@ -230,7 +230,7 @@
       ]
     },
     {
-      "time": "2026-04-13T12:30:00+09:00",
+      "time": "2026-04-14T12:30:00+09:00",
       "sessions": [
         {
           "title": "Lunch",
@@ -239,7 +239,7 @@
       ]
     },
     {
-      "time": "2026-04-13T14:00:00+09:00",
+      "time": "2026-04-14T14:00:00+09:00",
       "sessions": [
         {
           "title": "The Evolution of SwiftUI: An Insider's View",
@@ -275,7 +275,7 @@
       ]
     },
     {
-      "time": "2026-04-13T14:25:00+09:00",
+      "time": "2026-04-14T14:25:00+09:00",
       "sessions": [
         {
           "title": "⚡️Play 🀄 on swiftc!",
@@ -307,7 +307,7 @@
       ]
     },
     {
-      "time": "2026-04-13T14:35:00+09:00",
+      "time": "2026-04-14T14:35:00+09:00",
       "sessions": [
         {
           "title": "Let AI Generate XCUITest Code: Ensuring Quality with Structured Layers",
@@ -335,7 +335,7 @@
       ]
     },
     {
-      "time": "2026-04-13T15:00:00+09:00",
+      "time": "2026-04-14T15:00:00+09:00",
       "sessions": [
         {
           "title": "Break",
@@ -344,7 +344,7 @@
       ]
     },
     {
-      "time": "2026-04-13T15:35:00+09:00",
+      "time": "2026-04-14T15:35:00+09:00",
       "sessions": [
         {
           "title": "How Swift's Type System Guides AI Agents",
@@ -376,7 +376,7 @@
       ]
     },
     {
-      "time": "2026-04-13T16:00:00+09:00",
+      "time": "2026-04-14T16:00:00+09:00",
       "sessions": [
         {
           "title": "Zero-Downtime Migration: Moving a Massive, Historic iOS App from CocoaPods to SPM and Tuist without Stopping Feature Delivery",
@@ -404,7 +404,7 @@
       ]
     },
     {
-      "time": "2026-04-13T16:25:00+09:00",
+      "time": "2026-04-14T16:25:00+09:00",
       "sessions": [
         {
           "title": "Designing App Store Onboarding",
@@ -432,7 +432,7 @@
       ]
     },
     {
-      "time": "2026-04-13T16:45:00+09:00",
+      "time": "2026-04-14T16:45:00+09:00",
       "sessions": [
         {
           "title": "Closing",
