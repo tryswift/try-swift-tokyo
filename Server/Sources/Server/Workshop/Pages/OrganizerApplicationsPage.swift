@@ -12,6 +12,8 @@ struct OrganizerApplicationsPageView: HTML, Sendable {
   let applications: [ApplicationRow]
   let workshopFilter: String?
   let workshops: [WorkshopFilterOption]
+  let csrfToken: String
+  let successMessage: String?
 
   struct ApplicationRow: Sendable {
     let id: UUID
@@ -37,6 +39,13 @@ struct OrganizerApplicationsPageView: HTML, Sendable {
         }
         a(.class("btn btn-outline-secondary"), .href("/organizer/workshops")) {
           "← Back to Workshops"
+        }
+      }
+
+      // Success message
+      if let successMessage {
+        div(.class("alert alert-success mb-4")) {
+          HTMLText(successMessage)
         }
       }
 
@@ -77,7 +86,7 @@ struct OrganizerApplicationsPageView: HTML, Sendable {
     html += "<table class=\"table table-hover table-sm\">"
     html += "<thead><tr>"
     html += "<th>Name</th><th>Email</th><th>1st Choice</th><th>2nd Choice</th>"
-    html += "<th>3rd Choice</th><th>Status</th><th>Assigned</th><th>Date</th>"
+    html += "<th>3rd Choice</th><th>Status</th><th>Assigned</th><th>Date</th><th>Actions</th>"
     html += "</tr></thead><tbody>"
 
     for app in applications {
@@ -90,6 +99,15 @@ struct OrganizerApplicationsPageView: HTML, Sendable {
       html += "<td>\(statusBadgeHTML(app.status))</td>"
       html += "<td>\(escapeHTML(app.assignedWorkshop ?? "-"))</td>"
       html += "<td class=\"text-muted small\">\(escapeHTML(app.createdAt))</td>"
+      html += "<td>"
+      html +=
+        "<form method=\"post\" action=\"/organizer/workshops/applications/\(app.id.uuidString)/delete\""
+      html +=
+        " onsubmit=\"return confirm('Are you sure you want to delete this application? This action cannot be undone.');\">"
+      html += "<input type=\"hidden\" name=\"_csrf\" value=\"\(escapeHTML(csrfToken))\">"
+      html += "<button type=\"submit\" class=\"btn btn-sm btn-outline-danger\">Delete</button>"
+      html += "</form>"
+      html += "</td>"
       html += "</tr>"
     }
 
