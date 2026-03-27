@@ -1,4 +1,5 @@
 import Elementary
+import Foundation
 
 /// Winner entry for results display
 struct LotteryWinner: Sendable {
@@ -84,16 +85,19 @@ struct OrganizerResultsPageView: HTML, Sendable {
         }
         html += "</tbody></table></div>"
         // mailto: link for winners
-        let emails = result.winners.map { $0.email }.joined(separator: ",")
-        let subjectText =
-          "try! Swift Tokyo 2026 Workshop: \(escapeHTML(result.workshopTitle))"
-        let bccEncoded =
-          emails.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let subjectEncoded =
-          subjectText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        var components = URLComponents()
+        components.scheme = "mailto"
+        components.queryItems = [
+          URLQueryItem(
+            name: "bcc", value: result.winners.map { $0.email }.joined(separator: ",")),
+          URLQueryItem(
+            name: "subject",
+            value: "try! Swift Tokyo 2026 Workshop: \(result.workshopTitle)"),
+        ]
+        let mailtoURL = components.url?.absoluteString ?? "mailto:"
         html += "<div class=\"mt-3\">"
         html +=
-          "<a href=\"mailto:?bcc=\(bccEncoded)&amp;subject=\(subjectEncoded)\" class=\"btn btn-outline-primary btn-sm\">"
+          "<a href=\"\(escapeHTML(mailtoURL))\" class=\"btn btn-outline-primary btn-sm\">"
         html += "&#9993; Email All Winners (\(result.winners.count))"
         html += "</a></div>"
       }

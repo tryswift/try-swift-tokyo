@@ -137,14 +137,15 @@ struct OrganizerWorkshopsPageView: HTML, Sendable {
 
     let allWinnerEmails = Array(Set(workshops.flatMap(\.winnerEmails)))
     if !allWinnerEmails.isEmpty {
-      let bcc =
-        allWinnerEmails.joined(separator: ",")
-        .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-      let subject =
-        "try! Swift Tokyo 2026 Workshop"
-        .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+      var components = URLComponents()
+      components.scheme = "mailto"
+      components.queryItems = [
+        URLQueryItem(name: "bcc", value: allWinnerEmails.joined(separator: ",")),
+        URLQueryItem(name: "subject", value: "try! Swift Tokyo 2026 Workshop"),
+      ]
+      let mailtoURL = components.url?.absoluteString ?? "mailto:"
       html +=
-        " <a href=\"mailto:?bcc=\(bcc)&amp;subject=\(subject)\" class=\"btn btn-info\">&#9993; Email All Winners (\(allWinnerEmails.count))</a>"
+        " <a href=\"\(escapeHTML(mailtoURL))\" class=\"btn btn-info\">&#9993; Email All Winners (\(allWinnerEmails.count))</a>"
     }
 
     return html

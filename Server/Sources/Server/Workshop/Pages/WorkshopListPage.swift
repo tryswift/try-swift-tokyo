@@ -92,7 +92,12 @@ struct WorkshopCardView: HTML, Sendable {
       .class("card h-100"),
       .style("cursor: pointer;"),
       .custom(name: "data-bs-toggle", value: "modal"),
-      .custom(name: "data-bs-target", value: "#workshop-\(workshop.id.uuidString)")
+      .custom(name: "data-bs-target", value: "#workshop-\(workshop.id.uuidString)"),
+      .custom(name: "role", value: "button"),
+      .custom(name: "tabindex", value: "0"),
+      .custom(
+        name: "onkeydown",
+        value: "if(event.key==='Enter'||event.key===' '){this.click();}")
     ) {
       div(.class("card-body")) {
         if let details = workshop.workshopDetails {

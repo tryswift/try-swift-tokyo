@@ -603,11 +603,15 @@ struct WorkshopRoutes: RouteCollection {
     var workshopInfos: [OrganizerWorkshopsPageView.WorkshopInfo] = []
     if let user, user.role == .admin {
       let workshops = try await fetchWorkshops(on: req.db)
+
+      // Fetch all winners in a single query to avoid N+1
+      let allWinners = try await WorkshopApplication.query(on: req.db)
+        .filter(\.$status == .won)
+        .all()
+      let winnersByWorkshop = Dictionary(grouping: allWinners) { $0.$assignedWorkshop.id }
+
       for ws in workshops {
-        let winners = try await WorkshopApplication.query(on: req.db)
-          .filter(\.$assignedWorkshop.$id == ws.registrationID)
-          .filter(\.$status == .won)
-          .all()
+        let emails = (winnersByWorkshop[ws.registrationID] ?? []).map(\.email)
         workshopInfos.append(
           .init(
             registrationID: ws.registrationID,
@@ -616,7 +620,7 @@ struct WorkshopRoutes: RouteCollection {
             capacity: ws.capacity,
             applicationCount: ws.applicationCount,
             lumaEventID: ws.lumaEventID,
-            winnerEmails: winners.map(\.email)
+            winnerEmails: emails
           ))
       }
     }
@@ -927,7 +931,7 @@ struct WorkshopRoutes: RouteCollection {
 
     try await application.delete(on: req.db)
 
-    return req.redirect(to: "/organizer/workshops/applications?success=Application deleted")
+    return req.redirect(to: "/organizer/workshops/applications?success=Application+deleted")
   }
 
   @Sendable
