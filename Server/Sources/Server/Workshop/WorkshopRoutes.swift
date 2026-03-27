@@ -83,6 +83,7 @@ struct WorkshopRoutes: RouteCollection {
     let capacity: Int
     let applicationCount: Int
     let lumaEventID: String?
+    let workshopLanguage: WorkshopLanguage?
   }
 
   /// Fetch accepted workshops with registration info
@@ -146,7 +147,8 @@ struct WorkshopRoutes: RouteCollection {
           coInstructors: proposal.coInstructors?.items,
           capacity: registration.capacity,
           applicationCount: appCount,
-          lumaEventID: registration.lumaEventID
+          lumaEventID: registration.lumaEventID,
+          workshopLanguage: proposal.workshopDetails?.language
         ))
     }
 
@@ -245,7 +247,8 @@ struct WorkshopRoutes: RouteCollection {
         workshopDetails: $0.workshopDetails,
         coInstructors: $0.coInstructors,
         capacity: $0.capacity,
-        applicationCount: $0.applicationCount
+        applicationCount: $0.applicationCount,
+        workshopLanguage: $0.workshopLanguage
       )
     }
 

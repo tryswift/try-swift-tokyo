@@ -24,6 +24,7 @@ struct WorkshopListPageView: HTML, Sendable {
     let coInstructors: [CoInstructor]?
     let capacity: Int
     let applicationCount: Int
+    let workshopLanguage: WorkshopLanguage?
   }
 
   var body: some HTML {
@@ -118,11 +119,18 @@ struct WorkshopCardView: HTML, Sendable {
       }
       div(.class("card-footer bg-transparent")) {
         div(.class("d-flex justify-content-between align-items-center")) {
-          span(.class("badge bg-secondary")) {
-            HTMLText(
-              language == .ja
-                ? "定員: \(workshop.capacity)名"
-                : "Capacity: \(workshop.capacity)")
+          div {
+            span(.class("badge bg-secondary me-1")) {
+              HTMLText(
+                language == .ja
+                  ? "定員: \(workshop.capacity)名"
+                  : "Capacity: \(workshop.capacity)")
+            }
+            if let workshopLanguage = workshop.workshopLanguage {
+              span(.class("badge bg-info text-dark")) {
+                HTMLText(workshopLanguage.localizedName(for: language))
+              }
+            }
           }
           span(.class("text-muted small")) {
             HTMLText(
