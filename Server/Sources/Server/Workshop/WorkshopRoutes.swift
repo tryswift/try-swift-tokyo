@@ -52,6 +52,8 @@ struct WorkshopRoutes: RouteCollection {
     organizer.post(
       "workshops", ":registrationID", "luma-event", use: handleSetLumaEvent)
     organizer.get("workshops", "applications", use: organizerApplicationsPage)
+    organizer.post(
+      "workshops", "applications", ":applicationID", "delete", use: handleDeleteApplication)
     organizer.post("workshops", "lottery", use: handleRunLottery)
     organizer.get("workshops", "results", use: organizerResultsPage)
     organizer.post("workshops", "send-tickets", use: handleSendTickets)
@@ -67,8 +69,17 @@ struct WorkshopRoutes: RouteCollection {
   struct FetchedWorkshop: Sendable {
     let registrationID: UUID
     let proposalTitle: String
+    let titleJA: String?
     let speakerName: String
     let abstract: String
+    let abstractJA: String?
+    let bio: String
+    let bioJa: String?
+    let iconURL: String?
+    let githubUsername: String?
+    let paperCallUsername: String?
+    let workshopDetails: WorkshopDetails?
+    let coInstructors: [CoInstructor]?
     let capacity: Int
     let applicationCount: Int
     let lumaEventID: String?
@@ -122,8 +133,17 @@ struct WorkshopRoutes: RouteCollection {
         FetchedWorkshop(
           registrationID: regID,
           proposalTitle: proposal.title,
+          titleJA: proposal.titleJA,
           speakerName: proposal.speakerName,
           abstract: proposal.abstract,
+          abstractJA: proposal.abstractJA,
+          bio: proposal.bio,
+          bioJa: proposal.bioJa,
+          iconURL: proposal.iconURL,
+          githubUsername: proposal.githubUsername,
+          paperCallUsername: proposal.paperCallUsername,
+          workshopDetails: proposal.workshopDetails,
+          coInstructors: proposal.coInstructors?.items,
           capacity: registration.capacity,
           applicationCount: appCount,
           lumaEventID: registration.lumaEventID
@@ -213,8 +233,17 @@ struct WorkshopRoutes: RouteCollection {
       WorkshopListPageView.WorkshopItem(
         id: $0.registrationID,
         title: $0.proposalTitle,
+        titleJA: $0.titleJA,
         speakerName: $0.speakerName,
         abstract: $0.abstract,
+        abstractJA: $0.abstractJA,
+        bio: $0.bio,
+        bioJa: $0.bioJa,
+        iconURL: $0.iconURL,
+        githubUsername: $0.githubUsername,
+        isPaperCallImport: $0.paperCallUsername != nil,
+        workshopDetails: $0.workshopDetails,
+        coInstructors: $0.coInstructors,
         capacity: $0.capacity,
         applicationCount: $0.applicationCount
       )
@@ -574,7 +603,15 @@ struct WorkshopRoutes: RouteCollection {
     var workshopInfos: [OrganizerWorkshopsPageView.WorkshopInfo] = []
     if let user, user.role == .admin {
       let workshops = try await fetchWorkshops(on: req.db)
+
+      // Fetch all winners in a single query to avoid N+1
+      let allWinners = try await WorkshopApplication.query(on: req.db)
+        .filter(\.$status == .won)
+        .all()
+      let winnersByWorkshop = Dictionary(grouping: allWinners) { $0.$assignedWorkshop.id }
+
       for ws in workshops {
+        let emails = (winnersByWorkshop[ws.registrationID] ?? []).map(\.email)
         workshopInfos.append(
           .init(
             registrationID: ws.registrationID,
@@ -582,7 +619,8 @@ struct WorkshopRoutes: RouteCollection {
             speakerName: ws.speakerName,
             capacity: ws.capacity,
             applicationCount: ws.applicationCount,
-            lumaEventID: ws.lumaEventID
+            lumaEventID: ws.lumaEventID,
+            winnerEmails: emails
           ))
       }
     }
@@ -722,11 +760,13 @@ struct WorkshopRoutes: RouteCollection {
   @Sendable
   func organizerApplicationsPage(req: Request) async throws -> HTMLResponse {
     let user = try? await req.authenticatedUser()
+    let successMessage = req.query[String.self, at: "success"]
     guard let user, user.role == .admin else {
       return HTMLResponse {
         CfPLayout(title: "Applications", user: user, language: .en) {
           OrganizerApplicationsPageView(
-            applications: [], workshopFilter: nil, workshops: [])
+            applications: [], workshopFilter: nil, workshops: [],
+            csrfToken: "", successMessage: nil)
         }
       }
     }
@@ -800,7 +840,9 @@ struct WorkshopRoutes: RouteCollection {
         OrganizerApplicationsPageView(
           applications: filteredRows,
           workshopFilter: workshopFilter,
-          workshops: workshopList
+          workshops: workshopList,
+          csrfToken: csrfToken(from: req),
+          successMessage: successMessage
         )
       }
     }
@@ -868,6 +910,28 @@ struct WorkshopRoutes: RouteCollection {
         OrganizerResultsPageView(results: results, lotteryRun: lotteryRun)
       }
     }
+  }
+
+  @Sendable
+  func handleDeleteApplication(req: Request) async throws -> Response {
+    let user = try? await req.authenticatedUser()
+    guard let user, user.role == .admin else {
+      throw Abort(.forbidden)
+    }
+
+    guard let applicationIDString = req.parameters.get("applicationID"),
+      let applicationID = UUID(uuidString: applicationIDString)
+    else {
+      throw Abort(.badRequest, reason: "Invalid application ID")
+    }
+
+    guard let application = try await WorkshopApplication.find(applicationID, on: req.db) else {
+      throw Abort(.notFound, reason: "Application not found")
+    }
+
+    try await application.delete(on: req.db)
+
+    return req.redirect(to: "/organizer/workshops/applications?success=Application+deleted")
   }
 
   @Sendable

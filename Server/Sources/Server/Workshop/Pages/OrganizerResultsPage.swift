@@ -1,4 +1,5 @@
 import Elementary
+import Foundation
 
 /// Winner entry for results display
 struct LotteryWinner: Sendable {
@@ -83,6 +84,22 @@ struct OrganizerResultsPageView: HTML, Sendable {
           html += "</tr>"
         }
         html += "</tbody></table></div>"
+        // mailto: link for winners
+        var components = URLComponents()
+        components.scheme = "mailto"
+        components.queryItems = [
+          URLQueryItem(
+            name: "bcc", value: result.winners.map { $0.email }.joined(separator: ",")),
+          URLQueryItem(
+            name: "subject",
+            value: "try! Swift Tokyo 2026 Workshop: \(result.workshopTitle)"),
+        ]
+        let mailtoURL = components.url?.absoluteString ?? "mailto:"
+        html += "<div class=\"mt-3\">"
+        html +=
+          "<a href=\"\(escapeHTML(mailtoURL))\" class=\"btn btn-outline-primary btn-sm\">"
+        html += "&#9993; Email All Winners (\(result.winners.count))"
+        html += "</a></div>"
       }
       html += "</div></div>"
     }
