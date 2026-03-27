@@ -15,6 +15,7 @@ struct WorkshopListPageView: HTML, Sendable {
     let abstract: String
     let capacity: Int
     let applicationCount: Int
+    let workshopLanguage: WorkshopLanguage?
   }
 
   var body: some HTML {
@@ -67,6 +68,21 @@ struct WorkshopListPageView: HTML, Sendable {
   }
 }
 
+extension WorkshopLanguage {
+  func localizedName(for language: CfPLanguage) -> String {
+    switch (self, language) {
+    case (.english, .ja): return "英語"
+    case (.english, .en): return "English"
+    case (.japanese, .ja): return "日本語"
+    case (.japanese, .en): return "Japanese"
+    case (.bilingual, .ja): return "バイリンガル"
+    case (.bilingual, .en): return "Bilingual"
+    case (.other, .ja): return "その他"
+    case (.other, .en): return "Other"
+    }
+  }
+}
+
 /// Individual workshop card component
 struct WorkshopCardView: HTML, Sendable {
   let workshop: WorkshopListPageView.WorkshopItem
@@ -86,11 +102,18 @@ struct WorkshopCardView: HTML, Sendable {
       }
       div(.class("card-footer bg-transparent")) {
         div(.class("d-flex justify-content-between align-items-center")) {
-          span(.class("badge bg-secondary")) {
-            HTMLText(
-              language == .ja
-                ? "定員: \(workshop.capacity)名"
-                : "Capacity: \(workshop.capacity)")
+          div {
+            span(.class("badge bg-secondary me-1")) {
+              HTMLText(
+                language == .ja
+                  ? "定員: \(workshop.capacity)名"
+                  : "Capacity: \(workshop.capacity)")
+            }
+            if let workshopLanguage = workshop.workshopLanguage {
+              span(.class("badge bg-info")) {
+                HTMLText(workshopLanguage.localizedName(for: language))
+              }
+            }
           }
           span(.class("text-muted small")) {
             HTMLText(
