@@ -68,21 +68,6 @@ struct WorkshopListPageView: HTML, Sendable {
   }
 }
 
-extension WorkshopLanguage {
-  func localizedName(for language: CfPLanguage) -> String {
-    switch (self, language) {
-    case (.english, .ja): return "英語"
-    case (.english, .en): return "English"
-    case (.japanese, .ja): return "日本語"
-    case (.japanese, .en): return "Japanese"
-    case (.bilingual, .ja): return "バイリンガル"
-    case (.bilingual, .en): return "Bilingual"
-    case (.other, .ja): return "その他"
-    case (.other, .en): return "Other"
-    }
-  }
-}
-
 /// Individual workshop card component
 struct WorkshopCardView: HTML, Sendable {
   let workshop: WorkshopListPageView.WorkshopItem
@@ -110,7 +95,7 @@ struct WorkshopCardView: HTML, Sendable {
                   : "Capacity: \(workshop.capacity)")
             }
             if let workshopLanguage = workshop.workshopLanguage {
-              span(.class("badge bg-info")) {
+              span(.class("badge bg-info text-dark")) {
                 HTMLText(workshopLanguage.localizedName(for: language))
               }
             }
