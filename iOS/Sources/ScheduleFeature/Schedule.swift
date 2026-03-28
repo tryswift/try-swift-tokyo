@@ -5,7 +5,6 @@ import Foundation
 import SharedModels
 import SwiftUI
 import TipKit
-import VideoFeature
 
 @Reducer
 public struct Schedule {
@@ -55,6 +54,7 @@ public struct Schedule {
     case view(View)
     case fetchResponse(Result<SchedulesResponse, Error>)
     case allSessionsLoaded([SearchableSession])
+    case delegate(Delegate)
 
     @CasePathable
     public enum View {
@@ -63,12 +63,15 @@ public struct Schedule {
       case yearSelected(ConferenceYear)
       case daySelected(Days)
     }
+
+    public enum Delegate: Equatable {
+      case showVideoDetail(Session, VideoMetadata, ConferenceYear)
+    }
   }
 
   @Reducer
   public enum Path {
     case detail(ScheduleDetail)
-    case videoDetail(VideoDetail)
   }
 
   @Reducer
@@ -143,15 +146,7 @@ public struct Schedule {
           return .none
         }
         if let videoMeta = state.videoMetadata[session.title] {
-          state.path.append(
-            .videoDetail(
-              .init(
-                session: session,
-                videoMetadata: videoMeta,
-                conferenceYear: state.selectedYear
-              )
-            )
-          )
+          return .send(.delegate(.showVideoDetail(session, videoMeta, state.selectedYear)))
         } else {
           state.path.append(
             .detail(
@@ -183,7 +178,7 @@ public struct Schedule {
       case .fetchResponse(.failure(let error)):
         print(error)  // TODO: replace to Logger API
         return .none
-      case .binding, .path, .destination:
+      case .binding, .path, .destination, .delegate:
         return .none
       }
     }
@@ -220,6 +215,9 @@ extension Schedule.State {
 extension Schedule.Path.State: Equatable {}
 extension Schedule.Destination.State: Equatable {}
 
+/// The resource bundle for ScheduleFeature (contains speaker images).
+public let scheduleFeatureBundle: Bundle = .module
+
 @ViewAction(for: Schedule.self)
 public struct ScheduleView: View {
 
@@ -237,10 +235,6 @@ public struct ScheduleView: View {
       case .detail:
         if let store = store.scope(state: \.detail, action: \.detail) {
           ScheduleDetailView(store: store)
-        }
-      case .videoDetail:
-        if let store = store.scope(state: \.videoDetail, action: \.videoDetail) {
-          VideoDetailView(store: store, speakerImageBundle: .module)
         }
       }
     }

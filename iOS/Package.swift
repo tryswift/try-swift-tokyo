@@ -40,6 +40,7 @@ let package = Package(
         "ScheduleFeature",
         "SponsorFeature",
         "trySwiftFeature",
+        "VideoFeature",
         .product(name: "SharedModels", package: "SharedModels"),
       ]
     ),
@@ -84,7 +85,6 @@ let package = Package(
       dependencies: [
         .product(name: "DataClient", package: "DataClient"),
         "DependencyExtra",
-        "VideoFeature",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
       ]
     ),
