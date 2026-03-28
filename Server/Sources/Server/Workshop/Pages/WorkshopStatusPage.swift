@@ -16,6 +16,7 @@ struct WorkshopStatusPageView: HTML, Sendable {
     let thirdChoice: String?
     let assignedWorkshop: String?
     let canModify: Bool
+    let deleteToken: String?
   }
 
   var body: some HTML {
@@ -130,20 +131,21 @@ struct WorkshopStatusPageView: HTML, Sendable {
               language == .ja ? "申し込みを変更する" : "Edit Application"
             }
 
-            form(
-              .method(.post),
-              .action(language.path(for: "/workshops/delete")),
-              .custom(
-                name: "onsubmit",
-                value: language == .ja
-                  ? "return confirm('申し込みを取り消しますか？この操作は元に戻せません。');"
-                  : "return confirm('Are you sure you want to delete your application? This action cannot be undone.');"
-              )
-            ) {
-              input(.type(.hidden), .name("_csrf"), .value(csrfToken))
-              input(.type(.hidden), .name("email"), .value(app.email))
-              button(.type(.submit), .class("btn btn-outline-danger w-100")) {
-                language == .ja ? "申し込みを取り消す" : "Delete Application"
+            if let deleteToken = app.deleteToken {
+              form(
+                .method(.post),
+                .action(language.path(for: "/workshops/delete")),
+                .custom(
+                  name: "onsubmit",
+                  value: language == .ja
+                    ? "return confirm('申し込みを取り消しますか？この操作は元に戻せません。');"
+                    : "return confirm('Are you sure you want to delete your application? This action cannot be undone.');")
+              ) {
+                input(.type(.hidden), .name("_csrf"), .value(csrfToken))
+                input(.type(.hidden), .name("delete_token"), .value(deleteToken))
+                button(.type(.submit), .class("btn btn-outline-danger w-100")) {
+                  language == .ja ? "申し込みを取り消す" : "Delete Application"
+                }
               }
             }
           }

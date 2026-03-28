@@ -659,6 +659,15 @@ struct WorkshopRoutes: RouteCollection {
         nil
       }
 
+    // Generate a short-lived delete token for pending applications
+    let deleteToken: String?
+    if application.status == .pending {
+      let payload = WorkshopVerifyPayload(email: application.email, name: "")
+      deleteToken = try await req.jwt.sign(payload)
+    } else {
+      deleteToken = nil
+    }
+
     let info = WorkshopStatusPageView.ApplicationInfo(
       email: application.email,
       applicantName: application.applicantName,
@@ -667,7 +676,8 @@ struct WorkshopRoutes: RouteCollection {
       secondChoice: secondTitle,
       thirdChoice: thirdTitle,
       assignedWorkshop: assignedTitle,
-      canModify: application.status == .pending
+      canModify: application.status == .pending,
+      deleteToken: deleteToken
     )
 
     let html = try await renderWorkshopStatusPage(
@@ -679,57 +689,67 @@ struct WorkshopRoutes: RouteCollection {
     -> Response
   {
     struct DeleteForm: Content {
-      let email: String
+      let delete_token: String
     }
 
     let form = try req.content.decode(DeleteForm.self)
-    let email = form.email.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
 
-    guard
-      let application = try await WorkshopApplication.query(on: req.db)
-        .filter(\.$email == email)
-        .first()
-    else {
-      return req.redirect(to: language.path(for: "/workshops/status"))
+    // Verify JWT to authenticate the delete request
+    let payload: WorkshopVerifyPayload
+    do {
+      payload = try await req.jwt.verify(form.delete_token, as: WorkshopVerifyPayload.self)
+    } catch {
+      let html = try await renderWorkshopStatusPage(req: req, language: language)
+      return try await html.encodeResponse(for: req)
     }
 
-    guard application.status == .pending else {
-      // Cannot delete non-pending application — show status page
-      let firstTitle = try await workshopTitle(for: application.$firstChoice.id, on: req.db)
+    let email = payload.subject.value
+
+    // Atomic conditional delete: only delete pending applications
+    try await WorkshopApplication.query(on: req.db)
+      .filter(\.$email == email)
+      .filter(\.$status == .pending)
+      .delete()
+
+    // Check if application still exists (status changed between page load and delete)
+    if let current = try await WorkshopApplication.query(on: req.db)
+      .filter(\.$email == email)
+      .first()
+    {
+      let firstTitle = try await workshopTitle(for: current.$firstChoice.id, on: req.db)
       let secondTitle: String? =
-        if let id = application.$secondChoice.id {
+        if let id = current.$secondChoice.id {
           try await workshopTitle(for: id, on: req.db)
         } else {
           nil
         }
       let thirdTitle: String? =
-        if let id = application.$thirdChoice.id {
+        if let id = current.$thirdChoice.id {
           try await workshopTitle(for: id, on: req.db)
         } else {
           nil
         }
       let assignedTitle: String? =
-        if let id = application.$assignedWorkshop.id {
+        if let id = current.$assignedWorkshop.id {
           try await workshopTitle(for: id, on: req.db)
         } else {
           nil
         }
       let info = WorkshopStatusPageView.ApplicationInfo(
-        email: application.email,
-        applicantName: application.applicantName,
-        status: application.status,
+        email: current.email,
+        applicantName: current.applicantName,
+        status: current.status,
         firstChoice: firstTitle ?? "Unknown",
         secondChoice: secondTitle,
         thirdChoice: thirdTitle,
         assignedWorkshop: assignedTitle,
-        canModify: false
+        canModify: false,
+        deleteToken: nil
       )
       let html = try await renderWorkshopStatusPage(
         req: req, language: language, application: info)
       return try await html.encodeResponse(for: req)
     }
-
-    try await application.delete(on: req.db)
 
     let user = try? await req.authenticatedUser()
     let html = HTMLResponse {
