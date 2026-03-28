@@ -28,7 +28,7 @@
 gh pr checks <PR_NUMBER> --watch --fail-fast
 ```
 
-`--watch` で全チェック完了までブロックする。Copilot code review もCIチェックとして含まれるため暗黙的に待機される。
+`--watch` でCIのステータスチェック / チェックランが全て完了するまでブロックする。Copilot code review はチェックとしては扱われないため含まれず、CI完了後に **Step 4** で明示的に確認すること。
 
 ### Step 2: format自動コミットを取り込む
 
@@ -54,12 +54,14 @@ git pull --rebase
 ### Step 4: Copilotレビューコメントの確認
 
 ```bash
+REPO=$(gh repo view --json nameWithOwner --jq '.nameWithOwner')
+
 # レビュー本文の取得
-gh api repos/tryswift/try-swift-tokyo/pulls/<PR>/reviews \
+gh api repos/$REPO/pulls/<PR_NUMBER>/reviews \
   --jq '.[] | select(.user.login == "copilot-pull-request-reviewer[bot]") | {id, state, body}'
 
 # インラインコメントの取得（上記で得た review ID を使用）
-gh api repos/tryswift/try-swift-tokyo/pulls/<PR>/reviews/<REVIEW_ID>/comments \
+gh api repos/$REPO/pulls/<PR_NUMBER>/reviews/<REVIEW_ID>/comments \
   --jq '.[] | {path, line, body}'
 ```
 
