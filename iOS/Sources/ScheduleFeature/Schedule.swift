@@ -42,6 +42,7 @@ public struct Schedule {
     var day3: Conference?
     var favoriteProposalIds: Set<String> = []
     var favoriteCounts: [String: Int] = [:]
+    var hasLoadedFavorites: Bool = false
     @Presents var destination: Destination.State?
 
     public init() {}
@@ -88,7 +89,7 @@ public struct Schedule {
       case .view(.onAppear):
         let year = state.selectedYear
         let shouldLoadAllSessions = state.allSessions.isEmpty
-        let shouldLoadFavorites = state.favoriteProposalIds.isEmpty
+        let shouldLoadFavorites = !state.hasLoadedFavorites
         let dataClient = dataClient
         let apiClient = apiClient
         return .merge(
@@ -132,13 +133,18 @@ public struct Schedule {
             : .none,
           shouldLoadFavorites
             ? .run { send in
-              let ids = try await apiClient.fetchFavorites(DeviceIdentifier.current)
-              await send(.favoritesLoaded(Set(ids)))
+              do {
+                let ids = try await apiClient.fetchFavorites(DeviceIdentifier.current)
+                await send(.favoritesLoaded(Set(ids)))
+              } catch {
+                await send(.favoritesLoaded([]))
+              }
             }
             : .none,
           .run { send in
-            let counts = try await apiClient.fetchFavoriteCounts()
-            await send(.favoriteCountsLoaded(counts))
+            if let counts = try? await apiClient.fetchFavoriteCounts() {
+              await send(.favoriteCountsLoaded(counts))
+            }
           }
         )
       case .view(.yearSelected(let year)):
@@ -155,6 +161,7 @@ public struct Schedule {
         guard let proposalId = session.proposalId else { return .none }
         // Optimistic toggle
         let wasFavorite = state.favoriteProposalIds.contains(proposalId)
+        let previousCount = state.favoriteCounts[proposalId] ?? 0
         if wasFavorite {
           state.favoriteProposalIds.remove(proposalId)
         } else {
@@ -164,6 +171,8 @@ public struct Schedule {
         return .run { send in
           let result = try await apiClient.toggleFavorite(proposalId, DeviceIdentifier.current)
           await send(.favoriteToggled(proposalId, result.isFavorite, result.count))
+        } catch: { _, send in
+          await send(.favoriteToggled(proposalId, wasFavorite, previousCount))
         }
       case .view(.disclosureTapped(let session)):
         guard let description = session.description, let speakers = session.speakers else {
@@ -197,6 +206,7 @@ public struct Schedule {
         return .none
       case .favoritesLoaded(let ids):
         state.favoriteProposalIds = ids
+        state.hasLoadedFavorites = true
         return .none
       case .favoriteCountsLoaded(let counts):
         state.favoriteCounts = counts
@@ -215,10 +225,9 @@ public struct Schedule {
       case .fetchResponse(.failure(let error)):
         print(error)  // TODO: replace to Logger API
         return .none
-      case .path(.element(_, action: .detail(.favoriteToggled(let isFavorite, let count)))):
+      case .path(.element(let id, action: .detail(.favoriteToggled(let isFavorite, let count)))):
         // Sync favorite state from detail back to schedule
-        if let detailState = state.path.last,
-          case .detail(let detail) = detailState,
+        if case .detail(let detail) = state.path[id: id],
           let proposalId = detail.proposalId
         {
           if isFavorite {
@@ -546,6 +555,8 @@ public struct ScheduleView: View {
         .padding(12)
       }
       .buttonStyle(.plain)
+      .accessibilityLabel(isFavorite ? "Remove from favorites" : "Add to favorites")
+      .accessibilityValue(count > 0 ? "\(count)" : "")
     }
   }
 

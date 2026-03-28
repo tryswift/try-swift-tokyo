@@ -68,12 +68,16 @@ public struct ScheduleDetail: Sendable {
         return .run { _ in await safari(url) }
       case .view(.favoriteTapped):
         guard let proposalId = state.proposalId else { return .none }
+        let previousIsFavorite = state.isFavorite
+        let previousCount = state.favoriteCount
         state.isFavorite.toggle()
         let apiClient = apiClient
         return .run { send in
           let result = try await apiClient.toggleFavorite(
             proposalId, DeviceIdentifier.current)
           await send(.favoriteToggled(result.isFavorite, result.count))
+        } catch: { _, send in
+          await send(.favoriteToggled(previousIsFavorite, previousCount))
         }
       case .favoriteToggled(let isFavorite, let count):
         state.isFavorite = isFavorite
@@ -179,6 +183,8 @@ public struct ScheduleDetailView: View {
         }
       }
     }
+    .accessibilityLabel(store.isFavorite ? "Remove from favorites" : "Add to favorites")
+    .accessibilityValue(store.favoriteCount > 0 ? "\(store.favoriteCount)" : "")
   }
 
   @ViewBuilder

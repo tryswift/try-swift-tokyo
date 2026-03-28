@@ -5,7 +5,7 @@ import Vapor
 struct FeedbackSubmission: Content {
   let proposalId: UUID
   let comment: String
-  let deviceId: String?
+  let deviceId: String
 }
 
 struct FeedbackResponse: Content {
@@ -37,6 +37,10 @@ struct FeedbackController: RouteCollection {
   func submitFeedback(req: Request) async throws -> HTTPStatus {
     let submission = try req.content.decode(FeedbackSubmission.self)
 
+    guard !submission.deviceId.isEmpty else {
+      throw Abort(.badRequest, reason: "deviceId is required")
+    }
+
     let comment = submission.comment.trimmingCharacters(in: .whitespacesAndNewlines)
     guard !comment.isEmpty else {
       throw Abort(.badRequest, reason: "Comment cannot be empty")
@@ -51,14 +55,12 @@ struct FeedbackController: RouteCollection {
     }
 
     // Rate limit: max 3 feedback per device per proposal
-    if let deviceId = submission.deviceId, !deviceId.isEmpty {
-      let existingCount = try await Feedback.query(on: req.db)
-        .filter(\.$proposal.$id == submission.proposalId)
-        .filter(\.$deviceID == deviceId)
-        .count()
-      guard existingCount < 3 else {
-        throw Abort(.tooManyRequests, reason: "Feedback limit reached for this talk")
-      }
+    let existingCount = try await Feedback.query(on: req.db)
+      .filter(\.$proposal.$id == submission.proposalId)
+      .filter(\.$deviceID == submission.deviceId)
+      .count()
+    guard existingCount < 3 else {
+      throw Abort(.tooManyRequests, reason: "Feedback limit reached for this talk")
     }
 
     let feedback = Feedback(
@@ -83,15 +85,23 @@ struct FeedbackController: RouteCollection {
       .filter(\.$speaker.$id == userID)
       .all()
 
+    let proposalIDs = proposals.compactMap(\.id)
+    guard !proposalIDs.isEmpty else { return [] }
+
+    // Batch fetch all feedbacks in one query
+    let allFeedbacks = try await Feedback.query(on: req.db)
+      .filter(\.$proposal.$id ~~ proposalIDs)
+      .sort(\.$createdAt, .descending)
+      .all()
+
+    let feedbacksByProposal = Dictionary(grouping: allFeedbacks) { $0.$proposal.id }
+
     var result: [FeedbackForTalk] = []
     for proposal in proposals {
-      guard let proposalID = proposal.id else { continue }
-      let feedbacks = try await Feedback.query(on: req.db)
-        .filter(\.$proposal.$id == proposalID)
-        .sort(\.$createdAt, .descending)
-        .all()
-
-      guard !feedbacks.isEmpty else { continue }
+      guard let proposalID = proposal.id,
+        let feedbacks = feedbacksByProposal[proposalID],
+        !feedbacks.isEmpty
+      else { continue }
 
       result.append(
         FeedbackForTalk(

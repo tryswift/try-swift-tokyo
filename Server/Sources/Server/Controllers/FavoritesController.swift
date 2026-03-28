@@ -85,10 +85,15 @@ struct FavoritesController: RouteCollection {
       try await existing.delete(on: req.db)
       isFavorite = false
     } else {
-      // Add favorite
+      // Add favorite — handle concurrent insert race on unique constraint
       let favorite = Favorite(proposalID: body.proposalId, deviceID: body.deviceId)
-      try await favorite.save(on: req.db)
-      isFavorite = true
+      do {
+        try await favorite.save(on: req.db)
+        isFavorite = true
+      } catch let error as DatabaseError where error.isConstraintFailure {
+        // Another request inserted concurrently — treat as already favorited
+        isFavorite = true
+      }
     }
 
     // Get updated count

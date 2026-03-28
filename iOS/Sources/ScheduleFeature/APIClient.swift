@@ -67,7 +67,10 @@ extension ScheduleAPIClient: DependencyKey {
       var request = URLRequest(url: components.url!)
       request.httpMethod = "GET"
 
-      let (data, _) = try await URLSession.shared.data(for: request)
+      let (data, response) = try await URLSession.shared.data(for: request)
+      guard let httpResponse = response as? HTTPURLResponse,
+        (200...299).contains(httpResponse.statusCode)
+      else { throw URLError(.badServerResponse) }
       let decoder = JSONDecoder()
       decoder.keyDecodingStrategy = .convertFromSnakeCase
       let items = try decoder.decode([FavoriteItemResponse].self, from: data)
@@ -77,7 +80,10 @@ extension ScheduleAPIClient: DependencyKey {
       let url = apiBaseURL.appendingPathComponent("favorite-counts")
       let request = URLRequest(url: url)
 
-      let (data, _) = try await URLSession.shared.data(for: request)
+      let (data, response) = try await URLSession.shared.data(for: request)
+      guard let httpResponse = response as? HTTPURLResponse,
+        (200...299).contains(httpResponse.statusCode)
+      else { throw URLError(.badServerResponse) }
       let decoder = JSONDecoder()
       decoder.keyDecodingStrategy = .convertFromSnakeCase
       let items = try decoder.decode([FavoriteCountItemResponse].self, from: data)
@@ -97,11 +103,14 @@ extension ScheduleAPIClient: DependencyKey {
       let body: [String: String] = ["proposalId": proposalId, "deviceId": deviceId]
       request.httpBody = try JSONEncoder().encode(body)
 
-      let (data, _) = try await URLSession.shared.data(for: request)
+      let (data, urlResponse) = try await URLSession.shared.data(for: request)
+      guard let httpResponse = urlResponse as? HTTPURLResponse,
+        (200...299).contains(httpResponse.statusCode)
+      else { throw URLError(.badServerResponse) }
       let decoder = JSONDecoder()
       decoder.keyDecodingStrategy = .convertFromSnakeCase
-      let response = try decoder.decode(FavoriteToggleResponse.self, from: data)
-      return (response.isFavorite, response.count)
+      let toggleResponse = try decoder.decode(FavoriteToggleResponse.self, from: data)
+      return (toggleResponse.isFavorite, toggleResponse.count)
     },
     submitFeedback: { proposalId, comment, deviceId in
       let url = apiBaseURL.appendingPathComponent("feedback")

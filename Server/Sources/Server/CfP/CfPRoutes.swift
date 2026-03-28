@@ -246,17 +246,23 @@ struct CfPRoutes: RouteCollection {
         .sort(\.$createdAt, .descending)
         .all()
 
-      for proposal in proposals {
-        guard let proposalID = proposal.id else { continue }
-        let feedbacks = try await Feedback.query(on: req.db)
-          .filter(\.$proposal.$id == proposalID)
+      let proposalIDs = proposals.compactMap(\.id)
+      if !proposalIDs.isEmpty {
+        // Batch fetch all feedbacks in one query
+        let allFeedbacks = try await Feedback.query(on: req.db)
+          .filter(\.$proposal.$id ~~ proposalIDs)
           .sort(\.$createdAt, .descending)
           .all()
 
-        guard !feedbacks.isEmpty else { continue }
+        let feedbacksByProposal = Dictionary(grouping: allFeedbacks) { $0.$proposal.id }
 
-        feedbackGroups.append(
-          FeedbackForTalk(
+        for proposal in proposals {
+          guard let proposalID = proposal.id,
+            let feedbacks = feedbacksByProposal[proposalID],
+            !feedbacks.isEmpty
+          else { continue }
+
+          feedbackGroups.append(FeedbackForTalk(
             proposalId: proposalID,
             proposalTitle: proposal.title,
             feedbacks: feedbacks.compactMap { fb in
@@ -264,6 +270,7 @@ struct CfPRoutes: RouteCollection {
               return FeedbackResponse(id: id, comment: fb.comment, createdAt: fb.createdAt)
             }
           ))
+        }
       }
     }
 
