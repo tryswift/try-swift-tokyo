@@ -398,11 +398,34 @@ struct WorkshopRoutes: RouteCollection {
       let applicant_name: String
       let verify_token: String
       let first_choice_id: UUID
-      let second_choice_id: UUID?
-      let third_choice_id: UUID?
+      let second_choice_id: String?
+      let third_choice_id: String?
     }
 
     let form = try req.content.decode(ApplyForm.self)
+
+    // Parse optional choice IDs:
+    // - nil or empty strings from the form become nil
+    // - non-empty but invalid UUID strings cause a bad request
+    let secondChoiceID: UUID?
+    if let rawSecond = form.second_choice_id, !rawSecond.isEmpty {
+      guard let parsed = UUID(uuidString: rawSecond) else {
+        throw Abort(.badRequest, reason: "Invalid second_choice_id")
+      }
+      secondChoiceID = parsed
+    } else {
+      secondChoiceID = nil
+    }
+
+    let thirdChoiceID: UUID?
+    if let rawThird = form.third_choice_id, !rawThird.isEmpty {
+      guard let parsed = UUID(uuidString: rawThird) else {
+        throw Abort(.badRequest, reason: "Invalid third_choice_id")
+      }
+      thirdChoiceID = parsed
+    } else {
+      thirdChoiceID = nil
+    }
 
     // Verify the token
     let payload: WorkshopVerifyPayload
@@ -435,9 +458,7 @@ struct WorkshopRoutes: RouteCollection {
     }
 
     // Validate choices are different
-    let choices = [form.first_choice_id, form.second_choice_id, form.third_choice_id].compactMap {
-      $0
-    }
+    let choices = [form.first_choice_id, secondChoiceID, thirdChoiceID].compactMap { $0 }
     let uniqueChoices = Set(choices)
     guard uniqueChoices.count == choices.count else {
       let html = try await renderWorkshopApplyPage(
@@ -454,21 +475,21 @@ struct WorkshopRoutes: RouteCollection {
       email: email,
       applicantName: form.applicant_name.trimmingCharacters(in: .whitespacesAndNewlines),
       firstChoiceID: form.first_choice_id,
-      secondChoiceID: form.second_choice_id,
-      thirdChoiceID: form.third_choice_id
+      secondChoiceID: secondChoiceID,
+      thirdChoiceID: thirdChoiceID
     )
     try await application.save(on: req.db)
 
     // Get workshop titles for confirmation
     let firstTitle = try await workshopTitle(for: form.first_choice_id, on: req.db)
     let secondTitle =
-      if let id = form.second_choice_id {
+      if let id = secondChoiceID {
         try await workshopTitle(for: id, on: req.db)
       } else {
         nil as String?
       }
     let thirdTitle =
-      if let id = form.third_choice_id {
+      if let id = thirdChoiceID {
         try await workshopTitle(for: id, on: req.db)
       } else {
         nil as String?
