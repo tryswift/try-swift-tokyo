@@ -1,3 +1,4 @@
+#if !SKIP
 import Foundation
 
 /// User role for the CfP system
@@ -28,3 +29,4 @@ public enum UserRole: String, Codable, Sendable, Equatable, CaseIterable {
     }
   }
 }
+#endif

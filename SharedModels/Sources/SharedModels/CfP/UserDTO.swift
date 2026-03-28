@@ -1,3 +1,4 @@
+#if !SKIP
 import Foundation
 
 /// Data Transfer Object for User profile
@@ -87,3 +88,4 @@ public struct AuthResponse: Codable, Sendable {
     self.user = user
   }
 }
+#endif

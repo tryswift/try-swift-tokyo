@@ -1,3 +1,4 @@
+#if !SKIP
 import Foundation
 
 /// Proposal type (formerly "Talk Duration")
@@ -246,3 +247,4 @@ public struct UpdateProposalRequest: Codable, Sendable {
     self.coInstructors = coInstructors
   }
 }
+#endif

@@ -7,6 +7,7 @@ public final class AboutViewModel {
   public var organizers: [Organizer] = []
   public var isLoading = false
   public var errorMessage: String?
+  public var selectedOrganizer: Organizer?
 
   public init() {}
 

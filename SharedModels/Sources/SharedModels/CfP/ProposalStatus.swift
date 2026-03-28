@@ -1,3 +1,4 @@
+#if !SKIP
 import Foundation
 
 /// Proposal review status for the CfP system
@@ -34,3 +35,4 @@ public enum ProposalStatus: String, Codable, Sendable, Equatable, CaseIterable {
     }
   }
 }
+#endif

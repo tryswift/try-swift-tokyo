@@ -1,3 +1,4 @@
+#if !SKIP
 import Foundation
 
 /// Localized string supporting multiple languages
@@ -141,3 +142,4 @@ public enum ConferenceDescriptions {
       """
   )
 }
+#endif

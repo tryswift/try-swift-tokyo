@@ -1,3 +1,4 @@
+#if !SKIP
 import Foundation
 
 /// Workshop-specific details stored as JSON alongside a proposal
@@ -168,3 +169,4 @@ public struct CoInstructor: Codable, Sendable, Equatable {
     self.iconURL = iconURL
   }
 }
+#endif
