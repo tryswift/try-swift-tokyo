@@ -40,6 +40,15 @@ updates:
         patterns:
           - "source.skip.tools/*"
 
+  # DataClient - Swift Package Manager
+  - package-ecosystem: "swift"
+    directory: "/DataClient"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "iOS"
+
   # E2E Tests - npm
   - package-ecosystem: "npm"
     directory: "/e2e"
