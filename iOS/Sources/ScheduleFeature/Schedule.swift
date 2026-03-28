@@ -5,6 +5,9 @@ import Foundation
 import SharedModels
 import SwiftUI
 import TipKit
+import os
+
+private let logger = Logger(subsystem: "jp.tryswift.tokyo.App", category: "Schedule")
 
 @Reducer
 public struct Schedule {
@@ -104,7 +107,7 @@ public struct Schedule {
                   } catch let error as DecodingError {
                     assertionFailure(error.localizedDescription)
                   } catch {
-                    print(error)  // TODO: replace to Logger API
+                    logger.error("Failed to fetch conference data: \(error)")
                   }
                 }
                 for conference in conferences {
@@ -159,7 +162,7 @@ public struct Schedule {
         assertionFailure(error.localizedDescription)
         return .none
       case .fetchResponse(.failure(let error)):
-        print(error)  // TODO: replace to Logger API
+        logger.error("Failed to fetch schedules: \(error)")
         return .none
       case .binding, .path, .destination:
         return .none
