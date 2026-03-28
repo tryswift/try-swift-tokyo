@@ -7,6 +7,7 @@ struct WorkshopListPageView: HTML, Sendable {
   let workshops: [WorkshopItem]
   let language: CfPLanguage
   let applicationOpen: Bool
+  let isOrganizer: Bool
 
   struct WorkshopItem: Sendable {
     let id: UUID
@@ -21,6 +22,7 @@ struct WorkshopListPageView: HTML, Sendable {
     let githubUsername: String?
     let isPaperCallImport: Bool
     let workshopDetails: WorkshopDetails?
+    let workshopDetailsJA: WorkshopDetailsJA?
     let coInstructors: [CoInstructor]?
     let capacity: Int
     let applicationCount: Int
@@ -58,7 +60,7 @@ struct WorkshopListPageView: HTML, Sendable {
         div(.class("row g-4")) {
           for workshop in workshops {
             div(.class("col-md-6 col-lg-4")) {
-              WorkshopCardView(workshop: workshop, language: language)
+              WorkshopCardView(workshop: workshop, language: language, isOrganizer: isOrganizer)
             }
           }
         }
@@ -87,6 +89,7 @@ struct WorkshopListPageView: HTML, Sendable {
 struct WorkshopCardView: HTML, Sendable {
   let workshop: WorkshopListPageView.WorkshopItem
   let language: CfPLanguage
+  let isOrganizer: Bool
 
   var body: some HTML {
     div(
@@ -101,20 +104,13 @@ struct WorkshopCardView: HTML, Sendable {
         value: "if(event.key==='Enter'||event.key===' '){this.click();}")
     ) {
       div(.class("card-body")) {
-        if let details = workshop.workshopDetails {
-          div(.class("mb-2")) {
-            span(.class("badge \(languageBadgeClass(details.language))")) {
-              HTMLText(details.language.displayName)
-            }
-          }
-        }
-        h5(.class("card-title fw-bold")) { HTMLText(workshop.title) }
+        h5(.class("card-title fw-bold")) { HTMLText(displayTitle) }
         p(.class("text-muted small mb-2")) {
           HTMLText(workshop.speakerName)
         }
         p(.class("card-text")) {
-          HTMLText(String(workshop.abstract.prefix(200)))
-          if workshop.abstract.count > 200 { "..." }
+          HTMLText(String(displayAbstract.prefix(200)))
+          if displayAbstract.count > 200 { "..." }
         }
       }
       div(.class("card-footer bg-transparent")) {
@@ -132,24 +128,31 @@ struct WorkshopCardView: HTML, Sendable {
               }
             }
           }
-          span(.class("text-muted small")) {
-            HTMLText(
-              language == .ja
-                ? "\(workshop.applicationCount)名が申し込み済み"
-                : "\(workshop.applicationCount) applied")
+          if isOrganizer {
+            span(.class("text-muted small")) {
+              HTMLText(
+                language == .ja
+                  ? "\(workshop.applicationCount)名が申し込み済み"
+                  : "\(workshop.applicationCount) applied")
+            }
           }
         }
       }
     }
   }
 
-  private func languageBadgeClass(_ lang: WorkshopLanguage) -> String {
-    switch lang {
-    case .english: return "bg-primary"
-    case .japanese: return "bg-danger"
-    case .bilingual: return "bg-info"
-    case .other: return "bg-secondary"
+  private var displayTitle: String {
+    if language == .ja, let ja = workshop.titleJA, !ja.isEmpty {
+      return ja
     }
+    return workshop.title
+  }
+
+  private var displayAbstract: String {
+    if language == .ja, let ja = workshop.abstractJA, !ja.isEmpty {
+      return ja
+    }
+    return workshop.abstract
   }
 }
 
@@ -181,6 +184,20 @@ struct WorkshopModalView: HTML, Sendable {
       return ja
     }
     return workshop.bio
+  }
+
+  private func displayDetail(_ english: String, _ japanese: String?) -> String {
+    if language == .ja, let ja = japanese, !ja.isEmpty {
+      return ja
+    }
+    return english
+  }
+
+  private func displayOptionalDetail(_ english: String?, _ japanese: String?) -> String? {
+    if language == .ja, let ja = japanese, !ja.isEmpty {
+      return ja
+    }
+    return english
   }
 
   private func buildModalHTML() -> String {
@@ -231,12 +248,16 @@ struct WorkshopModalView: HTML, Sendable {
 
     // Workshop details
     if let details = workshop.workshopDetails {
+      let ja = workshop.workshopDetailsJA
+
       html += sectionHTML(
         label: language == .ja ? "学べること" : "Key Takeaways",
-        content: details.keyTakeaways
+        content: displayDetail(details.keyTakeaways, ja?.keyTakeaways)
       )
 
-      if let prerequisites = details.prerequisites, !prerequisites.isEmpty {
+      if let prerequisites = displayOptionalDetail(details.prerequisites, ja?.prerequisites),
+        !prerequisites.isEmpty
+      {
         html += sectionHTML(
           label: language == .ja ? "前提知識" : "Prerequisites",
           content: prerequisites
@@ -245,15 +266,17 @@ struct WorkshopModalView: HTML, Sendable {
 
       html += sectionHTML(
         label: language == .ja ? "アジェンダ / スケジュール" : "Agenda / Schedule",
-        content: details.agendaSchedule
+        content: displayDetail(details.agendaSchedule, ja?.agendaSchedule)
       )
 
       html += sectionHTML(
         label: language == .ja ? "持ち物" : "What to Bring",
-        content: details.participantRequirements
+        content: displayDetail(details.participantRequirements, ja?.participantRequirements)
       )
 
-      if let software = details.requiredSoftware, !software.isEmpty {
+      if let software = displayOptionalDetail(details.requiredSoftware, ja?.requiredSoftware),
+        !software.isEmpty
+      {
         html += sectionHTML(
           label: language == .ja ? "必要なソフトウェア" : "Required Software",
           content: software
@@ -262,7 +285,7 @@ struct WorkshopModalView: HTML, Sendable {
 
       html += sectionHTML(
         label: language == .ja ? "ネットワーク要件" : "Network Requirements",
-        content: details.networkRequirements
+        content: displayDetail(details.networkRequirements, ja?.networkRequirements)
       )
     }
 

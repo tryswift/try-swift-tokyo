@@ -47,6 +47,33 @@ public struct WorkshopDetails: Codable, Sendable, Equatable {
   }
 }
 
+/// Japanese translations for user-facing workshop detail fields.
+/// All fields are optional — when nil, the display layer falls back to the English value.
+public struct WorkshopDetailsJA: Codable, Sendable, Equatable {
+  public let keyTakeaways: String?
+  public let prerequisites: String?
+  public let agendaSchedule: String?
+  public let participantRequirements: String?
+  public let requiredSoftware: String?
+  public let networkRequirements: String?
+
+  public init(
+    keyTakeaways: String? = nil,
+    prerequisites: String? = nil,
+    agendaSchedule: String? = nil,
+    participantRequirements: String? = nil,
+    requiredSoftware: String? = nil,
+    networkRequirements: String? = nil
+  ) {
+    self.keyTakeaways = keyTakeaways
+    self.prerequisites = prerequisites
+    self.agendaSchedule = agendaSchedule
+    self.participantRequirements = participantRequirements
+    self.requiredSoftware = requiredSoftware
+    self.networkRequirements = networkRequirements
+  }
+}
+
 /// Language used in the workshop
 public enum WorkshopLanguage: String, Codable, Sendable, Equatable, CaseIterable {
   case english

@@ -79,6 +79,7 @@ struct WorkshopRoutes: RouteCollection {
     let githubUsername: String?
     let paperCallUsername: String?
     let workshopDetails: WorkshopDetails?
+    let workshopDetailsJA: WorkshopDetailsJA?
     let coInstructors: [CoInstructor]?
     let capacity: Int
     let applicationCount: Int
@@ -87,7 +88,9 @@ struct WorkshopRoutes: RouteCollection {
   }
 
   /// Fetch accepted workshops with registration info
-  private func fetchWorkshops(on db: Database) async throws -> [FetchedWorkshop] {
+  private func fetchWorkshops(on db: Database, includeApplicationCount: Bool = true) async throws
+    -> [FetchedWorkshop]
+  {
     // Get accepted workshop proposals
     let proposals = try await Proposal.query(on: db)
       .filter(\.$talkDuration == .workshop)
@@ -126,9 +129,12 @@ struct WorkshopRoutes: RouteCollection {
 
       guard let regID = registration.id else { continue }
 
-      let appCount = try await WorkshopApplication.query(on: db)
-        .filter(\.$firstChoice.$id == regID)
-        .count()
+      let appCount =
+        includeApplicationCount
+        ? try await WorkshopApplication.query(on: db)
+          .filter(\.$firstChoice.$id == regID)
+          .count()
+        : 0
 
       results.append(
         FetchedWorkshop(
@@ -144,6 +150,7 @@ struct WorkshopRoutes: RouteCollection {
           githubUsername: proposal.githubUsername,
           paperCallUsername: proposal.paperCallUsername,
           workshopDetails: proposal.workshopDetails,
+          workshopDetailsJA: proposal.workshopDetailsJA,
           coInstructors: proposal.coInstructors?.items,
           capacity: registration.capacity,
           applicationCount: appCount,
@@ -225,7 +232,8 @@ struct WorkshopRoutes: RouteCollection {
     -> HTMLResponse
   {
     let user = try? await req.authenticatedUser()
-    let workshops = try await fetchWorkshops(on: req.db)
+    let isOrganizer = user?.role == .admin
+    let workshops = try await fetchWorkshops(on: req.db, includeApplicationCount: isOrganizer)
     let hasLotteryRun =
       try await WorkshopApplication.query(on: req.db)
       .filter(\.$status != .pending)
@@ -245,6 +253,7 @@ struct WorkshopRoutes: RouteCollection {
         githubUsername: $0.githubUsername,
         isPaperCallImport: $0.paperCallUsername != nil,
         workshopDetails: $0.workshopDetails,
+        workshopDetailsJA: $0.workshopDetailsJA,
         coInstructors: $0.coInstructors,
         capacity: $0.capacity,
         applicationCount: $0.applicationCount,
@@ -262,7 +271,8 @@ struct WorkshopRoutes: RouteCollection {
         WorkshopListPageView(
           workshops: items,
           language: language,
-          applicationOpen: !hasLotteryRun
+          applicationOpen: !hasLotteryRun,
+          isOrganizer: isOrganizer
         )
       }
     }

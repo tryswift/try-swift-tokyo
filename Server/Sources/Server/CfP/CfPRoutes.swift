@@ -1864,6 +1864,13 @@ struct CfPRoutes: RouteCollection {
       var workshop_motivation: String?
       var workshop_uniqueness: String?
       var workshop_potentialRisks: String?
+      // Workshop Japanese translation fields
+      var workshop_keyTakeaways_ja: String?
+      var workshop_prerequisites_ja: String?
+      var workshop_agendaSchedule_ja: String?
+      var workshop_participantRequirements_ja: String?
+      var workshop_requiredSoftware_ja: String?
+      var workshop_networkRequirements_ja: String?
       // Co-instructor fields
       var coInstructor2_githubUsername: String?
       var coInstructor2_name: String?
@@ -1983,6 +1990,27 @@ struct CfPRoutes: RouteCollection {
           ? nil : formData.workshop_potentialRisks
       )
 
+      let detailsJA = WorkshopDetailsJA(
+        keyTakeaways: formData.workshop_keyTakeaways_ja?.isEmpty == true
+          ? nil : formData.workshop_keyTakeaways_ja,
+        prerequisites: formData.workshop_prerequisites_ja?.isEmpty == true
+          ? nil : formData.workshop_prerequisites_ja,
+        agendaSchedule: formData.workshop_agendaSchedule_ja?.isEmpty == true
+          ? nil : formData.workshop_agendaSchedule_ja,
+        participantRequirements: formData.workshop_participantRequirements_ja?.isEmpty == true
+          ? nil : formData.workshop_participantRequirements_ja,
+        requiredSoftware: formData.workshop_requiredSoftware_ja?.isEmpty == true
+          ? nil : formData.workshop_requiredSoftware_ja,
+        networkRequirements: formData.workshop_networkRequirements_ja?.isEmpty == true
+          ? nil : formData.workshop_networkRequirements_ja
+      )
+      let hasAnyJA = [
+        detailsJA.keyTakeaways, detailsJA.prerequisites, detailsJA.agendaSchedule,
+        detailsJA.participantRequirements, detailsJA.requiredSoftware,
+        detailsJA.networkRequirements,
+      ].contains(where: { $0 != nil })
+      proposal.workshopDetailsJA = hasAnyJA ? detailsJA : nil
+
       // Build co-instructors
       var instructors: [CoInstructor] = []
       if let name = formData.coInstructor2_name, !name.isEmpty,
@@ -2017,6 +2045,7 @@ struct CfPRoutes: RouteCollection {
     } else {
       // Clear workshop data if type changed away from workshop
       proposal.workshopDetails = nil
+      proposal.workshopDetailsJA = nil
       proposal.coInstructors = nil
     }
 
