@@ -115,7 +115,7 @@ public final class LiveTranslationViewModel {
       scope.launch {
         do {
           let name = ChatGuestSdk.connectChat(
-            roomCode: roomNumber, initialLangCode: selectedLangCode)
+            roomCode: vm.roomNumber, initialLangCode: vm.selectedLangCode)
           vm.roomName = name
         } catch {
           print("connectChat error: \(error)")

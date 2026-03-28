@@ -19,7 +19,22 @@ public struct ScheduleScreen: View {
         }
       }
       .navigationTitle("Schedule")
-      #if !SKIP
+      #if SKIP
+        .toolbar {
+          ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+            HStack {
+              Image(systemName: "magnifyingglass")
+                .foregroundStyle(Color.secondary)
+              TextField("Search", text: $viewModel.searchText)
+            }
+          }
+        }
+        .onChange(of: viewModel.searchText) { _, newValue in
+          viewModel.isSearchBarPresented = !newValue.trimmingCharacters(
+            in: CharacterSet.whitespaces
+          ).isEmpty
+        }
+      #else
         .searchable(text: $viewModel.searchText, isPresented: $viewModel.isSearchBarPresented)
       #endif
       .sheet(

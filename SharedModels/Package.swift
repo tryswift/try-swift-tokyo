@@ -2,6 +2,11 @@
 
 import PackageDescription
 
+// NOTE: Skip dependencies are required here for Android transpilation via the skipstone
+// plugin. SkipFoundation/SkipModel are lightweight on iOS/macOS (thin re-exports of
+// Foundation/Observation). The skipstone plugin is a build tool that only runs during
+// compilation and adds no runtime overhead on non-Android platforms.
+
 let package = Package(
   name: "SharedModels",
   platforms: [.iOS(.v26), .macOS(.v15), .watchOS(.v26), .tvOS(.v26), .visionOS(.v26)],
