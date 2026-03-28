@@ -1,248 +1,250 @@
-import Foundation
+#if !SKIP
+  import Foundation
 
-/// Proposal type (formerly "Talk Duration")
-public enum TalkDuration: String, Codable, Sendable, Equatable, CaseIterable {
-  case regular = "20min"
-  case lightning = "LT"
-  case workshop = "workshop"
-  case invited = "invited"
+  /// Proposal type (formerly "Talk Duration")
+  public enum TalkDuration: String, Codable, Sendable, Equatable, CaseIterable {
+    case regular = "20min"
+    case lightning = "LT"
+    case workshop = "workshop"
+    case invited = "invited"
 
-  public var displayName: String {
-    switch self {
-    case .regular:
-      return "Regular Talk (20 min)"
-    case .lightning:
-      return "Lightning Talk (5 min)"
-    case .workshop:
-      return "Workshop"
-    case .invited:
-      return "Invited Talk (20 min)"
+    public var displayName: String {
+      switch self {
+      case .regular:
+        return "Regular Talk (20 min)"
+      case .lightning:
+        return "Lightning Talk (5 min)"
+      case .workshop:
+        return "Workshop"
+      case .invited:
+        return "Invited Talk (20 min)"
+      }
+    }
+
+    /// Whether this duration is only available for invited speakers
+    public var isInvitedOnly: Bool {
+      self == .invited
+    }
+
+    public var isWorkshop: Bool {
+      self == .workshop
     }
   }
 
-  /// Whether this duration is only available for invited speakers
-  public var isInvitedOnly: Bool {
-    self == .invited
+  /// Data Transfer Object for CfP (Call for Proposals)
+  /// Shared between Server and iOS Client
+  public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
+    public let id: UUID
+    /// Conference ID (hash/UUID)
+    public let conferenceId: UUID
+    /// Conference path for display (e.g., "tryswift-tokyo-2026")
+    public let conferencePath: String
+    /// Conference display name (e.g., "try! Swift Tokyo 2026")
+    public let conferenceDisplayName: String
+    public let title: String
+    public let abstract: String
+    public let talkDetail: String
+    public let talkDuration: TalkDuration
+    /// Speaker name at time of submission
+    public let speakerName: String
+    /// Speaker email at time of submission
+    public let speakerEmail: String
+    public let bio: String
+    public let bioJa: String?
+    public let jobTitle: String?
+    public let jobTitleJa: String?
+    public let iconURL: String?
+    public let notes: String?
+    public let speakerID: UUID
+    public let speakerUsername: String
+    public let status: ProposalStatus
+    public let createdAt: Date?
+    public let updatedAt: Date?
+    /// GitHub username of the speaker
+    public let githubUsername: String?
+    /// Japanese title (translated by organizer)
+    public let titleJA: String?
+    /// Japanese abstract (translated by organizer)
+    public let abstractJA: String?
+    /// Workshop-specific details (only for workshop proposals)
+    public let workshopDetails: WorkshopDetails?
+    /// Japanese translations for user-facing workshop detail fields
+    public let workshopDetailsJA: WorkshopDetailsJA?
+    /// Co-instructors for workshop proposals (up to 2 additional instructors)
+    public let coInstructors: [CoInstructor]?
+
+    public init(
+      id: UUID,
+      conferenceId: UUID,
+      conferencePath: String,
+      conferenceDisplayName: String,
+      title: String,
+      abstract: String,
+      talkDetail: String,
+      talkDuration: TalkDuration,
+      speakerName: String,
+      speakerEmail: String,
+      bio: String,
+      bioJa: String? = nil,
+      jobTitle: String? = nil,
+      jobTitleJa: String? = nil,
+      iconURL: String? = nil,
+      notes: String? = nil,
+      speakerID: UUID,
+      speakerUsername: String,
+      status: ProposalStatus = .submitted,
+      createdAt: Date? = nil,
+      updatedAt: Date? = nil,
+      githubUsername: String? = nil,
+      titleJA: String? = nil,
+      abstractJA: String? = nil,
+      workshopDetails: WorkshopDetails? = nil,
+      workshopDetailsJA: WorkshopDetailsJA? = nil,
+      coInstructors: [CoInstructor]? = nil
+    ) {
+      self.id = id
+      self.conferenceId = conferenceId
+      self.conferencePath = conferencePath
+      self.conferenceDisplayName = conferenceDisplayName
+      self.title = title
+      self.abstract = abstract
+      self.talkDetail = talkDetail
+      self.talkDuration = talkDuration
+      self.speakerName = speakerName
+      self.speakerEmail = speakerEmail
+      self.bio = bio
+      self.bioJa = bioJa
+      self.jobTitle = jobTitle
+      self.jobTitleJa = jobTitleJa
+      self.iconURL = iconURL
+      self.notes = notes
+      self.speakerID = speakerID
+      self.speakerUsername = speakerUsername
+      self.status = status
+      self.createdAt = createdAt
+      self.updatedAt = updatedAt
+      self.githubUsername = githubUsername
+      self.titleJA = titleJA
+      self.abstractJA = abstractJA
+      self.workshopDetails = workshopDetails
+      self.workshopDetailsJA = workshopDetailsJA
+      self.coInstructors = coInstructors
+    }
   }
 
-  public var isWorkshop: Bool {
-    self == .workshop
+  /// Request object for creating a new proposal
+  public struct CreateProposalRequest: Codable, Sendable {
+    /// Conference path/alias (e.g., "tryswift-tokyo-2026")
+    public let conferencePath: String
+    public let title: String
+    public let abstract: String
+    public let talkDetail: String
+    public let talkDuration: TalkDuration
+    public let speakerName: String
+    public let speakerEmail: String
+    public let bio: String
+    public let bioJa: String?
+    public let jobTitle: String?
+    public let jobTitleJa: String?
+    public let iconURL: String?
+    public let notes: String?
+    public let titleJA: String?
+    public let abstractJA: String?
+    public let workshopDetails: WorkshopDetails?
+    public let coInstructors: [CoInstructor]?
+
+    public init(
+      conferencePath: String,
+      title: String,
+      abstract: String,
+      talkDetail: String,
+      talkDuration: TalkDuration,
+      speakerName: String,
+      speakerEmail: String,
+      bio: String,
+      bioJa: String? = nil,
+      jobTitle: String? = nil,
+      jobTitleJa: String? = nil,
+      iconURL: String? = nil,
+      notes: String? = nil,
+      titleJA: String? = nil,
+      abstractJA: String? = nil,
+      workshopDetails: WorkshopDetails? = nil,
+      coInstructors: [CoInstructor]? = nil
+    ) {
+      self.conferencePath = conferencePath
+      self.title = title
+      self.abstract = abstract
+      self.talkDetail = talkDetail
+      self.talkDuration = talkDuration
+      self.speakerName = speakerName
+      self.speakerEmail = speakerEmail
+      self.bio = bio
+      self.bioJa = bioJa
+      self.jobTitle = jobTitle
+      self.jobTitleJa = jobTitleJa
+      self.iconURL = iconURL
+      self.notes = notes
+      self.titleJA = titleJA
+      self.abstractJA = abstractJA
+      self.workshopDetails = workshopDetails
+      self.coInstructors = coInstructors
+    }
   }
-}
 
-/// Data Transfer Object for CfP (Call for Proposals)
-/// Shared between Server and iOS Client
-public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
-  public let id: UUID
-  /// Conference ID (hash/UUID)
-  public let conferenceId: UUID
-  /// Conference path for display (e.g., "tryswift-tokyo-2026")
-  public let conferencePath: String
-  /// Conference display name (e.g., "try! Swift Tokyo 2026")
-  public let conferenceDisplayName: String
-  public let title: String
-  public let abstract: String
-  public let talkDetail: String
-  public let talkDuration: TalkDuration
-  /// Speaker name at time of submission
-  public let speakerName: String
-  /// Speaker email at time of submission
-  public let speakerEmail: String
-  public let bio: String
-  public let bioJa: String?
-  public let jobTitle: String?
-  public let jobTitleJa: String?
-  public let iconURL: String?
-  public let notes: String?
-  public let speakerID: UUID
-  public let speakerUsername: String
-  public let status: ProposalStatus
-  public let createdAt: Date?
-  public let updatedAt: Date?
-  /// GitHub username of the speaker
-  public let githubUsername: String?
-  /// Japanese title (translated by organizer)
-  public let titleJA: String?
-  /// Japanese abstract (translated by organizer)
-  public let abstractJA: String?
-  /// Workshop-specific details (only for workshop proposals)
-  public let workshopDetails: WorkshopDetails?
-  /// Japanese translations for user-facing workshop detail fields
-  public let workshopDetailsJA: WorkshopDetailsJA?
-  /// Co-instructors for workshop proposals (up to 2 additional instructors)
-  public let coInstructors: [CoInstructor]?
+  /// Request object for updating an existing proposal
+  public struct UpdateProposalRequest: Codable, Sendable {
+    public let title: String?
+    public let abstract: String?
+    public let talkDetail: String?
+    public let talkDuration: TalkDuration?
+    public let speakerName: String?
+    public let speakerEmail: String?
+    public let bio: String?
+    public let bioJa: String?
+    public let jobTitle: String?
+    public let jobTitleJa: String?
+    public let iconURL: String?
+    public let notes: String?
+    public let titleJA: String?
+    public let abstractJA: String?
+    public let workshopDetails: WorkshopDetails?
+    public let coInstructors: [CoInstructor]?
 
-  public init(
-    id: UUID,
-    conferenceId: UUID,
-    conferencePath: String,
-    conferenceDisplayName: String,
-    title: String,
-    abstract: String,
-    talkDetail: String,
-    talkDuration: TalkDuration,
-    speakerName: String,
-    speakerEmail: String,
-    bio: String,
-    bioJa: String? = nil,
-    jobTitle: String? = nil,
-    jobTitleJa: String? = nil,
-    iconURL: String? = nil,
-    notes: String? = nil,
-    speakerID: UUID,
-    speakerUsername: String,
-    status: ProposalStatus = .submitted,
-    createdAt: Date? = nil,
-    updatedAt: Date? = nil,
-    githubUsername: String? = nil,
-    titleJA: String? = nil,
-    abstractJA: String? = nil,
-    workshopDetails: WorkshopDetails? = nil,
-    workshopDetailsJA: WorkshopDetailsJA? = nil,
-    coInstructors: [CoInstructor]? = nil
-  ) {
-    self.id = id
-    self.conferenceId = conferenceId
-    self.conferencePath = conferencePath
-    self.conferenceDisplayName = conferenceDisplayName
-    self.title = title
-    self.abstract = abstract
-    self.talkDetail = talkDetail
-    self.talkDuration = talkDuration
-    self.speakerName = speakerName
-    self.speakerEmail = speakerEmail
-    self.bio = bio
-    self.bioJa = bioJa
-    self.jobTitle = jobTitle
-    self.jobTitleJa = jobTitleJa
-    self.iconURL = iconURL
-    self.notes = notes
-    self.speakerID = speakerID
-    self.speakerUsername = speakerUsername
-    self.status = status
-    self.createdAt = createdAt
-    self.updatedAt = updatedAt
-    self.githubUsername = githubUsername
-    self.titleJA = titleJA
-    self.abstractJA = abstractJA
-    self.workshopDetails = workshopDetails
-    self.workshopDetailsJA = workshopDetailsJA
-    self.coInstructors = coInstructors
+    public init(
+      title: String? = nil,
+      abstract: String? = nil,
+      talkDetail: String? = nil,
+      talkDuration: TalkDuration? = nil,
+      speakerName: String? = nil,
+      speakerEmail: String? = nil,
+      bio: String? = nil,
+      bioJa: String? = nil,
+      jobTitle: String? = nil,
+      jobTitleJa: String? = nil,
+      iconURL: String? = nil,
+      notes: String? = nil,
+      titleJA: String? = nil,
+      abstractJA: String? = nil,
+      workshopDetails: WorkshopDetails? = nil,
+      coInstructors: [CoInstructor]? = nil
+    ) {
+      self.title = title
+      self.abstract = abstract
+      self.talkDetail = talkDetail
+      self.talkDuration = talkDuration
+      self.speakerName = speakerName
+      self.speakerEmail = speakerEmail
+      self.bio = bio
+      self.bioJa = bioJa
+      self.jobTitle = jobTitle
+      self.jobTitleJa = jobTitleJa
+      self.iconURL = iconURL
+      self.notes = notes
+      self.titleJA = titleJA
+      self.abstractJA = abstractJA
+      self.workshopDetails = workshopDetails
+      self.coInstructors = coInstructors
+    }
   }
-}
-
-/// Request object for creating a new proposal
-public struct CreateProposalRequest: Codable, Sendable {
-  /// Conference path/alias (e.g., "tryswift-tokyo-2026")
-  public let conferencePath: String
-  public let title: String
-  public let abstract: String
-  public let talkDetail: String
-  public let talkDuration: TalkDuration
-  public let speakerName: String
-  public let speakerEmail: String
-  public let bio: String
-  public let bioJa: String?
-  public let jobTitle: String?
-  public let jobTitleJa: String?
-  public let iconURL: String?
-  public let notes: String?
-  public let titleJA: String?
-  public let abstractJA: String?
-  public let workshopDetails: WorkshopDetails?
-  public let coInstructors: [CoInstructor]?
-
-  public init(
-    conferencePath: String,
-    title: String,
-    abstract: String,
-    talkDetail: String,
-    talkDuration: TalkDuration,
-    speakerName: String,
-    speakerEmail: String,
-    bio: String,
-    bioJa: String? = nil,
-    jobTitle: String? = nil,
-    jobTitleJa: String? = nil,
-    iconURL: String? = nil,
-    notes: String? = nil,
-    titleJA: String? = nil,
-    abstractJA: String? = nil,
-    workshopDetails: WorkshopDetails? = nil,
-    coInstructors: [CoInstructor]? = nil
-  ) {
-    self.conferencePath = conferencePath
-    self.title = title
-    self.abstract = abstract
-    self.talkDetail = talkDetail
-    self.talkDuration = talkDuration
-    self.speakerName = speakerName
-    self.speakerEmail = speakerEmail
-    self.bio = bio
-    self.bioJa = bioJa
-    self.jobTitle = jobTitle
-    self.jobTitleJa = jobTitleJa
-    self.iconURL = iconURL
-    self.notes = notes
-    self.titleJA = titleJA
-    self.abstractJA = abstractJA
-    self.workshopDetails = workshopDetails
-    self.coInstructors = coInstructors
-  }
-}
-
-/// Request object for updating an existing proposal
-public struct UpdateProposalRequest: Codable, Sendable {
-  public let title: String?
-  public let abstract: String?
-  public let talkDetail: String?
-  public let talkDuration: TalkDuration?
-  public let speakerName: String?
-  public let speakerEmail: String?
-  public let bio: String?
-  public let bioJa: String?
-  public let jobTitle: String?
-  public let jobTitleJa: String?
-  public let iconURL: String?
-  public let notes: String?
-  public let titleJA: String?
-  public let abstractJA: String?
-  public let workshopDetails: WorkshopDetails?
-  public let coInstructors: [CoInstructor]?
-
-  public init(
-    title: String? = nil,
-    abstract: String? = nil,
-    talkDetail: String? = nil,
-    talkDuration: TalkDuration? = nil,
-    speakerName: String? = nil,
-    speakerEmail: String? = nil,
-    bio: String? = nil,
-    bioJa: String? = nil,
-    jobTitle: String? = nil,
-    jobTitleJa: String? = nil,
-    iconURL: String? = nil,
-    notes: String? = nil,
-    titleJA: String? = nil,
-    abstractJA: String? = nil,
-    workshopDetails: WorkshopDetails? = nil,
-    coInstructors: [CoInstructor]? = nil
-  ) {
-    self.title = title
-    self.abstract = abstract
-    self.talkDetail = talkDetail
-    self.talkDuration = talkDuration
-    self.speakerName = speakerName
-    self.speakerEmail = speakerEmail
-    self.bio = bio
-    self.bioJa = bioJa
-    self.jobTitle = jobTitle
-    self.jobTitleJa = jobTitleJa
-    self.iconURL = iconURL
-    self.notes = notes
-    self.titleJA = titleJA
-    self.abstractJA = abstractJA
-    self.workshopDetails = workshopDetails
-    self.coInstructors = coInstructors
-  }
-}
+#endif
