@@ -25,6 +25,9 @@ struct CfPRoutes: RouteCollection {
     csrf.post("my-proposals", ":proposalID", "edit", use: handleEditProposal)
     csrf.post("my-proposals", ":proposalID", "withdraw", use: handleWithdrawProposal)
 
+    // Feedback page (speaker views their feedback)
+    csrf.get("feedback", use: feedbackPage)
+
     // Profile setup page
     csrf.get("profile", use: profilePage)
     csrf.post("profile", use: handleUpdateProfile)
@@ -41,6 +44,7 @@ struct CfPRoutes: RouteCollection {
     ja.get("guidelines", use: guidelinesPageJa)
     ja.get("login", use: loginPageJa)
     ja.get("submit", use: submitPageJa)
+    ja.get("feedback", use: feedbackPageJa)
     ja.get("my-proposals", use: myProposalsPageJa)
     ja.get("my-proposals", ":proposalID", use: myProposalDetailPageJa)
     ja.get("my-proposals", ":proposalID", "edit", use: editProposalPageJa)
@@ -126,6 +130,16 @@ struct CfPRoutes: RouteCollection {
     user.displayName == nil || user.displayName?.isEmpty == true || user.email == nil
       || user.email?.isEmpty == true || user.bio == nil || user.bio?.isEmpty == true
       || user.avatarURL == nil || user.avatarURL?.isEmpty == true
+  }
+
+  @Sendable
+  func feedbackPage(req: Request) async throws -> HTMLResponse {
+    try await renderFeedbackPage(req: req, language: .en)
+  }
+
+  @Sendable
+  func feedbackPageJa(req: Request) async throws -> HTMLResponse {
+    try await renderFeedbackPage(req: req, language: .ja)
   }
 
   @Sendable
@@ -217,6 +231,49 @@ struct CfPRoutes: RouteCollection {
         currentPath: "/"
       ) {
         CfPHomePage(user: user, language: language)
+      }
+    }
+  }
+
+  private func renderFeedbackPage(req: Request, language: CfPLanguage) async throws -> HTMLResponse
+  {
+    let user = try? await getAuthenticatedUser(req: req)
+
+    var feedbackGroups: [FeedbackForTalk] = []
+    if let user {
+      let proposals = try await Proposal.query(on: req.db)
+        .filter(\.$speaker.$id == user.id)
+        .sort(\.$createdAt, .descending)
+        .all()
+
+      for proposal in proposals {
+        guard let proposalID = proposal.id else { continue }
+        let feedbacks = try await Feedback.query(on: req.db)
+          .filter(\.$proposal.$id == proposalID)
+          .sort(\.$createdAt, .descending)
+          .all()
+
+        guard !feedbacks.isEmpty else { continue }
+
+        feedbackGroups.append(FeedbackForTalk(
+          proposalId: proposalID,
+          proposalTitle: proposal.title,
+          feedbacks: feedbacks.compactMap { fb in
+            guard let id = fb.id else { return nil }
+            return FeedbackResponse(id: id, comment: fb.comment, createdAt: fb.createdAt)
+          }
+        ))
+      }
+    }
+
+    return HTMLResponse {
+      CfPLayout(
+        title: language == .ja ? "フィードバック" : "Feedback",
+        user: user,
+        language: language,
+        currentPath: "/feedback"
+      ) {
+        FeedbackPageView(user: user, feedbackGroups: feedbackGroups, language: language)
       }
     }
   }
@@ -2958,6 +3015,7 @@ struct CfPRoutes: RouteCollection {
           let fallbackImageName =
             proposal.speakerName.lowercased().replacingOccurrences(of: " ", with: "_")
           return TimetableExportSession(
+            proposalId: proposal.id?.uuidString,
             title: proposal.title,
             titleJa: proposal.titleJA,
             summary: String(proposal.abstract.prefix(200)),
@@ -2982,6 +3040,7 @@ struct CfPRoutes: RouteCollection {
           )
         } else {
           return TimetableExportSession(
+            proposalId: nil,
             title: slot.customTitle ?? slot.slotType.displayName,
             titleJa: slot.customTitleJa,
             summary: nil,

@@ -40,6 +40,7 @@ public struct Schedule {
     var day1: Conference?
     var day2: Conference?
     var day3: Conference?
+    var favoriteProposalIds: Set<String> = []
     @Presents var destination: Destination.State?
 
     public init() {}
@@ -52,6 +53,8 @@ public struct Schedule {
     case view(View)
     case fetchResponse(Result<SchedulesResponse, Error>)
     case allSessionsLoaded([SearchableSession])
+    case favoritesLoaded(Set<String>)
+    case favoriteToggled(String, Bool)
 
     @CasePathable
     public enum View {
@@ -59,6 +62,7 @@ public struct Schedule {
       case disclosureTapped(Session)
       case yearSelected(ConferenceYear)
       case daySelected(Days)
+      case favoriteTapped(Session)
     }
   }
 
@@ -71,6 +75,7 @@ public struct Schedule {
   public enum Destination {}
 
   @Dependency(DataClient.self) var dataClient
+  @Dependency(\.scheduleAPIClient) var apiClient
 
   public init() {}
 
@@ -81,7 +86,9 @@ public struct Schedule {
       case .view(.onAppear):
         let year = state.selectedYear
         let shouldLoadAllSessions = state.allSessions.isEmpty
+        let shouldLoadFavorites = state.favoriteProposalIds.isEmpty
         let dataClient = dataClient
+        let apiClient = apiClient
         return .merge(
           .send(
             .fetchResponse(
@@ -120,6 +127,12 @@ public struct Schedule {
               }
               await send(.allSessionsLoaded(results))
             }
+            : .none,
+          shouldLoadFavorites
+            ? .run { send in
+              let ids = try await apiClient.fetchFavorites(DeviceIdentifier.current)
+              await send(.favoritesLoaded(Set(ids)))
+            }
             : .none
         )
       case .view(.yearSelected(let year)):
@@ -132,13 +145,31 @@ public struct Schedule {
       case .view(.daySelected(let day)):
         state.selectedDay = day
         return .none
+      case .view(.favoriteTapped(let session)):
+        guard let proposalId = session.proposalId else { return .none }
+        // Optimistic toggle
+        let wasFavorite = state.favoriteProposalIds.contains(proposalId)
+        if wasFavorite {
+          state.favoriteProposalIds.remove(proposalId)
+        } else {
+          state.favoriteProposalIds.insert(proposalId)
+        }
+        let apiClient = apiClient
+        return .run { send in
+          let isFavorite = try await apiClient.toggleFavorite(proposalId, DeviceIdentifier.current)
+          await send(.favoriteToggled(proposalId, isFavorite))
+        }
       case .view(.disclosureTapped(let session)):
         guard let description = session.description, let speakers = session.speakers else {
           return .none
         }
+        let isFavorite =
+          session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
         state.path.append(
           .detail(
             .init(
+              proposalId: session.proposalId,
+              isFavorite: isFavorite,
               title: session.title,
               description: description,
               requirements: session.requirements,
@@ -155,11 +186,34 @@ public struct Schedule {
       case .allSessionsLoaded(let sessions):
         state.allSessions = sessions
         return .none
+      case .favoritesLoaded(let ids):
+        state.favoriteProposalIds = ids
+        return .none
+      case .favoriteToggled(let proposalId, let isFavorite):
+        if isFavorite {
+          state.favoriteProposalIds.insert(proposalId)
+        } else {
+          state.favoriteProposalIds.remove(proposalId)
+        }
+        return .none
       case .fetchResponse(.failure(let error as DecodingError)):
         assertionFailure(error.localizedDescription)
         return .none
       case .fetchResponse(.failure(let error)):
         print(error)  // TODO: replace to Logger API
+        return .none
+      case .path(.element(_, action: .detail(.favoriteToggled(let isFavorite)))):
+        // Sync favorite state from detail back to schedule
+        if let detailState = state.path.last,
+          case .detail(let detail) = detailState,
+          let proposalId = detail.proposalId
+        {
+          if isFavorite {
+            state.favoriteProposalIds.insert(proposalId)
+          } else {
+            state.favoriteProposalIds.remove(proposalId)
+          }
+        }
         return .none
       case .binding, .path, .destination:
         return .none
@@ -387,6 +441,9 @@ public struct ScheduleView: View {
                   .padding()
               }
               .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
+              .overlay(alignment: .topTrailing) {
+                favoriteButton(session: session)
+              }
             } else {
               listRow(session: session)
                 .padding()
@@ -452,6 +509,21 @@ public struct ScheduleView: View {
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       .accessibilityElement(children: .combine)
+    }
+  }
+
+  @ViewBuilder
+  func favoriteButton(session: Session) -> some View {
+    if let proposalId = session.proposalId {
+      let isFavorite = store.favoriteProposalIds.contains(proposalId)
+      Button {
+        send(.favoriteTapped(session))
+      } label: {
+        Image(systemName: isFavorite ? "heart.fill" : "heart")
+          .foregroundStyle(isFavorite ? Color.red : Color.secondary)
+          .padding(12)
+      }
+      .buttonStyle(.plain)
     }
   }
 

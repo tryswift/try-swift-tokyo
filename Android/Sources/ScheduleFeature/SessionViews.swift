@@ -4,9 +4,13 @@ import SwiftUI
 /// A reusable session row component for Android.
 public struct SessionRowView: View {
   let session: Session
+  let isFavorite: Bool
+  let onToggleFavorite: (() -> Void)?
 
-  public init(session: Session) {
+  public init(session: Session, isFavorite: Bool = false, onToggleFavorite: (() -> Void)? = nil) {
     self.session = session
+    self.isFavorite = isFavorite
+    self.onToggleFavorite = onToggleFavorite
   }
 
   public var body: some View {
@@ -32,6 +36,16 @@ public struct SessionRowView: View {
         }
       }
       .frame(maxWidth: CGFloat.infinity, alignment: Alignment.leading)
+
+      if session.proposalId != nil, let onToggle = onToggleFavorite {
+        Button {
+          onToggle()
+        } label: {
+          Image(systemName: isFavorite ? "heart.fill" : "heart")
+            .foregroundStyle(isFavorite ? Color.red : Color.secondary)
+        }
+        .buttonStyle(.plain)
+      }
 
       if session.description != nil {
         Image(systemName: "chevron.right")
@@ -106,10 +120,17 @@ public struct SpeakerAvatarView: View {
 /// A detailed view for displaying session information on Android.
 public struct SessionDetailView: View {
   let session: Session
+  @ObservedObject private var viewModelRef: ViewModelRef
+
   @Environment(\.openURL) private var openURL
 
-  public init(session: Session) {
+  public init(session: Session, viewModel: ScheduleViewModel) {
     self.session = session
+    self.viewModelRef = ViewModelRef(viewModel: viewModel)
+  }
+
+  private var viewModel: ScheduleViewModel {
+    viewModelRef.viewModel
   }
 
   public var body: some View {
@@ -128,8 +149,31 @@ public struct SessionDetailView: View {
         if let requirements = session.requirements {
           requirementsSection(requirements: requirements)
         }
+
+        if session.proposalId != nil {
+          feedbackSection
+        }
       }
       .padding()
+    }
+    .toolbar {
+      if let proposalId = session.proposalId {
+        ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
+          Button {
+            viewModel.toggleFavorite(proposalId: proposalId)
+          } label: {
+            Image(
+              systemName: viewModel.isFavorite(proposalId: session.proposalId)
+                ? "heart.fill" : "heart"
+            )
+            .foregroundStyle(
+              viewModel.isFavorite(proposalId: session.proposalId) ? Color.red : Color.secondary)
+          }
+        }
+      }
+    }
+    .onDisappear {
+      viewModel.resetFeedbackState()
     }
   }
 
@@ -207,5 +251,60 @@ public struct SessionDetailView: View {
         .background(Color.orange.opacity(0.1))
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
+  }
+
+  @ViewBuilder
+  private var feedbackSection: some View {
+    VStack(alignment: HorizontalAlignment.leading, spacing: 12) {
+      Text("Leave Feedback")
+        .font(Font.title3.bold())
+
+      if viewModel.feedbackSubmitted {
+        Label("Thank you for your feedback!", systemImage: "checkmark.circle.fill")
+          .foregroundStyle(Color.green)
+      } else {
+        TextField("Share your thoughts...", text: Binding(
+          get: { viewModel.feedbackText },
+          set: { viewModel.feedbackText = $0 }
+        ), axis: .vertical)
+          .lineLimit(3...6)
+          .textFieldStyle(.roundedBorder)
+
+        if let error = viewModel.feedbackError {
+          Text(error)
+            .foregroundStyle(Color.red)
+            .font(Font.caption)
+        }
+
+        Button {
+          if let proposalId = session.proposalId {
+            viewModel.submitFeedback(proposalId: proposalId)
+          }
+        } label: {
+          if viewModel.isSubmittingFeedback {
+            ProgressView()
+          } else {
+            Text("Submit")
+          }
+        }
+        .disabled(
+          viewModel.feedbackText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
+            || viewModel.isSubmittingFeedback
+        )
+        .buttonStyle(.borderedProminent)
+      }
+    }
+    .padding()
+    .background(Color.secondary.opacity(0.1))
+    .clipShape(RoundedRectangle(cornerRadius: 12))
+  }
+}
+
+/// Helper class to pass ScheduleViewModel to SessionDetailView
+/// Skip's @Observable doesn't work with @Binding directly in all cases
+private class ViewModelRef: ObservableObject {
+  let viewModel: ScheduleViewModel
+  init(viewModel: ScheduleViewModel) {
+    self.viewModel = viewModel
   }
 }

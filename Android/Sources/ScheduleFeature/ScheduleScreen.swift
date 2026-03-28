@@ -21,7 +21,7 @@ public struct ScheduleScreen: View {
       .navigationTitle("Schedule")
       .searchable(text: $viewModel.searchText, isPresented: $viewModel.isSearchBarPresented)
       .navigationDestination(for: Session.self) { session in
-        SessionDetailView(session: session)
+        SessionDetailView(session: session, viewModel: viewModel)
           .navigationTitle("Session")
           #if os(iOS) || SKIP
             .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
@@ -38,6 +38,7 @@ public struct ScheduleScreen: View {
     .onAppear {
       viewModel.loadSchedules()
       viewModel.loadAllSessions()
+      viewModel.loadFavorites()
     }
   }
 
@@ -184,7 +185,12 @@ public struct ScheduleScreen: View {
             if session.title == "Office hour", let speakers = session.speakers {
               officeHourRow(session: session, speakers: speakers)
             } else {
-              SessionRowView(session: session)
+              SessionRowView(
+                session: session,
+                isFavorite: viewModel.isFavorite(proposalId: session.proposalId),
+                onToggleFavorite: session.proposalId != nil
+                  ? { viewModel.toggleFavorite(proposalId: session.proposalId!) } : nil
+              )
             }
           }
           .buttonStyle(.plain)

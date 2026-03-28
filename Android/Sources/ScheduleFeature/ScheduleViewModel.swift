@@ -2,6 +2,27 @@ import Foundation
 import SharedModels
 import SkipModel
 
+// MARK: - API Configuration
+
+private let apiBaseURLString = "https://tryswift-cfp-api.fly.dev/api/v1"
+
+// MARK: - Device Identifier
+
+enum AndroidDeviceIdentifier {
+  private static let key = "tryswift_device_id"
+
+  static var current: String {
+    if let existing = UserDefaults.standard.string(forKey: key) {
+      return existing
+    }
+    let newId = UUID().uuidString
+    UserDefaults.standard.set(newId, forKey: key)
+    return newId
+  }
+}
+
+// MARK: - Schedule Day
+
 public enum ScheduleDay: String, CaseIterable, Identifiable {
   case day1 = "Day 1"
   case day2 = "Day 2"
@@ -25,6 +46,18 @@ public struct SearchableSession: Equatable, Hashable {
   }
 }
 
+// MARK: - API Response Types
+
+private struct FavoriteItemResponse: Codable {
+  let proposalId: String
+}
+
+private struct FavoriteToggleResponse: Codable {
+  let isFavorite: Bool
+}
+
+// MARK: - ViewModel
+
 @Observable
 public final class ScheduleViewModel {
   public var selectedDay: ScheduleDay = .day1
@@ -38,6 +71,15 @@ public final class ScheduleViewModel {
   public var searchText: String = ""
   public var isSearchBarPresented: Bool = false
   public var allSearchableSessions: [SearchableSession] = []
+
+  // Favorites
+  public var favoriteProposalIds: Set<String> = []
+
+  // Feedback
+  public var feedbackText: String = ""
+  public var feedbackSubmitted: Bool = false
+  public var isSubmittingFeedback: Bool = false
+  public var feedbackError: String?
 
   public static let availableYears: [Int] = ConferenceYear.allCases.map { $0.rawValue }.reversed()
 
@@ -117,6 +159,124 @@ public final class ScheduleViewModel {
     }
     allSearchableSessions = results
   }
+
+  // MARK: - Favorites
+
+  public func loadFavorites() {
+    Task {
+      do {
+        guard
+          let url = URL(
+            string: "\(apiBaseURLString)/favorites?deviceId=\(AndroidDeviceIdentifier.current)")
+        else { return }
+        let request = URLRequest(url: url)
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let items = try decoder.decode([FavoriteItemResponse].self, from: data)
+        var ids: Set<String> = []
+        for item in items {
+          ids.insert(item.proposalId)
+        }
+        self.favoriteProposalIds = ids
+      } catch {
+        // Silently fail - favorites are not critical
+      }
+    }
+  }
+
+  public func toggleFavorite(proposalId: String) {
+    // Optimistic toggle
+    if favoriteProposalIds.contains(proposalId) {
+      favoriteProposalIds.remove(proposalId)
+    } else {
+      favoriteProposalIds.insert(proposalId)
+    }
+
+    Task {
+      do {
+        guard let url = URL(string: "\(apiBaseURLString)/favorites") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let body: [String: String] = [
+          "proposalId": proposalId, "deviceId": AndroidDeviceIdentifier.current,
+        ]
+        request.httpBody = try JSONEncoder().encode(body)
+
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let response = try decoder.decode(FavoriteToggleResponse.self, from: data)
+        if response.isFavorite {
+          self.favoriteProposalIds.insert(proposalId)
+        } else {
+          self.favoriteProposalIds.remove(proposalId)
+        }
+      } catch {
+        // Revert on failure
+        if self.favoriteProposalIds.contains(proposalId) {
+          self.favoriteProposalIds.remove(proposalId)
+        } else {
+          self.favoriteProposalIds.insert(proposalId)
+        }
+      }
+    }
+  }
+
+  public func isFavorite(proposalId: String?) -> Bool {
+    guard let proposalId = proposalId else { return false }
+    return favoriteProposalIds.contains(proposalId)
+  }
+
+  // MARK: - Feedback
+
+  public func submitFeedback(proposalId: String) {
+    let comment = feedbackText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+    guard !comment.isEmpty else { return }
+
+    isSubmittingFeedback = true
+    feedbackError = nil
+
+    Task {
+      do {
+        guard let url = URL(string: "\(apiBaseURLString)/feedback") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let body: [String: String] = [
+          "proposalId": proposalId,
+          "comment": comment,
+          "deviceId": AndroidDeviceIdentifier.current,
+        ]
+        request.httpBody = try JSONEncoder().encode(body)
+
+        let (_, response) = try await URLSession.shared.data(for: request)
+        if let httpResponse = response as? HTTPURLResponse,
+          (200...299).contains(httpResponse.statusCode)
+        {
+          self.feedbackSubmitted = true
+          self.feedbackText = ""
+        } else {
+          self.feedbackError = "Failed to submit feedback"
+        }
+      } catch {
+        self.feedbackError = error.localizedDescription
+      }
+      self.isSubmittingFeedback = false
+    }
+  }
+
+  public func resetFeedbackState() {
+    feedbackText = ""
+    feedbackSubmitted = false
+    feedbackError = nil
+    isSubmittingFeedback = false
+  }
+
+  // MARK: - Private
 
   private static func buildSearchCorpus(session: Session) -> String {
     var parts: [String] = [session.title]

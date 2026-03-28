@@ -9,14 +9,29 @@ public struct ScheduleDetail: Sendable {
   @ObservableState
   public struct State: Equatable {
 
+    var proposalId: String?
+    var isFavorite: Bool = false
     var title: String
     var description: String
     var requirements: String?
     var speakers: [Speaker]
 
+    // Feedback
+    var feedbackText: String = ""
+    var feedbackSubmitted: Bool = false
+    var isSubmittingFeedback: Bool = false
+    var feedbackError: String?
+
     public init(
-      title: String, description: String, requirements: String? = nil, speakers: [Speaker]
+      proposalId: String? = nil,
+      isFavorite: Bool = false,
+      title: String,
+      description: String,
+      requirements: String? = nil,
+      speakers: [Speaker]
     ) {
+      self.proposalId = proposalId
+      self.isFavorite = isFavorite
       self.title = title
       self.description = description
       self.requirements = requirements
@@ -27,13 +42,18 @@ public struct ScheduleDetail: Sendable {
   public enum Action: ViewAction, BindableAction {
     case binding(BindingAction<State>)
     case view(View)
+    case feedbackSubmitResponse(Result<Bool, Error>)
+    case favoriteToggled(Bool)
 
     public enum View {
       case snsTapped(URL)
+      case favoriteTapped
+      case submitFeedbackTapped
     }
   }
 
   @Dependency(\.safari) var safari
+  @Dependency(\.scheduleAPIClient) var apiClient
 
   public init() {}
 
@@ -43,6 +63,40 @@ public struct ScheduleDetail: Sendable {
       switch action {
       case .view(.snsTapped(let url)):
         return .run { _ in await safari(url) }
+      case .view(.favoriteTapped):
+        guard let proposalId = state.proposalId else { return .none }
+        state.isFavorite.toggle()
+        let apiClient = apiClient
+        return .run { send in
+          let isFavorite = try await apiClient.toggleFavorite(
+            proposalId, DeviceIdentifier.current)
+          await send(.favoriteToggled(isFavorite))
+        }
+      case .favoriteToggled(let isFavorite):
+        state.isFavorite = isFavorite
+        return .none
+      case .view(.submitFeedbackTapped):
+        guard let proposalId = state.proposalId else { return .none }
+        let comment = state.feedbackText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !comment.isEmpty else { return .none }
+        state.isSubmittingFeedback = true
+        state.feedbackError = nil
+        let apiClient = apiClient
+        return .run { send in
+          try await apiClient.submitFeedback(proposalId, comment, DeviceIdentifier.current)
+          await send(.feedbackSubmitResponse(.success(true)))
+        } catch: { error, send in
+          await send(.feedbackSubmitResponse(.failure(error)))
+        }
+      case .feedbackSubmitResponse(.success):
+        state.isSubmittingFeedback = false
+        state.feedbackSubmitted = true
+        state.feedbackText = ""
+        return .none
+      case .feedbackSubmitResponse(.failure(let error)):
+        state.isSubmittingFeedback = false
+        state.feedbackError = error.localizedDescription
+        return .none
       case .binding:
         return .none
       }
@@ -85,6 +139,34 @@ public struct ScheduleDetailView: View {
 
       speakers
         .frame(maxWidth: 700)  // Readable content width for iPad
+
+      if store.proposalId != nil {
+        feedbackSection
+          .frame(maxWidth: 700)
+      }
+    }
+    .toolbar {
+      if store.proposalId != nil {
+        #if os(macOS)
+          ToolbarItem(placement: .primaryAction) {
+            favoriteToolbarButton
+          }
+        #else
+          ToolbarItem(placement: .topBarTrailing) {
+            favoriteToolbarButton
+          }
+        #endif
+      }
+    }
+  }
+
+  @ViewBuilder
+  var favoriteToolbarButton: some View {
+    Button {
+      send(.favoriteTapped)
+    } label: {
+      Image(systemName: store.isFavorite ? "heart.fill" : "heart")
+        .foregroundStyle(store.isFavorite ? Color.red : Color.secondary)
     }
   }
 
@@ -128,12 +210,62 @@ public struct ScheduleDetailView: View {
     .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
     .padding()
   }
+
+  @ViewBuilder
+  var feedbackSection: some View {
+    VStack(alignment: .leading, spacing: 12) {
+      Text("Leave Feedback", bundle: .module)
+        .font(.title3.bold())
+
+      if store.feedbackSubmitted {
+        Label {
+          Text("Thank you for your feedback!", bundle: .module)
+        } icon: {
+          Image(systemName: "checkmark.circle.fill")
+            .foregroundStyle(Color.green)
+        }
+      } else {
+        TextField(
+          String(localized: "Share your thoughts...", bundle: .module),
+          text: $store.feedbackText,
+          axis: .vertical
+        )
+        .lineLimit(3...6)
+        .textFieldStyle(.roundedBorder)
+
+        if let error = store.feedbackError {
+          Text(error)
+            .foregroundStyle(Color.red)
+            .font(.caption)
+        }
+
+        Button {
+          send(.submitFeedbackTapped)
+        } label: {
+          if store.isSubmittingFeedback {
+            ProgressView()
+          } else {
+            Text("Submit", bundle: .module)
+          }
+        }
+        .disabled(
+          store.feedbackText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            || store.isSubmittingFeedback
+        )
+        .buttonStyle(.borderedProminent)
+      }
+    }
+    .padding()
+    .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
+    .padding()
+  }
 }
 
 #Preview {
   ScheduleDetailView(
     store: .init(
       initialState: .init(
+        proposalId: "preview-id",
         title: "What's new in try! Swift",
         description: #"""
           try! Swift is an international community gathering that focuses on the Swift programming language and its ecosystem. It brings together developers, industry experts, and enthusiasts for a series of talks, learning sessions, and networking opportunities. The event aims to foster collaboration, share the latest advancements and best practices, and inspire innovation within the Swift community.The revival of "try! Swift" signifies a renewed commitment to these goals, potentially after a period of hiatus or reduced activity, possibly due to global challenges like the COVID-19 pandemic. This resurgence would likely involve the organization of new events, either virtually or in-person, reflecting the latest trends and technologies within the Swift ecosystem. The revival indicates a strong, ongoing interest in Swift programming, with the community eager to reconvene, exchange ideas, and continue learning from each other.
