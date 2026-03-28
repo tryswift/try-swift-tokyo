@@ -259,6 +259,7 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
   private func workshopFieldsSection(proposal: ProposalDTO) -> some HTML {
     let isWorkshop = proposal.talkDuration == .workshop
     let details = proposal.workshopDetails
+    let detailsJA = proposal.workshopDetailsJA
 
     HTMLRaw(
       """
@@ -391,6 +392,102 @@ struct OrganizerEditProposalPageView: HTML, Sendable {
             .custom(name: "rows", value: "2"),
             .custom(name: "data-workshop-required", value: "true")
           ) { HTMLText(details?.networkRequirements ?? "") }
+        }
+
+        // Japanese Translations (user-facing fields)
+        hr(.class("my-4"))
+        h6(.class("fw-semibold text-muted mb-3")) {
+          "Japanese Translations (displayed on /ja/ pages)"
+        }
+
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_keyTakeaways_ja")) {
+            "Key Takeaways (Japanese)"
+          }
+          textarea(
+            .class("form-control"), .name("workshop_keyTakeaways_ja"),
+            .id("workshop_keyTakeaways_ja"),
+            .custom(name: "rows", value: "3"),
+            .placeholder("学べること（日本語）")
+          ) { HTMLText(detailsJA?.keyTakeaways ?? "") }
+          div(.class("form-text")) {
+            "Optional. Japanese translation of key takeaways."
+          }
+        }
+
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_prerequisites_ja")) {
+            "Prerequisites (Japanese)"
+          }
+          input(
+            .type(.text), .class("form-control"),
+            .name("workshop_prerequisites_ja"), .id("workshop_prerequisites_ja"),
+            .value(detailsJA?.prerequisites ?? ""),
+            .placeholder("前提知識（日本語）")
+          )
+          div(.class("form-text")) {
+            "Optional. Japanese translation of prerequisites."
+          }
+        }
+
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_agendaSchedule_ja")) {
+            "Agenda & Schedule (Japanese)"
+          }
+          textarea(
+            .class("form-control"), .name("workshop_agendaSchedule_ja"),
+            .id("workshop_agendaSchedule_ja"),
+            .custom(name: "rows", value: "4"),
+            .placeholder("アジェンダ / スケジュール（日本語）")
+          ) { HTMLText(detailsJA?.agendaSchedule ?? "") }
+          div(.class("form-text")) {
+            "Optional. Japanese translation of agenda/schedule."
+          }
+        }
+
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_participantRequirements_ja")) {
+            "What Participants Need to Bring (Japanese)"
+          }
+          textarea(
+            .class("form-control"), .name("workshop_participantRequirements_ja"),
+            .id("workshop_participantRequirements_ja"),
+            .custom(name: "rows", value: "2"),
+            .placeholder("持ち物（日本語）")
+          ) { HTMLText(detailsJA?.participantRequirements ?? "") }
+          div(.class("form-text")) {
+            "Optional. Japanese translation of participant requirements."
+          }
+        }
+
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_requiredSoftware_ja")) {
+            "Required Software (Japanese)"
+          }
+          textarea(
+            .class("form-control"), .name("workshop_requiredSoftware_ja"),
+            .id("workshop_requiredSoftware_ja"),
+            .custom(name: "rows", value: "2"),
+            .placeholder("必要なソフトウェア（日本語）")
+          ) { HTMLText(detailsJA?.requiredSoftware ?? "") }
+          div(.class("form-text")) {
+            "Optional. Japanese translation of required software."
+          }
+        }
+
+        div(.class("mb-3")) {
+          label(.class("form-label fw-semibold"), .for("workshop_networkRequirements_ja")) {
+            "Network Requirements (Japanese)"
+          }
+          textarea(
+            .class("form-control"), .name("workshop_networkRequirements_ja"),
+            .id("workshop_networkRequirements_ja"),
+            .custom(name: "rows", value: "2"),
+            .placeholder("ネットワーク要件（日本語）")
+          ) { HTMLText(detailsJA?.networkRequirements ?? "") }
+          div(.class("form-text")) {
+            "Optional. Japanese translation of network requirements."
+          }
         }
 
         // Facilities

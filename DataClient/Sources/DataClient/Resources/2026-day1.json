@@ -5,11 +5,11 @@
   "date": "2026-04-12T12:00:00+09:00",
   "schedules": [
     {
-      "time": "2026-04-12T13:00:00+09:00",
+      "time": "2026-04-12T10:00:00+09:00",
       "sessions": [
         {
           "title": "High-Performance Swift",
-          "title_ja": "高パフォーマンスSwift",
+          "title_ja": "高性能スイフト",
           "speakers": [
             {
               "id": 1,
@@ -67,7 +67,12 @@
           ],
           "description": "Attendee will get hands-on experience using the Foundation Models framework to access Apple's on-device LLM. Over the workshop, developer will explore text manipulation, including language support. also dive into guided generation. And developer will learn how to engineer effective prompts, and combine the Foundation Models framework with Apple ML frameworks like Speech.",
           "description_ja": "参加者は、Foundation Modelsフレームワークを使用してAppleのオンデバイスLLMにアクセスするハンズオン体験を行います。本ワークショップでは、言語サポートを含むテキスト操作、ガイド付き生成、さらに、効果的なプロンプトの設計方法を探求します。そして、Foundation ModelsフレームワークをSpeechフレームワークなど機械学習のフレームワークと組み合わせる方法についても習得します。"
-        },
+        }
+      ]
+    },
+    {
+      "time": "2026-04-12T13:30:00+09:00",
+      "sessions": [
         {
           "title": "Designing Visual Effects with Metal and SwiftUI",
           "title_ja": "MetalとSwiftUIでビジュアルエフェクトをデザインする",

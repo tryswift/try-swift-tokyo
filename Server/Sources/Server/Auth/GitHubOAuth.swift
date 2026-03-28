@@ -21,10 +21,26 @@ enum GitHubOAuth {
 
       self.clientID = clientID
       self.clientSecret = clientSecret
-      self.organizationName = Environment.get("GITHUB_ORG") ?? "tryswift"
-      self.teamSlug = Environment.get("GITHUB_TEAM") ?? "tokyo"
+      self.organizationName = Self.environmentValue(
+        primary: "GITHUB_ORG",
+        legacy: "GITHUB_ORG_NAME",
+        default: "tryswift"
+      )
+      self.teamSlug = Self.environmentValue(
+        primary: "GITHUB_TEAM",
+        legacy: "GITHUB_TEAM_SLUG",
+        default: "tokyo"
+      )
       self.invitedSpeakerTeamSlug =
         Environment.get("GITHUB_INVITED_SPEAKER_TEAM") ?? "tokyo-2026-speaker"
+    }
+
+    private static func environmentValue(
+      primary: String, legacy: String, default defaultValue: String
+    )
+      -> String
+    {
+      Environment.get(primary) ?? Environment.get(legacy) ?? defaultValue
     }
 
     enum ConfigError: Error, CustomStringConvertible {

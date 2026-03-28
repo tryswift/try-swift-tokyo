@@ -18,23 +18,22 @@
 
 ### Initial Setup
 
-1. **Create the app** (from the Server directory):
+1. **Create the production app**:
 
    ```bash
-   cd Server
-   fly apps create tryswift-cfp-api
+   fly apps create tryswift-cfp-api-prod
    ```
 
 2. **Create a PostgreSQL database**:
 
    ```bash
-   fly postgres create --name tryswift-cfp-db --region nrt
+   fly postgres create --name tryswift-cfp-db-prod --region nrt
    ```
 
 3. **Attach the database to the app**:
 
    ```bash
-   fly postgres attach tryswift-cfp-db --app tryswift-cfp-api
+   fly postgres attach tryswift-cfp-db-prod --app tryswift-cfp-api-prod
    ```
 
    This will automatically set the `DATABASE_URL` secret.
@@ -43,48 +42,40 @@
 
    ```bash
    # JWT Secret (generate a secure random string)
-   fly secrets set JWT_SECRET="$(openssl rand -base64 32)" --app tryswift-cfp-api
+   fly secrets set JWT_SECRET="$(openssl rand -base64 32)" --app tryswift-cfp-api-prod
 
    # GitHub OAuth credentials
-   fly secrets set GITHUB_CLIENT_ID="your-github-client-id" --app tryswift-cfp-api
-   fly secrets set GITHUB_CLIENT_SECRET="your-github-client-secret" --app tryswift-cfp-api
+   fly secrets set GITHUB_CLIENT_ID="your-github-client-id" --app tryswift-cfp-api-prod
+   fly secrets set GITHUB_CLIENT_SECRET="your-github-client-secret" --app tryswift-cfp-api-prod
 
    # GitHub Organization and Team for admin access
-   fly secrets set GITHUB_ORG_NAME="tryswift" --app tryswift-cfp-api
-   fly secrets set GITHUB_TEAM_SLUG="tokyo" --app tryswift-cfp-api
+   fly secrets set GITHUB_ORG="tryswift" --app tryswift-cfp-api-prod
+   fly secrets set GITHUB_TEAM="tokyo" --app tryswift-cfp-api-prod
 
    # Callback URL (update after deployment)
-   fly secrets set GITHUB_CALLBACK_URL="https://tryswift-cfp-api.fly.dev/api/v1/auth/github/callback" --app tryswift-cfp-api
+   fly secrets set GITHUB_CALLBACK_URL="https://tryswift-cfp-api-prod.fly.dev/api/v1/auth/github/callback" --app tryswift-cfp-api-prod
    ```
 
 ### Deploy
 
-**Important**: The Dockerfile needs access to the `MyLibrary` directory, so we need to deploy from the project root:
+**Important**: Deploy from the project root so Docker can access all workspace packages:
 
 ```bash
-# From project root directory
-fly deploy --config Server/fly.toml --dockerfile Server/Dockerfile
-```
-
-Or create a root-level fly.toml:
-
-```bash
-# Alternative: Deploy from Server directory with build context
-cd Server
-fly deploy --build-arg CONTEXT=..
+# From the project root directory
+fly deploy --config fly.production.toml
 ```
 
 ### Verify Deployment
 
 ```bash
 # Check app status
-fly status --app tryswift-cfp-api
+fly status --app tryswift-cfp-api-prod
 
 # View logs
-fly logs --app tryswift-cfp-api
+fly logs --app tryswift-cfp-api-prod
 
 # Check health endpoint
-curl https://tryswift-cfp-api.fly.dev/health
+curl https://tryswift-cfp-api-prod.fly.dev/health
 ```
 
 ### Run Migrations
@@ -92,7 +83,7 @@ curl https://tryswift-cfp-api.fly.dev/health
 Migrations run automatically on app startup. To run them manually:
 
 ```bash
-fly ssh console --app tryswift-cfp-api
+fly ssh console --app tryswift-cfp-api-prod
 ./Server migrate --yes
 ```
 
@@ -102,7 +93,7 @@ fly ssh console --app tryswift-cfp-api
 2. Create a new OAuth App:
    - **Application name**: trySwift CfP
    - **Homepage URL**: <https://tryswift.jp/cfp>
-   - **Authorization callback URL**: <https://tryswift-cfp-api.fly.dev/api/v1/auth/github/callback>
+   - **Authorization callback URL**: <https://tryswift-cfp-api-prod.fly.dev/api/v1/auth/github/callback>
 3. Copy the Client ID and Client Secret to Fly.io secrets
 
 ## Environment Variables
@@ -114,26 +105,28 @@ fly ssh console --app tryswift-cfp-api
 | `GITHUB_CLIENT_ID` | GitHub OAuth App Client ID | Yes |
 | `GITHUB_CLIENT_SECRET` | GitHub OAuth App Client Secret | Yes |
 | `GITHUB_CALLBACK_URL` | OAuth callback URL | Yes |
-| `GITHUB_ORG_NAME` | GitHub organization name (default: tryswift) | No |
-| `GITHUB_TEAM_SLUG` | Team slug for admin access (default: tokyo) | No |
+| `GITHUB_ORG` | GitHub organization name (default: tryswift) | No |
+| `GITHUB_TEAM` | Team slug for admin access (default: tokyo) | No |
+| `GITHUB_ORG_NAME` | Legacy alias for `GITHUB_ORG` | No |
+| `GITHUB_TEAM_SLUG` | Legacy alias for `GITHUB_TEAM` | No |
 | `LOG_LEVEL` | Logging level (default: info) | No |
 
 ## Scaling
 
 ```bash
 # Scale to 2 machines
-fly scale count 2 --app tryswift-cfp-api
+fly scale count 2 --app tryswift-cfp-api-prod
 
 # Scale memory
-fly scale memory 1024 --app tryswift-cfp-api
+fly scale memory 1024 --app tryswift-cfp-api-prod
 ```
 
 ## Monitoring
 
 ```bash
 # View metrics
-fly dashboard --app tryswift-cfp-api
+fly dashboard --app tryswift-cfp-api-prod
 
 # Check database
-fly postgres connect --app tryswift-cfp-db
+fly postgres connect --app tryswift-cfp-db-prod
 ```

@@ -67,6 +67,8 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
   public let abstractJA: String?
   /// Workshop-specific details (only for workshop proposals)
   public let workshopDetails: WorkshopDetails?
+  /// Japanese translations for user-facing workshop detail fields
+  public let workshopDetailsJA: WorkshopDetailsJA?
   /// Co-instructors for workshop proposals (up to 2 additional instructors)
   public let coInstructors: [CoInstructor]?
 
@@ -96,6 +98,7 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
     titleJA: String? = nil,
     abstractJA: String? = nil,
     workshopDetails: WorkshopDetails? = nil,
+    workshopDetailsJA: WorkshopDetailsJA? = nil,
     coInstructors: [CoInstructor]? = nil
   ) {
     self.id = id
@@ -123,6 +126,7 @@ public struct ProposalDTO: Codable, Sendable, Equatable, Identifiable {
     self.titleJA = titleJA
     self.abstractJA = abstractJA
     self.workshopDetails = workshopDetails
+    self.workshopDetailsJA = workshopDetailsJA
     self.coInstructors = coInstructors
   }
 }

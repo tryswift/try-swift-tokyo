@@ -1,6 +1,437 @@
 {
   "id": 2,
   "title": "Day 1",
-  "date": "2026-04-13T12:00:00+09:00",
-  "schedules": []
+  "title_ja": "Day 1",
+  "date": "2026-04-13T00:00:00+09:00",
+  "schedules": [
+    {
+      "time": "2026-04-13T08:00:00+09:00",
+      "sessions": [
+        {
+          "title": "🏃Run & Walk the Park",
+          "title_ja": "🏃Run & Walk the Park",
+          "description": "Kick off the first day of the conference with “Run & Walk the Park” at [Showa Kinen Park](https://maps.apple/p/r4DeFqIu9NQCMa).\nWake up, get moving, and start your day feeling refreshed.\n\nJoin fellow participants from around the world for a casual and open activity—whether you prefer a light run or a relaxed walk through the park.\n**No registration is required—anyone with a conference ticket is welcome to join.**",
+          "description_ja": "カンファレンス初日の朝、[昭和記念公園](https://maps.apple/p/r4DeFqIu9NQCMa)で「Run & Walk the Park」を開催します。\n軽く体を動かしながら、すっきりとした気分で一日をスタートしましょう。\n\n世界中から集まる参加者とともに、春の空気を感じながら公園内を走ったり歩いたりできる、オープンでカジュアルなアクティビティです。\n**事前申し込みは不要ですので、カンファレンスチケットをお持ちの方であればどなたでも気軽にご参加いただけます。**",
+          "place": "Showa Kinen Park",
+          "place_ja": "昭和記念公園"
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T09:30:00+09:00",
+      "sessions": [
+        {
+          "title": "#SwiftStudentsCafe: Crafting standout apps",
+          "title_ja": "#SwiftStudentsCafe: 際立つアプリを設計しよう",
+          "description": "**＊Registration required**\nHow to sign up: Coming soon...\n\nAI-generated apps become increasingly common on the App Store, how can beginner developers and student developers make their apps stand out? Let’s build apps that stand out precisely because you can code. In this session, speakers from different countries who are Swift Student Challenge Winners will share their unique experiences, covering everything from how to refine ideas and craft better user experiences to accessibility.\n\nBy the end of the event, you will likely come away with many new ideas for how to make your own app stand out. This event is part of the collaboration campaign #SwiftStudentsCafe, organized by a multinational team from Swift Student Community Japan, Community for Swift Students (Korea), and Swift Student Collective (Singapore).",
+          "description_ja": "**＊事前申し込みが必要です**\n申し込み方法：後日ご案内します\n\nAIで作られたアプリがApp Storeにたくさん並ぶようになった今、学生やアプリ開発を始めたばかりのデベロッパの皆さんが開発するアプリはどのようにして際立たせればいいのでしょうか。コーディングができる皆 さんだからこそ際立つアプリを開発しましょう。アイディアの輝かせ方体験設計からアクセシビリティまでを各国のSwift Student Challenge Winnerの独自の経験から語ります。\n\nイベント終了後にはご自身で開発されてるアプリをどのように際立たせられるのか、アイディアがいくつも浮かぶはずです。このイベントはSwift Student Community Japan, Community for Swift Students(韓国), Swift Student Collective(シンガポール)の多国籍チームによるコラボレーションキャンペーン #SwiftStudentsCafe の一環として行われます。",
+          "place": "KOTOBUKIYA-Hall",
+          "place_ja": "KOTOBUKIYA-Hall",
+          "speakers": [
+            {
+              "name": "Masakaz Ozaki",
+              "image_name": "2026/masakaz",
+              "bio": "A design engineer working across the intersection of design and engineering. Major projects include the Nikkei Spatial Edition app and the DEPSE app. Notable awards include being named a Winner of the Swift Student Challenge 2024 and receiving the 1st GOOD DESIGN NEW HOPE AWARD. Currently developing the Synchronism app.",
+              "bio_ja": "デザインとエンジニアリングの分野を行き来しながら活動するデザインエンジニア。手がけた主なプロジェクトは日経空間版アプリやDEPSEアプリなど。主な受賞にはSwift Student Challenge 2024、第一回GOOD DESIGN NEW HOPE AWARDなどがある。現在はSynchronism アプリを開発中。",
+              "job_title": "Senior Researcher at Keio University",
+              "links": [
+                {
+                  "url": "https://www.facebook.com/r2d28192",
+                  "name": "Facebook"
+                },
+                {
+                  "url": "https://www.instagram.com/masakazozaki",
+                  "name": "Instagram"
+                },
+                {
+                  "url": "https://x.com/masakazozaki",
+                  "name": "X"
+                },
+                {
+                  "url": "https://masakaz.com",
+                  "name": "masakaz.com"
+                }
+              ]
+            },
+            {
+              "name": "Kyoya Yamaguchi",
+              "image_name": "2026/kyoya",
+              "bio": "Started programming in Swift during junior high school and won first place in an app development competition. \nBegan working as an iOS engineering intern while in high school, alongside developing applications independently. \nSwift Student Challenge Winner (2023, 2024). \nCurrently working as an iOS App Developer at CoeFont",
+              "bio_ja": "中学生でSwiftを使ったプログラミングを始め、アプリのコンテストで優勝を経験。高校在学中からiOSエンジニアとしてのインターンを始め、個人でもアプリ開発に取り組む。2023年、2024年Swift Student Challenge入賞。現在は株式会社CoeFontでiOSアプリの開発を担当。",
+              "job_title": "iOS App Developer @CoeFont",
+              "links": [
+                {
+                  "url": "https://x.com/kyoya1123",
+                  "name": "X"
+                },
+                {
+                  "url": "https://kyoya.me",
+                  "name": "kyoya.me"
+                },
+                {
+                  "url": "https://www.linkedin.com/in/kyoya-yamaguchi",
+                  "name": "LinkedIn"
+                }
+              ]
+            },
+            {
+              "name": "Jaesung Lee",
+              "image_name": "2026/jaesung",
+              "bio": "Jaesung Lee is a winner of the WWDC Scholarship in 2019 and the Swift Student Challenge in 2020.\nIn 2022 and 2023, he served as an open-source mentor in the Swift Mentorship program at swift.org.\nCurrently, he is a tech mentor at Apple Developer Academy @ POSTECH and the lead organizer of “Community for Swift Students,” which has been holding events for Swift students led by Korean Swift Student Challenge winners since 2023.",
+              "bio_ja": "韓国を中心に活動するデベロッパ。WWDC Scholarship 2019, Swift Student Challenge 2020入賞。2022年, 2023年 swift.org Swift Mentorship オープンソースメンター。現在はApple Developer Academy @POSTECH にてテックメンターを担当。Community for Swift Students リードオーガナイザー。",
+              "job_title": "Tech Mentor at Apple Developer Academy @POSTECH",
+              "links": [
+                {
+                  "url": "https://www.linkedin.com/in/x-0o0",
+                  "name": "LinkedIn"
+                },
+                {
+                  "url": "https://x.com/j_sung_x_0o0",
+                  "name": "X"
+                }
+              ]
+            },
+            {
+              "name": "Jia Chen Yee",
+              "image_name": "2026/JiaChen",
+              "bio": "Jia Chen is an Apple Certified Trainer, developer, and community organizer based in Singapore, leading initiatives such as iOS Conf SG, Swift for Everyone, Swift Student Collective, and Spatial Singapore. Through his work, he creates experiences for students and developers across Asia. A two-time Swift Student Challenge winner (2020, 2021), he has been featured on Apple.com and continues to grow communities through events and initiatives.",
+              "bio_ja": "シンガポールを中心に活動するApple certified Trainer、 デベロッパ、コミュニティオーガナイザー。iOS Conf SG、 Swift for Everyone、 Swift Student Collective、Spatial Singaporeなどを運営。Swift Student Challenge 2020, 2021入賞。apple.comにフィーチャー経験などを持つ。",
+              "job_title": "Organizer, iOS Conf SG",
+              "links": [
+                {
+                  "url": "https://www.linkedin.com/in/jia-chen-yee/",
+                  "name": "LinkedIn"
+                },
+                {
+                  "url": "https://jiachenyee.com",
+                  "name": "jiachenyee.com"
+                },
+                {
+                  "url": "https://x.com/jiachenyee",
+                  "name": "X"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T10:00:00+09:00",
+      "sessions": [
+        {
+          "title": "🌸Ohanami Party",
+          "title_ja": "🌸お花見",
+          "description": "Join us for a morning Ohanami (cherry blossom gathering) at [Showa Kinen Park](https://maps.apple/p/r4DeFqIu9NQCMa) on the first day of the conference.\nSet against the beauty of spring, this is a chance for participants from around the world to naturally meet, connect, and share moments together.\n\nAs you stroll through the park, let conversations flow across cultures and backgrounds, sparking new connections and perspectives.\n**No registration is required—anyone with a conference ticket is welcome to join.**\nCome start your day in a warm, globally connected atmosphere.",
+          "description_ja": "カンファレンス初日の朝、[昭和記念公園](https://maps.apple/p/r4DeFqIu9NQCMa)でお花見イベントを開催します。\n春のやわらかな空気と桜に包まれながら、世界中から集まる参加者同士が自然に出会い、つながるひとときです。\n\n園内をゆったりと歩きながら、言葉やバックグラウンドを越えて、新しい出会いや気づきが生まれるような時間をお楽しみください。\n**事前申し込みは不要ですので、カンファレンスチケットをお持ちの方であればどなたでも気軽にご参加いただけます。**\n心地よい春の朝を、一緒に迎えましょう。",
+          "place": "Showa Kinen Park",
+          "place_ja": "昭和記念公園"
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T13:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Registration",
+          "title_ja": "受付"
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T13:30:00+09:00",
+      "sessions": [
+        {
+          "title": "Opening",
+          "title_ja": "オープニング"
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T13:50:00+09:00",
+      "sessions": [
+        {
+          "title": "Swift Outside Apple: One Codebase, Five Platforms",
+          "title_ja": "Appleの枠を超えるSwift：単一コードで5プラットフォーム対応",
+          "description": "Swift has quietly escaped the Apple ecosystem. With official support for Android, WebAssembly in Swift 6.2, and a maturing server and embedded story, we're entering an era where a single Swift codebase can run everywhere.\nIn this talk, I'll take you on a tour of Swift beyond Xcode—demonstrating the same code running on Server, Embedded Linux, Android, WebAssembly, and iOS. We'll explore what actually works today, where the rough edges remain, and how the tooling is evolving to make cross-platform Swift practical.\nWhether you're a library author wanting to expand your reach or simply curious about Swift's future beyond Apple, you'll leave with a clear picture of what's possible—and what's coming next.",
+          "description_ja": "SwiftはAppleエコシステムの外へと静かに広がっています。Androidへの公式サポート、Swift 6.2でのWebAssembly対応、そしてサーバーや組み込み領域の成熟により、1つのSwiftコードベースがどこでも動く時代が到来しつつあります。\nこのトークでは、Xcodeの外の世界をツアーし、同じコードがサーバー、組み込みLinux、Android、WebAssembly、iOSで動作するデモをお見せします。現在実際に動くもの、まだ荒削りな部分、クロスプラットフォームSwiftを実用的にするためにツールがどう進化しているかを探ります。\nライブラリ作者としてリーチを広げたい方も、Apple以外でのSwiftの未来に興味がある方も、何が可能で何が次に来るのか、その全体像を持ち帰れるでしょう。",
+          "summary": "Swift has quietly escaped the Apple ecosystem. With official support for Android, WebAssembly in Swift 6.2, and a maturing server and embedded story, we're entering an era where a single Swift codebas",
+          "summary_ja": "SwiftはAppleエコシステムの外へと静かに広がっています。Androidへの公式サポート、Swift 6.2でのWebAssembly対応、そしてサーバーや組み込み領域の成熟により、1つのSwiftコードベースがどこでも動く時代が到来しつつあります。",
+          "speakers": [
+            {
+              "name": "Joannis Orlandos",
+              "image_name": "Speaker/2026/2026_JoannisOrlandos",
+              "bio": "Joannis Orlandos is a cross-platform Swift developer and member of both the Swift Server Workgroup and Swift Android Workgroup. He announced the official Swift SDK for Android on Swift.org and co-founded Wendy Labs, creators of WendyOS—a Swift-first Linux distribution for embedded devices. Joannis maintains Hummingbird 2, created MongoKitten and Citadel, and co-runs SwiftOnServer.com",
+              "bio_ja": "Joannis Orlandosはクロスプラットフォーム Swift 開発者であり、Swift Server WorkgroupとSwift Android Workgroupの両方のメンバーです。Swift.orgでAndroid向け公式Swift SDKを発表し、組み込みデバイス向けのSwiftファーストLinuxディストリビューション「WendyOS」を作成したWendy Labsを共同設立しました。JoannisはHummingbird 2のメンテナーであり、MongoKittenとCitadelを作成し、SwiftOnServer.comを共同運営しています。",
+              "job_title": "OpenSource Maintainer / Co-Founder",
+              "links": [
+                {
+                  "url": "https://x.com/joannisorlandos",
+                  "name": "@joannisorlandos"
+                },
+                {
+                  "url": "https://github.com/joannis",
+                  "name": "@joannis"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T14:15:00+09:00",
+      "sessions": [
+        {
+          "title": "⚡️Polishing Liquid Glass: Practical Tips for iOS 26",
+          "title_ja": "⚡️Liquid Glassを磨き上げる：iOS 26の実践Tips",
+          "description": "Liquid Glass was introduced as a new material starting from iOS 26, but practical knowledge about it is still scarce.\nIn this talk, I'll share practical UI tips that aren't covered in Apple's documentation or WWDC sessions.\nIf you haven't yet adapted to the new iOS 26 design, use the insights from this talk to accelerate your adoption.",
+          "description_ja": "iOS 26からの新しいマテリアルとして登場したLiquid Glassですが、まだ実用的な知見が出回っていない状況です。\nこのトークでは、AppleのドキュメントやWWDCのセッション動画ではカバーできていない、より実践的なUIに対してのTipsを共有します。\nまだiOS 26の新しいデザインに対応できていない人は、このトークの情報を元に、新しいデザインの対応を加速させましょう。",
+          "summary": "Liquid Glass was introduced as a new material starting from iOS 26, but practical knowledge about it is still scarce. In this talk, I'll share practical UI tips that aren't covered in Apple's documenta",
+          "summary_ja": "iOS 26からの新しいマテリアルとして登場したLiquid Glassですが、まだ実用的な知見が出回っていない状況です。このトークでは、AppleのドキュメントやWWDCのセッション動画ではカバーできていない、より実践的なUIに対してのTipsを共有します。",
+          "speakers": [
+            {
+              "name": "matsuji",
+              "image_name": "Speaker/2026/2026_matsuji",
+              "bio": "matsuji is an iOS app developer based in Japan. In his professional work, he contributes to the development of globally deployed large-scale applications. Outside of work, he develops open-source software and releases independent apps. He also enjoys playing the board game Go.",
+              "bio_ja": "日本でiOSアプリ開発をしています。仕事としてグローバルに展開されている大規模なアプリの開発をしている一方、個人としてOSSを開発したり個人でアプリをリリースしたりしています。ボードゲームの囲碁が好きです。",
+              "job_title": "iOS App Developer",
+              "links": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T14:25:00+09:00",
+      "sessions": [
+        {
+          "title": "GeoJSON × SwiftUI: Techniques for Beautiful Map Rendering",
+          "title_ja": "GeoJSON×SwiftUI：地図を“美しく”描くための技術",
+          "description": "I independently develop an app called Travel Memory Map, which lets you crop photos to match geographic shapes on a map and arrange them like puzzle pieces to visually record and share your travel memories.\nInitially, I created the maps manually, but when users requested municipality-level maps, I realized manual creation would never scale—so I took on the challenge of map rendering using GeoJSON.\nIn this talk, I'll explain how to render GeoJSON with SwiftUI, how to address the visual oddities caused by map projections, and which projections, transformations, and rendering methods to choose in order to create natural-looking maps—with real examples from the design and implementation.",
+          "description_ja": "旅行思い出マップという訪れた場所の写真を地図の地形に合わせて切り取り、地図上にパズルのように配置して視覚的に旅の思い出を記録・共有できるアプリを個人で開発しております。\n最初は手作業で地図を作っていましたが、ユーザーから市町村レベルの地図が欲しいと要望を受け、手作業だと時間がいくらあっても足りないという悩みを解決するためにGeoJSONを使った地図描画に挑戦しました。\nこのトークでは、GeoJSONをSwiftUIで描画する方法、また実際に起きる図法由来の違和感をどう捉え、どの図法・変換・描画方法を選ぶことで「自然に見える地図」にしたのか、その設計と実装を実例とともに解説します。",
+          "summary": "I independently develop an app called Travel Memory Map that crops photos to match geographic shapes and arranges them like puzzle pieces on a map. When users requested municipality-level maps, I too",
+          "summary_ja": "旅行思い出マップという訪れた場所の写真を地図の地形に合わせて切り取り、地図上にパズルのように配置して視覚的に旅の思い出を記録・共有できるアプリを個人で開発しております。最初は手作業で地図を作っていましたが、ユーザーから市町村レベルの地図が欲しいと要望を受け、GeoJSONを使った地図描画に挑戦しました。",
+          "speakers": [
+            {
+              "name": "Ryo Tsuzukihashi",
+              "image_name": "Speaker/2026/2026_RyoTsuzukihashi",
+              "bio": "Ryo Tsuzukihashi started indie development in 2016. After joining Yahoo Japan as a new graduate in 2019, he worked on the PayPay Flea Market app and grew through LeanXP-style pair programming. In 2023 he joined DeNA and contributed to the development of the live communication app Pococha, including test-driven development practices and short video features. Since 2024 he has been working at ZOZO on the ZOZOTOWN iOS app, tackling large-scale refactoring and SwiftUI adoption. As an indie developer, he actively experiments with AI tools such as Claude Code and has worked on iOS, Android, and SaaS applications. He has extensive experience with Firebase as a BaaS and has released more than 50 apps so far.",
+              "bio_ja": "2016年から個人開発を開始。2019年に新卒でヤフー株式会社へ入社し、PayPayフリマの立ち上げ期からチームに参加。LeanXPのペアプログラミングを通して経験を積みました。2023年にDeNAへ移り、ライブコミュニケーションアプリ「Pococha」のiOSアプリ開発に従事し、テスト駆動開発やショート動画投稿機能の開発などに関わりました。2024年からはZOZOでZOZOTOWNのiOSアプリ開発を担当し、大規模アプリのリファクタリングやSwiftUI化などモダンな開発にも取り組んでいます。個人開発ではAI（Claude Code）を活用し、iOSだけでなくAndroidやSaaSアプリの開発にも挑戦。BaaSとしてFirebaseを活用し、これまでに50以上のアプリをリリースしています。",
+              "job_title": "iOS App Developer at ZOZO",
+              "links": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T14:50:00+09:00",
+      "sessions": [
+        {
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T15:20:00+09:00",
+      "sessions": [
+        {
+          "title": "Swift Concurrency Type System",
+          "title_ja": "Swift Concurrency Type System",
+          "description": "Swift’s modern concurrency model combines actors, async/await, Sendable, and region-based isolation, yet its underlying rules are often perceived as ad hoc or opaque. \nThis talk introduces an experimental formalization of Swift Concurrency Type System by unifying capability-based isolation and region-based alias tracking that cleanly separates execution context (capabilities) from value ownership and aliasing (regions), closely mirroring Swift's actual compiler behavior. ",
+          "description_ja": "Swiftのモダンな並行処理モデルは、アクター、async/await、Sendable、リージョンベースの隔離を組み合わせていますが、その基盤となるルールはしばしばアドホックで不透明に感じられます。\nこのトークでは、Swift Concurrency型システムの実験的な形式化を紹介します。能力ベースの隔離とリージョンベースのエイリアス追跡を統一することで、実行コンテキスト（能力）と値の所有権・エイリアシング（リージョン）を明確に分離し、Swiftの実際のコンパイラの動作に近い形でモデル化します。",
+          "summary": "Swift’s modern concurrency model combines actors, async/await, Sendable, and region-based isolation, yet its underlying rules are often perceived as ad hoc or opaque. \nThis talk introduces an experi",
+          "summary_ja": "Swiftのモダンな並行処理モデルは、アクター、async/await、Sendable、リージョンベースの隔離を組み合わせていますが、その基盤となるルールはしばしばアドホックで不透明に感じられます。このトークでは、Swift Concurrency型システムの実験的な形式化を紹介します。",
+          "speakers": [
+            {
+              "name": "Yasuhiro Inami",
+              "image_name": "Speaker/2026/2026_YasuhiroInami",
+              "bio": "Inamiy is an iOS developer at Goodnotes, focusing on mobile app development and AI-powered features.\nHe is a big fan of functional programming including Swift, Haskell, and any statically typed languages that can check his bad code.\nNowadays, he has shifted toward compiler-like work that helps detect and correct poor code produced by AI.",
+              "bio_ja": "GoodnotesでiOS開発者として働いており、モバイルアプリ開発とAI機能の開発に注力しています。\nSwift、Haskell、その他の静的型付け言語を含む関数型プログラミングの大ファンで、自分の悪いコードをチェックしてくれる言語が好きです。\n最近はAIが生成するコードの検出と修正を支援するコンパイラ的な作業にシフトしています。",
+              "job_title": "Software Engineer at Goodnotes",
+              "links": [
+                {
+                  "url": "https://github.com/inamiy",
+                  "name": "@inamiy"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T15:45:00+09:00",
+      "sessions": [
+        {
+          "title": "⚡️Furigana Deep Dive!",
+          "title_ja": "⚡️ふりがな Deep Dive！",
+          "description": "Furigana is more than just small characters above kanji. This talk explores implementing furigana in SwiftUI using TextRenderer.",
+          "description_ja": "ふりがなは、漢字の上に表示される小さな文字以上の存在です。このトークでは、SwiftUIでTextRendererを使ってふりがなを実装する方法を探ります。",
+          "summary": "Furigana is more than just small characters above kanji. This talk explores implementing furigana in SwiftUI using TextRenderer.",
+          "summary_ja": "ふりがなは、漢字の上に表示される小さな文字以上の存在です。このトークでは、SwiftUIでTextRendererを使ってふりがなを実装する方法を探ります。",
+          "speakers": [
+            {
+              "name": "Wataru Nishimoto",
+              "image_name": "Speaker/2026/2026_WataruNishimoto",
+              "bio": "Wataru Nishimoto is an iOS app engineer.",
+              "bio_ja": "Wataru NishimotoはiOSアプリエンジニアです。",
+              "job_title": "iOS App Engineer",
+              "links": [
+                {
+                  "url": "https://github.com/watura",
+                  "name": "@watura"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T15:55:00+09:00",
+      "sessions": [
+        {
+          "title": "Beyond Translation: Understanding Localization with Foundation.Locale",
+          "title_ja": "翻訳を超えて：Foundation.Localeで理解するローカライズ",
+          "description": "Is your app truly localized? Or does it stop at mere translation? Numbers, dates, sort order—regional differences lurk quietly in the gaps of your code, roughening the app experience like a pebble in your shoe. While FormatStyle has made display formatting easy to implement, it has also reduced opportunities for developers to be aware of regional differences. In other words, localization issues have become harder to notice. In this talk, we'll use Foundation's Locale as a starting point to visualize the overlooked localization spots—the 'pebbles' in your app. We'll organize everything from international standards to implementation tips, guiding you to a level of localization that goes beyond mere translation.",
+          "description_ja": "あなたのアプリは「本当に」ローカライズされていますか？単なる翻訳で終わっていませんか？数字、日付、並び順……地域差はコードの隙間に静かに潜み、靴の中の小石のようにアプリの体験をざらつかせます。FormatStyleの整備により表示処理を簡単に実装できるようになった反面、開発者が地域差を意識する機会は減りました。つまり、ローカライズの問題はより気づかれにくくなったのです。本トークではFoundationのLocaleを足がかりに、あなたのアプリ内の「小石」である見落とされたローカライズ箇所を可視化します。国際標準から実装のコツまでを整理し、単なる翻訳を越えた一段階上のローカライズへと導きます。",
+          "summary": "Is your app truly localized? Or does it stop at mere translation? Numbers, dates, sort order—regional differences lurk quietly in the gaps of your code, roughening the app experience like a pebble i",
+          "summary_ja": "あなたのアプリは「本当に」ローカライズされていますか？単なる翻訳で終わっていませんか？数字、日付、並び順……地域差はコードの隙間に静かに潜み、靴の中の小石のようにアプリの体験をざらつかせます。FormatStyleの整備により表示処理を簡単に実装できるようになった反面、開発者が地域差を意識する機会は減りました。",
+          "speakers": [
+            {
+              "name": "Satsuki Hashiba",
+              "image_name": "Speaker/2026/2026_SatsukiHashiba",
+              "bio": "Satsuki works at LY Corporation, where she contributes to the development of LINE, Japan’s largest communication app. She enjoys reading, knitting, and gaming, and happily embraces an indoor-oriented lifestyle—much like her beloved cat.",
+              "bio_ja": "Satsuki HashibaはLY Corporationで働き、日本最大級のコミュニケーションアプリであるLINEの開発に携わっています。読書、編み物、ゲームが趣味で、愛猫と同じくインドアな生活を楽しんでいます。",
+              "job_title": "Developer at LY Corporation",
+              "links": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T16:20:00+09:00",
+      "sessions": [
+        {
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T16:50:00+09:00",
+      "sessions": [
+        {
+          "title": "Open Source at Scale: Collaborating on Firefox for iOS",
+          "title_ja": "大規模オープンソース開発の現場：Firefox for iOSをどう作り続けるか",
+          "description": "Open source development makes it possible for teams across different countries, time zones, and skill levels to build high-quality software together, and Firefox for iOS is a real example of this working at scale. In this talk, I will share how we design and maintain a large Swift and SwiftUI application in a fully public environment while keeping the codebase approachable for first-time contributors and reliable for millions of users. I will explain our architectural choices, how we break down work to support external contributions, and how we review code in a way that balances quality with openness. I will also highlight Mozilla’s strong contributor community in Japan and how community input from this region has influenced shipped features and improvements in Firefox. By sharing practical workflows, contributor onboarding practices, and real examples of how outside developers have impacted our app, I want to show that open source is not only for experts but is an accessible path for any Swift developer who wants to grow their skills. The audience will leave with a clear understanding of how large open source projects operate in the real world, how they can get started contributing, and how collaboration in the open leads to stronger products and a stronger developer community.",
+          "description_ja": "オープンソース開発は、異なる国、タイムゾーン、スキルレベルのチームが協力して高品質なソフトウェアを構築することを可能にします。Firefox for iOSはまさにその大規模な実例です。このトークでは、完全に公開された環境で大規模なSwiftおよびSwiftUIアプリケーションをどのように設計・保守しているか、初めてのコントリビューターにとってもアクセスしやすく、何百万人ものユーザーにとっても信頼性のあるコードベースをどのように維持しているかをお話しします。アーキテクチャ上の選択、外部からのコントリビューションを支援するための作業の分割方法、品質とオープンさのバランスを取るコードレビューの仕方を説明します。また、日本におけるMozillaの活発なコントリビューターコミュニティと、この地域からのコミュニティの貢献がFirefoxにリリースされた機能や改善にどのように影響を与えてきたかを紹介します。実践的なワークフロー、コントリビューターのオンボーディング方法、外部の開発者がアプリにどのようなインパクトを与えたかの実例を共有することで、オープンソースは専門家だけのものではなく、スキルを伸ばしたいSwift開発者なら誰でもアクセスできるパスであることをお伝えしたいと思います。聴講者の皆さんは、大規模なオープンソースプロジェクトが実際にどのように運営されているか、コントリビューションを始める方法、そしてオープンなコラボレーションがより強い製品とより強い開発者コミュニティにつながることについて、明確な理解を持ち帰れるでしょう。",
+          "summary": "Open source development makes it possible for teams across different countries, time zones, and skill levels to build high-quality software together, and Firefox for iOS is a real example of this work",
+          "summary_ja": "オープンソース開発は、異なる国、タイムゾーン、スキルレベルのチームが協力して高品質なソフトウェアを構築することを可能にします。Firefox for iOSはまさにその大規模な実例です。このトークでは、完全に公開された環境で大規模なSwiftアプリケーションをどのように設計・保守しているかをお話しします。",
+          "speakers": [
+            {
+              "name": "Nishant Bhasin",
+              "image_name": "Speaker/2026/2026_NishantBhasin",
+              "bio": "Engineering Manager at Mozilla working on Firefox for iOS. Previously a Staff Engineer leading major architectural initiatives in Swift and SwiftUI. Over a decade of experience building and scaling mobile applications with a focus on performance, privacy, and usability. I am passionate about mentorship, open source collaboration, and helping engineers grow through real, impactful contributions. I continue to support global contributors and guide new developers through their first open source experience while ensuring Firefox for iOS maintains the quality and reliability expected from a product used by millions.",
+              "bio_ja": "Nishant BhasinはMozillaのEngineering Managerで、Firefox for iOSの開発に携わっています。以前はStaff Engineerとして、SwiftやSwiftUIを用いた大規模なアーキテクチャ改善プロジェクトをリードしてきました。パフォーマンス、プライバシー、ユーザビリティを重視したモバイルアプリ開発において、10年以上の経験を持っています。メンタリングやオープンソースでの協働、そしてエンジニアが実際に価値のある貢献を通して成長できる環境づくりに強い関心を持っています。世界中のコントリビューターを支援しながら、初めてオープンソースに参加する開発者をサポートしつつ、何百万人ものユーザーに使われるFirefox for iOSに求められる品質と信頼性を維持することに取り組んでいます。",
+              "job_title": "Engineering Manager at Mozilla",
+              "links": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T17:15:00+09:00",
+      "sessions": [
+        {
+          "title": "⚡️Living with Genmoji",
+          "title_ja": "⚡️Genmojiと私たちはどう生きるのか",
+          "description": "I released an indie app with Genmoji generation as its main feature, and decided to live alongside Genmoji.\nGenmoji was prominently featured at WWDC24, but it occupies a somewhat peculiar position within Swift's type system. In fact, .genmoji is not defined as a static constant in ImagePlaygroundStyle.\nIn this talk, I'll introduce techniques for naturally integrating Genmoji—despite its ambiguous position—into your apps and living with it. I'll also share ideas for making Genmoji output more expressive by leveraging Apple frameworks such as Foundation Models.",
+          "description_ja": "私はGenmoji生成を主機能にした個人開発アプリをリリースし、Genmojiと共に生きると決めました。\nWWDC24で大きく紹介されたGenmojiですが、Swiftの型システム上では少し不思議な立ち位置にあります。実は、ImagePlaygroundStyleには .genmojiがstatic定数として定義されていません。\nこのトークでは、そんな微妙な立ち位置のGenmojiを、アプリに自然に溶け込ませ、共に生きていくための工夫を紹介します。Foundation ModelsなどAppleのフレームワークを活用し、Genmojiのアウトプットをより表現豊かにするアイデアも紹介します。",
+          "summary": "I released an indie app with Genmoji generation as its main feature and decided to live alongside Genmoji. Despite being prominently featured at WWDC24, Genmoji occupies a peculiar position within S",
+          "summary_ja": "私はGenmoji生成を主機能にした個人開発アプリをリリースし、Genmojiと共に生きると決めました。WWDC24で大きく紹介されたGenmojiですが、Swiftの型システム上では少し不思議な立ち位置にあります。このトークでは、そんな微妙な立ち位置のGenmojiを、アプリに自然に溶け込ませるための工夫を紹介します。",
+          "speakers": [
+            {
+              "name": "Lil Ossa",
+              "image_name": "Speaker/2026/2026_LilOssa",
+              "bio": "Osama is an iOS engineer at Classmethod in Japan, and he's also a breakdancer who came in second place at the World Breakdancing Championship in Germany in 2007. In the breakdance world, he is known as 'Lil Ossa'. He has a passion for beer, dance, and building iOS apps. He enjoys sharing his unique experiences in iOS development at conferences such as try! Swift Tokyo 2024, Swiftable 2023, and iOSDC Japan 2022.",
+              "bio_ja": "Osamaは日本のクラスメソッドで働くiOSエンジニアです。2007年にはドイツで開催された世界ブレイクダンス選手権で準優勝したブレイクダンサーでもあり、ダンスの世界では「Lil Ossa」として知られています。ビールとダンス、そしてiOSアプリ開発をこよなく愛しています。try! Swift Tokyo 2024、Swiftable 2023、iOSDC Japan 2022などのカンファレンスで、ユニークなiOS開発の経験を共有することを楽しんでいます。",
+              "job_title": "iOS App Developer at Classmethod",
+              "links": [
+                {
+                  "url": "https://github.com/littleossa",
+                  "name": "@littleossa"
+                },
+                {
+                  "url": "https://x.com/littleossa",
+                  "name": "@littleossa"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T17:25:00+09:00",
+      "sessions": [
+        {
+          "title": "The Art of Caring",
+          "title_ja": "思いやりのデザイン",
+          "description": "The App Store is flooded with new applications every day. Standing out is hard — and in an age of AI, it’s only getting harder. Yet Art of Fauna managed to do exactly that through a simple principle: caring. Caring about every user. Caring about a clear, focused vision. Caring about myself as a creator.\n\nIn this talk, I share how these forms of care became the red thread throughout the development of Art of Fauna, and how they helped turn it into my most successful game so far.",
+          "description_ja": "App Storeには毎日新しいアプリケーションがあふれています。目立つことは難しく、AI時代においてはさらに困難です。しかしArt of Faunaは、シンプルな原則「思いやり」を通じてまさにそれを実現しました。すべてのユーザーへの思いやり。明確で集中したビジョンへの思いやり。クリエイターとしての自分自身への思いやり。\n\nこのトークでは、これらの形の思いやりがArt of Faunaの開発を通じてどのように一貫したテーマとなり、これまでで最も成功したゲームへと導いたかを共有します。",
+          "summary": "The App Store is flooded with new applications every day. Standing out is hard — and in an age of AI, it’s only getting harder. Yet Art of Fauna managed to do exactly that through a simple principle: ",
+          "summary_ja": "App Storeには毎日新しいアプリケーションがあふれています。目立つことは難しく、AI時代においてはさらに困難です。しかしArt of Faunaは、シンプルな原則「思いやり」を通じてまさにそれを実現しました。",
+          "speakers": [
+            {
+              "name": "Klemens Strasser",
+              "image_name": "Speaker/2026/2026_KlemensStrasser",
+              "bio": "Klemens is a indie developer dedicated to crafting delightful apps with a strong focus on accessibility. He won an Apple Design Award as a Student in 2015 for his very first project, Elementary Minute. In 2025, his latest app, Art of Fauna, received both an Apple Design Award and an App Store Award. His work centers on creating thoughtful, high-quality experiences that are welcoming and usable for as many people as possible.",
+              "bio_ja": "Klemensはアクセシビリティに強いこだわりを持ち、素晴らしいアプリを作ることに専念するインディー開発者です。2015年には学生として初めてのプロジェクト「Elementary Minute」でApple Design Awardを受賞しました。2025年には最新アプリ「Art of Fauna」がApple Design AwardとApp Store Awardの両方を受賞しました。彼の仕事は、できるだけ多くの人にとって親しみやすく使いやすい、思慮深く高品質な体験を創造することに重点を置いています。",
+              "job_title": "Indie Developer",
+              "links": [
+                {
+                  "url": "https://x.com/klemensstrasser",
+                  "name": "@klemensstrasser"
+                },
+                {
+                  "url": "https://www.instagram.com/autrach",
+                  "name": "@autrach"
+                },
+                {
+                  "url": "https://bsky.app/profile/strasser.bsky.social",
+                  "name": "@strasser.bsky.social"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T17:35:00+09:00",
+      "sessions": [
+        {
+          "title": "Closing",
+          "title_ja": "クロージング"
+        }
+      ]
+    },
+    {
+      "time": "2026-04-13T18:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Party",
+          "title_ja": "パーティー",
+          "place": "Tachihi Beach",
+          "place_ja": "タチヒビーチ"
+        }
+      ]
+    }
+  ]
 }

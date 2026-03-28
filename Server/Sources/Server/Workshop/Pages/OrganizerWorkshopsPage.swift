@@ -16,6 +16,7 @@ struct OrganizerWorkshopsPageView: HTML, Sendable {
     let capacity: Int
     let applicationCount: Int
     let lumaEventID: String?
+    let winnerEmails: [String]
   }
 
   var body: some HTML {
@@ -56,17 +57,7 @@ struct OrganizerWorkshopsPageView: HTML, Sendable {
           div(.class("card-body")) {
             h5(.class("fw-bold mb-3")) { "Lottery Actions" }
             div(.class("d-flex gap-2")) {
-              HTMLRaw(
-                """
-                <form method="post" action="/organizer/workshops/lottery" class="d-inline">
-                  <input type="hidden" name="_csrf" value="\(csrfToken)">
-                  <button type="submit" class="btn btn-warning">🎲 Run Lottery</button>
-                </form>
-                <form method="post" action="/organizer/workshops/send-tickets" class="d-inline">
-                  <input type="hidden" name="_csrf" value="\(csrfToken)">
-                  <button type="submit" class="btn btn-success">📧 Send Luma Tickets</button>
-                </form>
-                """)
+              HTMLRaw(lotteryActionsHTML())
             }
           }
         }
@@ -128,6 +119,35 @@ struct OrganizerWorkshopsPageView: HTML, Sendable {
     }
 
     html += "</tbody></table></div>"
+    return html
+  }
+
+  private func lotteryActionsHTML() -> String {
+    var html = ""
+    html += """
+      <form method="post" action="/organizer/workshops/lottery" class="d-inline">
+        <input type="hidden" name="_csrf" value="\(csrfToken)">
+        <button type="submit" class="btn btn-warning">🎲 Run Lottery</button>
+      </form>
+      <form method="post" action="/organizer/workshops/send-tickets" class="d-inline">
+        <input type="hidden" name="_csrf" value="\(csrfToken)">
+        <button type="submit" class="btn btn-success">📧 Send Luma Tickets</button>
+      </form>
+      """
+
+    let allWinnerEmails = Array(Set(workshops.flatMap(\.winnerEmails)))
+    if !allWinnerEmails.isEmpty {
+      var components = URLComponents()
+      components.scheme = "mailto"
+      components.queryItems = [
+        URLQueryItem(name: "bcc", value: allWinnerEmails.joined(separator: ",")),
+        URLQueryItem(name: "subject", value: "try! Swift Tokyo 2026 Workshop"),
+      ]
+      let mailtoURL = components.url?.absoluteString ?? "mailto:"
+      html +=
+        " <a href=\"\(escapeHTML(mailtoURL))\" class=\"btn btn-info\">&#9993; Email All Winners (\(allWinnerEmails.count))</a>"
+    }
+
     return html
   }
 

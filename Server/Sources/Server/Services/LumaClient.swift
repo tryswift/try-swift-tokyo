@@ -26,19 +26,34 @@ enum LumaClient {
       logger.error("LUMA_EVENT_ID not configured and no eventID provided")
       throw Abort(.internalServerError, reason: "Luma event ID not configured")
     }
-    let url =
-      "\(baseURL)/event/get-guest?event_id=\(lumaEventID)&id=\(email.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? email)"
+    var components = URLComponents(string: "\(baseURL)/event/get-guest")!
+    components.queryItems = [
+      URLQueryItem(name: "event_id", value: lumaEventID),
+      URLQueryItem(name: "id", value: email),
+    ]
+    // URLComponents leaves + unencoded (valid per RFC 3986), but many servers
+    // interpret + as space per x-www-form-urlencoded. Encode it explicitly.
+    components.percentEncodedQuery = components.percentEncodedQuery?
+      .replacingOccurrences(of: "+", with: "%2B")
+    let url = components.string!
 
     let response = try await client.get(URI(string: url)) { req in
       req.headers.add(name: "x-luma-api-key", value: apiKey)
     }
 
     guard response.status == .ok else {
-      logger.info("Luma get-guest returned status \(response.status.code) for email: \(email)")
-      return nil
+      if response.status == .notFound {
+        return nil
+      }
+      let body = response.body.map { String(buffer: $0) } ?? "no body"
+      let truncatedBody = body.count > 1000 ? String(body.prefix(1000)) + "… (truncated)" : body
+      logger.error(
+        "Luma get-guest returned status \(response.status.code) for email: \(email) - \(truncatedBody)"
+      )
+      throw Abort(.badGateway, reason: "Luma API returned \(response.status.code)")
     }
 
-    return try response.content.decode(LumaGuest.self)
+    return try response.content.decode(LumaGetGuestResponse.self).guest
   }
 
   /// Create a new event on Luma
@@ -114,16 +129,18 @@ enum LumaClient {
 
 // MARK: - Luma API Models
 
+/// Wrapper for GET /event/get-guest response
+private struct LumaGetGuestResponse: Content, Sendable {
+  let guest: LumaGuest
+}
+
 struct LumaGuest: Content, Sendable {
   let id: String?
-  let email: String?
-  let name: LumaName?
+  let user_email: String?
+  let user_name: String?
+  let user_first_name: String?
+  let user_last_name: String?
   let approval_status: String?
-
-  struct LumaName: Content, Sendable {
-    let first: String?
-    let last: String?
-  }
 
   /// Check if guest has an approved ticket
   var hasTicket: Bool {
@@ -131,7 +148,8 @@ struct LumaGuest: Content, Sendable {
   }
 
   var displayName: String {
-    [name?.first, name?.last].compactMap { $0 }.joined(separator: " ")
+    if let name = user_name, !name.isEmpty { return name }
+    return [user_first_name, user_last_name].compactMap { $0 }.joined(separator: " ")
   }
 }
 

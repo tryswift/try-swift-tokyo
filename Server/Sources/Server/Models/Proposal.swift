@@ -86,6 +86,10 @@ final class Proposal: Model, Content, @unchecked Sendable {
   @OptionalField(key: "workshop_details")
   var workshopDetails: WorkshopDetails?
 
+  /// Japanese translations for user-facing workshop detail fields (JSON)
+  @OptionalField(key: "workshop_details_ja")
+  var workshopDetailsJA: WorkshopDetailsJA?
+
   /// Co-instructors for workshop proposals (JSON array, up to 2 additional instructors)
   /// Wrapped in `CoInstructorList` so Fluent encodes a single JSONB value
   /// instead of a PostgreSQL `jsonb[]` array.
@@ -189,6 +193,7 @@ final class Proposal: Model, Content, @unchecked Sendable {
       titleJA: titleJA,
       abstractJA: abstractJA,
       workshopDetails: workshopDetails,
+      workshopDetailsJA: workshopDetailsJA,
       coInstructors: coInstructors?.items
     )
   }

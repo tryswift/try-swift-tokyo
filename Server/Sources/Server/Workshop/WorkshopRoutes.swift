@@ -52,6 +52,8 @@ struct WorkshopRoutes: RouteCollection {
     organizer.post(
       "workshops", ":registrationID", "luma-event", use: handleSetLumaEvent)
     organizer.get("workshops", "applications", use: organizerApplicationsPage)
+    organizer.post(
+      "workshops", "applications", ":applicationID", "delete", use: handleDeleteApplication)
     organizer.post("workshops", "lottery", use: handleRunLottery)
     organizer.get("workshops", "results", use: organizerResultsPage)
     organizer.post("workshops", "send-tickets", use: handleSendTickets)
@@ -67,15 +69,28 @@ struct WorkshopRoutes: RouteCollection {
   struct FetchedWorkshop: Sendable {
     let registrationID: UUID
     let proposalTitle: String
+    let titleJA: String?
     let speakerName: String
     let abstract: String
+    let abstractJA: String?
+    let bio: String
+    let bioJa: String?
+    let iconURL: String?
+    let githubUsername: String?
+    let paperCallUsername: String?
+    let workshopDetails: WorkshopDetails?
+    let workshopDetailsJA: WorkshopDetailsJA?
+    let coInstructors: [CoInstructor]?
     let capacity: Int
     let applicationCount: Int
     let lumaEventID: String?
+    let workshopLanguage: WorkshopLanguage?
   }
 
   /// Fetch accepted workshops with registration info
-  private func fetchWorkshops(on db: Database) async throws -> [FetchedWorkshop] {
+  private func fetchWorkshops(on db: Database, includeApplicationCount: Bool = true) async throws
+    -> [FetchedWorkshop]
+  {
     // Get accepted workshop proposals
     let proposals = try await Proposal.query(on: db)
       .filter(\.$talkDuration == .workshop)
@@ -114,19 +129,33 @@ struct WorkshopRoutes: RouteCollection {
 
       guard let regID = registration.id else { continue }
 
-      let appCount = try await WorkshopApplication.query(on: db)
-        .filter(\.$firstChoice.$id == regID)
-        .count()
+      let appCount =
+        includeApplicationCount
+        ? try await WorkshopApplication.query(on: db)
+          .filter(\.$firstChoice.$id == regID)
+          .count()
+        : 0
 
       results.append(
         FetchedWorkshop(
           registrationID: regID,
           proposalTitle: proposal.title,
+          titleJA: proposal.titleJA,
           speakerName: proposal.speakerName,
           abstract: proposal.abstract,
+          abstractJA: proposal.abstractJA,
+          bio: proposal.bio,
+          bioJa: proposal.bioJa,
+          iconURL: proposal.iconURL,
+          githubUsername: proposal.githubUsername,
+          paperCallUsername: proposal.paperCallUsername,
+          workshopDetails: proposal.workshopDetails,
+          workshopDetailsJA: proposal.workshopDetailsJA,
+          coInstructors: proposal.coInstructors?.items,
           capacity: registration.capacity,
           applicationCount: appCount,
-          lumaEventID: registration.lumaEventID
+          lumaEventID: registration.lumaEventID,
+          workshopLanguage: proposal.workshopDetails?.language
         ))
     }
 
@@ -203,7 +232,8 @@ struct WorkshopRoutes: RouteCollection {
     -> HTMLResponse
   {
     let user = try? await req.authenticatedUser()
-    let workshops = try await fetchWorkshops(on: req.db)
+    let isOrganizer = user?.role == .admin
+    let workshops = try await fetchWorkshops(on: req.db, includeApplicationCount: isOrganizer)
     let hasLotteryRun =
       try await WorkshopApplication.query(on: req.db)
       .filter(\.$status != .pending)
@@ -213,10 +243,21 @@ struct WorkshopRoutes: RouteCollection {
       WorkshopListPageView.WorkshopItem(
         id: $0.registrationID,
         title: $0.proposalTitle,
+        titleJA: $0.titleJA,
         speakerName: $0.speakerName,
         abstract: $0.abstract,
+        abstractJA: $0.abstractJA,
+        bio: $0.bio,
+        bioJa: $0.bioJa,
+        iconURL: $0.iconURL,
+        githubUsername: $0.githubUsername,
+        isPaperCallImport: $0.paperCallUsername != nil,
+        workshopDetails: $0.workshopDetails,
+        workshopDetailsJA: $0.workshopDetailsJA,
+        coInstructors: $0.coInstructors,
         capacity: $0.capacity,
-        applicationCount: $0.applicationCount
+        applicationCount: $0.applicationCount,
+        workshopLanguage: $0.workshopLanguage
       )
     }
 
@@ -230,7 +271,8 @@ struct WorkshopRoutes: RouteCollection {
         WorkshopListPageView(
           workshops: items,
           language: language,
-          applicationOpen: !hasLotteryRun
+          applicationOpen: !hasLotteryRun,
+          isOrganizer: isOrganizer
         )
       }
     }
@@ -287,22 +329,48 @@ struct WorkshopRoutes: RouteCollection {
     }
 
     // Verify Luma ticket
-    guard
-      let guest = try await LumaClient.getGuest(
-        email: email, client: req.client, logger: req.logger),
-      guest.hasTicket
-    else {
+    let guestName: String
+    if Environment.get("SKIP_LUMA_VERIFICATION") == "true" {
+      req.logger.debug("Luma ticket verification skipped (SKIP_LUMA_VERIFICATION=true)")
+      guestName = ""
+    } else if let lumaApiKey = Environment.get("LUMA_API_KEY"), !lumaApiKey.isEmpty {
+      let guest: LumaGuest?
+      do {
+        guest = try await LumaClient.getGuest(
+          email: email, client: req.client, logger: req.logger)
+      } catch {
+        req.logger.error("Luma API error during ticket verification: \(error)")
+        let html = try await renderWorkshopApplyPage(
+          req: req, language: language,
+          errorMessage: language == .ja
+            ? "チケット確認サービスに接続できませんでした。しばらくしてからもう一度お試しください。"
+            : "Could not connect to the ticket verification service. Please try again later."
+        )
+        return try await html.encodeResponse(for: req)
+      }
+
+      guard let guest, guest.hasTicket else {
+        let html = try await renderWorkshopApplyPage(
+          req: req, language: language,
+          errorMessage: language == .ja
+            ? "このメールアドレスでtry! Swift Tokyo 2026のチケットが見つかりませんでした。"
+            : "No try! Swift Tokyo 2026 ticket found for this email address."
+        )
+        return try await html.encodeResponse(for: req)
+      }
+      guestName = guest.displayName
+    } else {
       let html = try await renderWorkshopApplyPage(
         req: req, language: language,
         errorMessage: language == .ja
-          ? "このメールアドレスでtry! Swift Tokyo 2026のチケットが見つかりませんでした。"
-          : "No try! Swift Tokyo 2026 ticket found for this email address."
+          ? "チケット確認サービスが設定されていません。"
+          : "Ticket verification service is not configured."
       )
       return try await html.encodeResponse(for: req)
     }
 
     // Generate verify token
-    let payload = WorkshopVerifyPayload(email: email, name: guest.displayName)
+    let payload = WorkshopVerifyPayload(email: email, name: guestName)
     let token = try await req.jwt.sign(payload)
 
     // Show workshop selection form
@@ -323,7 +391,7 @@ struct WorkshopRoutes: RouteCollection {
         WorkshopSelectPageView(
           workshops: workshopOptions,
           email: email,
-          applicantName: guest.displayName,
+          applicantName: guestName,
           verifyToken: token,
           language: language,
           csrfToken: csrfToken(from: req),
@@ -340,11 +408,34 @@ struct WorkshopRoutes: RouteCollection {
       let applicant_name: String
       let verify_token: String
       let first_choice_id: UUID
-      let second_choice_id: UUID?
-      let third_choice_id: UUID?
+      let second_choice_id: String?
+      let third_choice_id: String?
     }
 
     let form = try req.content.decode(ApplyForm.self)
+
+    // Parse optional choice IDs:
+    // - nil or empty strings from the form become nil
+    // - non-empty but invalid UUID strings cause a bad request
+    let secondChoiceID: UUID?
+    if let rawSecond = form.second_choice_id, !rawSecond.isEmpty {
+      guard let parsed = UUID(uuidString: rawSecond) else {
+        throw Abort(.badRequest, reason: "Invalid second_choice_id")
+      }
+      secondChoiceID = parsed
+    } else {
+      secondChoiceID = nil
+    }
+
+    let thirdChoiceID: UUID?
+    if let rawThird = form.third_choice_id, !rawThird.isEmpty {
+      guard let parsed = UUID(uuidString: rawThird) else {
+        throw Abort(.badRequest, reason: "Invalid third_choice_id")
+      }
+      thirdChoiceID = parsed
+    } else {
+      thirdChoiceID = nil
+    }
 
     // Verify the token
     let payload: WorkshopVerifyPayload
@@ -377,9 +468,7 @@ struct WorkshopRoutes: RouteCollection {
     }
 
     // Validate choices are different
-    let choices = [form.first_choice_id, form.second_choice_id, form.third_choice_id].compactMap {
-      $0
-    }
+    let choices = [form.first_choice_id, secondChoiceID, thirdChoiceID].compactMap { $0 }
     let uniqueChoices = Set(choices)
     guard uniqueChoices.count == choices.count else {
       let html = try await renderWorkshopApplyPage(
@@ -396,21 +485,21 @@ struct WorkshopRoutes: RouteCollection {
       email: email,
       applicantName: form.applicant_name.trimmingCharacters(in: .whitespacesAndNewlines),
       firstChoiceID: form.first_choice_id,
-      secondChoiceID: form.second_choice_id,
-      thirdChoiceID: form.third_choice_id
+      secondChoiceID: secondChoiceID,
+      thirdChoiceID: thirdChoiceID
     )
     try await application.save(on: req.db)
 
     // Get workshop titles for confirmation
     let firstTitle = try await workshopTitle(for: form.first_choice_id, on: req.db)
     let secondTitle =
-      if let id = form.second_choice_id {
+      if let id = secondChoiceID {
         try await workshopTitle(for: id, on: req.db)
       } else {
         nil as String?
       }
     let thirdTitle =
-      if let id = form.third_choice_id {
+      if let id = thirdChoiceID {
         try await workshopTitle(for: id, on: req.db)
       } else {
         nil as String?
@@ -548,7 +637,15 @@ struct WorkshopRoutes: RouteCollection {
     var workshopInfos: [OrganizerWorkshopsPageView.WorkshopInfo] = []
     if let user, user.role == .admin {
       let workshops = try await fetchWorkshops(on: req.db)
+
+      // Fetch all winners in a single query to avoid N+1
+      let allWinners = try await WorkshopApplication.query(on: req.db)
+        .filter(\.$status == .won)
+        .all()
+      let winnersByWorkshop = Dictionary(grouping: allWinners) { $0.$assignedWorkshop.id }
+
       for ws in workshops {
+        let emails = (winnersByWorkshop[ws.registrationID] ?? []).map(\.email)
         workshopInfos.append(
           .init(
             registrationID: ws.registrationID,
@@ -556,7 +653,8 @@ struct WorkshopRoutes: RouteCollection {
             speakerName: ws.speakerName,
             capacity: ws.capacity,
             applicationCount: ws.applicationCount,
-            lumaEventID: ws.lumaEventID
+            lumaEventID: ws.lumaEventID,
+            winnerEmails: emails
           ))
       }
     }
@@ -696,11 +794,13 @@ struct WorkshopRoutes: RouteCollection {
   @Sendable
   func organizerApplicationsPage(req: Request) async throws -> HTMLResponse {
     let user = try? await req.authenticatedUser()
+    let successMessage = req.query[String.self, at: "success"]
     guard let user, user.role == .admin else {
       return HTMLResponse {
         CfPLayout(title: "Applications", user: user, language: .en) {
           OrganizerApplicationsPageView(
-            applications: [], workshopFilter: nil, workshops: [])
+            applications: [], workshopFilter: nil, workshops: [],
+            csrfToken: "", successMessage: nil)
         }
       }
     }
@@ -774,7 +874,9 @@ struct WorkshopRoutes: RouteCollection {
         OrganizerApplicationsPageView(
           applications: filteredRows,
           workshopFilter: workshopFilter,
-          workshops: workshopList
+          workshops: workshopList,
+          csrfToken: csrfToken(from: req),
+          successMessage: successMessage
         )
       }
     }
@@ -842,6 +944,28 @@ struct WorkshopRoutes: RouteCollection {
         OrganizerResultsPageView(results: results, lotteryRun: lotteryRun)
       }
     }
+  }
+
+  @Sendable
+  func handleDeleteApplication(req: Request) async throws -> Response {
+    let user = try? await req.authenticatedUser()
+    guard let user, user.role == .admin else {
+      throw Abort(.forbidden)
+    }
+
+    guard let applicationIDString = req.parameters.get("applicationID"),
+      let applicationID = UUID(uuidString: applicationIDString)
+    else {
+      throw Abort(.badRequest, reason: "Invalid application ID")
+    }
+
+    guard let application = try await WorkshopApplication.find(applicationID, on: req.db) else {
+      throw Abort(.notFound, reason: "Application not found")
+    }
+
+    try await application.delete(on: req.db)
+
+    return req.redirect(to: "/organizer/workshops/applications?success=Application+deleted")
   }
 
   @Sendable
