@@ -1990,7 +1990,7 @@ struct CfPRoutes: RouteCollection {
           ? nil : formData.workshop_potentialRisks
       )
 
-      proposal.workshopDetailsJA = WorkshopDetailsJA(
+      let detailsJA = WorkshopDetailsJA(
         keyTakeaways: formData.workshop_keyTakeaways_ja?.isEmpty == true
           ? nil : formData.workshop_keyTakeaways_ja,
         prerequisites: formData.workshop_prerequisites_ja?.isEmpty == true
@@ -2004,6 +2004,12 @@ struct CfPRoutes: RouteCollection {
         networkRequirements: formData.workshop_networkRequirements_ja?.isEmpty == true
           ? nil : formData.workshop_networkRequirements_ja
       )
+      let hasAnyJA = [
+        detailsJA.keyTakeaways, detailsJA.prerequisites, detailsJA.agendaSchedule,
+        detailsJA.participantRequirements, detailsJA.requiredSoftware,
+        detailsJA.networkRequirements,
+      ].contains(where: { $0 != nil })
+      proposal.workshopDetailsJA = hasAnyJA ? detailsJA : nil
 
       // Build co-instructors
       var instructors: [CoInstructor] = []

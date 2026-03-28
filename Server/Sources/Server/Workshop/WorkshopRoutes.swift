@@ -88,7 +88,9 @@ struct WorkshopRoutes: RouteCollection {
   }
 
   /// Fetch accepted workshops with registration info
-  private func fetchWorkshops(on db: Database) async throws -> [FetchedWorkshop] {
+  private func fetchWorkshops(on db: Database, includeApplicationCount: Bool = true) async throws
+    -> [FetchedWorkshop]
+  {
     // Get accepted workshop proposals
     let proposals = try await Proposal.query(on: db)
       .filter(\.$talkDuration == .workshop)
@@ -127,9 +129,12 @@ struct WorkshopRoutes: RouteCollection {
 
       guard let regID = registration.id else { continue }
 
-      let appCount = try await WorkshopApplication.query(on: db)
-        .filter(\.$firstChoice.$id == regID)
-        .count()
+      let appCount =
+        includeApplicationCount
+        ? try await WorkshopApplication.query(on: db)
+          .filter(\.$firstChoice.$id == regID)
+          .count()
+        : 0
 
       results.append(
         FetchedWorkshop(
@@ -227,7 +232,8 @@ struct WorkshopRoutes: RouteCollection {
     -> HTMLResponse
   {
     let user = try? await req.authenticatedUser()
-    let workshops = try await fetchWorkshops(on: req.db)
+    let isOrganizer = user?.role == .admin
+    let workshops = try await fetchWorkshops(on: req.db, includeApplicationCount: isOrganizer)
     let hasLotteryRun =
       try await WorkshopApplication.query(on: req.db)
       .filter(\.$status != .pending)
@@ -266,7 +272,7 @@ struct WorkshopRoutes: RouteCollection {
           workshops: items,
           language: language,
           applicationOpen: !hasLotteryRun,
-          isOrganizer: user?.role == .admin
+          isOrganizer: isOrganizer
         )
       }
     }
