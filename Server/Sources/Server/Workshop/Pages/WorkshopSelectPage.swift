@@ -17,6 +17,14 @@ struct WorkshopSelectPageView: HTML, Sendable {
   let language: CfPLanguage
   let csrfToken: String
   let errorMessage: String?
+  let isEditMode: Bool
+  let existingSelections: ExistingSelections?
+
+  struct ExistingSelections: Sendable {
+    let firstChoiceID: UUID
+    let secondChoiceID: UUID?
+    let thirdChoiceID: UUID?
+  }
 
   var body: some HTML {
     div(.class("container py-5")) {
@@ -35,14 +43,26 @@ struct WorkshopSelectPageView: HTML, Sendable {
             div(.class("card-body p-4")) {
               div(.class("mb-4")) {
                 h2(.class("fw-bold mb-2")) {
-                  language == .ja
-                    ? "ワークショップ申し込み"
-                    : "Workshop Application"
+                  if isEditMode {
+                    language == .ja
+                      ? "ワークショップ申し込み変更"
+                      : "Edit Workshop Application"
+                  } else {
+                    language == .ja
+                      ? "ワークショップ申し込み"
+                      : "Workshop Application"
+                  }
                 }
                 p(.class("text-muted")) {
-                  language == .ja
-                    ? "第1希望から第3希望まで選択してください。第2・第3希望は任意です。"
-                    : "Select your preferences from 1st to 3rd choice. 2nd and 3rd choices are optional."
+                  if isEditMode {
+                    language == .ja
+                      ? "希望するワークショップを変更してください。"
+                      : "Update your workshop preferences below."
+                  } else {
+                    language == .ja
+                      ? "第1希望から第3希望まで選択してください。第2・第3希望は任意です。"
+                      : "Select your preferences from 1st to 3rd choice. 2nd and 3rd choices are optional."
+                  }
                 }
                 div(.class("alert alert-info")) {
                   strong { HTMLText(email) }
@@ -96,7 +116,11 @@ struct WorkshopSelectPageView: HTML, Sendable {
                   .type(.submit),
                   .class("btn btn-primary btn-lg w-100 mt-3")
                 ) {
-                  language == .ja ? "申し込む" : "Submit Application"
+                  if isEditMode {
+                    language == .ja ? "申し込みを更新する" : "Update Application"
+                  } else {
+                    language == .ja ? "申し込む" : "Submit Application"
+                  }
                 }
               }
             }
@@ -122,7 +146,7 @@ struct WorkshopSelectPageView: HTML, Sendable {
       Elementary.label(.class("form-label fw-bold"), .for(name)) {
         HTMLText(label)
       }
-      HTMLRaw(workshopSelectHTML(name: name, isRequired: true))
+      HTMLRaw(workshopSelectHTML(name: name, isRequired: true, selectedID: selectedIDForField(name)))
     }
   }
 
@@ -132,11 +156,21 @@ struct WorkshopSelectPageView: HTML, Sendable {
       Elementary.label(.class("form-label fw-bold"), .for(name)) {
         HTMLText(label)
       }
-      HTMLRaw(workshopSelectHTML(name: name, isRequired: false))
+      HTMLRaw(workshopSelectHTML(name: name, isRequired: false, selectedID: selectedIDForField(name)))
     }
   }
 
-  private func workshopSelectHTML(name: String, isRequired: Bool) -> String {
+  private func selectedIDForField(_ fieldName: String) -> UUID? {
+    guard let selections = existingSelections else { return nil }
+    switch fieldName {
+    case "first_choice_id": return selections.firstChoiceID
+    case "second_choice_id": return selections.secondChoiceID
+    case "third_choice_id": return selections.thirdChoiceID
+    default: return nil
+    }
+  }
+
+  private func workshopSelectHTML(name: String, isRequired: Bool, selectedID: UUID? = nil) -> String {
     let placeholder = language == .ja ? "選択してください" : "Select a workshop"
     let requiredAttr = isRequired ? " required" : ""
     var html =
@@ -144,7 +178,8 @@ struct WorkshopSelectPageView: HTML, Sendable {
     html += "<option value=\"\">\(placeholder)</option>"
     for workshop in workshops {
       let escapedTitle = escapeHTML("\(workshop.title) - \(workshop.speakerName)")
-      html += "<option value=\"\(workshop.id.uuidString)\">\(escapedTitle)</option>"
+      let isSelected = workshop.id == selectedID ? " selected" : ""
+      html += "<option value=\"\(workshop.id.uuidString)\"\(isSelected)>\(escapedTitle)</option>"
     }
     html += "</select>"
     return html
