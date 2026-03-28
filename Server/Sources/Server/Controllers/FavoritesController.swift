@@ -69,7 +69,7 @@ struct FavoritesController: RouteCollection {
     }
 
     // Verify proposal exists
-    guard let _ = try await Proposal.find(body.proposalId, on: req.db) else {
+    guard (try await Proposal.find(body.proposalId, on: req.db)) != nil else {
       throw Abort(.notFound, reason: "Proposal not found")
     }
 

@@ -43,10 +43,12 @@ struct FavoriteCountItemResponse: Codable {
 struct ScheduleAPIClient: Sendable {
   var fetchFavorites: @Sendable (_ deviceId: String) async throws -> [String] = { _ in [] }
   var fetchFavoriteCounts: @Sendable () async throws -> [String: Int] = { [:] }
-  var toggleFavorite: @Sendable (_ proposalId: String, _ deviceId: String) async throws
-    -> (isFavorite: Bool, count: Int) = { _, _ in (false, 0) }
-  var submitFeedback: @Sendable (_ proposalId: String, _ comment: String, _ deviceId: String)
-    async throws -> Void
+  var toggleFavorite:
+    @Sendable (_ proposalId: String, _ deviceId: String) async throws
+      -> (isFavorite: Bool, count: Int) = { _, _ in (false, 0) }
+  var submitFeedback:
+    @Sendable (_ proposalId: String, _ comment: String, _ deviceId: String)
+      async throws -> Void
 }
 
 extension DependencyValues {

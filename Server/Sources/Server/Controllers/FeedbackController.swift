@@ -46,7 +46,7 @@ struct FeedbackController: RouteCollection {
     }
 
     // Verify proposal exists
-    guard let _ = try await Proposal.find(submission.proposalId, on: req.db) else {
+    guard (try await Proposal.find(submission.proposalId, on: req.db)) != nil else {
       throw Abort(.notFound, reason: "Proposal not found")
     }
 
@@ -93,14 +93,15 @@ struct FeedbackController: RouteCollection {
 
       guard !feedbacks.isEmpty else { continue }
 
-      result.append(FeedbackForTalk(
-        proposalId: proposalID,
-        proposalTitle: proposal.title,
-        feedbacks: feedbacks.compactMap { fb in
-          guard let id = fb.id else { return nil }
-          return FeedbackResponse(id: id, comment: fb.comment, createdAt: fb.createdAt)
-        }
-      ))
+      result.append(
+        FeedbackForTalk(
+          proposalId: proposalID,
+          proposalTitle: proposal.title,
+          feedbacks: feedbacks.compactMap { fb in
+            guard let id = fb.id else { return nil }
+            return FeedbackResponse(id: id, comment: fb.comment, createdAt: fb.createdAt)
+          }
+        ))
     }
 
     return result

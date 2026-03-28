@@ -255,14 +255,15 @@ struct CfPRoutes: RouteCollection {
 
         guard !feedbacks.isEmpty else { continue }
 
-        feedbackGroups.append(FeedbackForTalk(
-          proposalId: proposalID,
-          proposalTitle: proposal.title,
-          feedbacks: feedbacks.compactMap { fb in
-            guard let id = fb.id else { return nil }
-            return FeedbackResponse(id: id, comment: fb.comment, createdAt: fb.createdAt)
-          }
-        ))
+        feedbackGroups.append(
+          FeedbackForTalk(
+            proposalId: proposalID,
+            proposalTitle: proposal.title,
+            feedbacks: feedbacks.compactMap { fb in
+              guard let id = fb.id else { return nil }
+              return FeedbackResponse(id: id, comment: fb.comment, createdAt: fb.createdAt)
+            }
+          ))
       }
     }
 

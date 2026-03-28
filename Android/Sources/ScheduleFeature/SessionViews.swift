@@ -285,12 +285,15 @@ public struct SessionDetailView: View {
         Label("Thank you for your feedback!", systemImage: "checkmark.circle.fill")
           .foregroundStyle(Color.green)
       } else {
-        TextField("Share your thoughts...", text: Binding(
-          get: { viewModel.feedbackText },
-          set: { viewModel.feedbackText = $0 }
-        ), axis: .vertical)
-          .lineLimit(3...6)
-          .textFieldStyle(.roundedBorder)
+        TextField(
+          "Share your thoughts...",
+          text: Binding(
+            get: { viewModel.feedbackText },
+            set: { viewModel.feedbackText = $0 }
+          ), axis: .vertical
+        )
+        .lineLimit(3...6)
+        .textFieldStyle(.roundedBorder)
 
         if let error = viewModel.feedbackError {
           Text(error)
