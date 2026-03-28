@@ -166,7 +166,8 @@ public struct Guidance: Sendable {
         .init(latitude: polylineOrigin.latitude, longitude: polylineOrigin.longitude)
       ).first
     else {
-      print("[Error] Reverse Geocode failed (\(polylineOrigin.latitude), \(polylineOrigin.longitude))")
+      print(
+        "[Error] Reverse Geocode failed (\(polylineOrigin.latitude), \(polylineOrigin.longitude))")
       return nil
     }
     guard let lookAroundScene = try await mapKitClient.lookAround(geoLocation)
