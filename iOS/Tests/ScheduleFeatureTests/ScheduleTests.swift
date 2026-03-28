@@ -142,7 +142,9 @@ struct ScheduleTests {
       $0[DataClient.self].fetchVideos = { @Sendable _ in [.mock1] }
     }
 
-    await store.send(.view(.onAppear))
+    await store.send(.view(.onAppear)) {
+      $0.currentTime = $0.currentTime
+    }
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
       $0.day2 = .mock2
@@ -174,6 +176,7 @@ struct ScheduleTests {
     await store.receive(\.allSessionsLoaded) {
       $0.allSessions = expectedSessions
     }
+    await store.send(.view(.onDisappear))
   }
 
   @Test

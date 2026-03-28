@@ -26,6 +26,7 @@ public struct SearchableSession: Equatable, Hashable {
 }
 
 @Observable
+@MainActor
 public final class ScheduleViewModel {
   public var selectedDay: ScheduleDay = .day1
   public var selectedYear: Int = ConferenceYear.latest.rawValue
