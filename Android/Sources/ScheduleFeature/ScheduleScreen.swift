@@ -24,7 +24,7 @@ public struct ScheduleScreen: View {
           ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
             HStack {
               Image(systemName: "magnifyingglass")
-                .foregroundStyle(Color.secondary)
+              .foregroundStyle(Color.secondary)
               TextField("Search", text: $viewModel.searchText)
             }
           }
