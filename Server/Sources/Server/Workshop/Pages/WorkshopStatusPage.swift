@@ -139,7 +139,8 @@ struct WorkshopStatusPageView: HTML, Sendable {
                   name: "onsubmit",
                   value: language == .ja
                     ? "return confirm('申し込みを取り消しますか？この操作は元に戻せません。');"
-                    : "return confirm('Are you sure you want to delete your application? This action cannot be undone.');")
+                    : "return confirm('Are you sure you want to delete your application? This action cannot be undone.');"
+                )
               ) {
                 input(.type(.hidden), .name("_csrf"), .value(csrfToken))
                 input(.type(.hidden), .name("delete_token"), .value(deleteToken))
