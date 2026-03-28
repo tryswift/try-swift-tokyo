@@ -41,6 +41,7 @@ public struct Schedule {
     var day2: Conference?
     var day3: Conference?
     var favoriteProposalIds: Set<String> = []
+    var favoriteCounts: [String: Int] = [:]
     @Presents var destination: Destination.State?
 
     public init() {}
@@ -54,7 +55,8 @@ public struct Schedule {
     case fetchResponse(Result<SchedulesResponse, Error>)
     case allSessionsLoaded([SearchableSession])
     case favoritesLoaded(Set<String>)
-    case favoriteToggled(String, Bool)
+    case favoriteCountsLoaded([String: Int])
+    case favoriteToggled(String, Bool, Int)
 
     @CasePathable
     public enum View {
@@ -133,7 +135,11 @@ public struct Schedule {
               let ids = try await apiClient.fetchFavorites(DeviceIdentifier.current)
               await send(.favoritesLoaded(Set(ids)))
             }
-            : .none
+            : .none,
+          .run { send in
+            let counts = try await apiClient.fetchFavoriteCounts()
+            await send(.favoriteCountsLoaded(counts))
+          }
         )
       case .view(.yearSelected(let year)):
         state.selectedYear = year
@@ -156,8 +162,8 @@ public struct Schedule {
         }
         let apiClient = apiClient
         return .run { send in
-          let isFavorite = try await apiClient.toggleFavorite(proposalId, DeviceIdentifier.current)
-          await send(.favoriteToggled(proposalId, isFavorite))
+          let result = try await apiClient.toggleFavorite(proposalId, DeviceIdentifier.current)
+          await send(.favoriteToggled(proposalId, result.isFavorite, result.count))
         }
       case .view(.disclosureTapped(let session)):
         guard let description = session.description, let speakers = session.speakers else {
@@ -165,11 +171,14 @@ public struct Schedule {
         }
         let isFavorite =
           session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
+        let favoriteCount =
+          session.proposalId.flatMap { state.favoriteCounts[$0] } ?? 0
         state.path.append(
           .detail(
             .init(
               proposalId: session.proposalId,
               isFavorite: isFavorite,
+              favoriteCount: favoriteCount,
               title: session.title,
               description: description,
               requirements: session.requirements,
@@ -189,12 +198,16 @@ public struct Schedule {
       case .favoritesLoaded(let ids):
         state.favoriteProposalIds = ids
         return .none
-      case .favoriteToggled(let proposalId, let isFavorite):
+      case .favoriteCountsLoaded(let counts):
+        state.favoriteCounts = counts
+        return .none
+      case .favoriteToggled(let proposalId, let isFavorite, let count):
         if isFavorite {
           state.favoriteProposalIds.insert(proposalId)
         } else {
           state.favoriteProposalIds.remove(proposalId)
         }
+        state.favoriteCounts[proposalId] = count
         return .none
       case .fetchResponse(.failure(let error as DecodingError)):
         assertionFailure(error.localizedDescription)
@@ -202,7 +215,7 @@ public struct Schedule {
       case .fetchResponse(.failure(let error)):
         print(error)  // TODO: replace to Logger API
         return .none
-      case .path(.element(_, action: .detail(.favoriteToggled(let isFavorite)))):
+      case .path(.element(_, action: .detail(.favoriteToggled(let isFavorite, let count)))):
         // Sync favorite state from detail back to schedule
         if let detailState = state.path.last,
           case .detail(let detail) = detailState,
@@ -213,6 +226,7 @@ public struct Schedule {
           } else {
             state.favoriteProposalIds.remove(proposalId)
           }
+          state.favoriteCounts[proposalId] = count
         }
         return .none
       case .binding, .path, .destination:
@@ -516,12 +530,20 @@ public struct ScheduleView: View {
   func favoriteButton(session: Session) -> some View {
     if let proposalId = session.proposalId {
       let isFavorite = store.favoriteProposalIds.contains(proposalId)
+      let count = store.favoriteCounts[proposalId] ?? 0
       Button {
         send(.favoriteTapped(session))
       } label: {
-        Image(systemName: isFavorite ? "heart.fill" : "heart")
-          .foregroundStyle(isFavorite ? Color.red : Color.secondary)
-          .padding(12)
+        HStack(spacing: 2) {
+          Image(systemName: isFavorite ? "heart.fill" : "heart")
+            .foregroundStyle(isFavorite ? Color.red : Color.secondary)
+          if count > 0 {
+            Text("\(count)")
+              .font(.caption2)
+              .foregroundStyle(isFavorite ? Color.red : Color.secondary)
+          }
+        }
+        .padding(12)
       }
       .buttonStyle(.plain)
     }

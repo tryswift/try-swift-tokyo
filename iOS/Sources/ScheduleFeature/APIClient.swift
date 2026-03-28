@@ -29,6 +29,12 @@ struct FavoriteItemResponse: Codable {
 
 struct FavoriteToggleResponse: Codable {
   let isFavorite: Bool
+  let count: Int
+}
+
+struct FavoriteCountItemResponse: Codable {
+  let proposalId: UUID
+  let count: Int
 }
 
 // MARK: - API Client
@@ -36,9 +42,9 @@ struct FavoriteToggleResponse: Codable {
 @DependencyClient
 struct ScheduleAPIClient: Sendable {
   var fetchFavorites: @Sendable (_ deviceId: String) async throws -> [String] = { _ in [] }
-  var toggleFavorite: @Sendable (_ proposalId: String, _ deviceId: String) async throws -> Bool = {
-    _, _ in false
-  }
+  var fetchFavoriteCounts: @Sendable () async throws -> [String: Int] = { [:] }
+  var toggleFavorite: @Sendable (_ proposalId: String, _ deviceId: String) async throws
+    -> (isFavorite: Bool, count: Int) = { _, _ in (false, 0) }
   var submitFeedback: @Sendable (_ proposalId: String, _ comment: String, _ deviceId: String)
     async throws -> Void
 }
@@ -53,7 +59,8 @@ extension DependencyValues {
 extension ScheduleAPIClient: DependencyKey {
   static let liveValue = ScheduleAPIClient(
     fetchFavorites: { deviceId in
-      var components = URLComponents(url: apiBaseURL.appendingPathComponent("favorites"), resolvingAgainstBaseURL: false)!
+      var components = URLComponents(
+        url: apiBaseURL.appendingPathComponent("favorites"), resolvingAgainstBaseURL: false)!
       components.queryItems = [URLQueryItem(name: "deviceId", value: deviceId)]
       var request = URLRequest(url: components.url!)
       request.httpMethod = "GET"
@@ -63,6 +70,21 @@ extension ScheduleAPIClient: DependencyKey {
       decoder.keyDecodingStrategy = .convertFromSnakeCase
       let items = try decoder.decode([FavoriteItemResponse].self, from: data)
       return items.map(\.proposalId.uuidString)
+    },
+    fetchFavoriteCounts: {
+      let url = apiBaseURL.appendingPathComponent("favorite-counts")
+      let request = URLRequest(url: url)
+
+      let (data, _) = try await URLSession.shared.data(for: request)
+      let decoder = JSONDecoder()
+      decoder.keyDecodingStrategy = .convertFromSnakeCase
+      let items = try decoder.decode([FavoriteCountItemResponse].self, from: data)
+
+      var result: [String: Int] = [:]
+      for item in items {
+        result[item.proposalId.uuidString] = item.count
+      }
+      return result
     },
     toggleFavorite: { proposalId, deviceId in
       let url = apiBaseURL.appendingPathComponent("favorites")
@@ -77,7 +99,7 @@ extension ScheduleAPIClient: DependencyKey {
       let decoder = JSONDecoder()
       decoder.keyDecodingStrategy = .convertFromSnakeCase
       let response = try decoder.decode(FavoriteToggleResponse.self, from: data)
-      return response.isFavorite
+      return (response.isFavorite, response.count)
     },
     submitFeedback: { proposalId, comment, deviceId in
       let url = apiBaseURL.appendingPathComponent("feedback")

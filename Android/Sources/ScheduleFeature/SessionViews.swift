@@ -5,11 +5,16 @@ import SwiftUI
 public struct SessionRowView: View {
   let session: Session
   let isFavorite: Bool
+  let favoriteCount: Int
   let onToggleFavorite: (() -> Void)?
 
-  public init(session: Session, isFavorite: Bool = false, onToggleFavorite: (() -> Void)? = nil) {
+  public init(
+    session: Session, isFavorite: Bool = false, favoriteCount: Int = 0,
+    onToggleFavorite: (() -> Void)? = nil
+  ) {
     self.session = session
     self.isFavorite = isFavorite
+    self.favoriteCount = favoriteCount
     self.onToggleFavorite = onToggleFavorite
   }
 
@@ -41,8 +46,15 @@ public struct SessionRowView: View {
         Button {
           onToggle()
         } label: {
-          Image(systemName: isFavorite ? "heart.fill" : "heart")
-            .foregroundStyle(isFavorite ? Color.red : Color.secondary)
+          HStack(spacing: 2) {
+            Image(systemName: isFavorite ? "heart.fill" : "heart")
+              .foregroundStyle(isFavorite ? Color.red : Color.secondary)
+            if favoriteCount > 0 {
+              Text(String(favoriteCount))
+                .font(Font.caption2)
+                .foregroundStyle(isFavorite ? Color.red : Color.secondary)
+            }
+          }
         }
         .buttonStyle(.plain)
       }
@@ -162,12 +174,22 @@ public struct SessionDetailView: View {
           Button {
             viewModel.toggleFavorite(proposalId: proposalId)
           } label: {
-            Image(
-              systemName: viewModel.isFavorite(proposalId: session.proposalId)
-                ? "heart.fill" : "heart"
-            )
-            .foregroundStyle(
-              viewModel.isFavorite(proposalId: session.proposalId) ? Color.red : Color.secondary)
+            HStack(spacing: 2) {
+              Image(
+                systemName: viewModel.isFavorite(proposalId: session.proposalId)
+                  ? "heart.fill" : "heart"
+              )
+              .foregroundStyle(
+                viewModel.isFavorite(proposalId: session.proposalId) ? Color.red : Color.secondary)
+              let count = viewModel.favoriteCount(proposalId: session.proposalId)
+              if count > 0 {
+                Text(String(count))
+                  .font(Font.caption2)
+                  .foregroundStyle(
+                    viewModel.isFavorite(proposalId: session.proposalId)
+                      ? Color.red : Color.secondary)
+              }
+            }
           }
         }
       }

@@ -188,6 +188,7 @@ public struct ScheduleScreen: View {
               SessionRowView(
                 session: session,
                 isFavorite: viewModel.isFavorite(proposalId: session.proposalId),
+                favoriteCount: viewModel.favoriteCount(proposalId: session.proposalId),
                 onToggleFavorite: session.proposalId != nil
                   ? { viewModel.toggleFavorite(proposalId: session.proposalId!) } : nil
               )

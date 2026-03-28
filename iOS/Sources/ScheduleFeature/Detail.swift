@@ -11,6 +11,7 @@ public struct ScheduleDetail: Sendable {
 
     var proposalId: String?
     var isFavorite: Bool = false
+    var favoriteCount: Int = 0
     var title: String
     var description: String
     var requirements: String?
@@ -25,6 +26,7 @@ public struct ScheduleDetail: Sendable {
     public init(
       proposalId: String? = nil,
       isFavorite: Bool = false,
+      favoriteCount: Int = 0,
       title: String,
       description: String,
       requirements: String? = nil,
@@ -32,6 +34,7 @@ public struct ScheduleDetail: Sendable {
     ) {
       self.proposalId = proposalId
       self.isFavorite = isFavorite
+      self.favoriteCount = favoriteCount
       self.title = title
       self.description = description
       self.requirements = requirements
@@ -43,7 +46,7 @@ public struct ScheduleDetail: Sendable {
     case binding(BindingAction<State>)
     case view(View)
     case feedbackSubmitResponse(Result<Bool, Error>)
-    case favoriteToggled(Bool)
+    case favoriteToggled(Bool, Int)
 
     public enum View {
       case snsTapped(URL)
@@ -68,12 +71,13 @@ public struct ScheduleDetail: Sendable {
         state.isFavorite.toggle()
         let apiClient = apiClient
         return .run { send in
-          let isFavorite = try await apiClient.toggleFavorite(
+          let result = try await apiClient.toggleFavorite(
             proposalId, DeviceIdentifier.current)
-          await send(.favoriteToggled(isFavorite))
+          await send(.favoriteToggled(result.isFavorite, result.count))
         }
-      case .favoriteToggled(let isFavorite):
+      case .favoriteToggled(let isFavorite, let count):
         state.isFavorite = isFavorite
+        state.favoriteCount = count
         return .none
       case .view(.submitFeedbackTapped):
         guard let proposalId = state.proposalId else { return .none }
@@ -165,8 +169,15 @@ public struct ScheduleDetailView: View {
     Button {
       send(.favoriteTapped)
     } label: {
-      Image(systemName: store.isFavorite ? "heart.fill" : "heart")
-        .foregroundStyle(store.isFavorite ? Color.red : Color.secondary)
+      HStack(spacing: 2) {
+        Image(systemName: store.isFavorite ? "heart.fill" : "heart")
+          .foregroundStyle(store.isFavorite ? Color.red : Color.secondary)
+        if store.favoriteCount > 0 {
+          Text("\(store.favoriteCount)")
+            .font(.caption2)
+            .foregroundStyle(store.isFavorite ? Color.red : Color.secondary)
+        }
+      }
     }
   }
 

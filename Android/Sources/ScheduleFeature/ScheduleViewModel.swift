@@ -54,6 +54,12 @@ private struct FavoriteItemResponse: Codable {
 
 private struct FavoriteToggleResponse: Codable {
   let isFavorite: Bool
+  let count: Int
+}
+
+private struct FavoriteCountItemResponse: Codable {
+  let proposalId: String
+  let count: Int
 }
 
 // MARK: - ViewModel
@@ -74,6 +80,7 @@ public final class ScheduleViewModel {
 
   // Favorites
   public var favoriteProposalIds: Set<String> = []
+  public var favoriteCounts: [String: Int] = [:]
 
   // Feedback
   public var feedbackText: String = ""
@@ -183,6 +190,27 @@ public final class ScheduleViewModel {
         // Silently fail - favorites are not critical
       }
     }
+    loadFavoriteCounts()
+  }
+
+  public func loadFavoriteCounts() {
+    Task {
+      do {
+        guard let url = URL(string: "\(apiBaseURLString)/favorite-counts") else { return }
+        let request = URLRequest(url: url)
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let items = try decoder.decode([FavoriteCountItemResponse].self, from: data)
+        var counts: [String: Int] = [:]
+        for item in items {
+          counts[item.proposalId] = item.count
+        }
+        self.favoriteCounts = counts
+      } catch {
+        // Silently fail
+      }
+    }
   }
 
   public func toggleFavorite(proposalId: String) {
@@ -214,6 +242,7 @@ public final class ScheduleViewModel {
         } else {
           self.favoriteProposalIds.remove(proposalId)
         }
+        self.favoriteCounts[proposalId] = response.count
       } catch {
         // Revert on failure
         if self.favoriteProposalIds.contains(proposalId) {
@@ -228,6 +257,11 @@ public final class ScheduleViewModel {
   public func isFavorite(proposalId: String?) -> Bool {
     guard let proposalId = proposalId else { return false }
     return favoriteProposalIds.contains(proposalId)
+  }
+
+  public func favoriteCount(proposalId: String?) -> Int {
+    guard let proposalId = proposalId else { return 0 }
+    return favoriteCounts[proposalId] ?? 0
   }
 
   // MARK: - Feedback
