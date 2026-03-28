@@ -15,15 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Setup Swift
-        uses: swift-actions/setup-swift@v2
+        uses: swift-actions/setup-swift@7ca6abe6b3b0e8b5421b88be48feee39cbf52c6a # v2
         with:
           swift-version: "6.2"
 
       - name: Cache SwiftPM dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           key: spm-website-${{ runner.os }}-swift-6.2-${{ hashFiles('Website/Package.resolved', 'Website/Package.swift') }}
           restore-keys: spm-website-${{ runner.os }}-swift-6.2-
