@@ -398,11 +398,15 @@ struct WorkshopRoutes: RouteCollection {
       let applicant_name: String
       let verify_token: String
       let first_choice_id: UUID
-      let second_choice_id: UUID?
-      let third_choice_id: UUID?
+      let second_choice_id: String?
+      let third_choice_id: String?
     }
 
     let form = try req.content.decode(ApplyForm.self)
+
+    // Parse optional choice IDs (empty strings from the form become nil)
+    let secondChoiceID = form.second_choice_id.flatMap { UUID(uuidString: $0) }
+    let thirdChoiceID = form.third_choice_id.flatMap { UUID(uuidString: $0) }
 
     // Verify the token
     let payload: WorkshopVerifyPayload
@@ -435,9 +439,7 @@ struct WorkshopRoutes: RouteCollection {
     }
 
     // Validate choices are different
-    let choices = [form.first_choice_id, form.second_choice_id, form.third_choice_id].compactMap {
-      $0
-    }
+    let choices = [form.first_choice_id, secondChoiceID, thirdChoiceID].compactMap { $0 }
     let uniqueChoices = Set(choices)
     guard uniqueChoices.count == choices.count else {
       let html = try await renderWorkshopApplyPage(
@@ -454,21 +456,21 @@ struct WorkshopRoutes: RouteCollection {
       email: email,
       applicantName: form.applicant_name.trimmingCharacters(in: .whitespacesAndNewlines),
       firstChoiceID: form.first_choice_id,
-      secondChoiceID: form.second_choice_id,
-      thirdChoiceID: form.third_choice_id
+      secondChoiceID: secondChoiceID,
+      thirdChoiceID: thirdChoiceID
     )
     try await application.save(on: req.db)
 
     // Get workshop titles for confirmation
     let firstTitle = try await workshopTitle(for: form.first_choice_id, on: req.db)
     let secondTitle =
-      if let id = form.second_choice_id {
+      if let id = secondChoiceID {
         try await workshopTitle(for: id, on: req.db)
       } else {
         nil as String?
       }
     let thirdTitle =
-      if let id = form.third_choice_id {
+      if let id = thirdChoiceID {
         try await workshopTitle(for: id, on: req.db)
       } else {
         nil as String?

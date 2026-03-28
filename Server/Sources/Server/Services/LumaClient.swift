@@ -26,8 +26,11 @@ enum LumaClient {
       logger.error("LUMA_EVENT_ID not configured and no eventID provided")
       throw Abort(.internalServerError, reason: "Luma event ID not configured")
     }
-    let url =
-      "\(baseURL)/event/get-guest?event_id=\(lumaEventID)&id=\(email.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? email)"
+    var allowedCharacters = CharacterSet.urlQueryAllowed
+    allowedCharacters.remove("+")
+    let encodedEmail =
+      email.addingPercentEncoding(withAllowedCharacters: allowedCharacters) ?? email
+    let url = "\(baseURL)/event/get-guest?event_id=\(lumaEventID)&id=\(encodedEmail)"
 
     let response = try await client.get(URI(string: url)) { req in
       req.headers.add(name: "x-luma-api-key", value: apiKey)
