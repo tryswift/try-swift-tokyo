@@ -22,10 +22,12 @@ public struct ScheduleScreen: View {
       #if !SKIP
         .searchable(text: $viewModel.searchText, isPresented: $viewModel.isSearchBarPresented)
       #endif
-      .sheet(isPresented: Binding(
-        get: { viewModel.selectedSession != nil },
-        set: { if !$0 { viewModel.clearSelection() } }
-      )) {
+      .sheet(
+        isPresented: Binding(
+          get: { viewModel.selectedSession != nil },
+          set: { if !$0 { viewModel.clearSelection() } }
+        )
+      ) {
         if let session = viewModel.selectedSession {
           NavigationStack {
             SessionDetailView(session: session)
