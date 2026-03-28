@@ -38,6 +38,7 @@ private struct CreateTestProposalSchema: AsyncMigration {
       .field("github_username", .string)
       // Fields from AddProposalWorkshopFields
       .field("workshop_details", .json)
+      .field("workshop_details_ja", .json)
       .field("co_instructors", .json)
       // Field from AddProposalWorkshopDetailsJA
       .field("workshop_details_ja", .json)
