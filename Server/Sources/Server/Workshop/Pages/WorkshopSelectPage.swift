@@ -146,7 +146,8 @@ struct WorkshopSelectPageView: HTML, Sendable {
       Elementary.label(.class("form-label fw-bold"), .for(name)) {
         HTMLText(label)
       }
-      HTMLRaw(workshopSelectHTML(name: name, isRequired: true, selectedID: selectedIDForField(name)))
+      HTMLRaw(
+        workshopSelectHTML(name: name, isRequired: true, selectedID: selectedIDForField(name)))
     }
   }
 
@@ -156,7 +157,8 @@ struct WorkshopSelectPageView: HTML, Sendable {
       Elementary.label(.class("form-label fw-bold"), .for(name)) {
         HTMLText(label)
       }
-      HTMLRaw(workshopSelectHTML(name: name, isRequired: false, selectedID: selectedIDForField(name)))
+      HTMLRaw(
+        workshopSelectHTML(name: name, isRequired: false, selectedID: selectedIDForField(name)))
     }
   }
 
@@ -170,7 +172,8 @@ struct WorkshopSelectPageView: HTML, Sendable {
     }
   }
 
-  private func workshopSelectHTML(name: String, isRequired: Bool, selectedID: UUID? = nil) -> String {
+  private func workshopSelectHTML(name: String, isRequired: Bool, selectedID: UUID? = nil) -> String
+  {
     let placeholder = language == .ja ? "選択してください" : "Select a workshop"
     let requiredAttr = isRequired ? " required" : ""
     var html =

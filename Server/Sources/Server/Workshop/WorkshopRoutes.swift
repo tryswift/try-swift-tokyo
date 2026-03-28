@@ -406,7 +406,8 @@ struct WorkshopRoutes: RouteCollection {
       existingSelections = nil
     }
 
-    let applicantName = guestName.isEmpty && existingApplication != nil
+    let applicantName =
+      guestName.isEmpty && existingApplication != nil
       ? existingApplication!.applicantName : guestName
 
     let html = HTMLResponse {
