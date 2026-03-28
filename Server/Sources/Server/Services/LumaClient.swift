@@ -26,11 +26,16 @@ enum LumaClient {
       logger.error("LUMA_EVENT_ID not configured and no eventID provided")
       throw Abort(.internalServerError, reason: "Luma event ID not configured")
     }
-    var allowedCharacters = CharacterSet.urlQueryAllowed
-    allowedCharacters.remove("+")
-    let encodedEmail =
-      email.addingPercentEncoding(withAllowedCharacters: allowedCharacters) ?? email
-    let url = "\(baseURL)/event/get-guest?event_id=\(lumaEventID)&id=\(encodedEmail)"
+    var components = URLComponents(string: "\(baseURL)/event/get-guest")!
+    components.queryItems = [
+      URLQueryItem(name: "event_id", value: lumaEventID),
+      URLQueryItem(name: "id", value: email),
+    ]
+    // URLComponents leaves + unencoded (valid per RFC 3986), but many servers
+    // interpret + as space per x-www-form-urlencoded. Encode it explicitly.
+    components.percentEncodedQuery = components.percentEncodedQuery?
+      .replacingOccurrences(of: "+", with: "%2B")
+    let url = components.string!
 
     let response = try await client.get(URI(string: url)) { req in
       req.headers.add(name: "x-luma-api-key", value: apiKey)

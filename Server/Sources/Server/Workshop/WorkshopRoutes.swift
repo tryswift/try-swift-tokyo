@@ -404,9 +404,28 @@ struct WorkshopRoutes: RouteCollection {
 
     let form = try req.content.decode(ApplyForm.self)
 
-    // Parse optional choice IDs (empty strings from the form become nil)
-    let secondChoiceID = form.second_choice_id.flatMap { UUID(uuidString: $0) }
-    let thirdChoiceID = form.third_choice_id.flatMap { UUID(uuidString: $0) }
+    // Parse optional choice IDs:
+    // - nil or empty strings from the form become nil
+    // - non-empty but invalid UUID strings cause a bad request
+    let secondChoiceID: UUID?
+    if let rawSecond = form.second_choice_id, !rawSecond.isEmpty {
+      guard let parsed = UUID(uuidString: rawSecond) else {
+        throw Abort(.badRequest, reason: "Invalid second_choice_id")
+      }
+      secondChoiceID = parsed
+    } else {
+      secondChoiceID = nil
+    }
+
+    let thirdChoiceID: UUID?
+    if let rawThird = form.third_choice_id, !rawThird.isEmpty {
+      guard let parsed = UUID(uuidString: rawThird) else {
+        throw Abort(.badRequest, reason: "Invalid third_choice_id")
+      }
+      thirdChoiceID = parsed
+    } else {
+      thirdChoiceID = nil
+    }
 
     // Verify the token
     let payload: WorkshopVerifyPayload
