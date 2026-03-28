@@ -127,6 +127,7 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay3 = { @Sendable _ in
         throw DataClientError.resourceNotFound("day3")
       }
+      $0[DataClient.self].fetchVideos = { @Sendable _ in [.mock1] }
     }
 
     await store.send(.view(.onAppear))
@@ -134,6 +135,7 @@ struct ScheduleTests {
       $0.day1 = .mock1
       $0.day2 = .mock2
       $0.day3 = nil
+      $0.videoMetadata = ["session1": .mock1]
     }
 
     // Each year loads day1 (.mock1) and day2 (.mock2), day3 throws resourceNotFound.
