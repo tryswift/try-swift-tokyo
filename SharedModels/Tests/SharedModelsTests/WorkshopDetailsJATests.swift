@@ -44,7 +44,8 @@ struct WorkshopDetailsJATests {
 
   @Test("Decode with partial fields succeeds")
   func decodePartialFields() throws {
-    let json = Data("""
+    let json = Data(
+      """
       {"keyTakeaways": "テスト", "agendaSchedule": "スケジュール"}
       """.utf8)
     let decoded = try JSONDecoder().decode(WorkshopDetailsJA.self, from: json)
