@@ -80,10 +80,6 @@ public final class ScheduleViewModel {
 
   public init() {}
 
-  deinit {
-    timerTask?.cancel()
-  }
-
   public func loadSchedules() {
     isLoading = true
     errorMessage = nil
