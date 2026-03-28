@@ -79,6 +79,7 @@ struct WorkshopRoutes: RouteCollection {
     let githubUsername: String?
     let paperCallUsername: String?
     let workshopDetails: WorkshopDetails?
+    let workshopDetailsJA: WorkshopDetailsJA?
     let coInstructors: [CoInstructor]?
     let capacity: Int
     let applicationCount: Int
@@ -144,6 +145,7 @@ struct WorkshopRoutes: RouteCollection {
           githubUsername: proposal.githubUsername,
           paperCallUsername: proposal.paperCallUsername,
           workshopDetails: proposal.workshopDetails,
+          workshopDetailsJA: proposal.workshopDetailsJA,
           coInstructors: proposal.coInstructors?.items,
           capacity: registration.capacity,
           applicationCount: appCount,
@@ -245,6 +247,7 @@ struct WorkshopRoutes: RouteCollection {
         githubUsername: $0.githubUsername,
         isPaperCallImport: $0.paperCallUsername != nil,
         workshopDetails: $0.workshopDetails,
+        workshopDetailsJA: $0.workshopDetailsJA,
         coInstructors: $0.coInstructors,
         capacity: $0.capacity,
         applicationCount: $0.applicationCount,
@@ -262,7 +265,8 @@ struct WorkshopRoutes: RouteCollection {
         WorkshopListPageView(
           workshops: items,
           language: language,
-          applicationOpen: !hasLotteryRun
+          applicationOpen: !hasLotteryRun,
+          isOrganizer: user?.role == .admin
         )
       }
     }
