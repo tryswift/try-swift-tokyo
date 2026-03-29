@@ -238,4 +238,57 @@ struct ScheduleTests {
 
     #expect(state.isShowingSearchResults == false)
   }
+
+  @Test
+  func disclosureTapped_withVideo_richMetadata() async {
+    var state = Schedule.State()
+    state.allSessions = Self.preloadedSessions
+    state.videoMetadata = ["abc123def45": .mock1]
+
+    let store = TestStore(initialState: state) {
+      Schedule()
+    }
+
+    await store.send(.view(.disclosureTapped(.mock1)))
+    await store.receive(\.delegate.showVideoDetail)
+  }
+
+  @Test
+  func disclosureTapped_withVideo_fallbackMetadata() async {
+    var state = Schedule.State()
+    state.allSessions = Self.preloadedSessions
+
+    let store = TestStore(initialState: state) {
+      Schedule()
+    }
+
+    await store.send(.view(.disclosureTapped(.mock1)))
+    await store.receive(\.delegate.showVideoDetail)
+  }
+
+  @Test
+  func disclosureTapped_withoutVideo() async {
+    var state = Schedule.State()
+    state.allSessions = Self.preloadedSessions
+
+    let store = TestStore(initialState: state) {
+      Schedule()
+    }
+
+    #if os(macOS)
+      await store.send(.view(.disclosureTapped(.mock2)))
+      await store.receive(\.delegate.showScheduleDetail)
+    #else
+      await store.send(.view(.disclosureTapped(.mock2))) {
+        $0.path.append(
+          .detail(
+            ScheduleDetail.State(
+              title: "session2",
+              description: "description2",
+              requirements: "requirements2",
+              speakers: [.mock2]
+            )))
+      }
+    #endif
+  }
 }

@@ -188,12 +188,15 @@ public struct AppReducer {
         return .none
 
       case .schedule(.delegate(.showScheduleDetail(let session))):
+        guard let description = session.description, let speakers = session.speakers else {
+          return .none
+        }
         state.detailColumn = .scheduleDetail(
           .init(
             title: session.title,
-            description: session.description!,
+            description: description,
             requirements: session.requirements,
-            speakers: session.speakers!
+            speakers: speakers
           ))
         return .none
 
@@ -310,9 +313,7 @@ public struct AppView: View {
       if let scheduleStore = store.scope(
         state: \.detailColumn?.scheduleDetail, action: \.detailColumn.scheduleDetail)
       {
-        ScrollView {
-          ScheduleDetailView(store: scheduleStore)
-        }
+        ScheduleDetailView(store: scheduleStore)
       } else if let videoStore = store.scope(
         state: \.detailColumn?.videoDetail, action: \.detailColumn.videoDetail)
       {

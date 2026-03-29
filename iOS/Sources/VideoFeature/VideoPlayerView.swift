@@ -39,10 +39,10 @@ struct VideoPlayerView: View {
         ContentUnavailableView(
           "Video Unavailable",
           systemImage: "play.slash",
-          description: Text("This video could not be loaded. (\(String(describing: error)))")
+          description: Text("This video could not be loaded.")
         )
         .onAppear {
-          logger.error("YouTube player error for video \(videoId): \(String(describing: error))")
+          logger.error("YouTube player error for video \(videoId, privacy: .public): \(String(describing: error), privacy: .public)")
         }
       }
     }
