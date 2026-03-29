@@ -141,8 +141,7 @@ public struct ScheduleDetailView: View {
           .glassEffectIfAvailable(.regular.tint(.accentColor), in: .rect(cornerRadius: 16))
         }
       }
-      .padding(.horizontal)
-      .padding(.bottom)
+      .padding()
       .frame(maxWidth: 700)  // Readable content width for iPad
 
       speakers

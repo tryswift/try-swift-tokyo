@@ -67,6 +67,7 @@ extension LiveTranslationServiceClient: DependencyKey {
       disconnect: {
         await MainActor.run {
           ref.store?.disconnect()
+          ref.store = nil
         }
       },
       requestTranslationLanguage: { langCode in

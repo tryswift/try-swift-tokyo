@@ -1,4 +1,4 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.3
 
 import PackageDescription
 
@@ -19,11 +19,15 @@ let package = Package(
     .library(
       name: "trySwiftFeature",
       targets: ["trySwiftFeature"]),
+    .library(
+      name: "VideoFeature",
+      targets: ["VideoFeature"]),
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.25.0"),
     .package(url: "https://github.com/maiyama18/LicensesPlugin", from: "0.2.0"),
     .package(url: "https://github.com/flitto/rtt_sdk", from: "0.1.9"),
+    .package(url: "https://github.com/SvenTiigi/YouTubePlayerKit.git", from: "2.0.0"),
     .package(name: "SharedModels", path: "../SharedModels"),
     .package(name: "DataClient", path: "../DataClient"),
   ],
@@ -36,6 +40,7 @@ let package = Package(
         "ScheduleFeature",
         "SponsorFeature",
         "trySwiftFeature",
+        "VideoFeature",
         .product(name: "SharedModels", package: "SharedModels"),
       ]
     ),
@@ -79,6 +84,15 @@ let package = Package(
       name: "ScheduleFeature",
       dependencies: [
         .product(name: "DataClient", package: "DataClient"),
+        "DependencyExtra",
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+      ]
+    ),
+    .target(
+      name: "VideoFeature",
+      dependencies: [
+        .product(name: "DataClient", package: "DataClient"),
+        .product(name: "YouTubePlayerKit", package: "YouTubePlayerKit"),
         "DependencyExtra",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
       ]

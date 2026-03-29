@@ -57,7 +57,8 @@ extension Session {
     ],
     place: "place1",
     description: "description1",
-    requirements: "requirements1"
+    requirements: "requirements1",
+    youtubeVideoId: "abc123def45"
   )
 
   static let mock2 = Self(
@@ -68,6 +69,13 @@ extension Session {
     place: "place2",
     description: "description2",
     requirements: "requirements2"
+  )
+}
+
+extension VideoMetadata {
+  static let mock1 = Self(
+    sessionTitle: "session1",
+    youtubeVideoId: "abc123def45"
   )
 }
 

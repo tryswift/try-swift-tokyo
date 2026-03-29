@@ -1,5 +1,5 @@
 # Build image
-FROM swift:6.2-jammy AS build
+FROM swift:6.3-jammy AS build
 
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
     && apt-get -q update \

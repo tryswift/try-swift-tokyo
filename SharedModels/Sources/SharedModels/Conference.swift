@@ -16,10 +16,12 @@ public struct Conference: Codable, Equatable, Hashable, Sendable {
 
 public struct Schedule: Codable, Equatable, Hashable, Sendable {
   public var time: Date
+  public var endTime: Date?
   public var sessions: [Session]
 
-  public init(time: Date, sessions: [Session]) {
+  public init(time: Date, endTime: Date? = nil, sessions: [Session]) {
     self.time = time
+    self.endTime = endTime
     self.sessions = sessions
   }
 }
@@ -37,6 +39,8 @@ public struct Session: Codable, Equatable, Hashable, Sendable {
   public var descriptionJa: String?
   public var requirements: String?
   public var requirementsJa: String?
+  public var sponsor: String?
+  public var youtubeVideoId: String?
 
   public init(
     proposalId: String? = nil,
@@ -50,7 +54,9 @@ public struct Session: Codable, Equatable, Hashable, Sendable {
     description: String?,
     descriptionJa: String? = nil,
     requirements: String?,
-    requirementsJa: String? = nil
+    requirementsJa: String? = nil,
+    sponsor: String? = nil,
+    youtubeVideoId: String? = nil,
   ) {
     self.proposalId = proposalId
     self.title = title
@@ -64,5 +70,7 @@ public struct Session: Codable, Equatable, Hashable, Sendable {
     self.descriptionJa = descriptionJa
     self.requirements = requirements
     self.requirementsJa = requirementsJa
+    self.sponsor = sponsor
+    self.youtubeVideoId = youtubeVideoId
   }
 }

@@ -5,6 +5,9 @@ import Foundation
 @preconcurrency import MapKit
 import MapKitClient
 import SwiftUI
+import os
+
+private let logger = Logger(subsystem: "jp.tryswift.tokyo.App", category: "Guidance")
 
 @Reducer
 public struct Guidance: Sendable {
@@ -78,7 +81,7 @@ public struct Guidance: Sendable {
         return .none
 
       case .initialResponse(.failure(let error)):
-        print(error)
+        logger.error("Initial response failed: \(error)")
         return .none
 
       case .updateResponse(.success(let response)):
@@ -93,7 +96,7 @@ public struct Guidance: Sendable {
         return .none
 
       case .updateResponse(.failure(let error)):
-        print(error)
+        logger.error("Update response failed: \(error)")
         return .none
 
       case .binding(\.lines):
@@ -157,7 +160,7 @@ public struct Guidance: Sendable {
     let origin = try await mapKitClient.localSearch(lines.searchQuery, lines.region).first
     guard let origin = origin else { return nil }
     guard let route = try await mapKitClient.mapRoute(origin, destination) else {
-      print("[Error] Route Not found", origin, destination)
+      logger.error("Route not found: \(origin) to \(destination)")
       return nil
     }
     let polylineOrigin = route.polyline.coords.first!
@@ -166,12 +169,13 @@ public struct Guidance: Sendable {
         .init(latitude: polylineOrigin.latitude, longitude: polylineOrigin.longitude)
       ).first
     else {
-      print("[Error] Reverse Geocode failed", polylineOrigin)
+      logger.error(
+        "[Error] Reverse Geocode failed (\(polylineOrigin.latitude), \(polylineOrigin.longitude))")
       return nil
     }
     guard let lookAroundScene = try await mapKitClient.lookAround(geoLocation)
     else {
-      print("[Error] Look around scene not found", geoLocation)
+      logger.warning("Look around scene not found: \(geoLocation)")
       return (origin, route, nil)
     }
     return (origin, route, lookAroundScene)

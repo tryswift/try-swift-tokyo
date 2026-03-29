@@ -5,6 +5,9 @@ import Foundation
 import SharedModels
 import SwiftUI
 import TipKit
+import os
+
+private let logger = Logger(subsystem: "jp.tryswift.tokyo.App", category: "Schedule")
 
 @Reducer
 public struct Schedule {
@@ -20,6 +23,7 @@ public struct Schedule {
     var day1: Conference
     var day2: Conference
     var day3: Conference?
+    var videos: [VideoMetadata]
   }
 
   public struct SearchableSession: Equatable, Hashable {
@@ -43,6 +47,7 @@ public struct Schedule {
     var favoriteProposalIds: Set<String> = []
     var favoriteCounts: [String: Int] = [:]
     var hasLoadedFavorites: Bool = false
+    var videoMetadata: [String: VideoMetadata] = [:]
     @Presents var destination: Destination.State?
 
     public init() {}
@@ -58,6 +63,7 @@ public struct Schedule {
     case favoritesLoaded(Set<String>)
     case favoriteCountsLoaded([String: Int])
     case favoriteToggled(String, Bool, Int)
+    case delegate(Delegate)
 
     @CasePathable
     public enum View {
@@ -67,6 +73,11 @@ public struct Schedule {
       case daySelected(Days)
       case favoriteTapped(Session)
     }
+
+    public enum Delegate: Equatable {
+      case showVideoDetail(Session, VideoMetadata, ConferenceYear)
+      case showScheduleDetail(Session)
+    }
   }
 
   @Reducer
@@ -75,7 +86,9 @@ public struct Schedule {
   }
 
   @Reducer
-  public enum Destination {}
+  public enum Destination {
+    case detail(ScheduleDetail)
+  }
 
   @Dependency(DataClient.self) var dataClient
   @Dependency(\.scheduleAPIClient) var apiClient
@@ -99,7 +112,8 @@ public struct Schedule {
                 let day1 = try dataClient.fetchDay1(year)
                 let day2 = try dataClient.fetchDay2(year)
                 let day3 = try? dataClient.fetchDay3(year)
-                return .init(day1: day1, day2: day2, day3: day3)
+                let videos = (try? dataClient.fetchVideos(year)) ?? []
+                return .init(day1: day1, day2: day2, day3: day3, videos: videos)
               })),
           shouldLoadAllSessions
             ? .run { send in
@@ -114,7 +128,7 @@ public struct Schedule {
                   } catch let error as DecodingError {
                     assertionFailure(error.localizedDescription)
                   } catch {
-                    print(error)  // TODO: replace to Logger API
+                    logger.error("Failed to fetch conference data: \(error)")
                   }
                 }
                 for conference in conferences {
@@ -153,6 +167,7 @@ public struct Schedule {
         state.day1 = nil
         state.day2 = nil
         state.day3 = nil
+        state.videoMetadata = [:]
         return .send(.view(.onAppear))
       case .view(.daySelected(let day)):
         state.selectedDay = day
@@ -175,31 +190,43 @@ public struct Schedule {
           await send(.favoriteToggled(proposalId, wasFavorite, previousCount))
         }
       case .view(.disclosureTapped(let session)):
-        guard let description = session.description, let speakers = session.speakers else {
+        guard session.description != nil, session.speakers != nil else {
           return .none
         }
-        let isFavorite =
-          session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
-        let favoriteCount =
-          session.proposalId.flatMap { state.favoriteCounts[$0] } ?? 0
-        state.path.append(
-          .detail(
-            .init(
+        if let videoId = session.youtubeVideoId {
+          let videoMeta =
+            state.videoMetadata[videoId]
+            ?? VideoMetadata(sessionTitle: session.title, youtubeVideoId: videoId)
+          return .send(.delegate(.showVideoDetail(session, videoMeta, state.selectedYear)))
+        } else {
+          #if os(macOS)
+            return .send(.delegate(.showScheduleDetail(session)))
+          #else
+            let isFavorite =
+              session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
+            let favoriteCount =
+              session.proposalId.flatMap { state.favoriteCounts[$0] } ?? 0
+            let detailState = ScheduleDetail.State(
               proposalId: session.proposalId,
               isFavorite: isFavorite,
               favoriteCount: favoriteCount,
               title: session.title,
-              description: description,
+              description: session.description!,
               requirements: session.requirements,
-              speakers: speakers
+              speakers: session.speakers!
             )
-          )
-        )
-        return .none
+            state.path.append(.detail(detailState))
+            return .none
+          #endif
+        }
       case .fetchResponse(.success(let response)):
         state.day1 = response.day1
         state.day2 = response.day2
         state.day3 = response.day3
+        state.videoMetadata = Dictionary(
+          response.videos.map { ($0.youtubeVideoId, $0) },
+          uniquingKeysWith: { first, _ in first }
+        )
         return .none
       case .allSessionsLoaded(let sessions):
         state.allSessions = sessions
@@ -223,7 +250,7 @@ public struct Schedule {
         assertionFailure(error.localizedDescription)
         return .none
       case .fetchResponse(.failure(let error)):
-        print(error)  // TODO: replace to Logger API
+        logger.error("Failed to fetch schedules: \(error)")
         return .none
       case .path(.element(let id, action: .detail(.favoriteToggled(let isFavorite, let count)))):
         // Sync favorite state from detail back to schedule
@@ -238,7 +265,7 @@ public struct Schedule {
           state.favoriteCounts[proposalId] = count
         }
         return .none
-      case .binding, .path, .destination:
+      case .binding, .path, .destination, .delegate:
         return .none
       }
     }
@@ -275,6 +302,9 @@ extension Schedule.State {
 extension Schedule.Path.State: Equatable {}
 extension Schedule.Destination.State: Equatable {}
 
+/// The resource bundle for ScheduleFeature (contains speaker images).
+public let scheduleFeatureBundle: Bundle = .module
+
 @ViewAction(for: Schedule.self)
 public struct ScheduleView: View {
 
@@ -285,16 +315,20 @@ public struct ScheduleView: View {
   }
 
   public var body: some View {
-    NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+    #if os(macOS)
       root
-    } destination: { store in
-      switch store.state {
-      case .detail:
-        if let store = store.scope(state: \.detail, action: \.detail) {
-          ScheduleDetailView(store: store)
+    #else
+      NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+        root
+      } destination: { store in
+        switch store.state {
+        case .detail:
+          if let store = store.scope(state: \.detail, action: \.detail) {
+            ScheduleDetailView(store: store)
+          }
         }
       }
-    }
+    #endif
   }
 
   @ViewBuilder
@@ -377,7 +411,7 @@ public struct ScheduleView: View {
               searchResultRow(result: result)
                 .padding()
             }
-            .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
+            .glassEffectIfAvailable(.regular.interactive(), in: .buttonBorder)
           }
         }
         .padding()
@@ -452,25 +486,29 @@ public struct ScheduleView: View {
         .accessibilityAddTraits(.isHeader)
       ForEach(conference.schedules, id: \.self) { schedule in
         VStack(alignment: .leading, spacing: 4) {
-          Text(schedule.time, style: .time)
-            .font(.subheadline.bold())
-            .accessibilityAddTraits(.isHeader)
+          Text(
+            schedule.time.formatted(date: .omitted, time: .shortened)
+              + (schedule.endTime.map { " - " + $0.formatted(date: .omitted, time: .shortened) }
+                ?? "")
+          )
+          .font(.subheadline.bold())
+          .accessibilityAddTraits(.isHeader)
           ForEach(schedule.sessions, id: \.self) { session in
             if session.description != nil {
               Button {
                 send(.disclosureTapped(session))
               } label: {
-                listRow(session: session)
+                listRow(session: session, hasVideo: session.youtubeVideoId != nil)
                   .padding()
               }
-              .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
+              .glassIfAvailable()
               .overlay(alignment: .topTrailing) {
                 favoriteButton(session: session)
               }
             } else {
-              listRow(session: session)
+              listRow(session: session, hasVideo: false)
                 .padding()
-                .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
+                .glassIfAvailable()
             }
           }
         }
@@ -480,18 +518,25 @@ public struct ScheduleView: View {
   }
 
   @ViewBuilder
-  func listRow(session: Session) -> some View {
+  func listRow(session: Session, hasVideo: Bool) -> some View {
     HStack(spacing: 8) {
       VStack {
         if let speakers = session.speakers {
           ForEach(speakers, id: \.self) { speaker in
-            Image(speaker.imageName, bundle: .module)
-              .resizable()
-              .aspectRatio(contentMode: .fit)
-              .clipShape(Circle())
-              .frame(width: 60)
-              .accessibilityElement(children: .ignore)
-              .accessibilityIgnoresInvertColors()
+            ZStack(alignment: .bottomTrailing) {
+              Image(speaker.imageName, bundle: .module)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .clipShape(Circle())
+                .frame(width: 60)
+                .accessibilityElement(children: .ignore)
+                .accessibilityIgnoresInvertColors()
+              if hasVideo {
+                Image(systemName: "play.circle.fill")
+                  .font(.caption)
+                  .foregroundStyle(.white, Color.accentColor)
+              }
+            }
           }
         } else {
           Image(.tokyo)
@@ -528,6 +573,11 @@ public struct ScheduleView: View {
             Text(LocalizedStringKey(summary), bundle: .module)
               .foregroundStyle(secondaryLabelColor)
           }
+        }
+        if let sponsor = session.sponsor {
+          Text(String(localized: "Sponsored by \(sponsor)", bundle: .module))
+            .font(.caption)
+            .foregroundStyle(secondaryLabelColor)
         }
       }
       .frame(maxWidth: .infinity, alignment: .leading)

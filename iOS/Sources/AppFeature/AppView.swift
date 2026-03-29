@@ -7,6 +7,7 @@ import SharedModels
 import SponsorFeature
 import SwiftUI
 import TipKit
+import VideoFeature
 import trySwiftFeature
 
 // MARK: - AppReducer
@@ -28,6 +29,12 @@ public struct AppReducer {
     case codeOfConduct, privacyPolicy, luma, website
   }
 
+  @Reducer
+  public enum DetailColumn {
+    case scheduleDetail(ScheduleDetail)
+    case videoDetail(VideoDetail)
+  }
+
   @ObservableState
   public struct State: Equatable {
     var schedule = ScheduleFeature.Schedule.State()
@@ -45,6 +52,12 @@ public struct AppReducer {
 
     // Sidebar detail: standalone Acknowledgements
     var sidebarAcknowledgements = Acknowledgements.State()
+
+    // macOS: 3rd column detail
+    @Presents var detailColumn: DetailColumn.State?
+
+    // iOS: Video detail (presented as sheet from schedule)
+    @Presents var videoDetail: VideoDetail.State?
 
     public init() {
       try? Tips.configure([.displayFrequency(.immediate)])
@@ -66,6 +79,12 @@ public struct AppReducer {
     case sidebarOrganizers(Organizers.Action)
     case sidebarProfile(PresentationAction<Profile.Action>)
     case sidebarAcknowledgements(Acknowledgements.Action)
+
+    // Detail column (macOS 3rd column)
+    case detailColumn(PresentationAction<DetailColumn.Action>)
+
+    // Video detail (iOS sheet)
+    case videoDetail(PresentationAction<VideoDetail.Action>)
   }
 
   public init() {}
@@ -96,7 +115,15 @@ public struct AppReducer {
     Reduce { state, action in
       switch action {
       case .sidebarItemSelected(let item):
+        let previousYear: ConferenceYear
+        switch state.selectedSidebarItem {
+        case .pastYear(let year):
+          previousYear = year
+        default:
+          previousYear = .latest
+        }
         state.selectedSidebarItem = item
+        state.detailColumn = nil
         let targetDay: ScheduleFeature.Schedule.Days
         let targetYear: ConferenceYear
         switch item {
@@ -114,10 +141,14 @@ public struct AppReducer {
           targetYear = year
         default: return .none
         }
-        return .merge(
-          .send(.schedule(.view(.yearSelected(targetYear)))),
-          .send(.schedule(.view(.daySelected(targetDay))))
-        )
+        if targetYear != previousYear {
+          return .merge(
+            .send(.schedule(.view(.yearSelected(targetYear)))),
+            .send(.schedule(.view(.daySelected(targetDay))))
+          )
+        } else {
+          return .send(.schedule(.view(.daySelected(targetDay))))
+        }
 
       case .openExternalLink(let link):
         switch link {
@@ -137,19 +168,50 @@ public struct AppReducer {
 
       case .schedule(.view(.yearSelected(let year))):
         if year == .latest {
-          state.selectedSidebarItem = .day1
+          if case .pastYear = state.selectedSidebarItem {
+            state.selectedSidebarItem = .day1
+          }
         } else {
           state.selectedSidebarItem = .pastYear(year)
         }
+        state.detailColumn = nil
+        return .none
+
+      case .schedule(.delegate(.showVideoDetail(let session, let videoMeta, let year))):
+        #if os(macOS)
+          state.detailColumn = .videoDetail(
+            .init(session: session, videoMetadata: videoMeta, conferenceYear: year))
+        #else
+          state.videoDetail = .init(
+            session: session, videoMetadata: videoMeta, conferenceYear: year)
+        #endif
+        return .none
+
+      case .schedule(.delegate(.showScheduleDetail(let session))):
+        guard let description = session.description, let speakers = session.speakers else {
+          return .none
+        }
+        state.detailColumn = .scheduleDetail(
+          .init(
+            title: session.title,
+            description: description,
+            requirements: session.requirements,
+            speakers: speakers
+          ))
         return .none
 
       case .schedule, .liveTranslation, .guidance, .sponsors, .trySwift,
-        .sidebarOrganizers, .sidebarProfile, .sidebarAcknowledgements:
+        .sidebarOrganizers, .sidebarProfile, .sidebarAcknowledgements,
+        .detailColumn, .videoDetail:
         return .none
       }
     }
     .ifLet(\.$sidebarProfile, action: \.sidebarProfile) {
       Profile()
+    }
+    .ifLet(\.$detailColumn, action: \.detailColumn)
+    .ifLet(\.$videoDetail, action: \.videoDetail) {
+      VideoDetail()
     }
   }
 }
@@ -169,13 +231,34 @@ public struct AppView: View {
   }
 
   public var body: some View {
-    #if os(macOS)
-      sidebarLayout
-    #else
-      if horizontalSizeClass == .regular {
-        sidebarLayout
-      } else {
-        tabLayout
+    Group {
+      #if os(macOS)
+        macOSSidebarLayout
+      #else
+        if horizontalSizeClass == .regular {
+          sidebarLayout
+        } else {
+          tabLayout
+        }
+      #endif
+    }
+    #if !os(macOS)
+      .sheet(
+        item: $store.scope(state: \.videoDetail, action: \.videoDetail)
+      ) { videoDetailStore in
+        NavigationStack {
+          VideoDetailView(store: videoDetailStore, speakerImageBundle: scheduleFeatureBundle)
+          .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+              Button {
+                store.send(.videoDetail(.dismiss))
+              } label: {
+                Image(systemName: "xmark.circle.fill")
+                .symbolRenderingMode(.hierarchical)
+              }
+            }
+          }
+        }
       }
     #endif
   }
@@ -211,7 +294,42 @@ public struct AppView: View {
     }
   }
 
-  // MARK: Sidebar Layout (macOS / iPad)
+  // MARK: macOS Sidebar Layout (3 columns)
+
+  #if os(macOS)
+    @ViewBuilder
+    var macOSSidebarLayout: some View {
+      NavigationSplitView {
+        sidebarContent
+      } content: {
+        detailContent
+      } detail: {
+        macOSDetailColumnView
+      }
+    }
+
+    @ViewBuilder
+    var macOSDetailColumnView: some View {
+      if let scheduleStore = store.scope(
+        state: \.detailColumn?.scheduleDetail, action: \.detailColumn.scheduleDetail)
+      {
+        ScheduleDetailView(store: scheduleStore)
+      } else if let videoStore = store.scope(
+        state: \.detailColumn?.videoDetail, action: \.detailColumn.videoDetail)
+      {
+        VideoDetailView(store: videoStore, speakerImageBundle: scheduleFeatureBundle)
+      } else {
+        ContentUnavailableView {
+          Label(
+            String(localized: "Select a Session", bundle: .module), systemImage: "text.document")
+        } description: {
+          Text("Choose a session from the schedule to view details", bundle: .module)
+        }
+      }
+    }
+  #endif
+
+  // MARK: iPad Sidebar Layout (2 columns)
 
   @ViewBuilder
   var sidebarLayout: some View {
@@ -231,13 +349,13 @@ public struct AppView: View {
       )
     ) {
       Section {
-        Label(String(localized: "Day 1", bundle: .module), systemImage: "1.circle")
+        Label(String(localized: "Day 1", bundle: .module), systemImage: "1.calendar")
           .tag(AppReducer.SidebarItem.day1)
-        Label(String(localized: "Day 2", bundle: .module), systemImage: "2.circle")
+        Label(String(localized: "Day 2", bundle: .module), systemImage: "2.calendar")
           .tag(AppReducer.SidebarItem.day2)
-        Label(String(localized: "Day 3", bundle: .module), systemImage: "3.circle")
+        Label(String(localized: "Day 3", bundle: .module), systemImage: "3.calendar")
           .tag(AppReducer.SidebarItem.day3)
-        Label(String(localized: "Translation", bundle: .module), systemImage: "text.bubble")
+        Label(String(localized: "Live Translation", bundle: .module), systemImage: "text.bubble")
           .tag(AppReducer.SidebarItem.liveTranslation)
         Label(String(localized: "Venue", bundle: .module), systemImage: "map")
           .tag(AppReducer.SidebarItem.venue)
@@ -250,29 +368,55 @@ public struct AppView: View {
       }
 
       Section {
+        Label(String(localized: "Acknowledgements", bundle: .module), systemImage: "heart")
+          .tag(AppReducer.SidebarItem.acknowledgements)
+
         Button {
           store.send(.openExternalLink(.codeOfConduct))
         } label: {
-          Label(String(localized: "Code of Conduct", bundle: .module), systemImage: "doc.text")
+          externalLinkLabel(
+            String(localized: "Code of Conduct", bundle: .module), systemImage: "doc.text")
         }
+        #if os(macOS)
+          .buttonStyle(.link)
+        #else
+          .buttonStyle(.plain)
+        #endif
         Button {
           store.send(.openExternalLink(.privacyPolicy))
         } label: {
-          Label(String(localized: "Privacy Policy", bundle: .module), systemImage: "hand.raised")
+          externalLinkLabel(
+            String(localized: "Privacy Policy", bundle: .module), systemImage: "hand.raised")
         }
-        Label(String(localized: "Acknowledgements", bundle: .module), systemImage: "heart")
-          .tag(AppReducer.SidebarItem.acknowledgements)
+        #if os(macOS)
+          .buttonStyle(.link)
+        #else
+          .buttonStyle(.plain)
+        #endif
+
         Button {
           store.send(.openExternalLink(.luma))
         } label: {
-          Label(String(localized: "Luma", bundle: .module), systemImage: "ticket")
+          externalLinkLabel(String(localized: "Luma", bundle: .module), systemImage: "ticket")
         }
+        #if os(macOS)
+          .buttonStyle(.link)
+        #else
+          .buttonStyle(.plain)
+        #endif
+
         Button {
           store.send(.openExternalLink(.website))
         } label: {
-          Label(
+          externalLinkLabel(
             String(localized: "try! Swift Website", bundle: .module), systemImage: "safari")
         }
+        #if os(macOS)
+          .buttonStyle(.link)
+        #else
+          .buttonStyle(.plain)
+        #endif
+
       }
 
       Section(isExpanded: $isPastYearsExpanded) {
@@ -325,6 +469,22 @@ public struct AppView: View {
       } description: {
         Text("Select an item from the sidebar")
       }
+    }
+  }
+
+  @ViewBuilder
+  private func externalLinkLabel(_ title: String, systemImage: String) -> some View {
+    Label {
+      HStack {
+        Text(title)
+        Spacer()
+        Image(systemName: "arrow.up.forward")
+          .foregroundStyle(.tertiary)
+          .font(.caption)
+          .accessibilityHidden(true)
+      }
+    } icon: {
+      Image(systemName: systemImage)
     }
   }
 

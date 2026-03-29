@@ -26,12 +26,14 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay1 = { @Sendable _ in .mock1 }
       $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
       $0[DataClient.self].fetchDay3 = { @Sendable _ in .mock3 }
+      $0[DataClient.self].fetchVideos = { @Sendable _ in [.mock1] }
     }
     await store.send(.view(.onAppear))
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
       $0.day2 = .mock2
       $0.day3 = .mock3
+      $0.videoMetadata = ["abc123def45": .mock1]
     }
   }
 
@@ -48,6 +50,7 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay1 = { @Sendable _ in throw FetchError() }
       $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
       $0[DataClient.self].fetchDay3 = { @Sendable _ in .mock3 }
+      $0[DataClient.self].fetchVideos = { @Sendable _ in [] }
     }
     await store.send(.view(.onAppear))
     await store.receive(\.fetchResponse.failure)
@@ -66,12 +69,14 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay1 = { @Sendable _ in .mock1 }
       $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
       $0[DataClient.self].fetchDay3 = { @Sendable _ in throw NotFound() }
+      $0[DataClient.self].fetchVideos = { @Sendable _ in [.mock1] }
     }
     await store.send(.view(.onAppear))
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
       $0.day2 = .mock2
       $0.day3 = nil
+      $0.videoMetadata = ["abc123def45": .mock1]
     }
   }
 
@@ -92,6 +97,7 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay3 = { @Sendable _ in
         throw DataClientError.resourceNotFound("2017-day3")
       }
+      $0[DataClient.self].fetchVideos = { @Sendable _ in [.mock1] }
     }
 
     await store.send(.view(.yearSelected(.year2017))) {
@@ -100,12 +106,14 @@ struct ScheduleTests {
       $0.day1 = nil
       $0.day2 = nil
       $0.day3 = nil
+      $0.videoMetadata = [:]
     }
     await store.receive(\.view.onAppear)
     await store.receive(\.fetchResponse.success) {
       $0.day1 = .mock1
       $0.day2 = .mock2
       $0.day3 = nil
+      $0.videoMetadata = ["abc123def45": .mock1]
     }
   }
 
@@ -119,6 +127,7 @@ struct ScheduleTests {
       $0[DataClient.self].fetchDay3 = { @Sendable _ in
         throw DataClientError.resourceNotFound("day3")
       }
+      $0[DataClient.self].fetchVideos = { @Sendable _ in [.mock1] }
     }
 
     await store.send(.view(.onAppear))
@@ -126,6 +135,7 @@ struct ScheduleTests {
       $0.day1 = .mock1
       $0.day2 = .mock2
       $0.day3 = nil
+      $0.videoMetadata = ["abc123def45": .mock1]
     }
 
     // Each year loads day1 (.mock1) and day2 (.mock2), day3 throws resourceNotFound.
@@ -227,6 +237,59 @@ struct ScheduleTests {
     state.searchText = ""
 
     #expect(state.isShowingSearchResults == false)
+  }
+
+  @Test
+  func disclosureTapped_withVideo_richMetadata() async {
+    var state = Schedule.State()
+    state.allSessions = Self.preloadedSessions
+    state.videoMetadata = ["abc123def45": .mock1]
+
+    let store = TestStore(initialState: state) {
+      Schedule()
+    }
+
+    await store.send(.view(.disclosureTapped(.mock1)))
+    await store.receive(\.delegate.showVideoDetail)
+  }
+
+  @Test
+  func disclosureTapped_withVideo_fallbackMetadata() async {
+    var state = Schedule.State()
+    state.allSessions = Self.preloadedSessions
+
+    let store = TestStore(initialState: state) {
+      Schedule()
+    }
+
+    await store.send(.view(.disclosureTapped(.mock1)))
+    await store.receive(\.delegate.showVideoDetail)
+  }
+
+  @Test
+  func disclosureTapped_withoutVideo() async {
+    var state = Schedule.State()
+    state.allSessions = Self.preloadedSessions
+
+    let store = TestStore(initialState: state) {
+      Schedule()
+    }
+
+    #if os(macOS)
+      await store.send(.view(.disclosureTapped(.mock2)))
+      await store.receive(\.delegate.showScheduleDetail)
+    #else
+      await store.send(.view(.disclosureTapped(.mock2))) {
+        $0.path.append(
+          .detail(
+            ScheduleDetail.State(
+              title: "session2",
+              description: "description2",
+              requirements: "requirements2",
+              speakers: [.mock2]
+            )))
+      }
+    #endif
   }
 
   // MARK: - Favorites
