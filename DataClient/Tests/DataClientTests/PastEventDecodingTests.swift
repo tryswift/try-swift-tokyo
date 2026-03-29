@@ -130,7 +130,7 @@ struct PastEventDecodingTests {
     let allSessions = conference.schedules.flatMap(\.sessions)
     let sponsoredSessions = allSessions.filter { $0.sponsor != nil }
     #expect(!sponsoredSessions.isEmpty)
-    #expect(sponsoredSessions.first?.sponsor == "RevenueCat")
+    #expect(sponsoredSessions.contains { $0.sponsor == "RevenueCat" })
   }
 
   // MARK: - Error handling

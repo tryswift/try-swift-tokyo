@@ -51,9 +51,10 @@ struct TimetableComponent: HTML {
                 SessionTitleComponent(session: session, language: language)
                   .foregroundStyle(.dimGray)
                 if let sponsor = session.sponsor {
-                  let sponsorLabel =
-                    language == .ja ? "\(sponsor) 提供" : "Sponsored by \(sponsor)"
-                  Span(sponsorLabel)
+                  Span(
+                    String(
+                      format: String("Sponsored by %@", language: language), sponsor)
+                  )
                     .font(.small)
                     .fontWeight(.regular)
                     .foregroundStyle(.dimGray)

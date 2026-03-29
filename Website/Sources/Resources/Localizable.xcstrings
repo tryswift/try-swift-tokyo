@@ -995,6 +995,23 @@
         }
       }
     },
+    "Sponsored by %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sponsored by %1$@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ 提供"
+          }
+        }
+      }
+    },
     "Sponsor Inquiry Form" : {
       "extractionState" : "manual",
       "localizations" : {
