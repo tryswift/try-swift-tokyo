@@ -320,7 +320,11 @@ public struct ScheduleView: View {
               searchResultRow(result: result)
                 .padding()
             }
-            .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
+            #if os(macOS)
+              .buttonStyle(.plain)
+            #else
+              .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
+            #endif
           }
         }
         .padding()
@@ -395,9 +399,13 @@ public struct ScheduleView: View {
         .accessibilityAddTraits(.isHeader)
       ForEach(conference.schedules, id: \.self) { schedule in
         VStack(alignment: .leading, spacing: 4) {
-          Text(schedule.time, style: .time)
-            .font(.subheadline.bold())
-            .accessibilityAddTraits(.isHeader)
+          Text(
+            schedule.time.formatted(date: .omitted, time: .shortened)
+              + (schedule.endTime.map { " - " + $0.formatted(date: .omitted, time: .shortened) }
+                ?? "")
+          )
+          .font(.subheadline.bold())
+          .accessibilityAddTraits(.isHeader)
           ForEach(schedule.sessions, id: \.self) { session in
             if session.description != nil {
               Button {
@@ -406,11 +414,17 @@ public struct ScheduleView: View {
                 listRow(session: session, hasVideo: store.videoMetadata[session.title] != nil)
                   .padding()
               }
-              .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
+              #if os(macOS)
+                .buttonStyle(.plain)
+              #else
+                .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
+              #endif
             } else {
               listRow(session: session, hasVideo: false)
                 .padding()
-                .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
+                #if !os(macOS)
+                  .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
+                #endif
             }
           }
         }
@@ -475,6 +489,11 @@ public struct ScheduleView: View {
             Text(LocalizedStringKey(summary), bundle: .module)
               .foregroundStyle(secondaryLabelColor)
           }
+        }
+        if let sponsor = session.sponsor {
+          Text("Sponsored by \(sponsor)")
+            .font(.caption)
+            .foregroundStyle(secondaryLabelColor)
         }
       }
       .frame(maxWidth: .infinity, alignment: .leading)

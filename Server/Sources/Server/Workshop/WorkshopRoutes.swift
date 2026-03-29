@@ -33,6 +33,7 @@ struct WorkshopRoutes: RouteCollection {
     csrf.post("workshops", "apply", use: handleApply)
     csrf.get("workshops", "status", use: workshopStatusPage)
     csrf.post("workshops", "status", use: handleCheckStatus)
+    csrf.post("workshops", "delete", use: handleDeleteOwnApplication)
 
     // Public routes - Japanese
     let ja = csrf.grouped("ja")
@@ -42,6 +43,7 @@ struct WorkshopRoutes: RouteCollection {
     ja.post("workshops", "apply", use: handleApplyJa)
     ja.get("workshops", "status", use: workshopStatusPageJa)
     ja.post("workshops", "status", use: handleCheckStatusJa)
+    ja.post("workshops", "delete", use: handleDeleteOwnApplicationJa)
 
     // Organizer routes (reuse existing organizer group pattern)
     let organizer = csrf.grouped("organizer")
@@ -226,6 +228,16 @@ struct WorkshopRoutes: RouteCollection {
     try await processCheckStatus(req: req, language: .ja)
   }
 
+  @Sendable
+  func handleDeleteOwnApplication(req: Request) async throws -> Response {
+    try await processDeleteOwnApplication(req: req, language: .en)
+  }
+
+  @Sendable
+  func handleDeleteOwnApplicationJa(req: Request) async throws -> Response {
+    try await processDeleteOwnApplication(req: req, language: .ja)
+  }
+
   // MARK: - Shared Rendering
 
   private func renderWorkshopListPage(req: Request, language: CfPLanguage) async throws
@@ -315,15 +327,16 @@ struct WorkshopRoutes: RouteCollection {
     }
 
     // Check if already applied
-    if (try await WorkshopApplication.query(on: req.db)
+    let existingApplication = try await WorkshopApplication.query(on: req.db)
       .filter(\.$email == email)
-      .first()) != nil
-    {
+      .first()
+
+    if let existingApplication, existingApplication.status != .pending {
       let html = try await renderWorkshopApplyPage(
         req: req, language: language,
         errorMessage: language == .ja
-          ? "このメールアドレスは既に申し込み済みです。"
-          : "This email has already been used to apply."
+          ? "抽選が既に行われたため、申し込みを変更できません。"
+          : "The lottery has already been run. Your application can no longer be modified."
       )
       return try await html.encodeResponse(for: req)
     }
@@ -381,9 +394,27 @@ struct WorkshopRoutes: RouteCollection {
         id: $0.registrationID, title: $0.proposalTitle, speakerName: $0.speakerName)
     }
 
+    let isEditMode = existingApplication != nil
+    let existingSelections: WorkshopSelectPageView.ExistingSelections?
+    if let existingApplication {
+      existingSelections = WorkshopSelectPageView.ExistingSelections(
+        firstChoiceID: existingApplication.$firstChoice.id,
+        secondChoiceID: existingApplication.$secondChoice.id,
+        thirdChoiceID: existingApplication.$thirdChoice.id
+      )
+    } else {
+      existingSelections = nil
+    }
+
+    let applicantName =
+      guestName.isEmpty && existingApplication != nil
+      ? existingApplication!.applicantName : guestName
+
     let html = HTMLResponse {
       CfPLayout(
-        title: language == .ja ? "ワークショップ選択" : "Select Workshops",
+        title: language == .ja
+          ? (isEditMode ? "ワークショップ申し込み変更" : "ワークショップ選択")
+          : (isEditMode ? "Edit Workshop Application" : "Select Workshops"),
         user: user,
         language: language,
         currentPath: "/workshops/apply"
@@ -391,11 +422,13 @@ struct WorkshopRoutes: RouteCollection {
         WorkshopSelectPageView(
           workshops: workshopOptions,
           email: email,
-          applicantName: guestName,
+          applicantName: applicantName,
           verifyToken: token,
           language: language,
           csrfToken: csrfToken(from: req),
-          errorMessage: nil
+          errorMessage: nil,
+          isEditMode: isEditMode,
+          existingSelections: existingSelections
         )
       }
     }
@@ -453,16 +486,17 @@ struct WorkshopRoutes: RouteCollection {
 
     let email = payload.subject.value
 
-    // Check for duplicate application
-    if (try await WorkshopApplication.query(on: req.db)
+    // Check for existing application
+    let existingApplication = try await WorkshopApplication.query(on: req.db)
       .filter(\.$email == email)
-      .first()) != nil
-    {
+      .first()
+
+    if let existingApplication, existingApplication.status != .pending {
       let html = try await renderWorkshopApplyPage(
         req: req, language: language,
         errorMessage: language == .ja
-          ? "このメールアドレスは既に申し込み済みです。"
-          : "This email has already been used to apply."
+          ? "抽選が既に行われたため、申し込みを変更できません。"
+          : "The lottery has already been run. Your application can no longer be modified."
       )
       return try await html.encodeResponse(for: req)
     }
@@ -480,15 +514,27 @@ struct WorkshopRoutes: RouteCollection {
       return try await html.encodeResponse(for: req)
     }
 
-    // Save application
-    let application = WorkshopApplication(
-      email: email,
-      applicantName: form.applicant_name.trimmingCharacters(in: .whitespacesAndNewlines),
-      firstChoiceID: form.first_choice_id,
-      secondChoiceID: secondChoiceID,
-      thirdChoiceID: thirdChoiceID
-    )
-    try await application.save(on: req.db)
+    // Save or update application
+    let isUpdate: Bool
+    if let existingApplication {
+      existingApplication.applicantName = form.applicant_name
+        .trimmingCharacters(in: .whitespacesAndNewlines)
+      existingApplication.$firstChoice.id = form.first_choice_id
+      existingApplication.$secondChoice.id = secondChoiceID
+      existingApplication.$thirdChoice.id = thirdChoiceID
+      try await existingApplication.save(on: req.db)
+      isUpdate = true
+    } else {
+      let application = WorkshopApplication(
+        email: email,
+        applicantName: form.applicant_name.trimmingCharacters(in: .whitespacesAndNewlines),
+        firstChoiceID: form.first_choice_id,
+        secondChoiceID: secondChoiceID,
+        thirdChoiceID: thirdChoiceID
+      )
+      try await application.save(on: req.db)
+      isUpdate = false
+    }
 
     // Get workshop titles for confirmation
     let firstTitle = try await workshopTitle(for: form.first_choice_id, on: req.db)
@@ -519,7 +565,8 @@ struct WorkshopRoutes: RouteCollection {
           firstChoice: firstTitle ?? "Unknown",
           secondChoice: secondTitle,
           thirdChoice: thirdTitle,
-          language: language
+          language: language,
+          isUpdate: isUpdate
         )
       }
     }
@@ -612,6 +659,15 @@ struct WorkshopRoutes: RouteCollection {
         nil
       }
 
+    // Generate a short-lived delete token for pending applications
+    let deleteToken: String?
+    if application.status == .pending {
+      let payload = WorkshopVerifyPayload(email: application.email, name: "")
+      deleteToken = try await req.jwt.sign(payload)
+    } else {
+      deleteToken = nil
+    }
+
     let info = WorkshopStatusPageView.ApplicationInfo(
       email: application.email,
       applicantName: application.applicantName,
@@ -619,11 +675,93 @@ struct WorkshopRoutes: RouteCollection {
       firstChoice: firstTitle ?? "Unknown",
       secondChoice: secondTitle,
       thirdChoice: thirdTitle,
-      assignedWorkshop: assignedTitle
+      assignedWorkshop: assignedTitle,
+      canModify: application.status == .pending,
+      deleteToken: deleteToken
     )
 
     let html = try await renderWorkshopStatusPage(
       req: req, language: language, application: info)
+    return try await html.encodeResponse(for: req)
+  }
+
+  private func processDeleteOwnApplication(req: Request, language: CfPLanguage) async throws
+    -> Response
+  {
+    struct DeleteForm: Content {
+      let delete_token: String
+    }
+
+    let form = try req.content.decode(DeleteForm.self)
+
+    // Verify JWT to authenticate the delete request
+    let payload: WorkshopVerifyPayload
+    do {
+      payload = try await req.jwt.verify(form.delete_token, as: WorkshopVerifyPayload.self)
+    } catch {
+      let html = try await renderWorkshopStatusPage(req: req, language: language)
+      return try await html.encodeResponse(for: req)
+    }
+
+    let email = payload.subject.value
+
+    // Atomic conditional delete: only delete pending applications
+    try await WorkshopApplication.query(on: req.db)
+      .filter(\.$email == email)
+      .filter(\.$status == .pending)
+      .delete()
+
+    // Check if application still exists (status changed between page load and delete)
+    if let current = try await WorkshopApplication.query(on: req.db)
+      .filter(\.$email == email)
+      .first()
+    {
+      let firstTitle = try await workshopTitle(for: current.$firstChoice.id, on: req.db)
+      let secondTitle: String? =
+        if let id = current.$secondChoice.id {
+          try await workshopTitle(for: id, on: req.db)
+        } else {
+          nil
+        }
+      let thirdTitle: String? =
+        if let id = current.$thirdChoice.id {
+          try await workshopTitle(for: id, on: req.db)
+        } else {
+          nil
+        }
+      let assignedTitle: String? =
+        if let id = current.$assignedWorkshop.id {
+          try await workshopTitle(for: id, on: req.db)
+        } else {
+          nil
+        }
+      let info = WorkshopStatusPageView.ApplicationInfo(
+        email: current.email,
+        applicantName: current.applicantName,
+        status: current.status,
+        firstChoice: firstTitle ?? "Unknown",
+        secondChoice: secondTitle,
+        thirdChoice: thirdTitle,
+        assignedWorkshop: assignedTitle,
+        canModify: false,
+        deleteToken: nil
+      )
+      let html = try await renderWorkshopStatusPage(
+        req: req, language: language, application: info)
+      return try await html.encodeResponse(for: req)
+    }
+
+    let user = try? await req.authenticatedUser()
+    let html = HTMLResponse {
+      CfPLayout(
+        title: language == .ja ? "申し込み取り消し完了" : "Application Deleted",
+        user: user,
+        language: language,
+        currentPath: "/workshops/status"
+      ) {
+        WorkshopDeleteConfirmationView(language: language)
+      }
+    }
     return try await html.encodeResponse(for: req)
   }
 

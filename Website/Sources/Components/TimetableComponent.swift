@@ -19,8 +19,13 @@ struct TimetableComponent: HTML {
           if session.shouldShowInTimetable {
             Row {
               Column {
-                Text(schedule.time.formattedTimeString())
-                  .foregroundStyle(.dimGray)
+                Text(
+                  schedule.endTime.map {
+                    "\(schedule.time.formattedTimeString()) 〜 \($0.formattedTimeString())"
+                  }
+                    ?? schedule.time.formattedTimeString()
+                )
+                .foregroundStyle(.dimGray)
               }
 
               Column {
@@ -45,12 +50,18 @@ struct TimetableComponent: HTML {
               Column {
                 SessionTitleComponent(session: session, language: language)
                   .foregroundStyle(.dimGray)
-                  .padding(.all, .px(8))
                   .onClick {
                     ShowModal(id: session.modalId)
                   }
+                if let sponsor = session.sponsor {
+                  Span("Sponsored by \(sponsor)")
+                    .font(.small)
+                    .fontWeight(.regular)
+                    .foregroundStyle(.dimGray)
+                }
               }
               .verticalAlignment(.middle)
+              .padding(.all, .px(8))
             }
           }
         }

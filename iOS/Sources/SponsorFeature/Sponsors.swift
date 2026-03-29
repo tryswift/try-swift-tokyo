@@ -110,7 +110,11 @@ public struct SponsorsListView: View {
                 }
                 .padding()
               }
-              .glassEffectIfAvailable(.clear.interactive(), in: .rect(cornerRadius: 16))
+              #if os(macOS)
+                .buttonStyle(.plain)
+              #else
+                .glassEffectIfAvailable(.clear.interactive(), in: .rect(cornerRadius: 16))
+              #endif
               .accessibilityAddTraits(.isLink)
               .accessibilityIgnoresInvertColors()
             }

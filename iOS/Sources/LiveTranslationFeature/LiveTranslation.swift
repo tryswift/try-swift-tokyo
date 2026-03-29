@@ -36,6 +36,11 @@ public struct LiveTranslation: Sendable {
     /// Show speed control
     var isShowingSpeedControl: Bool = false
 
+    /// The display name for the currently selected language (read-only to avoid @Shared setter warning)
+    var selectedLanguageName: String {
+      supportLanguages.first { $0.languageCode == selectedLangCode }?.languageLocal ?? ""
+    }
+
     public init() {}
   }
 
@@ -259,11 +264,7 @@ public struct LiveTranslationView: View {
             Button {
               send(.setSelectedLanguageSheet(!store.isSelectedLanguageSheet))
             } label: {
-              let selectedLanguage =
-                store.supportLanguages.first {
-                  $0.languageCode == store.selectedLangCode
-                }?.languageLocal ?? ""
-              Text(selectedLanguage)
+              Text(store.selectedLanguageName)
               Image(systemName: "globe")
             }
           }
