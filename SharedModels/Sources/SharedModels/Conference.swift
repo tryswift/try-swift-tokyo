@@ -39,6 +39,7 @@ public struct Session: Codable, Equatable, Hashable, Sendable {
   public var requirements: String?
   public var requirementsJa: String?
   public var sponsor: String?
+  public var youtubeVideoId: String?
 
   public init(
     title: String,
@@ -53,6 +54,7 @@ public struct Session: Codable, Equatable, Hashable, Sendable {
     requirements: String?,
     requirementsJa: String? = nil,
     sponsor: String? = nil,
+    youtubeVideoId: String? = nil,
   ) {
     self.title = title
     self.titleJa = titleJa
@@ -66,5 +68,6 @@ public struct Session: Codable, Equatable, Hashable, Sendable {
     self.requirements = requirements
     self.requirementsJa = requirementsJa
     self.sponsor = sponsor
+    self.youtubeVideoId = youtubeVideoId
   }
 }

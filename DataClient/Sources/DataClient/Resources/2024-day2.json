@@ -56,7 +56,8 @@
           "place": "Hall",
           "place_ja": "ホール",
           "description": "After a year of developing an editor component with the TextKit 2 framework, I gained knowledge of best practices and techniques. I am thrilled to share my experience and insights.",
-          "description_ja": "TextKit 2フレームワークでエディターコンポーネントを1年間開発した結果、ベストプラクティスやテクニックの知識を得ました。私の経験と洞察を共有できることを嬉しく思います。"
+          "description_ja": "TextKit 2フレームワークでエディターコンポーネントを1年間開発した結果、ベストプラクティスやテクニックの知識を得ました。私の経験と洞察を共有できることを嬉しく思います。",
+          "youtube_video_id": "bQkKHysw68U"
         }
       ]
     },
@@ -86,7 +87,8 @@
           "place": "Hall",
           "place_ja": "ホール",
           "description": "As most people tend to use cloud sync services to store relevant content, we will explore File Provider framework on both iOS and macOS and all the related features: Finder and Files app integration, remote synchronisation with upload and downloads.  So let's explore how it works on both iOS and macOS and how you can sync, upload and download files on these platforms.",
-          "description_ja": "多くの人がクラウド同期サービスを使って重要なコンテンツを保存する中、iOSとmacOS両方のFile Providerフレームワークと関連機能を探ります：FinderとFilesアプリの統合、アップロードとダウンロードによるリモート同期。iOSとmacOSでの動作方法、そしてこれらのプラットフォームでファイルを同期、アップロード、ダウンロードする方法を探りましょう。"
+          "description_ja": "多くの人がクラウド同期サービスを使って重要なコンテンツを保存する中、iOSとmacOS両方のFile Providerフレームワークと関連機能を探ります：FinderとFilesアプリの統合、アップロードとダウンロードによるリモート同期。iOSとmacOSでの動作方法、そしてこれらのプラットフォームでファイルを同期、アップロード、ダウンロードする方法を探りましょう。",
+          "youtube_video_id": "wfkIJOwIWtQ"
         },
         {
           "id": 32,
@@ -144,7 +146,8 @@
           "place": "Hall",
           "place_ja": "ホール",
           "description": "Using the Accessibility API in macOS allows you to access and manipulate UI elements of other applications and retrieve the content displayed. This presentation will introduce methods to add assistant features such as autocomplete and translation to existing applications by utilizing this functionality. We will discuss the application of the Accessibility API to enhance applications, including practical examples.",
-          "description_ja": "macOSのAccessibility APIを使用すると、他のアプリケーションのUI要素にアクセスして操作し、表示されているコンテンツを取得できます。このプレゼンテーションでは、この機能を活用して既存のアプリケーションにオートコンプリートや翻訳などのアシスタント機能を追加する方法を紹介します。実際の例を含め、アプリケーションを強化するためのAccessibility APIの活用について議論します。"
+          "description_ja": "macOSのAccessibility APIを使用すると、他のアプリケーションのUI要素にアクセスして操作し、表示されているコンテンツを取得できます。このプレゼンテーションでは、この機能を活用して既存のアプリケーションにオートコンプリートや翻訳などのアシスタント機能を追加する方法を紹介します。実際の例を含め、アプリケーションを強化するためのAccessibility APIの活用について議論します。",
+          "youtube_video_id": "zbqJyd9YPN0"
         },
         {
           "id": 34,
@@ -186,7 +189,8 @@
             }
           ],
           "description": "With iPhones continually advancing their camera capabilities, one can capture satisfying photos without the need for a dedicated digital camera. Yet, there exists a niche of individuals who intentionally purchase older digital or film cameras. They are drawn to the unique aesthetic of photos and videos produced by these cameras.\nIn this talk, we'll explore how to achieve such retro-style photos using Swift. While Core Image's documentation offers articles like \"Simulating Scratchy Analog Film,\" implementing these techniques directly into a camera app may not yield the desired retro effect. Therefore, we'll start by reexamining the question, \"What defines a retro-style photo?\" and aim to create the ideal retro aesthetic.",
-          "description_ja": "iPhoneのカメラ機能が進化し続ける中、専用のデジタルカメラがなくても満足のいく写真が撮れるようになりました。しかし、あえて古いデジタルカメラやフィルムカメラを購入する人々がいます。彼らはこれらのカメラが生み出す独特の美学に惹かれています。\nこのトークでは、Swiftを使ってそのようなレトロ風の写真を実現する方法を探ります。Core Imageのドキュメントには「Simulating Scratchy Analog Film」などの記事がありますが、これらのテクニックをカメラアプリに直接実装しても望むレトロ効果は得られないかもしれません。そこで、「レトロ風の写真とは何か？」という問いを再検討し、理想的なレトロ美学の創出を目指します。"
+          "description_ja": "iPhoneのカメラ機能が進化し続ける中、専用のデジタルカメラがなくても満足のいく写真が撮れるようになりました。しかし、あえて古いデジタルカメラやフィルムカメラを購入する人々がいます。彼らはこれらのカメラが生み出す独特の美学に惹かれています。\nこのトークでは、Swiftを使ってそのようなレトロ風の写真を実現する方法を探ります。Core Imageのドキュメントには「Simulating Scratchy Analog Film」などの記事がありますが、これらのテクニックをカメラアプリに直接実装しても望むレトロ効果は得られないかもしれません。そこで、「レトロ風の写真とは何か？」という問いを再検討し、理想的なレトロ美学の創出を目指します。",
+          "youtube_video_id": "liCLBUyqfIg"
         },
         {
           "id": 37,
@@ -231,7 +235,8 @@
           "place": "Hall",
           "place_ja": "ホール",
           "description": "Swift boasts a powerful language feature known as type inference, which is crucial for balancing a safe type system with ease of coding. \nUnderstanding how this essential feature is implemented can aid in writing better code. \n\nIn this talk, I will explain the workings of Swift's type inference, including the fundamental algorithm that allows bidirectional propagation of type information for code, and how it's extended to accommodate language features like overloading. \nThis will help understand why compiling code can become overly burdensome and result in errors. \nI will also cover interesting related topics such as overload priority, simultaneous inference in multiple statements, and the challenges of protocol compliance determination.\n\nAdditionally, methods for directly observing the behavior of type inference using compiler options will be introduced, paving the way for further deepening your understanding.",
-          "description_ja": "Swiftは型推論という強力な言語機能を誇り、これは安全な型システムとコーディングの容易さのバランスを取るために重要です。\nこの重要な機能がどのように実装されているかを理解することは、より良いコードを書く助けになります。\n\nこのトークでは、コードに対する型情報の双方向伝播を可能にする基本アルゴリズムや、オーバーロードなどの言語機能に対応するための拡張方法を含む、Swiftの型推論の仕組みを説明します。\nこれにより、コードのコンパイルが過度に負担になりエラーが発生する理由を理解できます。\nオーバーロードの優先順位、複数ステートメントの同時推論、プロトコル準拠判定の課題など、興味深い関連トピックもカバーします。\n\nさらに、コンパイラオプションを使って型推論の動作を直接観察する方法を紹介し、理解をさらに深める道を開きます。"
+          "description_ja": "Swiftは型推論という強力な言語機能を誇り、これは安全な型システムとコーディングの容易さのバランスを取るために重要です。\nこの重要な機能がどのように実装されているかを理解することは、より良いコードを書く助けになります。\n\nこのトークでは、コードに対する型情報の双方向伝播を可能にする基本アルゴリズムや、オーバーロードなどの言語機能に対応するための拡張方法を含む、Swiftの型推論の仕組みを説明します。\nこれにより、コードのコンパイルが過度に負担になりエラーが発生する理由を理解できます。\nオーバーロードの優先順位、複数ステートメントの同時推論、プロトコル準拠判定の課題など、興味深い関連トピックもカバーします。\n\nさらに、コンパイラオプションを使って型推論の動作を直接観察する方法を紹介し、理解をさらに深める道を開きます。",
+          "youtube_video_id": "AubflnfDszE"
         }
       ]
     },
@@ -271,7 +276,8 @@
             }
           ],
           "description": "Localizing your app into other languages can unlock a huge amount of growth potential for your app. But as an indie developer, I don't have time to spare and don't have others I can rely on to do the work involved in maintaining a high quality localization. So, I rely heavily on automation to minimize the work associated with maintaining 8 different high-quality localizations in my app Nihongo.\n\nIn this talk, I'll discuss what aspects of localization I entrust to professional translators, what I use machine translation for, and what I use crowdsourcing from social media for. I'll discuss techniques for automating various aspects of the localization process, including (1) generating screenshots of strings for providing context to translators and validating their translations, (2) generating app store screenshots, including marketing copy in multiple languages, (3) generating meaningful release notes in multiple languages, and (4) verifying app layout and correctness in multiple languages.",
-          "description_ja": "アプリを他の言語にローカライズすることで、アプリの成長の可能性を大きく広げることができます。しかし、個人開発者として、高品質なローカライゼーションを維持する作業に費やす時間も頼れる人もいません。そこで、私のアプリNihongoで8つの異なる高品質なローカライゼーションを維持するための作業を最小限にするために、自動化に大きく依存しています。\n\nこのトークでは、ローカライゼーションのどの側面をプロの翻訳者に任せ、何に機械翻訳を使い、何にソーシャルメディアからのクラウドソーシングを使うかについて議論します。ローカライゼーションプロセスの様々な側面を自動化するテクニックについて議論します：（1）翻訳者にコンテキストを提供し翻訳を検証するための文字列のスクリーンショット生成、（2）複数言語でのマーケティングコピーを含むApp Storeスクリーンショットの生成、（3）複数言語での意味のあるリリースノートの生成、（4）複数言語でのアプリレイアウトと正確性の検証。"
+          "description_ja": "アプリを他の言語にローカライズすることで、アプリの成長の可能性を大きく広げることができます。しかし、個人開発者として、高品質なローカライゼーションを維持する作業に費やす時間も頼れる人もいません。そこで、私のアプリNihongoで8つの異なる高品質なローカライゼーションを維持するための作業を最小限にするために、自動化に大きく依存しています。\n\nこのトークでは、ローカライゼーションのどの側面をプロの翻訳者に任せ、何に機械翻訳を使い、何にソーシャルメディアからのクラウドソーシングを使うかについて議論します。ローカライゼーションプロセスの様々な側面を自動化するテクニックについて議論します：（1）翻訳者にコンテキストを提供し翻訳を検証するための文字列のスクリーンショット生成、（2）複数言語でのマーケティングコピーを含むApp Storeスクリーンショットの生成、（3）複数言語での意味のあるリリースノートの生成、（4）複数言語でのアプリレイアウトと正確性の検証。",
+          "youtube_video_id": "EF_FX6Ct9wE"
         },
         {
           "id": 39,
@@ -313,7 +319,8 @@
             }
           ],
           "description": "Have you ever pondered why '1 + 1 = 2' in Swift? Join me as I unveil the intriguing journey behind this seemingly simple arithmetic operation, delving into Swift's inner workings, including its source code, LLVM, and assembly language. This talk offers a deep dive into the concealed mechanics behind everyday code!",
-          "description_ja": "Swiftで「1 + 1 = 2」となる理由を考えたことはありますか？一見単純な算術演算の背後にある興味深い旅を、Swiftのソースコード、LLVM、アセンブリ言語を含む内部の仕組みに踏み込んで解き明かします。このトークは、日常的なコードの背後に隠された仕組みを深く探ります！"
+          "description_ja": "Swiftで「1 + 1 = 2」となる理由を考えたことはありますか？一見単純な算術演算の背後にある興味深い旅を、Swiftのソースコード、LLVM、アセンブリ言語を含む内部の仕組みに踏み込んで解き明かします。このトークは、日常的なコードの背後に隠された仕組みを深く探ります！",
+          "youtube_video_id": "OpenCwVkEGs"
         },
         {
           "id": 43,
@@ -355,7 +362,8 @@
             }
           ],
           "description": "Swift is cool but... do you know what's cooler? Successfully code signing your Swift apps. Code signing issues can certainly be scary but they can be really fun to solve! This talk will teach you how to take a step back from scary code signing errors to calmly and quickly code sign your apps.",
-          "description_ja": "Swiftはクールですが…もっとクールなものを知っていますか？Swiftアプリのコード署名を成功させることです。コード署名の問題は確かに怖いかもしれませんが、解決するのは本当に楽しいです！このトークでは、怖いコード署名エラーから一歩引いて、落ち着いて素早くアプリに署名する方法を教えます。"
+          "description_ja": "Swiftはクールですが…もっとクールなものを知っていますか？Swiftアプリのコード署名を成功させることです。コード署名の問題は確かに怖いかもしれませんが、解決するのは本当に楽しいです！このトークでは、怖いコード署名エラーから一歩引いて、落ち着いて素早くアプリに署名する方法を教えます。",
+          "youtube_video_id": "ZzIbqkusedU"
         }
       ]
     },
@@ -408,7 +416,8 @@
             }
           ],
           "description": "Binary size is one of the critical metrics to improve the app experience. There are a bunch of approaches to optimize program size and Swift provides some of them including Swift-specific one. This talk gives you an overview of well-known optimizations and how to write size-friendly Swift code.",
-          "description_ja": "バイナリサイズはアプリ体験を向上させるための重要な指標の一つです。プログラムサイズを最適化するアプローチは数多くあり、SwiftはSwift固有のものを含むいくつかの方法を提供しています。このトークでは、よく知られた最適化の概要と、サイズに優しいSwiftコードの書き方を紹介します。"
+          "description_ja": "バイナリサイズはアプリ体験を向上させるための重要な指標の一つです。プログラムサイズを最適化するアプローチは数多くあり、SwiftはSwift固有のものを含むいくつかの方法を提供しています。このトークでは、よく知られた最適化の概要と、サイズに優しいSwiftコードの書き方を紹介します。",
+          "youtube_video_id": "NdhdM7du5Ug"
         },
         {
           "id": 45,
@@ -450,7 +459,8 @@
             }
           ],
           "description": "This talk will take you through a handful of topics that either make a big or a small win for you or your application, mostly with the new iOS, SwiftUI and Xcode features. Want to give your app some extra sparkle? Let's chat about cool shortcuts, playful animations, and the new tricks from SwiftUI 5 like observation framework, enhanced phased animations, updates to scrollview and new gestures. Come join this session and take home some big and small wins with you.",
-          "description_ja": "このトークでは、あなたやあなたのアプリケーションに大きな勝利や小さな勝利をもたらすいくつかのトピックを紹介します。主に新しいiOS、SwiftUI、Xcodeの機能についてです。アプリに輝きを加えたいですか？クールなショートカット、遊び心のあるアニメーション、Observation framework、強化されたphased animations、scrollviewの更新、新しいジェスチャーなど、SwiftUI 5の新しいトリックについて話しましょう。このセッションに参加して、大小の勝利を持ち帰りましょう。"
+          "description_ja": "このトークでは、あなたやあなたのアプリケーションに大きな勝利や小さな勝利をもたらすいくつかのトピックを紹介します。主に新しいiOS、SwiftUI、Xcodeの機能についてです。アプリに輝きを加えたいですか？クールなショートカット、遊び心のあるアニメーション、Observation framework、強化されたphased animations、scrollviewの更新、新しいジェスチャーなど、SwiftUI 5の新しいトリックについて話しましょう。このセッションに参加して、大小の勝利を持ち帰りましょう。",
+          "youtube_video_id": "BUDp_An-Nwc"
         },
         {
           "id": 50,

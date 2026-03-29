@@ -1,6 +1,9 @@
 import Combine
 import SwiftUI
 import YouTubePlayerKit
+import os
+
+private let logger = Logger(subsystem: "jp.tryswift.tokyo.App", category: "VideoPlayer")
 
 struct VideoPlayerView: View {
   let videoId: String
@@ -32,12 +35,17 @@ struct VideoPlayerView: View {
       switch state {
       case .idle, .ready:
         EmptyView()
-      case .error:
+      case .error(let error):
         ContentUnavailableView(
           "Video Unavailable",
           systemImage: "play.slash",
           description: Text("This video could not be loaded.")
         )
+        .onAppear {
+          logger.error(
+            "YouTube player error for video \(videoId, privacy: .public): \(String(describing: error), privacy: .public)"
+          )
+        }
       }
     }
     .aspectRatio(16.0 / 9.0, contentMode: .fit)

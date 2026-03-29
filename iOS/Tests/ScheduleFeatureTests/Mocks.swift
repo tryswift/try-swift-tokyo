@@ -56,7 +56,8 @@ extension Session {
     ],
     place: "place1",
     description: "description1",
-    requirements: "requirements1"
+    requirements: "requirements1",
+    youtubeVideoId: "abc123def45"
   )
 
   static let mock2 = Self(

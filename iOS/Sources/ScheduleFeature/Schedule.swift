@@ -69,6 +69,7 @@ public struct Schedule {
 
     public enum Delegate: Equatable {
       case showVideoDetail(Session, VideoMetadata, ConferenceYear)
+      case showScheduleDetail(Session)
     }
   }
 
@@ -147,31 +148,34 @@ public struct Schedule {
         state.selectedDay = day
         return .none
       case .view(.disclosureTapped(let session)):
-        guard let description = session.description, let speakers = session.speakers else {
+        guard session.description != nil, session.speakers != nil else {
           return .none
         }
-        if let videoMeta = state.videoMetadata[session.title] {
+        if let videoId = session.youtubeVideoId {
+          let videoMeta =
+            state.videoMetadata[videoId]
+            ?? VideoMetadata(sessionTitle: session.title, youtubeVideoId: videoId)
           return .send(.delegate(.showVideoDetail(session, videoMeta, state.selectedYear)))
         } else {
-          let detailState = ScheduleDetail.State(
-            title: session.title,
-            description: description,
-            requirements: session.requirements,
-            speakers: speakers
-          )
           #if os(macOS)
-            state.destination = .detail(detailState)
+            return .send(.delegate(.showScheduleDetail(session)))
           #else
+            let detailState = ScheduleDetail.State(
+              title: session.title,
+              description: session.description!,
+              requirements: session.requirements,
+              speakers: session.speakers!
+            )
             state.path.append(.detail(detailState))
+            return .none
           #endif
         }
-        return .none
       case .fetchResponse(.success(let response)):
         state.day1 = response.day1
         state.day2 = response.day2
         state.day3 = response.day3
         state.videoMetadata = Dictionary(
-          response.videos.map { ($0.sessionTitle, $0) },
+          response.videos.map { ($0.youtubeVideoId, $0) },
           uniquingKeysWith: { first, _ in first }
         )
         return .none
@@ -234,33 +238,18 @@ public struct ScheduleView: View {
   }
 
   public var body: some View {
-    NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-      root
-    } destination: { store in
-      switch store.state {
-      case .detail:
-        if let store = store.scope(state: \.detail, action: \.detail) {
-          ScheduleDetailView(store: store)
-        }
-      }
-    }
     #if os(macOS)
-      .sheet(
-        item: $store.scope(state: \.destination?.detail, action: \.destination.detail)
-      ) { detailStore in
-        NavigationStack {
-          ScheduleDetailView(store: detailStore)
-          .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-              Button {
-                store.send(.destination(.dismiss))
-              } label: {
-                Text("Close", bundle: .module)
-              }
-            }
+      root
+    #else
+      NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+        root
+      } destination: { store in
+        switch store.state {
+        case .detail:
+          if let store = store.scope(state: \.detail, action: \.detail) {
+            ScheduleDetailView(store: store)
           }
         }
-        .frame(minWidth: 500, minHeight: 400)
       }
     #endif
   }
@@ -432,7 +421,7 @@ public struct ScheduleView: View {
               Button {
                 send(.disclosureTapped(session))
               } label: {
-                listRow(session: session, hasVideo: store.videoMetadata[session.title] != nil)
+                listRow(session: session, hasVideo: session.youtubeVideoId != nil)
                   .padding()
               }
               .glassIfAvailable()

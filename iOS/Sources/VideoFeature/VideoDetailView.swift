@@ -43,6 +43,8 @@ public struct VideoDetailView: View {
           #endif
         }
         .pickerStyle(.segmented)
+        .labelsHidden()
+        .accessibilityLabel(Text("Content", bundle: .module))
         .padding()
 
         // Tab Content
