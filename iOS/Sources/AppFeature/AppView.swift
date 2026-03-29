@@ -96,6 +96,13 @@ public struct AppReducer {
     Reduce { state, action in
       switch action {
       case .sidebarItemSelected(let item):
+        let previousYear: ConferenceYear
+        switch state.selectedSidebarItem {
+        case .pastYear(let year):
+          previousYear = year
+        default:
+          previousYear = .latest
+        }
         state.selectedSidebarItem = item
         let targetDay: ScheduleFeature.Schedule.Days
         let targetYear: ConferenceYear
@@ -114,10 +121,14 @@ public struct AppReducer {
           targetYear = year
         default: return .none
         }
-        return .merge(
-          .send(.schedule(.view(.yearSelected(targetYear)))),
-          .send(.schedule(.view(.daySelected(targetDay))))
-        )
+        if targetYear != previousYear {
+          return .merge(
+            .send(.schedule(.view(.yearSelected(targetYear)))),
+            .send(.schedule(.view(.daySelected(targetDay))))
+          )
+        } else {
+          return .send(.schedule(.view(.daySelected(targetDay))))
+        }
 
       case .openExternalLink(let link):
         switch link {
@@ -137,7 +148,9 @@ public struct AppReducer {
 
       case .schedule(.view(.yearSelected(let year))):
         if year == .latest {
-          state.selectedSidebarItem = .day1
+          if case .pastYear = state.selectedSidebarItem {
+            state.selectedSidebarItem = .day1
+          }
         } else {
           state.selectedSidebarItem = .pastYear(year)
         }
@@ -253,24 +266,26 @@ public struct AppView: View {
         Button {
           store.send(.openExternalLink(.codeOfConduct))
         } label: {
-          Label(String(localized: "Code of Conduct", bundle: .module), systemImage: "doc.text")
+          externalLinkLabel(
+            String(localized: "Code of Conduct", bundle: .module), systemImage: "doc.text")
         }
         Button {
           store.send(.openExternalLink(.privacyPolicy))
         } label: {
-          Label(String(localized: "Privacy Policy", bundle: .module), systemImage: "hand.raised")
+          externalLinkLabel(
+            String(localized: "Privacy Policy", bundle: .module), systemImage: "hand.raised")
         }
         Label(String(localized: "Acknowledgements", bundle: .module), systemImage: "heart")
           .tag(AppReducer.SidebarItem.acknowledgements)
         Button {
           store.send(.openExternalLink(.luma))
         } label: {
-          Label(String(localized: "Luma", bundle: .module), systemImage: "ticket")
+          externalLinkLabel(String(localized: "Luma", bundle: .module), systemImage: "ticket")
         }
         Button {
           store.send(.openExternalLink(.website))
         } label: {
-          Label(
+          externalLinkLabel(
             String(localized: "try! Swift Website", bundle: .module), systemImage: "safari")
         }
       }
@@ -325,6 +340,22 @@ public struct AppView: View {
       } description: {
         Text("Select an item from the sidebar")
       }
+    }
+  }
+
+  @ViewBuilder
+  private func externalLinkLabel(_ title: String, systemImage: String) -> some View {
+    Label {
+      HStack {
+        Text(title)
+        Spacer()
+        Image(systemName: "arrow.up.forward")
+          .foregroundStyle(.tertiary)
+          .font(.caption)
+          .accessibilityHidden(true)
+      }
+    } icon: {
+      Image(systemName: systemImage)
     }
   }
 
