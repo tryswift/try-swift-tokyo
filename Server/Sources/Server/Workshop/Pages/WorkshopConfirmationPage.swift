@@ -8,6 +8,7 @@ struct WorkshopConfirmationPageView: HTML, Sendable {
   let secondChoice: String?
   let thirdChoice: String?
   let language: CfPLanguage
+  let isUpdate: Bool
 
   var body: some HTML {
     div(.class("container py-5")) {
@@ -17,14 +18,26 @@ struct WorkshopConfirmationPageView: HTML, Sendable {
             div(.class("card-body text-center p-5")) {
               p(.class("fs-1 mb-3")) { "✅" }
               h2(.class("fw-bold mb-3")) {
-                language == .ja
-                  ? "申し込みが完了しました！"
-                  : "Application Submitted!"
+                if isUpdate {
+                  language == .ja
+                    ? "申し込みを更新しました！"
+                    : "Application Updated!"
+                } else {
+                  language == .ja
+                    ? "申し込みが完了しました！"
+                    : "Application Submitted!"
+                }
               }
               p(.class("text-muted mb-4")) {
-                language == .ja
-                  ? "抽選結果はメールでお知らせします。"
-                  : "You will be notified of the lottery results by email."
+                if isUpdate {
+                  language == .ja
+                    ? "ワークショップの希望が更新されました。抽選結果はメールでお知らせします。"
+                    : "Your workshop preferences have been updated. You will be notified of the lottery results by email."
+                } else {
+                  language == .ja
+                    ? "抽選結果はメールでお知らせします。"
+                    : "You will be notified of the lottery results by email."
+                }
               }
 
               div(.class("text-start")) {
