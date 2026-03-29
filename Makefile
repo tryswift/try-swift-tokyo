@@ -25,6 +25,7 @@ android-emulator:
 		echo "Starting emulator: $$AVD"; \
 		emulator -avd $$AVD & \
 		adb wait-for-device; \
+		adb shell 'while [ "$$(getprop sys.boot_completed)" != "1" ]; do sleep 1; done'; \
 	fi
 
 android-run: android-build android-emulator

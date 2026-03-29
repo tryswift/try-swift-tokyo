@@ -5,7 +5,8 @@ import PackageDescription
 
 // Skip dependencies are only needed for Android transpilation (skipstone plugin).
 // Set INCLUDE_SKIP=1 environment variable to enable (e.g., `INCLUDE_SKIP=1 swift build`).
-let includeSkip = ProcessInfo.processInfo.environment["INCLUDE_SKIP"] != nil
+let includeSkipEnv = ProcessInfo.processInfo.environment["INCLUDE_SKIP"]?.lowercased()
+let includeSkip = includeSkipEnv == "1" || includeSkipEnv == "true"
 
 var packageDependencies: [Package.Dependency] = []
 var targetDependencies: [Target.Dependency] = []
