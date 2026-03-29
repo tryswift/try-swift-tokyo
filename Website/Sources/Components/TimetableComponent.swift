@@ -21,7 +21,7 @@ struct TimetableComponent: HTML {
               Column {
                 Text(
                   schedule.endTime.map {
-                    "\(schedule.time.formattedTimeString()) ｜ \($0.formattedTimeString())"
+                    "\(schedule.time.formattedTimeString()) 〜 \($0.formattedTimeString())"
                   }
                     ?? schedule.time.formattedTimeString()
                 )
