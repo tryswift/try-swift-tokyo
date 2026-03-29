@@ -282,6 +282,23 @@
         }
       }
     },
+    "Sponsored by %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sponsored by %1$@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ 提供"
+          }
+        }
+      }
+    },
     "Sign in with Luma and show QR code of your ticket at the reception." : {
       "extractionState" : "manual",
       "localizations" : {

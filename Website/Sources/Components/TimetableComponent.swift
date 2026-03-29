@@ -50,18 +50,21 @@ struct TimetableComponent: HTML {
               Column {
                 SessionTitleComponent(session: session, language: language)
                   .foregroundStyle(.dimGray)
-                  .onClick {
-                    ShowModal(id: session.modalId)
-                  }
                 if let sponsor = session.sponsor {
-                  Span("Sponsored by \(sponsor)")
-                    .font(.small)
-                    .fontWeight(.regular)
-                    .foregroundStyle(.dimGray)
+                  Span(
+                    String(
+                      format: String("Sponsored by %@", language: language), sponsor)
+                  )
+                  .font(.small)
+                  .fontWeight(.regular)
+                  .foregroundStyle(.dimGray)
                 }
               }
               .verticalAlignment(.middle)
               .padding(.all, .px(8))
+              .onClick {
+                ShowModal(id: session.modalId)
+              }
             }
           }
         }
