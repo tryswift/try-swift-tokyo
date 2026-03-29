@@ -218,8 +218,11 @@ public struct ScheduleScreen: View {
 
   private func scheduleSection(schedule: SharedModels.Schedule) -> some View {
     VStack(alignment: HorizontalAlignment.leading, spacing: 8) {
-      Text(schedule.time, style: Text.DateStyle.time)
-        .font(Font.subheadline.bold())
+      Text(
+        schedule.time.formatted(date: .omitted, time: .shortened)
+          + (schedule.endTime.map { " - " + $0.formatted(date: .omitted, time: .shortened) } ?? "")
+      )
+      .font(Font.subheadline.bold())
 
       ForEach(schedule.sessions, id: \.title) { session in
         if session.description != nil {
@@ -266,6 +269,12 @@ public struct ScheduleScreen: View {
             .font(Font.caption)
             .foregroundStyle(Color.gray)
             .lineLimit(2)
+        }
+
+        if let sponsor = session.sponsor {
+          Text("Sponsored by \(sponsor)")
+            .font(Font.caption)
+            .foregroundStyle(Color.secondary)
         }
       }
       .frame(maxWidth: CGFloat.infinity, alignment: Alignment.leading)

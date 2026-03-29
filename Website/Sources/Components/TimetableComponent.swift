@@ -19,8 +19,13 @@ struct TimetableComponent: HTML {
           if session.shouldShowInTimetable {
             Row {
               Column {
-                Text(schedule.time.formattedTimeString())
-                  .foregroundStyle(.dimGray)
+                Text(
+                  schedule.endTime.map {
+                    "\(schedule.time.formattedTimeString()) 〜 \($0.formattedTimeString())"
+                  }
+                    ?? schedule.time.formattedTimeString()
+                )
+                .foregroundStyle(.dimGray)
               }
 
               Column {

@@ -6,6 +6,7 @@
   "schedules": [
     {
       "time": "2026-04-13T08:00:00+09:00",
+      "end_time": "2026-04-13T10:00:00+09:00",
       "sessions": [
         {
           "title": "🏃Run & Walk the Park",
@@ -19,6 +20,7 @@
     },
     {
       "time": "2026-04-13T09:30:00+09:00",
+      "end_time": "2026-04-13T11:30:00+09:00",
       "sessions": [
         {
           "title": "#SwiftStudentsCafe: Crafting standout apps",
