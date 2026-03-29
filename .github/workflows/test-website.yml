@@ -1,4 +1,6 @@
 name: Test Website
+permissions:
+  contents: read
 
 on:
   push:
