@@ -16,10 +16,12 @@ public struct Conference: Codable, Equatable, Hashable, Sendable {
 
 public struct Schedule: Codable, Equatable, Hashable, Sendable {
   public var time: Date
+  public var endTime: Date?
   public var sessions: [Session]
 
-  public init(time: Date, sessions: [Session]) {
+  public init(time: Date, endTime: Date? = nil, sessions: [Session]) {
     self.time = time
+    self.endTime = endTime
     self.sessions = sessions
   }
 }
