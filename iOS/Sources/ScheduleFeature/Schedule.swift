@@ -375,9 +375,12 @@ public struct ScheduleView: View {
         .accessibilityAddTraits(.isHeader)
       ForEach(conference.schedules, id: \.self) { schedule in
         VStack(alignment: .leading, spacing: 4) {
-          Text(schedule.time, style: .time)
-            .font(.subheadline.bold())
-            .accessibilityAddTraits(.isHeader)
+          Text(
+            schedule.time.formatted(date: .omitted, time: .shortened)
+              + (schedule.endTime.map { " - " + $0.formatted(date: .omitted, time: .shortened) } ?? "")
+          )
+          .font(.subheadline.bold())
+          .accessibilityAddTraits(.isHeader)
           ForEach(schedule.sessions, id: \.self) { session in
             if session.description != nil {
               Button {
