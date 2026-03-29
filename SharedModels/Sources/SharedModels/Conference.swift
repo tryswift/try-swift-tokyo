@@ -36,6 +36,7 @@ public struct Session: Codable, Equatable, Hashable, Sendable {
   public var descriptionJa: String?
   public var requirements: String?
   public var requirementsJa: String?
+  public var sponsor: String?
 
   public init(
     title: String,
@@ -48,7 +49,8 @@ public struct Session: Codable, Equatable, Hashable, Sendable {
     description: String?,
     descriptionJa: String? = nil,
     requirements: String?,
-    requirementsJa: String? = nil
+    requirementsJa: String? = nil,
+    sponsor: String? = nil,
   ) {
     self.title = title
     self.titleJa = titleJa
@@ -61,5 +63,6 @@ public struct Session: Codable, Equatable, Hashable, Sendable {
     self.descriptionJa = descriptionJa
     self.requirements = requirements
     self.requirementsJa = requirementsJa
+    self.sponsor = sponsor
   }
 }

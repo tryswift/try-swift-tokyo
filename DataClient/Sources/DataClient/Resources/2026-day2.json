@@ -429,7 +429,8 @@
           "title": "Party",
           "title_ja": "パーティー",
           "place": "Tachihi Beach",
-          "place_ja": "タチヒビーチ"
+          "place_ja": "タチヒビーチ",
+          "sponsor": "RevenueCat"
         }
       ]
     }
