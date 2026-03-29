@@ -19,13 +19,46 @@ public struct ScheduleScreen: View {
         }
       }
       .navigationTitle("Schedule")
-      .searchable(text: $viewModel.searchText, isPresented: $viewModel.isSearchBarPresented)
-      .navigationDestination(for: Session.self) { session in
-        SessionDetailView(session: session)
-          .navigationTitle("Session")
-          #if os(iOS) || SKIP
-            .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
-          #endif
+      #if SKIP
+        .toolbar {
+          ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+            HStack {
+              Image(systemName: "magnifyingglass")
+              .foregroundStyle(Color.secondary)
+              TextField("Search", text: $viewModel.searchText)
+            }
+          }
+        }
+        .onChange(of: viewModel.searchText) { _, newValue in
+          viewModel.isSearchBarPresented = !newValue.trimmingCharacters(
+            in: CharacterSet.whitespaces
+          ).isEmpty
+        }
+      #else
+        .searchable(text: $viewModel.searchText, isPresented: $viewModel.isSearchBarPresented)
+      #endif
+      .sheet(
+        isPresented: Binding(
+          get: { viewModel.selectedSession != nil },
+          set: { if !$0 { viewModel.clearSelection() } }
+        )
+      ) {
+        if let session = viewModel.selectedSession {
+          NavigationStack {
+            SessionDetailView(session: session)
+              .navigationTitle("Session")
+              #if os(iOS) || SKIP
+                .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
+                .toolbar {
+                  ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
+                    Button("Done") {
+                      viewModel.clearSelection()
+                    }
+                  }
+                }
+              #endif
+          }
+        }
       }
       #if os(iOS) || SKIP
         .toolbar {
@@ -68,12 +101,22 @@ public struct ScheduleScreen: View {
   private var searchResultsList: some View {
     let results = viewModel.searchResults
     if results.isEmpty {
-      ContentUnavailableView.search(text: viewModel.searchText)
+      VStack {
+        Spacer()
+        Image(systemName: "magnifyingglass")
+          .font(Font.system(size: 48))
+          .foregroundStyle(Color.secondary)
+        Text("No results for \"\(viewModel.searchText)\"")
+          .foregroundStyle(Color.secondary)
+        Spacer()
+      }
     } else {
       ScrollView {
         LazyVStack(alignment: HorizontalAlignment.leading, spacing: 12) {
           ForEach(results, id: \.self) { result in
-            NavigationLink(value: result.session) {
+            Button {
+              viewModel.selectSession(result.session)
+            } label: {
               searchResultRow(result: result)
                 .padding()
             }
@@ -180,7 +223,9 @@ public struct ScheduleScreen: View {
 
       ForEach(schedule.sessions, id: \.title) { session in
         if session.description != nil {
-          NavigationLink(value: session) {
+          Button {
+            viewModel.selectSession(session)
+          } label: {
             if session.title == "Office hour", let speakers = session.speakers {
               officeHourRow(session: session, speakers: speakers)
             } else {

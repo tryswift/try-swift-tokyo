@@ -4,7 +4,6 @@ import SwiftUI
 public struct AboutScreen: View {
   @State private var viewModel = AboutViewModel()
   @State private var showOrganizers = false
-  @State private var selectedOrganizer: Organizer?
   @Environment(\.openURL) private var openURL
 
   public init() {}
@@ -23,7 +22,7 @@ public struct AboutScreen: View {
         externalLinksSection
       }
       .navigationTitle("try! Swift")
-      .sheet(item: $selectedOrganizer) { organizer in
+      .sheet(item: $viewModel.selectedOrganizer) { organizer in
         OrganizerDetailSheet(organizer: organizer)
       }
     }
@@ -83,7 +82,7 @@ public struct AboutScreen: View {
       } else if !viewModel.organizers.isEmpty {
         ForEach(viewModel.organizers) { organizer in
           Button {
-            selectedOrganizer = organizer
+            viewModel.selectedOrganizer = organizer
           } label: {
             HStack {
               Circle()

@@ -77,11 +77,13 @@ public final class LiveTranslationViewModel {
       // Guard against duplicate connections
       if chatJob != nil { return }
 
+      let vm = self
+
       // Observe connection state
       connectionStateJob?.cancel()
       connectionStateJob = scope.launch {
         ChatGuestSdk.isConnected.collectLatest { connected in
-          self.isConnected = connected
+          vm.isConnected = connected
         }
       }
 
@@ -89,18 +91,20 @@ public final class LiveTranslationViewModel {
       languagesJob?.cancel()
       languagesJob = scope.launch {
         ChatGuestSdk.supportLanguages.collectLatest { languages in
-          self.supportedLanguages = languages.map { lang in
-            LanguageItem(langCode: lang.languageCode, langTitle: lang.languageLocal)
+          var langs: [LanguageItem] = []
+          for lang in languages {
+            langs.append(LanguageItem(langCode: lang.languageCode, langTitle: lang.languageLocal))
           }
+          vm.supportedLanguages = langs
           // Validate selected language
-          if !languages.isEmpty {
-            let isValid = languages.any { $0.languageCode == self.selectedLangCode }
+          if languages.size > 0 {
+            let isValid = languages.any { $0.languageCode == vm.selectedLangCode }
             if !isValid {
               let deviceLang = java.util.Locale.getDefault().language
               let hasDeviceLang = languages.any { $0.languageCode == deviceLang }
-              self.selectedLangCode = hasDeviceLang ? deviceLang : "en"
-              self.selectedLangTitle =
-                languages.first { $0.languageCode == self.selectedLangCode }?.languageLocal
+              vm.selectedLangCode = hasDeviceLang ? deviceLang : "en"
+              vm.selectedLangTitle =
+                languages.first { $0.languageCode == vm.selectedLangCode }?.languageLocal
                 ?? "English"
             }
           }
@@ -111,8 +115,8 @@ public final class LiveTranslationViewModel {
       scope.launch {
         do {
           let name = ChatGuestSdk.connectChat(
-            roomCode: roomNumber, initialLangCode: selectedLangCode)
-          self.roomName = name
+            roomCode: vm.roomNumber, initialLangCode: vm.selectedLangCode)
+          vm.roomName = name
         } catch {
           print("connectChat error: \(error)")
         }
@@ -121,7 +125,7 @@ public final class LiveTranslationViewModel {
       // Observe messages
       chatJob = scope.launch {
         ChatGuestSdk.observeMessages().collectLatest { data in
-          self.handleChatData(data)
+          vm.handleChatData(data)
         }
       }
     #endif
@@ -201,17 +205,21 @@ public final class LiveTranslationViewModel {
       tts?.setSpeechRate(Float(rate))
 
       let utteranceId = "tts_\(System.currentTimeMillis())"
-      tts?.setOnUtteranceProgressListener(
-        object: android.speech.tts.UtteranceProgressListener {
-          override func onStart(_ id: String) {}
-          override func onDone(_ id: String) {
-            self.speakingItemId = nil
-          }
-          override func onError(_ id: String) {
-            self.speakingItemId = nil
-          }
-        })
+      let vm = self
+      let listener = TTSListener { vm.speakingItemId = nil }
+      tts?.setOnUtteranceProgressListener(listener)
       tts?.speak(text, TextToSpeech.QUEUE_FLUSH, nil, utteranceId)
+    }
+
+    // Named listener class to avoid anonymous object transpilation issues
+    private class TTSListener: android.speech.tts.UtteranceProgressListener {
+      private let onComplete: () -> Void
+      init(_ onComplete: @escaping () -> Void) {
+        self.onComplete = onComplete
+      }
+      override func onStart(_ utteranceId: String) {}
+      override func onDone(_ utteranceId: String) { onComplete() }
+      override func onError(_ utteranceId: String) { onComplete() }
     }
 
     private func handleChatData(_ data: ChatDataEntity) {
@@ -222,13 +230,18 @@ public final class LiveTranslationViewModel {
 
         switch listType {
         case "renew":
-          self.chatMessages = items.map { item in
-            ChatMessage(
+          var newMessages: [ChatMessage] = []
+          for item in items {
+            let msg = ChatMessage(
               id: item.chatId ?? java.util.UUID.randomUUID().toString(),
               text: item.text ?? "",
               isRealTime: item.isRealTime
             )
-          }.filter { !$0.text.isEmpty }
+            if !msg.text.isEmpty {
+              newMessages.append(msg)
+            }
+          }
+          self.chatMessages = newMessages
 
         case "append":
           for item in items {
@@ -289,8 +302,8 @@ public final class LiveTranslationViewModel {
 
         self.messagesType = listType ?? ""
 
-      case let errorData as ChatDataEntity.ErrorEntity:
-        print("Chat error: \(errorData.message ?? "unknown")")
+      case is ChatDataEntity.ErrorEntity:
+        print("Chat error: \(data)")
 
       default:
         break
