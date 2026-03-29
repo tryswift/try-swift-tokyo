@@ -270,6 +270,12 @@ public struct ScheduleScreen: View {
             .foregroundStyle(Color.gray)
             .lineLimit(2)
         }
+
+        if let sponsor = session.sponsor {
+          Text("Sponsored by \(sponsor)")
+            .font(Font.caption)
+            .foregroundStyle(Color.secondary)
+        }
       }
       .frame(maxWidth: CGFloat.infinity, alignment: Alignment.leading)
 

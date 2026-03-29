@@ -452,6 +452,11 @@ public struct ScheduleView: View {
               .foregroundStyle(secondaryLabelColor)
           }
         }
+        if let sponsor = session.sponsor {
+          Text("Sponsored by \(sponsor)")
+            .font(.caption)
+            .foregroundStyle(secondaryLabelColor)
+        }
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       .accessibilityElement(children: .combine)
