@@ -42,4 +42,4 @@ jobs:
       - name: Build
         run: |
           cd Android
-          swift build
+          INCLUDE_SKIP=1 swift build
