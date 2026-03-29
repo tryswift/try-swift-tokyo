@@ -148,7 +148,9 @@ public struct AppReducer {
 
       case .schedule(.view(.yearSelected(let year))):
         if year == .latest {
-          state.selectedSidebarItem = .day1
+          if case .pastYear = state.selectedSidebarItem {
+            state.selectedSidebarItem = .day1
+          }
         } else {
           state.selectedSidebarItem = .pastYear(year)
         }
@@ -350,6 +352,7 @@ public struct AppView: View {
         Image(systemName: "arrow.up.forward")
           .foregroundStyle(.tertiary)
           .font(.caption)
+          .accessibilityHidden(true)
       }
     } icon: {
       Image(systemName: systemImage)
