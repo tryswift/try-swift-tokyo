@@ -306,21 +306,33 @@ public struct AppView: View {
           externalLinkLabel(
             String(localized: "Code of Conduct", bundle: .module), systemImage: "doc.text")
         }
-        .buttonStyle(.link)
+        #if os(macOS)
+          .buttonStyle(.link)
+        #else
+          .buttonStyle(.plain)
+        #endif
         Button {
           store.send(.openExternalLink(.privacyPolicy))
         } label: {
           externalLinkLabel(
             String(localized: "Privacy Policy", bundle: .module), systemImage: "hand.raised")
         }
-        .buttonStyle(.link)
+        #if os(macOS)
+          .buttonStyle(.link)
+        #else
+          .buttonStyle(.plain)
+        #endif
 
         Button {
           store.send(.openExternalLink(.luma))
         } label: {
           externalLinkLabel(String(localized: "Luma", bundle: .module), systemImage: "ticket")
         }
-        .buttonStyle(.link)
+        #if os(macOS)
+          .buttonStyle(.link)
+        #else
+          .buttonStyle(.plain)
+        #endif
 
         Button {
           store.send(.openExternalLink(.website))
@@ -328,7 +340,11 @@ public struct AppView: View {
           externalLinkLabel(
             String(localized: "try! Swift Website", bundle: .module), systemImage: "safari")
         }
-        .buttonStyle(.link)
+        #if os(macOS)
+          .buttonStyle(.link)
+        #else
+          .buttonStyle(.plain)
+        #endif
 
       }
 
