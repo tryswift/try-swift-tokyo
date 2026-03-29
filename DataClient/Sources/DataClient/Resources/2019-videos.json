@@ -1,0 +1,68 @@
+[
+  {
+    "session_title": "Native macOS application, or the world of AppKit",
+    "youtube_video_id": "PLACEHOLDER_VIDEO_ID_1",
+    "duration": 1500.0,
+    "chapters": [
+      { "title": "Introduction", "start_time": 0.0 },
+      { "title": "What is native?", "start_time": 120.0 },
+      { "title": "AppKit Fundamentals", "start_time": 360.0 },
+      { "title": "Human Interface Guidelines", "start_time": 720.0 },
+      { "title": "Marzipan and the Future", "start_time": 1080.0 },
+      { "title": "Summary", "start_time": 1380.0 }
+    ],
+    "transcript": [
+      { "id": 1, "start_time": 0.0, "end_time": 5.0, "text": "Hello everyone, thank you for coming to try! Swift Tokyo." },
+      { "id": 2, "start_time": 5.0, "end_time": 12.0, "text": "Today I'd like to talk about native macOS applications and the world of AppKit." },
+      { "id": 3, "start_time": 12.0, "end_time": 20.0, "text": "Swift is the language we use to build native applications for iOS and macOS." },
+      { "id": 4, "start_time": 20.0, "end_time": 28.0, "text": "But what does it really mean to be a native application?" },
+      { "id": 5, "start_time": 28.0, "end_time": 35.0, "text": "Is it just using Cocoa framework with Swift?" }
+    ],
+    "resources": [
+      { "title": "Slide Deck", "url": "https://speakerdeck.com/1024jp/native-macos-application-or-the-world-of-appkit" }
+    ],
+    "summary": "This talk explores what it truly means to build a native macOS application. Beyond simply using Swift with the Cocoa framework, the speaker discusses the importance of deeply understanding AppKit, following Human Interface Guidelines, and being a good citizen of the target OS. The talk also touches on Marzipan (now Catalyst) and its implications for the future of macOS development.",
+    "code_resources": [
+      { "title": "CotEditor", "url": "https://github.com/coteditor/CotEditor", "kind": "github" }
+    ]
+  },
+  {
+    "session_title": "Introduction to Swift Keypaths",
+    "youtube_video_id": "PLACEHOLDER_VIDEO_ID_2",
+    "duration": 1500.0,
+    "chapters": [
+      { "title": "Introduction", "start_time": 0.0 },
+      { "title": "Types of Keypaths", "start_time": 180.0 },
+      { "title": "Real World Examples", "start_time": 600.0 },
+      { "title": "Advanced Patterns", "start_time": 1080.0 }
+    ],
+    "transcript": [
+      { "id": 1, "start_time": 0.0, "end_time": 6.0, "text": "Hi everyone. Today I want to talk about Swift Keypaths." },
+      { "id": 2, "start_time": 6.0, "end_time": 14.0, "text": "Keypaths were added in Swift 4 and they are a fantastic feature." },
+      { "id": 3, "start_time": 14.0, "end_time": 22.0, "text": "But sometimes it feels difficult to find good situations for using them." },
+      { "id": 4, "start_time": 22.0, "end_time": 30.0, "text": "When understood and used the right way, keypaths allow you to implement additional abstractions." }
+    ],
+    "resources": [],
+    "summary": "An exploration of Swift Keypaths, introduced in Swift 4. The talk covers the different types of keypaths that exist in Swift and demonstrates through real-world examples how they can be leveraged to create powerful abstractions that would be much harder to achieve with generics or protocols alone.",
+    "code_resources": []
+  },
+  {
+    "session_title": "Graphics like Pixar using Swift",
+    "youtube_video_id": "PLACEHOLDER_VIDEO_ID_3",
+    "duration": 1500.0,
+    "chapters": [
+      { "title": "Introduction", "start_time": 0.0 },
+      { "title": "What is Ray Tracing?", "start_time": 90.0 },
+      { "title": "Building a Ray Tracer in Swift", "start_time": 480.0 },
+      { "title": "Rendering Results", "start_time": 1200.0 }
+    ],
+    "transcript": [
+      { "id": 1, "start_time": 0.0, "end_time": 7.0, "text": "Hello, my name is Michael Petrie but everyone calls me Kapsy." },
+      { "id": 2, "start_time": 7.0, "end_time": 15.0, "text": "Today I want to talk about creating Pixar-like graphics using Swift." },
+      { "id": 3, "start_time": 15.0, "end_time": 23.0, "text": "Ray tracing is the cornerstone of Pixar's Renderman 3D rendering technology." }
+    ],
+    "resources": [],
+    "summary": "A hands-on exploration of building a simple ray tracer from scratch using Swift. The talk covers the fundamentals of ray tracing—the technology behind Pixar's Renderman—and demonstrates how Swift's versatility makes it suitable for physically modeling light rays and their interactions with objects and surfaces.",
+    "code_resources": []
+  }
+]

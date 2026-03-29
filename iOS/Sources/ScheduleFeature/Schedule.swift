@@ -23,6 +23,7 @@ public struct Schedule {
     var day1: Conference
     var day2: Conference
     var day3: Conference?
+    var videos: [VideoMetadata]
   }
 
   public struct SearchableSession: Equatable, Hashable {
@@ -43,6 +44,7 @@ public struct Schedule {
     var day1: Conference?
     var day2: Conference?
     var day3: Conference?
+    var videoMetadata: [String: VideoMetadata] = [:]
     @Presents var destination: Destination.State?
 
     public init() {}
@@ -55,6 +57,7 @@ public struct Schedule {
     case view(View)
     case fetchResponse(Result<SchedulesResponse, Error>)
     case allSessionsLoaded([SearchableSession])
+    case delegate(Delegate)
 
     @CasePathable
     public enum View {
@@ -62,6 +65,10 @@ public struct Schedule {
       case disclosureTapped(Session)
       case yearSelected(ConferenceYear)
       case daySelected(Days)
+    }
+
+    public enum Delegate: Equatable {
+      case showVideoDetail(Session, VideoMetadata, ConferenceYear)
     }
   }
 
@@ -92,7 +99,8 @@ public struct Schedule {
                 let day1 = try dataClient.fetchDay1(year)
                 let day2 = try dataClient.fetchDay2(year)
                 let day3 = try? dataClient.fetchDay3(year)
-                return .init(day1: day1, day2: day2, day3: day3)
+                let videos = (try? dataClient.fetchVideos(year)) ?? []
+                return .init(day1: day1, day2: day2, day3: day3, videos: videos)
               })),
           shouldLoadAllSessions
             ? .run { send in
@@ -131,6 +139,7 @@ public struct Schedule {
         state.day1 = nil
         state.day2 = nil
         state.day3 = nil
+        state.videoMetadata = [:]
         return .send(.view(.onAppear))
       case .view(.daySelected(let day)):
         state.selectedDay = day
@@ -139,21 +148,29 @@ public struct Schedule {
         guard let description = session.description, let speakers = session.speakers else {
           return .none
         }
-        state.path.append(
-          .detail(
-            .init(
-              title: session.title,
-              description: description,
-              requirements: session.requirements,
-              speakers: speakers
+        if let videoMeta = state.videoMetadata[session.title] {
+          return .send(.delegate(.showVideoDetail(session, videoMeta, state.selectedYear)))
+        } else {
+          state.path.append(
+            .detail(
+              .init(
+                title: session.title,
+                description: description,
+                requirements: session.requirements,
+                speakers: speakers
+              )
             )
           )
-        )
+        }
         return .none
       case .fetchResponse(.success(let response)):
         state.day1 = response.day1
         state.day2 = response.day2
         state.day3 = response.day3
+        state.videoMetadata = Dictionary(
+          response.videos.map { ($0.sessionTitle, $0) },
+          uniquingKeysWith: { first, _ in first }
+        )
         return .none
       case .allSessionsLoaded(let sessions):
         state.allSessions = sessions
@@ -164,7 +181,7 @@ public struct Schedule {
       case .fetchResponse(.failure(let error)):
         logger.error("Failed to fetch schedules: \(error)")
         return .none
-      case .binding, .path, .destination:
+      case .binding, .path, .destination, .delegate:
         return .none
       }
     }
@@ -200,6 +217,9 @@ extension Schedule.State {
 
 extension Schedule.Path.State: Equatable {}
 extension Schedule.Destination.State: Equatable {}
+
+/// The resource bundle for ScheduleFeature (contains speaker images).
+public let scheduleFeatureBundle: Bundle = .module
 
 @ViewAction(for: Schedule.self)
 public struct ScheduleView: View {
@@ -394,7 +414,7 @@ public struct ScheduleView: View {
               Button {
                 send(.disclosureTapped(session))
               } label: {
-                listRow(session: session)
+                listRow(session: session, hasVideo: store.videoMetadata[session.title] != nil)
                   .padding()
               }
               #if os(macOS)
@@ -403,7 +423,7 @@ public struct ScheduleView: View {
                 .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
               #endif
             } else {
-              listRow(session: session)
+              listRow(session: session, hasVideo: false)
                 .padding()
                 #if !os(macOS)
                   .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
@@ -417,18 +437,25 @@ public struct ScheduleView: View {
   }
 
   @ViewBuilder
-  func listRow(session: Session) -> some View {
+  func listRow(session: Session, hasVideo: Bool) -> some View {
     HStack(spacing: 8) {
       VStack {
         if let speakers = session.speakers {
           ForEach(speakers, id: \.self) { speaker in
-            Image(speaker.imageName, bundle: .module)
-              .resizable()
-              .aspectRatio(contentMode: .fit)
-              .clipShape(Circle())
-              .frame(width: 60)
-              .accessibilityElement(children: .ignore)
-              .accessibilityIgnoresInvertColors()
+            ZStack(alignment: .bottomTrailing) {
+              Image(speaker.imageName, bundle: .module)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .clipShape(Circle())
+                .frame(width: 60)
+                .accessibilityElement(children: .ignore)
+                .accessibilityIgnoresInvertColors()
+              if hasVideo {
+                Image(systemName: "play.circle.fill")
+                  .font(.caption)
+                  .foregroundStyle(.white, Color.accentColor)
+              }
+            }
           }
         } else {
           Image(.tokyo)

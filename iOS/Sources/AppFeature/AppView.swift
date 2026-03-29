@@ -7,6 +7,7 @@ import SharedModels
 import SponsorFeature
 import SwiftUI
 import TipKit
+import VideoFeature
 import trySwiftFeature
 
 // MARK: - AppReducer
@@ -46,6 +47,9 @@ public struct AppReducer {
     // Sidebar detail: standalone Acknowledgements
     var sidebarAcknowledgements = Acknowledgements.State()
 
+    // Video detail (presented as full-screen cover from schedule)
+    @Presents var videoDetail: VideoDetail.State?
+
     public init() {
       try? Tips.configure([.displayFrequency(.immediate)])
     }
@@ -66,6 +70,9 @@ public struct AppReducer {
     case sidebarOrganizers(Organizers.Action)
     case sidebarProfile(PresentationAction<Profile.Action>)
     case sidebarAcknowledgements(Acknowledgements.Action)
+
+    // Video detail
+    case videoDetail(PresentationAction<VideoDetail.Action>)
   }
 
   public init() {}
@@ -156,13 +163,21 @@ public struct AppReducer {
         }
         return .none
 
+      case .schedule(.delegate(.showVideoDetail(let session, let videoMeta, let year))):
+        state.videoDetail = .init(
+          session: session, videoMetadata: videoMeta, conferenceYear: year)
+        return .none
+
       case .schedule, .liveTranslation, .guidance, .sponsors, .trySwift,
-        .sidebarOrganizers, .sidebarProfile, .sidebarAcknowledgements:
+        .sidebarOrganizers, .sidebarProfile, .sidebarAcknowledgements, .videoDetail:
         return .none
       }
     }
     .ifLet(\.$sidebarProfile, action: \.sidebarProfile) {
       Profile()
+    }
+    .ifLet(\.$videoDetail, action: \.videoDetail) {
+      VideoDetail()
     }
   }
 }
@@ -182,15 +197,34 @@ public struct AppView: View {
   }
 
   public var body: some View {
-    #if os(macOS)
-      sidebarLayout
-    #else
-      if horizontalSizeClass == .regular {
+    Group {
+      #if os(macOS)
         sidebarLayout
-      } else {
-        tabLayout
+      #else
+        if horizontalSizeClass == .regular {
+          sidebarLayout
+        } else {
+          tabLayout
+        }
+      #endif
+    }
+    .sheet(
+      item: $store.scope(state: \.videoDetail, action: \.videoDetail)
+    ) { videoDetailStore in
+      NavigationStack {
+        VideoDetailView(store: videoDetailStore, speakerImageBundle: scheduleFeatureBundle)
+          .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+              Button {
+                store.send(.videoDetail(.dismiss))
+              } label: {
+                Image(systemName: "xmark.circle.fill")
+                  .symbolRenderingMode(.hierarchical)
+              }
+            }
+          }
       }
-    #endif
+    }
   }
 
   // MARK: iPhone TabView
