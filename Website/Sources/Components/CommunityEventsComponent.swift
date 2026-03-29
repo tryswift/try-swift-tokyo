@@ -37,6 +37,11 @@ struct CommunityEventsComponent: HTML {
             imageName: "event-2026-3",
             url: "https://love-swift.connpass.com/event/385566/"
           ),
+          Event(
+            name: "Tokyo Mobile Meetup - Hosted by Mercari",
+            imageName: "event-2026-4",
+            url: "https://www.meetup.com/tokyoiosmeetup/events/313754863/"
+          ),
         ]
       default: []
       }
