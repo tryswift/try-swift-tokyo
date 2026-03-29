@@ -76,7 +76,7 @@ struct FeedbackController: RouteCollection {
   /// GET /api/v1/feedback/my-talks
   @Sendable
   func getMyTalksFeedback(req: Request) async throws -> [FeedbackForTalk] {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try req.auth.require(UserJWTPayload.self)
     guard let userID = payload.userID else {
       throw Abort(.unauthorized)
     }

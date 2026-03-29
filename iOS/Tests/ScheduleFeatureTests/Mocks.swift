@@ -50,6 +50,7 @@ extension Conference {
 
 extension Session {
   static let mock1 = Self(
+    proposalId: "proposal-1",
     title: "session1",
     speakers: [
       .mock1

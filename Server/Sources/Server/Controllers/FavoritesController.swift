@@ -1,4 +1,5 @@
 import Fluent
+import SQLKit
 import Vapor
 
 struct FavoriteToggleRequest: Content {
@@ -48,15 +49,25 @@ struct FavoritesController: RouteCollection {
   /// GET /api/v1/favorite-counts
   @Sendable
   func getFavoriteCounts(req: Request) async throws -> [FavoriteCountItem] {
-    let allFavorites = try await Favorite.query(on: req.db).all()
-
-    var counts: [UUID: Int] = [:]
-    for favorite in allFavorites {
-      let proposalId = favorite.$proposal.id
-      counts[proposalId, default: 0] += 1
+    guard let sql = req.db as? any SQLDatabase else {
+      throw Abort(.internalServerError, reason: "SQL database required")
     }
 
-    return counts.map { FavoriteCountItem(proposalId: $0.key, count: $0.value) }
+    struct CountRow: Decodable {
+      let proposalId: UUID
+      let count: Int
+
+      enum CodingKeys: String, CodingKey {
+        case proposalId = "proposal_id"
+        case count
+      }
+    }
+
+    let rows = try await sql.raw(
+      "SELECT proposal_id, COUNT(*) AS count FROM \(raw: Favorite.schema) GROUP BY proposal_id"
+    ).all(decoding: CountRow.self)
+
+    return rows.map { FavoriteCountItem(proposalId: $0.proposalId, count: $0.count) }
   }
 
   /// PUT /api/v1/favorites
