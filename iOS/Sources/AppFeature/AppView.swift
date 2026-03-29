@@ -245,16 +245,16 @@ public struct AppView: View {
       ) { videoDetailStore in
         NavigationStack {
           VideoDetailView(store: videoDetailStore, speakerImageBundle: scheduleFeatureBundle)
-            .toolbar {
-              ToolbarItem(placement: .cancellationAction) {
-                Button {
-                  store.send(.videoDetail(.dismiss))
-                } label: {
-                  Image(systemName: "xmark.circle.fill")
-                    .symbolRenderingMode(.hierarchical)
-                }
+          .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+              Button {
+                store.send(.videoDetail(.dismiss))
+              } label: {
+                Image(systemName: "xmark.circle.fill")
+                .symbolRenderingMode(.hierarchical)
               }
             }
+          }
         }
       }
     #endif
@@ -319,7 +319,8 @@ public struct AppView: View {
         VideoDetailView(store: videoStore, speakerImageBundle: scheduleFeatureBundle)
       } else {
         ContentUnavailableView {
-          Label(String(localized: "Select a Session", bundle: .module), systemImage: "text.document")
+          Label(
+            String(localized: "Select a Session", bundle: .module), systemImage: "text.document")
         } description: {
           Text("Choose a session from the schedule to view details", bundle: .module)
         }
