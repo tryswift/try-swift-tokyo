@@ -29,6 +29,12 @@ public struct AppReducer {
     case codeOfConduct, privacyPolicy, luma, website
   }
 
+  @Reducer
+  public enum DetailColumn {
+    case scheduleDetail(ScheduleDetail)
+    case videoDetail(VideoDetail)
+  }
+
   @ObservableState
   public struct State: Equatable {
     var schedule = ScheduleFeature.Schedule.State()
@@ -47,7 +53,10 @@ public struct AppReducer {
     // Sidebar detail: standalone Acknowledgements
     var sidebarAcknowledgements = Acknowledgements.State()
 
-    // Video detail (presented as full-screen cover from schedule)
+    // macOS: 3rd column detail
+    @Presents var detailColumn: DetailColumn.State?
+
+    // iOS: Video detail (presented as sheet from schedule)
     @Presents var videoDetail: VideoDetail.State?
 
     public init() {
@@ -71,7 +80,10 @@ public struct AppReducer {
     case sidebarProfile(PresentationAction<Profile.Action>)
     case sidebarAcknowledgements(Acknowledgements.Action)
 
-    // Video detail
+    // Detail column (macOS 3rd column)
+    case detailColumn(PresentationAction<DetailColumn.Action>)
+
+    // Video detail (iOS sheet)
     case videoDetail(PresentationAction<VideoDetail.Action>)
   }
 
@@ -111,6 +123,7 @@ public struct AppReducer {
           previousYear = .latest
         }
         state.selectedSidebarItem = item
+        state.detailColumn = nil
         let targetDay: ScheduleFeature.Schedule.Days
         let targetYear: ConferenceYear
         switch item {
@@ -161,21 +174,39 @@ public struct AppReducer {
         } else {
           state.selectedSidebarItem = .pastYear(year)
         }
+        state.detailColumn = nil
         return .none
 
       case .schedule(.delegate(.showVideoDetail(let session, let videoMeta, let year))):
-        state.videoDetail = .init(
-          session: session, videoMetadata: videoMeta, conferenceYear: year)
+        #if os(macOS)
+          state.detailColumn = .videoDetail(
+            .init(session: session, videoMetadata: videoMeta, conferenceYear: year))
+        #else
+          state.videoDetail = .init(
+            session: session, videoMetadata: videoMeta, conferenceYear: year)
+        #endif
+        return .none
+
+      case .schedule(.delegate(.showScheduleDetail(let session))):
+        state.detailColumn = .scheduleDetail(
+          .init(
+            title: session.title,
+            description: session.description!,
+            requirements: session.requirements,
+            speakers: session.speakers!
+          ))
         return .none
 
       case .schedule, .liveTranslation, .guidance, .sponsors, .trySwift,
-        .sidebarOrganizers, .sidebarProfile, .sidebarAcknowledgements, .videoDetail:
+        .sidebarOrganizers, .sidebarProfile, .sidebarAcknowledgements,
+        .detailColumn, .videoDetail:
         return .none
       }
     }
     .ifLet(\.$sidebarProfile, action: \.sidebarProfile) {
       Profile()
     }
+    .ifLet(\.$detailColumn, action: \.detailColumn)
     .ifLet(\.$videoDetail, action: \.videoDetail) {
       VideoDetail()
     }
@@ -199,7 +230,7 @@ public struct AppView: View {
   public var body: some View {
     Group {
       #if os(macOS)
-        sidebarLayout
+        macOSSidebarLayout
       #else
         if horizontalSizeClass == .regular {
           sidebarLayout
@@ -208,23 +239,25 @@ public struct AppView: View {
         }
       #endif
     }
-    .sheet(
-      item: $store.scope(state: \.videoDetail, action: \.videoDetail)
-    ) { videoDetailStore in
-      NavigationStack {
-        VideoDetailView(store: videoDetailStore, speakerImageBundle: scheduleFeatureBundle)
-          .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-              Button {
-                store.send(.videoDetail(.dismiss))
-              } label: {
-                Image(systemName: "xmark.circle.fill")
-                  .symbolRenderingMode(.hierarchical)
+    #if !os(macOS)
+      .sheet(
+        item: $store.scope(state: \.videoDetail, action: \.videoDetail)
+      ) { videoDetailStore in
+        NavigationStack {
+          VideoDetailView(store: videoDetailStore, speakerImageBundle: scheduleFeatureBundle)
+            .toolbar {
+              ToolbarItem(placement: .cancellationAction) {
+                Button {
+                  store.send(.videoDetail(.dismiss))
+                } label: {
+                  Image(systemName: "xmark.circle.fill")
+                    .symbolRenderingMode(.hierarchical)
+                }
               }
             }
-          }
+        }
       }
-    }
+    #endif
   }
 
   // MARK: iPhone TabView
@@ -258,7 +291,43 @@ public struct AppView: View {
     }
   }
 
-  // MARK: Sidebar Layout (macOS / iPad)
+  // MARK: macOS Sidebar Layout (3 columns)
+
+  #if os(macOS)
+    @ViewBuilder
+    var macOSSidebarLayout: some View {
+      NavigationSplitView {
+        sidebarContent
+      } content: {
+        detailContent
+      } detail: {
+        macOSDetailColumnView
+      }
+    }
+
+    @ViewBuilder
+    var macOSDetailColumnView: some View {
+      if let scheduleStore = store.scope(
+        state: \.detailColumn?.scheduleDetail, action: \.detailColumn.scheduleDetail)
+      {
+        ScrollView {
+          ScheduleDetailView(store: scheduleStore)
+        }
+      } else if let videoStore = store.scope(
+        state: \.detailColumn?.videoDetail, action: \.detailColumn.videoDetail)
+      {
+        VideoDetailView(store: videoStore, speakerImageBundle: scheduleFeatureBundle)
+      } else {
+        ContentUnavailableView {
+          Label(String(localized: "Select a Session", bundle: .module), systemImage: "text.document")
+        } description: {
+          Text("Choose a session from the schedule to view details", bundle: .module)
+        }
+      }
+    }
+  #endif
+
+  // MARK: iPad Sidebar Layout (2 columns)
 
   @ViewBuilder
   var sidebarLayout: some View {

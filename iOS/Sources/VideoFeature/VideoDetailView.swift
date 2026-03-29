@@ -43,6 +43,7 @@ public struct VideoDetailView: View {
           #endif
         }
         .pickerStyle(.segmented)
+        .labelsHidden()
         .padding()
 
         // Tab Content
