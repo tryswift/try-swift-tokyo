@@ -78,7 +78,9 @@ public struct Schedule {
   }
 
   @Reducer
-  public enum Destination {}
+  public enum Destination {
+    case detail(ScheduleDetail)
+  }
 
   @Dependency(DataClient.self) var dataClient
 
@@ -151,16 +153,17 @@ public struct Schedule {
         if let videoMeta = state.videoMetadata[session.title] {
           return .send(.delegate(.showVideoDetail(session, videoMeta, state.selectedYear)))
         } else {
-          state.path.append(
-            .detail(
-              .init(
-                title: session.title,
-                description: description,
-                requirements: session.requirements,
-                speakers: speakers
-              )
-            )
+          let detailState = ScheduleDetail.State(
+            title: session.title,
+            description: description,
+            requirements: session.requirements,
+            speakers: speakers
           )
+          #if os(macOS)
+            state.destination = .detail(detailState)
+          #else
+            state.path.append(.detail(detailState))
+          #endif
         }
         return .none
       case .fetchResponse(.success(let response)):
@@ -241,6 +244,23 @@ public struct ScheduleView: View {
         }
       }
     }
+    #if os(macOS)
+      .sheet(
+        item: $store.scope(state: \.destination?.detail, action: \.destination.detail)
+      ) { detailStore in
+        NavigationStack {
+          ScheduleDetailView(store: detailStore)
+            .toolbar {
+              ToolbarItem(placement: .cancellationAction) {
+                Button("Close") {
+                  store.send(.destination(.dismiss))
+                }
+              }
+            }
+        }
+        .frame(minWidth: 500, minHeight: 400)
+      }
+    #endif
   }
 
   @ViewBuilder
@@ -323,11 +343,7 @@ public struct ScheduleView: View {
               searchResultRow(result: result)
                 .padding()
             }
-            #if os(macOS)
-              .buttonStyle(.plain)
-            #else
-              .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
-            #endif
+            .glassEffectIfAvailable(.regular.interactive(), in: .buttonBorder)
           }
         }
         .padding()
@@ -417,17 +433,11 @@ public struct ScheduleView: View {
                 listRow(session: session, hasVideo: store.videoMetadata[session.title] != nil)
                   .padding()
               }
-              #if os(macOS)
-                .buttonStyle(.plain)
-              #else
-                .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
-              #endif
+              .glassIfAvailable()
             } else {
               listRow(session: session, hasVideo: false)
                 .padding()
-                #if !os(macOS)
-                  .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
-                #endif
+                .glassIfAvailable()
             }
           }
         }

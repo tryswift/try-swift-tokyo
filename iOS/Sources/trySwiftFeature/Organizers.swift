@@ -54,13 +54,19 @@ public struct Organizers {
         }
         return .none
       case .view(._organizerTapped(let organizer)):
-        return .send(.delegate(.organizerTapped(organizer)))
+        #if os(macOS)
+          state.destination = .profile(.init(organizer: organizer))
+          return .none
+        #else
+          return .send(.delegate(.organizerTapped(organizer)))
+        #endif
       case .delegate:
         return .none
       case .destination:
         return .none
       }
     }
+    .ifLet(\.$destination, action: \.destination)
   }
 }
 
@@ -69,7 +75,7 @@ extension Organizers.Destination.State: Equatable {}
 @ViewAction(for: Organizers.self)
 public struct OrganizersView: View {
 
-  public var store: StoreOf<Organizers>
+  @Bindable public var store: StoreOf<Organizers>
 
   public init(store: StoreOf<Organizers>) {
     self.store = store
@@ -95,7 +101,7 @@ public struct OrganizersView: View {
             }
             .padding()
           }
-          .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
+          .glassIfAvailable()
         }
       }
       .padding()
@@ -104,6 +110,23 @@ public struct OrganizersView: View {
       send(.onAppear)
     }
     .navigationTitle(Text("Meet Organizers", bundle: .module))
+    #if os(macOS)
+      .sheet(
+        item: $store.scope(state: \.destination?.profile, action: \.destination.profile)
+      ) { profileStore in
+        NavigationStack {
+          ProfileView(store: profileStore)
+            .toolbar {
+              ToolbarItem(placement: .cancellationAction) {
+                Button("Close") {
+                  store.send(.destination(.dismiss))
+                }
+              }
+            }
+        }
+        .frame(minWidth: 500, minHeight: 400)
+      }
+    #endif
   }
 }
 

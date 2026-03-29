@@ -268,18 +268,18 @@ public struct LiveTranslationView: View {
               Image(systemName: "globe")
             }
           }
-          .sheet(isPresented: $store.isSelectedLanguageSheet) {
-            SelectLanguageSheet(
-              languageList: store.supportLanguages,
-              selectedLanguageAction: { langItem in
-                send(.selectLangCode(langItem.languageCode))
-                send(.setSelectedLanguageSheet(false))
-              }
-            )
-            .presentationDetents([.medium, .large])
-          }
         }
       }
+    }
+    .sheet(isPresented: $store.isSelectedLanguageSheet) {
+      SelectLanguageSheet(
+        languageList: store.supportLanguages,
+        selectedLanguageAction: { langItem in
+          send(.selectLangCode(langItem.languageCode))
+          send(.setSelectedLanguageSheet(false))
+        }
+      )
+      .presentationDetents([.medium, .large])
     }
   }
 

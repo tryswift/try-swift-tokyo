@@ -44,6 +44,19 @@ extension View {
   }
 
   @ViewBuilder
+  public func glassIfAvailable() -> some View {
+  #if os(iOS) || os(macOS)
+    if #available(iOS 26.0, macOS 26.0, *) {
+      self.buttonStyle(.glass)
+    } else {
+      self.buttonStyle(.bordered)
+    }
+  #else
+    self.buttonStyle(.bordered)
+  #endif
+  }
+
+  @ViewBuilder
   public func glassProminentIfAvailable() -> some View {
     #if os(iOS) || os(macOS)
       if #available(iOS 26.0, macOS 26.0, *) {
