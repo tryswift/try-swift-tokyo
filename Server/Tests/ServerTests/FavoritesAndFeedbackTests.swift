@@ -131,7 +131,8 @@ struct FavoritesAndFeedbackTests {
     let user = User(githubID: 12345, username: "testuser", role: .speaker)
     try await user.save(on: db)
 
-    let conference = Conference(path: "test-2026", displayName: "Test Conference", year: 2026, isOpen: true)
+    let conference = Conference(
+      path: "test-2026", displayName: "Test Conference", year: 2026, isOpen: true)
     try await conference.save(on: db)
 
     let proposal = Proposal(
@@ -231,7 +232,8 @@ struct FavoritesAndFeedbackTests {
     try await app.testing().test(
       .PUT, "api/v1/favorites",
       beforeRequest: { req in
-        try req.content.encode(FavoriteToggleRequest(proposalId: nonExistentId, deviceId: "device1"))
+        try req.content.encode(
+          FavoriteToggleRequest(proposalId: nonExistentId, deviceId: "device1"))
       },
       afterResponse: { response in
         #expect(response.status == .notFound)
