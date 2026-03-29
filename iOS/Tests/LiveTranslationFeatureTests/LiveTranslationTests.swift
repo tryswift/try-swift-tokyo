@@ -264,6 +264,59 @@ struct LiveTranslationTests {
   // MARK: - Stream Connection
 
   @Test
+  func onAppear_emptyRoomNumber_doesNotConnect() async {
+    let connectCalled = LockIsolated(false)
+
+    let store = TestStore(initialState: LiveTranslation.State()) {
+      LiveTranslation()
+    } withDependencies: {
+      $0.buildConfig.liveTranslationRoomNumber = { "" }
+      $0.liveTranslationServiceClient.connect = { _, _ in
+        connectCalled.setValue(true)
+      }
+      $0.liveTranslationServiceClient.stateStream = { .never }
+    }
+    store.exhaustivity = .off
+
+    await store.send(.view(.onAppear)) {
+      $0.roomNumber = ""
+    }
+
+    connectCalled.withValue { #expect($0 == false) }
+  }
+
+  @Test
+  func storeStateUpdated_populatesLastErrorMessage() async {
+    let store = TestStore(initialState: LiveTranslation.State()) {
+      LiveTranslation()
+    }
+    store.exhaustivity = .off
+
+    await store.send(
+      .storeStateUpdated(
+        StoreState(isConnected: false, lastErrorMessage: "Socket error"))
+    ) {
+      $0.lastErrorMessage = "Socket error"
+    }
+  }
+
+  @Test
+  func storeStateUpdated_clearsErrorOnConnected() async {
+    var state = LiveTranslation.State()
+    state.lastErrorMessage = "Previous error"
+
+    let store = TestStore(initialState: state) {
+      LiveTranslation()
+    }
+    store.exhaustivity = .off
+
+    await store.send(.storeStateUpdated(StoreState(isConnected: true))) {
+      $0.isConnected = true
+      $0.lastErrorMessage = nil
+    }
+  }
+
+  @Test
   func disconnectStream_setsNotConnectedAndDisconnects() async {
     let disconnectCalled = LockIsolated(false)
     var state = LiveTranslation.State()

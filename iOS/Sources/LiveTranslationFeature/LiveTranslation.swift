@@ -18,6 +18,8 @@ public struct LiveTranslation: Sendable {
     var supportLanguages: [LanguageItemEntity] = []
     /// Streaming is connected
     var isConnected: Bool = false
+    /// Last error message from the translation service
+    var lastErrorMessage: String? = nil
     /// Live Translation Room Title
     var roomTitle: String? = nil
     /// Current language code which user selected
@@ -79,6 +81,7 @@ public struct LiveTranslation: Sendable {
       switch action {
       case .view(.onAppear):
         state.roomNumber = buildConfig.liveTranslationRoomNumber()
+        guard !state.roomNumber.isEmpty else { return .none }
         return .run { [state] send in
           await liveTranslationServiceClient.connect(
             state.roomNumber, state.selectedLangCode)
@@ -88,6 +91,7 @@ public struct LiveTranslation: Sendable {
         }.cancellable(id: observationTaskId, cancelInFlight: true)
 
       case .view(.connectStream):
+        guard !state.roomNumber.isEmpty else { return .none }
         return .run { [state] send in
           await liveTranslationServiceClient.connect(
             state.roomNumber, state.selectedLangCode)
@@ -150,6 +154,7 @@ public struct LiveTranslation: Sendable {
         state.supportLanguages = storeState.supportLanguages
         state.isConnected = storeState.isConnected
         state.roomTitle = storeState.roomTitle
+        state.lastErrorMessage = storeState.isConnected ? nil : storeState.lastErrorMessage
         if storeState.supportLanguages != previousLanguages
           && !storeState.supportLanguages.isEmpty
         {
@@ -201,7 +206,18 @@ public struct LiveTranslationView: View {
               Spacer()
               flittoLogo
             } else if store.chatList.isEmpty {
-              ContentUnavailableView("Not started yet", systemImage: "text.page.slash.fill")
+              if let errorMessage = store.lastErrorMessage {
+                ContentUnavailableView {
+                  Label(
+                    String(localized: "Connection error", bundle: .module),
+                    systemImage: "exclamationmark.triangle.fill"
+                  )
+                } description: {
+                  Text(errorMessage)
+                }
+              } else {
+                ContentUnavailableView("Not started yet", systemImage: "text.page.slash.fill")
+              }
               Spacer()
               flittoLogo
             } else {
