@@ -377,7 +377,8 @@ public struct ScheduleView: View {
         VStack(alignment: .leading, spacing: 4) {
           Text(
             schedule.time.formatted(date: .omitted, time: .shortened)
-              + (schedule.endTime.map { " - " + $0.formatted(date: .omitted, time: .shortened) } ?? "")
+              + (schedule.endTime.map { " - " + $0.formatted(date: .omitted, time: .shortened) }
+                ?? "")
           )
           .font(.subheadline.bold())
           .accessibilityAddTraits(.isHeader)

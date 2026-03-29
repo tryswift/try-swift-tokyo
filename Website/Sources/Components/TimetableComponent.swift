@@ -20,7 +20,9 @@ struct TimetableComponent: HTML {
             Row {
               Column {
                 Text(
-                  schedule.endTime.map { "\(schedule.time.formattedTimeString()) ｜ \($0.formattedTimeString())" }
+                  schedule.endTime.map {
+                    "\(schedule.time.formattedTimeString()) ｜ \($0.formattedTimeString())"
+                  }
                     ?? schedule.time.formattedTimeString()
                 )
                 .foregroundStyle(.dimGray)
