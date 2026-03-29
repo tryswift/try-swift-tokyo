@@ -37,7 +37,7 @@ jobs:
       - name: Setup Swift
         uses: swift-actions/setup-swift@v2
         with:
-          swift-version: "6.2"
+          swift-version: "6.3"
 
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v5

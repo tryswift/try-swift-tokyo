@@ -22,13 +22,13 @@ jobs:
       - name: Setup Swift
         uses: swift-actions/setup-swift@v2
         with:
-          swift-version: "6.2"
+          swift-version: "6.3"
 
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v5
         with:
-          key: spm-website-${{ runner.os }}-swift-6.2-${{ hashFiles('Website/Package.resolved', 'Website/Package.swift') }}
-          restore-keys: spm-website-${{ runner.os }}-swift-6.2-
+          key: spm-website-${{ runner.os }}-swift-6.3-${{ hashFiles('Website/Package.resolved', 'Website/Package.swift') }}
+          restore-keys: spm-website-${{ runner.os }}-swift-6.3-
           path: Website/.build
 
       - name: Build
