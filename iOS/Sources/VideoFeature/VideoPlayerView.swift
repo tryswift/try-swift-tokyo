@@ -42,7 +42,9 @@ struct VideoPlayerView: View {
           description: Text("This video could not be loaded.")
         )
         .onAppear {
-          logger.error("YouTube player error for video \(videoId, privacy: .public): \(String(describing: error), privacy: .public)")
+          logger.error(
+            "YouTube player error for video \(videoId, privacy: .public): \(String(describing: error), privacy: .public)"
+          )
         }
       }
     }
