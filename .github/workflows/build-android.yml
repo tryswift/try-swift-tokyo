@@ -16,6 +16,9 @@ on:
       - "DataClient/**"
       - ".github/workflows/build-android.yml"
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Build Android
