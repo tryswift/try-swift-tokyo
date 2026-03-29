@@ -300,7 +300,11 @@ public struct ScheduleView: View {
               searchResultRow(result: result)
                 .padding()
             }
-            .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
+            #if os(macOS)
+              .buttonStyle(.plain)
+            #else
+              .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
+            #endif
           }
         }
         .padding()
@@ -386,11 +390,17 @@ public struct ScheduleView: View {
                 listRow(session: session)
                   .padding()
               }
-              .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
+              #if os(macOS)
+                .buttonStyle(.plain)
+              #else
+                .glassEffectIfAvailable(.regular.interactive(), in: .rect(cornerRadius: 16))
+              #endif
             } else {
               listRow(session: session)
                 .padding()
-                .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
+                #if !os(macOS)
+                  .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
+                #endif
             }
           }
         }
