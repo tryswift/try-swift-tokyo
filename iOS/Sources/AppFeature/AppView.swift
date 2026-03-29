@@ -278,13 +278,13 @@ public struct AppView: View {
       )
     ) {
       Section {
-        Label(String(localized: "Day 1", bundle: .module), systemImage: "1.circle")
+        Label(String(localized: "Day 1", bundle: .module), systemImage: "1.calendar")
           .tag(AppReducer.SidebarItem.day1)
-        Label(String(localized: "Day 2", bundle: .module), systemImage: "2.circle")
+        Label(String(localized: "Day 2", bundle: .module), systemImage: "2.calendar")
           .tag(AppReducer.SidebarItem.day2)
-        Label(String(localized: "Day 3", bundle: .module), systemImage: "3.circle")
+        Label(String(localized: "Day 3", bundle: .module), systemImage: "3.calendar")
           .tag(AppReducer.SidebarItem.day3)
-        Label(String(localized: "Translation", bundle: .module), systemImage: "text.bubble")
+        Label(String(localized: "Live Translation", bundle: .module), systemImage: "text.bubble")
           .tag(AppReducer.SidebarItem.liveTranslation)
         Label(String(localized: "Venue", bundle: .module), systemImage: "map")
           .tag(AppReducer.SidebarItem.venue)
@@ -297,31 +297,39 @@ public struct AppView: View {
       }
 
       Section {
+        Label(String(localized: "Acknowledgements", bundle: .module), systemImage: "heart")
+          .tag(AppReducer.SidebarItem.acknowledgements)
+
         Button {
           store.send(.openExternalLink(.codeOfConduct))
         } label: {
           externalLinkLabel(
             String(localized: "Code of Conduct", bundle: .module), systemImage: "doc.text")
         }
+        .buttonStyle(.link)
         Button {
           store.send(.openExternalLink(.privacyPolicy))
         } label: {
           externalLinkLabel(
             String(localized: "Privacy Policy", bundle: .module), systemImage: "hand.raised")
         }
-        Label(String(localized: "Acknowledgements", bundle: .module), systemImage: "heart")
-          .tag(AppReducer.SidebarItem.acknowledgements)
+        .buttonStyle(.link)
+
         Button {
           store.send(.openExternalLink(.luma))
         } label: {
           externalLinkLabel(String(localized: "Luma", bundle: .module), systemImage: "ticket")
         }
+        .buttonStyle(.link)
+
         Button {
           store.send(.openExternalLink(.website))
         } label: {
           externalLinkLabel(
             String(localized: "try! Swift Website", bundle: .module), systemImage: "safari")
         }
+        .buttonStyle(.link)
+
       }
 
       Section(isExpanded: $isPastYearsExpanded) {
