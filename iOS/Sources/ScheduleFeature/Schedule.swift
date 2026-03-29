@@ -250,15 +250,15 @@ public struct ScheduleView: View {
       ) { detailStore in
         NavigationStack {
           ScheduleDetailView(store: detailStore)
-            .toolbar {
-              ToolbarItem(placement: .cancellationAction) {
-                Button {
-                  store.send(.destination(.dismiss))
-                } label: {
-                  Text("Close", bundle: .module)
-                }
+          .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+              Button {
+                store.send(.destination(.dismiss))
+              } label: {
+                Text("Close", bundle: .module)
               }
             }
+          }
         }
         .frame(minWidth: 500, minHeight: 400)
       }

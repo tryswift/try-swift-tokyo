@@ -116,13 +116,13 @@ public struct OrganizersView: View {
       ) { profileStore in
         NavigationStack {
           ProfileView(store: profileStore)
-            .toolbar {
-              ToolbarItem(placement: .cancellationAction) {
-                Button(String(localized: "Close", bundle: .module)) {
-                  store.send(.destination(.dismiss))
-                }
+          .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+              Button(String(localized: "Close", bundle: .module)) {
+                store.send(.destination(.dismiss))
               }
             }
+          }
         }
         .frame(minWidth: 500, minHeight: 400)
       }
