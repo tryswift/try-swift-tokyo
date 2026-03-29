@@ -55,9 +55,9 @@ struct TimetableComponent: HTML {
                     String(
                       format: String("Sponsored by %@", language: language), sponsor)
                   )
-                    .font(.small)
-                    .fontWeight(.regular)
-                    .foregroundStyle(.dimGray)
+                  .font(.small)
+                  .fontWeight(.regular)
+                  .foregroundStyle(.dimGray)
                 }
               }
               .verticalAlignment(.middle)
