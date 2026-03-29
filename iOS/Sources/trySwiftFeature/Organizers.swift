@@ -118,7 +118,7 @@ public struct OrganizersView: View {
           ProfileView(store: profileStore)
             .toolbar {
               ToolbarItem(placement: .cancellationAction) {
-                Button("Close") {
+                Button(String(localized: "Close", bundle: .module)) {
                   store.send(.destination(.dismiss))
                 }
               }

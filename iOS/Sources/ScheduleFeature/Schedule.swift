@@ -252,8 +252,10 @@ public struct ScheduleView: View {
           ScheduleDetailView(store: detailStore)
             .toolbar {
               ToolbarItem(placement: .cancellationAction) {
-                Button("Close") {
+                Button {
                   store.send(.destination(.dismiss))
+                } label: {
+                  Text("Close", bundle: .module)
                 }
               }
             }
