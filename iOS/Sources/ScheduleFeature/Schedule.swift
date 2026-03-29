@@ -494,7 +494,7 @@ public struct ScheduleView: View {
           }
         }
         if let sponsor = session.sponsor {
-          Text("Sponsored by \(sponsor)")
+          Text(String(localized: "Sponsored by \(sponsor)", bundle: .module))
             .font(.caption)
             .foregroundStyle(secondaryLabelColor)
         }

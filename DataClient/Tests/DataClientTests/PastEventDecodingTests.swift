@@ -122,6 +122,17 @@ struct PastEventDecodingTests {
     #expect(!speakers.isEmpty)
   }
 
+  // MARK: - 2026 sponsor field
+
+  @Test
+  func decode2026Day2SponsorField() throws {
+    let conference = try dataClient.fetchDay2(.year2026)
+    let allSessions = conference.schedules.flatMap(\.sessions)
+    let sponsoredSessions = allSessions.filter { $0.sponsor != nil }
+    #expect(!sponsoredSessions.isEmpty)
+    #expect(sponsoredSessions.first?.sponsor == "RevenueCat")
+  }
+
   // MARK: - Error handling
 
   @Test
