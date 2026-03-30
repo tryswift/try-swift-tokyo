@@ -61,11 +61,11 @@ extension LiveTranslationServiceClient: DependencyKey {
           if ref.store == nil {
             ref.store = ChatAudienceStore()
           }
-#if DEBUG
+          #if DEBUG
             LiveTranslationSDKConfiguration.configure(environment: .development)
-#else
+          #else
             LiveTranslationSDKConfiguration.configure(environment: .production)
-#endif
+          #endif
           ref.store?.connect(interactionKey: interactionKey, dstLangCode: dstLangCode)
         }
       },
