@@ -306,4 +306,108 @@ struct ScheduleTests {
       }
     #endif
   }
+
+  // MARK: - Favorites
+
+  @Test
+  func favoritesLoaded_onAppear() async {
+    var state = Schedule.State()
+    state.allSessions = Self.preloadedSessions
+
+    let store = TestStore(initialState: state) {
+      Schedule()
+    } withDependencies: {
+      $0[DataClient.self].fetchDay1 = { @Sendable _ in .mock1 }
+      $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
+      $0[DataClient.self].fetchDay3 = { @Sendable _ in
+        throw DataClientError.resourceNotFound("day3")
+      }
+      $0.scheduleAPIClient.fetchFavorites = { @Sendable _ in ["proposal-1"] }
+      $0.scheduleAPIClient.fetchFavoriteCounts = { @Sendable in ["proposal-1": 5] }
+    }
+    store.exhaustivity = .off
+
+    await store.send(.view(.onAppear))
+    await store.receive(\.favoritesLoaded) {
+      $0.favoriteProposalIds = ["proposal-1"]
+      $0.hasLoadedFavorites = true
+    }
+    await store.receive(\.favoriteCountsLoaded) {
+      $0.favoriteCounts = ["proposal-1": 5]
+    }
+  }
+
+  @Test
+  func favoritesNotReloaded_whenAlreadyLoaded() async {
+    var state = Schedule.State()
+    state.allSessions = Self.preloadedSessions
+    state.hasLoadedFavorites = true
+
+    let store = TestStore(initialState: state) {
+      Schedule()
+    } withDependencies: {
+      $0[DataClient.self].fetchDay1 = { @Sendable _ in .mock1 }
+      $0[DataClient.self].fetchDay2 = { @Sendable _ in .mock2 }
+      $0[DataClient.self].fetchDay3 = { @Sendable _ in
+        throw DataClientError.resourceNotFound("day3")
+      }
+      $0.scheduleAPIClient.fetchFavoriteCounts = { @Sendable in [:] }
+    }
+    store.exhaustivity = .off
+
+    await store.send(.view(.onAppear))
+    await store.receive(\.fetchResponse.success) {
+      $0.day1 = .mock1
+      $0.day2 = .mock2
+      $0.day3 = nil
+    }
+  }
+
+  @Test
+  func favoriteTapped_togglesAndReconciles() async {
+    var state = Schedule.State()
+    state.allSessions = Self.preloadedSessions
+    state.hasLoadedFavorites = true
+    state.favoriteProposalIds = []
+    state.favoriteCounts = [:]
+
+    let store = TestStore(initialState: state) {
+      Schedule()
+    } withDependencies: {
+      $0.scheduleAPIClient.toggleFavorite = { @Sendable _, _ in (isFavorite: true, count: 1) }
+    }
+
+    await store.send(.view(.favoriteTapped(.mock1))) {
+      $0.favoriteProposalIds = ["proposal-1"]
+    }
+    await store.receive(\.favoriteToggled) {
+      $0.favoriteProposalIds = ["proposal-1"]
+      $0.favoriteCounts = ["proposal-1": 1]
+    }
+  }
+
+  @Test
+  func favoriteTapped_revertsOnError() async {
+    struct ToggleError: Error {}
+
+    var state = Schedule.State()
+    state.allSessions = Self.preloadedSessions
+    state.hasLoadedFavorites = true
+    state.favoriteProposalIds = ["proposal-1"]
+    state.favoriteCounts = ["proposal-1": 3]
+
+    let store = TestStore(initialState: state) {
+      Schedule()
+    } withDependencies: {
+      $0.scheduleAPIClient.toggleFavorite = { @Sendable _, _ in throw ToggleError() }
+    }
+
+    await store.send(.view(.favoriteTapped(.mock1))) {
+      $0.favoriteProposalIds = []
+    }
+    await store.receive(\.favoriteToggled) {
+      $0.favoriteProposalIds = ["proposal-1"]
+      $0.favoriteCounts = ["proposal-1": 3]
+    }
+  }
 }

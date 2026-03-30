@@ -55,6 +55,7 @@ struct TimetableExportSchedule: Codable, Sendable {
 }
 
 struct TimetableExportSession: Codable, Sendable {
+  let proposalId: String?
   let title: String
   let titleJa: String?
   let summary: String?

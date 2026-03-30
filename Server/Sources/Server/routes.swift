@@ -34,6 +34,8 @@ enum AppRoutes {
     try api.register(collection: AuthController())
     try api.register(collection: ConferenceController())
     try api.register(collection: ProposalController())
+    try api.register(collection: FeedbackController())
+    try api.register(collection: FavoritesController())
 
     // Register CfP SSR pages
     try app.register(collection: CfPRoutes())

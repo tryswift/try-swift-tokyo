@@ -2,6 +2,27 @@ import Foundation
 import SharedModels
 import SkipModel
 
+// MARK: - API Configuration
+
+private let apiBaseURLString = "https://tryswift-cfp-api.fly.dev/api/v1"
+
+// MARK: - Device Identifier
+
+enum AndroidDeviceIdentifier {
+  private static let key = "tryswift_device_id"
+
+  static var current: String {
+    if let existing = UserDefaults.standard.string(forKey: key) {
+      return existing
+    }
+    let newId = UUID().uuidString
+    UserDefaults.standard.set(newId, forKey: key)
+    return newId
+  }
+}
+
+// MARK: - Schedule Day
+
 public enum ScheduleDay: String, CaseIterable, Identifiable {
   case day1 = "Day 1"
   case day2 = "Day 2"
@@ -25,6 +46,24 @@ public struct SearchableSession: Equatable, Hashable {
   }
 }
 
+// MARK: - API Response Types
+
+private struct FavoriteItemResponse: Codable {
+  let proposalId: String
+}
+
+private struct FavoriteToggleResponse: Codable {
+  let isFavorite: Bool
+  let count: Int
+}
+
+private struct FavoriteCountItemResponse: Codable {
+  let proposalId: String
+  let count: Int
+}
+
+// MARK: - ViewModel
+
 @Observable
 @MainActor
 public final class ScheduleViewModel {
@@ -41,6 +80,16 @@ public final class ScheduleViewModel {
   public var allSearchableSessions: [SearchableSession] = []
   public var currentTime: Date = Date()
   private var timerTask: Task<Void, Never>?
+
+  // Favorites
+  public var favoriteProposalIds: Set<String> = []
+  public var favoriteCounts: [String: Int] = [:]
+
+  // Feedback
+  public var feedbackText: String = ""
+  public var feedbackSubmitted: Bool = false
+  public var isSubmittingFeedback: Bool = false
+  public var feedbackError: String?
 
   public static let availableYears: [Int] = ConferenceYear.allCases.map { $0.rawValue }.reversed()
 
@@ -136,6 +185,151 @@ public final class ScheduleViewModel {
     }
     allSearchableSessions = results
   }
+
+  // MARK: - Favorites
+
+  public func loadFavorites() {
+    Task {
+      do {
+        guard
+          let url = URL(
+            string: "\(apiBaseURLString)/favorites?deviceId=\(AndroidDeviceIdentifier.current)")
+        else { return }
+        let request = URLRequest(url: url)
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let items = try decoder.decode([FavoriteItemResponse].self, from: data)
+        var ids: Set<String> = []
+        for item in items {
+          ids.insert(item.proposalId)
+        }
+        self.favoriteProposalIds = ids
+      } catch {
+        // Silently fail - favorites are not critical
+      }
+    }
+    loadFavoriteCounts()
+  }
+
+  public func loadFavoriteCounts() {
+    Task {
+      do {
+        guard let url = URL(string: "\(apiBaseURLString)/favorite-counts") else { return }
+        let request = URLRequest(url: url)
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let items = try decoder.decode([FavoriteCountItemResponse].self, from: data)
+        var counts: [String: Int] = [:]
+        for item in items {
+          counts[item.proposalId] = item.count
+        }
+        self.favoriteCounts = counts
+      } catch {
+        // Silently fail
+      }
+    }
+  }
+
+  public func toggleFavorite(proposalId: String) {
+    // Optimistic toggle
+    if favoriteProposalIds.contains(proposalId) {
+      favoriteProposalIds.remove(proposalId)
+    } else {
+      favoriteProposalIds.insert(proposalId)
+    }
+
+    Task {
+      do {
+        guard let url = URL(string: "\(apiBaseURLString)/favorites") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let body: [String: String] = [
+          "proposalId": proposalId, "deviceId": AndroidDeviceIdentifier.current,
+        ]
+        request.httpBody = try JSONEncoder().encode(body)
+
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let response = try decoder.decode(FavoriteToggleResponse.self, from: data)
+        if response.isFavorite {
+          self.favoriteProposalIds.insert(proposalId)
+        } else {
+          self.favoriteProposalIds.remove(proposalId)
+        }
+        self.favoriteCounts[proposalId] = response.count
+      } catch {
+        // Revert on failure
+        if self.favoriteProposalIds.contains(proposalId) {
+          self.favoriteProposalIds.remove(proposalId)
+        } else {
+          self.favoriteProposalIds.insert(proposalId)
+        }
+      }
+    }
+  }
+
+  public func isFavorite(proposalId: String?) -> Bool {
+    guard let proposalId = proposalId else { return false }
+    return favoriteProposalIds.contains(proposalId)
+  }
+
+  public func favoriteCount(proposalId: String?) -> Int {
+    guard let proposalId = proposalId else { return 0 }
+    return favoriteCounts[proposalId] ?? 0
+  }
+
+  // MARK: - Feedback
+
+  public func submitFeedback(proposalId: String) {
+    let comment = feedbackText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+    guard !comment.isEmpty else { return }
+
+    isSubmittingFeedback = true
+    feedbackError = nil
+
+    Task {
+      do {
+        guard let url = URL(string: "\(apiBaseURLString)/feedback") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let body: [String: String] = [
+          "proposalId": proposalId,
+          "comment": comment,
+          "deviceId": AndroidDeviceIdentifier.current,
+        ]
+        request.httpBody = try JSONEncoder().encode(body)
+
+        let (_, response) = try await URLSession.shared.data(for: request)
+        if let httpResponse = response as? HTTPURLResponse,
+          (200...299).contains(httpResponse.statusCode)
+        {
+          self.feedbackSubmitted = true
+          self.feedbackText = ""
+        } else {
+          self.feedbackError = "Failed to submit feedback"
+        }
+      } catch {
+        self.feedbackError = error.localizedDescription
+      }
+      self.isSubmittingFeedback = false
+    }
+  }
+
+  public func resetFeedbackState() {
+    feedbackText = ""
+    feedbackSubmitted = false
+    feedbackError = nil
+    isSubmittingFeedback = false
+  }
+
+  // MARK: - Private
 
   private static func buildSearchCorpus(session: Session) -> String {
     var parts: [String] = [session.title]

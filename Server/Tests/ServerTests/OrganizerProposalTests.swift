@@ -48,6 +48,8 @@ private struct CreateTestProposalSchema: AsyncMigration {
       .field("bio_ja", .string)
       .field("job_title", .string)
       .field("job_title_ja", .string)
+      // Fields from AddProposalWorkshopDetailsJA
+      .field("workshop_details_ja", .json)
       .create()
   }
 

@@ -48,6 +48,7 @@ public struct Schedule: Codable, Equatable, Hashable, Sendable {
 }
 
 public struct Session: Codable, Equatable, Hashable, Sendable {
+  public var proposalId: String?
   public var title: String
   public var titleJa: String?
   public var summary: String?
@@ -63,6 +64,7 @@ public struct Session: Codable, Equatable, Hashable, Sendable {
   public var youtubeVideoId: String?
 
   public init(
+    proposalId: String? = nil,
     title: String,
     titleJa: String? = nil,
     summary: String? = nil,
@@ -77,6 +79,7 @@ public struct Session: Codable, Equatable, Hashable, Sendable {
     sponsor: String? = nil,
     youtubeVideoId: String? = nil,
   ) {
+    self.proposalId = proposalId
     self.title = title
     self.titleJa = titleJa
     self.summary = summary

@@ -44,6 +44,9 @@ public struct Schedule {
     var day1: Conference?
     var day2: Conference?
     var day3: Conference?
+    var favoriteProposalIds: Set<String> = []
+    var favoriteCounts: [String: Int] = [:]
+    var hasLoadedFavorites: Bool = false
     var videoMetadata: [String: VideoMetadata] = [:]
     var currentTime: Date = .distantPast
     @Presents var destination: Destination.State?
@@ -69,6 +72,9 @@ public struct Schedule {
     case view(View)
     case fetchResponse(Result<SchedulesResponse, Error>)
     case allSessionsLoaded([SearchableSession])
+    case favoritesLoaded(Set<String>)
+    case favoriteCountsLoaded([String: Int])
+    case favoriteToggled(String, Bool, Int)
     case delegate(Delegate)
     case timerTicked
 
@@ -79,6 +85,7 @@ public struct Schedule {
       case disclosureTapped(Session)
       case yearSelected(ConferenceYear)
       case daySelected(Days)
+      case favoriteTapped(Session)
     }
 
     public enum Delegate: Equatable {
@@ -100,6 +107,7 @@ public struct Schedule {
   private enum CancelID { case timer }
 
   @Dependency(DataClient.self) var dataClient
+  @Dependency(\.scheduleAPIClient) var apiClient
   @Dependency(\.continuousClock) var clock
   @Dependency(\.date) var date
 
@@ -113,7 +121,9 @@ public struct Schedule {
         state.currentTime = date.now
         let year = state.selectedYear
         let shouldLoadAllSessions = state.allSessions.isEmpty
+        let shouldLoadFavorites = !state.hasLoadedFavorites
         let dataClient = dataClient
+        let apiClient = apiClient
         return .merge(
           .send(
             .fetchResponse(
@@ -154,6 +164,21 @@ public struct Schedule {
               await send(.allSessionsLoaded(results))
             }
             : .none,
+          shouldLoadFavorites
+            ? .run { send in
+              do {
+                let ids = try await apiClient.fetchFavorites(DeviceIdentifier.current)
+                await send(.favoritesLoaded(Set(ids)))
+              } catch {
+                await send(.favoritesLoaded([]))
+              }
+            }
+            : .none,
+          .run { send in
+            if let counts = try? await apiClient.fetchFavoriteCounts() {
+              await send(.favoriteCountsLoaded(counts))
+            }
+          },
           .run { [clock] send in
             for await _ in clock.timer(interval: .seconds(30)) {
               await send(.timerTicked)
@@ -174,6 +199,23 @@ public struct Schedule {
       case .view(.daySelected(let day)):
         state.selectedDay = day
         return .none
+      case .view(.favoriteTapped(let session)):
+        guard let proposalId = session.proposalId else { return .none }
+        // Optimistic toggle
+        let wasFavorite = state.favoriteProposalIds.contains(proposalId)
+        let previousCount = state.favoriteCounts[proposalId] ?? 0
+        if wasFavorite {
+          state.favoriteProposalIds.remove(proposalId)
+        } else {
+          state.favoriteProposalIds.insert(proposalId)
+        }
+        let apiClient = apiClient
+        return .run { send in
+          let result = try await apiClient.toggleFavorite(proposalId, DeviceIdentifier.current)
+          await send(.favoriteToggled(proposalId, result.isFavorite, result.count))
+        } catch: { _, send in
+          await send(.favoriteToggled(proposalId, wasFavorite, previousCount))
+        }
       case .view(.disclosureTapped(let session)):
         guard session.description != nil, session.speakers != nil else {
           return .none
@@ -187,7 +229,14 @@ public struct Schedule {
           #if os(macOS)
             return .send(.delegate(.showScheduleDetail(session)))
           #else
+            let isFavorite =
+              session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
+            let favoriteCount =
+              session.proposalId.flatMap { state.favoriteCounts[$0] } ?? 0
             let detailState = ScheduleDetail.State(
+              proposalId: session.proposalId,
+              isFavorite: isFavorite,
+              favoriteCount: favoriteCount,
               title: session.title,
               description: session.description!,
               requirements: session.requirements,
@@ -209,11 +258,39 @@ public struct Schedule {
       case .allSessionsLoaded(let sessions):
         state.allSessions = sessions
         return .none
+      case .favoritesLoaded(let ids):
+        state.favoriteProposalIds = ids
+        state.hasLoadedFavorites = true
+        return .none
+      case .favoriteCountsLoaded(let counts):
+        state.favoriteCounts = counts
+        return .none
+      case .favoriteToggled(let proposalId, let isFavorite, let count):
+        if isFavorite {
+          state.favoriteProposalIds.insert(proposalId)
+        } else {
+          state.favoriteProposalIds.remove(proposalId)
+        }
+        state.favoriteCounts[proposalId] = count
+        return .none
       case .fetchResponse(.failure(let error as DecodingError)):
         assertionFailure(error.localizedDescription)
         return .none
       case .fetchResponse(.failure(let error)):
         logger.error("Failed to fetch schedules: \(error)")
+        return .none
+      case .path(.element(let id, action: .detail(.favoriteToggled(let isFavorite, let count)))):
+        // Sync favorite state from detail back to schedule
+        if case .detail(let detail) = state.path[id: id],
+          let proposalId = detail.proposalId
+        {
+          if isFavorite {
+            state.favoriteProposalIds.insert(proposalId)
+          } else {
+            state.favoriteProposalIds.remove(proposalId)
+          }
+          state.favoriteCounts[proposalId] = count
+        }
         return .none
       case .timerTicked:
         state.currentTime = date.now
@@ -464,6 +541,9 @@ public struct ScheduleView: View {
                   .padding()
               }
               .glassIfAvailable()
+              .overlay(alignment: .topTrailing) {
+                favoriteButton(session: session)
+              }
             } else {
               listRow(session: session, hasVideo: false)
                 .padding()
@@ -541,6 +621,31 @@ public struct ScheduleView: View {
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       .accessibilityElement(children: .combine)
+    }
+  }
+
+  @ViewBuilder
+  func favoriteButton(session: Session) -> some View {
+    if let proposalId = session.proposalId {
+      let isFavorite = store.favoriteProposalIds.contains(proposalId)
+      let count = store.favoriteCounts[proposalId] ?? 0
+      Button {
+        send(.favoriteTapped(session))
+      } label: {
+        HStack(spacing: 2) {
+          Image(systemName: isFavorite ? "heart.fill" : "heart")
+            .foregroundStyle(isFavorite ? Color.red : Color.secondary)
+          if count > 0 {
+            Text("\(count)")
+              .font(.caption2)
+              .foregroundStyle(isFavorite ? Color.red : Color.secondary)
+          }
+        }
+        .padding(12)
+      }
+      .buttonStyle(.plain)
+      .accessibilityLabel(isFavorite ? "Remove from favorites" : "Add to favorites")
+      .accessibilityValue(count > 0 ? "\(count)" : "")
     }
   }
 

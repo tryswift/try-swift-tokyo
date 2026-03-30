@@ -95,6 +95,7 @@ struct TimetableExportTests {
   @Test("Session encodes all fields")
   func sessionEncodesAllFields() throws {
     let session = TimetableExportSession(
+      proposalId: nil,
       title: "Swift Concurrency Deep Dive",
       titleJa: "Swift並行処理の深掘り",
       summary: "A deep dive into async/await",
@@ -132,6 +133,7 @@ struct TimetableExportTests {
   @Test("Session with nil speakers encodes as null")
   func sessionNilSpeakers() throws {
     let session = TimetableExportSession(
+      proposalId: nil,
       title: "Lunch Break",
       titleJa: "昼休み",
       summary: nil,
@@ -202,6 +204,7 @@ struct TimetableExportTests {
           time: Date(timeIntervalSince1970: 1_717_218_000),
           sessions: [
             TimetableExportSession(
+              proposalId: nil,
               title: "Opening",
               titleJa: "オープニング",
               summary: nil,
@@ -218,6 +221,7 @@ struct TimetableExportTests {
           time: Date(timeIntervalSince1970: 1_717_221_600),
           sessions: [
             TimetableExportSession(
+              proposalId: nil,
               title: "Keynote: Future of Swift",
               titleJa: nil,
               summary: "A look at what's coming",
