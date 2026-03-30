@@ -23,7 +23,7 @@ COPY ./Server/Package.resolved ./Server/Package.resolved
 RUN mkdir -p Server/Sources/Server && \
     echo "@main struct App { static func main() {} }" > Server/Sources/Server/main.swift
 
-# Resolve dependencies (cached unless Package.swift changes)
+# Resolve dependencies (cached unless Package.swift or Package.resolved changes)
 WORKDIR /build/Server
 RUN swift package resolve
 
