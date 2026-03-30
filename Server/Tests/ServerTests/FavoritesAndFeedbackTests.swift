@@ -428,7 +428,8 @@ struct FavoritesAndFeedbackTests {
         .POST, "api/v1/feedback",
         beforeRequest: { req in
           try req.content.encode(
-            FeedbackSubmission(proposalId: proposalId, comment: "One too many", deviceId: "device1"))
+            FeedbackSubmission(proposalId: proposalId, comment: "One too many", deviceId: "device1")
+          )
         },
         afterResponse: { response in
           #expect(response.status == .tooManyRequests)
