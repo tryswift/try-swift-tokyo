@@ -249,13 +249,8 @@ public struct AppView: View {
         NavigationStack {
           VideoDetailView(store: videoDetailStore, speakerImageBundle: scheduleFeatureBundle)
           .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-              Button {
-                store.send(.videoDetail(.dismiss))
-              } label: {
-                Image(systemName: "xmark.circle.fill")
-                .symbolRenderingMode(.hierarchical)
-              }
+            Button(role: .close) {
+              store.send(.videoDetail(.dismiss))
             }
           }
         }
