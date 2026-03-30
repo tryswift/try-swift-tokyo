@@ -129,6 +129,7 @@ struct ConferenceSite2025: Site {
       CodeOfConduct(language: language)
       PrivacyPolicy(language: language)
     }
+    BoothMap()
     LegacyHome()
   }
 }
