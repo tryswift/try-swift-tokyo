@@ -48,7 +48,19 @@ public struct Schedule {
     var favoriteCounts: [String: Int] = [:]
     var hasLoadedFavorites: Bool = false
     var videoMetadata: [String: VideoMetadata] = [:]
+    var currentTime: Date = .distantPast
     @Presents var destination: Destination.State?
+
+    var liveScheduleIndex: Int? {
+      guard selectedYear == .latest else { return nil }
+      let conference: Conference? =
+        switch selectedDay {
+        case .day1: day1
+        case .day2: day2
+        case .day3: day3
+        }
+      return conference?.liveScheduleIndex(at: currentTime)
+    }
 
     public init() {}
   }
@@ -64,10 +76,12 @@ public struct Schedule {
     case favoriteCountsLoaded([String: Int])
     case favoriteToggled(String, Bool, Int)
     case delegate(Delegate)
+    case timerTicked
 
     @CasePathable
     public enum View {
       case onAppear
+      case onDisappear
       case disclosureTapped(Session)
       case yearSelected(ConferenceYear)
       case daySelected(Days)
@@ -90,8 +104,12 @@ public struct Schedule {
     case detail(ScheduleDetail)
   }
 
+  private enum CancelID { case timer }
+
   @Dependency(DataClient.self) var dataClient
   @Dependency(\.scheduleAPIClient) var apiClient
+  @Dependency(\.continuousClock) var clock
+  @Dependency(\.date) var date
 
   public init() {}
 
@@ -100,6 +118,7 @@ public struct Schedule {
     Reduce { state, action in
       switch action {
       case .view(.onAppear):
+        state.currentTime = date.now
         let year = state.selectedYear
         let shouldLoadAllSessions = state.allSessions.isEmpty
         let shouldLoadFavorites = !state.hasLoadedFavorites
@@ -159,8 +178,16 @@ public struct Schedule {
             if let counts = try? await apiClient.fetchFavoriteCounts() {
               await send(.favoriteCountsLoaded(counts))
             }
+          },
+          .run { [clock] send in
+            for await _ in clock.timer(interval: .seconds(30)) {
+              await send(.timerTicked)
+            }
           }
+          .cancellable(id: CancelID.timer, cancelInFlight: true)
         )
+      case .view(.onDisappear):
+        return .cancel(id: CancelID.timer)
       case .view(.yearSelected(let year)):
         state.selectedYear = year
         state.selectedDay = .day1
@@ -265,6 +292,9 @@ public struct Schedule {
           state.favoriteCounts[proposalId] = count
         }
         return .none
+      case .timerTicked:
+        state.currentTime = date.now
+        return .none
       case .binding, .path, .destination, .delegate:
         return .none
       }
@@ -342,6 +372,9 @@ public struct ScheduleView: View {
     }
     .onAppear(perform: {
       send(.onAppear)
+    })
+    .onDisappear(perform: {
+      send(.onDisappear)
     })
     .navigationTitle(Text("Schedule", bundle: .module))
     .searchable(text: $store.searchText, isPresented: $store.isSearchBarPresented)
@@ -484,15 +517,21 @@ public struct ScheduleView: View {
       Text(conference.date, style: .date)
         .font(.title2)
         .accessibilityAddTraits(.isHeader)
-      ForEach(conference.schedules, id: \.self) { schedule in
+      ForEach(conference.schedules.indices, id: \.self) { index in
+        let schedule = conference.schedules[index]
         VStack(alignment: .leading, spacing: 4) {
-          Text(
-            schedule.time.formatted(date: .omitted, time: .shortened)
-              + (schedule.endTime.map { " - " + $0.formatted(date: .omitted, time: .shortened) }
-                ?? "")
-          )
-          .font(.subheadline.bold())
-          .accessibilityAddTraits(.isHeader)
+          HStack(spacing: 6) {
+            Text(
+              schedule.time.formatted(date: .omitted, time: .shortened)
+                + (schedule.endTime.map { " - " + $0.formatted(date: .omitted, time: .shortened) }
+                  ?? "")
+            )
+            .font(.subheadline.bold())
+            .accessibilityAddTraits(.isHeader)
+            if store.liveScheduleIndex == index {
+              liveBadge
+            }
+          }
           ForEach(schedule.sessions, id: \.self) { session in
             if session.description != nil {
               Button {
@@ -628,6 +667,15 @@ public struct ScheduleView: View {
     }
     let formatter = ListFormatter()
     return formatter.string(from: givenNames)!
+  }
+
+  private var liveBadge: some View {
+    Text("LIVE", bundle: .module)
+      .font(.caption2.bold())
+      .foregroundStyle(.white)
+      .padding(.horizontal, 6)
+      .padding(.vertical, 2)
+      .background(.red, in: Capsule())
   }
 
   private var labelColor: Color {

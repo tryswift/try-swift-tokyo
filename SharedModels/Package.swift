@@ -1,11 +1,34 @@
 // swift-tools-version: 6.3
 
+import Foundation
 import PackageDescription
 
-// NOTE: Skip dependencies are required here for Android transpilation via the skipstone
-// plugin. SkipFoundation/SkipModel are lightweight on iOS/macOS (thin re-exports of
-// Foundation/Observation). The skipstone plugin is a build tool that only runs during
-// compilation and adds no runtime overhead on non-Android platforms.
+// Skip dependencies are only needed for Android transpilation (skipstone plugin).
+// Set INCLUDE_SKIP=1 environment variable to enable (e.g., `INCLUDE_SKIP=1 swift build`).
+let includeSkipEnv = ProcessInfo.processInfo.environment["INCLUDE_SKIP"]?.lowercased()
+let includeSkip = includeSkipEnv == "1" || includeSkipEnv == "true"
+
+var packageDependencies: [Package.Dependency] = []
+var targetDependencies: [Target.Dependency] = []
+var targetPlugins: [Target.PluginUsage] = []
+var targetExclude: [String] = []
+
+if includeSkip {
+  packageDependencies += [
+    .package(url: "https://source.skip.tools/skip.git", from: "1.2.0"),
+    .package(url: "https://source.skip.tools/skip-foundation.git", from: "1.0.0"),
+    .package(url: "https://source.skip.tools/skip-model.git", from: "1.0.0"),
+  ]
+  targetDependencies += [
+    .product(name: "SkipFoundation", package: "skip-foundation"),
+    .product(name: "SkipModel", package: "skip-model"),
+  ]
+  targetPlugins += [
+    .plugin(name: "skipstone", package: "skip")
+  ]
+} else {
+  targetExclude += ["Skip"]
+}
 
 let package = Package(
   name: "SharedModels",
@@ -16,22 +39,16 @@ let package = Package(
       targets: ["SharedModels"]
     )
   ],
-  dependencies: [
-    .package(url: "https://source.skip.tools/skip.git", from: "1.2.0"),
-    .package(url: "https://source.skip.tools/skip-foundation.git", from: "1.0.0"),
-    .package(url: "https://source.skip.tools/skip-model.git", from: "1.0.0"),
-  ],
+  dependencies: packageDependencies,
   targets: [
     .target(
       name: "SharedModels",
-      dependencies: [
-        .product(name: "SkipFoundation", package: "skip-foundation"),
-        .product(name: "SkipModel", package: "skip-model"),
-      ],
+      dependencies: targetDependencies,
+      exclude: targetExclude,
       swiftSettings: [
         .swiftLanguageMode(.v6)
       ],
-      plugins: [.plugin(name: "skipstone", package: "skip")]
+      plugins: targetPlugins
     ),
     .testTarget(
       name: "SharedModelsTests",

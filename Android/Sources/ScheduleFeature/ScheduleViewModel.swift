@@ -65,6 +65,7 @@ private struct FavoriteCountItemResponse: Codable {
 // MARK: - ViewModel
 
 @Observable
+@MainActor
 public final class ScheduleViewModel {
   public var selectedDay: ScheduleDay = .day1
   public var selectedYear: Int = ConferenceYear.latest.rawValue
@@ -77,6 +78,8 @@ public final class ScheduleViewModel {
   public var searchText: String = ""
   public var isSearchBarPresented: Bool = false
   public var allSearchableSessions: [SearchableSession] = []
+  public var currentTime: Date = Date()
+  private var timerTask: Task<Void, Never>?
 
   // Favorites
   public var favoriteProposalIds: Set<String> = []
@@ -100,6 +103,10 @@ public final class ScheduleViewModel {
 
   public var hasDay3: Bool {
     day3 != nil
+  }
+
+  public var liveScheduleIndex: Int? {
+    currentConference?.liveScheduleIndex(at: currentTime)
   }
 
   public var searchResults: [SearchableSession] {
@@ -135,6 +142,18 @@ public final class ScheduleViewModel {
     }
 
     isLoading = false
+    startTimer()
+  }
+
+  private func startTimer() {
+    timerTask?.cancel()
+    timerTask = Task { [weak self] in
+      while !Task.isCancelled {
+        try? await Task.sleep(nanoseconds: 30_000_000_000)
+        guard let self else { break }
+        self.currentTime = Date()
+      }
+    }
   }
 
   public func selectYear(_ year: Int) {

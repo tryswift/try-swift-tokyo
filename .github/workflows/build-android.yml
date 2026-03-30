@@ -41,11 +41,11 @@ jobs:
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v5
         with:
-          key: spm-android-${{ runner.os }}-${{ hashFiles('Android/Package.resolved', 'Android/Package.swift') }}
+          key: spm-android-${{ runner.os }}-${{ hashFiles('Android/Package.resolved', 'Android/Package.swift', 'SharedModels/Package.swift') }}
           restore-keys: spm-android-${{ runner.os }}-
           path: Android/.build
 
       - name: Build
         run: |
           cd Android
-          swift build
+          INCLUDE_SKIP=1 swift build
