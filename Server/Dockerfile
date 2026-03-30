@@ -15,8 +15,9 @@ COPY ./SharedModels ./SharedModels
 # Copy DataClient package (speaker data for timetable export)
 COPY ./DataClient ./DataClient
 
-# Copy Server package manifest
+# Copy Server package manifest and resolved file for reproducible builds
 COPY ./Server/Package.swift ./Server/Package.swift
+COPY ./Server/Package.resolved ./Server/Package.resolved
 
 # Create minimal Server source to resolve dependencies
 RUN mkdir -p Server/Sources/Server && \
