@@ -140,6 +140,17 @@
         }
       }
     },
+    "LIVE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LIVE"
+          }
+        }
+      }
+    },
     "Let's start!" : {
       "extractionState" : "manual",
       "localizations" : {

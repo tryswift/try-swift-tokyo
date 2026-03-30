@@ -209,20 +209,30 @@ public struct ScheduleScreen: View {
         .font(Font.title2)
         .padding(Edge.Set.horizontal)
 
-      ForEach(conference.schedules, id: \.time) { schedule in
-        scheduleSection(schedule: schedule)
+      ForEach(Array(conference.schedules.enumerated()), id: \.element.time) { index, schedule in
+        scheduleSection(schedule: schedule, isLive: viewModel.liveScheduleIndex == index)
       }
     }
     .padding()
   }
 
-  private func scheduleSection(schedule: SharedModels.Schedule) -> some View {
+  private func scheduleSection(schedule: SharedModels.Schedule, isLive: Bool) -> some View {
     VStack(alignment: HorizontalAlignment.leading, spacing: 8) {
-      Text(
-        schedule.time.formatted(date: .omitted, time: .shortened)
-          + (schedule.endTime.map { " - " + $0.formatted(date: .omitted, time: .shortened) } ?? "")
-      )
-      .font(Font.subheadline.bold())
+      HStack(spacing: 6) {
+        Text(
+          schedule.time.formatted(date: .omitted, time: .shortened)
+            + (schedule.endTime.map { " - " + $0.formatted(date: .omitted, time: .shortened) } ?? "")
+        )
+        .font(Font.subheadline.bold())
+        if isLive {
+          Text("LIVE")
+            .font(Font.caption2.bold())
+            .foregroundStyle(Color.white)
+            .padding(Edge.Set.horizontal, 6)
+            .padding(Edge.Set.vertical, 2)
+            .background(Color.red, in: Capsule())
+        }
+      }
 
       ForEach(schedule.sessions, id: \.title) { session in
         if session.description != nil {
