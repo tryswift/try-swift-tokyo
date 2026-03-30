@@ -42,7 +42,7 @@
           "title": "The hidden power of Async Sequences",
           "title_ja": "Async Sequenceの隠された力",
           "description": "AsyncSequence has been with us since Apple tried to gently nudge us away from Combine. Over the last few years they've become much more powerful and even legacy APIs such as NotificationCenter have embraced it. We'll look at this powerful protocol and some of the concrete types that conform to it and how to consuming sequences fits in nicely with async await.",
-          "description_ja": "AsyncSequenceは、AppleがCombineからの移行をそっと促し始めた頃から私たちの手元にあります。ここ数年で大幅に強化され、NotificationCenterのようなレガシーAPIもAsyncSequenceを採用するようになりました。この強力なプロトコルと、それに準拠する具体的な型のいくつかを見ていきながら、シーケンスの消費がasync awaitとどのようにうまく組み合わさるかを探ります。",
+          "description_ja": "AsyncSequenceは、AppleがCombineからの移行をそっと促し始めた頃から私たちの手元にあります。この数年で大きく強化され、NotificationCenterのようなレガシーAPIでも採用されるようになりました。\n本セッションでは、この強力なプロトコルと、それに準拠する具体的な型をいくつか取り上げます。また、シーケンスの消費がasync/awaitとどのように自然に組み合わさるのかについても見ていきます。",
           "summary": "AsyncSequence has been with us since Apple tried to gently nudge us away from Combine. Over the last few years they've become much more powerful and even legacy APIs such as NotificationCenter have em",
           "summary_ja": "AsyncSequenceは、AppleがCombineからの移行をそっと促し始めた頃から私たちの手元にあります。ここ数年で大幅に強化され、NotificationCenterのようなレガシーAPIもAsyncSequenceを採用するようになりました。",
           "speakers": [
@@ -102,7 +102,7 @@
           "title": "Why is SwiftUI like that?",
           "title_ja": "SwiftUIってなんでこうなるの？",
           "description": "We all know how SwiftUI code looks when it runs, but have you ever wondered why it looks that way? In this talk I'll show you how you can get a closer look at the inner workings of SwiftUI, and how to use that knowledge to write faster, smarter code.",
-          "description_ja": "SwiftUIコードが実行されたときの見た目は誰もが知っていますが、なぜそのように見えるのか考えたことはありますか？このトークでは、SwiftUIの内部動作をより深く観察する方法と、その知識を活用してより速く、より賢いコードを書く方法をお見せします。",
+          "description_ja": "SwiftUIのコードが実行時にどのように見えるかはよく知られていますが、なぜそのような挙動になるのか考えたことはあるでしょうか？\n本セッションでは、SwiftUIの内部の仕組みをより深く観察する方法を紹介し、その知識を活かして、より高速で洗練されたコードを書くためのアプローチを解説します。",
           "summary": "We all know how SwiftUI code looks when it runs, but have you ever wondered why it looks that way? In this talk I'll show you how you can get a closer look at the inner workings of SwiftUI, and how to",
           "summary_ja": "SwiftUIコードが実行されたときの見た目は誰もが知っていますが、なぜそのように見えるのか考えたことはありますか？このトークでは、SwiftUIの内部動作を深く観察し、その知識でより速く賢いコードを書く方法をお見せします。",
           "speakers": [
@@ -245,7 +245,7 @@
           "title": "The Evolution of SwiftUI: An Insider's View",
           "title_ja": "進化し続けるSwiftUI：内部から見たその変化",
           "description": "SwiftUI has been evolving rapidly since its introduction, with major API changes shaping how we build apps today. In this talk, I will share an insider's perspective on what drives these changes, drawing on my experience as a former engineer on the SwiftUI team at Apple and as an iOS developer who has used SwiftUI in production since day one. You will learn how and why SwiftUI evolves, how to evaluate when to move from older APIs to newer ones, and why embracing these changes is essential for building robust SwiftUI apps.",
-          "description_ja": "SwiftUIは登場以来急速に進化を続けており、主要なAPI変更が今日のアプリ構築方法を形作っています。このトークでは、AppleのSwiftUIチームの元エンジニアとして、また初日からSwiftUIをプロダクションで使ってきたiOS開発者としての経験を活かし、これらの変更を推進する要因についてインサイダーの視点を共有します。SwiftUIがどのように、そしてなぜ進化するのか、古いAPIから新しいAPIへの移行をどう判断するか、そしてこれらの変化を受け入れることが堅牢なSwiftUIアプリの構築に不可欠である理由を学べるでしょう。",
+          "description_ja": "SwiftUIは登場以来急速に進化を続けており、大きなAPIの変更が、現在のアプリ開発のあり方に影響を与えています。\n\n本セッションでは、AppleのSwiftUIチームでエンジニアとして働いていた経験と、リリース当初からSwiftUIをプロダクションで活用してきたiOS開発者としての視点をもとに、これらの変化を生み出している背景を内側から解説します。\n\nSwiftUIがどのように、そしてなぜ進化していくのか、古いAPIから新しいAPIへいつ移行すべきかをどのように判断するのか、そしてこれらの変化を受け入れることが堅牢なSwiftUIアプリを構築するうえでなぜ重要なのかを学ぶことができます。",
           "summary": "SwiftUI has been evolving rapidly since its introduction, with major API changes shaping how we build apps today. In this talk, I will share an insider's perspective on what drives these changes, draw",
           "summary_ja": "SwiftUIは登場以来急速に進化を続けており、主要なAPI変更が今日のアプリ構築方法を形作っています。このトークでは、AppleのSwiftUIチームの元エンジニアとしての経験を活かし、これらの変更を推進する要因についてインサイダーの視点を共有します。",
           "speakers": [
@@ -281,7 +281,7 @@
           "title": "⚡️Play 🀄 on swiftc!",
           "title_ja": "⚡️swiftcで🀄を打とう！",
           "description": "Mahjong is a popular game played by everyone. In Japan, it's played daily everywhere. Yes, even in the Swift compiler.\nThis time, let's use Swift's compile-time calculations to determine mahjong wins. This talk will show you the magic of the type system!",
-          "description_ja": "麻雀はみんながプレイする人気のゲームです。日本では毎日あちこちで打たれています。そう、Swiftコンパイラの中でさえも。\n今回は、Swiftのコンパイル時計算を使って麻雀のアガリを判定しましょう。このトークは型システムの魔法をお見せします！",
+          "description_ja": "麻雀は誰もが知る人気のゲームです。日本では日常的に、あらゆる場所で楽しまれています。そう、Swiftコンパイラの中でも。\n本セッションでは、Swiftのcompile-time calculationsを使って麻雀の和了判定を行います。型システムが持つ魔法のような力をお見せします！",
           "summary": "Mahjong is a popular game played by everyone. In Japan, it's played daily everywhere. Yes, even in the Swift compiler.\nThis time, let's use Swift's compile-time calculations to determine mahjong wins.",
           "summary_ja": "麻雀はみんながプレイする人気のゲームです。日本では毎日あちこちで打たれています。そう、Swiftコンパイラの中でさえも。今回は、Swiftのコンパイル時計算を使って麻雀のアガリを判定しましょう。",
           "speakers": [
@@ -350,7 +350,7 @@
           "title": "How Swift's Type System Guides AI Agents",
           "title_ja": "Swiftの型システムはAIエージェントをどう導くのか",
           "description": "When AI agents write code, compiler feedback is critical to quality. Swift's type system expresses information that most other languages leave out of their types (such as error possibilities and data race safety), giving the compiler more to feed back to the agent. This talk explores how Swift's type system gives AI agents an advantage.",
-          "description_ja": "AIエージェントがコードを書くとき、コンパイラからのフィードバックは品質に不可欠です。Swiftの型システムは、他の多くの言語が型に含めない情報（エラーの可能性やデータ競合の安全性など）を表現し、コンパイラがエージェントにフィードバックできる情報を増やします。このトークでは、Swiftの型システムがAIエージェントにどのような優位性を与えるかを探ります。",
+          "description_ja": "AIエージェントがコードを書く際、コンパイラからのフィードバックは品質にとって極めて重要です。Swiftの型システムは、多くの言語では型に含まれない情報（例えば、エラーの可能性やデータレースの安全性など）まで表現できるため、コンパイラはより豊富なフィードバックをエージェントに提供できます。\n本セッションでは、Swiftの型システムがどのようにしてAIエージェントに優位性をもたらすのかを探ります。",
           "summary": "When AI agents write code, compiler feedback is critical to quality. Swift's type system expresses information that most other languages leave out of their types (such as error possibilities and data ",
           "summary_ja": "AIエージェントがコードを書くとき、コンパイラからのフィードバックは品質に不可欠です。Swiftの型システムは、他の多くの言語が型に含めない情報を表現し、コンパイラがエージェントにフィードバックできる情報を増やします。",
           "speakers": [
@@ -382,7 +382,7 @@
           "title": "Zero-Downtime Migration: Moving a Massive, Historic iOS App from CocoaPods to SPM and Tuist without Stopping Feature Delivery",
           "title_ja": "ゼロダウンタイム移行：機能開発を止めずに、巨大なレガシーiOSアプリをCocoaPodsからSPMとTuistへ",
           "description": "To ensure business continuity ahead of the 2026 CocoaPods sunset, our mobile team migrated external dependencies and the multi-module project generation process of a 14-year-old iOS application with over 500,000 lines of mixed Objective-C and Swift code. The project involved decoupling 60+ external dependencies and 70+ internal modules from a legacy CocoaPods setup that was deeply intertwined with the app's structure. In just six months, a foundation team of two engineers achieved a \"zero-downtime\" transition to Tuist and SPM without disrupting the ongoing feature delivery of the wider development team. This session explores the strategy for large-scale automation, solutions for complex dependency graphs, and the custom \"guard rail\" tools that protected the production environment during this high-risk shift.",
-          "description_ja": "2026年のCocoaPodsサンセットに先立ちビジネス継続性を確保するため、私たちのモバイルチームは、50万行以上のObjective-CとSwiftが混在する14年の歴史を持つiOSアプリケーションの外部依存関係とマルチモジュールプロジェクト生成プロセスを移行しました。このプロジェクトでは、アプリの構造と深く結びついたレガシーなCocoaPods設定から、60以上の外部依存関係と70以上の内部モジュールを分離する必要がありました。わずか6ヶ月で、2人のエンジニアからなるファウンデーションチームが、開発チーム全体の機能開発を中断することなく、TuistとSPMへの「ゼロダウンタイム」移行を達成しました。このセッションでは、大規模自動化の戦略、複雑な依存関係グラフの解決策、そしてこのハイリスクな移行中にプロダクション環境を保護したカスタム「ガードレール」ツールについて解説します。",
+          "description_ja": "2026年のCocoaPodsサポート終了に備え、私たちのモバイルチームは、14年にわたって開発されてきた、50万行を超えるObjective-CとSwiftが混在するiOSアプリにおいて、外部依存関係およびマルチモジュールのプロジェクト生成プロセスを移行しました。\n\nこのプロジェクトでは、アプリの構造と深く結びついていた従来のCocoaPods構成から、60以上の外部依存および70以上の内部モジュールを切り離す必要がありました。わずか6か月で、2名の基盤チームにより、開発チーム全体の機能開発を止めることなく、TuistとSPMへの「ゼロダウンタイム」での移行を実現しました。\n\n本セッションでは、大規模な自動化のための戦略、複雑な依存関係グラフに対する解決策、そしてこの高リスクな移行期間中に本番環境を守るために構築されたカスタムの「ガードレール」ツールについて紹介します。",
           "summary": "To ensure business continuity ahead of the 2026 CocoaPods sunset, our mobile team migrated external dependencies and the multi-module project generation process of a 14-year-old iOS application with o",
           "summary_ja": "2026年のCocoaPodsサンセットに先立ち、50万行以上のObjective-CとSwiftが混在する14年の歴史を持つiOSアプリケーションを、CocoaPodsからTuistとSPMへ、機能開発を止めることなく移行しました。",
           "speakers": [
@@ -410,7 +410,7 @@
           "title": "Designing App Store Onboarding",
           "title_ja": "App Storeを前提としたオンボーディング設計",
           "description": "Most onboarding flows are designed as linear walkthroughs that explain features users already expect. In this talk, I’ll argue that we’re doing onboarding wrong — and that instead of explaining functionality, we should focus on delivering small, meaningful experiences that create emotional impact early.\n\nUsing a real-world observation as a framing device, I’ll show how effective onboarding is built around repeated moments of value, each paired with lightweight opportunities to continue or subscribe. The technical focus is on how to implement this approach in SwiftUI, structure onboarding state, and introduce monetization progressively while remaining compliant with App Store guidelines.",
-          "description_ja": "多くのオンボーディングフローは、ユーザーがすでに期待している機能を説明するリニアなウォークスルーとして設計されています。このトークでは、私たちはオンボーディングのやり方を間違えている―機能を説明するのではなく、初期段階で感情的なインパクトを生む小さくて意味のある体験を提供することに集中すべきだと主張します。\n\n実世界の観察をフレーミングデバイスとして使い、効果的なオンボーディングが価値ある瞬間の繰り返しを中心に構築され、それぞれに継続またはサブスクライブの軽量な機会が組み合わされる様子を示します。技術的な焦点は、SwiftUIでこのアプローチを実装する方法、オンボーディングのステート構造、App Storeガイドラインに準拠しつつ段階的にマネタイズを導入する方法です。",
+          "description_ja": "多くのオンボーディングは、ユーザーがすでに想定している機能を説明するための、直線的なウォークスルーとして設計されています。本セッションでは、そうしたオンボーディングのあり方に疑問を投げかけ、機能の説明ではなく、初期段階で感情的なインパクトを生み出す小さく意味のある体験を提供することに注力すべきだと提案します。\n\n実際の観察事例をもとに、効果的なオンボーディングがどのように構築されるのかを解説します。それは、価値を感じられる瞬間を繰り返し提供し、それぞれに軽やかな継続やサブスクリプションの機会を組み合わせるというアプローチです。\n\n技術的な観点では、この手法をSwiftUIでどのように実装するか、オンボーディングの状態管理をどのように設計するか、そしてApp Storeのガイドラインに準拠しながら段階的にマネタイズを導入する方法について掘り下げます。",
           "summary": "Most onboarding flows are designed as linear walkthroughs that explain features users already expect. In this talk, I’ll argue that we’re doing onboarding wrong — and that instead of explaining functi",
           "summary_ja": "多くのオンボーディングフローは、ユーザーがすでに期待している機能を説明するリニアなウォークスルーとして設計されています。このトークでは、機能説明ではなく、初期段階で感情的なインパクトを生む小さくて意味のある体験の提供に集中すべきだと主張します。",
           "speakers": [
