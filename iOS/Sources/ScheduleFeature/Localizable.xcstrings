@@ -310,9 +310,6 @@
         }
       }
     },
-    "Sponsored by %@" : {
-
-    },
     "Take a break and meet other attendees or sponsors" : {
       "extractionState" : "manual",
       "localizations" : {
