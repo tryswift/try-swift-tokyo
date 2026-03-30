@@ -124,6 +124,17 @@ struct FavoritesAndFeedbackTests {
     return app
   }
 
+  private func withTestApp(_ body: (Application) async throws -> Void) async throws {
+    let app = try await makeTestApp()
+    do {
+      try await body(app)
+    } catch {
+      try await app.asyncShutdown()
+      throw error
+    }
+    try await app.asyncShutdown()
+  }
+
   /// Seed a user, conference, and proposal for testing. Returns the created models.
   private func seedProposal(on db: Database) async throws -> (
     user: User, conference: Conference, proposal: Proposal
@@ -156,283 +167,273 @@ struct FavoritesAndFeedbackTests {
 
   @Test("toggleFavorite adds a new favorite")
   func toggleFavorite_addsNewFavorite() async throws {
-    let app = try await makeTestApp()
-    defer { Task { try? await app.asyncShutdown() } }
+    try await withTestApp { app in
+      let (_, _, proposal) = try await seedProposal(on: app.db)
+      let proposalId = try proposal.requireID()
 
-    let (_, _, proposal) = try await seedProposal(on: app.db)
-    let proposalId = try proposal.requireID()
-
-    try await app.testing().test(
-      .PUT, "api/v1/favorites",
-      beforeRequest: { req in
-        try req.content.encode(FavoriteToggleRequest(proposalId: proposalId, deviceId: "device1"))
-      },
-      afterResponse: { response in
-        #expect(response.status == .ok)
-        let body = try response.content.decode(FavoriteToggleResponse.self)
-        #expect(body.isFavorite == true)
-        #expect(body.count == 1)
-      }
-    )
+      try await app.testing().test(
+        .PUT, "api/v1/favorites",
+        beforeRequest: { req in
+          try req.content.encode(FavoriteToggleRequest(proposalId: proposalId, deviceId: "device1"))
+        },
+        afterResponse: { response in
+          #expect(response.status == .ok)
+          let body = try response.content.decode(FavoriteToggleResponse.self)
+          #expect(body.isFavorite == true)
+          #expect(body.count == 1)
+        }
+      )
+    }
   }
 
   @Test("toggleFavorite removes an existing favorite")
   func toggleFavorite_removesFavorite() async throws {
-    let app = try await makeTestApp()
-    defer { Task { try? await app.asyncShutdown() } }
+    try await withTestApp { app in
+      let (_, _, proposal) = try await seedProposal(on: app.db)
+      let proposalId = try proposal.requireID()
 
-    let (_, _, proposal) = try await seedProposal(on: app.db)
-    let proposalId = try proposal.requireID()
+      // Add a favorite first
+      let favorite = Favorite(proposalID: proposalId, deviceID: "device1")
+      try await favorite.save(on: app.db)
 
-    // Add a favorite first
-    let favorite = Favorite(proposalID: proposalId, deviceID: "device1")
-    try await favorite.save(on: app.db)
-
-    // Toggle should remove it
-    try await app.testing().test(
-      .PUT, "api/v1/favorites",
-      beforeRequest: { req in
-        try req.content.encode(FavoriteToggleRequest(proposalId: proposalId, deviceId: "device1"))
-      },
-      afterResponse: { response in
-        #expect(response.status == .ok)
-        let body = try response.content.decode(FavoriteToggleResponse.self)
-        #expect(body.isFavorite == false)
-        #expect(body.count == 0)
-      }
-    )
+      // Toggle should remove it
+      try await app.testing().test(
+        .PUT, "api/v1/favorites",
+        beforeRequest: { req in
+          try req.content.encode(FavoriteToggleRequest(proposalId: proposalId, deviceId: "device1"))
+        },
+        afterResponse: { response in
+          #expect(response.status == .ok)
+          let body = try response.content.decode(FavoriteToggleResponse.self)
+          #expect(body.isFavorite == false)
+          #expect(body.count == 0)
+        }
+      )
+    }
   }
 
   @Test("toggleFavorite rejects empty deviceId")
   func toggleFavorite_rejectsEmptyDeviceId() async throws {
-    let app = try await makeTestApp()
-    defer { Task { try? await app.asyncShutdown() } }
+    try await withTestApp { app in
+      let (_, _, proposal) = try await seedProposal(on: app.db)
+      let proposalId = try proposal.requireID()
 
-    let (_, _, proposal) = try await seedProposal(on: app.db)
-    let proposalId = try proposal.requireID()
-
-    try await app.testing().test(
-      .PUT, "api/v1/favorites",
-      beforeRequest: { req in
-        try req.content.encode(FavoriteToggleRequest(proposalId: proposalId, deviceId: ""))
-      },
-      afterResponse: { response in
-        #expect(response.status == .badRequest)
-      }
-    )
+      try await app.testing().test(
+        .PUT, "api/v1/favorites",
+        beforeRequest: { req in
+          try req.content.encode(FavoriteToggleRequest(proposalId: proposalId, deviceId: ""))
+        },
+        afterResponse: { response in
+          #expect(response.status == .badRequest)
+        }
+      )
+    }
   }
 
   @Test("toggleFavorite rejects non-existent proposal")
   func toggleFavorite_rejectsInvalidProposal() async throws {
-    let app = try await makeTestApp()
-    defer { Task { try? await app.asyncShutdown() } }
+    try await withTestApp { app in
+      let nonExistentId = UUID()
 
-    let nonExistentId = UUID()
-
-    try await app.testing().test(
-      .PUT, "api/v1/favorites",
-      beforeRequest: { req in
-        try req.content.encode(
-          FavoriteToggleRequest(proposalId: nonExistentId, deviceId: "device1"))
-      },
-      afterResponse: { response in
-        #expect(response.status == .notFound)
-      }
-    )
+      try await app.testing().test(
+        .PUT, "api/v1/favorites",
+        beforeRequest: { req in
+          try req.content.encode(
+            FavoriteToggleRequest(proposalId: nonExistentId, deviceId: "device1"))
+        },
+        afterResponse: { response in
+          #expect(response.status == .notFound)
+        }
+      )
+    }
   }
 
   @Test("getFavorites returns user favorites for a given deviceId")
   func getFavorites_returnsUserFavorites() async throws {
-    let app = try await makeTestApp()
-    defer { Task { try? await app.asyncShutdown() } }
+    try await withTestApp { app in
+      let (user, conference, proposal1) = try await seedProposal(on: app.db)
+      let proposal1Id = try proposal1.requireID()
 
-    let (user, conference, proposal1) = try await seedProposal(on: app.db)
-    let proposal1Id = try proposal1.requireID()
+      // Create a second proposal
+      let proposal2 = Proposal(
+        conferenceID: try conference.requireID(),
+        title: "Second Talk",
+        abstract: "Another abstract",
+        talkDetail: "More detail",
+        talkDuration: .lightning,
+        speakerName: "Test Speaker",
+        speakerEmail: "test@example.com",
+        bio: "A test bio",
+        speakerID: try user.requireID(),
+        status: .accepted
+      )
+      try await proposal2.save(on: app.db)
+      let proposal2Id = try proposal2.requireID()
 
-    // Create a second proposal
-    let proposal2 = Proposal(
-      conferenceID: try conference.requireID(),
-      title: "Second Talk",
-      abstract: "Another abstract",
-      talkDetail: "More detail",
-      talkDuration: .lightning,
-      speakerName: "Test Speaker",
-      speakerEmail: "test@example.com",
-      bio: "A test bio",
-      speakerID: try user.requireID(),
-      status: .accepted
-    )
-    try await proposal2.save(on: app.db)
-    let proposal2Id = try proposal2.requireID()
+      // Add favorites for device1
+      try await Favorite(proposalID: proposal1Id, deviceID: "device1").save(on: app.db)
+      try await Favorite(proposalID: proposal2Id, deviceID: "device1").save(on: app.db)
 
-    // Add favorites for device1
-    try await Favorite(proposalID: proposal1Id, deviceID: "device1").save(on: app.db)
-    try await Favorite(proposalID: proposal2Id, deviceID: "device1").save(on: app.db)
+      // Add a favorite for a different device (should not appear)
+      try await Favorite(proposalID: proposal1Id, deviceID: "device2").save(on: app.db)
 
-    // Add a favorite for a different device (should not appear)
-    try await Favorite(proposalID: proposal1Id, deviceID: "device2").save(on: app.db)
-
-    try await app.testing().test(
-      .GET, "api/v1/favorites?deviceId=device1",
-      afterResponse: { response in
-        #expect(response.status == .ok)
-        let items = try response.content.decode([FavoriteItem].self)
-        #expect(items.count == 2)
-        let returnedIds = Set(items.map(\.proposalId))
-        #expect(returnedIds.contains(proposal1Id))
-        #expect(returnedIds.contains(proposal2Id))
-      }
-    )
+      try await app.testing().test(
+        .GET, "api/v1/favorites?deviceId=device1",
+        afterResponse: { response in
+          #expect(response.status == .ok)
+          let items = try response.content.decode([FavoriteItem].self)
+          #expect(items.count == 2)
+          let returnedIds = Set(items.map(\.proposalId))
+          #expect(returnedIds.contains(proposal1Id))
+          #expect(returnedIds.contains(proposal2Id))
+        }
+      )
+    }
   }
 
   @Test("getFavoriteCounts returns aggregated counts per proposal")
   func getFavoriteCounts_returnsAggregatedCounts() async throws {
-    let app = try await makeTestApp()
-    defer { Task { try? await app.asyncShutdown() } }
+    try await withTestApp { app in
+      let (user, conference, proposal1) = try await seedProposal(on: app.db)
+      let proposal1Id = try proposal1.requireID()
 
-    let (user, conference, proposal1) = try await seedProposal(on: app.db)
-    let proposal1Id = try proposal1.requireID()
+      // Create a second proposal
+      let proposal2 = Proposal(
+        conferenceID: try conference.requireID(),
+        title: "Second Talk",
+        abstract: "Another abstract",
+        talkDetail: "More detail",
+        talkDuration: .lightning,
+        speakerName: "Test Speaker",
+        speakerEmail: "test@example.com",
+        bio: "A test bio",
+        speakerID: try user.requireID(),
+        status: .accepted
+      )
+      try await proposal2.save(on: app.db)
+      let proposal2Id = try proposal2.requireID()
 
-    // Create a second proposal
-    let proposal2 = Proposal(
-      conferenceID: try conference.requireID(),
-      title: "Second Talk",
-      abstract: "Another abstract",
-      talkDetail: "More detail",
-      talkDuration: .lightning,
-      speakerName: "Test Speaker",
-      speakerEmail: "test@example.com",
-      bio: "A test bio",
-      speakerID: try user.requireID(),
-      status: .accepted
-    )
-    try await proposal2.save(on: app.db)
-    let proposal2Id = try proposal2.requireID()
+      // Proposal 1 gets 3 favorites from different devices
+      try await Favorite(proposalID: proposal1Id, deviceID: "device1").save(on: app.db)
+      try await Favorite(proposalID: proposal1Id, deviceID: "device2").save(on: app.db)
+      try await Favorite(proposalID: proposal1Id, deviceID: "device3").save(on: app.db)
 
-    // Proposal 1 gets 3 favorites from different devices
-    try await Favorite(proposalID: proposal1Id, deviceID: "device1").save(on: app.db)
-    try await Favorite(proposalID: proposal1Id, deviceID: "device2").save(on: app.db)
-    try await Favorite(proposalID: proposal1Id, deviceID: "device3").save(on: app.db)
+      // Proposal 2 gets 1 favorite
+      try await Favorite(proposalID: proposal2Id, deviceID: "device1").save(on: app.db)
 
-    // Proposal 2 gets 1 favorite
-    try await Favorite(proposalID: proposal2Id, deviceID: "device1").save(on: app.db)
+      try await app.testing().test(
+        .GET, "api/v1/favorite-counts",
+        afterResponse: { response in
+          #expect(response.status == .ok)
+          let counts = try response.content.decode([FavoriteCountItem].self)
+          #expect(counts.count == 2)
 
-    try await app.testing().test(
-      .GET, "api/v1/favorite-counts",
-      afterResponse: { response in
-        #expect(response.status == .ok)
-        let counts = try response.content.decode([FavoriteCountItem].self)
-        #expect(counts.count == 2)
-
-        let countMap = Dictionary(uniqueKeysWithValues: counts.map { ($0.proposalId, $0.count) })
-        #expect(countMap[proposal1Id] == 3)
-        #expect(countMap[proposal2Id] == 1)
-      }
-    )
+          let countMap = Dictionary(uniqueKeysWithValues: counts.map { ($0.proposalId, $0.count) })
+          #expect(countMap[proposal1Id] == 3)
+          #expect(countMap[proposal2Id] == 1)
+        }
+      )
+    }
   }
 
   // MARK: - FeedbackController Tests
 
   @Test("submitFeedback succeeds with valid data")
   func submitFeedback_success() async throws {
-    let app = try await makeTestApp()
-    defer { Task { try? await app.asyncShutdown() } }
+    try await withTestApp { app in
+      let (_, _, proposal) = try await seedProposal(on: app.db)
+      let proposalId = try proposal.requireID()
 
-    let (_, _, proposal) = try await seedProposal(on: app.db)
-    let proposalId = try proposal.requireID()
-
-    try await app.testing().test(
-      .POST, "api/v1/feedback",
-      beforeRequest: { req in
-        try req.content.encode(
-          FeedbackSubmission(proposalId: proposalId, comment: "Great talk!", deviceId: "device1"))
-      },
-      afterResponse: { response in
-        #expect(response.status == .created)
-      }
-    )
-
-    // Verify the feedback was persisted
-    let feedbacks = try await Feedback.query(on: app.db).all()
-    #expect(feedbacks.count == 1)
-    #expect(feedbacks.first?.comment == "Great talk!")
-  }
-
-  @Test("submitFeedback rejects empty comment")
-  func submitFeedback_rejectsEmptyComment() async throws {
-    let app = try await makeTestApp()
-    defer { Task { try? await app.asyncShutdown() } }
-
-    let (_, _, proposal) = try await seedProposal(on: app.db)
-    let proposalId = try proposal.requireID()
-
-    try await app.testing().test(
-      .POST, "api/v1/feedback",
-      beforeRequest: { req in
-        try req.content.encode(
-          FeedbackSubmission(proposalId: proposalId, comment: "", deviceId: "device1"))
-      },
-      afterResponse: { response in
-        #expect(response.status == .badRequest)
-      }
-    )
-  }
-
-  @Test("submitFeedback rejects comment over 2000 characters")
-  func submitFeedback_rejectsLongComment() async throws {
-    let app = try await makeTestApp()
-    defer { Task { try? await app.asyncShutdown() } }
-
-    let (_, _, proposal) = try await seedProposal(on: app.db)
-    let proposalId = try proposal.requireID()
-
-    let longComment = String(repeating: "a", count: 2001)
-
-    try await app.testing().test(
-      .POST, "api/v1/feedback",
-      beforeRequest: { req in
-        try req.content.encode(
-          FeedbackSubmission(proposalId: proposalId, comment: longComment, deviceId: "device1"))
-      },
-      afterResponse: { response in
-        #expect(response.status == .badRequest)
-      }
-    )
-  }
-
-  @Test("submitFeedback rate limits at 3 per device per proposal")
-  func submitFeedback_rateLimits() async throws {
-    let app = try await makeTestApp()
-    defer { Task { try? await app.asyncShutdown() } }
-
-    let (_, _, proposal) = try await seedProposal(on: app.db)
-    let proposalId = try proposal.requireID()
-
-    // Submit 3 feedbacks (should all succeed)
-    for i in 1...3 {
       try await app.testing().test(
         .POST, "api/v1/feedback",
         beforeRequest: { req in
           try req.content.encode(
-            FeedbackSubmission(
-              proposalId: proposalId, comment: "Feedback \(i)", deviceId: "device1"))
+            FeedbackSubmission(proposalId: proposalId, comment: "Great talk!", deviceId: "device1"))
         },
         afterResponse: { response in
           #expect(response.status == .created)
         }
       )
-    }
 
-    // 4th feedback should be rate limited
-    try await app.testing().test(
-      .POST, "api/v1/feedback",
-      beforeRequest: { req in
-        try req.content.encode(
-          FeedbackSubmission(proposalId: proposalId, comment: "One too many", deviceId: "device1"))
-      },
-      afterResponse: { response in
-        #expect(response.status == .tooManyRequests)
+      // Verify the feedback was persisted
+      let feedbacks = try await Feedback.query(on: app.db).all()
+      #expect(feedbacks.count == 1)
+      #expect(feedbacks.first?.comment == "Great talk!")
+    }
+  }
+
+  @Test("submitFeedback rejects empty comment")
+  func submitFeedback_rejectsEmptyComment() async throws {
+    try await withTestApp { app in
+      let (_, _, proposal) = try await seedProposal(on: app.db)
+      let proposalId = try proposal.requireID()
+
+      try await app.testing().test(
+        .POST, "api/v1/feedback",
+        beforeRequest: { req in
+          try req.content.encode(
+            FeedbackSubmission(proposalId: proposalId, comment: "", deviceId: "device1"))
+        },
+        afterResponse: { response in
+          #expect(response.status == .badRequest)
+        }
+      )
+    }
+  }
+
+  @Test("submitFeedback rejects comment over 2000 characters")
+  func submitFeedback_rejectsLongComment() async throws {
+    try await withTestApp { app in
+      let (_, _, proposal) = try await seedProposal(on: app.db)
+      let proposalId = try proposal.requireID()
+
+      let longComment = String(repeating: "a", count: 2001)
+
+      try await app.testing().test(
+        .POST, "api/v1/feedback",
+        beforeRequest: { req in
+          try req.content.encode(
+            FeedbackSubmission(proposalId: proposalId, comment: longComment, deviceId: "device1"))
+        },
+        afterResponse: { response in
+          #expect(response.status == .badRequest)
+        }
+      )
+    }
+  }
+
+  @Test("submitFeedback rate limits at 3 per device per proposal")
+  func submitFeedback_rateLimits() async throws {
+    try await withTestApp { app in
+      let (_, _, proposal) = try await seedProposal(on: app.db)
+      let proposalId = try proposal.requireID()
+
+      // Submit 3 feedbacks (should all succeed)
+      for i in 1...3 {
+        try await app.testing().test(
+          .POST, "api/v1/feedback",
+          beforeRequest: { req in
+            try req.content.encode(
+              FeedbackSubmission(
+                proposalId: proposalId, comment: "Feedback \(i)", deviceId: "device1"))
+          },
+          afterResponse: { response in
+            #expect(response.status == .created)
+          }
+        )
       }
-    )
+
+      // 4th feedback should be rate limited
+      try await app.testing().test(
+        .POST, "api/v1/feedback",
+        beforeRequest: { req in
+          try req.content.encode(
+            FeedbackSubmission(proposalId: proposalId, comment: "One too many", deviceId: "device1"))
+        },
+        afterResponse: { response in
+          #expect(response.status == .tooManyRequests)
+        }
+      )
+    }
   }
 }
