@@ -181,21 +181,20 @@ public struct SessionDetailView: View {
             Button {
               viewModel.toggleFavorite(proposalId: proposalId)
             } label: {
+              let isFavorite = viewModel.isFavorite(proposalId: proposalId)
+              let count = viewModel.favoriteCount(proposalId: proposalId)
               HStack(spacing: 2) {
                 Image(
-                  systemName: viewModel.isFavorite(proposalId: session.proposalId)
-                    ? "heart.fill" : "heart"
+                  systemName: isFavorite ? "heart.fill" : "heart"
                 )
                 .foregroundStyle(
-                  viewModel.isFavorite(proposalId: session.proposalId) ? Color.red : Color.secondary
+                  isFavorite ? Color.red : Color.secondary
                 )
-                let count = viewModel.favoriteCount(proposalId: session.proposalId)
                 if count > 0 {
                   Text(String(count))
-                  .font(Font.caption2)
-                  .foregroundStyle(
-                    viewModel.isFavorite(proposalId: session.proposalId)
-                      ? Color.red : Color.secondary)
+                    .font(Font.caption2)
+                    .foregroundStyle(
+                      isFavorite ? Color.red : Color.secondary)
                 }
               }
             }
@@ -294,14 +293,13 @@ public struct SessionDetailView: View {
         Label("Thank you for your feedback!", systemImage: "checkmark.circle.fill")
           .foregroundStyle(Color.green)
       } else {
-        TextField(
-          "Share your thoughts...",
+        TextEditor(
           text: Binding(
             get: { viewModel.feedbackText },
             set: { viewModel.feedbackText = $0 }
           )
         )
-        .textFieldStyle(.roundedBorder)
+        .frame(minHeight: 80)
 
         if let error = viewModel.feedbackError {
           Text(error)
