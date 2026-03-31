@@ -70,6 +70,16 @@ extension Session {
     description: "description2",
     requirements: "requirements2"
   )
+
+  static let mock3 = Self(
+    proposalId: "proposal-3",
+    title: "session3",
+    speakers: [
+      .mock1
+    ],
+    place: "place3",
+    description: "description3"
+  )
 }
 
 extension VideoMetadata {

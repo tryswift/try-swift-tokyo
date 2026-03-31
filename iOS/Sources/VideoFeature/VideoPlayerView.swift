@@ -1,4 +1,3 @@
-import Combine
 import SwiftUI
 import YouTubePlayerKit
 import os
@@ -63,7 +62,9 @@ struct VideoPlayerView: View {
       }
     }
     .task {
-      for await _ in Timer.publish(every: 0.5, on: .main, in: .common).autoconnect().values {
+      while !Task.isCancelled {
+        try? await Task.sleep(for: .milliseconds(500))
+        guard !Task.isCancelled else { break }
         if let time = try? await player.getCurrentTime() {
           onTimeUpdate(time.converted(to: .seconds).value)
         }

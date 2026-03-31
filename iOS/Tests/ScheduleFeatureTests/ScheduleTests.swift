@@ -292,7 +292,10 @@ struct ScheduleTests {
 
     #if os(macOS)
       await store.send(.view(.disclosureTapped(.mock2)))
-      await store.receive(\.delegate.showScheduleDetail)
+      await store.receive(
+        .delegate(
+          .showScheduleDetail(
+            .mock2, proposalId: nil, isFavorite: false, favoriteCount: 0)))
     #else
       await store.send(.view(.disclosureTapped(.mock2))) {
         $0.path.append(
@@ -306,6 +309,26 @@ struct ScheduleTests {
       }
     #endif
   }
+
+  #if os(macOS)
+    @Test
+    func disclosureTapped_withoutVideo_passesFavoriteState() async {
+      var state = Schedule.State()
+      state.allSessions = Self.preloadedSessions
+      state.favoriteProposalIds = ["proposal-3"]
+      state.favoriteCounts = ["proposal-3": 7]
+
+      let store = TestStore(initialState: state) {
+        Schedule()
+      }
+
+      await store.send(.view(.disclosureTapped(.mock3)))
+      await store.receive(
+        .delegate(
+          .showScheduleDetail(
+            .mock3, proposalId: "proposal-3", isFavorite: true, favoriteCount: 7)))
+    }
+  #endif
 
   // MARK: - Favorites
 

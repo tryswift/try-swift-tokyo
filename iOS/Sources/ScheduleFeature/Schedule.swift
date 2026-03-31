@@ -90,7 +90,7 @@ public struct Schedule {
 
     public enum Delegate: Equatable {
       case showVideoDetail(Session, VideoMetadata, ConferenceYear)
-      case showScheduleDetail(Session)
+      case showScheduleDetail(Session, proposalId: String?, isFavorite: Bool, favoriteCount: Int)
     }
   }
 
@@ -227,7 +227,15 @@ public struct Schedule {
           return .send(.delegate(.showVideoDetail(session, videoMeta, state.selectedYear)))
         } else {
           #if os(macOS)
-            return .send(.delegate(.showScheduleDetail(session)))
+            let isFavorite =
+              session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
+            let favoriteCount =
+              session.proposalId.flatMap { state.favoriteCounts[$0] } ?? 0
+            return .send(
+              .delegate(
+                .showScheduleDetail(
+                  session, proposalId: session.proposalId, isFavorite: isFavorite,
+                  favoriteCount: favoriteCount)))
           #else
             let isFavorite =
               session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
@@ -444,10 +452,11 @@ public struct ScheduleView: View {
               searchResultRow(result: result)
                 .padding()
             }
-            .glassEffectIfAvailable(.regular.interactive(), in: .buttonBorder)
+            .glassIfAvailable()
           }
         }
         .padding()
+        .glassEffectContainerIfAvailable()
       }
     }
   }
@@ -554,6 +563,7 @@ public struct ScheduleView: View {
       }
     }
     .padding()
+    .glassEffectContainerIfAvailable()
   }
 
   @ViewBuilder
@@ -561,7 +571,29 @@ public struct ScheduleView: View {
     HStack(spacing: 8) {
       VStack {
         if let speakers = session.speakers {
-          ForEach(speakers, id: \.self) { speaker in
+          if speakers.count > 1 {
+            ZStack(alignment: .bottomTrailing) {
+              ZStack(alignment: .leading) {
+                ForEach(Array(speakers.enumerated()), id: \.element) { index, speaker in
+                  Image(speaker.imageName, bundle: .module)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(.background, lineWidth: 2))
+                    .frame(width: 60)
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityIgnoresInvertColors()
+                    .offset(x: CGFloat(index) * 20)
+                }
+              }
+              .frame(width: 60 + CGFloat(speakers.count - 1) * 20, alignment: .leading)
+              if hasVideo {
+                Image(systemName: "play.circle.fill")
+                  .font(.body)
+                  .foregroundStyle(.white, Color.accentColor)
+              }
+            }
+          } else if let speaker = speakers.first {
             ZStack(alignment: .bottomTrailing) {
               Image(speaker.imageName, bundle: .module)
                 .resizable()
@@ -572,7 +604,7 @@ public struct ScheduleView: View {
                 .accessibilityIgnoresInvertColors()
               if hasVideo {
                 Image(systemName: "play.circle.fill")
-                  .font(.caption)
+                  .font(.body)
                   .foregroundStyle(.white, Color.accentColor)
               }
             }
@@ -607,9 +639,11 @@ public struct ScheduleView: View {
           if session.title == "Office hour", let speakers = session.speakers {
             let description = officeHourDescription(speakers: speakers)
             Text(description)
+              .lineLimit(2)
               .foregroundStyle(secondaryLabelColor)
           } else {
             Text(LocalizedStringKey(summary), bundle: .module)
+              .lineLimit(2)
               .foregroundStyle(secondaryLabelColor)
           }
         }
