@@ -1122,14 +1122,47 @@ struct WorkshopRoutes: RouteCollection {
 
     var sent = 0
     var errors = 0
+    var skipped = 0
 
     // Cache Standard ticket type ID per event (nil value = lookup failed)
     var ticketTypeCache: [String: String?] = [:]
+    // Cache existing guest emails per event to avoid duplicate sends
+    var existingGuestsCache: [String: [String: String]] = [:]  // eventID -> [email: guestID]
 
     for winner in winners {
       guard let workshop = winner.assignedWorkshop,
         let lumaEventID = workshop.lumaEventID
       else { continue }
+
+      // Fetch and cache existing guests for this event (once per event)
+      if !existingGuestsCache.keys.contains(lumaEventID) {
+        do {
+          let guests = try await LumaClient.getGuests(
+            eventID: lumaEventID,
+            client: req.client,
+            logger: req.logger
+          )
+          var emailToID: [String: String] = [:]
+          for guest in guests {
+            if let email = guest.user_email?.lowercased(), let id = guest.id {
+              emailToID[email] = id
+            }
+          }
+          existingGuestsCache[lumaEventID] = emailToID
+        } catch {
+          req.logger.error(
+            "Failed to fetch existing guests for event \(lumaEventID): \(error)")
+          existingGuestsCache[lumaEventID] = [:]
+        }
+      }
+
+      // Skip if guest already exists on Luma
+      if let guestID = existingGuestsCache[lumaEventID]?[winner.email.lowercased()] {
+        winner.lumaGuestID = guestID
+        try await winner.save(on: req.db)
+        skipped += 1
+        continue
+      }
 
       // Fetch and cache the Standard ticket type for this event (once per event)
       if !ticketTypeCache.keys.contains(lumaEventID) {
@@ -1170,6 +1203,8 @@ struct WorkshopRoutes: RouteCollection {
         winner.lumaGuestID = response.id
         try await winner.save(on: req.db)
         sent += 1
+        // Throttle to stay under Luma POST rate limit (100 req / 5 min)
+        try await Task.sleep(nanoseconds: 3_000_000_000)
       } catch {
         req.logger.error("Failed to send ticket to \(winner.email): \(error)")
         errors += 1
@@ -1177,7 +1212,8 @@ struct WorkshopRoutes: RouteCollection {
     }
 
     return req.redirect(
-      to: "/organizer/workshops?success=Tickets sent: \(sent) success, \(errors) errors"
+      to:
+        "/organizer/workshops?success=Tickets sent: \(sent) success, \(skipped) skipped (already on Luma), \(errors) errors"
     )
   }
 }
