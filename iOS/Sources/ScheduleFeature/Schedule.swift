@@ -452,7 +452,7 @@ public struct ScheduleView: View {
               searchResultRow(result: result)
                 .padding()
             }
-            .glassEffectIfAvailable(.regular.interactive(), in: .buttonBorder)
+            .glassIfAvailable()
           }
         }
         .padding()
