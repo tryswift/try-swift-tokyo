@@ -174,32 +174,35 @@ public struct SessionDetailView: View {
       }
       .padding()
     }
-    .toolbar {
-      if let proposalId = session.proposalId {
-        ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
-          Button {
-            viewModel.toggleFavorite(proposalId: proposalId)
-          } label: {
-            HStack(spacing: 2) {
-              Image(
-                systemName: viewModel.isFavorite(proposalId: session.proposalId)
-                  ? "heart.fill" : "heart"
-              )
-              .foregroundStyle(
-                viewModel.isFavorite(proposalId: session.proposalId) ? Color.red : Color.secondary)
-              let count = viewModel.favoriteCount(proposalId: session.proposalId)
-              if count > 0 {
-                Text(String(count))
-                  .font(Font.caption2)
-                  .foregroundStyle(
-                    viewModel.isFavorite(proposalId: session.proposalId)
-                      ? Color.red : Color.secondary)
+    #if os(iOS) || SKIP
+      .toolbar {
+        if let proposalId = session.proposalId {
+          ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
+            Button {
+              viewModel.toggleFavorite(proposalId: proposalId)
+            } label: {
+              HStack(spacing: 2) {
+                Image(
+                  systemName: viewModel.isFavorite(proposalId: session.proposalId)
+                    ? "heart.fill" : "heart"
+                )
+                .foregroundStyle(
+                  viewModel.isFavorite(proposalId: session.proposalId) ? Color.red : Color.secondary
+                )
+                let count = viewModel.favoriteCount(proposalId: session.proposalId)
+                if count > 0 {
+                  Text(String(count))
+                    .font(Font.caption2)
+                    .foregroundStyle(
+                      viewModel.isFavorite(proposalId: session.proposalId)
+                        ? Color.red : Color.secondary)
+                }
               }
             }
           }
         }
       }
-    }
+    #endif
     .onDisappear {
       viewModel.resetFeedbackState()
     }
@@ -296,9 +299,8 @@ public struct SessionDetailView: View {
           text: Binding(
             get: { viewModel.feedbackText },
             set: { viewModel.feedbackText = $0 }
-          ), axis: .vertical
+          )
         )
-        .lineLimit(3...6)
         .textFieldStyle(.roundedBorder)
 
         if let error = viewModel.feedbackError {
