@@ -572,21 +572,28 @@ public struct ScheduleView: View {
       VStack {
         if let speakers = session.speakers {
           if speakers.count > 1 {
+            let rows = stride(from: 0, to: speakers.count, by: 2).map { i in
+              Array(speakers[i..<min(i + 2, speakers.count)])
+            }
             ZStack(alignment: .bottomTrailing) {
-              ZStack(alignment: .leading) {
-                ForEach(Array(speakers.prefix(2).enumerated()), id: \.element) { index, speaker in
-                  Image(speaker.imageName, bundle: .module)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(.background, lineWidth: 2))
-                    .frame(width: 60)
-                    .accessibilityElement(children: .ignore)
-                    .accessibilityIgnoresInvertColors()
-                    .offset(x: CGFloat(index) * 54)
+              VStack(alignment: .leading, spacing: 4) {
+                ForEach(Array(rows.enumerated()), id: \.offset) { _, row in
+                  ZStack(alignment: .leading) {
+                    ForEach(Array(row.enumerated()), id: \.element) { index, speaker in
+                      Image(speaker.imageName, bundle: .module)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(Circle())
+                        .overlay(Circle().stroke(.background, lineWidth: 2))
+                        .frame(width: 60)
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityIgnoresInvertColors()
+                        .offset(x: CGFloat(index) * 54)
+                    }
+                  }
+                  .frame(width: 60 + CGFloat(row.count - 1) * 54, alignment: .leading)
                 }
               }
-              .frame(width: 60 + CGFloat(min(speakers.count, 2) - 1) * 54, alignment: .leading)
               if hasVideo {
                 Image(systemName: "play.circle.fill")
                   .font(.body)
