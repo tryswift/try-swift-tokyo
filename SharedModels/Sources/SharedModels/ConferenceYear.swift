@@ -1,4 +1,5 @@
 public enum ConferenceYear: Int, CaseIterable, Codable, Sendable {
+  case year2016 = 2016
   case year2017 = 2017
   case year2018 = 2018
   case year2019 = 2019

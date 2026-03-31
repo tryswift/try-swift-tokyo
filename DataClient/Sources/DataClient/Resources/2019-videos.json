@@ -1,68 +1,130 @@
 [
   {
-    "session_title": "Native macOS application, or the world of AppKit",
-    "youtube_video_id": "PLACEHOLDER_VIDEO_ID_1",
-    "duration": 1500.0,
-    "chapters": [
-      { "title": "Introduction", "start_time": 0.0 },
-      { "title": "What is native?", "start_time": 120.0 },
-      { "title": "AppKit Fundamentals", "start_time": 360.0 },
-      { "title": "Human Interface Guidelines", "start_time": 720.0 },
-      { "title": "Marzipan and the Future", "start_time": 1080.0 },
-      { "title": "Summary", "start_time": 1380.0 }
-    ],
-    "transcript": [
-      { "id": 1, "start_time": 0.0, "end_time": 5.0, "text": "Hello everyone, thank you for coming to try! Swift Tokyo." },
-      { "id": 2, "start_time": 5.0, "end_time": 12.0, "text": "Today I'd like to talk about native macOS applications and the world of AppKit." },
-      { "id": 3, "start_time": 12.0, "end_time": 20.0, "text": "Swift is the language we use to build native applications for iOS and macOS." },
-      { "id": 4, "start_time": 20.0, "end_time": 28.0, "text": "But what does it really mean to be a native application?" },
-      { "id": 5, "start_time": 28.0, "end_time": 35.0, "text": "Is it just using Cocoa framework with Swift?" }
-    ],
-    "resources": [
-      { "title": "Slide Deck", "url": "https://speakerdeck.com/1024jp/native-macos-application-or-the-world-of-appkit" }
-    ],
-    "summary": "This talk explores what it truly means to build a native macOS application. Beyond simply using Swift with the Cocoa framework, the speaker discusses the importance of deeply understanding AppKit, following Human Interface Guidelines, and being a good citizen of the target OS. The talk also touches on Marzipan (now Catalyst) and its implications for the future of macOS development.",
-    "code_resources": [
-      { "title": "CotEditor", "url": "https://github.com/coteditor/CotEditor", "kind": "github" }
-    ]
+    "session_title": "Swift Server Update",
+    "youtube_video_id": "ZefmzgLabCA"
   },
   {
-    "session_title": "Introduction to Swift Keypaths",
-    "youtube_video_id": "PLACEHOLDER_VIDEO_ID_2",
-    "duration": 1500.0,
-    "chapters": [
-      { "title": "Introduction", "start_time": 0.0 },
-      { "title": "Types of Keypaths", "start_time": 180.0 },
-      { "title": "Real World Examples", "start_time": 600.0 },
-      { "title": "Advanced Patterns", "start_time": 1080.0 }
-    ],
-    "transcript": [
-      { "id": 1, "start_time": 0.0, "end_time": 6.0, "text": "Hi everyone. Today I want to talk about Swift Keypaths." },
-      { "id": 2, "start_time": 6.0, "end_time": 14.0, "text": "Keypaths were added in Swift 4 and they are a fantastic feature." },
-      { "id": 3, "start_time": 14.0, "end_time": 22.0, "text": "But sometimes it feels difficult to find good situations for using them." },
-      { "id": 4, "start_time": 22.0, "end_time": 30.0, "text": "When understood and used the right way, keypaths allow you to implement additional abstractions." }
-    ],
-    "resources": [],
-    "summary": "An exploration of Swift Keypaths, introduced in Swift 4. The talk covers the different types of keypaths that exist in Swift and demonstrates through real-world examples how they can be leveraged to create powerful abstractions that would be much harder to achieve with generics or protocols alone.",
-    "code_resources": []
+    "session_title": "The Philosopher's String",
+    "youtube_video_id": "lMhGnTFA9CI"
+  },
+  {
+    "session_title": "Building a Social Network in Swift",
+    "youtube_video_id": "u901qDvBuUU"
+  },
+  {
+    "session_title": "次へつなごう— Extending a hand to the next generation of Apple developers",
+    "youtube_video_id": "bMMWf-Dr7kY"
+  },
+  {
+    "session_title": "Psychology study background and prospects in iOS device",
+    "youtube_video_id": "5XgV5vF6tiM"
+  },
+  {
+    "session_title": "Using C, C++ and Objective C frameworks in Swift apps",
+    "youtube_video_id": "aVdJj0XC-Ko"
+  },
+  {
+    "session_title": "Swift Hardware Hacking",
+    "youtube_video_id": "b9EVb0jEt8E"
+  },
+  {
+    "session_title": "Building a Mobile Design System",
+    "youtube_video_id": "Fvq8PQKJj_k"
+  },
+  {
+    "session_title": "Swift type metadata",
+    "youtube_video_id": "2fon4YFI9Ao"
+  },
+  {
+    "session_title": "Basics of Implement convenience with SwiftSyntax",
+    "youtube_video_id": "nFtShzC0n6s"
+  },
+  {
+    "session_title": "In defence of Core Data",
+    "youtube_video_id": "aUoT5w4JOoM"
+  },
+  {
+    "session_title": "Contributing to Swift Compiler",
+    "youtube_video_id": "HAXJsgYniqE"
+  },
+  {
+    "session_title": "Assembly. You can do it!",
+    "youtube_video_id": "nf0GXcvBlRY"
+  },
+  {
+    "session_title": "All about linking libraries",
+    "youtube_video_id": "EPLreKM5Dlc"
+  },
+  {
+    "session_title": "Property-based test beginning with SwiftCheck",
+    "youtube_video_id": "PnnSQet2-Pg"
+  },
+  {
+    "session_title": "Shaping Sounds in Swift",
+    "youtube_video_id": "lDTw6YZBDGo"
+  },
+  {
+    "session_title": "Making Portrait mode yourself",
+    "youtube_video_id": "_Lq0iJirT-E"
+  },
+  {
+    "session_title": "The Laws of Magic",
+    "youtube_video_id": "T9vRBioadYc"
+  },
+  {
+    "session_title": "MachObfuscator",
+    "youtube_video_id": "QTS2_CcnAgU"
+  },
+  {
+    "session_title": "Introducing SourceKit-LSP",
+    "youtube_video_id": "rQ7qArmbKOI"
+  },
+  {
+    "session_title": "try Prototype!",
+    "youtube_video_id": "TYOramNrprQ"
+  },
+  {
+    "session_title": "Driving Engagement with Siri Shortcuts and NSUserActivity",
+    "youtube_video_id": "zm-Ayvm0oew"
+  },
+  {
+    "session_title": "Discover memory leak with Testcase",
+    "youtube_video_id": "jseRwn8fTg4"
+  },
+  {
+    "session_title": "So you want to build an ARKit app",
+    "youtube_video_id": "RpJJEvFGGCY"
   },
   {
     "session_title": "Graphics like Pixar using Swift",
-    "youtube_video_id": "PLACEHOLDER_VIDEO_ID_3",
-    "duration": 1500.0,
-    "chapters": [
-      { "title": "Introduction", "start_time": 0.0 },
-      { "title": "What is Ray Tracing?", "start_time": 90.0 },
-      { "title": "Building a Ray Tracer in Swift", "start_time": 480.0 },
-      { "title": "Rendering Results", "start_time": 1200.0 }
-    ],
-    "transcript": [
-      { "id": 1, "start_time": 0.0, "end_time": 7.0, "text": "Hello, my name is Michael Petrie but everyone calls me Kapsy." },
-      { "id": 2, "start_time": 7.0, "end_time": 15.0, "text": "Today I want to talk about creating Pixar-like graphics using Swift." },
-      { "id": 3, "start_time": 15.0, "end_time": 23.0, "text": "Ray tracing is the cornerstone of Pixar's Renderman 3D rendering technology." }
-    ],
-    "resources": [],
-    "summary": "A hands-on exploration of building a simple ray tracer from scratch using Swift. The talk covers the fundamentals of ray tracing—the technology behind Pixar's Renderman—and demonstrates how Swift's versatility makes it suitable for physically modeling light rays and their interactions with objects and surfaces.",
-    "code_resources": []
+    "youtube_video_id": "jcshB5wM28Q"
+  },
+  {
+    "session_title": "Color Contrast for Accessibility",
+    "youtube_video_id": "V6YY0fmaocc"
+  },
+  {
+    "session_title": "Deep dive into Swift Literal",
+    "youtube_video_id": "NpPLmSVWMAc"
+  },
+  {
+    "session_title": "Native macOS application, or the world of AppKit",
+    "youtube_video_id": "lSiwCAQVKQk"
+  },
+  {
+    "session_title": "Introduction to Swift Keypaths",
+    "youtube_video_id": "z4lTKBS0ZbQ"
+  },
+  {
+    "session_title": "Limited import clarification and its effect",
+    "youtube_video_id": "8OMQ2DiS-zA"
+  },
+  {
+    "session_title": "Swift as Light",
+    "youtube_video_id": "XfDCGvnoLhs"
+  },
+  {
+    "session_title": "Generics in protocol extension",
+    "youtube_video_id": "Urt1VJShbL4"
   }
 ]

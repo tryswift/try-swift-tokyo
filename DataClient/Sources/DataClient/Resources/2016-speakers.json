@@ -1,0 +1,398 @@
+[
+  {
+    "name": "Syo Ikeda",
+    "image_name": "syo_ikeda",
+    "bio": "Syo Ikeda is an iOS developer at Realm, known for his contributions to open source projects including Himotoki, Carthage, and ReactiveSwift. He is passionate about the Swift ecosystem and developer tooling.",
+    "bio_ja": "RealmのiOS開発者で、Himotoki、Carthage、ReactiveSwiftなどのオープンソースプロジェクトへの貢献で知られています。Swiftエコシステムと開発者ツールに情熱を注いでいます。",
+    "links": [
+      {
+        "name": "@ikesyo",
+        "url": "https://x.com/ikesyo"
+      }
+    ]
+  },
+  {
+    "name": "JP Simard",
+    "image_name": "jp_simard",
+    "bio": "JP Simard is an iOS developer at Realm, where he works on the Realm Mobile Database and related tooling. He is the creator of SourceKitten and a core contributor to SwiftLint. He is passionate about developer tools and open source.",
+    "bio_ja": "RealmのiOS開発者で、Realm Mobile Databaseと関連ツールの開発に携わっています。SourceKittenの作者であり、SwiftLintのコアコントリビューターです。開発者ツールとオープンソースに情熱を注いでいます。",
+    "links": [
+      {
+        "name": "@simjp",
+        "url": "https://x.com/simjp"
+      }
+    ]
+  },
+  {
+    "name": "Laura Savino",
+    "image_name": "laura_savino",
+    "bio": "Laura Savino is an iOS developer and linguist who builds language learning tools. She brings her background in linguistics to software development, exploring the parallels between human languages and programming languages.",
+    "bio_ja": "iOSデベロッパーであり言語学者で、言語学習ツールを開発しています。言語学のバックグラウンドをソフトウェア開発に活かし、人間の言語とプログラミング言語の類似点を探求しています。",
+    "links": [
+      {
+        "name": "@savinola",
+        "url": "https://x.com/savinola"
+      }
+    ]
+  },
+  {
+    "name": "Boris Bugling",
+    "image_name": "boris_bugling",
+    "bio": "Boris Bugling is a Cocoa developer at Contentful and a prolific contributor to the CocoaPods ecosystem. He enjoys building tools and exploring new Apple platforms.",
+    "bio_ja": "ContentfulのCocoa開発者であり、CocoaPodsエコシステムへの多くの貢献で知られています。ツールの構築と新しいAppleプラットフォームの探求を楽しんでいます。",
+    "links": [
+      {
+        "name": "@NeoNacho",
+        "url": "https://x.com/NeoNacho"
+      }
+    ]
+  },
+  {
+    "name": "Gwendolyn Weston",
+    "image_name": "gwendolyn_weston",
+    "bio": "Gwendolyn Weston is an iOS developer who enjoys exploring Swift's type system and pushing the boundaries of protocol-oriented programming.",
+    "bio_ja": "iOSデベロッパーで、Swiftの型システムの探求とプロトコル指向プログラミングの限界に挑戦することを楽しんでいます。",
+    "links": [
+      {
+        "name": "@purpleyay",
+        "url": "https://x.com/purpleyay"
+      }
+    ]
+  },
+  {
+    "name": "Yuta Koshizawa",
+    "image_name": "yuta_koshizawa",
+    "bio": "Yuta Koshizawa (@koher) is a Swift developer who is passionate about type safety and functional programming concepts in Swift. He has written extensively about error handling patterns in Swift.",
+    "bio_ja": "Swiftの型安全性と関数型プログラミングの概念に情熱を注ぐSwift開発者です。Swiftのエラーハンドリングパターンについて広く執筆しています。",
+    "links": [
+      {
+        "name": "@koher",
+        "url": "https://x.com/koher"
+      }
+    ]
+  },
+  {
+    "name": "Michele Titolo",
+    "image_name": "michele_titolo",
+    "bio": "Michele Titolo is a lead iOS engineer at Capital One, known for her expertise in Swift protocols and software architecture. She is a frequent conference speaker and advocate for clean code practices.",
+    "bio_ja": "Capital OneのリードiOSエンジニアで、Swiftのプロトコルとソフトウェアアーキテクチャの専門知識で知られています。カンファレンスでの講演を頻繁に行い、クリーンコードの実践を推進しています。",
+    "links": [
+      {
+        "name": "@micheletitolo",
+        "url": "https://x.com/micheletitolo"
+      }
+    ]
+  },
+  {
+    "name": "Daniel Steinberg",
+    "image_name": "daniel_steinberg",
+    "bio": "Daniel Steinberg (@dimsumthinking) is an author, trainer, and speaker who has been writing about Cocoa and Swift for many years. He is the author of several books on Swift and iOS development and is known for his engaging teaching style.",
+    "bio_ja": "著者、トレーナー、スピーカーとして、長年にわたりCocoaとSwiftについて執筆しています。SwiftとiOS開発に関する複数の書籍の著者であり、魅力的な教え方で知られています。",
+    "links": [
+      {
+        "name": "@dimsumthinking",
+        "url": "https://x.com/dimsumthinking"
+      }
+    ]
+  },
+  {
+    "name": "Tim Oliver",
+    "image_name": "tim_oliver",
+    "bio": "Tim Oliver is an iOS developer at Realm, and a prolific open-source contributor. Originally from Perth, Australia, he moved to Tokyo where he has been building iOS apps and contributing to the community.",
+    "bio_ja": "RealmのiOS開発者であり、活発なオープンソースコントリビューターです。オーストラリアのパース出身で、東京に移住し、iOSアプリの開発とコミュニティへの貢献を続けています。",
+    "links": [
+      {
+        "name": "@TimOliverAU",
+        "url": "https://x.com/TimOliverAU"
+      }
+    ]
+  },
+  {
+    "name": "Stephanie Shupe",
+    "image_name": "stephanie_shupe",
+    "bio": "Stephanie Shupe is an iOS developer focused on smart home technology. She is passionate about the intersection of software and hardware, building apps that connect the digital and physical worlds.",
+    "bio_ja": "スマートホーム技術に注力するiOS開発者です。ソフトウェアとハードウェアの交差点に情熱を注ぎ、デジタルと物理の世界をつなぐアプリを構築しています。",
+    "links": [
+      {
+        "name": "@stloyal",
+        "url": "https://x.com/stloyal"
+      }
+    ]
+  },
+  {
+    "name": "Cate Huston",
+    "image_name": "cate_huston",
+    "bio": "Cate Huston is an engineering leader at Automattic. She has lived and worked in the UK, Australia, Canada, China, and the United States. She is passionate about engineering leadership, diversity, and inclusion in the tech industry.",
+    "bio_ja": "Automatticのエンジニアリングリーダーです。イギリス、オーストラリア、カナダ、中国、アメリカで生活し働いてきました。エンジニアリングリーダーシップ、テック業界における多様性とインクルージョンに情熱を注いでいます。",
+    "links": [
+      {
+        "name": "@catehstn",
+        "url": "https://x.com/catehstn"
+      }
+    ]
+  },
+  {
+    "name": "Ayaka Nonaka",
+    "image_name": "ayaka_nonaka",
+    "bio": "Ayaka Nonaka is an iOS engineer at Venmo, where she works on internationalization and localization. She is passionate about making apps accessible to users around the world and is known for her expertise in Swift localization patterns.",
+    "bio_ja": "VenmoのiOSエンジニアで、国際化とローカリゼーションに取り組んでいます。世界中のユーザーがアクセスできるアプリを作ることに情熱を注いでおり、Swiftのローカリゼーションパターンの専門知識で知られています。",
+    "links": [
+      {
+        "name": "@ayanonagon",
+        "url": "https://x.com/ayanonagon"
+      }
+    ]
+  },
+  {
+    "name": "Adam Bell",
+    "image_name": "adam_bell",
+    "bio": "Adam Bell is a software engineer at Facebook, where he works on animation and prototyping tools. He is known for his creative approach to interactive animations and has contributed to popular open-source animation libraries.",
+    "bio_ja": "Facebookのソフトウェアエンジニアで、アニメーションとプロトタイピングツールに取り組んでいます。インタラクティブアニメーションへのクリエイティブなアプローチで知られ、人気のあるオープンソースアニメーションライブラリに貢献しています。",
+    "links": [
+      {
+        "name": "@b3ll",
+        "url": "https://x.com/b3ll"
+      }
+    ]
+  },
+  {
+    "name": "Matthew Gillingham",
+    "image_name": "matthew_gillingham",
+    "bio": "Matthew Gillingham is a Tokyo-based iOS developer with a deep interest in the history and evolution of programming languages. He enjoys exploring how language features influence software design patterns.",
+    "bio_ja": "東京を拠点とするiOS開発者で、プログラミング言語の歴史と進化に深い関心を持っています。言語の機能がソフトウェア設計パターンにどのように影響するかを探求することを楽しんでいます。",
+    "links": [
+      {
+        "name": "@gillygize",
+        "url": "https://x.com/gillygize"
+      }
+    ]
+  },
+  {
+    "name": "Himi Sato",
+    "image_name": "himi_sato",
+    "bio": "Himi Sato is the lead organizer of Women Who Code Tokyo, dedicated to building a supportive community for women in technology in Tokyo. She is passionate about diversity and inclusion in the tech industry.",
+    "bio_ja": "Women Who Code Tokyoのリードオーガナイザーで、東京のテクノロジー業界の女性のための支援コミュニティの構築に尽力しています。テック業界における多様性とインクルージョンに情熱を注いでいます。",
+    "links": [
+      {
+        "name": "@himisato",
+        "url": "https://x.com/himisato"
+      }
+    ]
+  },
+  {
+    "name": "Rachel Bobbins",
+    "image_name": "rachel_bobbins",
+    "bio": "Rachel Bobbins is a lead iOS engineer at Stitch Fix, where she builds delightful shopping experiences. She is passionate about clean Swift API design and creating intuitive developer interfaces.",
+    "bio_ja": "Stitch FixのリードiOSエンジニアで、楽しいショッピング体験を構築しています。クリーンなSwift APIデザインと直感的な開発者インターフェースの作成に情熱を注いでいます。",
+    "links": [
+      {
+        "name": "@bobbins",
+        "url": "https://x.com/bobbins"
+      }
+    ]
+  },
+  {
+    "name": "Daniel Eggert",
+    "image_name": "daniel_eggert",
+    "bio": "Daniel Eggert is a co-founder of objc.io and a Core Data expert. He has been working with Core Data since its inception and has contributed extensively to the iOS developer community through writing and speaking.",
+    "bio_ja": "objc.ioの共同設立者であり、Core Dataの専門家です。Core Dataの誕生以来、Core Dataに取り組んでおり、執筆と講演を通じてiOS開発者コミュニティに広く貢献しています。",
+    "links": [
+      {
+        "name": "@danielboedewadt",
+        "url": "https://x.com/danielboedewadt"
+      }
+    ]
+  },
+  {
+    "name": "Novall Khan",
+    "image_name": "novall_khan",
+    "bio": "Novall Khan is a software engineer at Splitwise with expertise in LLDB and compiler internals. She enjoys diving deep into debugging tools and sharing her knowledge of how Swift's debugger works under the hood.",
+    "bio_ja": "SplitwiseのソフトウェアエンジニアでLLDBとコンパイラの内部に関する専門知識を持っています。デバッグツールの深い部分に飛び込み、Swiftのデバッガーがどのように動作するかについての知識を共有することを楽しんでいます。",
+    "links": [
+      {
+        "name": "@novaborosky",
+        "url": "https://x.com/novaborosky"
+      }
+    ]
+  },
+  {
+    "name": "Jeff Hui",
+    "image_name": "jeff_hui",
+    "bio": "Jeff Hui is a maintainer of Quick and Nimble, popular testing frameworks for Swift and Objective-C. He is passionate about testing practices and building developer tools that make it easier to write reliable software.",
+    "bio_ja": "SwiftとObjective-Cのテストフレームワークとして人気のあるQuickとNimbleのメンテナーです。テストのプラクティスと、信頼性の高いソフトウェアを書きやすくする開発者ツールの構築に情熱を注いでいます。",
+    "links": [
+      {
+        "name": "@jeffhui",
+        "url": "https://x.com/jeffhui"
+      }
+    ]
+  },
+  {
+    "name": "Yosuke Ishikawa",
+    "image_name": "yosuke_ishikawa",
+    "bio": "Yosuke Ishikawa is an iOS engineer at Mercari and the author of APIKit, a type-safe networking library for Swift. He is passionate about protocol-oriented programming and building elegant API abstractions.",
+    "bio_ja": "MercariのiOSエンジニアであり、Swift用の型安全ネットワーキングライブラリAPIKitの作者です。プロトコル指向プログラミングとエレガントなAPI抽象化の構築に情熱を注いでいます。",
+    "links": [
+      {
+        "name": "@_ishkawa",
+        "url": "https://x.com/_ishkawa"
+      }
+    ]
+  },
+  {
+    "name": "Maxim Cramer",
+    "image_name": "maxim_cramer",
+    "bio": "Maxim Cramer is a designer and developer at SwiftKey, known for her work bridging the gap between design and development. She specializes in live design techniques and creating tools that bring designs to life interactively.",
+    "bio_ja": "SwiftKeyのデザイナー兼開発者で、デザインと開発のギャップを埋める仕事で知られています。ライブデザインのテクニックと、デザインをインタラクティブに実現するツールの作成を専門としています。",
+    "links": [
+      {
+        "name": "@mennenia",
+        "url": "https://x.com/mennenia"
+      }
+    ]
+  },
+  {
+    "name": "Chris Eidhof",
+    "image_name": "chris_eidhof",
+    "bio": "Chris Eidhof is a co-founder of objc.io and the author of 'Functional Swift' and 'Advanced Swift'. He is known for his contributions to the Swift community through writing, speaking, and building innovative Swift projects.",
+    "bio_ja": "objc.ioの共同設立者であり、『Functional Swift』と『Advanced Swift』の著者です。執筆、講演、革新的なSwiftプロジェクトの構築を通じてSwiftコミュニティへの貢献で知られています。",
+    "links": [
+      {
+        "name": "@chriseidhof",
+        "url": "https://x.com/chriseidhof"
+      }
+    ]
+  },
+  {
+    "name": "Hiroki Kato",
+    "image_name": "hiroki_kato",
+    "bio": "Hiroki Kato is an iOS developer with a focus on library design and API abstraction. He is passionate about creating well-designed libraries that are intuitive and easy to use.",
+    "bio_ja": "ライブラリデザインとAPI抽象化に注力するiOS開発者です。直感的で使いやすい、よく設計されたライブラリの作成に情熱を注いでいます。",
+    "links": [
+      {
+        "name": "@hiroki_kato",
+        "url": "https://x.com/hiroki_kato"
+      }
+    ]
+  },
+  {
+    "name": "Caesar Wirth",
+    "image_name": "caesar_wirth",
+    "bio": "Caesar Wirth is an iOS developer at CyberAgent, based in Tokyo. He is an early adopter of server-side Swift and enjoys exploring how Swift can be used beyond mobile development.",
+    "bio_ja": "CyberAgentのiOS開発者で、東京を拠点としています。サーバーサイドSwiftの早期導入者であり、Swiftがモバイル開発を超えてどのように使えるかを探求することを楽しんでいます。",
+    "links": [
+      {
+        "name": "@cjwirth",
+        "url": "https://x.com/cjwirth"
+      }
+    ]
+  },
+  {
+    "name": "Veronica Ray",
+    "image_name": "veronica_ray",
+    "bio": "Veronica Ray is an iOS developer at LinkedIn, where she focuses on testing practices and code quality. She is passionate about making testing accessible and practical for all developers.",
+    "bio_ja": "LinkedInのiOS開発者で、テストの実践とコード品質に注力しています。すべての開発者にとってテストをアクセスしやすく実践的なものにすることに情熱を注いでいます。",
+    "links": [
+      {
+        "name": "@nyronica",
+        "url": "https://x.com/nyronica"
+      }
+    ]
+  },
+  {
+    "name": "Hector Matos",
+    "image_name": "hector_matos",
+    "bio": "Hector Matos is an iOS developer known for his creative and unconventional approach to Swift programming. He enjoys pushing the boundaries of what is possible with the language.",
+    "bio_ja": "Swiftプログラミングへのクリエイティブで型破りなアプローチで知られるiOS開発者です。言語で何が可能かの限界を押し広げることを楽しんでいます。",
+    "links": [
+      {
+        "name": "@allonsykraken",
+        "url": "https://x.com/allonsykraken"
+      }
+    ]
+  },
+  {
+    "name": "Simon Gladman",
+    "image_name": "simon_gladman",
+    "bio": "Simon Gladman is a Core Image expert and computational photographer. He has written extensively about image processing in Swift and is known for his creative explorations of Core Image filters and GPU-accelerated processing.",
+    "bio_ja": "Core Imageの専門家であり計算写真家です。Swiftでの画像処理について広く執筆しており、Core Imageフィルターの創造的な探求とGPUアクセラレーション処理で知られています。",
+    "links": [
+      {
+        "name": "@FlexMonkey",
+        "url": "https://x.com/FlexMonkey"
+      }
+    ]
+  },
+  {
+    "name": "Diana Zmuda",
+    "image_name": "diana_zmuda",
+    "bio": "Diana Zmuda is a developer at thoughtbot with a background in statistics and data science. She enjoys exploring how Swift can be used for computational and scientific applications.",
+    "bio_ja": "thoughtbotの開発者で、統計学とデータサイエンスのバックグラウンドを持っています。Swiftが計算および科学的アプリケーションにどのように使えるかを探求することを楽しんでいます。",
+    "links": [
+      {
+        "name": "@dazmuda",
+        "url": "https://x.com/dazmuda"
+      }
+    ]
+  },
+  {
+    "name": "Daniel Haight",
+    "image_name": "daniel_haight",
+    "bio": "Daniel Haight is a build systems expert who enjoys exploring alternative approaches to building and compiling Swift projects. He is passionate about developer tooling and build process optimization.",
+    "bio_ja": "Swiftプロジェクトの構築とコンパイルに対する代替アプローチの探求を楽しむビルドシステムの専門家です。開発者ツールとビルドプロセスの最適化に情熱を注いでいます。",
+    "links": [
+      {
+        "name": "@daniel_haight",
+        "url": "https://x.com/daniel_haight"
+      }
+    ]
+  },
+  {
+    "name": "Helen Holmes",
+    "image_name": "helen_holmes",
+    "bio": "Helen Holmes is a designer and developer who bridges the gap between design and engineering. She is passionate about creating tools and workflows that make it easier for designers to contribute directly to codebases.",
+    "bio_ja": "デザインとエンジニアリングのギャップを埋めるデザイナー兼開発者です。デザイナーがコードベースに直接貢献しやすくするツールとワークフローの作成に情熱を注いでいます。",
+    "links": [
+      {
+        "name": "@helenvholmes",
+        "url": "https://x.com/helenvholmes"
+      }
+    ]
+  },
+  {
+    "name": "Yasuhiro Inami",
+    "image_name": "yasuhiro_inami",
+    "bio": "Yasuhiro Inami (@inamiy) is a Swift developer known for his work on ReactiveSwift and functional programming in Swift. He enjoys exploring advanced concepts like parser combinators and applying them to practical problems.",
+    "bio_ja": "ReactiveSwiftやSwiftにおける関数型プログラミングの仕事で知られるSwift開発者です。パーサーコンビネーターのような高度な概念を探求し、実践的な問題に適用することを楽しんでいます。",
+    "links": [
+      {
+        "name": "@inamiy",
+        "url": "https://x.com/inamiy"
+      }
+    ]
+  },
+  {
+    "name": "Jesse Squires",
+    "image_name": "jesse_squires",
+    "bio": "Jesse Squires is an open source Swift contributor and community advocate. He writes about Swift development on his blog and is known for his weekly Swift Weekly Brief newsletter tracking changes in the Swift open source project.",
+    "bio_ja": "オープンソースSwiftのコントリビューターであり、コミュニティの提唱者です。ブログでSwift開発について執筆しており、Swiftオープンソースプロジェクトの変更を追跡する週刊のSwift Weekly Briefニュースレターで知られています。",
+    "links": [
+      {
+        "name": "@jesse_squires",
+        "url": "https://x.com/jesse_squires"
+      }
+    ]
+  },
+  {
+    "name": "Ash Furrow",
+    "image_name": "ash_furrow",
+    "bio": "Ash Furrow is a developer at Artsy, a testing advocate, and a community builder. He is the author of several books on iOS development and is known for his contributions to open source and his advocacy for testing best practices.",
+    "bio_ja": "Artsyの開発者であり、テストの提唱者であり、コミュニティビルダーです。iOS開発に関する複数の書籍の著者であり、オープンソースへの貢献とテストのベストプラクティスの推進で知られています。",
+    "links": [
+      {
+        "name": "@ashfurrow",
+        "url": "https://x.com/ashfurrow"
+      }
+    ]
+  }
+]

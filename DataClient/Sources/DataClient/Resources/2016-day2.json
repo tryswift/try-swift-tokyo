@@ -1,0 +1,371 @@
+{
+  "id": 2,
+  "title": "Day 2",
+  "title_ja": "2日目",
+  "date": "2016-03-03T09:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2016-03-03T08:30:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Registration & Breakfast",
+          "title_ja": "受付・朝食"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2016-03-03T09:45:00+09:00",
+      "sessions": [
+        {
+          "id": 2,
+          "title": "Opening Remarks",
+          "title_ja": "開会"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2016-03-03T10:00:00+09:00",
+      "sessions": [
+        {
+          "id": 3,
+          "title": "Practical Boundaries",
+          "title_ja": "実践的な境界",
+          "description": "Setting boundaries in your codebase is essential for maintainability and scalability. In this talk, we will explore practical techniques for defining clear boundaries between modules, layers, and components in Swift applications, with a focus on real-world patterns from production apps.",
+          "description_ja": "コードベースに境界を設定することは、保守性とスケーラビリティに不可欠です。このトークでは、Swiftアプリケーションにおけるモジュール、レイヤー、コンポーネント間の明確な境界を定義するための実践的なテクニックを、プロダクションアプリからの実際のパターンに焦点を当てて探ります。",
+          "speakers": [
+            {
+              "name": "Ayaka Nonaka",
+              "image_name": "ayaka_nonaka",
+              "bio": "Ayaka Nonaka is an iOS engineer at Venmo, where she works on internationalization and localization. She is passionate about making apps accessible to users around the world and is known for her expertise in Swift localization patterns.",
+              "bio_ja": "VenmoのiOSエンジニアで、国際化とローカリゼーションに取り組んでいます。世界中のユーザーがアクセスできるアプリを作ることに情熱を注いでおり、Swiftのローカリゼーションパターンの専門知識で知られています。",
+              "links": [
+                {
+                  "name": "@ayanonagon",
+                  "url": "https://x.com/ayanonagon"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2016-03-03T10:25:00+09:00",
+      "sessions": [
+        {
+          "id": 4,
+          "title": "Prototyping Magic",
+          "title_ja": "プロトタイピングマジック",
+          "description": "Prototyping is a powerful way to explore ideas and validate designs before committing to a full implementation. In this talk, we will explore how to use Swift and iOS frameworks to quickly build interactive prototypes with fluid animations and delightful interactions that feel like magic.",
+          "description_ja": "プロトタイピングは、完全な実装にコミットする前にアイデアを探求しデザインを検証する強力な方法です。このトークでは、SwiftとiOSフレームワークを使って、魔法のように感じられる流れるようなアニメーションと心地よいインタラクションを持つインタラクティブなプロトタイプを素早く構築する方法を探ります。",
+          "speakers": [
+            {
+              "name": "Adam Bell",
+              "image_name": "adam_bell",
+              "bio": "Adam Bell is a software engineer at Facebook, where he works on animation and prototyping tools. He is known for his creative approach to interactive animations and has contributed to popular open-source animation libraries.",
+              "bio_ja": "Facebookのソフトウェアエンジニアで、アニメーションとプロトタイピングツールに取り組んでいます。インタラクティブアニメーションへのクリエイティブなアプローチで知られ、人気のあるオープンソースアニメーションライブラリに貢献しています。",
+              "links": [
+                {
+                  "name": "@b3ll",
+                  "url": "https://x.com/b3ll"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2016-03-03T10:35:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "Protocol Extensions: A History",
+          "title_ja": "Protocol Extensions: その歴史",
+          "description": "Protocol extensions were a game-changing addition to Swift. In this talk, we will trace the history of protocol extensions, from their conceptual origins in other languages to their implementation in Swift, and explore how they have transformed the way we write Swift code.",
+          "description_ja": "Protocol extensionsはSwiftにとって画期的な追加でした。このトークでは、他の言語における概念的な起源からSwiftでの実装まで、Protocol extensionsの歴史をたどり、Swiftコードの書き方をどのように変えたかを探ります。",
+          "speakers": [
+            {
+              "name": "Matthew Gillingham",
+              "image_name": "matthew_gillingham",
+              "bio": "Matthew Gillingham is a Tokyo-based iOS developer with a deep interest in the history and evolution of programming languages. He enjoys exploring how language features influence software design patterns.",
+              "bio_ja": "東京を拠点とするiOS開発者で、プログラミング言語の歴史と進化に深い関心を持っています。言語の機能がソフトウェア設計パターンにどのように影響するかを探求することを楽しんでいます。",
+              "links": [
+                {
+                  "name": "@gillygize",
+                  "url": "https://x.com/gillygize"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2016-03-03T11:00:00+09:00",
+      "sessions": [
+        {
+          "id": 6,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2016-03-03T11:30:00+09:00",
+      "sessions": [
+        {
+          "id": 7,
+          "title": "Building Women Who Code in Tokyo",
+          "title_ja": "東京のWomen Who Codeを作る",
+          "description": "Building a thriving developer community takes dedication and passion. In this talk, we will share the story of growing Women Who Code in Tokyo, discussing the challenges and rewards of organizing events, fostering diversity, and creating an inclusive space for women in technology.",
+          "description_ja": "活気ある開発者コミュニティを構築するには献身と情熱が必要です。このトークでは、東京でWomen Who Codeを成長させた物語を共有し、イベントの企画、多様性の促進、そしてテクノロジー業界の女性のためのインクルーシブな場を作ることの課題と報酬について議論します。",
+          "speakers": [
+            {
+              "name": "Himi Sato",
+              "image_name": "himi_sato",
+              "bio": "Himi Sato is the lead organizer of Women Who Code Tokyo, dedicated to building a supportive community for women in technology in Tokyo. She is passionate about diversity and inclusion in the tech industry.",
+              "bio_ja": "Women Who Code Tokyoのリードオーガナイザーで、東京のテクノロジー業界の女性のための支援コミュニティの構築に尽力しています。テック業界における多様性とインクルージョンに情熱を注いでいます。",
+              "links": [
+                {
+                  "name": "@himisato",
+                  "url": "https://x.com/himisato"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2016-03-03T11:55:00+09:00",
+      "sessions": [
+        {
+          "id": 8,
+          "title": "The Design of Everyday Swift",
+          "title_ja": "日常のSwiftのデザイン",
+          "description": "Good API design is like good product design -- it should be intuitive, discoverable, and a joy to use. In this talk, we will explore principles of good API design in Swift, drawing inspiration from Don Norman's 'The Design of Everyday Things' and applying those principles to create APIs that are easy to use correctly and hard to use incorrectly.",
+          "description_ja": "良いAPIデザインは良いプロダクトデザインに似ています -- 直感的で、発見しやすく、使って楽しいものであるべきです。このトークでは、ドン・ノーマンの『誰のためのデザイン？』からインスピレーションを得て、SwiftにおけるAPIデザインの原則を探り、正しく使いやすく間違って使いにくいAPIを作るための原則を適用します。",
+          "speakers": [
+            {
+              "name": "Rachel Bobbins",
+              "image_name": "rachel_bobbins",
+              "bio": "Rachel Bobbins is a lead iOS engineer at Stitch Fix, where she builds delightful shopping experiences. She is passionate about clean Swift API design and creating intuitive developer interfaces.",
+              "bio_ja": "Stitch FixのリードiOSエンジニアで、楽しいショッピング体験を構築しています。クリーンなSwift APIデザインと直感的な開発者インターフェースの作成に情熱を注いでいます。",
+              "links": [
+                {
+                  "name": "@bobbins",
+                  "url": "https://x.com/bobbins"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2016-03-03T12:05:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "Modern Core Data",
+          "title_ja": "モダン Core Data",
+          "description": "Core Data has evolved significantly over the years. In this talk, we will explore modern best practices for using Core Data in Swift, including the latest APIs, concurrency patterns, and architectural approaches that make Core Data a joy to work with in modern iOS applications.",
+          "description_ja": "Core Dataは長年にわたり大きく進化してきました。このトークでは、最新のAPI、並行処理パターン、そしてモダンなiOSアプリケーションでCore Dataを楽しく使えるようにするアーキテクチャのアプローチを含む、SwiftでCore Dataを使用するためのモダンなベストプラクティスを探ります。",
+          "speakers": [
+            {
+              "name": "Daniel Eggert",
+              "image_name": "daniel_eggert",
+              "bio": "Daniel Eggert is a co-founder of objc.io and a Core Data expert. He has been working with Core Data since its inception and has contributed extensively to the iOS developer community through writing and speaking.",
+              "bio_ja": "objc.ioの共同設立者であり、Core Dataの専門家です。Core Dataの誕生以来、Core Dataに取り組んでおり、執筆と講演を通じてiOS開発者コミュニティに広く貢献しています。",
+              "links": [
+                {
+                  "name": "@danielboedewadt",
+                  "url": "https://x.com/danielboedewadt"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2016-03-03T12:30:00+09:00",
+      "sessions": [
+        {
+          "id": 10,
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2016-03-03T14:30:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "Swift Compiler Integration in LLDB",
+          "title_ja": "LLDBにおけるSwiftコンパイラの統合",
+          "description": "LLDB integrates the Swift compiler to provide a rich debugging experience. In this talk, we will explore how the Swift compiler is embedded within LLDB, how expression evaluation works, and what this means for debugging Swift code at a deeper level.",
+          "description_ja": "LLDBはSwiftコンパイラを統合して、豊富なデバッグ体験を提供しています。このトークでは、SwiftコンパイラがLLDBにどのように組み込まれているか、式の評価がどのように機能するか、そしてこれがSwiftコードのより深いレベルでのデバッグにとって何を意味するかを探ります。",
+          "speakers": [
+            {
+              "name": "Novall Khan",
+              "image_name": "novall_khan",
+              "bio": "Novall Khan is a software engineer at Splitwise with expertise in LLDB and compiler internals. She enjoys diving deep into debugging tools and sharing her knowledge of how Swift's debugger works under the hood.",
+              "bio_ja": "SplitwiseのソフトウェアエンジニアでLLDBとコンパイラの内部に関する専門知識を持っています。デバッグツールの深い部分に飛び込み、Swiftのデバッガーがどのように動作するかについての知識を共有することを楽しんでいます。",
+              "links": [
+                {
+                  "name": "@novaborosky",
+                  "url": "https://x.com/novaborosky"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2016-03-03T14:55:00+09:00",
+      "sessions": [
+        {
+          "id": 12,
+          "title": "Creating a Swift Library",
+          "title_ja": "Swiftライブラリの作成",
+          "description": "Building a great Swift library involves more than just writing code. In this talk, we will cover the full lifecycle of creating and maintaining a Swift library, from API design and testing strategies to documentation, versioning, and community management, drawing from experience with Quick and Nimble.",
+          "description_ja": "優れたSwiftライブラリを構築するには、コードを書くだけでは不十分です。このトークでは、QuickとNimbleでの経験を活かし、APIデザインとテスト戦略からドキュメント、バージョニング、コミュニティ管理まで、Swiftライブラリの作成と保守のライフサイクル全体をカバーします。",
+          "speakers": [
+            {
+              "name": "Jeff Hui",
+              "image_name": "jeff_hui",
+              "bio": "Jeff Hui is a maintainer of Quick and Nimble, popular testing frameworks for Swift and Objective-C. He is passionate about testing practices and building developer tools that make it easier to write reliable software.",
+              "bio_ja": "SwiftとObjective-Cのテストフレームワークとして人気のあるQuickとNimbleのメンテナーです。テストのプラクティスと、信頼性の高いソフトウェアを書きやすくする開発者ツールの構築に情熱を注いでいます。",
+              "links": [
+                {
+                  "name": "@jeffhui",
+                  "url": "https://x.com/jeffhui"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2016-03-03T15:05:00+09:00",
+      "sessions": [
+        {
+          "id": 13,
+          "title": "Protocol-Oriented Programming in Networking",
+          "title_ja": "ネットワーキングにおけるプロトコル指向プログラミング",
+          "description": "Networking code is often messy and hard to maintain. In this talk, we will explore how protocol-oriented programming can transform the way we write networking code in Swift, using protocols and associated types to build type-safe, composable API clients, as demonstrated by the APIKit library.",
+          "description_ja": "ネットワーキングのコードはしばしば煩雑で保守が困難です。このトークでは、APIKitライブラリで示されているように、プロトコル指向プログラミングがSwiftでのネットワーキングコードの書き方をどのように変えることができるかを、プロトコルと関連型を使って型安全で構成可能なAPIクライアントを構築する方法を通じて探ります。",
+          "speakers": [
+            {
+              "name": "Yosuke Ishikawa",
+              "image_name": "yosuke_ishikawa",
+              "bio": "Yosuke Ishikawa is an iOS engineer at Mercari and the author of APIKit, a type-safe networking library for Swift. He is passionate about protocol-oriented programming and building elegant API abstractions.",
+              "bio_ja": "MercariのiOSエンジニアであり、Swift用の型安全ネットワーキングライブラリAPIKitの作者です。プロトコル指向プログラミングとエレガントなAPI抽象化の構築に情熱を注いでいます。",
+              "links": [
+                {
+                  "name": "@_ishkawa",
+                  "url": "https://x.com/_ishkawa"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2016-03-03T15:30:00+09:00",
+      "sessions": [
+        {
+          "id": 14,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "time": "2016-03-03T16:00:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "Live Designing",
+          "title_ja": "ライブデザイニング",
+          "description": "Design and development don't have to be separate processes. In this talk, we will explore techniques for live designing in Swift, bridging the gap between designers and developers by creating interactive design tools and workflows that bring designs to life in real time.",
+          "description_ja": "デザインと開発は別々のプロセスである必要はありません。このトークでは、Swiftでのライブデザインのテクニックを探り、インタラクティブなデザインツールとワークフローを作成することで、デザイナーと開発者のギャップを埋め、リアルタイムでデザインを実現する方法を紹介します。",
+          "speakers": [
+            {
+              "name": "Maxim Cramer",
+              "image_name": "maxim_cramer",
+              "bio": "Maxim Cramer is a designer and developer at SwiftKey, known for her work bridging the gap between design and development. She specializes in live design techniques and creating tools that bring designs to life interactively.",
+              "bio_ja": "SwiftKeyのデザイナー兼開発者で、デザインと開発のギャップを埋める仕事で知られています。ライブデザインのテクニックと、デザインをインタラクティブに実現するツールの作成を専門としています。",
+              "links": [
+                {
+                  "name": "@mennenia",
+                  "url": "https://x.com/mennenia"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2016-03-03T16:25:00+09:00",
+      "sessions": [
+        {
+          "id": 16,
+          "title": "Idiomatic Table View Controller Usage",
+          "title_ja": "慣用的なTable View Controllerの使い方",
+          "description": "Table views are fundamental to iOS development, yet they are often overcomplicated. In this talk, we will explore idiomatic patterns for using table view controllers in Swift, focusing on clean data source implementations, reusable cells, and modern approaches to building list-based interfaces.",
+          "description_ja": "Table viewはiOS開発の基本ですが、しばしば過度に複雑化されます。このトークでは、Swiftでtable view controllerを使用するための慣用的なパターンを探り、クリーンなデータソースの実装、再利用可能なセル、リストベースのインターフェースを構築するためのモダンなアプローチに焦点を当てます。",
+          "speakers": [
+            {
+              "name": "Chris Eidhof",
+              "image_name": "chris_eidhof",
+              "bio": "Chris Eidhof is a co-founder of objc.io and the author of 'Functional Swift' and 'Advanced Swift'. He is known for his contributions to the Swift community through writing, speaking, and building innovative Swift projects.",
+              "bio_ja": "objc.ioの共同設立者であり、『Functional Swift』と『Advanced Swift』の著者です。執筆、講演、革新的なSwiftプロジェクトの構築を通じてSwiftコミュニティへの貢献で知られています。",
+              "links": [
+                {
+                  "name": "@chriseidhof",
+                  "url": "https://x.com/chriseidhof"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2016-03-03T17:00:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "Closing",
+          "title_ja": "閉会"
+        }
+      ]
+    }
+  ]
+}

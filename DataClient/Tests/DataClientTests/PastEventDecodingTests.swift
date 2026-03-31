@@ -6,6 +6,38 @@ import Testing
 struct PastEventDecodingTests {
   let dataClient = DataClient.liveValue
 
+  // MARK: - 2016
+
+  @Test
+  func decode2016Day1() throws {
+    let conference = try dataClient.fetchDay1(.year2016)
+    #expect(conference.title == "Day 1")
+    #expect(!conference.schedules.isEmpty)
+    #expect(conference.schedules.count > 10)
+  }
+
+  @Test
+  func decode2016Day2() throws {
+    let conference = try dataClient.fetchDay2(.year2016)
+    #expect(conference.title == "Day 2")
+    #expect(!conference.schedules.isEmpty)
+  }
+
+  @Test
+  func decode2016Day3() throws {
+    let conference = try dataClient.fetchDay3(.year2016)
+    #expect(conference.title == "Day 3")
+    #expect(!conference.schedules.isEmpty)
+  }
+
+  @Test
+  func decode2016Speakers() throws {
+    let speakers = try dataClient.fetchSpeakers(.year2016)
+    #expect(speakers.count >= 30)
+    #expect(speakers.allSatisfy { !$0.name.isEmpty })
+    #expect(speakers.allSatisfy { !$0.imageName.isEmpty })
+  }
+
   // MARK: - 2017
 
   @Test
@@ -82,6 +114,21 @@ struct PastEventDecodingTests {
     let speakers = try dataClient.fetchSpeakers(.year2019)
     #expect(speakers.count >= 30)
     #expect(speakers.allSatisfy { !$0.name.isEmpty })
+  }
+
+  @Test
+  func decode2019Workshop() throws {
+    let conference = try dataClient.fetchWorkshop(.year2019)
+    #expect(conference.title == "Day 3")
+    #expect(!conference.schedules.isEmpty)
+  }
+
+  @Test
+  func decode2019Videos() throws {
+    let videos = try dataClient.fetchVideos(.year2019)
+    #expect(videos.count >= 30)
+    #expect(videos.allSatisfy { !$0.youtubeVideoId.isEmpty })
+    #expect(!videos.contains { $0.youtubeVideoId.hasPrefix("PLACEHOLDER") })
   }
 
   // MARK: - 2020

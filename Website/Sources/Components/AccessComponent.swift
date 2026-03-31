@@ -7,6 +7,7 @@ struct AccessComponent: HTML {
 
   private var venueData: VenueData {
     switch year {
+    case .year2016: .shibuyaMarkCity
     case .year2017, .year2018, .year2019, .year2020: .bellesalleShinjuku
     case .year2024: .shibuyaStream
     case .year2025, .year2026: .tachikawa
@@ -85,6 +86,14 @@ private struct VenueData {
   let address: String
   let mapUrl: String
   let accommodationMapUrl: String?
+
+  static let shibuyaMarkCity = VenueData(
+    name: "Shibuya Mark City",
+    address: "Dogenzaka, Shibuya-ku, Tokyo",
+    mapUrl:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.5!2d139.6967!3d35.6580!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b57a6e1e2c1%3A0x5c0b0e9f3b8a5f1!2sShibuya%20Mark%20City!5e0!3m2!1sen!2sjp!4v1704067200000!5m2!1sen!2sjp",
+    accommodationMapUrl: nil
+  )
 
   static let bellesalleShinjuku = VenueData(
     name: "Bellesalle Shinjuku Grand",
