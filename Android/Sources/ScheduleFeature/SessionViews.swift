@@ -192,9 +192,9 @@ public struct SessionDetailView: View {
                 )
                 if count > 0 {
                   Text(String(count))
-                    .font(Font.caption2)
-                    .foregroundStyle(
-                      isFavorite ? Color.red : Color.secondary)
+                  .font(Font.caption2)
+                  .foregroundStyle(
+                    isFavorite ? Color.red : Color.secondary)
                 }
               }
             }
