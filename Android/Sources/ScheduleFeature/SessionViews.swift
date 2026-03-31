@@ -192,10 +192,10 @@ public struct SessionDetailView: View {
                 let count = viewModel.favoriteCount(proposalId: session.proposalId)
                 if count > 0 {
                   Text(String(count))
-                    .font(Font.caption2)
-                    .foregroundStyle(
-                      viewModel.isFavorite(proposalId: session.proposalId)
-                        ? Color.red : Color.secondary)
+                  .font(Font.caption2)
+                  .foregroundStyle(
+                    viewModel.isFavorite(proposalId: session.proposalId)
+                      ? Color.red : Color.secondary)
                 }
               }
             }
