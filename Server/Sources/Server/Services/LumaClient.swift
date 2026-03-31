@@ -93,11 +93,41 @@ enum LumaClient {
     return try response.content.decode(LumaEventResponse.self)
   }
 
-  /// Add a guest to a Luma event (sends them a ticket)
+  /// List ticket types for a Luma event
+  static func getTicketTypes(
+    eventID: String,
+    client: Client,
+    logger: Logger
+  ) async throws -> [LumaTicketType] {
+    guard let apiKey = Environment.get("LUMA_API_KEY") else {
+      throw Abort(.internalServerError, reason: "Luma API not configured")
+    }
+
+    var components = URLComponents(string: "\(baseURL)/event/ticket-types/list")!
+    components.queryItems = [
+      URLQueryItem(name: "event_id", value: eventID)
+    ]
+    let url = components.string!
+
+    let response = try await client.get(URI(string: url)) { req in
+      req.headers.add(name: "x-luma-api-key", value: apiKey)
+    }
+
+    guard response.status == .ok else {
+      let body = response.body.map { String(buffer: $0) } ?? "no body"
+      logger.error("Luma ticket-types/list failed: \(response.status.code) - \(body)")
+      throw Abort(.badGateway, reason: "Failed to list Luma ticket types")
+    }
+
+    return try response.content.decode(LumaTicketTypesResponse.self).ticket_types
+  }
+
+  /// Add a guest to a Luma event with a specific ticket type
   static func addGuestToEvent(
     eventID: String,
     email: String,
     name: String,
+    ticketTypeID: String,
     client: Client,
     logger: Logger
   ) async throws -> LumaAddGuestResponse {
@@ -105,13 +135,13 @@ enum LumaClient {
       throw Abort(.internalServerError, reason: "Luma API not configured")
     }
 
-    let payload = LumaAddGuestRequest(
-      event_id: eventID,
-      email: email,
-      name: name
+    let payload = LumaAddGuestsRequest(
+      event_api_id: eventID,
+      guests: [LumaGuestInput(email: email, name: name)],
+      ticket: LumaTicketSpec(event_ticket_type_id: ticketTypeID)
     )
 
-    let response = try await client.post(URI(string: "\(baseURL)/event/add-guest")) { req in
+    let response = try await client.post(URI(string: "\(baseURL)/event/add-guests")) { req in
       req.headers.add(name: "x-luma-api-key", value: apiKey)
       req.headers.contentType = .json
       try req.content.encode(payload)
@@ -119,7 +149,7 @@ enum LumaClient {
 
     guard response.status == .ok || response.status == .created else {
       let body = response.body.map { String(buffer: $0) } ?? "no body"
-      logger.error("Luma add-guest failed: \(response.status.code) - \(body)")
+      logger.error("Luma add-guests failed: \(response.status.code) - \(body)")
       throw Abort(.badGateway, reason: "Failed to add guest to Luma event")
     }
 
@@ -167,8 +197,26 @@ struct LumaEventResponse: Content, Sendable {
   let url: String?
 }
 
-struct LumaAddGuestRequest: Content, Sendable {
-  let event_id: String
+private struct LumaTicketTypesResponse: Content, Sendable {
+  let ticket_types: [LumaTicketType]
+}
+
+struct LumaTicketType: Content, Sendable {
+  let id: String
+  let name: String
+}
+
+struct LumaAddGuestsRequest: Content, Sendable {
+  let event_api_id: String
+  let guests: [LumaGuestInput]
+  let ticket: LumaTicketSpec
+}
+
+struct LumaTicketSpec: Content, Sendable {
+  let event_ticket_type_id: String
+}
+
+struct LumaGuestInput: Content, Sendable {
   let email: String
   let name: String
 }
