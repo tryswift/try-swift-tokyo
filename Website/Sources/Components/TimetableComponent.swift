@@ -30,13 +30,12 @@ struct TimetableComponent: HTML {
 
               Column {
                 if let speakers = session.speakers {
-                  VStack(alignment: .leading, spacing: 8) {
-                    for speaker in speakers {
-                      Image(speaker.imageFilename, description: speaker.name)
-                        .resizable()
-                        .frame(maxWidth: imageSize, maxHeight: imageSize)
-                        .cornerRadius(imageSize / 2)
-                    }
+                  CenterAlignedGrid(speakers, columns: 2) { speaker in
+                    Image(speaker.imageFilename, description: speaker.name)
+                      .resizable()
+                      .frame(maxWidth: imageSize, maxHeight: imageSize)
+                      .cornerRadius(imageSize / 2)
+                      .margin(.leading, .px(-5))
                   }
                 } else {
                   Image.defaultImage
