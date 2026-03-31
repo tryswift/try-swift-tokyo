@@ -32,7 +32,7 @@
           "speakers": [
             {
               "name": "Masakaz Ozaki",
-              "image_name": "masakaz",
+              "image_name": "2026/masakaz",
               "bio": "A design engineer working across the intersection of design and engineering. Major projects include the Nikkei Spatial Edition app and the DEPSE app. Notable awards include being named a Winner of the Swift Student Challenge 2024 and receiving the 1st GOOD DESIGN NEW HOPE AWARD. Currently developing the Synchronism app.",
               "bio_ja": "デザインとエンジニアリングの分野を行き来しながら活動するデザインエンジニア。手がけた主なプロジェクトは日経空間版アプリやDEPSEアプリなど。主な受賞にはSwift Student Challenge 2024、第一回GOOD DESIGN NEW HOPE AWARDなどがある。現在はSynchronism アプリを開発中。",
               "job_title": "Senior Researcher at Keio University",
@@ -57,7 +57,7 @@
             },
             {
               "name": "Kyoya Yamaguchi",
-              "image_name": "kyoya",
+              "image_name": "2026/kyoya",
               "bio": "Started programming in Swift during junior high school and won first place in an app development competition. \nBegan working as an iOS engineering intern while in high school, alongside developing applications independently. \nSwift Student Challenge Winner (2023, 2024). \nCurrently working as an iOS App Developer at CoeFont",
               "bio_ja": "中学生でSwiftを使ったプログラミングを始め、アプリのコンテストで優勝を経験。高校在学中からiOSエンジニアとしてのインターンを始め、個人でもアプリ開発に取り組む。2023年、2024年Swift Student Challenge入賞。現在は株式会社CoeFontでiOSアプリの開発を担当。",
               "job_title": "iOS App Developer @CoeFont",
@@ -78,7 +78,7 @@
             },
             {
               "name": "Jaesung Lee",
-              "image_name": "jaesung",
+              "image_name": "2026/jaesung",
               "bio": "Jaesung Lee is a winner of the WWDC Scholarship in 2019 and the Swift Student Challenge in 2020.\nIn 2022 and 2023, he served as an open-source mentor in the Swift Mentorship program at swift.org.\nCurrently, he is a tech mentor at Apple Developer Academy @ POSTECH and the lead organizer of “Community for Swift Students,” which has been holding events for Swift students led by Korean Swift Student Challenge winners since 2023.",
               "bio_ja": "韓国を中心に活動するデベロッパ。WWDC Scholarship 2019, Swift Student Challenge 2020入賞。2022年, 2023年 swift.org Swift Mentorship オープンソースメンター。現在はApple Developer Academy @POSTECH にてテックメンターを担当。Community for Swift Students リードオーガナイザー。",
               "job_title": "Tech Mentor at Apple Developer Academy @POSTECH",
@@ -95,7 +95,7 @@
             },
             {
               "name": "Jia Chen Yee",
-              "image_name": "JiaChen",
+              "image_name": "2026/JiaChen",
               "bio": "Jia Chen is an Apple Certified Trainer, developer, and community organizer based in Singapore, leading initiatives such as iOS Conf SG, Swift for Everyone, Swift Student Collective, and Spatial Singapore. Through his work, he creates experiences for students and developers across Asia. A two-time Swift Student Challenge winner (2020, 2021), he has been featured on Apple.com and continues to grow communities through events and initiatives.",
               "bio_ja": "シンガポールを中心に活動するApple certified Trainer、 デベロッパ、コミュニティオーガナイザー。iOS Conf SG、 Swift for Everyone、 Swift Student Collective、Spatial Singaporeなどを運営。Swift Student Challenge 2020, 2021入賞。apple.comにフィーチャー経験などを持つ。",
               "job_title": "Organizer, iOS Conf SG",

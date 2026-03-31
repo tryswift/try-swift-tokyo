@@ -216,6 +216,8 @@ public struct AppReducer {
   }
 }
 
+extension AppReducer.DetailColumn.State: Equatable {}
+
 // MARK: - AppView
 
 public struct AppView: View {
