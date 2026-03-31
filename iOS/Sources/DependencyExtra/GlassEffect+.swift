@@ -8,14 +8,10 @@ extension View {
     cornerRadius: CGFloat = 24
   ) -> some View {
     #if os(iOS) || os(macOS)
-      if #available(iOS 26.0, macOS 26.0, *) {
-        self.glassEffect(
-          glass,
-          in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-        )
-      } else {
-        self
-      }
+      self.glassEffect(
+        glass,
+        in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+      )
     #elseif os(visionOS)
       self.glassBackgroundEffect(
         in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
@@ -31,11 +27,7 @@ extension View {
     in shape: S
   ) -> some View {
     #if os(iOS) || os(macOS)
-      if #available(iOS 26.0, macOS 26.0, *) {
-        self.glassEffect(glass, in: shape)
-      } else {
-        self
-      }
+      self.glassEffect(glass, in: shape)
     #elseif os(visionOS)
       self.glassBackgroundEffect(in: shape)
     #else
@@ -46,11 +38,7 @@ extension View {
   @ViewBuilder
   public func glassIfAvailable() -> some View {
     #if os(iOS) || os(macOS)
-      if #available(iOS 26.0, macOS 26.0, *) {
-        self.buttonStyle(.glass)
-      } else {
-        self.buttonStyle(.bordered)
-      }
+      self.buttonStyle(.glass)
     #else
       self.buttonStyle(.bordered)
     #endif
@@ -59,11 +47,7 @@ extension View {
   @ViewBuilder
   public func glassProminentIfAvailable() -> some View {
     #if os(iOS) || os(macOS)
-      if #available(iOS 26.0, macOS 26.0, *) {
-        self.buttonStyle(.glassProminent)
-      } else {
-        self.buttonStyle(.borderedProminent)
-      }
+      self.buttonStyle(.glassProminent)
     #else
       self.buttonStyle(.borderedProminent)
     #endif
