@@ -11,20 +11,16 @@ public struct Organizers {
   @ObservableState
   public struct State: Equatable {
     var organizers = IdentifiedArrayOf<Organizer>()
-    @Presents var destination: Destination.State?
 
     public init(
-      organizers: IdentifiedArrayOf<Organizer> = [],
-      destination: Destination.State? = nil
+      organizers: IdentifiedArrayOf<Organizer> = []
     ) {
       self.organizers = organizers
-      self.destination = destination
     }
   }
 
   public enum Action: ViewAction {
     case view(View)
-    case destination(PresentationAction<Destination.Action>)
     case delegate(Delegate)
 
     public enum View {
@@ -38,11 +34,6 @@ public struct Organizers {
     }
   }
 
-  @Reducer
-  public enum Destination {
-    case profile(Profile)
-  }
-
   @Dependency(DataClient.self) var dataClient
 
   public var body: some ReducerOf<Organizers> {
@@ -54,23 +45,13 @@ public struct Organizers {
         }
         return .none
       case .view(._organizerTapped(let organizer)):
-        #if os(macOS)
-          state.destination = .profile(.init(organizer: organizer))
-          return .none
-        #else
-          return .send(.delegate(.organizerTapped(organizer)))
-        #endif
+        return .send(.delegate(.organizerTapped(organizer)))
       case .delegate:
-        return .none
-      case .destination:
         return .none
       }
     }
-    .ifLet(\.$destination, action: \.destination)
   }
 }
-
-extension Organizers.Destination.State: Equatable {}
 
 @ViewAction(for: Organizers.self)
 public struct OrganizersView: View {
@@ -110,23 +91,6 @@ public struct OrganizersView: View {
       send(.onAppear)
     }
     .navigationTitle(Text("Meet Organizers", bundle: .module))
-    #if os(macOS)
-      .sheet(
-        item: $store.scope(state: \.destination?.profile, action: \.destination.profile)
-      ) { profileStore in
-        NavigationStack {
-          ProfileView(store: profileStore)
-          .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-              Button(String(localized: "Close", bundle: .module)) {
-                store.send(.destination(.dismiss))
-              }
-            }
-          }
-        }
-        .frame(minWidth: 500, minHeight: 400)
-      }
-    #endif
   }
 }
 
