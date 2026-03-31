@@ -217,6 +217,7 @@ public struct TrySwiftView: View {
         }
       }
       .padding()
+      .glassEffectContainerIfAvailable()
     }
     .navigationTitle(Text("try! Swift", bundle: .module))
   }

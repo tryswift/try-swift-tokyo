@@ -121,6 +121,7 @@ public struct SponsorsListView: View {
           }
         }
         .padding()
+        .glassEffectContainerIfAvailable()
       }
       .navigationTitle(Text("Sponsors", bundle: .module))
     } else {

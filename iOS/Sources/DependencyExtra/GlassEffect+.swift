@@ -45,6 +45,15 @@ extension View {
   }
 
   @ViewBuilder
+  public func glassEffectContainerIfAvailable() -> some View {
+    #if os(iOS) || os(macOS)
+      GlassEffectContainer { self }
+    #else
+      self
+    #endif
+  }
+
+  @ViewBuilder
   public func glassProminentIfAvailable() -> some View {
     #if os(iOS) || os(macOS)
       self.buttonStyle(.glassProminent)

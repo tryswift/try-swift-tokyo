@@ -375,6 +375,7 @@ public struct LiveTranslationView: View {
       }
     }
     .padding(.horizontal)
+    .glassEffectContainerIfAvailable()
   }
 
   @ViewBuilder

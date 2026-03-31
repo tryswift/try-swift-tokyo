@@ -302,6 +302,9 @@ public struct AppView: View {
           Text("About", bundle: .module)
         }
     }
+    #if os(iOS)
+      .tabBarMinimizeBehavior(.onScrollDown)
+    #endif
   }
 
   // MARK: macOS Sidebar Layout (3 columns)

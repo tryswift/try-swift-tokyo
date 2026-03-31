@@ -456,6 +456,7 @@ public struct ScheduleView: View {
           }
         }
         .padding()
+        .glassEffectContainerIfAvailable()
       }
     }
   }
@@ -562,6 +563,7 @@ public struct ScheduleView: View {
       }
     }
     .padding()
+    .glassEffectContainerIfAvailable()
   }
 
   @ViewBuilder

@@ -316,6 +316,7 @@ public struct GuidanceView: View {
       }
     }
     .padding()
+    .glassEffectContainerIfAvailable()
   }
 }
 
