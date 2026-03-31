@@ -561,21 +561,42 @@ public struct ScheduleView: View {
     HStack(spacing: 8) {
       VStack {
         if let speakers = session.speakers {
-          ForEach(speakers, id: \.self) { speaker in
+          if hasVideo {
             ZStack(alignment: .bottomTrailing) {
-              Image(speaker.imageName, bundle: .module)
+              Image(speakers[0].imageName, bundle: .module)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .clipShape(Circle())
                 .frame(width: 60)
                 .accessibilityElement(children: .ignore)
                 .accessibilityIgnoresInvertColors()
-              if hasVideo {
-                Image(systemName: "play.circle.fill")
-                  .font(.caption)
-                  .foregroundStyle(.white, Color.accentColor)
+              Image(systemName: "play.circle.fill")
+                .font(.caption)
+                .foregroundStyle(.white, Color.accentColor)
+            }
+          } else if speakers.count > 1 {
+            ZStack(alignment: .leading) {
+              ForEach(Array(speakers.enumerated()), id: \.element) { index, speaker in
+                Image(speaker.imageName, bundle: .module)
+                  .resizable()
+                  .aspectRatio(contentMode: .fit)
+                  .clipShape(Circle())
+                  .overlay(Circle().stroke(.background, lineWidth: 2))
+                  .frame(width: 60)
+                  .accessibilityElement(children: .ignore)
+                  .accessibilityIgnoresInvertColors()
+                  .offset(x: CGFloat(index) * 20)
               }
             }
+            .frame(width: 60 + CGFloat(speakers.count - 1) * 20, alignment: .leading)
+          } else {
+            Image(speakers[0].imageName, bundle: .module)
+              .resizable()
+              .aspectRatio(contentMode: .fit)
+              .clipShape(Circle())
+              .frame(width: 60)
+              .accessibilityElement(children: .ignore)
+              .accessibilityIgnoresInvertColors()
           }
         } else {
           Image(.tokyo)
