@@ -287,16 +287,29 @@ public struct LiveTranslationView: View {
         }
       }
     }
-    .sheet(isPresented: $store.isSelectedLanguageSheet) {
-      SelectLanguageSheet(
-        languageList: store.supportLanguages,
-        selectedLanguageAction: { langItem in
-          send(.selectLangCode(langItem.languageCode))
-          send(.setSelectedLanguageSheet(false))
-        }
-      )
-      .presentationDetents([.medium, .large])
-    }
+    #if os(macOS)
+      .popover(isPresented: $store.isSelectedLanguageSheet) {
+        SelectLanguageSheet(
+          languageList: store.supportLanguages,
+          selectedLanguageAction: { langItem in
+            send(.selectLangCode(langItem.languageCode))
+            send(.setSelectedLanguageSheet(false))
+          }
+        )
+        .frame(width: 280, height: 400)
+      }
+    #else
+      .sheet(isPresented: $store.isSelectedLanguageSheet) {
+        SelectLanguageSheet(
+          languageList: store.supportLanguages,
+          selectedLanguageAction: { langItem in
+            send(.selectLangCode(langItem.languageCode))
+            send(.setSelectedLanguageSheet(false))
+          }
+        )
+        .presentationDetents([.medium, .large])
+      }
+    #endif
   }
 
   @ViewBuilder

@@ -6,10 +6,17 @@ struct SelectLanguageSheet: View {
   let languageList: [LanguageItemEntity]
   let selectedLanguageAction: (LanguageItemEntity) -> Void
 
+  private var sortedLanguages: [LanguageItemEntity] {
+    let priorityCodes = ["ja", "en"]
+    let priority = languageList.filter { priorityCodes.contains($0.languageCode) }
+    let rest = languageList.filter { !priorityCodes.contains($0.languageCode) }
+    return priority + rest
+  }
+
   var body: some View {
     ScrollView {
       LazyVStack(spacing: 12) {
-        ForEach(languageList) { langItem in
+        ForEach(sortedLanguages) { langItem in
           Button(action: { selectedLanguageAction(langItem) }) {
             Text(langItem.languageLocal)
               .frame(maxWidth: .infinity, alignment: .leading)
