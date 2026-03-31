@@ -168,6 +168,52 @@ enum LumaClient {
     return allGuests
   }
 
+  /// Add multiple guests to a Luma event in a single request
+  static func addGuestsToEvent(
+    eventID: String,
+    guests: [LumaGuestInput],
+    ticketTypeID: String,
+    client: Client,
+    logger: Logger
+  ) async throws {
+    guard !guests.isEmpty else { return }
+    guard let apiKey = Environment.get("LUMA_API_KEY") else {
+      throw Abort(.internalServerError, reason: "Luma API not configured")
+    }
+
+    let payload = LumaAddGuestsRequest(
+      event_api_id: eventID,
+      guests: guests,
+      ticket: LumaTicketSpec(event_ticket_type_id: ticketTypeID)
+    )
+
+    var response = try await client.post(URI(string: "\(baseURL)/event/add-guests")) { req in
+      req.headers.add(name: "x-luma-api-key", value: apiKey)
+      req.headers.contentType = .json
+      try req.content.encode(payload)
+    }
+
+    // Retry once on rate limit (429) — Luma blocks for 1 minute after exceeding limits
+    if response.status == .tooManyRequests {
+      logger.warning(
+        "Luma rate limit hit for add-guests (\(guests.count) guests), waiting 65s before retry...")
+      try await Task.sleep(nanoseconds: 65_000_000_000)
+      response = try await client.post(URI(string: "\(baseURL)/event/add-guests")) { req in
+        req.headers.add(name: "x-luma-api-key", value: apiKey)
+        req.headers.contentType = .json
+        try req.content.encode(payload)
+      }
+    }
+
+    guard response.status == .ok || response.status == .created else {
+      let body = response.body.map { String(buffer: $0) } ?? "no body"
+      logger.error("Luma add-guests failed: \(response.status.code) - \(body)")
+      throw Abort(.badGateway, reason: "Failed to add guests to Luma event")
+    }
+
+    logger.info("Successfully added \(guests.count) guests to Luma event \(eventID)")
+  }
+
   /// Add a guest to a Luma event with a specific ticket type
   static func addGuestToEvent(
     eventID: String,

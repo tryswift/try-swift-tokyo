@@ -1124,90 +1124,115 @@ struct WorkshopRoutes: RouteCollection {
     var errors = 0
     var skipped = 0
 
-    // Cache Standard ticket type ID per event (nil value = lookup failed)
-    var ticketTypeCache: [String: String?] = [:]
-    // Cache existing guest emails per event to avoid duplicate sends
-    var existingGuestsCache: [String: [String: String]] = [:]  // eventID -> [email: guestID]
-
+    // Group winners by Luma event ID for batch processing
+    var winnersByEvent: [String: [WorkshopApplication]] = [:]
     for winner in winners {
       guard let workshop = winner.assignedWorkshop,
         let lumaEventID = workshop.lumaEventID
       else { continue }
+      winnersByEvent[lumaEventID, default: []].append(winner)
+    }
 
-      // Fetch and cache existing guests for this event (once per event)
-      if !existingGuestsCache.keys.contains(lumaEventID) {
-        do {
-          let guests = try await LumaClient.getGuests(
-            eventID: lumaEventID,
-            client: req.client,
-            logger: req.logger
-          )
-          var emailToID: [String: String] = [:]
-          for guest in guests {
-            if let email = guest.user_email?.lowercased(), let id = guest.id {
-              emailToID[email] = id
-            }
-          }
-          existingGuestsCache[lumaEventID] = emailToID
-        } catch {
-          req.logger.error(
-            "Failed to fetch existing guests for event \(lumaEventID): \(error)")
-          existingGuestsCache[lumaEventID] = [:]
-        }
-      }
-
-      // Skip if guest already exists on Luma
-      if let guestID = existingGuestsCache[lumaEventID]?[winner.email.lowercased()] {
-        winner.lumaGuestID = guestID
-        try await winner.save(on: req.db)
-        skipped += 1
-        continue
-      }
-
-      // Fetch and cache the Standard ticket type for this event (once per event)
-      if !ticketTypeCache.keys.contains(lumaEventID) {
-        do {
-          let ticketTypes = try await LumaClient.getTicketTypes(
-            eventID: lumaEventID,
-            client: req.client,
-            logger: req.logger
-          )
-          if let standard = ticketTypes.first(where: { $0.name == "Standard" }) {
-            ticketTypeCache[lumaEventID] = standard.id
-          } else {
-            req.logger.error(
-              "No 'Standard' ticket type found for event \(lumaEventID)")
-            ticketTypeCache[lumaEventID] = nil as String?
-          }
-        } catch {
-          req.logger.error(
-            "Failed to fetch ticket types for event \(lumaEventID): \(error)")
-          ticketTypeCache[lumaEventID] = nil as String?
-        }
-      }
-
-      guard let ticketTypeID = ticketTypeCache[lumaEventID] ?? nil else {
-        errors += 1
-        continue
-      }
-
+    for (lumaEventID, eventWinners) in winnersByEvent {
+      // 1. Fetch existing guests to skip duplicates and sync DB
+      var existingEmails: [String: String] = [:]  // email -> guestID
       do {
-        let response = try await LumaClient.addGuestToEvent(
+        let guests = try await LumaClient.getGuests(
           eventID: lumaEventID,
-          email: winner.email,
-          name: winner.applicantName,
+          client: req.client,
+          logger: req.logger
+        )
+        for guest in guests {
+          if let email = guest.user_email?.lowercased(), let id = guest.id {
+            existingEmails[email] = id
+          }
+        }
+      } catch {
+        req.logger.error(
+          "Failed to fetch existing guests for event \(lumaEventID): \(error)")
+      }
+
+      // 2. Separate already-invited from new guests
+      var newWinners: [WorkshopApplication] = []
+      for winner in eventWinners {
+        if let guestID = existingEmails[winner.email.lowercased()] {
+          winner.lumaGuestID = guestID
+          try await winner.save(on: req.db)
+          skipped += 1
+        } else {
+          newWinners.append(winner)
+        }
+      }
+
+      guard !newWinners.isEmpty else { continue }
+
+      // 3. Fetch Standard ticket type for this event
+      let ticketTypeID: String
+      do {
+        let ticketTypes = try await LumaClient.getTicketTypes(
+          eventID: lumaEventID,
+          client: req.client,
+          logger: req.logger
+        )
+        guard let standard = ticketTypes.first(where: { $0.name == "Standard" }) else {
+          req.logger.error("No 'Standard' ticket type found for event \(lumaEventID)")
+          errors += newWinners.count
+          continue
+        }
+        ticketTypeID = standard.id
+      } catch {
+        req.logger.error(
+          "Failed to fetch ticket types for event \(lumaEventID): \(error)")
+        errors += newWinners.count
+        continue
+      }
+
+      // 4. Batch add all new guests in a single API call
+      let guestInputs = newWinners.map { LumaGuestInput(email: $0.email, name: $0.applicantName) }
+      do {
+        try await LumaClient.addGuestsToEvent(
+          eventID: lumaEventID,
+          guests: guestInputs,
           ticketTypeID: ticketTypeID,
           client: req.client,
           logger: req.logger
         )
-        winner.lumaGuestID = response.id
-        try await winner.save(on: req.db)
-        sent += 1
-        // Throttle to stay under Luma POST rate limit (100 req / 5 min)
-        try await Task.sleep(nanoseconds: 3_000_000_000)
       } catch {
-        req.logger.error("Failed to send ticket to \(winner.email): \(error)")
-        errors += 1
+        req.logger.error(
+          "Failed to batch-add \(guestInputs.count) guests to event \(lumaEventID): \(error)")
+        errors += newWinners.count
+        continue
+      }
+
+      // 5. Re-fetch guest list to resolve guest IDs for DB
+      do {
+        let updatedGuests = try await LumaClient.getGuests(
+          eventID: lumaEventID,
+          client: req.client,
+          logger: req.logger
+        )
+        var emailToID: [String: String] = [:]
+        for guest in updatedGuests {
+          if let email = guest.user_email?.lowercased(), let id = guest.id {
+            emailToID[email] = id
+          }
+        }
+        for winner in newWinners {
+          if let guestID = emailToID[winner.email.lowercased()] {
+            winner.lumaGuestID = guestID
+            try await winner.save(on: req.db)
+            sent += 1
+          } else {
+            req.logger.warning(
+              "Guest \(winner.email) not found in Luma after batch add for event \(lumaEventID)")
+            errors += 1
+          }
+        }
+      } catch {
+        req.logger.error(
+          "Failed to re-fetch guests after batch add for event \(lumaEventID): \(error)")
+        // Guests were added to Luma but we couldn't resolve IDs — count as sent
+        sent += newWinners.count
       }
     }
 
