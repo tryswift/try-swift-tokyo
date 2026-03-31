@@ -24,7 +24,14 @@
       }
     },
     "Choose a session from the schedule to view details" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "詳細を表示するにはスケジュールからセッションを選択してください"
+          }
+        }
+      }
     },
     "Code of Conduct" : {
       "comment" : "A link to the conference's code of conduct.",
