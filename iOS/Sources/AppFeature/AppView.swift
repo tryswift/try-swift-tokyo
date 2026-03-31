@@ -33,6 +33,7 @@ public struct AppReducer {
   public enum DetailColumn {
     case scheduleDetail(ScheduleDetail)
     case videoDetail(VideoDetail)
+    case profileDetail(Profile)
   }
 
   @ObservableState
@@ -163,7 +164,11 @@ public struct AppReducer {
         }
 
       case .sidebarOrganizers(.delegate(.organizerTapped(let organizer))):
-        state.sidebarProfile = .init(organizer: organizer)
+        #if os(macOS)
+          state.detailColumn = .profileDetail(.init(organizer: organizer))
+        #else
+          state.sidebarProfile = .init(organizer: organizer)
+        #endif
         return .none
 
       case .schedule(.view(.yearSelected(let year))):
@@ -313,6 +318,10 @@ public struct AppView: View {
         state: \.detailColumn?.videoDetail, action: \.detailColumn.videoDetail)
       {
         VideoDetailView(store: videoStore, speakerImageBundle: scheduleFeatureBundle)
+      } else if let profileStore = store.scope(
+        state: \.detailColumn?.profileDetail, action: \.detailColumn.profileDetail)
+      {
+        ProfileView(store: profileStore)
       } else {
         ContentUnavailableView {
           Label(
