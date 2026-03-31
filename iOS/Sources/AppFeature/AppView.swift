@@ -192,12 +192,20 @@ public struct AppReducer {
         #endif
         return .none
 
-      case .schedule(.delegate(.showScheduleDetail(let session))):
+      case .schedule(
+        .delegate(
+          .showScheduleDetail(
+            let session, proposalId: let proposalId, isFavorite: let isFavorite,
+            favoriteCount: let favoriteCount))
+      ):
         guard let description = session.description, let speakers = session.speakers else {
           return .none
         }
         state.detailColumn = .scheduleDetail(
           .init(
+            proposalId: proposalId,
+            isFavorite: isFavorite,
+            favoriteCount: favoriteCount,
             title: session.title,
             description: description,
             requirements: session.requirements,

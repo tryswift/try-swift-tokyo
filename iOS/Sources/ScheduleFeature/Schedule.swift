@@ -90,7 +90,7 @@ public struct Schedule {
 
     public enum Delegate: Equatable {
       case showVideoDetail(Session, VideoMetadata, ConferenceYear)
-      case showScheduleDetail(Session)
+      case showScheduleDetail(Session, proposalId: String?, isFavorite: Bool, favoriteCount: Int)
     }
   }
 
@@ -227,7 +227,15 @@ public struct Schedule {
           return .send(.delegate(.showVideoDetail(session, videoMeta, state.selectedYear)))
         } else {
           #if os(macOS)
-            return .send(.delegate(.showScheduleDetail(session)))
+            let isFavorite =
+              session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
+            let favoriteCount =
+              session.proposalId.flatMap { state.favoriteCounts[$0] } ?? 0
+            return .send(
+              .delegate(
+                .showScheduleDetail(
+                  session, proposalId: session.proposalId, isFavorite: isFavorite,
+                  favoriteCount: favoriteCount)))
           #else
             let isFavorite =
               session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
