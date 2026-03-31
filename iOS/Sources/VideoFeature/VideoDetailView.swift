@@ -24,6 +24,7 @@ public struct VideoDetailView: View {
             send(.playerTimeUpdated(time))
           }
         )
+        .id(store.videoMetadata.youtubeVideoId)
         .padding(.horizontal)
         .padding(.top)
 
