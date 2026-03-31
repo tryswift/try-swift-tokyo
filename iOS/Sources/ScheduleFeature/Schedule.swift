@@ -637,9 +637,11 @@ public struct ScheduleView: View {
           if session.title == "Office hour", let speakers = session.speakers {
             let description = officeHourDescription(speakers: speakers)
             Text(description)
+              .lineLimit(2)
               .foregroundStyle(secondaryLabelColor)
           } else {
             Text(LocalizedStringKey(summary), bundle: .module)
+              .lineLimit(2)
               .foregroundStyle(secondaryLabelColor)
           }
         }
