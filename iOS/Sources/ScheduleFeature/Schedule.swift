@@ -572,14 +572,11 @@ public struct ScheduleView: View {
       VStack {
         if let speakers = session.speakers {
           if speakers.count > 1 {
-            let rows = stride(from: 0, to: speakers.count, by: 2).map { i in
-              Array(speakers[i..<min(i + 2, speakers.count)])
-            }
             ZStack(alignment: .bottomTrailing) {
-              VStack(alignment: .leading, spacing: 4) {
-                ForEach(Array(rows.enumerated()), id: \.offset) { _, row in
-                  ZStack(alignment: .leading) {
-                    ForEach(Array(row.enumerated()), id: \.element) { index, speaker in
+              Grid(alignment: .leading, horizontalSpacing: -6, verticalSpacing: -6) {
+                ForEach(Array(stride(from: 0, to: speakers.count, by: 2)), id: \.self) { i in
+                  GridRow {
+                    ForEach(speakers[i..<min(i + 2, speakers.count)], id: \.self) { speaker in
                       Image(speaker.imageName, bundle: .module)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -588,10 +585,8 @@ public struct ScheduleView: View {
                         .frame(width: 60)
                         .accessibilityElement(children: .ignore)
                         .accessibilityIgnoresInvertColors()
-                        .offset(x: CGFloat(index) * 54)
                     }
                   }
-                  .frame(width: 60 + CGFloat(row.count - 1) * 54, alignment: .leading)
                 }
               }
               if hasVideo {
