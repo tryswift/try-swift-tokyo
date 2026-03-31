@@ -569,7 +569,29 @@ public struct ScheduleView: View {
     HStack(spacing: 8) {
       VStack {
         if let speakers = session.speakers {
-          if hasVideo {
+          if speakers.count > 1 {
+            ZStack(alignment: .bottomTrailing) {
+              ZStack(alignment: .leading) {
+                ForEach(Array(speakers.enumerated()), id: \.element) { index, speaker in
+                  Image(speaker.imageName, bundle: .module)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(.background, lineWidth: 2))
+                    .frame(width: 60)
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityIgnoresInvertColors()
+                    .offset(x: CGFloat(index) * 20)
+                }
+              }
+              .frame(width: 60 + CGFloat(speakers.count - 1) * 20, alignment: .leading)
+              if hasVideo {
+                Image(systemName: "play.circle.fill")
+                  .font(.body)
+                  .foregroundStyle(.white, Color.accentColor)
+              }
+            }
+          } else {
             ZStack(alignment: .bottomTrailing) {
               Image(speakers[0].imageName, bundle: .module)
                 .resizable()
@@ -578,33 +600,12 @@ public struct ScheduleView: View {
                 .frame(width: 60)
                 .accessibilityElement(children: .ignore)
                 .accessibilityIgnoresInvertColors()
-              Image(systemName: "play.circle.fill")
-                .font(.caption)
-                .foregroundStyle(.white, Color.accentColor)
-            }
-          } else if speakers.count > 1 {
-            ZStack(alignment: .leading) {
-              ForEach(Array(speakers.enumerated()), id: \.element) { index, speaker in
-                Image(speaker.imageName, bundle: .module)
-                  .resizable()
-                  .aspectRatio(contentMode: .fit)
-                  .clipShape(Circle())
-                  .overlay(Circle().stroke(.background, lineWidth: 2))
-                  .frame(width: 60)
-                  .accessibilityElement(children: .ignore)
-                  .accessibilityIgnoresInvertColors()
-                  .offset(x: CGFloat(index) * 20)
+              if hasVideo {
+                Image(systemName: "play.circle.fill")
+                  .font(.body)
+                  .foregroundStyle(.white, Color.accentColor)
               }
             }
-            .frame(width: 60 + CGFloat(speakers.count - 1) * 20, alignment: .leading)
-          } else {
-            Image(speakers[0].imageName, bundle: .module)
-              .resizable()
-              .aspectRatio(contentMode: .fit)
-              .clipShape(Circle())
-              .frame(width: 60)
-              .accessibilityElement(children: .ignore)
-              .accessibilityIgnoresInvertColors()
           }
         } else {
           Image(.tokyo)
