@@ -1123,36 +1123,40 @@ struct WorkshopRoutes: RouteCollection {
     var sent = 0
     var errors = 0
 
-    // Cache Standard ticket type ID per event
-    var ticketTypeCache: [String: String] = [:]
+    // Cache Standard ticket type ID per event (nil value = lookup failed)
+    var ticketTypeCache: [String: String?] = [:]
 
     for winner in winners {
       guard let workshop = winner.assignedWorkshop,
         let lumaEventID = workshop.lumaEventID
       else { continue }
 
-      // Fetch and cache the Standard ticket type for this event
-      if ticketTypeCache[lumaEventID] == nil {
+      // Fetch and cache the Standard ticket type for this event (once per event)
+      if !ticketTypeCache.keys.contains(lumaEventID) {
         do {
           let ticketTypes = try await LumaClient.getTicketTypes(
             eventID: lumaEventID,
             client: req.client,
             logger: req.logger
           )
-          guard let standard = ticketTypes.first(where: { $0.name == "Standard" }) else {
+          if let standard = ticketTypes.first(where: { $0.name == "Standard" }) {
+            ticketTypeCache[lumaEventID] = standard.id
+          } else {
             req.logger.error(
               "No 'Standard' ticket type found for event \(lumaEventID)")
-            continue
+            ticketTypeCache[lumaEventID] = nil as String?
           }
-          ticketTypeCache[lumaEventID] = standard.id
         } catch {
           req.logger.error(
             "Failed to fetch ticket types for event \(lumaEventID): \(error)")
-          continue
+          ticketTypeCache[lumaEventID] = nil as String?
         }
       }
 
-      guard let ticketTypeID = ticketTypeCache[lumaEventID] else { continue }
+      guard let ticketTypeID = ticketTypeCache[lumaEventID] ?? nil else {
+        errors += 1
+        continue
+      }
 
       do {
         let response = try await LumaClient.addGuestToEvent(

@@ -115,7 +115,10 @@ enum LumaClient {
 
     guard response.status == .ok else {
       let body = response.body.map { String(buffer: $0) } ?? "no body"
-      logger.error("Luma ticket-types/list failed: \(response.status.code) - \(body)")
+      let truncatedBody = String(body.prefix(1000))
+      logger.error(
+        "Luma ticket-types/list failed for eventID=\(eventID): \(response.status.code) - \(truncatedBody)"
+      )
       throw Abort(.badGateway, reason: "Failed to list Luma ticket types")
     }
 
