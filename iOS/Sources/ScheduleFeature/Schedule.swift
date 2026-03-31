@@ -593,9 +593,9 @@ public struct ScheduleView: View {
                   .foregroundStyle(.white, Color.accentColor)
               }
             }
-          } else {
+          } else if let speaker = speakers.first {
             ZStack(alignment: .bottomTrailing) {
-              Image(speakers[0].imageName, bundle: .module)
+              Image(speaker.imageName, bundle: .module)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .clipShape(Circle())
