@@ -574,7 +574,7 @@ public struct ScheduleView: View {
           if speakers.count > 1 {
             ZStack(alignment: .bottomTrailing) {
               ZStack(alignment: .leading) {
-                ForEach(Array(speakers.enumerated()), id: \.element) { index, speaker in
+                ForEach(Array(speakers.prefix(2).enumerated()), id: \.element) { index, speaker in
                   Image(speaker.imageName, bundle: .module)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -583,10 +583,10 @@ public struct ScheduleView: View {
                     .frame(width: 60)
                     .accessibilityElement(children: .ignore)
                     .accessibilityIgnoresInvertColors()
-                    .offset(x: CGFloat(index) * 20)
+                    .offset(x: CGFloat(index) * 54)
                 }
               }
-              .frame(width: 60 + CGFloat(speakers.count - 1) * 20, alignment: .leading)
+              .frame(width: 60 + CGFloat(min(speakers.count, 2) - 1) * 54, alignment: .leading)
               if hasVideo {
                 Image(systemName: "play.circle.fill")
                   .font(.body)
