@@ -26,20 +26,8 @@ public struct VideoDetailView: View {
         )
         .id(store.videoMetadata.youtubeVideoId)
 
-        var isTabShown: Bool {
-          if store.videoMetadata.transcript != nil {
-            #if os(macOS)
-              if store.videoMetadata.summary != nil || store.videoMetadata.codeResources != nil {
-                return true
-              }
-            #endif
-            return true
-          }
-          return false
-        }
-
-        if isTabShown {
-          // Tab Picker
+        // Tab Picker
+        if hasAdditionalTabs {
           Picker("Content", selection: $store.selectedTab.sending(\.view.tabSelected)) {
             Text("About").tag(VideoDetail.Tab.about)
             if store.videoMetadata.transcript != nil {
@@ -63,8 +51,19 @@ public struct VideoDetailView: View {
         // Tab Content
         tabContent
       }
-      .frame(maxWidth: 700)
+      #if !os(macOS)
+        .frame(maxWidth: 700)
+      #endif
     }
+  }
+
+  private var hasAdditionalTabs: Bool {
+    if store.videoMetadata.transcript != nil { return true }
+    #if os(macOS)
+      if store.videoMetadata.summary != nil { return true }
+      if store.videoMetadata.codeResources != nil { return true }
+    #endif
+    return false
   }
 
   @ViewBuilder
