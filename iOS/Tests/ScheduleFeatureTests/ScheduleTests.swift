@@ -295,7 +295,8 @@ struct ScheduleTests {
       await store.receive(
         .delegate(
           .showScheduleDetail(
-            .mock2, proposalId: nil, isFavorite: false, favoriteCount: 0)))
+            .mock2, proposalId: nil, isFavorite: false, favoriteCount: 0,
+            relatedSessions: [], tagCandidates: [])))
     #else
       await store.send(.view(.disclosureTapped(.mock2))) {
         $0.path.append(
@@ -326,7 +327,8 @@ struct ScheduleTests {
       await store.receive(
         .delegate(
           .showScheduleDetail(
-            .mock3, proposalId: "proposal-3", isFavorite: true, favoriteCount: 7)))
+            .mock3, proposalId: "proposal-3", isFavorite: true, favoriteCount: 7,
+            relatedSessions: [], tagCandidates: [])))
     }
   #endif
 
@@ -432,5 +434,94 @@ struct ScheduleTests {
       $0.favoriteProposalIds = ["proposal-1"]
       $0.favoriteCounts = ["proposal-1": 3]
     }
+  }
+
+  // MARK: - Related Sessions
+
+  @Test
+  func findRelatedSessions_sameSpeakerAlwaysIncluded_evenWithNoTagOverlap() {
+    // session1 (speaker1) and session3 (speaker1) share no tags, but share a speaker
+    let allSessions: [Schedule.SearchableSession] = [
+      .init(year: .year2026, session: .mock1, searchCorpus: "session1 speaker1"),
+      .init(year: .year2025, session: .mock3, searchCorpus: "session3 speaker1"),
+    ]
+
+    let results = Schedule.findRelatedSessions(for: .mock1, from: allSessions)
+    #expect(results.count == 1)
+    #expect(results[0].session == .mock3)
+    #expect(results[0].isSameSpeaker == true)
+  }
+
+  @Test
+  func findRelatedSessions_sameSpeakerSorted_newestFirst() {
+    let sessionA = Session(
+      title: "talk-a", speakers: [.mock1], place: "p", description: "desc-a")
+    let sessionB = Session(
+      title: "talk-b", speakers: [.mock1], place: "p", description: "desc-b")
+    let sessionC = Session(
+      title: "talk-c", speakers: [.mock1], place: "p", description: "desc-c")
+
+    let allSessions: [Schedule.SearchableSession] = [
+      .init(year: .year2026, session: .mock1, searchCorpus: "session1"),
+      .init(year: .year2016, session: sessionA, searchCorpus: "talk-a"),
+      .init(year: .year2019, session: sessionB, searchCorpus: "talk-b"),
+      .init(year: .year2025, session: sessionC, searchCorpus: "talk-c"),
+    ]
+
+    let results = Schedule.findRelatedSessions(for: .mock1, from: allSessions)
+    #expect(results.count == 3)
+    #expect(results[0].year == .year2025)
+    #expect(results[1].year == .year2019)
+    #expect(results[2].year == .year2016)
+  }
+
+  @Test
+  func findRelatedSessions_tagMatchedFillsRemaining_afterSameSpeaker() {
+    // "SwiftUI" in title triggers the .swiftUI tag
+    let swiftuiSession = Session(
+      title: "Advanced SwiftUI Techniques",
+      speakers: [.mock1], place: "p", description: "Building complex SwiftUI views")
+    let tagMatchSession = Session(
+      title: "SwiftUI Performance Tips",
+      speakers: [.mock2], place: "p", description: "Optimizing SwiftUI apps")
+
+    let allSessions: [Schedule.SearchableSession] = [
+      .init(year: .year2026, session: swiftuiSession, searchCorpus: "swiftui"),
+      .init(year: .year2025, session: .mock3, searchCorpus: "session3"),
+      .init(year: .year2025, session: tagMatchSession, searchCorpus: "swiftui"),
+    ]
+
+    let results = Schedule.findRelatedSessions(for: swiftuiSession, from: allSessions)
+
+    // mock3 shares speaker1 → same-speaker first; tagMatchSession matches SwiftUI tag
+    let sameSpeaker = results.filter(\.isSameSpeaker)
+    let tagMatched = results.filter { !$0.isSameSpeaker }
+    #expect(!sameSpeaker.isEmpty)
+    #expect(!tagMatched.isEmpty)
+    // Same-speaker comes before tag-matched
+    let firstSameSpeakerIdx = results.firstIndex(where: \.isSameSpeaker)!
+    let firstTagIdx = results.firstIndex(where: { !$0.isSameSpeaker })!
+    #expect(firstSameSpeakerIdx < firstTagIdx)
+  }
+
+  @Test
+  func findRelatedSessions_limitRespected() {
+    var allSessions: [Schedule.SearchableSession] = [
+      .init(year: .year2026, session: .mock1, searchCorpus: "session1")
+    ]
+    // Add 6 same-speaker sessions across different years
+    for (i, year) in [
+      ConferenceYear.year2016, .year2017, .year2018, .year2019, .year2020, .year2025,
+    ].enumerated() {
+      let s = Session(
+        title: "talk-\(i)", speakers: [.mock1], place: "p", description: "desc-\(i)")
+      allSessions.append(.init(year: year, session: s, searchCorpus: "talk-\(i)"))
+    }
+
+    let results = Schedule.findRelatedSessions(for: .mock1, from: allSessions)
+    #expect(results.count == 5)
+    // Should be newest first
+    #expect(results[0].year == .year2025)
+    #expect(results[1].year == .year2020)
   }
 }
