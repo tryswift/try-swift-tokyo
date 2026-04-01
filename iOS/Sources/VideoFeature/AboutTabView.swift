@@ -13,7 +13,6 @@ struct AboutTabView: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 24) {
-      conferenceHeader
       descriptionSection
       speakersSection
       chaptersSection
@@ -25,21 +24,19 @@ struct AboutTabView: View {
 
   // MARK: - Conference Header
 
-  @ViewBuilder
-  private var conferenceHeader: some View {
-    Text("try! Swift Tokyo \(String(conferenceYear.rawValue))")
-      .font(.subheadline)
-      .foregroundStyle(.secondary)
-  }
-
   // MARK: - Description
 
   @ViewBuilder
   private var descriptionSection: some View {
     if let description = session.description {
       VStack(alignment: .leading, spacing: 8) {
-        Text(session.title)
-          .font(.title2.bold())
+        VStack(alignment: .leading, spacing: 4) {
+          Text(session.title)
+            .font(.title2.bold())
+          Text("try! Swift Tokyo \(String(conferenceYear.rawValue))")
+            .font(.subheadline)
+            .foregroundStyle(.secondary)
+        }
         Text(description)
           .font(.body)
       }

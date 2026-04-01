@@ -25,38 +25,46 @@ public struct VideoDetailView: View {
           }
         )
         .id(store.videoMetadata.youtubeVideoId)
-        .padding(.horizontal)
-        .padding(.top)
 
-        // Tab Picker
-        Picker("Content", selection: $store.selectedTab.sending(\.view.tabSelected)) {
-          Text("About").tag(VideoDetail.Tab.about)
+        var isTabShown: Bool {
           if store.videoMetadata.transcript != nil {
-            Text("Transcript").tag(VideoDetail.Tab.transcript)
+            #if os(macOS)
+              if store.videoMetadata.summary != nil || store.videoMetadata.codeResources != nil {
+                return true
+              }
+            #endif
+            return true
           }
-          #if os(macOS)
-            if store.videoMetadata.summary != nil {
-              Text("Summary").tag(VideoDetail.Tab.summary)
-            }
-            if store.videoMetadata.codeResources != nil {
-              Text("Code").tag(VideoDetail.Tab.code)
-            }
-          #endif
+          return false
         }
-        .pickerStyle(.segmented)
-        .labelsHidden()
-        .accessibilityLabel(Text("Content", bundle: .module))
-        .padding()
+
+        if isTabShown {
+          // Tab Picker
+          Picker("Content", selection: $store.selectedTab.sending(\.view.tabSelected)) {
+            Text("About").tag(VideoDetail.Tab.about)
+            if store.videoMetadata.transcript != nil {
+              Text("Transcript").tag(VideoDetail.Tab.transcript)
+            }
+            #if os(macOS)
+              if store.videoMetadata.summary != nil {
+                Text("Summary").tag(VideoDetail.Tab.summary)
+              }
+              if store.videoMetadata.codeResources != nil {
+                Text("Code").tag(VideoDetail.Tab.code)
+              }
+            #endif
+          }
+          .pickerStyle(.segmented)
+          .labelsHidden()
+          .accessibilityLabel(Text("Content", bundle: .module))
+          .padding()
+        }
 
         // Tab Content
         tabContent
       }
       .frame(maxWidth: 700)
     }
-    .navigationTitle(store.session.title)
-    #if !os(macOS)
-      .navigationBarTitleDisplayMode(.inline)
-    #endif
   }
 
   @ViewBuilder
