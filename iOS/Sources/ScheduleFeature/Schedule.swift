@@ -40,14 +40,14 @@ public struct Schedule {
     var selectedDay: Days = .day1
     var searchText: String = ""
     var isSearchBarPresented: Bool = false
-    public private(set) var allSessions: [SearchableSession] = []
+    public var allSessions: [SearchableSession] = []
     var day1: Conference?
     var day2: Conference?
     var day3: Conference?
-    public private(set) var favoriteProposalIds: Set<String> = []
-    public private(set) var favoriteCounts: [String: Int] = [:]
+    public var favoriteProposalIds: Set<String> = []
+    public var favoriteCounts: [String: Int] = [:]
     var hasLoadedFavorites: Bool = false
-    public private(set) var videoMetadata: [String: VideoMetadata] = [:]
+    public var videoMetadata: [String: VideoMetadata] = [:]
     var currentTime: Date = .distantPast
     @Presents var destination: Destination.State?
 
