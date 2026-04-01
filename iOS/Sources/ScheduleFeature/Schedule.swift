@@ -572,8 +572,15 @@ public struct ScheduleView: View {
       VStack {
         if let speakers = session.speakers {
           if speakers.count > 1 {
+            let iconSize: CGFloat =
+              switch speakers.count {
+              case 2: 44
+              case 3...4: 34
+              default: 28
+              }
+            let spacing = -(iconSize * 0.1).rounded()
             ZStack(alignment: .bottomTrailing) {
-              Grid(alignment: .leading, horizontalSpacing: -6, verticalSpacing: -6) {
+              Grid(alignment: .leading, horizontalSpacing: spacing, verticalSpacing: spacing) {
                 ForEach(Array(stride(from: 0, to: speakers.count, by: 2)), id: \.self) { i in
                   GridRow {
                     ForEach(speakers[i..<min(i + 2, speakers.count)], id: \.self) { speaker in
@@ -582,7 +589,7 @@ public struct ScheduleView: View {
                         .aspectRatio(contentMode: .fit)
                         .clipShape(Circle())
                         .overlay(Circle().stroke(.background, lineWidth: 2))
-                        .frame(width: 60)
+                        .frame(width: iconSize)
                         .accessibilityElement(children: .ignore)
                         .accessibilityIgnoresInvertColors()
                     }

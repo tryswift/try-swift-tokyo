@@ -30,11 +30,18 @@ struct TimetableComponent: HTML {
 
               Column {
                 if let speakers = session.speakers {
-                  CenterAlignedGrid(speakers, columns: 2) { speaker in
+                  let size =
+                    switch speakers.count {
+                    case 1: 50
+                    case 2: 36
+                    case 3...4: 28
+                    default: 22
+                    }
+                  CenterAlignedGrid(speakers, columns: min(speakers.count, 2)) { speaker in
                     Image(speaker.imageFilename, description: speaker.name)
                       .resizable()
-                      .frame(maxWidth: imageSize, maxHeight: imageSize)
-                      .cornerRadius(imageSize / 2)
+                      .frame(maxWidth: size, maxHeight: size)
+                      .cornerRadius(size / 2)
                   }
                 } else {
                   Image.defaultImage
