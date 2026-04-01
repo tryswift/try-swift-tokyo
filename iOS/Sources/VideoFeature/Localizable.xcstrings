@@ -61,6 +61,16 @@
         }
       }
     },
+    "Related Sessions" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "関連セッション"
+          }
+        }
+      }
+    },
     "Resources" : {
       "localizations" : {
         "ja" : {

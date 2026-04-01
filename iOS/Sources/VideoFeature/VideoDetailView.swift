@@ -76,6 +76,7 @@ public struct VideoDetailView: View {
         videoMetadata: store.videoMetadata,
         conferenceYear: store.conferenceYear,
         speakerImageBundle: speakerImageBundle,
+        relatedSessions: store.relatedSessions,
         onChapterTapped: { chapter in
           send(.chapterTapped(chapter))
         },
@@ -84,6 +85,9 @@ public struct VideoDetailView: View {
         },
         onSnsTapped: { url in
           send(.snsTapped(url))
+        },
+        onRelatedSessionTapped: { related in
+          send(.relatedSessionTapped(related))
         }
       )
 

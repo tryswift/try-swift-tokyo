@@ -7,9 +7,11 @@ struct AboutTabView: View {
   let videoMetadata: VideoMetadata
   let conferenceYear: ConferenceYear
   var speakerImageBundle: Bundle = .main
+  var relatedSessions: [RelatedSession] = []
   var onChapterTapped: (Chapter) -> Void
   var onResourceTapped: (URL) -> Void
   var onSnsTapped: (URL) -> Void
+  var onRelatedSessionTapped: ((RelatedSession) -> Void)?
 
   var body: some View {
     VStack(alignment: .leading, spacing: 24) {
@@ -17,6 +19,7 @@ struct AboutTabView: View {
       speakersSection
       chaptersSection
       resourcesSection
+      relatedSessionsSection
     }
     .padding(.horizontal)
     .padding(.bottom)
@@ -151,6 +154,58 @@ struct AboutTabView: View {
           .foregroundStyle(Color.accentColor)
         }
       }
+    }
+  }
+
+  // MARK: - Related Sessions
+
+  @ViewBuilder
+  private var relatedSessionsSection: some View {
+    if !relatedSessions.isEmpty {
+      VStack(alignment: .leading, spacing: 12) {
+        Text("Related Sessions", bundle: .module)
+          .font(.headline)
+          .foregroundStyle(.secondary)
+
+        ForEach(relatedSessions) { related in
+          Button {
+            onRelatedSessionTapped?(related)
+          } label: {
+            relatedSessionRow(related)
+              .padding()
+          }
+          .glassEffectIfAvailable()
+        }
+      }
+    }
+  }
+
+  @ViewBuilder
+  private func relatedSessionRow(_ related: RelatedSession) -> some View {
+    HStack(spacing: 8) {
+      if let imageName = related.speakerImageName {
+        Image(imageName, bundle: speakerImageBundle)
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+          .clipShape(Circle())
+          .frame(width: 44)
+          .accessibilityIgnoresInvertColors()
+      }
+      VStack(alignment: .leading, spacing: 2) {
+        Text(related.session.title)
+          .font(.body)
+          .multilineTextAlignment(.leading)
+        if let speakerName = related.speakerName {
+          Text(speakerName)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+        }
+        Text(String(related.year.rawValue))
+          .font(.caption2)
+          .foregroundStyle(.tertiary)
+      }
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .accessibilityElement(children: .combine)
     }
   }
 

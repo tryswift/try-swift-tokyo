@@ -182,13 +182,21 @@ public struct AppReducer {
         state.detailColumn = nil
         return .none
 
-      case .schedule(.delegate(.showVideoDetail(let session, let videoMeta, let year))):
+      case .schedule(
+        .delegate(
+          .showVideoDetail(
+            let session, let videoMeta, let year,
+            relatedSessions: let relatedSessions))
+      ):
         #if os(macOS)
           state.detailColumn = .videoDetail(
-            .init(session: session, videoMetadata: videoMeta, conferenceYear: year))
+            .init(
+              session: session, videoMetadata: videoMeta, conferenceYear: year,
+              relatedSessions: relatedSessions))
         #else
           state.videoDetail = .init(
-            session: session, videoMetadata: videoMeta, conferenceYear: year)
+            session: session, videoMetadata: videoMeta, conferenceYear: year,
+            relatedSessions: relatedSessions)
         #endif
         return .none
 
@@ -226,8 +234,12 @@ public struct AppReducer {
           let videoMeta =
             state.schedule.videoMetadata[videoId]
             ?? VideoMetadata(sessionTitle: session.title, youtubeVideoId: videoId)
+          let relatedSessions = ScheduleFeature.Schedule.findRelatedSessions(
+            for: session, from: state.schedule.allSessions)
           state.detailColumn = .videoDetail(
-            .init(session: session, videoMetadata: videoMeta, conferenceYear: year))
+            .init(
+              session: session, videoMetadata: videoMeta, conferenceYear: year,
+              relatedSessions: relatedSessions))
           return .none
         }
         let isFavorite =
@@ -251,6 +263,84 @@ public struct AppReducer {
             relatedSessions: relatedSessions,
             tagCandidates: tagCandidates
           ))
+        return .none
+
+      case .detailColumn(
+        .presented(.videoDetail(.delegate(.showRelatedSession(let session, let year))))
+      ):
+        guard session.description != nil, session.speakers != nil else { return .none }
+        if let videoId = session.youtubeVideoId {
+          let videoMeta =
+            state.schedule.videoMetadata[videoId]
+            ?? VideoMetadata(sessionTitle: session.title, youtubeVideoId: videoId)
+          let relatedSessions = ScheduleFeature.Schedule.findRelatedSessions(
+            for: session, from: state.schedule.allSessions)
+          state.detailColumn = .videoDetail(
+            .init(
+              session: session, videoMetadata: videoMeta, conferenceYear: year,
+              relatedSessions: relatedSessions))
+        } else {
+          let isFavorite =
+            session.proposalId.map { state.schedule.favoriteProposalIds.contains($0) } ?? false
+          let favoriteCount =
+            session.proposalId.flatMap { state.schedule.favoriteCounts[$0] } ?? 0
+          let relatedSessions = ScheduleFeature.Schedule.findRelatedSessions(
+            for: session, from: state.schedule.allSessions)
+          let sameSpeakerIds = Set(relatedSessions.filter(\.isSameSpeaker).map(\.id))
+          let tagCandidates = ScheduleFeature.Schedule.findTagCandidates(
+            for: session, from: state.schedule.allSessions, excludingIds: sameSpeakerIds)
+          state.detailColumn = .scheduleDetail(
+            .init(
+              proposalId: session.proposalId,
+              isFavorite: isFavorite,
+              favoriteCount: favoriteCount,
+              title: session.title,
+              description: session.description!,
+              requirements: session.requirements,
+              speakers: session.speakers!,
+              relatedSessions: relatedSessions,
+              tagCandidates: tagCandidates
+            ))
+        }
+        return .none
+
+      case .videoDetail(
+        .presented(.delegate(.showRelatedSession(let session, let year)))
+      ):
+        guard session.description != nil, session.speakers != nil else { return .none }
+        if let videoId = session.youtubeVideoId {
+          let videoMeta =
+            state.schedule.videoMetadata[videoId]
+            ?? VideoMetadata(sessionTitle: session.title, youtubeVideoId: videoId)
+          let relatedSessions = ScheduleFeature.Schedule.findRelatedSessions(
+            for: session, from: state.schedule.allSessions)
+          state.videoDetail = .init(
+            session: session, videoMetadata: videoMeta, conferenceYear: year,
+            relatedSessions: relatedSessions)
+        } else {
+          state.videoDetail = nil
+          let isFavorite =
+            session.proposalId.map { state.schedule.favoriteProposalIds.contains($0) } ?? false
+          let favoriteCount =
+            session.proposalId.flatMap { state.schedule.favoriteCounts[$0] } ?? 0
+          let relatedSessions = ScheduleFeature.Schedule.findRelatedSessions(
+            for: session, from: state.schedule.allSessions)
+          let sameSpeakerIds = Set(relatedSessions.filter(\.isSameSpeaker).map(\.id))
+          let tagCandidates = ScheduleFeature.Schedule.findTagCandidates(
+            for: session, from: state.schedule.allSessions, excludingIds: sameSpeakerIds)
+          let detailState = ScheduleDetail.State(
+            proposalId: session.proposalId,
+            isFavorite: isFavorite,
+            favoriteCount: favoriteCount,
+            title: session.title,
+            description: session.description!,
+            requirements: session.requirements,
+            speakers: session.speakers!,
+            relatedSessions: relatedSessions,
+            tagCandidates: tagCandidates
+          )
+          state.schedule.path.append(.detail(detailState))
+        }
         return .none
 
       case .schedule, .liveTranslation, .guidance, .sponsors, .trySwift,
