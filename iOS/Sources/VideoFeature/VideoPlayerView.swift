@@ -71,5 +71,19 @@ struct VideoPlayerView: View {
         }
       }
     }
+    #if os(macOS)
+      .onReceive(player.fullscreenStatePublisher.receive(on: DispatchQueue.main)) { state in
+        if state.isFullscreen {
+          Task {
+            try? await player.evaluate(
+              javaScript: .youTubePlayer(
+                functionName: "setSize",
+                parameters: ["screen.width", "screen.height"]
+              )
+            )
+          }
+        }
+      }
+    #endif
   }
 }
