@@ -28,11 +28,11 @@ public struct VideoDetailView: View {
 
         var isTabShown: Bool {
           if store.videoMetadata.transcript != nil {
-#if os(macOS)
-            if store.videoMetadata.summary != nil || store.videoMetadata.codeResources != nil {
-              return true
-            }
-#endif
+            #if os(macOS)
+              if store.videoMetadata.summary != nil || store.videoMetadata.codeResources != nil {
+                return true
+              }
+            #endif
             return true
           }
           return false
@@ -45,14 +45,14 @@ public struct VideoDetailView: View {
             if store.videoMetadata.transcript != nil {
               Text("Transcript").tag(VideoDetail.Tab.transcript)
             }
-#if os(macOS)
-            if store.videoMetadata.summary != nil {
-              Text("Summary").tag(VideoDetail.Tab.summary)
-            }
-            if store.videoMetadata.codeResources != nil {
-              Text("Code").tag(VideoDetail.Tab.code)
-            }
-#endif
+            #if os(macOS)
+              if store.videoMetadata.summary != nil {
+                Text("Summary").tag(VideoDetail.Tab.summary)
+              }
+              if store.videoMetadata.codeResources != nil {
+                Text("Code").tag(VideoDetail.Tab.code)
+              }
+            #endif
           }
           .pickerStyle(.segmented)
           .labelsHidden()
