@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		249B840F2F7CBF890038D20B /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 249B840E2F7CBF890038D20B /* AppIcon.icon */; };
+		249B84102F7CBF890038D20B /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 249B840E2F7CBF890038D20B /* AppIcon.icon */; };
 		D54B195A2B932BBF0065B7E5 /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = D54B19592B932BBF0065B7E5 /* AppFeature */; };
 		D563615F2B931FF800E4F789 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563615E2B931FF800E4F789 /* App.swift */; };
 		D56361652B931FF900E4F789 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D56361642B931FF900E4F789 /* Assets.xcassets */; };
@@ -45,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		2435021A2BA49F29000083BB /* App.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = App.xctestplan; sourceTree = "<group>"; };
+		249B840E2F7CBF890038D20B /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		D563615B2B931FF800E4F789 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D563615E2B931FF800E4F789 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		D56361642B931FF900E4F789 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -83,6 +86,7 @@
 		D56361522B931FF800E4F789 = {
 			isa = PBXGroup;
 			children = (
+				249B840E2F7CBF890038D20B /* AppIcon.icon */,
 				D563615D2B931FF800E4F789 /* App */,
 				D583D7C82B9B634800B94F73 /* Clip */,
 				D563615C2B931FF800E4F789 /* Products */,
@@ -237,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D583D7C22B9AD2ED00B94F73 /* PrivacyInfo.xcprivacy in Resources */,
+				249B840F2F7CBF890038D20B /* AppIcon.icon in Resources */,
 				D56361692B931FF900E4F789 /* Preview Assets.xcassets in Resources */,
 				D56361652B931FF900E4F789 /* Assets.xcassets in Resources */,
 			);
@@ -248,6 +253,7 @@
 			files = (
 				D583D7D12B9B634B00B94F73 /* Preview Assets.xcassets in Resources */,
 				D583D7CE2B9B634B00B94F73 /* Assets.xcassets in Resources */,
+				249B84102F7CBF890038D20B /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
