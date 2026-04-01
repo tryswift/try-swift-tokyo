@@ -25,7 +25,6 @@ struct VideoPlayerView: View {
         parameters: .init(
           autoPlay: false,
           showControls: true,
-          restrictRelatedVideosToSameChannel: true
         ),
         configuration: .init(
           allowsPictureInPictureMediaPlayback: true
