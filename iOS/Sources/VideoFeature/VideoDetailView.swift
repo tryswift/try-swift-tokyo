@@ -26,25 +26,39 @@ public struct VideoDetailView: View {
         )
         .id(store.videoMetadata.youtubeVideoId)
 
-        // Tab Picker
-        Picker("Content", selection: $store.selectedTab.sending(\.view.tabSelected)) {
-          Text("About").tag(VideoDetail.Tab.about)
+        var isTabShown: Bool {
           if store.videoMetadata.transcript != nil {
-            Text("Transcript").tag(VideoDetail.Tab.transcript)
+#if os(macOS)
+            if store.videoMetadata.summary != nil || store.videoMetadata.codeResources != nil {
+              return true
+            }
+#endif
+            return true
           }
-          #if os(macOS)
+          return false
+        }
+
+        if isTabShown {
+          // Tab Picker
+          Picker("Content", selection: $store.selectedTab.sending(\.view.tabSelected)) {
+            Text("About").tag(VideoDetail.Tab.about)
+            if store.videoMetadata.transcript != nil {
+              Text("Transcript").tag(VideoDetail.Tab.transcript)
+            }
+#if os(macOS)
             if store.videoMetadata.summary != nil {
               Text("Summary").tag(VideoDetail.Tab.summary)
             }
             if store.videoMetadata.codeResources != nil {
               Text("Code").tag(VideoDetail.Tab.code)
             }
-          #endif
+#endif
+          }
+          .pickerStyle(.segmented)
+          .labelsHidden()
+          .accessibilityLabel(Text("Content", bundle: .module))
+          .padding()
         }
-        .pickerStyle(.segmented)
-        .labelsHidden()
-        .accessibilityLabel(Text("Content", bundle: .module))
-        .padding()
 
         // Tab Content
         tabContent
