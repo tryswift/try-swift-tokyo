@@ -424,7 +424,8 @@ struct WorkshopRoutes: RouteCollection {
     if hasLotteryRun {
       // Post-lottery: only show workshops with remaining capacity
       let remaining = try await computeRemainingCapacity(on: req.db)
-      workshopOptions = workshops
+      workshopOptions =
+        workshops
         .filter { (remaining[$0.registrationID] ?? 0) > 0 }
         .map {
           WorkshopOption(
