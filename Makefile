@@ -29,5 +29,5 @@ android-emulator:
 	fi
 
 android-run: android-build android-emulator
-	cd Android/.build/plugins/outputs/skipstone/AndroidApp/skipstone && ./gradlew installDebug
+	cd Android/.build/plugins/outputs/try-swift-tokyo-android/AndroidApp/skipstone && ./gradlew installDebug
 	adb shell am start -n tokyo.tryswift.android/.MainActivity
