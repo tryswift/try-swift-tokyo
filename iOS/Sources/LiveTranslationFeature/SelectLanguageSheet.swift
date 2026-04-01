@@ -8,7 +8,9 @@ struct SelectLanguageSheet: View {
 
   private var sortedLanguages: [LanguageItemEntity] {
     let priorityCodes = ["ja", "en"]
-    let priority = languageList.filter { priorityCodes.contains($0.languageCode) }
+    let priority = priorityCodes.flatMap { code in
+      languageList.filter { $0.languageCode == code }
+    }
     let rest = languageList.filter { !priorityCodes.contains($0.languageCode) }
     return priority + rest
   }
