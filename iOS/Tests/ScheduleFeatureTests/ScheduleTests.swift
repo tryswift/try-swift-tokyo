@@ -510,9 +510,9 @@ struct ScheduleTests {
       .init(year: .year2026, session: .mock1, searchCorpus: "session1")
     ]
     // Add 6 same-speaker sessions across different years
-    for (i, year) in
-      [ConferenceYear.year2016, .year2017, .year2018, .year2019, .year2020, .year2025].enumerated()
-    {
+    for (i, year) in [
+      ConferenceYear.year2016, .year2017, .year2018, .year2019, .year2020, .year2025,
+    ].enumerated() {
       let s = Session(
         title: "talk-\(i)", speakers: [.mock1], place: "p", description: "desc-\(i)")
       allSessions.append(.init(year: year, session: s, searchCorpus: "talk-\(i)"))
