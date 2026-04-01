@@ -307,17 +307,25 @@ public struct AppView: View {
     #endif
   }
 
-  // MARK: macOS Sidebar Layout (3 columns)
+  // MARK: macOS Sidebar Layout
 
   #if os(macOS)
     @ViewBuilder
     var macOSSidebarLayout: some View {
-      NavigationSplitView {
-        sidebarContent
-      } content: {
-        detailContent
-      } detail: {
-        macOSDetailColumnView
+      if store.selectedSidebarItem == .liveTranslation {
+        NavigationSplitView {
+          sidebarContent
+        } detail: {
+          detailContent
+        }
+      } else {
+        NavigationSplitView {
+          sidebarContent
+        } content: {
+          detailContent
+        } detail: {
+          macOSDetailColumnView
+        }
       }
     }
 
