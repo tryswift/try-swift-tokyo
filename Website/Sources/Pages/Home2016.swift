@@ -50,7 +50,8 @@ struct Home2016: StaticPage {
     // Speaker modals
     Alert {
       ForEach(speakers) { speaker in
-        SpeakerModal(year: .year2016, speaker: speaker, language: language, accentColor: .init(hex: "#FC983B"))
+        SpeakerModal(
+          year: .year2016, speaker: speaker, language: language, accentColor: .init(hex: "#FC983B"))
       }
     }
 
@@ -66,7 +67,8 @@ struct Home2016: StaticPage {
     Grid(alignment: .top, spacing: 16) {
       ForEach(allDays) { data in
         Section {
-          TimetableComponent(conference: data, language: language, accentColor: .init(hex: "#FC983B"))
+          TimetableComponent(
+            conference: data, language: language, accentColor: .init(hex: "#FC983B"))
         }
       }
     }
@@ -79,7 +81,8 @@ struct Home2016: StaticPage {
         .flatMap { $0.schedules.flatMap(\.sessions) }
         .filter(\.hasDescription)
       ForEach(sessions) { session in
-        SessionDetailModal(year: .year2016, session: session, language: language, accentColor: .init(hex: "#FC983B"))
+        SessionDetailModal(
+          year: .year2016, session: session, language: language, accentColor: .init(hex: "#FC983B"))
       }
     }
 
