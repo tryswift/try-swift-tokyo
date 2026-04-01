@@ -63,6 +63,14 @@
                   "name": "@albertoricci"
                 }
               ]
+            },
+            {
+              "id": 8,
+              "name": "Melvin Tan",
+              "image_name": "2026/melvin_tan",
+              "bio": "Technology Evangelist, Apple Worldwide Developer Relations.",
+              "bio_ja": "テクノロジーエバンジェリスト。Apple Worldwide Developer Relations所属。",
+              "links": []
             }
           ],
           "description": "Attendee will get hands-on experience using the Foundation Models framework to access Apple's on-device LLM. Over the workshop, developer will explore text manipulation, including language support. also dive into guided generation. And developer will learn how to engineer effective prompts, and combine the Foundation Models framework with Apple ML frameworks like Speech.",
