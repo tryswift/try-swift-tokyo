@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "rachel_bobbins.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

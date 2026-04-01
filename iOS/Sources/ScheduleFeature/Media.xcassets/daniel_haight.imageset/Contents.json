@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "daniel_haight.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
