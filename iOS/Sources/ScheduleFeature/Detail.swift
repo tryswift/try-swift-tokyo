@@ -4,6 +4,15 @@ import Foundation
 import SharedModels
 import SwiftUI
 
+public struct RelatedSession: Equatable, Hashable, Identifiable, Sendable {
+  public var id: String { "\(year.rawValue)-\(session.title)-\(speakerName ?? "")" }
+  public var year: ConferenceYear
+  public var session: Session
+  public var speakerImageName: String?
+  public var speakerName: String?
+  public var isSameSpeaker: Bool
+}
+
 @Reducer
 public struct ScheduleDetail: Sendable {
   @ObservableState
@@ -16,6 +25,7 @@ public struct ScheduleDetail: Sendable {
     var description: String
     var requirements: String?
     var speakers: [Speaker]
+    var relatedSessions: [RelatedSession] = []
 
     // Feedback
     var feedbackText: String = ""
@@ -30,7 +40,8 @@ public struct ScheduleDetail: Sendable {
       title: String,
       description: String,
       requirements: String? = nil,
-      speakers: [Speaker]
+      speakers: [Speaker],
+      relatedSessions: [RelatedSession] = []
     ) {
       self.proposalId = proposalId
       self.isFavorite = isFavorite
@@ -39,6 +50,7 @@ public struct ScheduleDetail: Sendable {
       self.description = description
       self.requirements = requirements
       self.speakers = speakers
+      self.relatedSessions = relatedSessions
     }
   }
 
@@ -47,11 +59,17 @@ public struct ScheduleDetail: Sendable {
     case view(View)
     case feedbackSubmitResponse(Result<Bool, Error>)
     case favoriteToggled(Bool, Int)
+    case delegate(Delegate)
 
     public enum View {
       case snsTapped(URL)
       case favoriteTapped
       case submitFeedbackTapped
+      case relatedSessionTapped(RelatedSession)
+    }
+
+    public enum Delegate: Equatable {
+      case showRelatedSession(Session, ConferenceYear)
     }
   }
 
@@ -64,6 +82,8 @@ public struct ScheduleDetail: Sendable {
     BindingReducer()
     Reduce { state, action in
       switch action {
+      case .view(.relatedSessionTapped(let related)):
+        return .send(.delegate(.showRelatedSession(related.session, related.year)))
       case .view(.snsTapped(let url)):
         return .run { _ in await safari(url) }
       case .view(.favoriteTapped):
@@ -105,7 +125,7 @@ public struct ScheduleDetail: Sendable {
         state.isSubmittingFeedback = false
         state.feedbackError = error.localizedDescription
         return .none
-      case .binding:
+      case .binding, .delegate:
         return .none
       }
     }
@@ -146,6 +166,11 @@ public struct ScheduleDetailView: View {
 
       speakers
         .frame(maxWidth: 700)  // Readable content width for iPad
+
+      if !store.relatedSessions.isEmpty {
+        relatedSessionsSection
+          .frame(maxWidth: 700)
+      }
 
       if store.proposalId != nil {
         feedbackSection
@@ -225,6 +250,72 @@ public struct ScheduleDetailView: View {
     .padding()
     .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
     .padding()
+  }
+
+  @ViewBuilder
+  var relatedSessionsSection: some View {
+    VStack(alignment: .leading, spacing: 12) {
+      Text("Related Sessions", bundle: .module)
+        .font(.title3.bold())
+        .padding(.horizontal)
+
+      ForEach(store.relatedSessions) { related in
+        Button {
+          send(.relatedSessionTapped(related))
+        } label: {
+          relatedSessionRow(related)
+            .padding()
+        }
+        .glassIfAvailable()
+      }
+    }
+    .padding()
+    .glassEffectContainerIfAvailable()
+  }
+
+  @ViewBuilder
+  func relatedSessionRow(_ related: RelatedSession) -> some View {
+    HStack(spacing: 8) {
+      if let imageName = related.speakerImageName {
+        Image(imageName, bundle: .module)
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+          .clipShape(Circle())
+          .frame(width: 44)
+          .accessibilityIgnoresInvertColors()
+      }
+      VStack(alignment: .leading, spacing: 2) {
+        Text(LocalizedStringKey(related.session.title), bundle: .module)
+          .font(.body)
+          .multilineTextAlignment(.leading)
+        if let speakerName = related.speakerName {
+          Text(speakerName)
+            .font(.caption)
+            .foregroundStyle(labelColor)
+        }
+        Text(String(related.year.rawValue))
+          .font(.caption2)
+          .foregroundStyle(secondaryLabelColor)
+      }
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .accessibilityElement(children: .combine)
+    }
+  }
+
+  private var labelColor: Color {
+    #if os(macOS)
+      Color(nsColor: .labelColor)
+    #else
+      Color(uiColor: .label)
+    #endif
+  }
+
+  private var secondaryLabelColor: Color {
+    #if os(macOS)
+      Color(nsColor: .secondaryLabelColor)
+    #else
+      Color(uiColor: .secondaryLabel)
+    #endif
   }
 
   @ViewBuilder

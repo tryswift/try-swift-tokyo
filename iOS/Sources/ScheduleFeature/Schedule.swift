@@ -90,7 +90,9 @@ public struct Schedule {
 
     public enum Delegate: Equatable {
       case showVideoDetail(Session, VideoMetadata, ConferenceYear)
-      case showScheduleDetail(Session, proposalId: String?, isFavorite: Bool, favoriteCount: Int)
+      case showScheduleDetail(
+        Session, proposalId: String?, isFavorite: Bool, favoriteCount: Int,
+        relatedSessions: [RelatedSession])
     }
   }
 
@@ -226,21 +228,19 @@ public struct Schedule {
             ?? VideoMetadata(sessionTitle: session.title, youtubeVideoId: videoId)
           return .send(.delegate(.showVideoDetail(session, videoMeta, state.selectedYear)))
         } else {
+          let isFavorite =
+            session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
+          let favoriteCount =
+            session.proposalId.flatMap { state.favoriteCounts[$0] } ?? 0
+          let relatedSessions = Schedule.findRelatedSessions(
+            for: session, from: state.allSessions)
           #if os(macOS)
-            let isFavorite =
-              session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
-            let favoriteCount =
-              session.proposalId.flatMap { state.favoriteCounts[$0] } ?? 0
             return .send(
               .delegate(
                 .showScheduleDetail(
                   session, proposalId: session.proposalId, isFavorite: isFavorite,
-                  favoriteCount: favoriteCount)))
+                  favoriteCount: favoriteCount, relatedSessions: relatedSessions)))
           #else
-            let isFavorite =
-              session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
-            let favoriteCount =
-              session.proposalId.flatMap { state.favoriteCounts[$0] } ?? 0
             let detailState = ScheduleDetail.State(
               proposalId: session.proposalId,
               isFavorite: isFavorite,
@@ -248,7 +248,8 @@ public struct Schedule {
               title: session.title,
               description: session.description!,
               requirements: session.requirements,
-              speakers: session.speakers!
+              speakers: session.speakers!,
+              relatedSessions: relatedSessions
             )
             state.path.append(.detail(detailState))
             return .none
@@ -300,6 +301,34 @@ public struct Schedule {
           state.favoriteCounts[proposalId] = count
         }
         return .none
+      case .path(
+        .element(_, action: .detail(.delegate(.showRelatedSession(let session, let year))))
+      ):
+        guard session.description != nil, session.speakers != nil else { return .none }
+        if let videoId = session.youtubeVideoId {
+          let videoMeta =
+            state.videoMetadata[videoId]
+            ?? VideoMetadata(sessionTitle: session.title, youtubeVideoId: videoId)
+          return .send(.delegate(.showVideoDetail(session, videoMeta, year)))
+        }
+        let isFavorite =
+          session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
+        let favoriteCount =
+          session.proposalId.flatMap { state.favoriteCounts[$0] } ?? 0
+        let relatedSessions = Schedule.findRelatedSessions(
+          for: session, from: state.allSessions)
+        let detailState = ScheduleDetail.State(
+          proposalId: session.proposalId,
+          isFavorite: isFavorite,
+          favoriteCount: favoriteCount,
+          title: session.title,
+          description: session.description!,
+          requirements: session.requirements,
+          speakers: session.speakers!,
+          relatedSessions: relatedSessions
+        )
+        state.path.append(.detail(detailState))
+        return .none
       case .timerTicked:
         state.currentTime = date.now
         return .none
@@ -322,6 +351,68 @@ public struct Schedule {
       }
     }
     return parts.joined(separator: " ").lowercased()
+  }
+
+  public static func findRelatedSessions(
+    for session: Session,
+    from allSessions: [SearchableSession],
+    limit: Int = 5
+  ) -> [RelatedSession] {
+    let currentTags = SessionTagging.generateTags(for: session)
+    guard !currentTags.isEmpty else { return [] }
+
+    let currentSpeakerNames = session.speakers?.map(\.name) ?? []
+
+    struct ScoredResult {
+      var related: RelatedSession
+      var matchCount: Int
+    }
+
+    var scored: [ScoredResult] = []
+
+    for searchable in allSessions {
+      let candidate = searchable.session
+      // Skip self
+      if candidate.title == session.title,
+        candidate.speakers?.first?.name == session.speakers?.first?.name
+      {
+        continue
+      }
+
+      let candidateTags = SessionTagging.generateTags(for: candidate)
+      let matchCount = currentTags.intersection(candidateTags).count
+      guard matchCount > 0 else { continue }
+
+      let candidateSpeakerNames = candidate.speakers?.map(\.name) ?? []
+      let isSameSpeaker =
+        !currentSpeakerNames.isEmpty
+        && currentSpeakerNames.contains {
+          name in
+          candidateSpeakerNames.contains { SessionTagging.speakerNamesMatch(name, $0) }
+        }
+
+      scored.append(
+        ScoredResult(
+          related: RelatedSession(
+            year: searchable.year,
+            session: candidate,
+            speakerImageName: candidate.speakers?.first?.imageName,
+            speakerName: candidate.speakers?.first?.name,
+            isSameSpeaker: isSameSpeaker
+          ),
+          matchCount: matchCount
+        )
+      )
+    }
+
+    scored.sort { lhs, rhs in
+      if lhs.related.isSameSpeaker != rhs.related.isSameSpeaker {
+        return lhs.related.isSameSpeaker
+      }
+      return lhs.matchCount > rhs.matchCount
+    }
+
+    return scored.prefix(limit).map(\.related)
   }
 }
 
