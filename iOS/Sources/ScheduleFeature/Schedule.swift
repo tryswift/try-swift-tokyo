@@ -580,10 +580,12 @@ public struct ScheduleView: View {
               }
             let spacing = -(iconSize * 0.1).rounded()
             ZStack(alignment: .bottomTrailing) {
-              Grid(alignment: .leading, horizontalSpacing: spacing, verticalSpacing: spacing) {
+              Grid(alignment: .center, horizontalSpacing: spacing, verticalSpacing: spacing) {
                 ForEach(Array(stride(from: 0, to: speakers.count, by: 2)), id: \.self) { i in
                   GridRow {
-                    ForEach(speakers[i..<min(i + 2, speakers.count)], id: \.self) { speaker in
+                    let end = min(i + 2, speakers.count)
+                    let isLastSingle = (end - i == 1)
+                    ForEach(speakers[i..<end], id: \.self) { speaker in
                       Image(speaker.imageName, bundle: .module)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -592,6 +594,7 @@ public struct ScheduleView: View {
                         .frame(width: iconSize)
                         .accessibilityElement(children: .ignore)
                         .accessibilityIgnoresInvertColors()
+                        .gridCellColumns(isLastSingle ? 2 : 1)
                     }
                   }
                 }
