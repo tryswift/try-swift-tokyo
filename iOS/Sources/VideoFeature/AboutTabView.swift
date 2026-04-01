@@ -22,8 +22,6 @@ struct AboutTabView: View {
     .padding(.bottom)
   }
 
-  // MARK: - Conference Header
-
   // MARK: - Description
 
   @ViewBuilder
