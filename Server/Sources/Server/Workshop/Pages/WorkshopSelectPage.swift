@@ -19,6 +19,7 @@ struct WorkshopSelectPageView: HTML, Sendable {
   let errorMessage: String?
   let isEditMode: Bool
   let existingSelections: ExistingSelections?
+  let isPostLottery: Bool
 
   struct ExistingSelections: Sendable {
     let firstChoiceID: UUID
@@ -43,7 +44,11 @@ struct WorkshopSelectPageView: HTML, Sendable {
             div(.class("card-body p-4")) {
               div(.class("mb-4")) {
                 h2(.class("fw-bold mb-2")) {
-                  if isEditMode {
+                  if isPostLottery {
+                    language == .ja
+                      ? "ワークショップ選択（先着順）"
+                      : "Select Workshop (First-Come-First-Served)"
+                  } else if isEditMode {
                     language == .ja
                       ? "ワークショップ申し込み変更"
                       : "Edit Workshop Application"
@@ -54,7 +59,11 @@ struct WorkshopSelectPageView: HTML, Sendable {
                   }
                 }
                 p(.class("text-muted")) {
-                  if isEditMode {
+                  if isPostLottery {
+                    language == .ja
+                      ? "空きのあるワークショップから1つ選んでください。選択した時点で確定します。"
+                      : "Select a workshop with available spots. Your selection will be confirmed immediately."
+                  } else if isEditMode {
                     language == .ja
                       ? "希望するワークショップを変更してください。"
                       : "Update your workshop preferences below."
@@ -96,27 +105,33 @@ struct WorkshopSelectPageView: HTML, Sendable {
 
                 // First choice (required)
                 requiredWorkshopSelect(
-                  label: language == .ja ? "第1希望（必須）" : "1st Choice (Required)",
+                  label: isPostLottery
+                    ? (language == .ja ? "ワークショップ（必須）" : "Workshop (Required)")
+                    : (language == .ja ? "第1希望（必須）" : "1st Choice (Required)"),
                   name: "first_choice_id"
                 )
 
-                // Second choice (optional)
-                optionalWorkshopSelect(
-                  label: language == .ja ? "第2希望（任意）" : "2nd Choice (Optional)",
-                  name: "second_choice_id"
-                )
+                if !isPostLottery {
+                  // Second choice (optional)
+                  optionalWorkshopSelect(
+                    label: language == .ja ? "第2希望（任意）" : "2nd Choice (Optional)",
+                    name: "second_choice_id"
+                  )
 
-                // Third choice (optional)
-                optionalWorkshopSelect(
-                  label: language == .ja ? "第3希望（任意）" : "3rd Choice (Optional)",
-                  name: "third_choice_id"
-                )
+                  // Third choice (optional)
+                  optionalWorkshopSelect(
+                    label: language == .ja ? "第3希望（任意）" : "3rd Choice (Optional)",
+                    name: "third_choice_id"
+                  )
+                }
 
                 button(
                   .type(.submit),
                   .class("btn btn-primary btn-lg w-100 mt-3")
                 ) {
-                  if isEditMode {
+                  if isPostLottery {
+                    language == .ja ? "申し込む（即時確定）" : "Apply (Confirmed Immediately)"
+                  } else if isEditMode {
                     language == .ja ? "申し込みを更新する" : "Update Application"
                   } else {
                     language == .ja ? "申し込む" : "Submit Application"
@@ -209,7 +224,8 @@ struct WorkshopSelectPageView: HTML, Sendable {
         });
         function validateChoices() {
           var values = selects.map(function(name) {
-            return document.getElementById(name).value;
+            var el = document.getElementById(name);
+            return el ? el.value : '';
           }).filter(function(v) { return v !== ''; });
           var unique = new Set(values);
           if (unique.size !== values.length) {

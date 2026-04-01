@@ -9,6 +9,7 @@ struct WorkshopConfirmationPageView: HTML, Sendable {
   let thirdChoice: String?
   let language: CfPLanguage
   let isUpdate: Bool
+  let isPostLottery: Bool
 
   var body: some HTML {
     div(.class("container py-5")) {
@@ -29,7 +30,11 @@ struct WorkshopConfirmationPageView: HTML, Sendable {
                 }
               }
               p(.class("text-muted mb-4")) {
-                if isUpdate {
+                if isPostLottery {
+                  language == .ja
+                    ? "ワークショップが確定しました！詳細はメールでお送りします。"
+                    : "Your workshop has been confirmed! Details will be sent by email."
+                } else if isUpdate {
                   language == .ja
                     ? "ワークショップの希望が更新されました。抽選結果はメールでお知らせします。"
                     : "Your workshop preferences have been updated. You will be notified of the lottery results by email."
@@ -55,7 +60,11 @@ struct WorkshopConfirmationPageView: HTML, Sendable {
                 }
                 div(.class("mb-3")) {
                   strong {
-                    language == .ja ? "第1希望: " : "1st Choice: "
+                    if isPostLottery {
+                      language == .ja ? "当選ワークショップ: " : "Assigned Workshop: "
+                    } else {
+                      language == .ja ? "第1希望: " : "1st Choice: "
+                    }
                   }
                   HTMLText(firstChoice)
                 }

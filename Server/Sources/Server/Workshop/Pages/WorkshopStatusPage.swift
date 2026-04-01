@@ -16,6 +16,7 @@ struct WorkshopStatusPageView: HTML, Sendable {
     let thirdChoice: String?
     let assignedWorkshop: String?
     let canModify: Bool
+    let canReapply: Bool
     let deleteToken: String?
   }
 
@@ -148,6 +149,17 @@ struct WorkshopStatusPageView: HTML, Sendable {
                   language == .ja ? "申し込みを取り消す" : "Delete Application"
                 }
               }
+            }
+          }
+        }
+
+        if app.canReapply {
+          div(.class("mt-4 pt-3 border-top")) {
+            a(
+              .class("btn btn-primary w-100"),
+              .href(language.path(for: "/workshops/apply"))
+            ) {
+              language == .ja ? "空きワークショップに申し込む" : "Apply for Available Workshops"
             }
           }
         }
