@@ -353,7 +353,7 @@ public struct Schedule {
     return parts.joined(separator: " ").lowercased()
   }
 
-  static func findRelatedSessions(
+  public static func findRelatedSessions(
     for session: Session,
     from allSessions: [SearchableSession],
     limit: Int = 5
@@ -363,7 +363,12 @@ public struct Schedule {
 
     let currentSpeakerNames = session.speakers?.map(\.name) ?? []
 
-    var results: [RelatedSession] = []
+    struct ScoredResult {
+      var related: RelatedSession
+      var matchCount: Int
+    }
+
+    var scored: [ScoredResult] = []
 
     for searchable in allSessions {
       let candidate = searchable.session
@@ -386,27 +391,28 @@ public struct Schedule {
           candidateSpeakerNames.contains { SessionTagging.speakerNamesMatch(name, $0) }
         }
 
-      results.append(
-        RelatedSession(
-          year: searchable.year,
-          session: candidate,
-          speakerImageName: candidate.speakers?.first?.imageName,
-          speakerName: candidate.speakers?.first?.name,
-          isSameSpeaker: isSameSpeaker
+      scored.append(
+        ScoredResult(
+          related: RelatedSession(
+            year: searchable.year,
+            session: candidate,
+            speakerImageName: candidate.speakers?.first?.imageName,
+            speakerName: candidate.speakers?.first?.name,
+            isSameSpeaker: isSameSpeaker
+          ),
+          matchCount: matchCount
         )
       )
     }
 
-    results.sort { lhs, rhs in
-      if lhs.isSameSpeaker != rhs.isSameSpeaker {
-        return lhs.isSameSpeaker
+    scored.sort { lhs, rhs in
+      if lhs.related.isSameSpeaker != rhs.related.isSameSpeaker {
+        return lhs.related.isSameSpeaker
       }
-      let lhsTags = SessionTagging.generateTags(for: lhs.session)
-      let rhsTags = SessionTagging.generateTags(for: rhs.session)
-      return currentTags.intersection(lhsTags).count > currentTags.intersection(rhsTags).count
+      return lhs.matchCount > rhs.matchCount
     }
 
-    return Array(results.prefix(limit))
+    return scored.prefix(limit).map(\.related)
   }
 }
 

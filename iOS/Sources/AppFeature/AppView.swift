@@ -221,8 +221,9 @@ public struct AppReducer {
           return .none
         }
         if let videoId = session.youtubeVideoId {
-          let videoMeta = VideoMetadata(
-            sessionTitle: session.title, youtubeVideoId: videoId)
+          let videoMeta =
+            state.schedule.videoMetadata[videoId]
+            ?? VideoMetadata(sessionTitle: session.title, youtubeVideoId: videoId)
           state.detailColumn = .videoDetail(
             .init(session: session, videoMetadata: videoMeta, conferenceYear: year))
           return .none

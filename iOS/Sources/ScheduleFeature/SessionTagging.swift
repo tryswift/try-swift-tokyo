@@ -67,11 +67,11 @@ enum SessionTag: String, CaseIterable, Equatable, Hashable, Sendable {
     case .uiKit: return ["uikit", "uicollectionview", "uitableview", "uiviewcontroller"]
     case .concurrency:
       return [
-        "concurrency", "async/await", "async ", " await", "actor ", "actors", "sendable",
+        "concurrency", "async/await", "async await", "actors", "sendable",
         "structured concurrency", "task group",
       ]
     case .macros: return ["macro", "macros", "@attached", "@freestanding"]
-    case .generics: return ["generic", "generics", "some ", "any "]
+    case .generics: return ["generic", "generics"]
     case .protocols: return ["protocol-oriented", "protocol oriented"]
     case .resultBuilders: return ["result builder", "resultbuilder", "@resultbuilder"]
     case .propertyWrappers: return ["property wrapper", "propertywrapper", "@propertyWrapper"]
@@ -81,7 +81,7 @@ enum SessionTag: String, CaseIterable, Equatable, Hashable, Sendable {
     case .watchOS: return ["watchos", "apple watch"]
     case .crossPlatform:
       return [
-        "cross-platform", "cross platform", "multiplatform", "skip ", "kotlin",
+        "cross-platform", "cross platform", "multiplatform", "kotlin",
       ]
     case .testing:
       return [
@@ -126,13 +126,13 @@ enum SessionTag: String, CaseIterable, Equatable, Hashable, Sendable {
         "llm", "on-device intelligence", "ml model",
       ]
     case .coreML: return ["coreml", "core ml", "createml", "create ml"]
-    case .metal: return ["metal ", "shader", "gpu computing"]
+    case .metal: return ["metal", "shader", "gpu computing"]
     case .graphics: return ["graphics", "core graphics", "core image", "rendering"]
     case .arKit: return ["arkit", "augmented reality"]
     case .appIntents: return ["app intent", "appintent", "siri", "shortcut"]
     case .widgetKit: return ["widgetkit", "widget"]
     case .swiftPackageManager:
-      return ["swift package manager", "package.swift", " spm"]
+      return ["swift package manager", "package.swift"]
     case .instruments:
       return ["instruments", "time profiler", "allocation"]
     case .combine: return ["combine", "publisher", "subscriber"]
