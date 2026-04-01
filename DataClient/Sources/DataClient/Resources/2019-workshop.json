@@ -22,7 +22,7 @@
           "speakers": [
             {
               "name": "Sho Ikeda",
-              "image_name": "sho_ikeda",
+              "image_name": "ikesyo",
               "links": [
                 {
                   "name": "@ikesyo",
@@ -50,8 +50,8 @@
           "description_ja": "Swiftのコンパイルプロセス、LLVMの基本、bugs.swift.orgでのバグの見つけ方、変更を加えたビルドの作成とテストの実行について学びます。"
         },
         {
-          "title": "Build an app with Firestore, Swift, and Typescript",
-          "title_ja": "Firestore、Swift、Typescriptでアプリをつくろう",
+          "title": "Build an app with Firestore, Swift, and TypeScript",
+          "title_ja": "Firestore、Swift、TypeScriptでアプリをつくろう",
           "speakers": [
             {
               "name": "Morgan Chen",

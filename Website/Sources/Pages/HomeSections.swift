@@ -150,9 +150,7 @@ extension HomeSectionType {
         switch year {
         case .year2016, .year2020:
           nil
-        case .year2017, .year2018, .year2019:
-          try? dataClient.fetchWorkshop(year)
-        case .year2024:
+        case .year2017, .year2018, .year2019, .year2024:
           try! dataClient.fetchWorkshop(year)
         case .year2025, .year2026:
           try! dataClient.fetchDay3(year)
