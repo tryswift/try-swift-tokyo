@@ -4,6 +4,7 @@ import SharedModels
 struct SpeakerDetailComponent: HTML {
   let speaker: Speaker
   let language: SupportedLanguage
+  var accentColor: Color = .bootstrapPurple
   private let imageSize = 75
 
   var body: some HTML {
@@ -16,7 +17,7 @@ struct SpeakerDetailComponent: HTML {
       Section {
         Text(speaker.name)
           .font(.title2)
-          .foregroundStyle(.bootstrapPurple)
+          .foregroundStyle(accentColor)
 
         if let bio = speaker.localizedBio(for: language) {
           Text(markdown: bio.convertNewlines())

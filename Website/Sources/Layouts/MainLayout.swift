@@ -7,6 +7,9 @@ struct MainLayout: Layout {
 
   var body: some Document {
     Head {
+      if currentPage.url.path.contains("/2016") {
+        MetaLink(href: "/css/retro-2016.css", rel: "stylesheet")
+      }
       MetaTag(.openGraphTitle, content: title)
       MetaTag(.openGraphImage, content: ogpLink)
       MetaTag(.twitterTitle, content: title)

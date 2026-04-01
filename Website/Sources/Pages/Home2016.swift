@@ -15,6 +15,8 @@ struct Home2016: StaticPage {
   @Dependency(DataClient.self) var dataClient
 
   var body: some HTML {
+    let retroAccent: Color = .init(hex: "#FC983B")
+
     // Navigation bar
     Retro2016NavigationBar(language: language)
 
@@ -26,7 +28,7 @@ struct Home2016: StaticPage {
     Text(String("hero-text-past", language: language))
       .horizontalAlignment(.center)
       .font(.lead)
-      .foregroundStyle(.dimGray)
+      .foregroundStyle(.init(hex: "#59595A"))
       .margin(.top, .px(20))
       .margin(.horizontal, .px(50))
 
@@ -39,8 +41,8 @@ struct Home2016: StaticPage {
     Retro2016SectionHeader(title: "Speaker", htmlId: "speaker", language: language)
 
     let speakers = try! dataClient.fetchSpeakers(year: .year2016)
-    CenterAlignedGrid(speakers, columns: 4) { speaker in
-      Retro2016SpeakerComponent(speaker: speaker)
+    CenterAlignedGrid(speakers, columns: 3) { speaker in
+      Retro2016SpeakerComponent(speaker: speaker, language: language)
         .margin(.bottom, .px(32))
         .onClick {
           ShowModal(id: speaker.modalId)
@@ -50,7 +52,8 @@ struct Home2016: StaticPage {
     // Speaker modals
     Alert {
       ForEach(speakers) { speaker in
-        SpeakerModal(year: .year2016, speaker: speaker, language: language)
+        SpeakerModal(
+          year: .year2016, speaker: speaker, language: language, accentColor: retroAccent)
       }
     }
 
@@ -66,7 +69,8 @@ struct Home2016: StaticPage {
     Grid(alignment: .top, spacing: 16) {
       ForEach(allDays) { data in
         Section {
-          TimetableComponent(conference: data, language: language)
+          TimetableComponent(
+            conference: data, language: language, accentColor: retroAccent)
         }
       }
     }
@@ -79,7 +83,8 @@ struct Home2016: StaticPage {
         .flatMap { $0.schedules.flatMap(\.sessions) }
         .filter(\.hasDescription)
       ForEach(sessions) { session in
-        SessionDetailModal(year: .year2016, session: session, language: language)
+        SessionDetailModal(
+          year: .year2016, session: session, language: language, accentColor: retroAccent)
       }
     }
 
@@ -103,12 +108,14 @@ private struct Retro2016SectionHeader: HTML {
         .horizontalAlignment(.center)
         .font(.title1)
         .fontWeight(.bold)
-        .foregroundStyle(.init(hex: "#444444"))
+        .foregroundStyle(.white)
+        .class("retro-2016-heading")
     }
-    .padding(.top, .px(80))
-    .padding(.bottom, .px(32))
+    .frame(height: 150)
+    .background(
+      Gradient(colors: [.init(hex: "#FC983B"), .white], type: .linear(angle: 180))
+    )
     .margin(.bottom, .px(54))
-    .border(.init(hex: "#cccccc"), width: 1, edges: .bottom)
     .id(htmlId)
   }
 }

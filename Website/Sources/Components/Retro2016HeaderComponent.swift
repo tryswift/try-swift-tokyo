@@ -15,16 +15,17 @@ struct Retro2016HeaderComponent: HTML {
       Text("March 2-4, 2016")
         .horizontalAlignment(.center)
         .font(.title3)
-        .foregroundStyle(.init(hex: "#555555"))
+        .foregroundStyle(.white.opacity(0.8))
         .margin(.top, .px(16))
 
       Text(String("About", language: language))
         .horizontalAlignment(.center)
         .font(.title1)
         .fontWeight(.bold)
-        .foregroundStyle(.init(hex: "#444444"))
+        .foregroundStyle(.init(hex: "#FC983B"))
+        .class("retro-2016-heading")
         .margin(.top, .px(40))
     }
-    .background(.white)
+    .background(.init(hex: "#282B35"))
   }
 }
