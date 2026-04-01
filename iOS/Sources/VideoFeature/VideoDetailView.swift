@@ -27,7 +27,7 @@ public struct VideoDetailView: View {
         .id(store.videoMetadata.youtubeVideoId)
 
         // Tab Picker
-        if hasMultipleTabs {
+        if hasAdditionalTabs {
           Picker("Content", selection: $store.selectedTab.sending(\.view.tabSelected)) {
             Text("About").tag(VideoDetail.Tab.about)
             if store.videoMetadata.transcript != nil {
@@ -57,7 +57,7 @@ public struct VideoDetailView: View {
     }
   }
 
-  private var hasMultipleTabs: Bool {
+  private var hasAdditionalTabs: Bool {
     if store.videoMetadata.transcript != nil { return true }
     #if os(macOS)
       if store.videoMetadata.summary != nil { return true }
