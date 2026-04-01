@@ -567,18 +567,20 @@ struct WorkshopRoutes: RouteCollection {
       switch result {
       case .assigned:
         // Fire-and-forget Luma invitation
-        let app = req.application
         let capturedEmail = email
         let capturedName = applicantName
         let capturedWorkshopID = form.first_choice_id
+        let db = req.db
+        let client = req.client
+        let logger = req.logger
         Task {
           await self.sendLumaInvitation(
             email: capturedEmail,
             applicantName: capturedName,
             workshopID: capturedWorkshopID,
-            db: app.db,
-            client: app.client,
-            logger: app.logger
+            db: db,
+            client: client,
+            logger: logger
           )
         }
 
@@ -757,6 +759,17 @@ struct WorkshopRoutes: RouteCollection {
     logger: Logger
   ) async {
     do {
+      // Skip if already invited (e.g. batch handleSendTickets ran concurrently)
+      if let existing = try await WorkshopApplication.query(on: db)
+        .filter(\.$email == email)
+        .filter(\.$status == .won)
+        .first(),
+        existing.lumaGuestID != nil
+      {
+        logger.info("FCFS Luma invite: \(email) already has lumaGuestID, skipping")
+        return
+      }
+
       guard let workshop = try await WorkshopRegistration.find(workshopID, on: db) else {
         logger.warning("FCFS Luma invite: workshop \(workshopID) not found")
         return
@@ -774,7 +787,7 @@ struct WorkshopRoutes: RouteCollection {
         return
       }
 
-      let response = try await LumaClient.addGuestToEvent(
+      try await LumaClient.addGuestToEvent(
         eventID: lumaEventID,
         email: email,
         name: applicantName,
@@ -783,7 +796,14 @@ struct WorkshopRoutes: RouteCollection {
         logger: logger
       )
 
-      if let guestID = response.id {
+      // Re-fetch guest to resolve the guest ID (same pattern as handleSendTickets)
+      let guest = try await LumaClient.getGuest(
+        email: email,
+        eventID: lumaEventID,
+        client: client,
+        logger: logger
+      )
+      if let guestID = guest?.id {
         if let application = try await WorkshopApplication.query(on: db)
           .filter(\.$email == email)
           .filter(\.$status == .won)
@@ -794,7 +814,7 @@ struct WorkshopRoutes: RouteCollection {
           logger.info("FCFS Luma invite: sent and saved guestID for \(email)")
         }
       } else {
-        logger.info("FCFS Luma invite: sent for \(email) but no guestID in response")
+        logger.info("FCFS Luma invite: sent for \(email) but could not resolve guestID")
       }
     } catch {
       logger.error("FCFS Luma invite failed for \(email): \(error)")
