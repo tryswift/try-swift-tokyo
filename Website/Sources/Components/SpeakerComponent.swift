@@ -30,10 +30,11 @@ struct SpeakerModal: HTML {
   let year: ConferenceYear
   let speaker: Speaker
   let language: SupportedLanguage
+  var accentColor: Color = .bootstrapPurple
 
   var body: some HTML {
     Modal(id: speaker.modalId) {
-      SpeakerDetailComponent(speaker: speaker, language: language)
+      SpeakerDetailComponent(speaker: speaker, language: language, accentColor: accentColor)
       ModalFooterComponent(year: year, modalId: speaker.modalId, language: language)
         .padding(.all, .px(16))
     }.size(.large)

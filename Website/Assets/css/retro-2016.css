@@ -1,0 +1,43 @@
+/* retro-2016.css - Styles for the 2016 try! Swift archive page */
+/* Scoped via class names to avoid affecting other year pages */
+
+/* System font stack: SanFrancisco on Apple devices, similar on others */
+.retro-2016-speaker {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/* Heading font: weight 900 approximating NeueHaasUnica Black */
+.retro-2016-heading {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-weight: 900 !important;
+  text-transform: uppercase;
+}
+
+/* Speaker image: 75% grayscale, removed on hover */
+.retro-2016-speaker img {
+  filter: grayscale(75%);
+  transition: all 0.3s ease;
+}
+.retro-2016-speaker:hover img {
+  filter: grayscale(0%);
+}
+
+/* Speaker name color on hover */
+.retro-2016-speaker:hover h2,
+.retro-2016-speaker:hover h3,
+.retro-2016-speaker:hover h4 {
+  filter: grayscale(0%);
+}
+
+/* Navigation link styling */
+.retro-2016-nav .navbar-nav .nav-link {
+  text-transform: uppercase;
+  font-weight: 900;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: #E8E4E4 !important;
+  transition: color 0.3s ease;
+}
+.retro-2016-nav .navbar-nav .nav-link:hover,
+.retro-2016-nav .navbar-nav .nav-link:active {
+  color: #59595A !important;
+}

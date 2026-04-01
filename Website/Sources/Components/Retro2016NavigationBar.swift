@@ -24,7 +24,10 @@ struct Retro2016NavigationBar: HTML {
       )
     }
     .navigationBarStyle(.light)
-    .background(.white.opacity(0.95))
+    .background(.white)
     .position(.fixedTop)
+    .border(.init(hex: "#FC983B"), width: 1, edges: .bottom)
+    .shadow(radius: 4, y: 2)
+    .class("retro-2016-nav")
   }
 }

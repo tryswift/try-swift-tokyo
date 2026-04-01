@@ -5,13 +5,14 @@ import SharedModels
 struct TimetableComponent: HTML {
   let conference: Conference
   let language: SupportedLanguage
+  var accentColor: Color = .bootstrapPurple
   private let imageSize = 50
 
   var body: some HTML {
     Text(conference.title)
       .font(.title2)
       .fontWeight(.bold)
-      .foregroundStyle(.bootstrapPurple)
+      .foregroundStyle(accentColor)
 
     Table {
       for schedule in conference.schedules {
@@ -95,6 +96,7 @@ struct SessionDetailModal: HTML {
   let year: ConferenceYear
   let session: Session
   let language: SupportedLanguage
+  var accentColor: Color = .bootstrapPurple
 
   var body: some HTML {
     Modal(
@@ -108,8 +110,8 @@ struct SessionDetailModal: HTML {
         }
         if let speakers = session.speakers {
           ForEach(speakers) { speaker in
-            SpeakerDetailComponent(speaker: speaker, language: language)
-              .border(.bootstrapPurple, width: 1)
+            SpeakerDetailComponent(speaker: speaker, language: language, accentColor: accentColor)
+              .border(accentColor, width: 1)
               .cornerRadius(8)
               .margin(.bottom, .px(8))
           }
@@ -121,7 +123,7 @@ struct SessionDetailModal: HTML {
         Text(session.localizedTitle(for: language))
           .font(.title2)
           .fontWeight(.bold)
-          .foregroundStyle(.bootstrapPurple)
+          .foregroundStyle(accentColor)
       }
     ).size(.large)
   }
