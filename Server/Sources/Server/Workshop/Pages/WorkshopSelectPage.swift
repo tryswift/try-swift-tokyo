@@ -224,7 +224,8 @@ struct WorkshopSelectPageView: HTML, Sendable {
         });
         function validateChoices() {
           var values = selects.map(function(name) {
-            return document.getElementById(name).value;
+            var el = document.getElementById(name);
+            return el ? el.value : '';
           }).filter(function(v) { return v !== ''; });
           var unique = new Set(values);
           if (unique.size !== values.length) {
