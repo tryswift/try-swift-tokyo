@@ -1,1 +1,50 @@
-[]
+[
+  {
+    "session_title": "Practical Cross-Platform Swift",
+    "youtube_video_id": "xhv-O_s-gBk"
+  },
+  {
+    "session_title": "Keep Calm and Type Erase On",
+    "youtube_video_id": "7Ec5-pUVvfk"
+  },
+  {
+    "session_title": "Boundaries in Practice",
+    "youtube_video_id": "rhEiUrY75o8"
+  },
+  {
+    "session_title": "Design of Everyday Swift",
+    "youtube_video_id": "CsuW_EfDJ6k"
+  },
+  {
+    "session_title": "Modern Core Data",
+    "youtube_video_id": "TVI6zDPCLuU"
+  },
+  {
+    "session_title": "Creating a Swift Library",
+    "youtube_video_id": "QcwGd3iKC0U"
+  },
+  {
+    "session_title": "Table View Controllers in Swift",
+    "youtube_video_id": "Y1w6ugLCHGU"
+  },
+  {
+    "session_title": "Real World Mocking in Swift",
+    "youtube_video_id": "AL118shRlYY"
+  },
+  {
+    "session_title": "Hipster Swift",
+    "youtube_video_id": "5kQYDXr0HSw"
+  },
+  {
+    "session_title": "Train Your Swift: Computational Statistics in Swift Examples",
+    "youtube_video_id": "bwDTziTY9UU"
+  },
+  {
+    "session_title": "Parser Combinators in Swift",
+    "youtube_video_id": "6JLpO1RwPU8"
+  },
+  {
+    "session_title": "Contributing to Open Source Swift",
+    "youtube_video_id": "Ysa2n8ZX-YY"
+  }
+]

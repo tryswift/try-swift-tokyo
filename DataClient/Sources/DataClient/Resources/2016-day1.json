@@ -38,10 +38,10 @@
           "description_ja": "Swiftはアプリを作るための単なる言語ではありません。このトークでは、コンパイラ、パッケージマネージャ、そしてSwift開発を生産的で楽しいものにするコミュニティ主導のツールを含むSwiftエコシステムを探ります。これらのツールがどのように連携するか、そしてエコシステムにどのように貢献できるかを見ていきます。",
           "speakers": [
             {
-              "name": "Sho Ikeda",
+              "name": "Syo Ikeda",
               "image_name": "ikesyo",
-              "bio": "Syo Ikeda is an iOS developer at Realm, known for his contributions to open source projects including Himotoki, Carthage, and ReactiveSwift. He is passionate about the Swift ecosystem and developer tooling.",
-              "bio_ja": "RealmのiOS開発者で、Himotoki、Carthage、ReactiveSwiftなどのオープンソースプロジェクトへの貢献で知られています。Swiftエコシステムと開発者ツールに情熱を注いでいます。",
+              "bio": "Syo Ikeda (a.k.a @ikesyo) is an iOS developer lives in Kyoto, working at Hatena. He is the author of Himotoki, a type-safe JSON decoding library made of Swift, and also is contributing to several open source projects such as ReactiveCocoa and Carthage.",
+              "bio_ja": "京都在住のiOSエンジニアで、はてなで働いています。（Twitter上では@ikesyoで知られています。）オープンソースの活動として、Himotoki（type-safeなJSONパーサーライブラリ）の開発やReactiveCocoaやCarthageといったオープンソースのプロジェクトにコントリビュートしています。",
               "links": [
                 {
                   "name": "@ikesyo",
@@ -55,51 +55,25 @@
     },
     {
       "id": 4,
-      "time": "2016-03-02T10:25:00+09:00",
+      "time": "2016-03-02T10:30:00+09:00",
       "sessions": [
         {
           "id": 4,
           "title": "Practical Cross-Platform Swift",
           "title_ja": "実践的クロスプラットフォームSwift",
-          "description": "Swift is now open source and runs on Linux. In this talk, we will explore practical techniques for writing Swift code that runs on both Apple platforms and Linux, covering the challenges and solutions for building cross-platform libraries and tools with Swift.",
+          "description": "With Swift now available on non-Apple platforms, you can set your code free to roam beyond just your iOS app. In this presentation you will discover practical ways to write, test, debug, and deploy cross-platform Swift code without sacrificing the Cocoa and Objective-C functionality where it's available.",
           "description_ja": "Swiftはオープンソースとなり、Linuxでも動作するようになりました。このトークでは、AppleプラットフォームとLinuxの両方で動作するSwiftコードを書くための実践的なテクニックを探り、クロスプラットフォームのライブラリやツールを構築する際の課題と解決策をカバーします。",
+          "youtube_video_id": "xhv-O_s-gBk",
           "speakers": [
             {
               "name": "JP Simard",
               "image_name": "jp_simard",
-              "bio": "JP Simard is an iOS developer at Realm, where he works on the Realm Mobile Database and related tooling. He is the creator of SourceKitten and a core contributor to SwiftLint. He is passionate about developer tools and open source.",
-              "bio_ja": "RealmのiOS開発者で、Realm Mobile Databaseと関連ツールの開発に携わっています。SourceKittenの作者であり、SwiftLintのコアコントリビューターです。開発者ツールとオープンソースに情熱を注いでいます。",
+              "bio": "JP works at Realm on the Objective-C & Swift bindings, creator of jazzy (the documentation tool Apple forgot to release) and enjoys hacking on Swift tooling.",
+              "bio_ja": "Realmにて、Objective-CとSwiftのバインディングを担当しています。また、jazzy（Appleがリリースし忘れているドキュメンテーションツール😜）の開発者でありSwiftのツールチェーンのハックを楽しんでいます。",
               "links": [
                 {
                   "name": "@simjp",
                   "url": "https://x.com/simjp"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "time": "2016-03-02T10:35:00+09:00",
-      "sessions": [
-        {
-          "id": 5,
-          "title": "Code Reading",
-          "title_ja": "コードリーディング",
-          "description": "Reading code is a skill that developers use every day, yet we rarely talk about how to do it well. In this talk, we will explore techniques for reading and understanding unfamiliar codebases, drawing parallels to how we learn human languages and how those same strategies can make us better code readers.",
-          "description_ja": "コードを読むことは開発者が毎日使うスキルですが、上手に読む方法についてはめったに語られません。このトークでは、馴染みのないコードベースを読んで理解するためのテクニックを探り、人間の言語を学ぶ方法との類似点を描き、同じ戦略がどのようにコードリーダーとしてのスキルを向上させるかを見ていきます。",
-          "speakers": [
-            {
-              "name": "Laura Savino",
-              "image_name": "laura_savino",
-              "bio": "Laura Savino is an iOS developer and linguist who builds language learning tools. She brings her background in linguistics to software development, exploring the parallels between human languages and programming languages.",
-              "bio_ja": "iOSデベロッパーであり言語学者で、言語学習ツールを開発しています。言語学のバックグラウンドをソフトウェア開発に活かし、人間の言語とプログラミング言語の類似点を探求しています。",
-              "links": [
-                {
-                  "name": "@savinola",
-                  "url": "https://x.com/savinola"
                 }
               ]
             }
@@ -119,8 +93,35 @@
       ]
     },
     {
-      "id": 7,
+      "id": 5,
       "time": "2016-03-02T11:30:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "Code Reading",
+          "title_ja": "コードリーディング",
+          "description": "Reading code is a skill that developers use every day, yet we rarely talk about how to do it well. In this talk, we will explore techniques for reading and understanding unfamiliar codebases, drawing parallels to how we learn human languages and how those same strategies can make us better code readers.",
+          "description_ja": "コードを読むことは開発者が毎日使うスキルですが、上手に読む方法についてはめったに語られません。このトークでは、馴染みのないコードベースを読んで理解するためのテクニックを探り、人間の言語を学ぶ方法との類似点を描き、同じ戦略がどのようにコードリーダーとしてのスキルを向上させるかを見ていきます。",
+          "speakers": [
+            {
+              "name": "Laura Savino",
+              "image_name": "laura_savino",
+              "bio": "Laura is an iOS developer with a penchant for languages, travel, and education. She most recently worked to transform students' academic experience by building apps for learning at Khan Academy, and is now an independent coder, speaker, and trainer.",
+              "bio_ja": "言語、旅行、教育に強い興味を持っているiOSエンジニアです。Khan Academyにて、アプリを作り、学ぶ過程で学生のアカデミックな経験を活かす取り組みをしています。フリーでコーダー、発表者、トレーナーをしています。",
+              "links": [
+                {
+                  "name": "@savinola",
+                  "url": "https://x.com/savinola"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2016-03-02T12:00:00+09:00",
       "sessions": [
         {
           "id": 7,
@@ -130,10 +131,10 @@
           "description_ja": "Apple TVとtvOSはSwift開発者に新しい可能性を開きます。このトークでは、tvOS SDKを探り、大画面向け開発のユニークな課題について議論し、Swiftを使ってApple TV向けの魅力的なアプリやゲームを構築する方法をデモンストレーションします。",
           "speakers": [
             {
-              "name": "Boris Bugling",
+              "name": "Boris Bügling",
               "image_name": "boris_bugling",
-              "bio": "Boris Bugling is a Cocoa developer at Contentful and a prolific contributor to the CocoaPods ecosystem. He enjoys building tools and exploring new Apple platforms.",
-              "bio_ja": "ContentfulのCocoa開発者であり、CocoaPodsエコシステムへの多くの貢献で知られています。ツールの構築と新しいAppleプラットフォームの探求を楽しんでいます。",
+              "bio": "Boris is a Cocoa developer from Berlin, who currently works on the iOS SDK at Contentful. A Java developer in another life, with many iOS apps under his belt, he is also a strong open source contributor, building plugins to tame Xcode, and bashing bugs as the CocoaPods \"Senior VP of Evil\". Ya tu sabes.",
+              "bio_ja": "ベルリン在住のCocoaデベロッパーです。現在はContentfulでiOSのSDKを開発に携わっています。Java開発者としての一面や、たくさんのiOSアプリを開発した経験を持っています。彼はまたオープンソースの強力なコントリビュータでもあります。Xcodeをより使いやすくするためのプラグインを開発したり、\"Senior VP of Evil\"という肩書きでCocoaPodsの不具合を直しています。Ya tu sabes.（それじゃ、また。）",
               "links": [
                 {
                   "name": "@NeoNacho",
@@ -147,20 +148,21 @@
     },
     {
       "id": 8,
-      "time": "2016-03-02T11:55:00+09:00",
+      "time": "2016-03-02T12:30:00+09:00",
       "sessions": [
         {
           "id": 8,
           "title": "Keep Calm and Type Erase On",
           "title_ja": "落ち着いてType Erasureしよう",
-          "description": "Protocols with associated types are powerful, but they come with limitations. In this talk, we will explore the concept of type erasure in Swift, why it is needed, and how to implement it to work around the constraints of protocols with associated types.",
-          "description_ja": "関連型を持つプロトコルは強力ですが、制限もあります。このトークでは、Swiftにおける型消去の概念、なぜそれが必要なのか、そして関連型を持つプロトコルの制約を回避するための実装方法を探ります。",
+          "description": "Just when you thought having unambiguous types was the one true way of Swift, it turns out that sometimes it is necessary to erase types. In this talk Gwendolyn Weston explains what a type is, what it means to erase a type, and why you would want to do it.",
+          "description_ja": "プロトコルの関連型を持つプロトコルは強力ですが、制限もあります。このトークでは、Swiftにおける型消去の概念、なぜそれが必要なのか、そして関連型を持つプロトコルの制約を回避するための実装方法を探ります。",
+          "youtube_video_id": "7Ec5-pUVvfk",
           "speakers": [
             {
               "name": "Gwendolyn Weston",
               "image_name": "gwendolyn_weston",
-              "bio": "Gwendolyn Weston is an iOS developer who enjoys exploring Swift's type system and pushing the boundaries of protocol-oriented programming.",
-              "bio_ja": "iOSデベロッパーで、Swiftの型システムの探求とプロトコル指向プログラミングの限界に挑戦することを楽しんでいます。",
+              "bio": "Gwendolyn Weston is a developer at PlanGrid, where she works on version control for construction blueprints. She likes math, the colour purple (#A157E8), and is currently producing her first music album.",
+              "bio_ja": "PlanGridでエンジニアをしており、建築設計図用のバージョンコントロールの開発をしています。数学と紫色(#A157E8）が好きで、初めてのミュージックアルバムの制作を現在しています。",
               "links": [
                 {
                   "name": "@purpleyay",
@@ -173,8 +175,19 @@
       ]
     },
     {
+      "id": 10,
+      "time": "2016-03-02T13:00:00+09:00",
+      "sessions": [
+        {
+          "id": 10,
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
       "id": 9,
-      "time": "2016-03-02T12:05:00+09:00",
+      "time": "2016-03-02T14:30:00+09:00",
       "sessions": [
         {
           "id": 9,
@@ -186,8 +199,8 @@
             {
               "name": "Yuta Koshizawa",
               "image_name": "yuta_koshizawa",
-              "bio": "Yuta Koshizawa (@koher) is a Swift developer who is passionate about type safety and functional programming concepts in Swift. He has written extensively about error handling patterns in Swift.",
-              "bio_ja": "Swiftの型安全性と関数型プログラミングの概念に情熱を注ぐSwift開発者です。Swiftのエラーハンドリングパターンについて広く執筆しています。",
+              "bio": "Yuta is an iOS developer at Qoncept. He is also developing Qaleidospace as his side project. His posts about Swift on Qiita, Japanese blogging service specialized for programming, are popular with iOS developers in Japan.",
+              "bio_ja": "QonceptでiOS開発をしています。また、サイドプロジェクトとしてQaleidospaceも開発しています。Qiitaに投稿しているSwiftの記事は日本のiOS開発者の間で人気です。",
               "links": [
                 {
                   "name": "@koher",
@@ -200,19 +213,8 @@
       ]
     },
     {
-      "id": 10,
-      "time": "2016-03-02T12:30:00+09:00",
-      "sessions": [
-        {
-          "id": 10,
-          "title": "Lunch",
-          "title_ja": "ランチ"
-        }
-      ]
-    },
-    {
       "id": 11,
-      "time": "2016-03-02T14:30:00+09:00",
+      "time": "2016-03-02T15:00:00+09:00",
       "sessions": [
         {
           "id": 11,
@@ -224,8 +226,8 @@
             {
               "name": "Michele Titolo",
               "image_name": "michele_titolo",
-              "bio": "Michele Titolo is a lead iOS engineer at Capital One, known for her expertise in Swift protocols and software architecture. She is a frequent conference speaker and advocate for clean code practices.",
-              "bio_ja": "Capital OneのリードiOSエンジニアで、Swiftのプロトコルとソフトウェアアーキテクチャの専門知識で知られています。カンファレンスでの講演を頻繁に行い、クリーンコードの実践を推進しています。",
+              "bio": "Michele Titolo is not at all worried about a robot uprising. Making software professionally since 2010, she has seen enough codebases without tests to know our future is safe. By day she is a Lead Software Engineer at Capital One and CTO of Women Who Code. By night she travels the world advocating for high quality and maintainable code.",
+              "bio_ja": "Michele Titoloは機械の反乱についてまったく気にしていません。2010よりプロとしてソフトウェア開発を始め、数多くのテスト書かれていないコードを見てきて、未来が安全であるという確信を得ました。 彼女はCapital Oneのリードエンジニアであり、Women Who CodeのCTOでもあります。日夜、彼女は品質が高くメンテナンスしやすいコードを世界に広めるために活動しています。",
               "links": [
                 {
                   "name": "@micheletitolo",
@@ -239,7 +241,7 @@
     },
     {
       "id": 12,
-      "time": "2016-03-02T14:55:00+09:00",
+      "time": "2016-03-02T15:30:00+09:00",
       "sessions": [
         {
           "id": 12,
@@ -251,8 +253,8 @@
             {
               "name": "Daniel Steinberg",
               "image_name": "daniel_steinberg",
-              "bio": "Daniel Steinberg (@dimsumthinking) is an author, trainer, and speaker who has been writing about Cocoa and Swift for many years. He is the author of several books on Swift and iOS development and is known for his engaging teaching style.",
-              "bio_ja": "著者、トレーナー、スピーカーとして、長年にわたりCocoaとSwiftについて執筆しています。SwiftとiOS開発に関する複数の書籍の著者であり、魅力的な教え方で知られています。",
+              "bio": "Daniel is the author of the best selling books A Swift Kickstart and Developing iOS 7 Apps for iPad and iPhone (the official companion book to the popular iTunes U series from Stanford University). He has written apps for the iPhone and the iPad since the SDKs first appeared and has written programs for the Mac all the way back to System 7. Daniel presents iPhone, Cocoa, and Swift training and consults through his company Dim Sum Thinking.",
+              "bio_ja": "ベストセラーになった「A Swift Kickstart」と「Developing iOS 7 Apps for iPad and iPhone」の著者です。（この２冊の本は、iTunes Uで人気のスタンフォード大学のiOS開発の講義の公式の参考書になっています。）iPhoneとiPadアプリの開発をSDKが出た当初から始め、Macアプリに至ってはSyntem 7の頃から携わっています。また、iPhone、Cocoa、およびSwiftについてのトレーニングとコンサルティングを彼のDim Sum Thinking社で行っています。",
               "links": [
                 {
                   "name": "@dimsumthinking",
@@ -265,8 +267,19 @@
       ]
     },
     {
+      "id": 14,
+      "time": "2016-03-02T16:00:00+09:00",
+      "sessions": [
+        {
+          "id": 14,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
       "id": 13,
-      "time": "2016-03-02T15:05:00+09:00",
+      "time": "2016-03-02T16:30:00+09:00",
       "sessions": [
         {
           "id": 13,
@@ -278,8 +291,8 @@
             {
               "name": "Tim Oliver",
               "image_name": "tim_oliver",
-              "bio": "Tim Oliver is an iOS developer at Realm, and a prolific open-source contributor. Originally from Perth, Australia, he moved to Tokyo where he has been building iOS apps and contributing to the community.",
-              "bio_ja": "RealmのiOS開発者であり、活発なオープンソースコントリビューターです。オーストラリアのパース出身で、東京に移住し、iOSアプリの開発とコミュニティへの貢献を続けています。",
+              "bio": "Tim Oliver hails from Perth, Australia! He has been an iOS developer for 6 years, and recently joined Realm in March 2015. Tim has a cool app called iComics and he loves karaoke!",
+              "bio_ja": "オーストラリア・パースの出身です。6年間iOS開発に携わっており、2015年3月にRealmにジョインしました。App StoreではiComicsというクールなアプリをリリースしてます。カラオケが大好きです!",
               "links": [
                 {
                   "name": "@TimOliverAU",
@@ -292,19 +305,8 @@
       ]
     },
     {
-      "id": 14,
-      "time": "2016-03-02T15:30:00+09:00",
-      "sessions": [
-        {
-          "id": 14,
-          "title": "Break",
-          "title_ja": "休憩"
-        }
-      ]
-    },
-    {
       "id": 15,
-      "time": "2016-03-02T16:00:00+09:00",
+      "time": "2016-03-02T17:00:00+09:00",
       "sessions": [
         {
           "id": 15,
@@ -316,12 +318,12 @@
             {
               "name": "Stephanie Shupe",
               "image_name": "stephanie_shupe",
-              "bio": "Stephanie Shupe is an iOS developer focused on smart home technology. She is passionate about the intersection of software and hardware, building apps that connect the digital and physical worlds.",
-              "bio_ja": "スマートホーム技術に注力するiOS開発者です。ソフトウェアとハードウェアの交差点に情熱を注ぎ、デジタルと物理の世界をつなぐアプリを構築しています。",
+              "bio": "Stephanie Shupe is a Senior Software Engineer at Lookout and an Advisor to Women Who Code. She has years of experience in iOS and has recently gotten more involved with backend development. Stephanie is passionate about learning new things, and helping others learn and develop their skills.",
+              "bio_ja": "Lookoutでシニアソフトウェアエンジニアをしており、Wowen Who Codeのアドバイザーもしています。iOSのフィールドで長年の経験を持っており、最近はバックエンドの開発により関わっています。自身が新しいことを学ぶこと、また、人が学習しスキルアップをサポートすることに情熱を持っています。",
               "links": [
                 {
-                  "name": "@stloyal",
-                  "url": "https://x.com/stloyal"
+                  "name": "@steph_shupe",
+                  "url": "https://x.com/steph_shupe"
                 }
               ]
             }
@@ -331,7 +333,7 @@
     },
     {
       "id": 16,
-      "time": "2016-03-02T16:25:00+09:00",
+      "time": "2016-03-02T17:30:00+09:00",
       "sessions": [
         {
           "id": 16,
@@ -343,8 +345,8 @@
             {
               "name": "Cate Huston",
               "image_name": "cate_huston",
-              "bio": "Cate Huston is an engineering leader at Automattic. She has lived and worked in the UK, Australia, Canada, China, and the United States. She is passionate about engineering leadership, diversity, and inclusion in the tech industry.",
-              "bio_ja": "Automatticのエンジニアリングリーダーです。イギリス、オーストラリア、カナダ、中国、アメリカで生活し働いてきました。エンジニアリングリーダーシップ、テック業界における多様性とインクルージョンに情熱を注いでいます。",
+              "bio": "Cate Huston is Director of Mobile Engineering at Ride. She's lived and worked in the UK, Australia, Canada, China and the United States, previously as an engineer at Google, an Extreme Blue intern at IBM, and a ski instructor. Cate speaks internationally on mobile development and her writing has been published on sites as varied as Lifehacker, The Daily Beast, The Eloquent Woman and Model View Culture. She is an advisor at Glowforge, co-curates Technically Speaking, blogs at Accidentally in Code and is @catehstn on Twitter.",
+              "bio_ja": "Rideにてモバイルエンジニアリングのディレクターをしています。UK、オースタラリア、カナダ、中国、アメリカに居住した経験を持ち、Googleではエンジニア、IBMではExtreme Blueインターン、スキーのインストラクターとして働いた経験があります。国際的にモバイル開発の講演をしており、執筆に関してはLifehacker、The Daily Beast、The Eloquent Woman、Model View Cultureといったサイトに掲載されております。Glowforgeにてアドバイザーをしており、Accidentally in Codeでブログも書いています。また、Twitterは@catehstnで活動しています。",
               "links": [
                 {
                   "name": "@catehstn",
@@ -358,7 +360,7 @@
     },
     {
       "id": 17,
-      "time": "2016-03-02T17:00:00+09:00",
+      "time": "2016-03-02T18:00:00+09:00",
       "sessions": [
         {
           "id": 17,
