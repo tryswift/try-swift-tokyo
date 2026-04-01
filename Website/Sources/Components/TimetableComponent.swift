@@ -109,7 +109,7 @@ struct SessionDetailModal: HTML {
         if let speakers = session.speakers {
           ForEach(speakers) { speaker in
             SpeakerDetailComponent(speaker: speaker, language: language)
-              .background(.lightGray)
+              .border(.bootstrapPurple, width: 1)
               .cornerRadius(8)
               .margin(.bottom, .px(8))
           }
