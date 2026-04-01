@@ -94,6 +94,7 @@ public struct ScheduleDetail: Sendable {
         let title = state.title
         let description = state.description
         let limit = 5 - sameSpeaker.count
+        guard limit > 0 else { return .none }
         return .run { send in
           if let reranked = await SessionRelevance.rerank(
             currentTitle: title,

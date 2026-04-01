@@ -421,19 +421,15 @@ public struct Schedule {
     if !currentTags.isEmpty {
       let sameSpeakerIds = Set(sameSpeakerResults.map(\.id))
       for searchable in allSessions where !isSelf(searchable.session) {
-        let candidateId =
-          "\(searchable.year.rawValue)-\(searchable.session.title)-\(searchable.session.speakers?.first?.name ?? "")"
-        guard !sameSpeakerIds.contains(candidateId) else { continue }
+        let related = makeRelated(searchable, isSameSpeaker: false)
+        guard !sameSpeakerIds.contains(related.id) else { continue }
 
         let candidateTags = SessionTagging.generateTags(for: searchable.session)
         let matchCount = currentTags.intersection(candidateTags).count
         guard matchCount > 0 else { continue }
 
         tagResults.append(
-          ScoredResult(
-            related: makeRelated(searchable, isSameSpeaker: false),
-            matchCount: matchCount
-          )
+          ScoredResult(related: related, matchCount: matchCount)
         )
       }
       tagResults.sort { $0.matchCount > $1.matchCount }
@@ -465,26 +461,20 @@ public struct Schedule {
       {
         continue
       }
-      let candidateId =
-        "\(searchable.year.rawValue)-\(candidate.title)-\(candidate.speakers?.first?.name ?? "")"
-      guard !excludingIds.contains(candidateId) else { continue }
+      let related = RelatedSession(
+        year: searchable.year,
+        session: candidate,
+        speakerImageName: candidate.speakers?.first?.imageName,
+        speakerName: candidate.speakers?.first?.name,
+        isSameSpeaker: false
+      )
+      guard !excludingIds.contains(related.id) else { continue }
 
       let candidateTags = SessionTagging.generateTags(for: candidate)
       let matchCount = currentTags.intersection(candidateTags).count
       guard matchCount > 0 else { continue }
 
-      results.append(
-        ScoredResult(
-          related: RelatedSession(
-            year: searchable.year,
-            session: candidate,
-            speakerImageName: candidate.speakers?.first?.imageName,
-            speakerName: candidate.speakers?.first?.name,
-            isSameSpeaker: false
-          ),
-          matchCount: matchCount
-        )
-      )
+      results.append(ScoredResult(related: related, matchCount: matchCount))
     }
     results.sort { $0.matchCount > $1.matchCount }
     return results.prefix(limit).map(\.related)

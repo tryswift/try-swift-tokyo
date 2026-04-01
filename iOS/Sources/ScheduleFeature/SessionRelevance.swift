@@ -17,6 +17,7 @@ enum SessionRelevance {
     candidates: [RelatedSession],
     limit: Int
   ) async -> [RelatedSession]? {
+    guard limit > 0 else { return nil }
     let model = SystemLanguageModel.default
     guard case .available = model.availability else { return nil }
     guard !candidates.isEmpty else { return nil }
@@ -53,7 +54,11 @@ enum SessionRelevance {
       )
     else { return nil }
 
-    let validIndices = result.content.rankedIndices.filter { $0 >= 0 && $0 < candidates.count }
+    var seen = Set<Int>()
+    let validIndices = result.content.rankedIndices.filter { index in
+      guard index >= 0 && index < candidates.count else { return false }
+      return seen.insert(index).inserted
+    }
     let ranked = validIndices.prefix(limit).map { candidates[$0] }
     return ranked.isEmpty ? nil : Array(ranked)
   }
