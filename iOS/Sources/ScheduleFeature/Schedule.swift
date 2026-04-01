@@ -572,21 +572,33 @@ public struct ScheduleView: View {
       VStack {
         if let speakers = session.speakers {
           if speakers.count > 1 {
+            let iconSize: CGFloat =
+              switch speakers.count {
+              case 2: 44
+              case 3...4: 34
+              default: 28
+              }
+            let spacing = -(iconSize * 0.1).rounded()
             ZStack(alignment: .bottomTrailing) {
-              ZStack(alignment: .leading) {
-                ForEach(Array(speakers.enumerated()), id: \.element) { index, speaker in
-                  Image(speaker.imageName, bundle: .module)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(.background, lineWidth: 2))
-                    .frame(width: 60)
-                    .accessibilityElement(children: .ignore)
-                    .accessibilityIgnoresInvertColors()
-                    .offset(x: CGFloat(index) * 20)
+              Grid(alignment: .center, horizontalSpacing: spacing, verticalSpacing: spacing) {
+                ForEach(Array(stride(from: 0, to: speakers.count, by: 2)), id: \.self) { i in
+                  GridRow {
+                    let end = min(i + 2, speakers.count)
+                    let isLastSingle = (end - i == 1)
+                    ForEach(speakers[i..<end], id: \.self) { speaker in
+                      Image(speaker.imageName, bundle: .module)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(Circle())
+                        .overlay(Circle().stroke(.background, lineWidth: 2))
+                        .frame(width: iconSize)
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityIgnoresInvertColors()
+                        .gridCellColumns(isLastSingle ? 2 : 1)
+                    }
+                  }
                 }
               }
-              .frame(width: 60 + CGFloat(speakers.count - 1) * 20, alignment: .leading)
               if hasVideo {
                 Image(systemName: "play.circle.fill")
                   .font(.body)
