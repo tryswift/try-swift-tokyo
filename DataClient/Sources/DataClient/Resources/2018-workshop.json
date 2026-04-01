@@ -1,0 +1,177 @@
+{
+  "id": 3,
+  "title": "Day 3",
+  "title_ja": "3日目",
+  "date": "2018-03-03T09:00:00+09:00",
+  "schedules": [
+    {
+      "time": "2018-03-03T09:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Registration",
+          "title_ja": "受付"
+        }
+      ]
+    },
+    {
+      "time": "2018-03-03T09:30:00+09:00",
+      "sessions": [
+        {
+          "title": "Building Real-World Server-Side Swift Applications with Kitura",
+          "title_ja": "Kituraで実践的なサーバーサイドSwiftアプリケーションを構築しよう",
+          "place": "Casareal",
+          "place_ja": "Casareal",
+          "speakers": [
+            {
+              "name": "Taiji Hagino",
+              "image_name": "taiji_hagino",
+              "links": [
+                {
+                  "name": "@taiponrock",
+                  "url": "https://x.com/taiponrock"
+                }
+              ]
+            }
+          ],
+          "description": "Hands-on backend development with Kitura covering API basics, template creation, deployment, and codable routing.",
+          "description_ja": "Kituraを使ったハンズオン形式のバックエンド開発で、APIの基本、テンプレート作成、デプロイ、Codableルーティングをカバーします。"
+        },
+        {
+          "title": "Cloud Firestore Workshop",
+          "title_ja": "Cloud Firestoreワークショップ",
+          "place": "Casareal",
+          "place_ja": "Casareal",
+          "speakers": [
+            {
+              "name": "Todd Kerpelman",
+              "image_name": "todd_kerpelman",
+              "links": [
+                {
+                  "name": "@ToddKerpelman",
+                  "url": "https://x.com/ToddKerpelman"
+                }
+              ]
+            }
+          ],
+          "description": "Introduction to Cloud Firestore, covering NoSQL concepts, querying, transactions, security rules, and offline support.",
+          "description_ja": "Cloud Firestoreの入門で、NoSQLの概念、クエリ、トランザクション、セキュリティルール、オフラインサポートをカバーします。"
+        },
+        {
+          "title": "Open Source Swift Workshop",
+          "title_ja": "オープンソースSwiftワークショップ",
+          "place": "LINE",
+          "place_ja": "LINE",
+          "speakers": [
+            {
+              "name": "Nicholas Maccharoli",
+              "image_name": "nicholas_maccharoli",
+              "links": [
+                {
+                  "name": "@din0sr",
+                  "url": "https://x.com/din0sr"
+                }
+              ]
+            },
+            {
+              "name": "Sho Ikeda",
+              "image_name": "ikesyo",
+              "links": [
+                {
+                  "name": "@ikesyo",
+                  "url": "https://x.com/ikesyo"
+                }
+              ]
+            }
+          ],
+          "description": "Examine Swift's compilation process and LLVM fundamentals, learn to find bugs on bugs.swift.org and contribute PRs.",
+          "description_ja": "SwiftのコンパイルプロセスとLLVMの基本を学び、bugs.swift.orgでバグを見つけてPRを送る方法を習得します。"
+        },
+        {
+          "title": "Mastering Value Types in Swift with SWIFT QUEST",
+          "title_ja": "SWIFT QUESTでSwiftの値型をマスターしよう",
+          "place": "Casareal",
+          "place_ja": "Casareal",
+          "speakers": [
+            {
+              "name": "Yuta Koshizawa",
+              "image_name": "yuta_koshizawa",
+              "links": [
+                {
+                  "name": "@koher",
+                  "url": "https://x.com/koher"
+                }
+              ]
+            }
+          ],
+          "description": "RPG-themed workshop progressing through mutable class code to immutable value-type architecture.",
+          "description_ja": "RPGをテーマにしたワークショップで、ミュータブルなクラスコードからイミュータブルな値型アーキテクチャへと段階的に進みます。"
+        },
+        {
+          "title": "Augmented Reality, Swiftly!",
+          "title_ja": "Swiftで拡張現実！",
+          "place": "DeNA",
+          "place_ja": "DeNA",
+          "speakers": [
+            {
+              "name": "Thomas Paul Mann",
+              "image_name": "thomas_paul_mann",
+              "links": []
+            },
+            {
+              "name": "Alex Rozanski",
+              "image_name": "alex_rozanski",
+              "links": []
+            },
+            {
+              "name": "Jason Harris",
+              "image_name": "jason_harris",
+              "links": []
+            }
+          ],
+          "description": "Build AR experiences using Swift with members of Facebook's AR Studio team.",
+          "description_ja": "FacebookのAR Studioチームメンバーと一緒に、Swiftを使ったAR体験を構築します。"
+        },
+        {
+          "title": "Making Apps with Realm Cloud",
+          "title_ja": "Realm Cloudでアプリを作ろう",
+          "place": "Casareal",
+          "place_ja": "Casareal",
+          "speakers": [
+            {
+              "name": "Katsumi Kishikawa",
+              "image_name": "katsumi_kishikawa",
+              "links": [
+                {
+                  "name": "@k_katsumi",
+                  "url": "https://x.com/k_katsumi"
+                }
+              ]
+            }
+          ],
+          "description": "Create applications leveraging Realm Cloud without building custom API or server-side code.",
+          "description_ja": "カスタムAPIやサーバーサイドコードを構築せずに、Realm Cloudを活用したアプリケーションを作成します。"
+        }
+      ]
+    },
+    {
+      "time": "2018-03-03T13:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
+      "time": "2018-03-03T14:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Peer Labs",
+          "title_ja": "もくもく会",
+          "summary": "An unstructured collaborative session for networking and learning.",
+          "summary_ja": "ネットワーキングと学びのための自由な共同作業セッションです。"
+        }
+      ]
+    }
+  ]
+}

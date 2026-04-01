@@ -27,7 +27,7 @@ extension HomeSectionType {
 
   func isAvailable(for year: ConferenceYear) -> Bool {
     switch year {
-    case .year2017, .year2018:
+    case .year2016, .year2017, .year2018:
       [
         .about, .outline, .speaker, .timetable, .access,
       ].contains(self)
@@ -75,7 +75,7 @@ extension HomeSectionType {
 
       let text =
         switch year {
-        case .year2017, .year2018, .year2019, .year2020:
+        case .year2016, .year2017, .year2018, .year2019, .year2020:
           String("hero-text-past", language: language)
         case .year2024:
           String("hero-text-2024", language: language)
@@ -148,9 +148,9 @@ extension HomeSectionType {
       let day2 = try! dataClient.fetchDay2(year)
       let day3: Conference? =
         switch year {
-        case .year2017, .year2018, .year2019, .year2020:
+        case .year2016, .year2020:
           nil
-        case .year2024:
+        case .year2017, .year2018, .year2019, .year2024:
           try! dataClient.fetchWorkshop(year)
         case .year2025, .year2026:
           try! dataClient.fetchDay3(year)

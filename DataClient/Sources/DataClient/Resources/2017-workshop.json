@@ -1,0 +1,154 @@
+{
+  "id": 3,
+  "title": "Day 3",
+  "title_ja": "3日目",
+  "date": "2017-03-04T09:00:00+09:00",
+  "schedules": [
+    {
+      "time": "2017-03-04T09:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Breakfast & Registration",
+          "title_ja": "朝食・受付"
+        }
+      ]
+    },
+    {
+      "time": "2017-03-04T09:30:00+09:00",
+      "sessions": [
+        {
+          "title": "Opening Remarks",
+          "title_ja": "オープニング"
+        }
+      ]
+    },
+    {
+      "time": "2017-03-04T09:45:00+09:00",
+      "sessions": [
+        {
+          "title": "Ideathon & Team Formation",
+          "title_ja": "アイデアソン・チーム編成"
+        }
+      ]
+    },
+    {
+      "time": "2017-03-04T10:30:00+09:00",
+      "sessions": [
+        {
+          "title": "IBM Kitura Workshop",
+          "title_ja": "IBM Kituraワークショップ",
+          "description": "Hands-on workshop on server-side Swift development using IBM's Kitura framework.",
+          "description_ja": "IBMのKituraフレームワークを使用したサーバーサイドSwift開発のハンズオンワークショップです。"
+        },
+        {
+          "title": "Realm Workshop",
+          "title_ja": "Realmワークショップ",
+          "description": "Hands-on workshop on building mobile applications with the Realm mobile database.",
+          "description_ja": "Realmモバイルデータベースを使用したモバイルアプリケーション開発のハンズオンワークショップです。"
+        },
+        {
+          "title": "Cross-platform 2D Game Programming with SDL",
+          "title_ja": "SDLによるクロスプラットフォーム2Dゲームプログラミング",
+          "speakers": [
+            {
+              "name": "Eric Wing",
+              "image_name": "eric_wing",
+              "bio": "Game developer and advocate for cross-platform 2D game programming with SDL.",
+              "links": [
+                {
+                  "name": "@ewingfighter",
+                  "url": "https://x.com/ewingfighter"
+                }
+              ]
+            }
+          ],
+          "description": "Learn cross-platform 2D game programming techniques using SDL with Swift.",
+          "description_ja": "SwiftでSDLを使ったクロスプラットフォーム2Dゲームプログラミングの技法を学びます。"
+        },
+        {
+          "title": "React Native Workshop",
+          "title_ja": "React Nativeワークショップ",
+          "speakers": [
+            {
+              "name": "Orta Therox",
+              "image_name": "orta_therox",
+              "bio": "Developer experience engineer known for work on CocoaPods, Danger, and React Native.",
+              "links": [
+                {
+                  "name": "@orta",
+                  "url": "https://x.com/orta"
+                }
+              ]
+            }
+          ],
+          "description": "Hands-on workshop on building mobile applications with React Native.",
+          "description_ja": "React Nativeを使用したモバイルアプリケーション開発のハンズオンワークショップです。"
+        },
+        {
+          "title": "Open Source Swift Workshop",
+          "title_ja": "オープンソースSwiftワークショップ",
+          "description": "Learn how to contribute to the Swift open source project, including building from source, finding issues, and submitting patches.",
+          "description_ja": "Swiftオープンソースプロジェクトへの貢献方法を学びます。ソースからのビルド、課題の発見、パッチの提出を含みます。"
+        }
+      ]
+    },
+    {
+      "time": "2017-03-04T11:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Hackathon",
+          "title_ja": "ハッカソン",
+          "description": "All-day hackathon with 195 participants forming 47 project teams. All projects must be coded in Swift.",
+          "description_ja": "195名の参加者が47のプロジェクトチームを結成する終日ハッカソン。全プロジェクトはSwiftで開発します。"
+        }
+      ]
+    },
+    {
+      "time": "2017-03-04T13:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Lunch",
+          "title_ja": "昼食"
+        }
+      ]
+    },
+    {
+      "time": "2017-03-04T14:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Hackathon",
+          "title_ja": "ハッカソン",
+          "description": "Hackathon continues. Teams work on their projects with mentor support.",
+          "description_ja": "ハッカソン続行。チームはメンターのサポートを受けながらプロジェクトに取り組みます。"
+        }
+      ]
+    },
+    {
+      "time": "2017-03-04T18:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Coding Ends",
+          "title_ja": "コーディング終了"
+        }
+      ]
+    },
+    {
+      "time": "2017-03-04T18:30:00+09:00",
+      "sessions": [
+        {
+          "title": "Team Presentations",
+          "title_ja": "チームプレゼンテーション"
+        }
+      ]
+    },
+    {
+      "time": "2017-03-04T20:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Winner Announcements",
+          "title_ja": "結果発表"
+        }
+      ]
+    }
+  ]
+}

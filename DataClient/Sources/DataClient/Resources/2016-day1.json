@@ -1,0 +1,371 @@
+{
+  "id": 1,
+  "title": "Day 1",
+  "title_ja": "1日目",
+  "date": "2016-03-02T09:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2016-03-02T08:30:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Registration & Breakfast",
+          "title_ja": "受付・朝食"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2016-03-02T09:45:00+09:00",
+      "sessions": [
+        {
+          "id": 2,
+          "title": "Opening Remarks",
+          "title_ja": "開会"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2016-03-02T10:00:00+09:00",
+      "sessions": [
+        {
+          "id": 3,
+          "title": "Dive into Swift Ecosystem",
+          "title_ja": "Swiftエコシステムに飛び込む",
+          "description": "Swift is more than just a language for building apps. In this talk, we will explore the Swift ecosystem including the compiler, the package manager, and the community-driven tools that make Swift development productive and enjoyable. We will look at how these tools work together and how you can contribute to the ecosystem.",
+          "description_ja": "Swiftはアプリを作るための単なる言語ではありません。このトークでは、コンパイラ、パッケージマネージャ、そしてSwift開発を生産的で楽しいものにするコミュニティ主導のツールを含むSwiftエコシステムを探ります。これらのツールがどのように連携するか、そしてエコシステムにどのように貢献できるかを見ていきます。",
+          "speakers": [
+            {
+              "name": "Sho Ikeda",
+              "image_name": "ikesyo",
+              "bio": "Syo Ikeda is an iOS developer at Realm, known for his contributions to open source projects including Himotoki, Carthage, and ReactiveSwift. He is passionate about the Swift ecosystem and developer tooling.",
+              "bio_ja": "RealmのiOS開発者で、Himotoki、Carthage、ReactiveSwiftなどのオープンソースプロジェクトへの貢献で知られています。Swiftエコシステムと開発者ツールに情熱を注いでいます。",
+              "links": [
+                {
+                  "name": "@ikesyo",
+                  "url": "https://x.com/ikesyo"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2016-03-02T10:25:00+09:00",
+      "sessions": [
+        {
+          "id": 4,
+          "title": "Practical Cross-Platform Swift",
+          "title_ja": "実践的クロスプラットフォームSwift",
+          "description": "Swift is now open source and runs on Linux. In this talk, we will explore practical techniques for writing Swift code that runs on both Apple platforms and Linux, covering the challenges and solutions for building cross-platform libraries and tools with Swift.",
+          "description_ja": "Swiftはオープンソースとなり、Linuxでも動作するようになりました。このトークでは、AppleプラットフォームとLinuxの両方で動作するSwiftコードを書くための実践的なテクニックを探り、クロスプラットフォームのライブラリやツールを構築する際の課題と解決策をカバーします。",
+          "speakers": [
+            {
+              "name": "JP Simard",
+              "image_name": "jp_simard",
+              "bio": "JP Simard is an iOS developer at Realm, where he works on the Realm Mobile Database and related tooling. He is the creator of SourceKitten and a core contributor to SwiftLint. He is passionate about developer tools and open source.",
+              "bio_ja": "RealmのiOS開発者で、Realm Mobile Databaseと関連ツールの開発に携わっています。SourceKittenの作者であり、SwiftLintのコアコントリビューターです。開発者ツールとオープンソースに情熱を注いでいます。",
+              "links": [
+                {
+                  "name": "@simjp",
+                  "url": "https://x.com/simjp"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2016-03-02T10:35:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "Code Reading",
+          "title_ja": "コードリーディング",
+          "description": "Reading code is a skill that developers use every day, yet we rarely talk about how to do it well. In this talk, we will explore techniques for reading and understanding unfamiliar codebases, drawing parallels to how we learn human languages and how those same strategies can make us better code readers.",
+          "description_ja": "コードを読むことは開発者が毎日使うスキルですが、上手に読む方法についてはめったに語られません。このトークでは、馴染みのないコードベースを読んで理解するためのテクニックを探り、人間の言語を学ぶ方法との類似点を描き、同じ戦略がどのようにコードリーダーとしてのスキルを向上させるかを見ていきます。",
+          "speakers": [
+            {
+              "name": "Laura Savino",
+              "image_name": "laura_savino",
+              "bio": "Laura Savino is an iOS developer and linguist who builds language learning tools. She brings her background in linguistics to software development, exploring the parallels between human languages and programming languages.",
+              "bio_ja": "iOSデベロッパーであり言語学者で、言語学習ツールを開発しています。言語学のバックグラウンドをソフトウェア開発に活かし、人間の言語とプログラミング言語の類似点を探求しています。",
+              "links": [
+                {
+                  "name": "@savinola",
+                  "url": "https://x.com/savinola"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2016-03-02T11:00:00+09:00",
+      "sessions": [
+        {
+          "id": 6,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2016-03-02T11:30:00+09:00",
+      "sessions": [
+        {
+          "id": 7,
+          "title": "tvOS",
+          "title_ja": "tvOS",
+          "description": "Apple TV and tvOS open up new possibilities for Swift developers. In this talk, we will explore the tvOS SDK, discuss the unique challenges of developing for the big screen, and demonstrate how to build engaging apps and games for Apple TV using Swift.",
+          "description_ja": "Apple TVとtvOSはSwift開発者に新しい可能性を開きます。このトークでは、tvOS SDKを探り、大画面向け開発のユニークな課題について議論し、Swiftを使ってApple TV向けの魅力的なアプリやゲームを構築する方法をデモンストレーションします。",
+          "speakers": [
+            {
+              "name": "Boris Bugling",
+              "image_name": "boris_bugling",
+              "bio": "Boris Bugling is a Cocoa developer at Contentful and a prolific contributor to the CocoaPods ecosystem. He enjoys building tools and exploring new Apple platforms.",
+              "bio_ja": "ContentfulのCocoa開発者であり、CocoaPodsエコシステムへの多くの貢献で知られています。ツールの構築と新しいAppleプラットフォームの探求を楽しんでいます。",
+              "links": [
+                {
+                  "name": "@NeoNacho",
+                  "url": "https://x.com/NeoNacho"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2016-03-02T11:55:00+09:00",
+      "sessions": [
+        {
+          "id": 8,
+          "title": "Keep Calm and Type Erase On",
+          "title_ja": "落ち着いてType Erasureしよう",
+          "description": "Protocols with associated types are powerful, but they come with limitations. In this talk, we will explore the concept of type erasure in Swift, why it is needed, and how to implement it to work around the constraints of protocols with associated types.",
+          "description_ja": "関連型を持つプロトコルは強力ですが、制限もあります。このトークでは、Swiftにおける型消去の概念、なぜそれが必要なのか、そして関連型を持つプロトコルの制約を回避するための実装方法を探ります。",
+          "speakers": [
+            {
+              "name": "Gwendolyn Weston",
+              "image_name": "gwendolyn_weston",
+              "bio": "Gwendolyn Weston is an iOS developer who enjoys exploring Swift's type system and pushing the boundaries of protocol-oriented programming.",
+              "bio_ja": "iOSデベロッパーで、Swiftの型システムの探求とプロトコル指向プログラミングの限界に挑戦することを楽しんでいます。",
+              "links": [
+                {
+                  "name": "@purpleyay",
+                  "url": "https://x.com/purpleyay"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2016-03-02T12:05:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "Three Stories About Error Handling in Swift",
+          "title_ja": "Swiftのエラーハンドリングに関する3つの話",
+          "description": "Error handling is a crucial part of writing robust Swift code. In this talk, we will explore three different approaches to error handling in Swift, examining the trade-offs between Optional, Result types, and Swift's native error handling mechanism using throws.",
+          "description_ja": "エラーハンドリングは堅牢なSwiftコードを書く上で重要な部分です。このトークでは、Swiftにおける3つの異なるエラーハンドリングのアプローチを探り、Optional、Result型、そしてthrowsを使ったSwiftネイティブのエラーハンドリングメカニズムの間のトレードオフを検討します。",
+          "speakers": [
+            {
+              "name": "Yuta Koshizawa",
+              "image_name": "yuta_koshizawa",
+              "bio": "Yuta Koshizawa (@koher) is a Swift developer who is passionate about type safety and functional programming concepts in Swift. He has written extensively about error handling patterns in Swift.",
+              "bio_ja": "Swiftの型安全性と関数型プログラミングの概念に情熱を注ぐSwift開発者です。Swiftのエラーハンドリングパターンについて広く執筆しています。",
+              "links": [
+                {
+                  "name": "@koher",
+                  "url": "https://x.com/koher"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2016-03-02T12:30:00+09:00",
+      "sessions": [
+        {
+          "id": 10,
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2016-03-02T14:30:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "Swift Protocols and the Promised Land",
+          "title_ja": "Swiftのプロトコルと約束の地",
+          "description": "Protocols are at the heart of Swift's design philosophy. In this talk, we will explore how to leverage protocols effectively, examining real-world patterns for protocol-oriented programming and how they can lead to cleaner, more maintainable code architectures.",
+          "description_ja": "プロトコルはSwiftの設計哲学の中心にあります。このトークでは、プロトコルを効果的に活用する方法を探り、プロトコル指向プログラミングの実践的なパターンと、それがどのようにクリーンで保守しやすいコードアーキテクチャにつながるかを検討します。",
+          "speakers": [
+            {
+              "name": "Michele Titolo",
+              "image_name": "michele_titolo",
+              "bio": "Michele Titolo is a lead iOS engineer at Capital One, known for her expertise in Swift protocols and software architecture. She is a frequent conference speaker and advocate for clean code practices.",
+              "bio_ja": "Capital OneのリードiOSエンジニアで、Swiftのプロトコルとソフトウェアアーキテクチャの専門知識で知られています。カンファレンスでの講演を頻繁に行い、クリーンコードの実践を推進しています。",
+              "links": [
+                {
+                  "name": "@micheletitolo",
+                  "url": "https://x.com/micheletitolo"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2016-03-02T14:55:00+09:00",
+      "sessions": [
+        {
+          "id": 12,
+          "title": "Blending Cultures",
+          "title_ja": "文化の融合",
+          "description": "As Swift developers, we come from many different programming backgrounds. In this talk, we will explore how ideas from functional programming, object-oriented programming, and other paradigms blend together in Swift, and how embracing this cultural diversity makes us better programmers.",
+          "description_ja": "Swift開発者として、私たちは多くの異なるプログラミングの背景を持っています。このトークでは、関数型プログラミング、オブジェクト指向プログラミング、その他のパラダイムのアイデアがSwiftでどのように融合するか、そしてこの文化的多様性を受け入れることがどのように私たちをより良いプログラマーにするかを探ります。",
+          "speakers": [
+            {
+              "name": "Daniel Steinberg",
+              "image_name": "daniel_steinberg",
+              "bio": "Daniel Steinberg (@dimsumthinking) is an author, trainer, and speaker who has been writing about Cocoa and Swift for many years. He is the author of several books on Swift and iOS development and is known for his engaging teaching style.",
+              "bio_ja": "著者、トレーナー、スピーカーとして、長年にわたりCocoaとSwiftについて執筆しています。SwiftとiOS開発に関する複数の書籍の著者であり、魅力的な教え方で知られています。",
+              "links": [
+                {
+                  "name": "@dimsumthinking",
+                  "url": "https://x.com/dimsumthinking"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2016-03-02T15:05:00+09:00",
+      "sessions": [
+        {
+          "id": 13,
+          "title": "Advanced Graphics with Core Animation",
+          "title_ja": "Core Animationによる高度なグラフィックス",
+          "description": "Core Animation is a powerful framework that goes far beyond simple view animations. In this talk, we will explore advanced techniques for creating stunning graphics and animations using Core Animation layers, including custom drawing, 3D transforms, and particle effects.",
+          "description_ja": "Core Animationはシンプルなビューアニメーションをはるかに超える強力なフレームワークです。このトークでは、Core Animationのレイヤーを使った高度なグラフィックスとアニメーションの作成テクニックを探ります。カスタム描画、3Dトランスフォーム、パーティクルエフェクトなどを含みます。",
+          "speakers": [
+            {
+              "name": "Tim Oliver",
+              "image_name": "tim_oliver",
+              "bio": "Tim Oliver is an iOS developer at Realm, and a prolific open-source contributor. Originally from Perth, Australia, he moved to Tokyo where he has been building iOS apps and contributing to the community.",
+              "bio_ja": "RealmのiOS開発者であり、活発なオープンソースコントリビューターです。オーストラリアのパース出身で、東京に移住し、iOSアプリの開発とコミュニティへの貢献を続けています。",
+              "links": [
+                {
+                  "name": "@TimOliverAU",
+                  "url": "https://x.com/TimOliverAU"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2016-03-02T15:30:00+09:00",
+      "sessions": [
+        {
+          "id": 14,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "time": "2016-03-02T16:00:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "Code for Smart Homes",
+          "title_ja": "スマートホームのためのコード",
+          "description": "The smart home revolution is here, and Swift developers are uniquely positioned to build the next generation of home automation apps. In this talk, we will explore HomeKit and other frameworks for controlling smart home devices, and discuss the challenges and opportunities in this growing field.",
+          "description_ja": "スマートホーム革命が到来し、Swift開発者は次世代のホームオートメーションアプリを構築するのに最適な立場にあります。このトークでは、HomeKitやスマートホームデバイスを制御するための他のフレームワークを探り、この成長分野における課題と機会について議論します。",
+          "speakers": [
+            {
+              "name": "Stephanie Shupe",
+              "image_name": "stephanie_shupe",
+              "bio": "Stephanie Shupe is an iOS developer focused on smart home technology. She is passionate about the intersection of software and hardware, building apps that connect the digital and physical worlds.",
+              "bio_ja": "スマートホーム技術に注力するiOS開発者です。ソフトウェアとハードウェアの交差点に情熱を注ぎ、デジタルと物理の世界をつなぐアプリを構築しています。",
+              "links": [
+                {
+                  "name": "@stloyal",
+                  "url": "https://x.com/stloyal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2016-03-02T16:25:00+09:00",
+      "sessions": [
+        {
+          "id": 16,
+          "title": "How to Be Invisible",
+          "title_ja": "見えなくなる方法",
+          "description": "What does it mean to be invisible in the tech industry? In this talk, we will explore the challenges of underrepresented groups in technology, discuss strategies for building inclusive teams, and examine how engineering leaders can create environments where everyone can thrive.",
+          "description_ja": "テック業界で見えない存在になるとはどういうことでしょうか？このトークでは、テクノロジーにおける少数派グループの課題を探り、インクルーシブなチームを構築するための戦略を議論し、エンジニアリングリーダーが全員が活躍できる環境をどのように作れるかを検討します。",
+          "speakers": [
+            {
+              "name": "Cate Huston",
+              "image_name": "cate_huston",
+              "bio": "Cate Huston is an engineering leader at Automattic. She has lived and worked in the UK, Australia, Canada, China, and the United States. She is passionate about engineering leadership, diversity, and inclusion in the tech industry.",
+              "bio_ja": "Automatticのエンジニアリングリーダーです。イギリス、オーストラリア、カナダ、中国、アメリカで生活し働いてきました。エンジニアリングリーダーシップ、テック業界における多様性とインクルージョンに情熱を注いでいます。",
+              "links": [
+                {
+                  "name": "@catehstn",
+                  "url": "https://x.com/catehstn"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2016-03-02T17:00:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "Closing",
+          "title_ja": "閉会"
+        }
+      ]
+    }
+  ]
+}

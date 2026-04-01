@@ -1,0 +1,248 @@
+{
+  "id": 3,
+  "title": "Day 3",
+  "title_ja": "3日目",
+  "date": "2019-03-23T09:00:00+09:00",
+  "schedules": [
+    {
+      "time": "2019-03-23T09:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Registration",
+          "title_ja": "受付"
+        }
+      ]
+    },
+    {
+      "time": "2019-03-23T09:30:00+09:00",
+      "sessions": [
+        {
+          "title": "Open Source Swift Workshop",
+          "title_ja": "オープンソースSwiftワークショップ",
+          "speakers": [
+            {
+              "name": "Sho Ikeda",
+              "image_name": "ikesyo",
+              "links": [
+                {
+                  "name": "@ikesyo",
+                  "url": "https://x.com/ikesyo"
+                }
+              ]
+            },
+            {
+              "name": "Yusuke Kita",
+              "image_name": "yusuke_kita",
+              "links": [
+                {
+                  "name": "@kitasuke",
+                  "url": "https://x.com/kitasuke"
+                }
+              ]
+            },
+            {
+              "name": "Nicholas Maccharoli",
+              "image_name": "nicholas_maccharoli",
+              "links": []
+            }
+          ],
+          "description": "Learn the Swift compilation process, LLVM basics, finding bugs on bugs.swift.org, building with changes and running tests.",
+          "description_ja": "Swiftのコンパイルプロセス、LLVMの基本、bugs.swift.orgでのバグの見つけ方、変更を加えたビルドの作成とテストの実行について学びます。"
+        },
+        {
+          "title": "Build an app with Firestore, Swift, and TypeScript",
+          "title_ja": "Firestore、Swift、TypeScriptでアプリをつくろう",
+          "speakers": [
+            {
+              "name": "Morgan Chen",
+              "image_name": "morgan_chen",
+              "links": []
+            },
+            {
+              "name": "Mike McDonald",
+              "image_name": "mike_mcdonald",
+              "links": []
+            }
+          ],
+          "description": "Build a serverless iOS application using Cloud Firestore, leveraging Swift language features for managing complex application state.",
+          "description_ja": "Cloud Firestoreを使用してサーバーレスiOSアプリケーションを構築し、Swiftの言語機能を活用して複雑なアプリケーション状態を管理します。"
+        },
+        {
+          "title": "Exploring Swift on the Raspberry Pi",
+          "title_ja": "Raspberry PiでSwiftを探求しよう",
+          "speakers": [
+            {
+              "name": "Ahmed Bakir",
+              "image_name": "ahmed_bakir",
+              "links": [
+                {
+                  "name": "@devatelier",
+                  "url": "https://x.com/devatelier"
+                }
+              ]
+            }
+          ],
+          "description": "Set up development environments on Raspberry Pi, create servers using Vapor, develop IoT projects with SwiftyGPIO.",
+          "description_ja": "Raspberry Pi上で開発環境を構築し、Vaporを使用してサーバーを作成し、SwiftyGPIOでIoTプロジェクトを開発します。"
+        },
+        {
+          "title": "Testing and Performance Workshop",
+          "title_ja": "テストとパフォーマンスワークショップ",
+          "speakers": [
+            {
+              "name": "Samuel Goodwin",
+              "image_name": "samuel_goodwin",
+              "links": [
+                {
+                  "name": "@samuelgoodwin",
+                  "url": "https://x.com/samuelgoodwin"
+                }
+              ]
+            },
+            {
+              "name": "Nic Laughter",
+              "image_name": "nic_laughter",
+              "links": [
+                {
+                  "name": "@nictheawesome",
+                  "url": "https://x.com/nictheawesome"
+                }
+              ]
+            }
+          ],
+          "description": "Bring your personal or work projects to improve test coverage and fix performance problems.",
+          "description_ja": "個人またはお仕事のプロジェクトを持ち寄り、テストカバレッジの改善やパフォーマンスの問題を修正しましょう。"
+        },
+        {
+          "title": "Better Developer Tooling by writing your own Mac Apps with Cocoa Bindings",
+          "title_ja": "Cocoa Bindingsで独自のMacアプリを書いてより良い開発ツールを作ろう",
+          "speakers": [
+            {
+              "name": "Benedikt Terhechte",
+              "image_name": "benedikt_terhechte",
+              "links": [
+                {
+                  "name": "@terhechte",
+                  "url": "https://x.com/terhechte"
+                }
+              ]
+            }
+          ],
+          "description": "Build prototyped macOS apps to solve daily developer tooling tasks. Covers Cocoa Bindings, macOS/iOS differences.",
+          "description_ja": "日々の開発ツールの課題を解決するためのmacOSアプリのプロトタイプを構築します。Cocoa BindingsやmacOS/iOSの違いをカバーします。"
+        },
+        {
+          "title": "Fast Audio Waveform Rendering using the Accelerate Framework",
+          "title_ja": "Accelerateフレームワークを使った高速オーディオ波形レンダリング",
+          "speakers": [
+            {
+              "name": "Andrew Coad",
+              "image_name": "andrew_coad",
+              "links": [
+                {
+                  "name": "@AndrewKCoad",
+                  "url": "https://x.com/AndrewKCoad"
+                }
+              ]
+            }
+          ],
+          "description": "Techniques for rapid on-screen rendering of audio waveforms using the Accelerate Framework's DSP library.",
+          "description_ja": "AccelerateフレームワークのDSPライブラリを使用した、オーディオ波形の高速画面描画テクニックを紹介します。"
+        },
+        {
+          "title": "Getting Time Calculations Right",
+          "title_ja": "時間計算を正しく行う",
+          "speakers": [
+            {
+              "name": "Dave DeLong",
+              "image_name": "dave_deLong",
+              "links": [
+                {
+                  "name": "@davedelong",
+                  "url": "https://x.com/davedelong"
+                }
+              ]
+            }
+          ],
+          "description": "Tactics for ensuring accurate date and time calculations, addressing common pitfalls.",
+          "description_ja": "正確な日付と時間の計算を確実にするための戦略と、一般的な落とし穴への対処方法を紹介します。"
+        },
+        {
+          "title": "Build a Cloud-Native Swift Backend",
+          "title_ja": "クラウドネイティブなSwiftバックエンドを構築しよう",
+          "speakers": [
+            {
+              "name": "Ian Partridge",
+              "image_name": "ian",
+              "links": [
+                {
+                  "name": "@alfa",
+                  "url": "https://x.com/alfa"
+                }
+              ]
+            },
+            {
+              "name": "David Okun",
+              "image_name": "david",
+              "links": [
+                {
+                  "name": "@dokun24",
+                  "url": "https://x.com/dokun24"
+                }
+              ]
+            }
+          ],
+          "description": "Learn cloud-native technologies like Docker and Kubernetes, build and deploy a server-side Swift microservice.",
+          "description_ja": "DockerやKubernetesなどのクラウドネイティブ技術を学び、サーバーサイドSwiftマイクロサービスを構築してデプロイします。"
+        },
+        {
+          "title": "Getting started with Swift Hardware",
+          "title_ja": "Swiftハードウェア入門",
+          "speakers": [
+            {
+              "name": "Sally Shepard",
+              "image_name": "sally_shepard",
+              "links": [
+                {
+                  "name": "@mostgood",
+                  "url": "https://x.com/mostgood"
+                }
+              ]
+            }
+          ],
+          "description": "Start with simple circuit construction, progressing to building a CI status bot using Raspberry Pi in Swift.",
+          "description_ja": "簡単な回路の構築から始め、SwiftでRaspberry Piを使ったCIステータスボットの構築へと進みます。"
+        }
+      ]
+    },
+    {
+      "time": "2019-03-23T13:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Lunch",
+          "title_ja": "昼食"
+        }
+      ]
+    },
+    {
+      "time": "2019-03-23T14:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Peer Labs",
+          "title_ja": "もくもく会",
+          "summary": "An unstructured collaborative session for networking and learning.",
+          "summary_ja": "ネットワーキングと学びのための自由な共同作業セッションです。"
+        }
+      ]
+    },
+    {
+      "time": "2019-03-23T18:00:00+09:00",
+      "sessions": [
+        {
+          "title": "Close",
+          "title_ja": "終了"
+        }
+      ]
+    }
+  ]
+}
