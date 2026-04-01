@@ -196,7 +196,7 @@ public struct AppReducer {
         .delegate(
           .showScheduleDetail(
             let session, proposalId: let proposalId, isFavorite: let isFavorite,
-            favoriteCount: let favoriteCount))
+            favoriteCount: let favoriteCount, relatedSessions: let relatedSessions))
       ):
         guard let description = session.description, let speakers = session.speakers else {
           return .none
@@ -209,7 +209,40 @@ public struct AppReducer {
             title: session.title,
             description: description,
             requirements: session.requirements,
-            speakers: speakers
+            speakers: speakers,
+            relatedSessions: relatedSessions
+          ))
+        return .none
+
+      case .detailColumn(
+        .presented(.scheduleDetail(.delegate(.showRelatedSession(let session, let year))))
+      ):
+        guard let description = session.description, let speakers = session.speakers else {
+          return .none
+        }
+        if let videoId = session.youtubeVideoId {
+          let videoMeta = VideoMetadata(
+            sessionTitle: session.title, youtubeVideoId: videoId)
+          state.detailColumn = .videoDetail(
+            .init(session: session, videoMetadata: videoMeta, conferenceYear: year))
+          return .none
+        }
+        let isFavorite =
+          session.proposalId.map { state.schedule.favoriteProposalIds.contains($0) } ?? false
+        let favoriteCount =
+          session.proposalId.flatMap { state.schedule.favoriteCounts[$0] } ?? 0
+        let relatedSessions = ScheduleFeature.Schedule.findRelatedSessions(
+          for: session, from: state.schedule.allSessions)
+        state.detailColumn = .scheduleDetail(
+          .init(
+            proposalId: session.proposalId,
+            isFavorite: isFavorite,
+            favoriteCount: favoriteCount,
+            title: session.title,
+            description: description,
+            requirements: session.requirements,
+            speakers: speakers,
+            relatedSessions: relatedSessions
           ))
         return .none
 

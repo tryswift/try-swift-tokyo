@@ -297,6 +297,16 @@
         }
       }
     },
+    "Related Sessions" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "関連セッション"
+          }
+        }
+      }
+    },
     "Requirements" : {
       "localizations" : {
         "ja" : {
