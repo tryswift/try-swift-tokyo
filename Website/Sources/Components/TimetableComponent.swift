@@ -35,7 +35,6 @@ struct TimetableComponent: HTML {
                       .resizable()
                       .frame(maxWidth: imageSize, maxHeight: imageSize)
                       .cornerRadius(imageSize / 2)
-                      .margin(.leading, .px(-5))
                   }
                 } else {
                   Image.defaultImage
