@@ -123,7 +123,11 @@ struct ConferenceSite2025: Site {
   var staticPages: [any StaticPage] {
     for language in SupportedLanguage.allCases {
       for year in ConferenceYear.allCases {
-        Home(year: year, language: language)
+        if year == .year2016 {
+          Home2016(language: language)
+        } else {
+          Home(year: year, language: language)
+        }
       }
       FAQ(language: language)
       CodeOfConduct(language: language)

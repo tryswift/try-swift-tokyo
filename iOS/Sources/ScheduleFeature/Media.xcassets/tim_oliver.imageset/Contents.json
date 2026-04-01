@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "tim_oliver.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "novall_khan.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

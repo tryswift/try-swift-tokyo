@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "daniel_steinberg.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
