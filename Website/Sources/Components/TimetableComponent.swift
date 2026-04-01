@@ -7,6 +7,7 @@ struct TimetableComponent: HTML {
   let language: SupportedLanguage
   var accentColor: Color = .bootstrapPurple
   private let imageSize = 50
+  private let imageGap = 4
 
   var body: some HTML {
     Text(conference.title)
@@ -49,8 +50,8 @@ struct TimetableComponent: HTML {
                   .style(.display, "flex")
                   .style(.flexWrap, "wrap")
                   .style(.justifyContent, "center")
-                  .style(.gap, "4px")
-                  .style(.maxWidth, "\(size * 2 + 4)px")
+                  .style(.gap, "\(imageGap)px")
+                  .style(.maxWidth, "\(size * 2 + imageGap)px")
                 } else {
                   Image.defaultImage
                     .resizable()
