@@ -379,10 +379,12 @@ public struct Schedule {
       guard matchCount > 0 else { continue }
 
       let candidateSpeakerNames = candidate.speakers?.map(\.name) ?? []
-      let isSameSpeaker = !currentSpeakerNames.isEmpty && currentSpeakerNames.contains {
-        name in
-        candidateSpeakerNames.contains { SessionTagging.speakerNamesMatch(name, $0) }
-      }
+      let isSameSpeaker =
+        !currentSpeakerNames.isEmpty
+        && currentSpeakerNames.contains {
+          name in
+          candidateSpeakerNames.contains { SessionTagging.speakerNamesMatch(name, $0) }
+        }
 
       results.append(
         RelatedSession(
