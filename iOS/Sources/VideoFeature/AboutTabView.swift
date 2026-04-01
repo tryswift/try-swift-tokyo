@@ -174,6 +174,7 @@ struct AboutTabView: View {
             relatedSessionRow(related)
               .padding()
           }
+          .buttonStyle(.plain)
           .glassEffectIfAvailable()
         }
       }
