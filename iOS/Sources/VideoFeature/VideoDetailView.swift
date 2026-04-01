@@ -25,8 +25,6 @@ public struct VideoDetailView: View {
           }
         )
         .id(store.videoMetadata.youtubeVideoId)
-        .padding(.horizontal)
-        .padding(.top)
 
         // Tab Picker
         Picker("Content", selection: $store.selectedTab.sending(\.view.tabSelected)) {
@@ -53,7 +51,7 @@ public struct VideoDetailView: View {
       }
       .frame(maxWidth: 700)
     }
-    .navigationTitle(store.session.title)
+//    .navigationTitle(store.session.title)
     #if !os(macOS)
       .navigationBarTitleDisplayMode(.inline)
     #endif
