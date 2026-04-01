@@ -64,6 +64,13 @@ struct PastEventDecodingTests {
   }
 
   @Test
+  func decode2017Workshop() throws {
+    let conference = try dataClient.fetchWorkshop(.year2017)
+    #expect(conference.title == "Day 3")
+    #expect(!conference.schedules.isEmpty)
+  }
+
+  @Test
   func decode2017Day3Throws() throws {
     #expect(throws: DataClientError.self) {
       _ = try dataClient.fetchDay3(.year2017)
@@ -91,6 +98,13 @@ struct PastEventDecodingTests {
     let speakers = try dataClient.fetchSpeakers(.year2018)
     #expect(speakers.count >= 25)
     #expect(speakers.allSatisfy { !$0.name.isEmpty })
+  }
+
+  @Test
+  func decode2018Workshop() throws {
+    let conference = try dataClient.fetchWorkshop(.year2018)
+    #expect(conference.title == "Day 3")
+    #expect(!conference.schedules.isEmpty)
   }
 
   // MARK: - 2019

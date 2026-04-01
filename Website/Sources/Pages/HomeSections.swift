@@ -148,9 +148,9 @@ extension HomeSectionType {
       let day2 = try! dataClient.fetchDay2(year)
       let day3: Conference? =
         switch year {
-        case .year2016, .year2017, .year2018, .year2020:
+        case .year2016, .year2020:
           nil
-        case .year2019:
+        case .year2017, .year2018, .year2019:
           try? dataClient.fetchWorkshop(year)
         case .year2024:
           try! dataClient.fetchWorkshop(year)
