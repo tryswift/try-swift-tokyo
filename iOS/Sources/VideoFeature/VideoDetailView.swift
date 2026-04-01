@@ -51,7 +51,7 @@ public struct VideoDetailView: View {
       }
       .frame(maxWidth: 700)
     }
-//    .navigationTitle(store.session.title)
+    //    .navigationTitle(store.session.title)
     #if !os(macOS)
       .navigationBarTitleDisplayMode(.inline)
     #endif
