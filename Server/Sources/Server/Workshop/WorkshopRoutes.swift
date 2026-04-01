@@ -89,6 +89,22 @@ struct WorkshopRoutes: RouteCollection {
     let workshopLanguage: WorkshopLanguage?
   }
 
+  /// Compute remaining capacity per workshop: capacity minus won application count
+  private func computeRemainingCapacity(on db: Database) async throws -> [UUID: Int] {
+    let workshops = try await WorkshopRegistration.query(on: db).all()
+    let wonApps = try await WorkshopApplication.query(on: db)
+      .filter(\.$status == .won)
+      .all()
+    let wonCounts: [UUID?: Int] = Dictionary(grouping: wonApps) { $0.$assignedWorkshop.id }
+      .mapValues(\.count)
+    var result: [UUID: Int] = [:]
+    for workshop in workshops {
+      guard let id = workshop.id else { continue }
+      result[id] = max(0, workshop.capacity - (wonCounts[id] ?? 0))
+    }
+    return result
+  }
+
   /// Fetch accepted workshops with registration info
   private func fetchWorkshops(on db: Database, includeApplicationCount: Bool = true) async throws
     -> [FetchedWorkshop]
@@ -251,6 +267,14 @@ struct WorkshopRoutes: RouteCollection {
       .filter(\.$status != .pending)
       .count() > 0
 
+    let applicationOpen: Bool
+    if !hasLotteryRun {
+      applicationOpen = true
+    } else {
+      let remaining = try await computeRemainingCapacity(on: req.db)
+      applicationOpen = remaining.values.contains { $0 > 0 }
+    }
+
     let items = workshops.map {
       WorkshopListPageView.WorkshopItem(
         id: $0.registrationID,
@@ -283,7 +307,7 @@ struct WorkshopRoutes: RouteCollection {
         WorkshopListPageView(
           workshops: items,
           language: language,
-          applicationOpen: !hasLotteryRun,
+          applicationOpen: applicationOpen,
           isOrganizer: isOrganizer
         )
       }
@@ -331,12 +355,12 @@ struct WorkshopRoutes: RouteCollection {
       .filter(\.$email == email)
       .first()
 
-    if let existingApplication, existingApplication.status != .pending {
+    if let existingApplication, existingApplication.status == .won {
       let html = try await renderWorkshopApplyPage(
         req: req, language: language,
         errorMessage: language == .ja
-          ? "抽選が既に行われたため、申し込みを変更できません。"
-          : "The lottery has already been run. Your application can no longer be modified."
+          ? "既にワークショップに当選しています。"
+          : "You have already been assigned a workshop."
       )
       return try await html.encodeResponse(for: req)
     }
@@ -389,14 +413,34 @@ struct WorkshopRoutes: RouteCollection {
     // Show workshop selection form
     let user = try? await req.authenticatedUser()
     let workshops = try await fetchWorkshops(on: req.db)
-    let workshopOptions = workshops.map {
-      WorkshopOption(
-        id: $0.registrationID, title: $0.proposalTitle, speakerName: $0.speakerName)
+
+    // Check if lottery has run to determine post-lottery (FCFS) mode
+    let hasLotteryRun =
+      try await WorkshopApplication.query(on: req.db)
+      .filter(\.$status != .pending)
+      .count() > 0
+
+    let workshopOptions: [WorkshopOption]
+    if hasLotteryRun {
+      // Post-lottery: only show workshops with remaining capacity
+      let remaining = try await computeRemainingCapacity(on: req.db)
+      workshopOptions = workshops
+        .filter { (remaining[$0.registrationID] ?? 0) > 0 }
+        .map {
+          WorkshopOption(
+            id: $0.registrationID, title: $0.proposalTitle, speakerName: $0.speakerName)
+        }
+    } else {
+      workshopOptions = workshops.map {
+        WorkshopOption(
+          id: $0.registrationID, title: $0.proposalTitle, speakerName: $0.speakerName)
+      }
     }
 
-    let isEditMode = existingApplication != nil
+    let isEditMode = existingApplication != nil && existingApplication!.status == .pending
     let existingSelections: WorkshopSelectPageView.ExistingSelections?
-    if let existingApplication {
+    if let existingApplication, existingApplication.status == .pending {
+      // Only prefill for pending applications (pre-lottery edit)
       existingSelections = WorkshopSelectPageView.ExistingSelections(
         firstChoiceID: existingApplication.$firstChoice.id,
         secondChoiceID: existingApplication.$secondChoice.id,
@@ -428,7 +472,8 @@ struct WorkshopRoutes: RouteCollection {
           csrfToken: csrfToken(from: req),
           errorMessage: nil,
           isEditMode: isEditMode,
-          existingSelections: existingSelections
+          existingSelections: existingSelections,
+          isPostLottery: hasLotteryRun
         )
       }
     }
@@ -491,15 +536,70 @@ struct WorkshopRoutes: RouteCollection {
       .filter(\.$email == email)
       .first()
 
-    if let existingApplication, existingApplication.status != .pending {
+    if let existingApplication, existingApplication.status == .won {
       let html = try await renderWorkshopApplyPage(
         req: req, language: language,
         errorMessage: language == .ja
-          ? "抽選が既に行われたため、申し込みを変更できません。"
-          : "The lottery has already been run. Your application can no longer be modified."
+          ? "既にワークショップに当選しています。"
+          : "You have already been assigned a workshop."
       )
       return try await html.encodeResponse(for: req)
     }
+
+    // Check if lottery has run to determine post-lottery (FCFS) mode
+    let hasLotteryRun =
+      try await WorkshopApplication.query(on: req.db)
+      .filter(\.$status != .pending)
+      .count() > 0
+
+    if hasLotteryRun {
+      // Post-lottery: first-come-first-served direct assignment
+      let applicantName = form.applicant_name.trimmingCharacters(in: .whitespacesAndNewlines)
+      let result = try await directAssign(
+        email: email,
+        applicantName: applicantName,
+        workshopID: form.first_choice_id,
+        existingApplication: existingApplication,
+        on: req.db
+      )
+
+      switch result {
+      case .assigned:
+        let workshopTitle = try await workshopTitle(for: form.first_choice_id, on: req.db)
+        let user = try? await req.authenticatedUser()
+        let html = HTMLResponse {
+          CfPLayout(
+            title: language == .ja ? "申し込み完了" : "Application Complete",
+            user: user,
+            language: language,
+            currentPath: "/workshops/apply"
+          ) {
+            WorkshopConfirmationPageView(
+              email: email,
+              applicantName: applicantName,
+              firstChoice: workshopTitle ?? "Unknown",
+              secondChoice: nil,
+              thirdChoice: nil,
+              language: language,
+              isUpdate: existingApplication != nil,
+              isPostLottery: true
+            )
+          }
+        }
+        return try await html.encodeResponse(for: req)
+
+      case .full:
+        let html = try await renderWorkshopApplyPage(
+          req: req, language: language,
+          errorMessage: language == .ja
+            ? "申し訳ありませんが、選択したワークショップは満員になりました。別のワークショップをお試しください。"
+            : "Sorry, the selected workshop is now full. Please try another workshop."
+        )
+        return try await html.encodeResponse(for: req)
+      }
+    }
+
+    // Pre-lottery: standard lottery application flow
 
     // Validate choices are different
     let choices = [form.first_choice_id, secondChoiceID, thirdChoiceID].compactMap { $0 }
@@ -566,11 +666,66 @@ struct WorkshopRoutes: RouteCollection {
           secondChoice: secondTitle,
           thirdChoice: thirdTitle,
           language: language,
-          isUpdate: isUpdate
+          isUpdate: isUpdate,
+          isPostLottery: false
         )
       }
     }
     return try await html.encodeResponse(for: req)
+  }
+
+  /// Result of a direct (first-come-first-served) workshop assignment
+  private enum DirectAssignResult {
+    case assigned
+    case full
+  }
+
+  /// Directly assign an applicant to a workshop (post-lottery, first-come-first-served).
+  /// Uses a transaction to prevent race conditions on the last available slot.
+  private func directAssign(
+    email: String,
+    applicantName: String,
+    workshopID: UUID,
+    existingApplication: WorkshopApplication?,
+    on db: Database
+  ) async throws -> DirectAssignResult {
+    try await db.transaction { tx in
+      // Count current won applications for this workshop within transaction
+      let wonCount = try await WorkshopApplication.query(on: tx)
+        .filter(\.$assignedWorkshop.$id == workshopID)
+        .filter(\.$status == .won)
+        .count()
+
+      guard let workshop = try await WorkshopRegistration.find(workshopID, on: tx) else {
+        return .full
+      }
+
+      guard wonCount < workshop.capacity else {
+        return .full
+      }
+
+      // Assign directly
+      if let existingApplication {
+        existingApplication.applicantName = applicantName
+        existingApplication.$firstChoice.id = workshopID
+        existingApplication.$secondChoice.id = nil
+        existingApplication.$thirdChoice.id = nil
+        existingApplication.$assignedWorkshop.id = workshopID
+        existingApplication.status = .won
+        existingApplication.lumaGuestID = nil
+        try await existingApplication.save(on: tx)
+      } else {
+        let application = WorkshopApplication(
+          email: email,
+          applicantName: applicantName,
+          firstChoiceID: workshopID,
+          status: .won
+        )
+        application.$assignedWorkshop.id = workshopID
+        try await application.save(on: tx)
+      }
+      return .assigned
+    }
   }
 
   private func workshopTitle(for registrationID: UUID, on db: Database) async throws -> String? {
@@ -668,6 +823,15 @@ struct WorkshopRoutes: RouteCollection {
       deleteToken = nil
     }
 
+    // Determine if user can reapply (lost + workshops with remaining capacity)
+    let canReapply: Bool
+    if application.status == .lost {
+      let remaining = try await computeRemainingCapacity(on: req.db)
+      canReapply = remaining.values.contains { $0 > 0 }
+    } else {
+      canReapply = false
+    }
+
     let info = WorkshopStatusPageView.ApplicationInfo(
       email: application.email,
       applicantName: application.applicantName,
@@ -677,6 +841,7 @@ struct WorkshopRoutes: RouteCollection {
       thirdChoice: thirdTitle,
       assignedWorkshop: assignedTitle,
       canModify: application.status == .pending,
+      canReapply: canReapply,
       deleteToken: deleteToken
     )
 
@@ -735,6 +900,14 @@ struct WorkshopRoutes: RouteCollection {
         } else {
           nil
         }
+      let canReapplyAfterDelete: Bool
+      if current.status == .lost {
+        let remaining = try await computeRemainingCapacity(on: req.db)
+        canReapplyAfterDelete = remaining.values.contains { $0 > 0 }
+      } else {
+        canReapplyAfterDelete = false
+      }
+
       let info = WorkshopStatusPageView.ApplicationInfo(
         email: current.email,
         applicantName: current.applicantName,
@@ -744,6 +917,7 @@ struct WorkshopRoutes: RouteCollection {
         thirdChoice: thirdTitle,
         assignedWorkshop: assignedTitle,
         canModify: false,
+        canReapply: canReapplyAfterDelete,
         deleteToken: nil
       )
       let html = try await renderWorkshopStatusPage(

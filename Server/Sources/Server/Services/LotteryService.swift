@@ -22,10 +22,17 @@ enum LotteryService {
         .all()
 
       // Build capacity tracker: workshopID -> remaining slots
+      // Subtract already-won applications to support running lottery after FCFS assignments
+      let existingWon = try await WorkshopApplication.query(on: tx)
+        .filter(\.$status == .won)
+        .all()
+      let wonCounts: [UUID?: Int] = Dictionary(grouping: existingWon) { $0.$assignedWorkshop.id }
+        .mapValues(\.count)
+
       var remainingCapacity: [UUID: Int] = [:]
       for workshop in workshops {
         guard let id = workshop.id else { continue }
-        remainingCapacity[id] = workshop.capacity
+        remainingCapacity[id] = max(0, workshop.capacity - (wonCounts[id] ?? 0))
       }
 
       // Fetch all pending applications

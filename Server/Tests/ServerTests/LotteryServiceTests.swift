@@ -381,4 +381,41 @@ struct LotteryServiceTests {
       #expect(result.unassigned == 3)
     }
   }
+
+  @Test("lottery subtracts existing won applications from capacity")
+  func lotterySubtractsExistingWon() async throws {
+    try await withTestApp { app in
+      let (_, _, regs) = try await seedWorkshops(count: 1, capacity: 3, on: app.db)
+      let regID = try regs[0].requireID()
+
+      // 2 already-won applications (e.g., from a previous lottery or FCFS)
+      for i in 0..<2 {
+        let wonApp = WorkshopApplication(
+          email: "won\(i)@test.com", applicantName: "Won \(i)",
+          firstChoiceID: regID, status: .won)
+        wonApp.$assignedWorkshop.id = regID
+        try await wonApp.save(on: app.db)
+      }
+
+      // 3 new pending applications — only 1 slot should remain
+      for i in 0..<3 {
+        let application = WorkshopApplication(
+          email: "pending\(i)@test.com", applicantName: "Pending \(i)",
+          firstChoiceID: regID)
+        try await application.save(on: app.db)
+      }
+
+      let result = try await LotteryService.runLottery(on: app.db)
+
+      #expect(result.totalApplications == 3)
+      #expect(result.assigned == 1)
+      #expect(result.unassigned == 2)
+
+      // Verify total won count does not exceed capacity
+      let totalWon = try await WorkshopApplication.query(on: app.db)
+        .filter(\.$status == .won)
+        .count()
+      #expect(totalWon == 3)  // 2 existing + 1 new
+    }
+  }
 }
