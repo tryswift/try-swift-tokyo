@@ -15,6 +15,8 @@ struct Home2016: StaticPage {
   @Dependency(DataClient.self) var dataClient
 
   var body: some HTML {
+    let retroAccent: Color = .init(hex: "#FC983B")
+
     // Navigation bar
     Retro2016NavigationBar(language: language)
 
@@ -51,7 +53,7 @@ struct Home2016: StaticPage {
     Alert {
       ForEach(speakers) { speaker in
         SpeakerModal(
-          year: .year2016, speaker: speaker, language: language, accentColor: .init(hex: "#FC983B"))
+          year: .year2016, speaker: speaker, language: language, accentColor: retroAccent)
       }
     }
 
@@ -68,7 +70,7 @@ struct Home2016: StaticPage {
       ForEach(allDays) { data in
         Section {
           TimetableComponent(
-            conference: data, language: language, accentColor: .init(hex: "#FC983B"))
+            conference: data, language: language, accentColor: retroAccent)
         }
       }
     }
@@ -82,7 +84,7 @@ struct Home2016: StaticPage {
         .filter(\.hasDescription)
       ForEach(sessions) { session in
         SessionDetailModal(
-          year: .year2016, session: session, language: language, accentColor: .init(hex: "#FC983B"))
+          year: .year2016, session: session, language: language, accentColor: retroAccent)
       }
     }
 
