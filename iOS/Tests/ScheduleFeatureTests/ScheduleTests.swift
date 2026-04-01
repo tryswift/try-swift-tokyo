@@ -295,7 +295,8 @@ struct ScheduleTests {
       await store.receive(
         .delegate(
           .showScheduleDetail(
-            .mock2, proposalId: nil, isFavorite: false, favoriteCount: 0)))
+            .mock2, proposalId: nil, isFavorite: false, favoriteCount: 0,
+            relatedSessions: [], tagCandidates: [])))
     #else
       await store.send(.view(.disclosureTapped(.mock2))) {
         $0.path.append(
@@ -326,7 +327,8 @@ struct ScheduleTests {
       await store.receive(
         .delegate(
           .showScheduleDetail(
-            .mock3, proposalId: "proposal-3", isFavorite: true, favoriteCount: 7)))
+            .mock3, proposalId: "proposal-3", isFavorite: true, favoriteCount: 7,
+            relatedSessions: [], tagCandidates: [])))
     }
   #endif
 

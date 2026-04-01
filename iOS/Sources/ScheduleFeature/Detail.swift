@@ -26,6 +26,7 @@ public struct ScheduleDetail: Sendable {
     var requirements: String?
     var speakers: [Speaker]
     var relatedSessions: [RelatedSession] = []
+    var tagCandidates: [RelatedSession] = []
 
     // Feedback
     var feedbackText: String = ""
@@ -41,7 +42,8 @@ public struct ScheduleDetail: Sendable {
       description: String,
       requirements: String? = nil,
       speakers: [Speaker],
-      relatedSessions: [RelatedSession] = []
+      relatedSessions: [RelatedSession] = [],
+      tagCandidates: [RelatedSession] = []
     ) {
       self.proposalId = proposalId
       self.isFavorite = isFavorite
@@ -51,6 +53,7 @@ public struct ScheduleDetail: Sendable {
       self.requirements = requirements
       self.speakers = speakers
       self.relatedSessions = relatedSessions
+      self.tagCandidates = tagCandidates
     }
   }
 
@@ -59,9 +62,11 @@ public struct ScheduleDetail: Sendable {
     case view(View)
     case feedbackSubmitResponse(Result<Bool, Error>)
     case favoriteToggled(Bool, Int)
+    case aiRerankCompleted([RelatedSession])
     case delegate(Delegate)
 
     public enum View {
+      case task
       case snsTapped(URL)
       case favoriteTapped
       case submitFeedbackTapped
@@ -82,6 +87,26 @@ public struct ScheduleDetail: Sendable {
     BindingReducer()
     Reduce { state, action in
       switch action {
+      case .view(.task):
+        let tagCandidates = state.tagCandidates
+        guard !tagCandidates.isEmpty else { return .none }
+        let sameSpeaker = state.relatedSessions.filter(\.isSameSpeaker)
+        let title = state.title
+        let description = state.description
+        let limit = 5 - sameSpeaker.count
+        return .run { send in
+          if let reranked = await SessionRelevance.rerank(
+            currentTitle: title,
+            currentDescription: description,
+            candidates: tagCandidates,
+            limit: limit
+          ) {
+            await send(.aiRerankCompleted(sameSpeaker + reranked))
+          }
+        }
+      case .aiRerankCompleted(let sessions):
+        state.relatedSessions = sessions
+        return .none
       case .view(.relatedSessionTapped(let related)):
         return .send(.delegate(.showRelatedSession(related.session, related.year)))
       case .view(.snsTapped(let url)):
@@ -177,6 +202,7 @@ public struct ScheduleDetailView: View {
           .frame(maxWidth: 700)
       }
     }
+    .task { await send(.task).finish() }
     .toolbar {
       if store.proposalId != nil {
         #if os(macOS)

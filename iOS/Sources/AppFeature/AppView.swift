@@ -196,7 +196,8 @@ public struct AppReducer {
         .delegate(
           .showScheduleDetail(
             let session, proposalId: let proposalId, isFavorite: let isFavorite,
-            favoriteCount: let favoriteCount, relatedSessions: let relatedSessions))
+            favoriteCount: let favoriteCount, relatedSessions: let relatedSessions,
+            tagCandidates: let tagCandidates))
       ):
         guard let description = session.description, let speakers = session.speakers else {
           return .none
@@ -210,7 +211,8 @@ public struct AppReducer {
             description: description,
             requirements: session.requirements,
             speakers: speakers,
-            relatedSessions: relatedSessions
+            relatedSessions: relatedSessions,
+            tagCandidates: tagCandidates
           ))
         return .none
 
@@ -234,6 +236,9 @@ public struct AppReducer {
           session.proposalId.flatMap { state.schedule.favoriteCounts[$0] } ?? 0
         let relatedSessions = ScheduleFeature.Schedule.findRelatedSessions(
           for: session, from: state.schedule.allSessions)
+        let sameSpeakerIds = Set(relatedSessions.filter(\.isSameSpeaker).map(\.id))
+        let tagCandidates = ScheduleFeature.Schedule.findTagCandidates(
+          for: session, from: state.schedule.allSessions, excludingIds: sameSpeakerIds)
         state.detailColumn = .scheduleDetail(
           .init(
             proposalId: session.proposalId,
@@ -243,7 +248,8 @@ public struct AppReducer {
             description: description,
             requirements: session.requirements,
             speakers: speakers,
-            relatedSessions: relatedSessions
+            relatedSessions: relatedSessions,
+            tagCandidates: tagCandidates
           ))
         return .none
 

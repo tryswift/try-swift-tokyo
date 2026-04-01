@@ -92,7 +92,7 @@ public struct Schedule {
       case showVideoDetail(Session, VideoMetadata, ConferenceYear)
       case showScheduleDetail(
         Session, proposalId: String?, isFavorite: Bool, favoriteCount: Int,
-        relatedSessions: [RelatedSession])
+        relatedSessions: [RelatedSession], tagCandidates: [RelatedSession])
     }
   }
 
@@ -234,12 +234,16 @@ public struct Schedule {
             session.proposalId.flatMap { state.favoriteCounts[$0] } ?? 0
           let relatedSessions = Schedule.findRelatedSessions(
             for: session, from: state.allSessions)
+          let sameSpeakerIds = Set(relatedSessions.filter(\.isSameSpeaker).map(\.id))
+          let tagCandidates = Schedule.findTagCandidates(
+            for: session, from: state.allSessions, excludingIds: sameSpeakerIds)
           #if os(macOS)
             return .send(
               .delegate(
                 .showScheduleDetail(
                   session, proposalId: session.proposalId, isFavorite: isFavorite,
-                  favoriteCount: favoriteCount, relatedSessions: relatedSessions)))
+                  favoriteCount: favoriteCount, relatedSessions: relatedSessions,
+                  tagCandidates: tagCandidates)))
           #else
             let detailState = ScheduleDetail.State(
               proposalId: session.proposalId,
@@ -249,7 +253,8 @@ public struct Schedule {
               description: session.description!,
               requirements: session.requirements,
               speakers: session.speakers!,
-              relatedSessions: relatedSessions
+              relatedSessions: relatedSessions,
+              tagCandidates: tagCandidates
             )
             state.path.append(.detail(detailState))
             return .none
@@ -317,6 +322,9 @@ public struct Schedule {
           session.proposalId.flatMap { state.favoriteCounts[$0] } ?? 0
         let relatedSessions = Schedule.findRelatedSessions(
           for: session, from: state.allSessions)
+        let sameSpeakerIds = Set(relatedSessions.filter(\.isSameSpeaker).map(\.id))
+        let tagCandidates = Schedule.findTagCandidates(
+          for: session, from: state.allSessions, excludingIds: sameSpeakerIds)
         let detailState = ScheduleDetail.State(
           proposalId: session.proposalId,
           isFavorite: isFavorite,
@@ -325,7 +333,8 @@ public struct Schedule {
           description: session.description!,
           requirements: session.requirements,
           speakers: session.speakers!,
-          relatedSessions: relatedSessions
+          relatedSessions: relatedSessions,
+          tagCandidates: tagCandidates
         )
         state.path.append(.detail(detailState))
         return .none
@@ -358,61 +367,127 @@ public struct Schedule {
     from allSessions: [SearchableSession],
     limit: Int = 5
   ) -> [RelatedSession] {
-    let currentTags = SessionTagging.generateTags(for: session)
-    guard !currentTags.isEmpty else { return [] }
-
     let currentSpeakerNames = session.speakers?.map(\.name) ?? []
+
+    func isSelf(_ candidate: Session) -> Bool {
+      candidate.title == session.title
+        && candidate.speakers?.first?.name == session.speakers?.first?.name
+    }
+
+    func sharesSpeaker(_ candidate: Session) -> Bool {
+      guard !currentSpeakerNames.isEmpty else { return false }
+      let candidateNames = candidate.speakers?.map(\.name) ?? []
+      return currentSpeakerNames.contains { name in
+        candidateNames.contains { SessionTagging.speakerNamesMatch(name, $0) }
+      }
+    }
+
+    func makeRelated(_ searchable: SearchableSession, isSameSpeaker: Bool) -> RelatedSession {
+      RelatedSession(
+        year: searchable.year,
+        session: searchable.session,
+        speakerImageName: searchable.session.speakers?.first?.imageName,
+        speakerName: searchable.session.speakers?.first?.name,
+        isSameSpeaker: isSameSpeaker
+      )
+    }
+
+    // Pass 1: Same-speaker sessions (no tag requirement), sorted by year descending
+    var sameSpeakerResults: [RelatedSession] = []
+    if !currentSpeakerNames.isEmpty {
+      for searchable in allSessions where !isSelf(searchable.session) {
+        if sharesSpeaker(searchable.session) {
+          sameSpeakerResults.append(makeRelated(searchable, isSameSpeaker: true))
+        }
+      }
+      sameSpeakerResults.sort { $0.year.rawValue > $1.year.rawValue }
+    }
+
+    if sameSpeakerResults.count >= limit {
+      return Array(sameSpeakerResults.prefix(limit))
+    }
+
+    // Pass 2: Tag-matched sessions from other speakers
+    let remainingSlots = limit - sameSpeakerResults.count
+    let currentTags = SessionTagging.generateTags(for: session)
 
     struct ScoredResult {
       var related: RelatedSession
       var matchCount: Int
     }
 
-    var scored: [ScoredResult] = []
+    var tagResults: [ScoredResult] = []
 
+    if !currentTags.isEmpty {
+      let sameSpeakerIds = Set(sameSpeakerResults.map(\.id))
+      for searchable in allSessions where !isSelf(searchable.session) {
+        let candidateId =
+          "\(searchable.year.rawValue)-\(searchable.session.title)-\(searchable.session.speakers?.first?.name ?? "")"
+        guard !sameSpeakerIds.contains(candidateId) else { continue }
+
+        let candidateTags = SessionTagging.generateTags(for: searchable.session)
+        let matchCount = currentTags.intersection(candidateTags).count
+        guard matchCount > 0 else { continue }
+
+        tagResults.append(
+          ScoredResult(
+            related: makeRelated(searchable, isSameSpeaker: false),
+            matchCount: matchCount
+          )
+        )
+      }
+      tagResults.sort { $0.matchCount > $1.matchCount }
+    }
+
+    return sameSpeakerResults + tagResults.prefix(remainingSlots).map(\.related)
+  }
+
+  /// Returns a broader pool of tag-matched candidates for Foundation Models re-ranking.
+  public static func findTagCandidates(
+    for session: Session,
+    from allSessions: [SearchableSession],
+    excludingIds: Set<String>,
+    limit: Int = 15
+  ) -> [RelatedSession] {
+    let currentTags = SessionTagging.generateTags(for: session)
+    guard !currentTags.isEmpty else { return [] }
+
+    struct ScoredResult {
+      var related: RelatedSession
+      var matchCount: Int
+    }
+
+    var results: [ScoredResult] = []
     for searchable in allSessions {
       let candidate = searchable.session
-      // Skip self
       if candidate.title == session.title,
         candidate.speakers?.first?.name == session.speakers?.first?.name
       {
         continue
       }
+      let candidateId =
+        "\(searchable.year.rawValue)-\(candidate.title)-\(candidate.speakers?.first?.name ?? "")"
+      guard !excludingIds.contains(candidateId) else { continue }
 
       let candidateTags = SessionTagging.generateTags(for: candidate)
       let matchCount = currentTags.intersection(candidateTags).count
       guard matchCount > 0 else { continue }
 
-      let candidateSpeakerNames = candidate.speakers?.map(\.name) ?? []
-      let isSameSpeaker =
-        !currentSpeakerNames.isEmpty
-        && currentSpeakerNames.contains {
-          name in
-          candidateSpeakerNames.contains { SessionTagging.speakerNamesMatch(name, $0) }
-        }
-
-      scored.append(
+      results.append(
         ScoredResult(
           related: RelatedSession(
             year: searchable.year,
             session: candidate,
             speakerImageName: candidate.speakers?.first?.imageName,
             speakerName: candidate.speakers?.first?.name,
-            isSameSpeaker: isSameSpeaker
+            isSameSpeaker: false
           ),
           matchCount: matchCount
         )
       )
     }
-
-    scored.sort { lhs, rhs in
-      if lhs.related.isSameSpeaker != rhs.related.isSameSpeaker {
-        return lhs.related.isSameSpeaker
-      }
-      return lhs.matchCount > rhs.matchCount
-    }
-
-    return scored.prefix(limit).map(\.related)
+    results.sort { $0.matchCount > $1.matchCount }
+    return results.prefix(limit).map(\.related)
   }
 }
 
