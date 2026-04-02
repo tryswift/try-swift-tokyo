@@ -12,7 +12,7 @@ private let logger = Logger(subsystem: "jp.tryswift.tokyo.App", category: "Guida
 
 enum VenueTab: Equatable, Hashable, Sendable {
   case access
-  case boothGuide
+  case floorGuide
 }
 
 @Reducer
@@ -22,7 +22,7 @@ public struct Guidance: Sendable {
   public struct State: Equatable, @unchecked Sendable {
     var selectedTab: VenueTab = .access
     var lines: Lines = .tachikawa
-    var boothGuideURL: URL = URL(string: "https://tryswift.jp/booth-map/")!
+    var floorGuideURL: URL = URL(string: "https://tryswift.jp/booth-map/")!
     var route: MKRoute?
     var origin: MKMapItem?
     var originTitle: LocalizedStringKey { lines.originTitle }
@@ -204,7 +204,7 @@ public struct GuidanceView: View {
       Group {
         switch store.selectedTab {
         case .access: accessContent
-        case .boothGuide: boothGuideContent
+        case .floorGuide: WebView(url: store.floorGuideURL)
         }
       }
       .animation(.default, value: store.selectedTab)
@@ -250,7 +250,7 @@ public struct GuidanceView: View {
   var sectionPicker: some View {
     Picker("Lines", selection: $store.selectedTab) {
       Text("Access", bundle: .module).tag(VenueTab.access)
-      Text("Booth Guide", bundle: .module).tag(VenueTab.boothGuide)
+      Text("Floor Guide", bundle: .module).tag(VenueTab.floorGuide)
     }
     .pickerStyle(.segmented)
     .labelsHidden()
@@ -360,11 +360,6 @@ public struct GuidanceView: View {
           .strokeBorder(Color.accentColor, lineWidth: 2)
       }
     }
-  }
-
-  @ViewBuilder
-  var boothGuideContent: some View {
-    WebView(url: store.boothGuideURL)
   }
 
   @ViewBuilder

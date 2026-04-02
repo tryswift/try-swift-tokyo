@@ -21,12 +21,12 @@
         }
       }
     },
-    "Booth Guide" : {
+    "Floor Guide" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ブースガイド"
+            "value" : "フロアガイド"
           }
         }
       }
