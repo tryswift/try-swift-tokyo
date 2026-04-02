@@ -248,7 +248,7 @@ public struct GuidanceView: View {
 
   @ViewBuilder
   var sectionPicker: some View {
-    Picker("Lines", selection: $store.selectedTab) {
+    Picker("Section", selection: $store.selectedTab) {
       Text("Access", bundle: .module).tag(VenueTab.access)
       Text("Floor Guide", bundle: .module).tag(VenueTab.floorGuide)
     }

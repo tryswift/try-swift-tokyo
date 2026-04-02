@@ -21,16 +21,6 @@
         }
       }
     },
-    "Floor Guide" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "フロアガイド"
-          }
-        }
-      }
-    },
     "Chuo line" : {
       "localizations" : {
         "ja" : {
@@ -47,6 +37,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "行き方"
+          }
+        }
+      }
+    },
+    "Floor Guide" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フロアガイド"
           }
         }
       }
@@ -78,16 +78,6 @@
         }
       }
     },
-    "Lines" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "路線"
-          }
-        }
-      }
-    },
     "North Exit" : {
       "localizations" : {
         "ja" : {
@@ -104,6 +94,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mapを開く"
+          }
+        }
+      }
+    },
+    "Section" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セクション"
           }
         }
       }
