@@ -1,8 +1,15 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%lld" : {
-
+    "Access" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アクセス"
+          }
+        }
+      }
     },
     "Arrival Erea" : {
       "localizations" : {
@@ -25,7 +32,24 @@
       }
     },
     "Directions" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "行き方"
+          }
+        }
+      }
+    },
+    "Floor Guide" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フロアガイド"
+          }
+        }
+      }
     },
     "Haneda Airport" : {
       "localizations" : {
@@ -54,16 +78,6 @@
         }
       }
     },
-    "Lines" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "路線"
-          }
-        }
-      }
-    },
     "North Exit" : {
       "localizations" : {
         "ja" : {
@@ -80,6 +94,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mapを開く"
+          }
+        }
+      }
+    },
+    "Section" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セクション"
           }
         }
       }
@@ -180,16 +204,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "東京駅の1番・2番ホームから中央線で40分程度で到着します。\n快速ではなく、中央特快・青梅特快・特急あずさ・特急かいじの利用を強く推奨します。"
-          }
-        }
-      }
-    },
-    "Venue" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "会場"
           }
         }
       }

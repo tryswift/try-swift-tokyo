@@ -86,15 +86,15 @@ enum Lines: Equatable, Identifiable, CaseIterable {
     switch self {
     case .tachikawa:
       return [
-        .init(order: 1, description: "tachikawa-1")
+        .init(description: "tachikawa-1")
       ]
     case .haneda:
       return [
-        .init(order: 1, description: "haneda-1")
+        .init(description: "haneda-1")
       ]
     case .tokyo:
       return [
-        .init(order: 1, description: "tokyo-1")
+        .init(description: "tokyo-1")
       ]
     }
   }
@@ -110,9 +110,20 @@ enum Lines: Equatable, Identifiable, CaseIterable {
     }
   }
 
+  var systemImage: String {
+    switch self {
+    case .tachikawa: "tram.fill"
+    case .haneda: "airplane"
+    case .tokyo: "train.side.front.car"
+    }
+  }
+
+  var formattedDuration: String {
+    duration.formatted(.units(allowed: [.hours, .minutes], width: .abbreviated))
+  }
+
   struct Direction: Equatable, Identifiable {
     var id: UUID { .init() }
-    var order: Int
     var description: LocalizedStringKey
     var imageName: String?
   }
