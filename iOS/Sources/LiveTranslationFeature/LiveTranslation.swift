@@ -3,8 +3,8 @@ import BuildConfig
 import ComposableArchitecture
 import DependencyExtra
 import Foundation
-import rtt_sdk
 import SwiftUI
+import rtt_sdk
 
 @Reducer
 public struct LiveTranslation: Sendable {

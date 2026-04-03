@@ -1,8 +1,8 @@
 import Dependencies
 import DependenciesMacros
 import Foundation
-import rtt_sdk
 import Observation
+import rtt_sdk
 
 extension DependencyValues {
   public var liveTranslationServiceClient: LiveTranslationServiceClient {
