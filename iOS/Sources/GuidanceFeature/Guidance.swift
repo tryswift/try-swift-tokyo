@@ -18,7 +18,7 @@ enum VenueTab: Equatable, Hashable, Sendable {
 @Reducer
 public struct Guidance: Sendable {
 
-  struct LineRouteData: Equatable, @unchecked Sendable {
+  public struct LineRouteData: Equatable, @unchecked Sendable {
     var origin: MKMapItem
     var route: MKRoute
     var lookAround: MKLookAroundScene?

@@ -39,7 +39,7 @@ public struct AppReducer {
   @ObservableState
   public struct State: Equatable {
     var schedule = ScheduleFeature.Schedule.State()
-    var liveTranslation = LiveTranslation.State()
+    public var liveTranslation = LiveTranslation.State()
     var guidance = Guidance.State()
     var sponsors = SponsorsList.State()
     var trySwift = TrySwift.State()
@@ -403,13 +403,14 @@ public struct AppView: View {
   #if os(macOS)
     @ViewBuilder
     var macOSSidebarLayout: some View {
-      if store.selectedSidebarItem == .liveTranslation {
+      switch store.selectedSidebarItem {
+      case .liveTranslation, .venue, .sponsors:
         NavigationSplitView {
           sidebarContent
         } detail: {
           detailContent
         }
-      } else {
+      default:
         NavigationSplitView {
           sidebarContent
         } content: {

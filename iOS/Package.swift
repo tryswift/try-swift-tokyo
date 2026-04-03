@@ -24,10 +24,10 @@ let package = Package(
       targets: ["VideoFeature"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.25.0"),
+    .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.25.5"),
     .package(url: "https://github.com/maiyama18/LicensesPlugin", from: "0.2.0"),
-    .package(url: "https://github.com/flitto/rtt_sdk", from: "0.1.9"),
-    .package(url: "https://github.com/SvenTiigi/YouTubePlayerKit.git", from: "2.0.0"),
+    .package(url: "https://github.com/flitto/rtt_sdk", from: "0.2.0"),
+    .package(url: "https://github.com/SvenTiigi/YouTubePlayerKit.git", from: "2.0.5"),
     .package(name: "SharedModels", path: "../SharedModels"),
     .package(name: "DataClient", path: "../DataClient"),
   ],
@@ -70,7 +70,7 @@ let package = Package(
         "BuildConfig",
         "DependencyExtra",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        .product(name: "rtt-sdk", package: "rtt_sdk"),
+        .product(name: "LiveTranslationSDK", package: "rtt_sdk"),
       ]
     ),
     .target(

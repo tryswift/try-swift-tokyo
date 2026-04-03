@@ -3,8 +3,8 @@ import IdentifiedCollections
 import MapKit
 import SwiftUI
 
-enum Lines: Equatable, Identifiable, CaseIterable {
-  var id: Self { self }
+public enum Lines: Equatable, Identifiable, CaseIterable, Sendable {
+  public var id: Self { self }
 
   case tachikawa
   case haneda
