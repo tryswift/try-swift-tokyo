@@ -220,9 +220,14 @@ public struct ScheduleScreen: View {
   private func scheduleSection(schedule: SharedModels.Schedule, isLive: Bool) -> some View {
     VStack(alignment: HorizontalAlignment.leading, spacing: 8) {
       HStack(spacing: 6) {
+        let endTimeText: String = {
+          if let endTime = schedule.endTime {
+            return " - " + endTime.formatted(date: .omitted, time: .shortened)
+          }
+          return ""
+        }()
         Text(
-          schedule.time.formatted(date: .omitted, time: .shortened)
-            + (schedule.endTime.map { " - " + $0.formatted(date: .omitted, time: .shortened) } ?? "")
+          schedule.time.formatted(date: .omitted, time: .shortened) + endTimeText
         )
         .font(Font.subheadline.bold())
         if isLive {

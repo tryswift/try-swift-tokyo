@@ -13,6 +13,8 @@ format:
 		./SharedModels/ \
 		./Website/
 
+SKIPSTONE_DIR = Android/.build/plugins/outputs/android/AndroidApp/destination/skipstone
+
 android-build:
 	cd Android && INCLUDE_SKIP=1 swift build
 
@@ -29,5 +31,11 @@ android-emulator:
 	fi
 
 android-run: android-build android-emulator
-	cd Android/.build/plugins/outputs/android/AndroidApp/destination/skipstone && ./gradlew installDebug
+	@cp -R Android/app-wrapper $(SKIPSTONE_DIR)/app
+	@chmod u+w $(SKIPSTONE_DIR)/settings.gradle.kts
+	@grep -q 'include(":app")' $(SKIPSTONE_DIR)/settings.gradle.kts || \
+		echo 'include(":app")' >> $(SKIPSTONE_DIR)/settings.gradle.kts
+	@test -f $(SKIPSTONE_DIR)/local.properties || \
+		echo "sdk.dir=$${ANDROID_HOME:-$$HOME/Library/Android/sdk}" > $(SKIPSTONE_DIR)/local.properties
+	cd $(SKIPSTONE_DIR) && gradle :app:installDebug
 	adb shell am start -n tokyo.tryswift.android/.MainActivity
