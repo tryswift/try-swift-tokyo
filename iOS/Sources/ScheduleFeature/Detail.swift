@@ -4,15 +4,6 @@ import Foundation
 import SharedModels
 import SwiftUI
 
-public struct RelatedSession: Equatable, Hashable, Identifiable, Sendable {
-  public var id: String { "\(year.rawValue)-\(session.title)-\(speakerName ?? "")" }
-  public var year: ConferenceYear
-  public var session: Session
-  public var speakerImageName: String?
-  public var speakerName: String?
-  public var isSameSpeaker: Bool
-}
-
 @Reducer
 public struct ScheduleDetail: Sendable {
   @ObservableState

@@ -89,7 +89,8 @@ public struct Schedule {
     }
 
     public enum Delegate: Equatable {
-      case showVideoDetail(Session, VideoMetadata, ConferenceYear)
+      case showVideoDetail(
+        Session, VideoMetadata, ConferenceYear, relatedSessions: [RelatedSession])
       case showScheduleDetail(
         Session, proposalId: String?, isFavorite: Bool, favoriteCount: Int,
         relatedSessions: [RelatedSession], tagCandidates: [RelatedSession])
@@ -226,7 +227,13 @@ public struct Schedule {
           let videoMeta =
             state.videoMetadata[videoId]
             ?? VideoMetadata(sessionTitle: session.title, youtubeVideoId: videoId)
-          return .send(.delegate(.showVideoDetail(session, videoMeta, state.selectedYear)))
+          let relatedSessions = Schedule.findRelatedSessions(
+            for: session, from: state.allSessions)
+          return .send(
+            .delegate(
+              .showVideoDetail(
+                session, videoMeta, state.selectedYear,
+                relatedSessions: relatedSessions)))
         } else {
           let isFavorite =
             session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
@@ -314,7 +321,11 @@ public struct Schedule {
           let videoMeta =
             state.videoMetadata[videoId]
             ?? VideoMetadata(sessionTitle: session.title, youtubeVideoId: videoId)
-          return .send(.delegate(.showVideoDetail(session, videoMeta, year)))
+          let relatedSessions = Schedule.findRelatedSessions(
+            for: session, from: state.allSessions)
+          return .send(
+            .delegate(
+              .showVideoDetail(session, videoMeta, year, relatedSessions: relatedSessions)))
         }
         let isFavorite =
           session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false

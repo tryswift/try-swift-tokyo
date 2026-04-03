@@ -26,6 +26,7 @@ public struct VideoDetail: Sendable {
     public var session: Session
     public var videoMetadata: VideoMetadata
     public var conferenceYear: ConferenceYear
+    public var relatedSessions: [RelatedSession] = []
     public var selectedTab: Tab = .about
     public var currentTime: TimeInterval = 0
     public var seekRequest: SeekRequest?
@@ -34,17 +35,20 @@ public struct VideoDetail: Sendable {
     public init(
       session: Session,
       videoMetadata: VideoMetadata,
-      conferenceYear: ConferenceYear
+      conferenceYear: ConferenceYear,
+      relatedSessions: [RelatedSession] = []
     ) {
       self.session = session
       self.videoMetadata = videoMetadata
       self.conferenceYear = conferenceYear
+      self.relatedSessions = relatedSessions
     }
   }
 
   public enum Action: ViewAction, BindableAction {
     case binding(BindingAction<State>)
     case view(View)
+    case delegate(Delegate)
 
     @CasePathable
     public enum View {
@@ -54,6 +58,11 @@ public struct VideoDetail: Sendable {
       case resourceTapped(URL)
       case snsTapped(URL)
       case playerTimeUpdated(TimeInterval)
+      case relatedSessionTapped(RelatedSession)
+    }
+
+    public enum Delegate: Equatable {
+      case showRelatedSession(Session, ConferenceYear)
     }
   }
 
@@ -90,7 +99,10 @@ public struct VideoDetail: Sendable {
         }
         return .none
 
-      case .binding:
+      case .view(.relatedSessionTapped(let related)):
+        return .send(.delegate(.showRelatedSession(related.session, related.year)))
+
+      case .binding, .delegate:
         return .none
       }
     }
