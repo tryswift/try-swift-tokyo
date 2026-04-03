@@ -5,9 +5,10 @@ build:
     - block: 'android'
       contents:
         - 'compileOptions.isCoreLibraryDesugaringEnabled = true'
+    - 'repositories { flatDir { dirs(rootProject.file("LiveTranslationFeature/src/main/kotlin/libs")) }; mavenCentral(); google() }'
     - block: 'dependencies'
       contents:
-        - 'implementation(files("src/main/kotlin/libs/chat-guest-release-20260304.aar"))'
+        - 'implementation(":chat-guest-release-20260304@aar")'
         - 'coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")'
         - 'implementation("com.squareup.okhttp3:okhttp:4.12.0")'
         - 'implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")'
