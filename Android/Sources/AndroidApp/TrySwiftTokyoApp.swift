@@ -31,19 +31,19 @@ public struct ContentView: View {
 
       LiveTranslationScreen()
         .tabItem {
-          Label("Translation", systemImage: "text.bubble")
+          Label("Translation", systemImage: "envelope")
         }
         .tag(1)
 
       SponsorsScreen()
         .tabItem {
-          Label("Sponsors", systemImage: "building.2")
+          Label("Sponsors", systemImage: "star")
         }
         .tag(2)
 
       VenueScreen()
         .tabItem {
-          Label("Venue", systemImage: "map")
+          Label("Venue", systemImage: "location")
         }
         .tag(3)
 

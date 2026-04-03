@@ -25,7 +25,7 @@ public final class AboutViewModel {
   }
 
   private func loadOrganizersFromBundle() throws -> [Organizer] {
-    guard let url = Bundle.module.url(forResource: "2026-organizers", withExtension: "json") else {
+    guard let url = Bundle.main.url(forResource: "2026-organizers", withExtension: "json") else {
       throw AboutError.fileNotFound
     }
     let data = try Data(contentsOf: url)

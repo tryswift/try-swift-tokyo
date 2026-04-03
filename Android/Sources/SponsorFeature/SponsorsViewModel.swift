@@ -24,7 +24,7 @@ public final class SponsorsViewModel {
   }
 
   private func loadSponsorsFromBundle() throws -> Sponsors {
-    guard let url = Bundle.module.url(forResource: "2026-sponsors", withExtension: "json") else {
+    guard let url = Bundle.main.url(forResource: "2026-sponsors", withExtension: "json") else {
       throw SponsorError.fileNotFound
     }
     let data = try Data(contentsOf: url)

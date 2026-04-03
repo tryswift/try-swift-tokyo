@@ -91,7 +91,7 @@ public struct VenueScreen: View {
         .aspectRatio(1.6, contentMode: ContentMode.fit)
 
       VStack(spacing: 8) {
-        Image(systemName: "map")
+        Image(systemName: "location")
           .font(Font.largeTitle)
           .foregroundStyle(Color.secondary)
 
@@ -162,7 +162,7 @@ public struct VenueScreen: View {
         .foregroundStyle(Color.secondary)
 
       Link(destination: URL(string: "https://www.tachikawasg.com")!) {
-        Label("Visit Website", systemImage: "globe")
+        Label("Visit Website", systemImage: "arrow.forward.square")
       }
       .padding(Edge.Set.top, 4)
     }
