@@ -72,6 +72,7 @@ public struct Guidance: Sendable {
     Reduce { state, action in
       switch action {
       case .view(.onAppear):
+        guard state.cachedLineData.isEmpty else { return .none }
         return .run { send in
           await send(
             .initialResponse(
@@ -101,15 +102,19 @@ public struct Guidance: Sendable {
         return .none
 
       case .binding(\.lines):
-        if let data = state.cachedLineData[state.lines] {
-          state.origin = data.origin
-          state.route = data.route
-          state.lookAround = data.lookAround
-          state.cameraPosition = .camera(
-            .init(
-              centerCoordinate: data.route.polyline.coordinate,
-              distance: data.route.distance * 2))
+        guard let data = state.cachedLineData[state.lines] else {
+          state.origin = nil
+          state.route = nil
+          state.lookAround = nil
+          return .none
         }
+        state.origin = data.origin
+        state.route = data.route
+        state.lookAround = data.lookAround
+        state.cameraPosition = .camera(
+          .init(
+            centerCoordinate: data.route.polyline.coordinate,
+            distance: data.route.distance * 2))
         return .none
 
       case .view(.openMapTapped):
@@ -157,8 +162,7 @@ public struct Guidance: Sendable {
     else { return nil }
     guard let route = try await mapKitClient.mapRoute(origin, destination, line.transportType)
     else { return nil }
-    let polylineOrigin = route.polyline.coords.first!
-    guard
+    guard let polylineOrigin = route.polyline.coords.first,
       let geoLocation = try await mapKitClient.reverseGeocodeLocation(
         .init(latitude: polylineOrigin.latitude, longitude: polylineOrigin.longitude)
       ).first
