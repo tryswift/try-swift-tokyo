@@ -1,6 +1,6 @@
 import DependencyExtra
 import SwiftUI
-import rtt_sdk
+import LiveTranslationSDK
 
 struct SelectLanguageSheet: View {
   let languageList: [LanguageItemEntity]

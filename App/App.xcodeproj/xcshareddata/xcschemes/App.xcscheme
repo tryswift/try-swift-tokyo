@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1530"
+   LastUpgradeVersion = "2640"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D563615A2B931FF800E4F789"
-               BuildableName = "App.app"
-               BlueprintName = "App"
+               BuildableName = "try! Tokyo.app"
+               BlueprintName = "try! Tokyo"
                ReferencedContainer = "container:App.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -50,8 +50,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D563615A2B931FF800E4F789"
-            BuildableName = "App.app"
-            BlueprintName = "App"
+            BuildableName = "try! Tokyo.app"
+            BlueprintName = "try! Tokyo"
             ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -74,8 +74,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D563615A2B931FF800E4F789"
-            BuildableName = "App.app"
-            BlueprintName = "App"
+            BuildableName = "try! Tokyo.app"
+            BlueprintName = "try! Tokyo"
             ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

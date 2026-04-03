@@ -48,7 +48,7 @@
 /* Begin PBXFileReference section */
 		2435021A2BA49F29000083BB /* App.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = App.xctestplan; sourceTree = "<group>"; };
 		249B840E2F7CBF890038D20B /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
-		D563615B2B931FF800E4F789 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D563615B2B931FF800E4F789 /* try! Tokyo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "try! Tokyo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D563615E2B931FF800E4F789 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		D56361642B931FF900E4F789 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D56361662B931FF900E4F789 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		D563615C2B931FF800E4F789 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D563615B2B931FF800E4F789 /* App.app */,
+				D563615B2B931FF800E4F789 /* try! Tokyo.app */,
 				D583D7C72B9B634800B94F73 /* Clip.app */,
 			);
 			name = Products;
@@ -155,9 +155,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D563615A2B931FF800E4F789 /* App */ = {
+		D563615A2B931FF800E4F789 /* try! Tokyo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D563616D2B931FF900E4F789 /* Build configuration list for PBXNativeTarget "App" */;
+			buildConfigurationList = D563616D2B931FF900E4F789 /* Build configuration list for PBXNativeTarget "try! Tokyo" */;
 			buildPhases = (
 				D56361572B931FF800E4F789 /* Sources */,
 				D56361582B931FF800E4F789 /* Frameworks */,
@@ -169,12 +169,12 @@
 			dependencies = (
 				D583D7D52B9B634B00B94F73 /* PBXTargetDependency */,
 			);
-			name = App;
+			name = "try! Tokyo";
 			packageProductDependencies = (
 				D54B19592B932BBF0065B7E5 /* AppFeature */,
 			);
 			productName = App;
-			productReference = D563615B2B931FF800E4F789 /* App.app */;
+			productReference = D563615B2B931FF800E4F789 /* try! Tokyo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D583D7C62B9B634800B94F73 /* Clip */ = {
@@ -205,7 +205,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 2640;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					D563615A2B931FF800E4F789 = {
@@ -229,7 +229,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D563615A2B931FF800E4F789 /* App */,
+				D563615A2B931FF800E4F789 /* try! Tokyo */,
 				D583D7C62B9B634800B94F73 /* Clip */,
 			);
 		};
@@ -325,6 +325,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9PC9DZ9559;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -349,6 +350,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
@@ -393,6 +395,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9PC9DZ9559;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -410,6 +413,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 6.0;
 				XROS_DEPLOYMENT_TARGET = 26.0;
@@ -426,7 +430,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
-				DEVELOPMENT_TEAM = 9PC9DZ9559;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
@@ -482,7 +485,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
-				DEVELOPMENT_TEAM = 9PC9DZ9559;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
@@ -537,7 +539,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Clip/Preview Content\"";
-				DEVELOPMENT_TEAM = 9PC9DZ9559;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Clip/Info.plist;
@@ -569,7 +570,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Clip/Preview Content\"";
-				DEVELOPMENT_TEAM = 9PC9DZ9559;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Clip/Info.plist;
@@ -605,7 +605,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D563616D2B931FF900E4F789 /* Build configuration list for PBXNativeTarget "App" */ = {
+		D563616D2B931FF900E4F789 /* Build configuration list for PBXNativeTarget "try! Tokyo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D563616E2B931FF900E4F789 /* Debug */,

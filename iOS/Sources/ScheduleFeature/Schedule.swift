@@ -35,7 +35,7 @@ public struct Schedule {
   @ObservableState
   public struct State: Equatable {
 
-    var path = StackState<Path.State>()
+    public var path = StackState<Path.State>()
     var selectedYear: ConferenceYear = .latest
     var selectedDay: Days = .day1
     var searchText: String = ""

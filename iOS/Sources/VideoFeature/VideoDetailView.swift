@@ -24,6 +24,7 @@ public struct VideoDetailView: View {
             send(.playerTimeUpdated(time))
           }
         )
+        .padding(.bottom)
         .id(store.videoMetadata.youtubeVideoId)
 
         // Tab Picker
