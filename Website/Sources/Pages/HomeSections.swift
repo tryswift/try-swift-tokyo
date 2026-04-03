@@ -46,7 +46,7 @@ extension HomeSectionType {
       ].contains(self)
     case .year2026:
       [
-        .about, .outline, .timetable, .speaker, .workshop, .sponsor, .communityEvents,
+        .about, .outline, .tickets, .timetable, .speaker, .workshop, .sponsor, .communityEvents,
         .meetTheHosts,
         .meetTheOrganizers, .access,
       ].contains(self)
@@ -56,7 +56,7 @@ extension HomeSectionType {
   static func navigationItems(for year: ConferenceYear) -> [Self] {
     allCases.filter {
       $0.isAvailable(for: year)
-        && ![.meetTheHosts, .meetTheOrganizers].contains($0)
+        && ![.tickets, .meetTheHosts, .meetTheOrganizers].contains($0)
     }
   }
 }
