@@ -18,6 +18,12 @@ enum VenueTab: Equatable, Hashable, Sendable {
 @Reducer
 public struct Guidance: Sendable {
 
+  struct LineRouteData: Equatable, @unchecked Sendable {
+    var origin: MKMapItem
+    var route: MKRoute
+    var lookAround: MKLookAroundScene?
+  }
+
   @ObservableState
   public struct State: Equatable, @unchecked Sendable {
     var selectedTab: VenueTab = .access
@@ -30,6 +36,7 @@ public struct Guidance: Sendable {
     @ObservationStateIgnored var cameraPosition: MapCameraPosition = .automatic
     var isLookAroundPresented: Bool = false
     var lookAround: MKLookAroundScene?
+    @ObservationStateIgnored var cachedLineData: [Lines: LineRouteData] = [:]
 
     var routeOrigin: CLLocationCoordinate2D? {
       guard let route = route else { return nil }
@@ -47,8 +54,7 @@ public struct Guidance: Sendable {
   public enum Action: BindableAction, ViewAction {
     case binding(BindingAction<State>)
     case view(View)
-    case initialResponse(Result<(MKMapItem, MKMapItem, MKRoute, MKLookAroundScene?)?, Error>)
-    case updateResponse(Result<(MKMapItem, MKRoute, MKLookAroundScene?)?, Error>)
+    case initialResponse(Result<(MKMapItem, [Lines: LineRouteData])?, Error>)
 
     public enum View {
       case onAppear
@@ -66,58 +72,45 @@ public struct Guidance: Sendable {
     Reduce { state, action in
       switch action {
       case .view(.onAppear):
-        return .run { [state] send in
+        return .run { send in
           await send(
             .initialResponse(
               Result {
-                try await onAppear(lines: state.lines)
+                try await fetchAllRoutes()
               }
             )
           )
         }
       case .initialResponse(.success(let response)):
-        guard let response = response else { return .none }
-        let route = response.2
-
-        state.origin = response.0
-        state.destinationItem = response.1
-        state.route = route
-        state.lookAround = response.3
-        //TODO: Calculate distance from 2 CLLocation
-        state.cameraPosition = .camera(
-          .init(centerCoordinate: route.polyline.coordinate, distance: route.distance * 2))
+        guard let (destination, lineData) = response else { return .none }
+        state.destinationItem = destination
+        state.cachedLineData = lineData
+        if let data = lineData[state.lines] {
+          state.origin = data.origin
+          state.route = data.route
+          state.lookAround = data.lookAround
+          state.cameraPosition = .camera(
+            .init(
+              centerCoordinate: data.route.polyline.coordinate,
+              distance: data.route.distance * 2))
+        }
         return .none
 
       case .initialResponse(.failure(let error)):
         logger.error("Initial response failed: \(error)")
         return .none
 
-      case .updateResponse(.success(let response)):
-        guard let response = response else { return .none }
-        let route = response.1
-        state.origin = response.0
-        state.route = route
-        state.lookAround = response.2
-        //TODO: Calculate distance from 2 CLLocation
-        state.cameraPosition = .camera(
-          .init(centerCoordinate: route.polyline.coordinate, distance: route.distance * 2))
-        return .none
-
-      case .updateResponse(.failure(let error)):
-        logger.error("Update response failed: \(error)")
-        return .none
-
       case .binding(\.lines):
-        guard let destination = state.destinationItem else { return .none }
-        return .run { [state] send in
-          await send(
-            .updateResponse(
-              Result {
-                try await update(with: state.lines, destination: destination)
-              }
-            )
-          )
+        if let data = state.cachedLineData[state.lines] {
+          state.origin = data.origin
+          state.route = data.route
+          state.lookAround = data.lookAround
+          state.cameraPosition = .camera(
+            .init(
+              centerCoordinate: data.route.polyline.coordinate,
+              distance: data.route.distance * 2))
         }
+        return .none
 
       case .view(.openMapTapped):
         return .run { [state] _ in
@@ -129,64 +122,51 @@ public struct Guidance: Sendable {
     }
   }
 
-  func onAppear(lines: Lines) async throws -> (MKMapItem, MKMapItem, MKRoute, MKLookAroundScene?)? {
-    let items = try await withThrowingTaskGroup(
-      of: (Int, MKMapItem?).self, returning: (MKMapItem?, MKMapItem?).self
-    ) { group in
-      group.addTask {
-        (0, try await mapKitClient.localSearch(lines.searchQuery, lines.region).first)
-      }
-      group.addTask {
-        (1, try await mapKitClient.localSearch("立川ステージガーデン", hallLocation).first)
-      }
-      var result: [Int: MKMapItem?] = [:]
-      for try await (index, element) in group {
-        result[index] = element
-      }
-      return (result[0]!, result[1]!)
-    }
-    guard let origin = items.0, let destination = items.1 else { return nil }
-    guard let route = try await mapKitClient.mapRoute(origin, destination) else { return nil }
-    let polylineOrigin = route.polyline.coords.first!
+  func fetchAllRoutes() async throws -> (MKMapItem, [Lines: LineRouteData])? {
     guard
-      let geoLocation = try await mapKitClient.reverseGeocodeLocation(
-        .init(latitude: polylineOrigin.latitude, longitude: polylineOrigin.longitude)
-      ).first
-    else {
-      return nil
+      let destination = try await mapKitClient.localSearch("立川ステージガーデン", hallLocation)
+        .first
+    else { return nil }
+
+    let lineData = await withTaskGroup(
+      of: (Lines, LineRouteData?).self,
+      returning: [Lines: LineRouteData].self
+    ) { group in
+      for line in Lines.allCases {
+        group.addTask {
+          do {
+            return (line, try await self.fetchLineData(line: line, destination: destination))
+          } catch {
+            logger.error("Failed to fetch route for \(String(describing: line)): \(error)")
+            return (line, nil)
+          }
+        }
+      }
+      var result: [Lines: LineRouteData] = [:]
+      for await (line, data) in group {
+        if let data { result[line] = data }
+      }
+      return result
     }
-    guard let lookAroundScene = try await mapKitClient.lookAround(geoLocation)
-    else {
-      return (origin, destination, route, nil)
-    }
-    return (origin, destination, route, lookAroundScene)
+
+    return (destination, lineData)
   }
 
-  func update(with lines: Lines, destination: MKMapItem) async throws -> (
-    MKMapItem, MKRoute, MKLookAroundScene?
-  )? {
-    let origin = try await mapKitClient.localSearch(lines.searchQuery, lines.region).first
-    guard let origin = origin else { return nil }
-    guard let route = try await mapKitClient.mapRoute(origin, destination) else {
-      logger.error("Route not found: \(origin) to \(destination)")
-      return nil
-    }
+  func fetchLineData(line: Lines, destination: MKMapItem) async throws -> LineRouteData? {
+    guard let origin = try await mapKitClient.localSearch(line.searchQuery, line.region).first
+    else { return nil }
+    guard let route = try await mapKitClient.mapRoute(origin, destination, line.transportType)
+    else { return nil }
     let polylineOrigin = route.polyline.coords.first!
     guard
       let geoLocation = try await mapKitClient.reverseGeocodeLocation(
         .init(latitude: polylineOrigin.latitude, longitude: polylineOrigin.longitude)
       ).first
     else {
-      logger.error(
-        "[Error] Reverse Geocode failed (\(polylineOrigin.latitude), \(polylineOrigin.longitude))")
-      return nil
+      return LineRouteData(origin: origin, route: route, lookAround: nil)
     }
-    guard let lookAroundScene = try await mapKitClient.lookAround(geoLocation)
-    else {
-      logger.warning("Look around scene not found: \(geoLocation)")
-      return (origin, route, nil)
-    }
-    return (origin, route, lookAroundScene)
+    let lookAround = try? await mapKitClient.lookAround(geoLocation)
+    return LineRouteData(origin: origin, route: route, lookAround: lookAround)
   }
 }
 

@@ -10,7 +10,7 @@ public struct MapKitClient: Sendable {
   public enum Error: Swift.Error {
     case invalidLocation
   }
-  public var mapRoute: @Sendable (MKMapItem, MKMapItem) async throws -> MKRoute?
+  public var mapRoute: @Sendable (MKMapItem, MKMapItem, MKDirectionsTransportType) async throws -> MKRoute?
   public var lookAround: @Sendable (MKMapItem) async throws -> MKLookAroundScene?
   public var reverseGeocodeLocation: @Sendable (CLLocationCoordinate2D) async throws -> [MKMapItem]
   public var localSearch: @Sendable (String, MKCoordinateRegion) async throws -> [MKMapItem]
@@ -18,11 +18,11 @@ public struct MapKitClient: Sendable {
 
 extension MapKitClient: DependencyKey {
   public static let liveValue: Self = .init(
-    mapRoute: { starting, ending in
+    mapRoute: { starting, ending, transportType in
       let directionsRequest = MKDirections.Request()
       directionsRequest.source = starting
       directionsRequest.destination = ending
-      directionsRequest.transportType = [.transit, .walking]
+      directionsRequest.transportType = transportType
 
       let directionsService = MKDirections(request: directionsRequest)
       let response = try await directionsService.calculate()
