@@ -3,7 +3,7 @@ import BuildConfig
 import ComposableArchitecture
 import DependencyExtra
 import Foundation
-import LiveTranslationSDK
+import rtt_sdk
 import SwiftUI
 
 @Reducer
@@ -356,6 +356,7 @@ public struct LiveTranslationView: View {
           Text(item.textForTr.isEmpty ? item.text : item.textForTr)
             .frame(maxWidth: .infinity, alignment: .leading)
             .multilineTextAlignment(.leading)
+            .foregroundStyle(item.isRealTime ? .secondary : .primary)
           Button {
             let text = item.textForTr.isEmpty ? item.text : item.textForTr
             if store.speakingItemId == item.id {

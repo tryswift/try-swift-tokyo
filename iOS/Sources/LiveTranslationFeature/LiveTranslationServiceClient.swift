@@ -1,7 +1,7 @@
 import Dependencies
 import DependenciesMacros
 import Foundation
-import LiveTranslationSDK
+import rtt_sdk
 import Observation
 
 extension DependencyValues {
