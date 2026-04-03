@@ -1,5 +1,5 @@
 import DependencyExtra
-import LiveTranslationSDK
+import rtt_sdk
 import SwiftUI
 
 struct SelectLanguageSheet: View {
