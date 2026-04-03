@@ -67,6 +67,7 @@ struct VideoPlayerView: View {
         try? await Task.sleep(for: .milliseconds(500))
         guard !Task.isCancelled else { break }
         if let time = try? await player.getCurrentTime() {
+          guard !Task.isCancelled else { break }
           onTimeUpdate(time.converted(to: .seconds).value)
         }
       }
