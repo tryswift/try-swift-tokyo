@@ -158,6 +158,7 @@ public struct LiveTranslationScreen: View {
           Text(item.text)
             .frame(maxWidth: .infinity, alignment: .leading)
             .multilineTextAlignment(TextAlignment.leading)
+            .foregroundStyle(item.isRealTime ? Color.secondary : Color.primary)
           Button {
             if viewModel.speakingItemId == item.id {
               viewModel.stopSpeaking()
