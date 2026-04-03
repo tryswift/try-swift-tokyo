@@ -23,8 +23,15 @@ description: Definitive guide for Swift 6+ Concurrency, strictly enforcing Senda
 - Mark immutable structs/enums as `Sendable` (often implicit, but be explicit if public).
 - For classes, use `final` and `@unchecked Sendable` *only* if you are manually managing thread safety (locks/queues). Ideally, use `actor`.
 - **Closures:** Ensure closures passed between contexts are `@Sendable`.
+- TCA types: State and Reducer structs should conform to `Sendable`.
 
-## 4. Migration from Combine/Closures
+## 4. Observable Pattern
+
+- **Prefer `@Observable`** (Observation framework) over `ObservableObject` + `@Published`.
+- Pattern: `@Observable public final class ViewModel`.
+- Combine `@Observable` with `@MainActor` when accessing UI state from async contexts.
+
+## 5. Migration from Combine/Closures
 
 - Replace `DispatchQueue.main.async` with `await MainActor.run { ... }` or isolate the function itself.
 - Replace `Future`/`Promise` with direct `async throws` functions.
@@ -33,19 +40,23 @@ description: Definitive guide for Swift 6+ Concurrency, strictly enforcing Senda
 ## Example: Safe ViewModel
 
 ```swift
+@Observable
 @MainActor
-final class UserViewModel: ObservableObject {
-    @Published var users: [User] = []
+final class UserViewModel {
+    var users: [User] = []
 
-    // Dependencies should be Sendable
     private let client: APIClient
+
+    init(client: APIClient) {
+        self.client = client
+    }
 
     func load() async {
         do {
-            // 'await' suspends, allowing other work on MainActor if needed
             self.users = try await client.fetchUsers()
         } catch {
             print(error)
         }
     }
 }
+```
