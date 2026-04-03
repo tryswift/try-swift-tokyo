@@ -38,6 +38,11 @@ public struct LiveTranslation: Sendable {
     /// Show speed control
     var isShowingSpeedControl: Bool = false
 
+    /// The most recent items for transcript display
+    var transcriptItems: [ChatItemEntity] {
+      Array(chatList.suffix(3))
+    }
+
     /// The display name for the currently selected language (read-only to avoid @Shared setter warning)
     var selectedLanguageName: String {
       supportLanguages.first { $0.languageCode == selectedLangCode }?.languageLocal ?? ""
@@ -189,6 +194,9 @@ public struct LiveTranslationView: View {
 
   @Bindable public var store: StoreOf<LiveTranslation>
   @Environment(\.scenePhase) var scenePhase
+  #if os(macOS) || os(visionOS)
+    @Environment(\.openWindow) private var openWindow
+  #endif
 
   private let scrollContentBottomID: String = "atBottom"
 
@@ -270,6 +278,16 @@ public struct LiveTranslationView: View {
             }
           }
         }
+        #if os(macOS) || os(visionOS)
+          ToolbarItem(placement: .primaryAction) {
+            Button {
+              openWindow(id: "transcript")
+            } label: {
+              Image(systemName: "rectangle.on.rectangle")
+            }
+            .accessibilityLabel(Text("Open transcript window", bundle: .module))
+          }
+        #endif
         ToolbarItem(placement: .primaryAction) {
           HStack {
             Button {
@@ -417,6 +435,69 @@ public struct LiveTranslationView: View {
 extension SharedKey where Self == AppStorageKey<String> {
   static var selectedLangCode: Self {
     appStorage("selectedLangCode")
+  }
+}
+
+// MARK: - Transcript Window View
+
+public struct TranscriptWindowView: View {
+
+  var store: StoreOf<LiveTranslation>
+
+  public init(store: StoreOf<LiveTranslation>) {
+    self.store = store
+  }
+
+  public var body: some View {
+    VStack(spacing: 16) {
+      Spacer()
+      if store.chatList.isEmpty {
+        ContentUnavailableView(
+          String(localized: "Not started yet", bundle: .module),
+          systemImage: "text.page.slash.fill"
+        )
+      } else {
+        ForEach(store.transcriptItems) { item in
+          Text(item.textForTr.isEmpty ? item.text : item.textForTr)
+            #if os(visionOS)
+              .font(.system(size: 36, weight: .medium))
+            #else
+              .font(.system(size: 28, weight: .medium))
+            #endif
+            .multilineTextAlignment(.center)
+            .foregroundStyle(item.isRealTime ? .secondary : .primary)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 16)
+            .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 20))
+        }
+        .animation(.easeInOut(duration: 0.3), value: store.chatList.last?.id)
+      }
+      Spacer()
+      flittoLogo
+    }
+    .padding()
+    .glassEffectContainerIfAvailable()
+  }
+
+  @ViewBuilder
+  private var flittoLogo: some View {
+    HStack {
+      Spacer()
+      Text("Powered by", bundle: .module)
+        .font(.caption)
+        .foregroundStyle(.secondary)
+      Image(.flitto)
+        .resizable()
+        .offset(x: -10)
+        .aspectRatio(contentMode: .fit)
+        .frame(maxHeight: 30)
+        .accessibilityIgnoresInvertColors()
+      Spacer()
+    }
+    .padding(.vertical, 8)
+    .glassEffectIfAvailable(.clear, in: .capsule)
+    .padding(.horizontal)
   }
 }
 
