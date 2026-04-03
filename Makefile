@@ -31,11 +31,23 @@ android-emulator:
 	fi
 
 android-run: android-build android-emulator
+	@rm -rf $(SKIPSTONE_DIR)/app
 	@cp -R Android/app-wrapper $(SKIPSTONE_DIR)/app
 	@chmod u+w $(SKIPSTONE_DIR)/settings.gradle.kts
 	@grep -q 'include(":app")' $(SKIPSTONE_DIR)/settings.gradle.kts || \
 		echo 'include(":app")' >> $(SKIPSTONE_DIR)/settings.gradle.kts
-	@test -f $(SKIPSTONE_DIR)/local.properties || \
-		echo "sdk.dir=$${ANDROID_HOME:-$$HOME/Library/Android/sdk}" > $(SKIPSTONE_DIR)/local.properties
+	@if [ ! -f $(SKIPSTONE_DIR)/local.properties ]; then \
+		if [ -n "$$ANDROID_HOME" ]; then \
+			echo "sdk.dir=$$ANDROID_HOME" > $(SKIPSTONE_DIR)/local.properties; \
+		elif [ -n "$$ANDROID_SDK_ROOT" ]; then \
+			echo "sdk.dir=$$ANDROID_SDK_ROOT" > $(SKIPSTONE_DIR)/local.properties; \
+		elif [ -d "$$HOME/Library/Android/sdk" ]; then \
+			echo "sdk.dir=$$HOME/Library/Android/sdk" > $(SKIPSTONE_DIR)/local.properties; \
+		elif [ -d "$$HOME/Android/Sdk" ]; then \
+			echo "sdk.dir=$$HOME/Android/Sdk" > $(SKIPSTONE_DIR)/local.properties; \
+		else \
+			echo "Error: Android SDK not found. Set ANDROID_HOME." >&2; exit 1; \
+		fi; \
+	fi
 	cd $(SKIPSTONE_DIR) && gradle :app:installDebug
 	adb shell am start -n tokyo.tryswift.android/.MainActivity
