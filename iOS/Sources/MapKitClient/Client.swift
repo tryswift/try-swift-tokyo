@@ -10,7 +10,8 @@ public struct MapKitClient: Sendable {
   public enum Error: Swift.Error {
     case invalidLocation
   }
-  public var mapRoute: @Sendable (MKMapItem, MKMapItem, MKDirectionsTransportType) async throws -> MKRoute?
+  public var mapRoute:
+    @Sendable (MKMapItem, MKMapItem, MKDirectionsTransportType) async throws -> MKRoute?
   public var lookAround: @Sendable (MKMapItem) async throws -> MKLookAroundScene?
   public var reverseGeocodeLocation: @Sendable (CLLocationCoordinate2D) async throws -> [MKMapItem]
   public var localSearch: @Sendable (String, MKCoordinateRegion) async throws -> [MKMapItem]
