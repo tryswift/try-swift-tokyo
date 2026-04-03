@@ -110,6 +110,14 @@ enum Lines: Equatable, Identifiable, CaseIterable {
     }
   }
 
+  var transportType: MKDirectionsTransportType {
+    switch self {
+    case .tachikawa: .walking
+    case .haneda: [.transit, .walking]
+    case .tokyo: [.transit, .walking]
+    }
+  }
+
   var systemImage: String {
     switch self {
     case .tachikawa: "tram.fill"
