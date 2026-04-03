@@ -38,6 +38,14 @@ public struct LiveTranslation: Sendable {
     /// Show speed control
     var isShowingSpeedControl: Bool = false
 
+    /// Number of most recent items to display in transcript mode
+    private static let transcriptItemCount = 3
+
+    /// The most recent items for transcript display
+    var transcriptItems: [ChatItemEntity] {
+      Array(chatList.suffix(Self.transcriptItemCount))
+    }
+
     /// The display name for the currently selected language (read-only to avoid @Shared setter warning)
     var selectedLanguageName: String {
       supportLanguages.first { $0.languageCode == selectedLangCode }?.languageLocal ?? ""
@@ -189,6 +197,9 @@ public struct LiveTranslationView: View {
 
   @Bindable public var store: StoreOf<LiveTranslation>
   @Environment(\.scenePhase) var scenePhase
+  #if os(macOS) || os(visionOS)
+    @Environment(\.openWindow) private var openWindow
+  #endif
 
   private let scrollContentBottomID: String = "atBottom"
 
@@ -204,7 +215,7 @@ public struct LiveTranslationView: View {
             if store.roomNumber.isEmpty {
               ContentUnavailableView("Room is unavailable", systemImage: "text.page.slash.fill")
               Spacer()
-              flittoLogo
+              FlittoLogoView()
             } else if store.chatList.isEmpty {
               if let errorMessage = store.lastErrorMessage {
                 ContentUnavailableView {
@@ -219,7 +230,7 @@ public struct LiveTranslationView: View {
                 ContentUnavailableView("Not started yet", systemImage: "text.page.slash.fill")
               }
               Spacer()
-              flittoLogo
+              FlittoLogoView()
             } else {
               translationContents
               Color.clear
@@ -270,6 +281,16 @@ public struct LiveTranslationView: View {
             }
           }
         }
+        #if os(macOS) || os(visionOS)
+          ToolbarItem(placement: .primaryAction) {
+            Button {
+              openWindow(id: "transcript")
+            } label: {
+              Image(systemName: "rectangle.on.rectangle")
+            }
+            .accessibilityLabel(Text("Open transcript window", bundle: .module))
+          }
+        #endif
         ToolbarItem(placement: .primaryAction) {
           HStack {
             Button {
@@ -393,8 +414,12 @@ public struct LiveTranslationView: View {
     .glassEffectContainerIfAvailable()
   }
 
-  @ViewBuilder
-  var flittoLogo: some View {
+}
+
+// MARK: - Shared Flitto Logo
+
+struct FlittoLogoView: View {
+  var body: some View {
     HStack {
       Spacer()
       Text("Powered by", bundle: .module)
@@ -417,6 +442,62 @@ public struct LiveTranslationView: View {
 extension SharedKey where Self == AppStorageKey<String> {
   static var selectedLangCode: Self {
     appStorage("selectedLangCode")
+  }
+}
+
+// MARK: - Transcript Window View
+
+public struct TranscriptWindowView: View {
+
+  @Bindable var store: StoreOf<LiveTranslation>
+  @Environment(\.scenePhase) private var scenePhase
+
+  public init(store: StoreOf<LiveTranslation>) {
+    self.store = store
+  }
+
+  public var body: some View {
+    VStack(spacing: 16) {
+      Spacer()
+      if store.chatList.isEmpty {
+        ContentUnavailableView(
+          String(localized: "Not started yet", bundle: .module),
+          systemImage: "text.page.slash.fill"
+        )
+      } else {
+        ForEach(store.transcriptItems) { item in
+          Text(item.textForTr.isEmpty ? item.text : item.textForTr)
+            #if os(visionOS)
+              .font(.system(size: 36, weight: .medium))
+            #else
+              .font(.system(size: 28, weight: .medium))
+            #endif
+            .multilineTextAlignment(.center)
+            .foregroundStyle(item.isRealTime ? .secondary : .primary)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 16)
+            .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 20))
+        }
+        .animation(.easeInOut(duration: 0.3), value: store.chatList.last?.id)
+      }
+      Spacer()
+      FlittoLogoView()
+    }
+    .padding()
+    .glassEffectContainerIfAvailable()
+    .task {
+      store.send(.view(.onAppear))
+    }
+    .onChange(of: scenePhase) {
+      switch scenePhase {
+      case .active:
+        store.send(.view(.connectStream))
+      case .background:
+        store.send(.view(.disconnectStream))
+      default: break
+      }
+    }
   }
 }
 

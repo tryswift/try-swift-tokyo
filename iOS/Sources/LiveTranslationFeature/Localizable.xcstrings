@@ -51,6 +51,16 @@
         }
       }
     },
+    "Open transcript window" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "字幕ウィンドウを開く"
+          }
+        }
+      }
+    },
     "Powered by" : {
       "localizations" : {
         "ja" : {
