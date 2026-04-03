@@ -38,9 +38,12 @@ public struct LiveTranslation: Sendable {
     /// Show speed control
     var isShowingSpeedControl: Bool = false
 
+    /// Number of most recent items to display in transcript mode
+    private static let transcriptItemCount = 3
+
     /// The most recent items for transcript display
     var transcriptItems: [ChatItemEntity] {
-      Array(chatList.suffix(3))
+      Array(chatList.suffix(Self.transcriptItemCount))
     }
 
     /// The display name for the currently selected language (read-only to avoid @Shared setter warning)
@@ -212,7 +215,7 @@ public struct LiveTranslationView: View {
             if store.roomNumber.isEmpty {
               ContentUnavailableView("Room is unavailable", systemImage: "text.page.slash.fill")
               Spacer()
-              flittoLogo
+              FlittoLogoView()
             } else if store.chatList.isEmpty {
               if let errorMessage = store.lastErrorMessage {
                 ContentUnavailableView {
@@ -227,7 +230,7 @@ public struct LiveTranslationView: View {
                 ContentUnavailableView("Not started yet", systemImage: "text.page.slash.fill")
               }
               Spacer()
-              flittoLogo
+              FlittoLogoView()
             } else {
               translationContents
               Color.clear
@@ -411,8 +414,12 @@ public struct LiveTranslationView: View {
     .glassEffectContainerIfAvailable()
   }
 
-  @ViewBuilder
-  var flittoLogo: some View {
+}
+
+// MARK: - Shared Flitto Logo
+
+struct FlittoLogoView: View {
+  var body: some View {
     HStack {
       Spacer()
       Text("Powered by", bundle: .module)
@@ -442,7 +449,8 @@ extension SharedKey where Self == AppStorageKey<String> {
 
 public struct TranscriptWindowView: View {
 
-  var store: StoreOf<LiveTranslation>
+  @Bindable var store: StoreOf<LiveTranslation>
+  @Environment(\.scenePhase) private var scenePhase
 
   public init(store: StoreOf<LiveTranslation>) {
     self.store = store
@@ -474,30 +482,22 @@ public struct TranscriptWindowView: View {
         .animation(.easeInOut(duration: 0.3), value: store.chatList.last?.id)
       }
       Spacer()
-      flittoLogo
+      FlittoLogoView()
     }
     .padding()
     .glassEffectContainerIfAvailable()
-  }
-
-  @ViewBuilder
-  private var flittoLogo: some View {
-    HStack {
-      Spacer()
-      Text("Powered by", bundle: .module)
-        .font(.caption)
-        .foregroundStyle(.secondary)
-      Image(.flitto)
-        .resizable()
-        .offset(x: -10)
-        .aspectRatio(contentMode: .fit)
-        .frame(maxHeight: 30)
-        .accessibilityIgnoresInvertColors()
-      Spacer()
+    .task {
+      store.send(.view(.onAppear))
     }
-    .padding(.vertical, 8)
-    .glassEffectIfAvailable(.clear, in: .capsule)
-    .padding(.horizontal)
+    .onChange(of: scenePhase) {
+      switch scenePhase {
+      case .active:
+        store.send(.view(.connectStream))
+      case .background:
+        store.send(.view(.disconnectStream))
+      default: break
+      }
+    }
   }
 }
 
