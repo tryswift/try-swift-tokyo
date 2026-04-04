@@ -11,7 +11,7 @@ You are an expert in using Ignite, the Swift static site generator.
 
 - Pages implement the `StaticPage` protocol.
 - Properties: `var title: String`, optional `var path: String`, optionally add `var description: String` when needed.
-- Body: `@HTMLBuilder var body: some HTML` (result builder).
+- Body: `var body: some HTML`. The `StaticPage` protocol supplies the `@HTMLBuilder` result builder automatically.
 - Use `@Dependency(DataClient.self) var dataClient` for data loading.
 
 ```swift
@@ -49,7 +49,7 @@ struct SpeakerCard: HTML {
 ## 3. Layouts
 
 - Layouts implement the `Layout` protocol.
-- Body returns `@DocumentBuilder var body: some Document` (not `some HTML`).
+- Body: `var body: some Document` (not `some HTML`). The `Layout` protocol supplies the `@DocumentBuilder` result builder automatically.
 - Access page context via `@Environment(\.page)`.
 
 ```swift
@@ -69,7 +69,7 @@ struct MainLayout: Layout {
 
 - `Site` protocol defines the overall site structure.
 - Properties: `titleSuffix`, `name`, `url`, `homePage`, `layout`, `darkTheme`, `favicon`.
-- `@StaticPageBuilder var staticPages: [any StaticPage]` lists all pages.
+- `var staticPages: [any StaticPage]` lists all pages; the `Site` protocol provides the builder behavior, so `for`/`if` blocks work without requiring `@StaticPageBuilder` on the property declaration.
 
 ## 5. Styling
 

@@ -40,6 +40,7 @@ import SwiftUI
 #Preview {
     MyView()
 }
+#endif
 ```
 
 ## 3. SwiftUI Compatibility

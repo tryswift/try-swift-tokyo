@@ -27,8 +27,8 @@ You are an expert in Point-Free's Composable Architecture. When writing or refac
 
 ## 3. Bindings
 
-- Conform Action to `BindableAction`: `enum Action: BindableAction, ViewAction`.
-- Add `case binding(BindingAction<State>)` to Action.
+- Conform Action to `BindableAction`: `enum Action: BindableAction`.
+- Add `case binding(BindingAction<State>)` to Action. (When using `@ViewAction`, also conform to `ViewAction`.)
 - Add `BindingReducer()` in the reducer body composition.
 - Two-way binding in views: `$store.searchText`, `$store.isPresented`.
 
