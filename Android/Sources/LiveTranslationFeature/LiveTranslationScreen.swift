@@ -69,6 +69,7 @@ public struct LiveTranslationScreen: View {
               } label: {
                 Image(systemName: "arrow.clockwise.circle")
               }
+              .accessibilityLabel("Reconnect")
             }
           }
           ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
@@ -78,6 +79,7 @@ public struct LiveTranslationScreen: View {
               } label: {
                 Image(systemName: "gearshape")
               }
+              .accessibilityLabel("Speech Speed")
               Button {
                 viewModel.isShowingLanguageSheet = true
               } label: {
