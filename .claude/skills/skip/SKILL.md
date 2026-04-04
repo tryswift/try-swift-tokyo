@@ -27,8 +27,10 @@ public final class AboutViewModel {
 
 ## 2. Conditional Compilation
 
-- Use `#if SKIP ... #else ... #endif` for platform-specific code when needed.
-- Shared UI code typically imports `SwiftUI` directly on all platforms.
+- `#if SKIP`: Always transpiled to Kotlin. Use for Java/Kotlin API access.
+- `#if os(Android)`: Native Swift in Fuse mode, transpiled in Lite mode.
+- `#if !SKIP`: iOS only (excluded from transpilation).
+- Shared UI code imports `SwiftUI` directly on all platforms (NOT `SkipUI`).
 - Wrap previews in `#if !SKIP`.
 
 ```swift

@@ -12,17 +12,18 @@ You are an expert in Point-Free's Composable Architecture. When writing or refac
 - ALWAYS use the `@Reducer` macro.
 - State and Action must be nested types within the Reducer struct.
 - State uses `@ObservableState` macro: `@ObservableState public struct State: Equatable`.
-- Actions should be separated into:
-  - `case view(View)`: User interactions (`@CasePathable public enum View`).
-  - `case delegate(Delegate)`: Communication with parent reducers.
-  - Side-effect results should use descriptive top-level `Action` cases (e.g. `fetchResponse`, `initialResponse`) instead of a generic `internal` case.
+- Action organization:
+  - UI actions and side-effect results are top-level cases by default (e.g. `case incrementButtonTapped`, `case fetchResponse(Result<Data, Error>)`).
+  - `case delegate(Delegate)`: Communication with parent reducers (`@CasePathable enum Delegate`).
+  - `case destination(PresentationAction<Destination.Action>)`: For presentation-based navigation.
+- **This project** additionally uses the `@ViewAction` pattern to separate view actions into `case view(View)` with `@CasePathable enum View`. This is an optional advanced pattern.
 
 ## 2. View Integration
 
-- Use `@ViewAction(for: Feature.self)` macro on view structs.
 - Store reference: `@Bindable var store: StoreOf<Feature>`.
-- Actions from views: `send(.actionName)` shorthand (provided by `@ViewAction`).
+- Send actions: `store.send(.actionName)`.
 - Child stores: `store.scope(state: \.child, action: \.child)`.
+- **This project** uses `@ViewAction(for: Feature.self)` macro on view structs, enabling `send(.actionName)` shorthand (auto-wraps in `.view(...)`).
 
 ## 3. Bindings
 
@@ -41,9 +42,11 @@ You are an expert in Point-Free's Composable Architecture. When writing or refac
 - View: `NavigationStack(path: $store.scope(state: \.path, action: \.path))`.
 
 **Presentation (sheets/alerts):**
-- State: `@Presents var videoDetail: VideoDetail.State?`.
-- Reducer body: `.ifLet(\.$videoDetail, action: \.videoDetail)`.
-- View: `.sheet(item: $store.scope(state: \.videoDetail, action: \.videoDetail))`.
+- State: `@Presents var destination: Destination.State?`.
+- Action: `case destination(PresentationAction<Destination.Action>)`.
+- Reducer body: `.ifLet(\.$destination, action: \.destination)`.
+- View (1.25+ enum scope): `.sheet(item: $store.scope(state: \.$destination, action: \.destination).edit) { ... }`.
+- Use `@ReducerCaseIgnored` for non-reducer data (e.g. `AlertState`) in `Destination`.
 
 ## 5. Dependencies
 
@@ -59,10 +62,12 @@ You are an expert in Point-Free's Composable Architecture. When writing or refac
 ## 7. Testing
 
 - Use `TestStore` for all logic verification.
-- Enforce exhaustivity: `store.exhaustivity = .on`.
-- Mock all dependencies in tests using `withDependencies`.
+- Enforce exhaustivity: `store.exhaustivity = .on` (default). Use `.off` for partial tests.
+- Mock all dependencies: `TestStore(initialState:) { Reducer() } withDependencies: { ... }`.
+- Receive actions with case key paths: `await store.receive(\.delegate.startMeeting)`.
+- Stack path actions: `store.send(\.path[id: 0].feature.action)`.
 
-## Example
+## Example (standard pattern)
 
 ```swift
 @Reducer
@@ -70,11 +75,54 @@ struct Feature {
     @ObservableState
     struct State: Equatable {
         var count = 0
-        var isLoading = false
     }
 
-    enum Action: BindableAction, ViewAction {
-        case binding(BindingAction<State>)
+    enum Action {
+        case incrementButtonTapped
+        case fetchResponse(Result<Int, any Error>)
+        case delegate(Delegate)
+
+        @CasePathable
+        enum Delegate {
+            case countChanged(Int)
+        }
+    }
+
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case .incrementButtonTapped:
+                state.count += 1
+                return .send(.delegate(.countChanged(state.count)))
+            case .fetchResponse, .delegate:
+                return .none
+            }
+        }
+    }
+}
+
+struct FeatureView: View {
+    @Bindable var store: StoreOf<Feature>
+
+    var body: some View {
+        Button("Increment") {
+            store.send(.incrementButtonTapped)
+        }
+    }
+}
+```
+
+## Example (this project's @ViewAction pattern)
+
+```swift
+@Reducer
+struct Feature {
+    @ObservableState
+    struct State: Equatable {
+        var count = 0
+    }
+
+    enum Action: ViewAction {
         case view(View)
         case delegate(Delegate)
 
@@ -82,19 +130,19 @@ struct Feature {
         enum View {
             case incrementButtonTapped
         }
-        enum Delegate: Equatable {
+        @CasePathable
+        enum Delegate {
             case countChanged(Int)
         }
     }
 
     var body: some ReducerOf<Self> {
-        BindingReducer()
         Reduce { state, action in
             switch action {
             case .view(.incrementButtonTapped):
                 state.count += 1
                 return .send(.delegate(.countChanged(state.count)))
-            case .binding, .delegate:
+            case .delegate:
                 return .none
             }
         }
