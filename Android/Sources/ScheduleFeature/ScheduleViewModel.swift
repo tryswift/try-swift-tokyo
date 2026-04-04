@@ -345,7 +345,7 @@ public final class ScheduleViewModel {
   }
 
   private func loadConference(fileName: String) throws -> Conference {
-    guard let url = Bundle.module.url(forResource: fileName, withExtension: "json") else {
+    guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else {
       throw DataError.fileNotFound(fileName)
     }
     let data = try Data(contentsOf: url)

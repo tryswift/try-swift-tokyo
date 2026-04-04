@@ -64,13 +64,13 @@ public struct AboutScreen: View {
       Button {
         openURL(URL(string: "https://tryswift.jp/code-of-conduct")!)
       } label: {
-        Label("Code of Conduct", systemImage: "doc.text")
+        Label("Code of Conduct", systemImage: "info.circle")
       }
 
       Button {
         openURL(URL(string: "https://tryswift.jp/privacy")!)
       } label: {
-        Label("Privacy Policy", systemImage: "hand.raised")
+        Label("Privacy Policy", systemImage: "lock")
       }
     }
   }
@@ -112,13 +112,13 @@ public struct AboutScreen: View {
       Button {
         openURL(URL(string: "https://lu.ma/tryswifttokyo2026")!)
       } label: {
-        Label("Get Tickets (Luma)", systemImage: "ticket")
+        Label("Get Tickets (Luma)", systemImage: "star.fill")
       }
 
       Button {
         openURL(URL(string: "https://tryswift.jp")!)
       } label: {
-        Label("Visit Website", systemImage: "globe")
+        Label("Visit Website", systemImage: "arrow.forward.square")
       }
     }
   }
@@ -160,7 +160,7 @@ struct OrganizerDetailSheet: View {
                 Button {
                   openURL(link.url)
                 } label: {
-                  Label(link.name, systemImage: "link")
+                  Label(link.name, systemImage: "arrow.forward")
                 }
                 .buttonStyle(.bordered)
               }

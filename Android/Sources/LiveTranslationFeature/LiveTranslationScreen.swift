@@ -14,9 +14,9 @@ public struct LiveTranslationScreen: View {
         ScrollViewReader { proxy in
           ScrollView {
             if viewModel.roomNumber.isEmpty {
-              unavailableView("Room is unavailable", icon: "text.page.slash.fill")
+              unavailableView("Room is unavailable", icon: "exclamationmark.triangle")
             } else if viewModel.chatMessages.isEmpty {
-              unavailableView("Not started yet", icon: "text.page.slash.fill")
+              unavailableView("Not started yet", icon: "exclamationmark.triangle")
             } else {
               translationContents
               Color.clear
@@ -67,8 +67,9 @@ public struct LiveTranslationScreen: View {
               Button {
                 viewModel.connect()
               } label: {
-                Image(systemName: "arrow.trianglehead.2.clockwise")
+                Image(systemName: "arrow.clockwise.circle")
               }
+              .accessibilityLabel("Reconnect")
             }
           }
           ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
@@ -76,13 +77,14 @@ public struct LiveTranslationScreen: View {
               Button {
                 viewModel.isShowingSpeedControl = !viewModel.isShowingSpeedControl
               } label: {
-                Image(systemName: "speedometer")
+                Image(systemName: "gearshape")
               }
+              .accessibilityLabel("Speech Speed")
               Button {
                 viewModel.isShowingLanguageSheet = true
               } label: {
                 Text(viewModel.selectedLangTitle)
-                Image(systemName: "globe")
+                Image(systemName: "arrow.forward.square")
               }
             }
           }
@@ -168,7 +170,7 @@ public struct LiveTranslationScreen: View {
           } label: {
             Image(
               systemName: viewModel.speakingItemId == item.id
-                ? "stop.circle.fill" : "speaker.wave.2"
+                ? "xmark" : "play.fill"
             )
             .foregroundStyle(
               viewModel.speakingItemId == item.id ? Color.red : Color.accentColor

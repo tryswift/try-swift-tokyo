@@ -34,7 +34,7 @@ public struct SponsorsScreen: View {
       }
     } else {
       VStack(spacing: 16) {
-        Image(systemName: "building.2")
+        Image(systemName: "star")
           .font(Font.system(size: 48))
           .foregroundStyle(Color.secondary)
         Text("No Sponsors")
