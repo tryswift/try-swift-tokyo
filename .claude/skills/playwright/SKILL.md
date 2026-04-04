@@ -55,10 +55,11 @@ export { expect };
 
 ## 5. Wait Patterns
 
-- Network idle: `await page.waitForLoadState("networkidle")`
-- Timeout: `await page.waitForTimeout(3_000)` (WebSocket propagation, animations)
-- Element: `await element.waitFor({ state: "visible", timeout: 15_000 })`
-- Graceful: `.isVisible().catch(() => false)` for optional elements
+- **Prefer web assertions** over explicit waits: `await expect(element).toBeVisible()` auto-retries.
+- Network idle: `await page.waitForLoadState("networkidle")` (DISCOURAGED by Playwright docs; used in this project for legacy reasons).
+- Timeout: `await page.waitForTimeout(3_000)` (WebSocket propagation, animations).
+- Element: `await element.waitFor({ state: "visible", timeout: 15_000 })`.
+- Graceful: `.isVisible().catch(() => false)` for optional elements.
 
 ## 6. Screenshots
 
