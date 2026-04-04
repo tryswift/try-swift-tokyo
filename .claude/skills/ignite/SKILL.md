@@ -10,8 +10,8 @@ You are an expert in using Ignite, the Swift static site generator.
 ## 1. Pages
 
 - Pages implement the `StaticPage` protocol.
-- Properties: `var title: String`, optional `var path: String`, `var description: String`.
-- Body: `var body: some HTML`.
+- Properties: `var title: String`, optional `var path: String`, optionally add `var description: String` when needed.
+- Body: `var body: some HTML`. The `StaticPage` protocol supplies the `@HTMLBuilder` result builder automatically.
 - Use `@Dependency(DataClient.self) var dataClient` for data loading.
 
 ```swift
@@ -49,7 +49,7 @@ struct SpeakerCard: HTML {
 ## 3. Layouts
 
 - Layouts implement the `Layout` protocol.
-- Body returns `some Document` (not `some HTML`).
+- Body: `var body: some Document` (not `some HTML`). The `Layout` protocol supplies the `@DocumentBuilder` result builder automatically.
 - Access page context via `@Environment(\.page)`.
 
 ```swift
@@ -57,7 +57,7 @@ struct MainLayout: Layout {
     @Environment(\.page) private var currentPage
 
     var body: some Document {
-        Head(for: currentPage)
+        Head { }
         Body {
             content
         }
@@ -69,12 +69,12 @@ struct MainLayout: Layout {
 
 - `Site` protocol defines the overall site structure.
 - Properties: `titleSuffix`, `name`, `url`, `homePage`, `layout`, `darkTheme`, `favicon`.
-- `var staticPages: [any StaticPage]` lists all pages.
+- `var staticPages: [any StaticPage]` lists all pages; the `Site` protocol provides the builder behavior, so `for`/`if` blocks work without requiring `@StaticPageBuilder` on the property declaration.
 
 ## 5. Styling
 
-- Margin/padding: `.margin(.top, .px(20))`, `.padding(.all, .large)`.
-- Frame: `.frame(maxWidth: 230)`, `.frame(width: .percent(50))`.
+- Margin/padding: `.margin(.top, .px(20))`, `.margin(20)` (px shorthand), `.padding(.all, .large)` (Bootstrap semantic).
+- Frame: `.frame(maxWidth: 230)`, `.frame(width: .percent(50))`. Int values auto-convert to `.px()`.
 - Color: `.foregroundStyle(.bootstrapPurple)`, `.init(hex: "#FF0000")`.
 - Typography: `.font(.title1)`, `.fontWeight(.bold)`.
 - Full-width: `.ignorePageGutters()`.
