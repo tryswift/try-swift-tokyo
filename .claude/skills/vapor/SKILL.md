@@ -8,14 +8,14 @@ description: Expert guidance for Vapor 4+ development, focusing on async/await, 
 ## 1. Concurrency
 
 - ALWAYS use Swift Concurrency (`async`/`await`) over `EventLoopFuture`.
-- All route handlers MUST be annotated with `@Sendable`.
+- Controller handler methods MUST be annotated with `@Sendable`; using `@Sendable` on simple closure routes is strongly recommended but not strictly required.
 
 ## 2. Controllers & Routing
 
 - Organize routes into `RouteCollection` conformances.
 - Do not put logic in `routes.swift`; delegate immediately to a Controller.
 - Group routes by feature (e.g., `UsersController`, `AuthController`).
-- Register controllers: `app.register(collection: MyController())`.
+- Register controllers: `try app.register(collection: MyController())`.
 - API versioning: `app.grouped("api", "v1")`.
 
 ## 3. Middleware

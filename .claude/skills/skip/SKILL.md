@@ -27,16 +27,17 @@ public final class AboutViewModel {
 
 ## 2. Conditional Compilation
 
-- Use `#if SKIP ... #else ... #endif` for platform-specific code.
-- Android-specific imports inside `#if SKIP` blocks.
+- Use `#if SKIP ... #else ... #endif` for platform-specific code when needed.
+- Shared UI code typically imports `SwiftUI` directly on all platforms.
 - Wrap previews in `#if !SKIP`.
 
 ```swift
-#if SKIP
-import SkipUI
-#else
 import SwiftUI
-#endif
+
+#if !SKIP
+#Preview {
+    MyView()
+}
 ```
 
 ## 3. SwiftUI Compatibility

@@ -15,7 +15,7 @@ You are an expert in Point-Free's Composable Architecture. When writing or refac
 - Actions should be separated into:
   - `case view(View)`: User interactions (`@CasePathable public enum View`).
   - `case delegate(Delegate)`: Communication with parent reducers.
-  - `case internal(InternalAction)`: Side-effect results.
+  - Side-effect results should use descriptive top-level `Action` cases (e.g. `fetchResponse`, `initialResponse`) instead of a generic `internal` case.
 
 ## 2. View Integration
 
@@ -41,9 +41,9 @@ You are an expert in Point-Free's Composable Architecture. When writing or refac
 - View: `NavigationStack(path: $store.scope(state: \.path, action: \.path))`.
 
 **Presentation (sheets/alerts):**
-- State: `@Presents var destination: Destination.State?`.
-- Reducer body: `.ifLet(\.$destination, action: \.destination)`.
-- View: `.sheet(item: $store.scope(state: \.destination?.detail, action: \.destination.detail))`.
+- State: `@Presents var videoDetail: VideoDetail.State?`.
+- Reducer body: `.ifLet(\.$videoDetail, action: \.videoDetail)`.
+- View: `.sheet(item: $store.scope(state: \.videoDetail, action: \.videoDetail))`.
 
 ## 5. Dependencies
 

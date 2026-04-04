@@ -10,7 +10,7 @@ You are an expert in using Ignite, the Swift static site generator.
 ## 1. Pages
 
 - Pages implement the `StaticPage` protocol.
-- Properties: `var title: String`, optional `var path: String`, `var description: String`.
+- Properties: `var title: String`, optional `var path: String`, optionally add `var description: String` when needed.
 - Body: `var body: some HTML`.
 - Use `@Dependency(DataClient.self) var dataClient` for data loading.
 
@@ -57,7 +57,7 @@ struct MainLayout: Layout {
     @Environment(\.page) private var currentPage
 
     var body: some Document {
-        Head(for: currentPage)
+        Head { }
         Body {
             content
         }
