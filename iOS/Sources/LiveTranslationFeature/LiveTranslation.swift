@@ -194,7 +194,7 @@ public struct LiveTranslation: Sendable {
         if state.isAutoReadEnabled {
           effects.append(.send(.autoReadNextItem))
         }
-        return effects.isEmpty ? .none : .merge(effects)
+        return effects.isEmpty ? .none : .concatenate(effects)
 
       case .validateSelectedLangCode(let langCodes):
         let currentCode = state.selectedLangCode
@@ -214,11 +214,15 @@ public struct LiveTranslation: Sendable {
       case .view(.setAutoReadEnabled(let enabled)):
         state.$isAutoReadEnabled.withLock { $0 = enabled }
         if !enabled {
+          let wasAutoReading = state.isAutoReading
           state.isAutoReading = false
-          return .merge(
-            .cancel(id: autoReadTaskId),
-            .run { _ in await speechSynthesizer.stop() }
-          )
+          if wasAutoReading {
+            return .merge(
+              .cancel(id: autoReadTaskId),
+              .run { _ in await speechSynthesizer.stop() }
+            )
+          }
+          return .cancel(id: autoReadTaskId)
         }
         return .send(.autoReadNextItem)
 
