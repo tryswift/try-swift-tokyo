@@ -328,6 +328,7 @@ struct LiveTranslationTests {
       $0.liveTranslationServiceClient.disconnect = { @Sendable in
         disconnectCalled.setValue(true)
       }
+      $0.speechSynthesizer.stop = { @Sendable in }
     }
     store.exhaustivity = .off
 
@@ -336,5 +337,105 @@ struct LiveTranslationTests {
     }
 
     disconnectCalled.withValue { #expect($0 == true) }
+  }
+
+  // MARK: - Auto-Read
+
+  @Test
+  func setAutoReadEnabled_true() async {
+    let store = TestStore(initialState: LiveTranslation.State()) {
+      LiveTranslation()
+    }
+    store.exhaustivity = .off
+
+    await store.send(.view(.setAutoReadEnabled(true))) {
+      $0.$isAutoReadEnabled.withLock { $0 = true }
+    }
+  }
+
+  @Test
+  func setAutoReadEnabled_false_stopsAutoReading() async {
+    @Shared(.isAutoReadEnabled) var isAutoReadEnabled = true
+    var state = LiveTranslation.State()
+    state.isAutoReading = true
+
+    let stopCalled = LockIsolated(false)
+    let store = TestStore(initialState: state) {
+      LiveTranslation()
+    } withDependencies: {
+      $0.speechSynthesizer.stop = { @Sendable in
+        stopCalled.setValue(true)
+      }
+    }
+    store.exhaustivity = .off
+
+    await store.send(.view(.setAutoReadEnabled(false))) {
+      $0.$isAutoReadEnabled.withLock { $0 = false }
+      $0.isAutoReading = false
+    }
+
+    stopCalled.withValue { #expect($0 == true) }
+  }
+
+  @Test
+  func autoReadNextItem_skipsWhileManuallyPlaying() async {
+    @Shared(.isAutoReadEnabled) var isAutoReadEnabled = true
+    var state = LiveTranslation.State()
+    state.speakingItemId = "manual-item"
+
+    let store = TestStore(initialState: state) {
+      LiveTranslation()
+    }
+    store.exhaustivity = .off
+
+    await store.send(.autoReadNextItem)
+    // No effects should be produced since manual playback is in progress
+  }
+
+  @Test
+  func autoReadNextItem_skipsWhenDisabled() async {
+    let store = TestStore(initialState: LiveTranslation.State()) {
+      LiveTranslation()
+    }
+    store.exhaustivity = .off
+
+    await store.send(.autoReadNextItem)
+    // No effects since auto-read is disabled by default
+  }
+
+  @Test
+  func speechDidFinish_resumesAutoReadWhenEnabled() async {
+    @Shared(.isAutoReadEnabled) var isAutoReadEnabled = true
+    var state = LiveTranslation.State()
+    state.speakingItemId = "item-123"
+
+    let store = TestStore(initialState: state) {
+      LiveTranslation()
+    }
+    store.exhaustivity = .off
+
+    await store.send(.view(.speechDidFinish)) {
+      $0.speakingItemId = nil
+    }
+
+    await store.receive(\.autoReadNextItem)
+  }
+
+  @Test
+  func autoReadDidFinish_chainsToNextItem() async {
+    @Shared(.isAutoReadEnabled) var isAutoReadEnabled = true
+    var state = LiveTranslation.State()
+    state.isAutoReading = true
+
+    let store = TestStore(initialState: state) {
+      LiveTranslation()
+    }
+    store.exhaustivity = .off
+
+    await store.send(.autoReadDidFinish) {
+      $0.isAutoReading = false
+    }
+
+    await store.receive(\.autoReadNextItem)
   }
 }
