@@ -133,7 +133,12 @@ public struct Schedule {
               Result {
                 let day1 = try dataClient.fetchDay1(year)
                 let day2 = try dataClient.fetchDay2(year)
-                let day3 = try? dataClient.fetchDay3(year)
+                let day3: Conference?
+                do {
+                  day3 = try dataClient.fetchDay3(year)
+                } catch is DataClientError {
+                  day3 = try? dataClient.fetchWorkshop(year)
+                }
                 let videos = (try? dataClient.fetchVideos(year)) ?? []
                 return .init(day1: day1, day2: day2, day3: day3, videos: videos)
               })),
@@ -142,7 +147,10 @@ public struct Schedule {
               var results: [SearchableSession] = []
               for year in ConferenceYear.allCases {
                 var conferences: [Conference] = []
-                for fetch in [dataClient.fetchDay1, dataClient.fetchDay2, dataClient.fetchDay3] {
+                for fetch in [
+                  dataClient.fetchDay1, dataClient.fetchDay2, dataClient.fetchDay3,
+                  dataClient.fetchWorkshop,
+                ] {
                   do {
                     conferences.append(try fetch(year))
                   } catch is DataClientError {
