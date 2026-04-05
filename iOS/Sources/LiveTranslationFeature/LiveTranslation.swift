@@ -497,6 +497,7 @@ public struct LiveTranslationView: View {
           )
         }
         .padding()
+        .glassEffectContainerIfAvailable()
         .glassEffectIfAvailable(item.isRealTime ? .clear : .regular, in: .rect(cornerRadius: 16))
         .onAppear {
           guard item == store.chatList.last else { return }
