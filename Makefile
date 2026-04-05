@@ -1,3 +1,5 @@
+.PHONY: format android-build android-emulator android-install android-run
+
 format:
 	@swift format \
 		--ignore-unparsable-files \
@@ -13,10 +15,13 @@ format:
 		./SharedModels/ \
 		./Website/
 
-SKIPSTONE_DIR = Android/.build/plugins/outputs/android/AndroidApp/destination/skipstone
+ANDROID_DIR = Android
+ANDROID_APP_ID = tokyo.tryswift.android
+ANDROID_ACTIVITY = $(ANDROID_APP_ID)/.MainActivity
+JAVA_HOME ?= $(shell if [ -d "$$HOME/.asdf/installs/java/temurin-25.0.2+10.0.LTS" ]; then echo "$$HOME/.asdf/installs/java/temurin-25.0.2+10.0.LTS"; else /usr/libexec/java_home 2>/dev/null; fi)
 
 android-build:
-	cd Android && INCLUDE_SKIP=1 swift build
+	cd $(ANDROID_DIR) && swift build
 
 android-emulator:
 	@if adb devices | grep -q 'emulator'; then \
@@ -30,24 +35,8 @@ android-emulator:
 		adb shell 'while [ "$$(getprop sys.boot_completed)" != "1" ]; do sleep 1; done'; \
 	fi
 
-android-run: android-build android-emulator
-	@rm -rf $(SKIPSTONE_DIR)/app
-	@cp -R Android/app-wrapper $(SKIPSTONE_DIR)/app
-	@chmod u+w $(SKIPSTONE_DIR)/settings.gradle.kts
-	@grep -q 'include(":app")' $(SKIPSTONE_DIR)/settings.gradle.kts || \
-		echo 'include(":app")' >> $(SKIPSTONE_DIR)/settings.gradle.kts
-	@if [ ! -f $(SKIPSTONE_DIR)/local.properties ]; then \
-		if [ -n "$$ANDROID_HOME" ]; then \
-			echo "sdk.dir=$$ANDROID_HOME" > $(SKIPSTONE_DIR)/local.properties; \
-		elif [ -n "$$ANDROID_SDK_ROOT" ]; then \
-			echo "sdk.dir=$$ANDROID_SDK_ROOT" > $(SKIPSTONE_DIR)/local.properties; \
-		elif [ -d "$$HOME/Library/Android/sdk" ]; then \
-			echo "sdk.dir=$$HOME/Library/Android/sdk" > $(SKIPSTONE_DIR)/local.properties; \
-		elif [ -d "$$HOME/Android/Sdk" ]; then \
-			echo "sdk.dir=$$HOME/Android/Sdk" > $(SKIPSTONE_DIR)/local.properties; \
-		else \
-			echo "Error: Android SDK not found. Set ANDROID_HOME." >&2; exit 1; \
-		fi; \
-	fi
-	cd $(SKIPSTONE_DIR) && gradle :app:installDebug
-	adb shell am start -n tokyo.tryswift.android/.MainActivity
+android-install: android-build android-emulator
+	cd $(ANDROID_DIR) && if [ -n "$(JAVA_HOME)" ]; then JAVA_HOME="$(JAVA_HOME)" ./gradlew app:installDebug; else ./gradlew app:installDebug; fi
+
+android-run: android-install
+	adb shell am start -n $(ANDROID_ACTIVITY)

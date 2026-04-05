@@ -8,6 +8,10 @@ public struct SessionRowView: View {
   let favoriteCount: Int
   let onToggleFavorite: (() -> Void)?
 
+  private let rowBackgroundTop = Color(red: 0.99, green: 0.99, blue: 1.0)
+  private let rowBackgroundBottom = Color(red: 0.96, green: 0.97, blue: 0.99)
+  private let accentColor = Color(red: 0.11, green: 0.35, blue: 0.85)
+
   public init(
     session: Session, isFavorite: Bool = false, favoriteCount: Int = 0,
     onToggleFavorite: (() -> Void)? = nil
@@ -71,8 +75,17 @@ public struct SessionRowView: View {
       }
     }
     .padding()
-    .background(Color.secondary.opacity(0.1))
-    .clipShape(RoundedRectangle(cornerRadius: 12))
+    .background(
+      LinearGradient(
+        colors: [
+          rowBackgroundTop,
+          rowBackgroundBottom,
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+      )
+    )
+    .clipShape(RoundedRectangle(cornerRadius: 16))
   }
 
   // Helper function to avoid Kotlin type inference issues with map
@@ -94,11 +107,11 @@ public struct SessionRowView: View {
       }
     } else {
       Circle()
-        .fill(Color.orange.opacity(0.2))
+        .fill(accentColor.opacity(0.14))
         .frame(width: 44, height: 44)
         .overlay {
           Image(systemName: "calendar")
-            .foregroundStyle(Color.orange)
+            .foregroundStyle(accentColor)
         }
     }
   }
@@ -109,6 +122,9 @@ public struct SpeakerAvatarView: View {
   let speaker: Speaker
   let size: CGFloat
 
+  private let avatarStart = Color(red: 0.27, green: 0.47, blue: 0.92)
+  private let avatarEnd = Color(red: 0.13, green: 0.28, blue: 0.66)
+
   public init(speaker: Speaker, size: CGFloat = 60) {
     self.speaker = speaker
     self.size = size
@@ -116,13 +132,12 @@ public struct SpeakerAvatarView: View {
 
   public var body: some View {
     Circle()
-      .fill(Color.blue.opacity(0.2))
       .frame(width: size, height: size)
       .overlay {
-        Text(avatarInitial)
-          .font(avatarFont)
-          .fontWeight(Font.Weight.medium)
-          .foregroundStyle(Color.blue)
+        ModuleImageView(imageName: speaker.imageName) {
+          avatarPlaceholder
+        }
+        .clipShape(Circle())
       }
   }
 
@@ -133,22 +148,41 @@ public struct SpeakerAvatarView: View {
   private var avatarFont: Font {
     size > 50 ? Font.title2 : Font.body
   }
+
+  private var avatarPlaceholder: some View {
+    Circle()
+      .fill(
+        LinearGradient(
+          colors: [
+            avatarStart,
+            avatarEnd,
+          ],
+          startPoint: .topLeading,
+          endPoint: .bottomTrailing
+        )
+      )
+      .overlay {
+        Text(avatarInitial)
+          .font(avatarFont)
+          .fontWeight(Font.Weight.bold)
+          .foregroundStyle(Color.white)
+      }
+  }
 }
 
 /// A detailed view for displaying session information on Android.
 public struct SessionDetailView: View {
   let session: Session
-  @ObservedObject private var viewModelRef: ViewModelRef
+  let viewModel: ScheduleViewModel
 
   @Environment(\.openURL) private var openURL
 
+  private let screenBackground = Color(red: 0.95, green: 0.96, blue: 0.98)
+  private let accentColor = Color(red: 0.11, green: 0.35, blue: 0.85)
+
   public init(session: Session, viewModel: ScheduleViewModel) {
     self.session = session
-    self.viewModelRef = ViewModelRef(viewModel: viewModel)
-  }
-
-  private var viewModel: ScheduleViewModel {
-    viewModelRef.viewModel
+    self.viewModel = viewModel
   }
 
   public var body: some View {
@@ -174,6 +208,7 @@ public struct SessionDetailView: View {
       }
       .padding()
     }
+    .background(screenBackground)
     #if os(iOS) || SKIP
       .toolbar {
         if let proposalId = session.proposalId {
@@ -218,6 +253,10 @@ public struct SessionDetailView: View {
           .foregroundStyle(Color.secondary)
       }
     }
+    .padding(20)
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .background(Color.white)
+    .clipShape(RoundedRectangle(cornerRadius: 20))
   }
 
   private func speakersSection(speakers: [Speaker]) -> some View {
@@ -257,6 +296,9 @@ public struct SessionDetailView: View {
         }
       }
     }
+    .padding(20)
+    .background(Color.white)
+    .clipShape(RoundedRectangle(cornerRadius: 20))
   }
 
   private func descriptionSection(description: String) -> some View {
@@ -267,6 +309,9 @@ public struct SessionDetailView: View {
       Text(description)
         .font(Font.body)
     }
+    .padding(20)
+    .background(Color.white)
+    .clipShape(RoundedRectangle(cornerRadius: 24))
   }
 
   private func requirementsSection(requirements: String) -> some View {
@@ -278,9 +323,12 @@ public struct SessionDetailView: View {
         .font(Font.body)
         .padding()
         .frame(maxWidth: CGFloat.infinity, alignment: Alignment.leading)
-        .background(Color.orange.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .background(accentColor.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
+    .padding(20)
+    .background(Color.white)
+    .clipShape(RoundedRectangle(cornerRadius: 20))
   }
 
   @ViewBuilder
@@ -326,16 +374,7 @@ public struct SessionDetailView: View {
       }
     }
     .padding()
-    .background(Color.secondary.opacity(0.1))
-    .clipShape(RoundedRectangle(cornerRadius: 12))
-  }
-}
-
-/// Helper class to pass ScheduleViewModel to SessionDetailView
-/// Skip's @Observable doesn't work with @Binding directly in all cases
-private class ViewModelRef: ObservableObject {
-  let viewModel: ScheduleViewModel
-  init(viewModel: ScheduleViewModel) {
-    self.viewModel = viewModel
+    .background(Color.white)
+    .clipShape(RoundedRectangle(cornerRadius: 20))
   }
 }

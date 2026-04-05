@@ -12,6 +12,7 @@ public struct SponsorsScreen: View {
     NavigationStack {
       content
         .navigationTitle("Sponsors")
+        .background(Color(red: 0.98, green: 0.97, blue: 0.96))
     }
     .onAppear {
       viewModel.loadSponsors()
@@ -22,6 +23,7 @@ public struct SponsorsScreen: View {
   private var content: some View {
     if viewModel.isLoading {
       ProgressView()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     } else if let error = viewModel.errorMessage {
       Text(error)
         .foregroundStyle(Color.red)
@@ -34,7 +36,7 @@ public struct SponsorsScreen: View {
       }
     } else {
       VStack(spacing: 16) {
-        Image(systemName: "star")
+        Image(systemName: "star.fill")
           .font(Font.system(size: 48))
           .foregroundStyle(Color.secondary)
         Text("No Sponsors")

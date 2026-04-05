@@ -1,0 +1,565 @@
+{
+  "id": 2,
+  "title": "Day 2",
+  "title_ja": "2日目",
+  "date": "2018-03-02T09:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2018-03-02T09:00:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "🍩 Breakfast",
+          "title_ja": "🍩 朝食"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2018-03-02T09:45:00+09:00",
+      "sessions": [
+        {
+          "id": 2,
+          "title": "Opening Remarks",
+          "title_ja": "開会"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2018-03-02T10:00:00+09:00",
+      "sessions": [
+        {
+          "id": 3,
+          "title": "Finally Solving the Expression Problem",
+          "title_ja": "Expression Problem を解決する",
+          "description": "UIKit let's us describe view hierarchies by putting together a bunch of UIView and UIView subclasses. We can even create our own views by subclassing UIView ourselves without even reaching into UIKit! But we can't reuse this view description on AppKit or for serialization. Imagine for a moment, we had EnumKit, it's like UIKit, but the views are provided as cases of an enum. Now we can reuse the view description, but we can no longer create our own views without reaching into EnumKit (or forking the library).The 'Final Tagless' approach gives us the best of both worlds taking advantage of Swift’s powerful Self type inside protocols.",
+          "description_ja": "UIKitでは、一連の UIView と UIView のサブクラスをまとめてビュー階層を記述します。UIViewをサブクラス化することによって自分自身のビューを作成することもできます。しかし、この View Description をAppKitやシリアライゼーションに再利用することはできません。UIKit と似たようなものに EnumKit があり、 View は列挙型のケースとして提供されています。これで View Description を使いまわすことができますが、EnumKit なしで (もしくはライブラリをフォークしないと）ビューを生成することができません。'Final Tagless' は、Swift のプロトコルの内部にある強力な Self 型を用いて、双方の世界をベストな状態にします。",
+          "speakers": [
+            {
+              "name": "Brandon Kase",
+              "image_name": "bkase",
+              "bio": "Brandon Kase brings typed functional programming to weird places. He has shipped production code on Android with Kotlin, iOS with Swift and React Native, and Web with JS/Flow/React. Brandon is currently building a new cryptocurrency at O(1) Labs. He came across functional programming while pursuing a B.S. in Computer Science from Carnegie Mellon University. Brandon is excited that strong static typing and functional programming are becoming mainstream, and believes that techniques once reserved for academia will help industry produce more reliable software.",
+              "bio_ja": "Brandon Kase は型付関数プログラミングを奇妙な場所に導入しています。 Kotlin で Android アプリを、 Swift や React Native で iOS アプリを、そして JS/Flow/React で Web サイトを作ってきました。 今は O(1) Lab で新しい暗号通貨を作っています。彼はカーネギーメロン大学でコンピュータサイエンスの学位を取りながら、関数プログラミングを学んできました。強い静的型付けや関数プログラミングが主流となってきたことにワクワクしており、かつて学問のために進んだ技術が、より品質の高いソフトウェアを作り出すことに役立つと信じています。良い設計のプログラミング言語やライブラリなどにハマっています。",
+              "job_title": "iOS Engineer at Pinterest",
+              "job_title_ja": "iOS Engineer at Pinterest",
+              "links": [
+                {
+                  "name": "@bkase_",
+                  "url": "https://x.com/bkase_"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "e7VEOsbYQM4"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2018-03-02T10:25:00+09:00",
+      "sessions": [
+        {
+          "id": 4,
+          "title": "Swift Peer Lab Barcelona",
+          "title_ja": "Swift もくもく会 in Barcelona",
+          "description": "I want to share my experience of creating a Swift Peer Lab in the city of Barcelona. I will start by explaining the peer lab concept. Then I will share why I believe it’s an easy and rewarding experience and how you can do it in your city. I will also share some numbers and tips from my experience.",
+          "description_ja": "バルセロナで開催した Swift Peer Lab の体験についてお話します。コンセプトから説明し、これがあなたの街でもでき、簡単で価値ある体験が得られると思っている理由を説明します。いくつかのTipsについてもお話します。",
+          "speakers": [
+            {
+              "name": "Tiago Martinho",
+              "image_name": "tiago",
+              "bio": "Tiago Martinho is a Developer at ThoughtWorks in Barcelona - he created Swift Peer Labs in Barcelona. He loves to create apps, mainly for iOS (he already built more than 15 projects). Tiago is currently studying Machine Learning. He started iOS development professionally with Swift 1.0 in 2014.",
+              "bio_ja": "バルセロナにあるThoghtWorksのエンジニアです、Swift Peer Lab (もくもく会）を開催しています。アプリを作るのが好きで、主にiOSのアプリをつくっています（これまで15以上のプロジェクトを立ち上げました）。今は機械学習を勉強していて、プロとしてiOS開発を始めたのは2014年で、Swift1.0のときでした。",
+              "job_title": "Developer at ThoughtWorks",
+              "job_title_ja": "Developer at ThoughtWorks",
+              "links": [
+                {
+                  "name": "@martinho_t",
+                  "url": "https://x.com/martinho_t"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "A5ms8gsTa2U"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2018-03-02T10:40:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "Using Swift to Visualize Algorithms",
+          "title_ja": "Swift によるアルゴリズムの可視化",
+          "description": "Visual aids can help make clear how an algorithm functions. In this talk we will examine how UIBezierPath works, by reimplementing the algorithm in an interactive way that we can see. Using Swift playgrounds, we can quickly get feedback about our implementation and use it as a learning tool.",
+          "description_ja": "視覚教材は、アルゴリズムがどのように機能するかを明確にするのに役立ちます。 このトークでは、UIBezierPathがどのように動作するかを、我々が見ることができるインタラクティブな方法で、アルゴリズムを再実装して調べてみます。 Swift Playgroundを使って、実装のフィードバックをすばやく入手し、学習ツールとして使用することができます。",
+          "speakers": [
+            {
+              "name": "Ben Scheirman",
+              "image_name": "ben",
+              "bio": "Ben Scheirman is an independent software developer from Houston, Texas. He is best known for creating NSScreencast, a site that delivers quality training videos on iOS development. Ben has been writing iOS apps since 2009, and has produced more than 300 videos teaching others to do the same. You can find Ben’s website at benscheirman.com or follow him on Twitter @subdigital.",
+              "bio_ja": "Ben Scheirman はヒューストン出身の個人開発者です。iOS開発を動画で学べる NSScreencast を作っていることでよく知られています。Ben は2009年からiOSアプリを作り始めて、300本以上の動画を作成してきました。Webサイト benscheirman.com や Twitter @subdigital をチェックしましょう。",
+              "job_title": "Creator of NSScreencast",
+              "job_title_ja": "Creator of NSScreencast",
+              "links": [
+                {
+                  "name": "@subdigital",
+                  "url": "https://x.com/subdigital"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "7e13FierAF8"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2018-03-02T11:00:00+09:00",
+      "sessions": [
+        {
+          "id": 6,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2018-03-02T11:30:00+09:00",
+      "sessions": [
+        {
+          "id": 7,
+          "title": "Codable Routing with Kitura",
+          "title_ja": "Kitura で Codable ルーティング",
+          "description": "Swift 4 introduced the Codable interface that, through JSONEncoder and JSONDecoder, makes working with JSON a really pleasurable experience. Encoding and decoding JSON often becomes the most complex part of working with RESTful APIs. Using Codable, Kitura 2.0 offers to take up the responsibility of JSON processing, allowing you to work directly with your own Codable types, in a type-safe manner. Using KituraKit, you may also share type definitions between the iOS app and the server side.",
+          "description_ja": "Swift 4では、Codable が導入されました。これは、JSONEncoder や JSONDecoder を通して、JSON を扱いやすくしてくれるものです。 JSONのエンコードやデコードが、RESTful API を扱う際の一番複雑な部分です。Codable を使うことで、 Kitura 2.0 は JSON の処理の責務を受け持ち、型安全な方法で、独自の Codable 型で直接処理できます。KituraKit を用いることで、iOS アプリとサーバーサイドの間で型の定義を共有することができるでしょう。",
+          "speakers": [
+            {
+              "name": "Pushkar Kulkarni",
+              "image_name": "pushkar",
+              "bio": "Pushkar Kulkarni is a server-side Swift developer working with IBM. Prior to Swift, he worked on IBM's Java runtime, working on the JIT compiler and the Java standard library. Over the last two years, he has been contributing to open source Swift Foundation, focussed on making URLSession fully functional on Linux. He thinks Swift is the coolest language ever and is excited about the opportunities it offers on the server side.",
+              "bio_ja": "Pushkar Kulkarni は IBM のサーバーサイド Swift の開発者です。Swift に関わる前は、IBM の Java のランタイムの部署にいて、 JIT コンパイラや、 Java の標準ライブラリを開発していました。過去二年間、オープンソース Swift の Foundation にコントリビュートしており、特に Linux の URLSession 関数型の世界にすることに注力しています。Swift は最もクールな言語で、サーバーサイドで提供されることにわくわくしています。",
+              "job_title": "Server-Side Swift at IBM",
+              "job_title_ja": "Server-Side Swift at IBM",
+              "links": [
+                {
+                  "name": "@pushkar_nk",
+                  "url": "https://x.com/pushkar_nk"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "5ciZS7Cxyp0"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2018-03-02T11:50:00+09:00",
+      "sessions": [
+        {
+          "id": 8,
+          "title": "Super Resolution with CoreML",
+          "title_ja": "超解像+CoreML+Swiftを使ってアプリの画像データ転送量削減に挑戦する",
+          "description": "The 'super resolution' technique is used for converting low resolution image into high resolution, which reduces the amount of image data that needs to be transfered. In this talk, I'd like to show you the implementation of super resolution with CoreML and Swift, and compare the results with conventional methods.",
+          "description_ja": "「超解像」は低解像度画像を高解像度に変換する技術のことです。この技術をiOSアプリに適用することで、画像データの転送量削減が期待できます。本トークではCoreMLとSwiftを使って超解像処理を実装し、従来手法と比較・検証した結果についてご報告します。",
+          "speakers": [
+            {
+              "name": "Kentaro Matsumae",
+              "image_name": "kenmaz",
+              "bio": "Kentaro Matsumae is an engineer at DeNA, where he works on the MangaBox iOS app. Previously, he worked on several other apps including niconico. When not coding, he studies machine learning.",
+              "bio_ja": "DeNA のエンジニア。マンガボックスというサービスの iOS  アプリを開発しています。前職ではニコニコ動画のアプリなどを開発していました。最近は趣味で機械学習の勉強をしています。",
+              "job_title": "Engineer at DeNA",
+              "job_title_ja": "Engineer at DeNA",
+              "links": [
+                {
+                  "name": "@kenmaz",
+                  "url": "https://x.com/kenmaz"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "E65lXzau_0Y"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2018-03-02T12:05:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "Introducing Charles for iOS",
+          "title_ja": "iOSでCharlesを導入する",
+          "description": "Many of the apps we develop access APIs over the internet. Charles Proxy running on macOS lets you capture the HTTP and HTTPS traffic from iOS, so you can debug faults and measure performance. At try! Swift Tokyo, Karl–the creator of Charles Proxy–will unveil a new and more powerful approach: Charles for iOS; enabling you to capture traffic directly on your iOS device.",
+          "description_ja": "我々が開発するアプリの多くが、インターネット経由でAPIにアクセスします。macOS上で実行されるCharles Proxyは、iOSからの HTTP と HTTPS のトラフィックをキャプチャできるため、障害をデバッグしたり、パフォーマンスを測定することができます。try!Swift Tokyoでは、Charles Proxy の作者である Karl が Charles for iOS という新しく強力なアプローチを発表します。これにより、あなたのiOSデバイスでトラフィックを直接キャプチャすることが可能となります。",
+          "speakers": [
+            {
+              "name": "Karl von Randow",
+              "image_name": "karl",
+              "bio": "Back in the olden days Karl was co-founder of Camera+, which sold over 12 million copies on the App Store. More recently he created Vee for Video—an app for quickly shooting, editing and sharing video. He is also the creator of Charles Proxy—a popular desktop app for observing an app’s network traffic—and co-founder of Letterboxd—a social website and app for movie lovers. Karl likes creating things.",
+              "bio_ja": "かつて、Karl は App Store で1200万以上ダウンロードされている Camera+ の Co-Founder でした。 最近では、動画を素早くとったり、編集したり、共有したりする、Vee for Video をいうアプリを作りました。また、アプリのネットワーク監視のデスクトップアプリとして人気のある、Charles Proxy も作っていたり、動画が大好きな人のためのソーシャルウェブサイトとアプリである、 Letterboxd の Co-Founder でもあります。物を作ることが大好きなのです。",
+              "job_title": "Creator of Camera+, Charles Proxy, and Vee",
+              "job_title_ja": "Creator of Camera+, Charles Proxy, and Vee",
+              "links": [
+                {
+                  "name": "@avon",
+                  "url": "https://x.com/avon"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "RWotEyTeJhc"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2018-03-02T12:30:00+09:00",
+      "sessions": [
+        {
+          "id": 10,
+          "title": "Designing Experiences With Augmented Reality",
+          "title_ja": "拡張現実における体験設計",
+          "description": "As technology becomes more ubiquitous with the real world, it is inevitable that experiences will go beyond screens and in physical space. Like VR and Voice, Augmented Reality (AR) is one of the emerging technologies experiencing an undiscovered phase, similar to mobile applications just a decade ago.David Hoang shares his experiences designing for AR. This talk will cover the best practices of what makes a great AR experience, how to prototype physically, and share a few concepts using Apple’s ARKit.",
+          "description_ja": "技術が現実世界でよりユビキタスになっていくにつれて、経験がスクリーンや物理空間からはみ出てくるのは避けられません。VRや声のように、また10年前モバイルアプリケーションがそうだったように、拡張現実 (AR) は未知の段階にいる新しい技術です。David Hoangは、ARの設計で経験したことをお話します。このトークでは、優れたAR体験を実現するためのベストプラクティス、物理的なプロトタイプ作成方法、AppleのARKitを使ったコンセプトを紹介します。",
+          "speakers": [
+            {
+              "name": "David Hoang",
+              "image_name": "david",
+              "bio": "David Hoang loves Swift, Visual Programming, and infusing the design and engineering process together. In his 15-year career he has worked in B2B at ExactTarget, Brand at HTC, being a founder of a digital studio, Design Director at Black Pixel, and now Head of Product Design at One Medical. \n\nHe’s worked on three apps featured by Apple and got into programming as a designer with the desire to push ideas to become more tangible. It’s true that he has a VM of Mac OS 9 running so he can use HyperCard. \n\nWhen he’s not working, David likes to collaborate with other designers and engineers, travel, read, and paint. He currently lives in San Francisco, California, but his heart is back in New York City.",
+              "bio_ja": "David Hoang は、 Swift やビジュアルプログラミングが大好きで、デザインとエンジニアリングのプロセスを融合させています。この15年で、 ExactTarget の B2B、HTC のブランド担当、デジタルスタジオの創設者、Black Pixel のデザインディレクターを経て、今では One Medical のプロダクトデザインのヘッドとして働いています。\n\nAppleにフィーチャーされた3つのアプリをつくっており、アイディアをより具現化するためにデザイナーとしてプログラミングをはじめました。HyperCardを使えるようにするために、Mac OS 9が動作するVMを持っているのは本当のことです。仕事以外では、他のデザイナーやエンジニアと協業したり、旅行や読書、ペイントするのが好きです。今はサンフランシスコにすんでますが、想い出はニューヨークにあります。",
+              "job_title": "Head of Product Design at One Medical",
+              "job_title_ja": "Head of Product Design at One Medical",
+              "links": [
+                {
+                  "name": "@davidhoang",
+                  "url": "https://x.com/davidhoang"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "r5eWys9B-no"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2018-03-02T13:00:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2018-03-02T14:30:00+09:00",
+      "sessions": [
+        {
+          "id": 12,
+          "title": "Kotlin For Swift Developers",
+          "title_ja": "Swift エンジニアのための Kotlin 入門",
+          "description": "Kotlin is a functional language written on top of the JVM that your Android friends are probably *really* excited about. It's got quite a bit in common with Swift, and learning to read it can help you communicate more easily with your Android team.  You'll get a look at this new language from a Swift perspective - what things are the same, what things are not, and what things each language's partisans can be jealous of in the other.",
+          "description_ja": "Kotlin は JVM に書かれた関数型言語です。あなたのAndroid開発者の友達は、この言語の登場をとても喜んでいることでしょう。Swiftとの共通点が多いこの言語を学ぶことで、Android チームのメンバーとコミュニケーションが取りやすくなります。Swiftの視点からこの言語を眺め、何が同じで何が違うのか、他の言語を書いている人が羨ましがるのはどの辺なのかを見てみましょう。",
+          "speakers": [
+            {
+              "name": "Ellen Shapiro",
+              "image_name": "ellen",
+              "bio": "Ellen Shapiro is a native mobile developer who recently moved to the Netherlands. She's been building iOS and Android apps since 2010, and was most recently the lead mobile developer for SpotHero. In addition, Ellen writes and edits iOS and Android tutorials for RayWenderlich.com, and is the lead developer for Hum, a prominent iOS app for songwriting. In her spare time Ellen enjoys playing the guitar, traveling, biking, and hanging out with her girlfriend and their two cats.",
+              "bio_ja": "Ellen Shapiro は最近オランダに移住したネイティブモバイルエンジニアです。 2010年からiOSとAndroidのアプリを作り始めて、最近までは、SpotHero でリードモバイルエンジニアを努めていました。さらに、 RayWenderlich.com でiOSとAndroidのチュートリアルを書いており、 作曲のiOSアプリでは有名な Hum でリードエンジニアを努めています。暇なときは、ギターを弾いたり、旅行したり、自転車に乗ったり、女友達や２匹の猫とぶらぶらしたりしています。",
+              "job_title": "iOS Developer at Bakken & Bæck",
+              "job_title_ja": "iOS Developer at Bakken & Bæck",
+              "links": [
+                {
+                  "name": "@designatednerd",
+                  "url": "https://x.com/designatednerd"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "JK2s6n80Sl8"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2018-03-02T14:50:00+09:00",
+      "sessions": [
+        {
+          "id": 13,
+          "title": "Preparing for Swift 5 Ownership",
+          "title_ja": "Swift5のOwnershipに備える",
+          "description": "Ownership is a new Swift 5 feature that will appear later this year. Although it is important for ABI stabilization, mastering Ownership can help reduce memory copies and improve program performance. In this session, Toru Kuriyama will outline Ownership based on the contents of the Ownership Manifesto released last year.",
+          "description_ja": "Ownership(所有権)は今年後半に登場予定のSwift5で追加される機能です。ABI安定化に向けても重要な機能ですが、Ownershipを使いこなすことでメモリコピーを減らすことができ、プログラムのパフォーマンスを向上させることができると期待されます。本セッションでは、昨年公開されたマニフェスト(OwnershipManifesto)に記載された内容を元に、Ownershipの概要をご紹介します。",
+          "speakers": [
+            {
+              "name": "Toru Kuriyama",
+              "image_name": "kotetu",
+              "bio": "Toru Kuriyama is an iOS application engineer at Sansan Inc, which handles business card management service, and develops 'Sansan' iOS app for corporations.",
+              "bio_ja": "名刺管理サービスを手がけるSansan株式会社に所属するiOSアプリエンジニアです。法人向け名刺管理サービス 'Sansan' のiOSアプリ開発を担当しています。",
+              "job_title": "iOS Engineer at Sansan",
+              "job_title_ja": "iOS Engineer at Sansan",
+              "links": [
+                {
+                  "name": "@kotetu",
+                  "url": "https://x.com/kotetu"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "O1U1JQT5bG4"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2018-03-02T15:05:00+09:00",
+      "sessions": [
+        {
+          "id": 14,
+          "title": "Digital Signal Processing with Swift",
+          "title_ja": "デジタル信号処理 in Swift",
+          "description": "A deep dive into the field of digital signal processing and how Apple’s Accelerate framework makes use of Fast Fourier Transforms for detecting audio frequencies. Join me and see how we can use a powerful language like Swift to break down audio sampling rates with an interactive live demo.",
+          "description_ja": "デジタル信号処理の分野に潜って、Apple の Accelerate framework が高速フーリエ変換を使ってどうやってオーディオ周波数を特定しているのかを見てみましょう。Swift のような強力な言語でオーディオサンプリングレートを分解する方法を対話的なデモを通して見てみましょう。",
+          "speakers": [
+            {
+              "name": "Daisy Ramos",
+              "image_name": "daisy",
+              "bio": "Daisy is an avid iOS developer and lover of all that is tech. Most recently working on the iOS team at Citi FinTech building data-driven solutions and new features for their consumer banking app. She also actively consults for early stage companies looking to build the next big thing. Daisy holds a B.S in Computer Science from Queens College in NYC, the same college where the try! Swift NYC meetup originated. She now organizes the meetup and hosts a wide variety of technical Swift talks. She can be found on twitter as @daisyr317.",
+              "bio_ja": "Daisy は熱心なiOSエンジニアで技術が大好きです。最近は Citi FinTech でデータドリブンなソリューションを構築したり、自社顧客向けの銀行アプリへの新機能を追加しています。また、将来大きなことを成し遂げようとしているアーリーステージの会社へのコンサルティングにも積極的です。try! Swift NYC meetup の所縁の地でもある、ニューヨークの Queens College でコンピュータサイエンスの学士を取りました。今は多種多様な Swift の技術的なトークが披露されるミートアップを主宰しています。Twitterは @daisyr317 です。",
+              "job_title": "iOS Developer",
+              "job_title_ja": "iOS Developer",
+              "links": [
+                {
+                  "name": "@daisyr317",
+                  "url": "https://x.com/daisyr317"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "TcTukRKHwnE"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "time": "2018-03-02T15:25:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "The Type-Safe World of Codable",
+          "title_ja": "Codableが導く型安全な世界",
+          "description": "You might be surprised to learn that Codable can be used for various situation beyond just mapping API responses, including making source code more type safe. In this talk, Tatsuya Tanaka will introduce you to this more powerful way of using Codable.",
+          "description_ja": "CodableはAPIのレスポンスをマッピングするためだけの機能ではありません。Codableは様々な場面で利用でき、ソースコードを型安全にすることができます。このLTではCodableをフル活用するためのアプローチや、よりアグレッシブなCodableの活用方法をご紹介します。",
+          "speakers": [
+            {
+              "name": "Tatsuya Tanaka",
+              "image_name": "tattn",
+              "bio": "Tatsuya Tanaka is an engineer at Yahoo! JAPAN, where he mainly develops transit iOS apps. When not coding, he shares iOS tips at meetups or on his blog. You can find him at Hackathons.",
+              "bio_ja": "ヤフーのエンジニア。業務では主に乗換案内のiOSアプリを開発。 勉強会やブログでSwiftやiOS開発のTipsなどを紹介しています。 ハッカソンが好きで、よく参加しています。",
+              "job_title": "Engineer at Yahoo! JAPAN",
+              "job_title_ja": "Engineer at Yahoo! JAPAN",
+              "links": [
+                {
+                  "name": "@tanakasan2525",
+                  "url": "https://x.com/tanakasan2525"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "CU-xOXHXPJ0"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2018-03-02T15:35:00+09:00",
+      "sessions": [
+        {
+          "id": 16,
+          "title": "Creating conversational interfaces in iOS/Swift",
+          "title_ja": "iOS / Swift における対話型インターフェースの作成",
+          "description": "We'll explore the latest technologies for creating conversational interfaces in your app. We'll explore speech recognition, both with Apple's APIs and other solutions such as Amazon Lex. We'll also explore different strategies for voice playback. Lastly, we'll talk about best design practices when building conversational interfaces in your apps.",
+          "description_ja": "アプリで対話型インターフェースを実現するための最新技術を紹介します。AppleのAPIとAmazon Lexのような他社の技術による音声認識を見てみましょう。また、音声再生における別なストラテジーについても紹介します。さらに、アプリで対話型インターフェースを構築するにあたってのベストプラクティスについてもお話します。",
+          "speakers": [
+            {
+              "name": "Wendy Lu",
+              "image_name": "wendy",
+              "bio": "Wendy is an iOS engineer and has been working at Pinterest for the last 5 years. She is currently engineering manager of the Ad Formats team with a focus on mobile. Previously, she led the launch of their commerce product on mobile and has also touched everything from the data layer to the UI frameworks. She has given talks at several iOS conferences and moderates a mobile development panel at Grace Hopper. In a past life she competed on the US Synchronised Swimming National Team.",
+              "bio_ja": "Wendy は iOS エンジニアとして５年間 Pinterest で働いていました。今は、モバイルを中心とした広告フォーマットチームのエンジニアリングマネージャです。以前は、モバイルにおけるコマース製品を立ち上げ、データレイヤーからUIフレームワークに至るまですべてを担当してきました。これまでいくつかのiOSカンファレンスでトークしたり、 Grace Hopper Conference の mobile development panel をモデレートしています。昔は、アメリカのシンクロナイズドスイミングナショナルチームで競い合っていました。",
+              "job_title": "iOS Engineer at Pinterest",
+              "job_title_ja": "iOS Engineer at Pinterest",
+              "links": [
+                {
+                  "name": "@wendyluwho",
+                  "url": "https://x.com/wendyluwho"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "NcYjfIeZgR8"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2018-03-02T16:00:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "time": "2018-03-02T16:30:00+09:00",
+      "sessions": [
+        {
+          "id": 18,
+          "title": "UIImageView vs Metal",
+          "title_ja": "UIImageView vs Metal",
+          "description": "Metal is an API that provides access to the GPU. Apple announced it's 10x times faster than OpenGL. In this session, I'll explain the basics of Metal, then compare the performance of graphics rendering with UIImageView. Even if you don't use the API directly, your app is implicitly benefitting from Metal. This comparison to a familiar class will lead you to be conscious of the GPU layer that we usually miss.",
+          "description_ja": "MetalはGPUへのアクセスを提供するAPIで、OpenGLより10倍速いという謳い文句で登場しました。本セッションではMetalの基礎を解説しつつ、そのグラフィックス描画性能をUIImageViewと比較してみます。MetalのAPIを直接利用する機会がなくても、Metalはあなたのアプリの裏で暗躍しています。身近なクラスとの比較を通じて、普段我々が意識することのないGPUのレイヤで何が起きているのか、目を向けてみるきっかけになればと思います。",
+          "speakers": [
+            {
+              "name": "Shuichi Tsutsumi",
+              "image_name": "shu223",
+              "bio": "Shuichi has been a freelance iOS developer in Tokyo, and works for Fyusion Inc. in San Francisco since 2016. Co-authored “iOS x BLE Core Bluetooth Programming” (2015) and authored “iOS Programming - Advanced 100 Recipes” (2013). He is the creator of some popular OSS repositories such as iOS Sampler series.",
+              "bio_ja": "元フリーランスiOSエンジニア、2016年末よりサンフランシスコのFyusion社勤務。著書に「iOS×BLE　Core Bluetooth プログラミング」(2015)、「iOSアプリ開発　達人のレシピ100」（2013）。GitHubで「iOS Sampler」シリーズ他さまざまなオープンソースを公開している。",
+              "job_title": "iOS Developer in Tokyo/San Francisco",
+              "job_title_ja": "iOS Developer in Tokyo/San Francisco",
+              "links": [
+                {
+                  "name": "@shu223",
+                  "url": "https://x.com/shu223"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "mebKTCPZwLc"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "time": "2018-03-02T16:50:00+09:00",
+      "sessions": [
+        {
+          "id": 19,
+          "title": "Best Docker Container in Swift",
+          "title_ja": "Swiftが動くDockerコンテナの各OSの性能比較",
+          "description": "Several years have passed since Swift was released as open source and Linux became supported. The adoption of server side Swift has increased. Meanwhile, Swift is constantly being updated, and the cost of supporting different Swift versions on multiple machines is getting higher. By using Docker, this cost can be reduced by preparing a virtual environment container with a fixed Swift version, so we can develop without relying on version. Also, since Docker does not perform full virtualization, disk usage is small, and virtual environment initialization and startup are fast. In this talk, I'll explore the best Docker container for Swift.",
+          "description_ja": "Swiftがオープンソースとして公開されてLinuxサポートがされてから数年経ち、サーバーサイドSwiftの導入・運用事例が増えてきました。その間にもSwiftはアップデートされ続けていて、Swiftのバージョンを複数の開発・運用マシンで揃えることのコストが高くなってきています。このコストを削減するためにDockerを用いると、Swiftのバージョンを固定したコンテナ型の仮想化環境を用意できるので、マシンのローカルのSwiftのバージョン依存することなく開発することができます。また、Dockerは完全仮想化を行うわけではないのでディスク使用量は少なく、仮想環境の作成や起動は速いという特徴があります。このトークではSwiftに最適なDockerコンテナを紹介します。",
+          "speakers": [
+            {
+              "name": "Takeshi Ihara",
+              "image_name": "ihara",
+              "bio": "Takeshi Ihara is an iOS engineer of English learning services at Recruit Marketing Partners. He uses server side Swift in his personal apps. When not coding, you can find him bouldering or playing games.",
+              "bio_ja": "リクルートマーケティングパートナーズで英語系の学習サービスのiOSエンジニアをしています。個人サービスでサーバーサイドSwiftを活用しています。趣味はボルダリングと格闘ゲームです。",
+              "job_title": "iOS Engineer at Recruit Marketing Partners",
+              "job_title_ja": "iOS Engineer at Recruit Marketing Partners",
+              "links": [
+                {
+                  "name": "@nonchalant0303",
+                  "url": "https://x.com/nonchalant0303"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "AVkKkl5ZlYo"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "time": "2018-03-02T17:05:00+09:00",
+      "sessions": [
+        {
+          "id": 20,
+          "title": "The Type Erasure Advantage",
+          "title_ja": "型とパフォーマンスで見るType-erasureの利点",
+          "description": "Type erasure, which was presented at try! Swift Tokyo 2016, is now known by many Swift developers. This talk will focus on the type and performance advantages of adopting type erasure. We will also cover the AnySequence implementation in stdlib to explore an efficient and powerful type erasure implementation.",
+          "description_ja": "2016年のtry! Swiftで紹介されてから誰もが知るところとなったType-erasure、これを採用するメリットを型とパフォーマンスの面から紐解きます。また、stdlibのAnySequenceの実装をヒントに、効率が良くパワフルなType-erasureの実装を探っていきましょう。",
+          "speakers": [
+            {
+              "name": "Nobuo Saito",
+              "image_name": "tarunon",
+              "bio": "Nobuo Saito is an engineer at Mercari. He likes Swift, games and sleeping, so he has problems with time allocation. He recently bought MHW, so the time required for gaming has doubled. It is serious.",
+              "bio_ja": "株式会社メルカリ所属の iOS エンジニアです。 Swift とゲームと睡眠が好きで、時間配分に悩んでいます。最近 MHW を買ってしまい、ゲームに必要な時間が2倍になってしまいました。大変です。",
+              "job_title": "iOS Engineer at Mercari",
+              "job_title_ja": "iOS Engineer at Mercari",
+              "links": [
+                {
+                  "name": "@tarunon",
+                  "url": "https://x.com/tarunon"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "ogQOzfO8pV8"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "time": "2018-03-02T17:30:00+09:00",
+      "sessions": [
+        {
+          "id": 21,
+          "title": "Investing time into developer tools and experience",
+          "title_ja": "開発者ツールと経験への時間投資",
+          "description": "How to look for ideas to improve developer tooling and experience. We’ll look at examples of common pain points in daily development and techniques that can be used to improve them, either through creating new developer tools or adjusting the development process. If the 10x developer exists, it's the person that decides to work on things that make the lives of the other 10 developers better.",
+          "description_ja": "開発者のツールと経験を向上させるためのアイディアを探すにはどうすればよいでしょうか？新しい開発ツールを作成するか、開発プロセスを調整することで、日々の開発における共通の苦しみとその改善方法を見ていきます。 10倍の開発者がいるなら、その人は他の10人の開発者の生活をより良くするものに取り組むことを決めた人です。",
+          "speakers": [
+            {
+              "name": "Krzysztof Zabłocki",
+              "image_name": "krzysztof",
+              "bio": "Krzysztof is the Lead iOS developer at The New York Times, known for creating Sourcery, Objective-C Playgrounds, and Apple’s Essential Apps like Foldify and 3D Game Engines. Passionate about writing quality code and helping other do the same. He blogs on merowing.info and open sources tools/libraries on github.com/krzysztofzablocki.",
+              "bio_ja": "KrzysztofはNew York TimesのリードiOSエンジニアで、 Sourceryや Objective-C Playgrounds 、さらにFoldifyや3D Game Engineなど、Appleに欠かせないアプリの開発で有名です。品質の高いコードを書いたり、他の人も同じように書けるようにすることにも熱心です。merowing.infoでブログを書いており、公開されているOSSはGitHub github.com/krzysztofzablocki で見ることができます。",
+              "job_title": "Creator of Sourcery & Objective-C Playgrounds",
+              "job_title_ja": "Creator of Sourcery & Objective-C Playgrounds",
+              "links": [
+                {
+                  "name": "@merowing_",
+                  "url": "https://x.com/merowing_"
+                }
+              ]
+            }
+          ],
+          "youtube_video_id": "yAQQ0cIxSF8"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "time": "2018-03-02T18:00:00+09:00",
+      "sessions": [
+        {
+          "id": 22,
+          "title": "Closing / Announcements",
+          "title_ja": "クロージング"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "time": "2018-03-02T18:30:00+09:00",
+      "sessions": [
+        {
+          "id": 23,
+          "title": "Party 🎉",
+          "title_ja": "Party 🎉"
+        }
+      ]
+    }
+  ]
+}

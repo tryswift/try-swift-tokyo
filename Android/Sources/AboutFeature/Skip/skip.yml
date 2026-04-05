@@ -1,1 +1,7 @@
 # Skip configuration for AboutFeature module
+
+build:
+  contents:
+    - block: 'android'
+      contents:
+        - 'sourceSets.getByName("main").assets.srcDir(file("../../../../../../../../Sources/AboutFeature/Resources"))'

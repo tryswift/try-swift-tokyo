@@ -3,24 +3,21 @@ import SwiftUI
 
 public struct AboutScreen: View {
   @State private var viewModel = AboutViewModel()
-  @State private var showOrganizers = false
   @Environment(\.openURL) private var openURL
 
   public init() {}
 
   public var body: some View {
     NavigationStack {
-      List {
-        logoSection
-
-        descriptionSection
-
-        linksSection
-
-        organizersSection
-
-        externalLinksSection
+      ScrollView {
+        VStack(spacing: 20) {
+          heroSection
+          linkGroups
+          organizersSection
+        }
+        .padding()
       }
+      .background(Color(red: 0.98, green: 0.97, blue: 0.96))
       .navigationTitle("try! Swift")
       .sheet(item: $viewModel.selectedOrganizer) { organizer in
         OrganizerDetailSheet(organizer: organizer)
@@ -31,96 +28,158 @@ public struct AboutScreen: View {
     }
   }
 
-  private var logoSection: some View {
-    Section {
-      HStack {
-        Spacer()
-        // Placeholder for try! Swift logo
-        RoundedRectangle(cornerRadius: 12)
-          .fill(Color.orange.opacity(0.2))
-          .frame(width: 200, height: 100)
-          .overlay {
-            Text("try! Swift Tokyo")
-              .font(Font.title2.bold())
-              .foregroundStyle(Color.orange)
-          }
-        Spacer()
-      }
-      .listRowBackground(Color.clear)
-    }
-  }
+  private var heroSection: some View {
+    VStack(spacing: 16) {
+      ZStack {
+        RoundedRectangle(cornerRadius: 28)
+          .fill(
+            LinearGradient(
+              colors: [
+                Color(red: 1.0, green: 0.44, blue: 0.22),
+                Color(red: 0.98, green: 0.69, blue: 0.23),
+              ],
+              startPoint: .topLeading,
+              endPoint: .bottomTrailing
+            )
+          )
+          .frame(height: 180)
 
-  private var descriptionSection: some View {
-    Section {
+        VStack(spacing: 12) {
+          Text("try! Swift")
+            .font(Font.largeTitle.bold())
+            .foregroundStyle(Color.white)
+          Text("TOKYO 2026")
+            .font(Font.title3.bold())
+            .tracking(2)
+            .foregroundStyle(Color.white.opacity(0.95))
+        }
+      }
+
       Text(
         "try! Swift Tokyo is an international community gathering about the latest advancements in Swift Development. The event takes place in Tokyo, Japan."
       )
       .font(Font.body)
+      .multilineTextAlignment(.center)
+      .foregroundStyle(Color.secondary)
     }
+    .padding()
+    .background(Color.white)
+    .clipShape(RoundedRectangle(cornerRadius: 28))
   }
 
-  private var linksSection: some View {
-    Section {
-      Button {
-        openURL(URL(string: "https://tryswift.jp/code-of-conduct")!)
-      } label: {
-        Label("Code of Conduct", systemImage: "info.circle")
-      }
-
-      Button {
-        openURL(URL(string: "https://tryswift.jp/privacy")!)
-      } label: {
-        Label("Privacy Policy", systemImage: "lock")
-      }
+  private var linkGroups: some View {
+    VStack(spacing: 12) {
+      aboutLinkRow(
+        title: "Code of Conduct",
+        systemImage: "info.circle",
+        urlString: "https://tryswift.jp/code-of-conduct"
+      )
+      aboutLinkRow(
+        title: "Privacy Policy",
+        systemImage: "lock",
+        urlString: "https://tryswift.jp/privacy"
+      )
+      aboutLinkRow(
+        title: "Get Tickets (Luma)",
+        systemImage: "cart.fill",
+        urlString: "https://lu.ma/tryswifttokyo2026"
+      )
+      aboutLinkRow(
+        title: "Visit Website",
+        systemImage: "arrow.forward.square",
+        urlString: "https://tryswift.jp"
+      )
     }
   }
 
   private var organizersSection: some View {
-    Section("Organizers") {
+    VStack(alignment: .leading, spacing: 16) {
+      Text("Organizers")
+        .font(Font.title2.bold())
+
       if viewModel.isLoading {
         ProgressView()
+          .frame(maxWidth: .infinity)
+          .padding(.vertical, 24)
       } else if !viewModel.organizers.isEmpty {
-        ForEach(viewModel.organizers) { organizer in
-          Button {
-            viewModel.selectedOrganizer = organizer
-          } label: {
-            HStack {
-              Circle()
-                .fill(Color.blue.opacity(0.3))
-                .frame(width: 40, height: 40)
-                .overlay {
-                  Text(String(organizer.name.prefix(1)))
-                    .foregroundStyle(Color.blue)
-                }
-
-              Text(organizer.name)
-                .foregroundStyle(Color.primary)
-
-              Spacer()
-
-              Image(systemName: "chevron.right")
-                .foregroundStyle(Color.secondary)
+        LazyVStack(spacing: 12) {
+          ForEach(viewModel.organizers) { organizer in
+            Button {
+              viewModel.selectedOrganizer = organizer
+            } label: {
+              organizerRow(organizer: organizer)
             }
+            .buttonStyle(.plain)
           }
         }
+      } else if let error = viewModel.errorMessage {
+        Text(error)
+          .font(Font.subheadline)
+          .foregroundStyle(Color.red)
+      } else {
+        Text("Organizer information is not available")
+          .font(Font.subheadline)
+          .foregroundStyle(Color.secondary)
       }
     }
   }
 
-  private var externalLinksSection: some View {
-    Section {
-      Button {
-        openURL(URL(string: "https://lu.ma/tryswifttokyo2026")!)
-      } label: {
-        Label("Get Tickets (Luma)", systemImage: "star.fill")
+  private func aboutLinkRow(
+    title: String,
+    systemImage: String,
+    urlString: String
+  ) -> some View {
+    Button {
+      if let url = URL(string: urlString) {
+        openURL(url)
+      }
+    } label: {
+      HStack(spacing: 14) {
+        Image(systemName: systemImage)
+          .font(Font.headline)
+          .foregroundStyle(Color(red: 0.95, green: 0.35, blue: 0.20))
+          .frame(width: 28)
+
+        Text(title)
+          .font(Font.body.weight(.semibold))
+          .foregroundStyle(Color.primary)
+
+        Spacer()
+
+        Image(systemName: "chevron.right")
+          .font(Font.subheadline.weight(.semibold))
+          .foregroundStyle(Color.secondary)
+      }
+      .padding()
+      .background(Color.white)
+      .clipShape(RoundedRectangle(cornerRadius: 20))
+    }
+    .buttonStyle(.plain)
+  }
+
+  private func organizerRow(organizer: Organizer) -> some View {
+    HStack(spacing: 14) {
+      AvatarBadge(name: organizer.name, diameter: 54)
+
+      VStack(alignment: .leading, spacing: 4) {
+        Text(organizer.name)
+          .font(Font.body.weight(.semibold))
+          .foregroundStyle(Color.primary)
+        Text(organizer.bio)
+          .font(Font.caption)
+          .foregroundStyle(Color.secondary)
+          .lineLimit(2)
       }
 
-      Button {
-        openURL(URL(string: "https://tryswift.jp")!)
-      } label: {
-        Label("Visit Website", systemImage: "arrow.forward.square")
-      }
+      Spacer()
+
+      Image(systemName: "chevron.right")
+        .font(Font.subheadline.weight(.semibold))
+        .foregroundStyle(Color.secondary)
     }
+    .padding()
+    .background(Color.white)
+    .clipShape(RoundedRectangle(cornerRadius: 20))
   }
 }
 
@@ -133,15 +192,7 @@ struct OrganizerDetailSheet: View {
     NavigationStack {
       ScrollView {
         VStack(spacing: 20) {
-          // Profile image placeholder
-          Circle()
-            .fill(Color.blue.opacity(0.3))
-            .frame(width: 120, height: 120)
-            .overlay {
-              Text(String(organizer.name.prefix(1)))
-                .font(Font.largeTitle)
-                .foregroundStyle(Color.blue)
-            }
+          AvatarBadge(name: organizer.name, diameter: 120)
 
           Text(organizer.name)
             .font(Font.title.bold())
@@ -149,7 +200,8 @@ struct OrganizerDetailSheet: View {
           Text(organizer.bio)
             .font(Font.body)
             .multilineTextAlignment(TextAlignment.center)
-            .padding(Edge.Set.horizontal)
+            .foregroundStyle(Color.secondary)
+            .padding(.horizontal)
 
           if let links = organizer.links, !links.isEmpty {
             VStack(spacing: 12) {
@@ -160,16 +212,17 @@ struct OrganizerDetailSheet: View {
                 Button {
                   openURL(link.url)
                 } label: {
-                  Label(link.name, systemImage: "arrow.forward")
+                  Label(link.name, systemImage: "square.and.arrow.up")
                 }
                 .buttonStyle(.bordered)
               }
             }
-            .padding(Edge.Set.top)
+            .padding(.top)
           }
         }
         .padding()
       }
+      .background(Color(red: 0.98, green: 0.97, blue: 0.96))
       .navigationTitle("Profile")
       #if os(iOS) || SKIP
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
@@ -190,6 +243,31 @@ struct OrganizerDetailSheet: View {
         }
       #endif
     }
+  }
+}
+
+private struct AvatarBadge: View {
+  let name: String
+  let diameter: CGFloat
+
+  var body: some View {
+    Circle()
+      .fill(
+        LinearGradient(
+          colors: [
+            Color(red: 1.0, green: 0.61, blue: 0.35),
+            Color(red: 0.92, green: 0.33, blue: 0.34),
+          ],
+          startPoint: .topLeading,
+          endPoint: .bottomTrailing
+        )
+      )
+      .frame(width: diameter, height: diameter)
+      .overlay {
+        Text(String(name.prefix(1)))
+          .font(diameter > 80 ? Font.largeTitle.bold() : Font.title3.bold())
+          .foregroundStyle(Color.white)
+      }
   }
 }
 

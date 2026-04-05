@@ -1,0 +1,418 @@
+{
+  "id": 2,
+  "title": "Day 2",
+  "title_ja": "2日目",
+  "date": "2020-03-19T09:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2020-03-19T09:00:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Breakfast",
+          "title_ja": "受付・朝食"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2020-03-19T09:45:00+09:00",
+      "sessions": [
+        {
+          "id": 2,
+          "title": "Opening Remarks",
+          "title_ja": "開会"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2020-03-19T10:00:00+09:00",
+      "sessions": [
+        {
+          "id": 3,
+          "title": "Xcode Project Generation",
+          "title_ja": "Xcodeプロジェクトの生成",
+          "description": "Motivations, challenges, and learnings from building and using XcodeGen",
+          "description_ja": "XcodeGenを開発し利用しているモチベーションやチャレンジ、学んだことについてお話します。",
+          "speakers": [
+            {
+              "name": "Yonas Kolb",
+              "image_name": "2393781-d7cea03c-8a8d-4827-8a8a-f4644c75b150",
+              "bio": "Yonas is an iOS developer with a passion for Swift, Architecture, UX, and Dev tools. He is the creator of a few popular open source Swift tools such as XcodeGen and Mint. When he's not coding he can be found exploring the outdoors",
+              "bio_ja": "YonasはSwiftやアーキテクチャ、UX、そして開発者ツールに情熱をもったiOS開発者で、XcodeGenやMintといった有名なオープンソースのSwift製ツールの作者です。趣味はアウトドアです。",
+              "job_title": "iOS Developer",
+              "job_title_ja": "iOS Developer",
+              "links": [
+                {
+                  "name": "@yonaskolb",
+                  "url": "https://x.com/yonaskolb"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2020-03-19T10:25:00+09:00",
+      "sessions": [
+        {
+          "id": 4,
+          "title": "Effective UIKit-based app development with Xcode Preview",
+          "title_ja": "Xcode Preview でUIKitベースのアプリ開発を効率化する",
+          "description": "Much of the time in iOS app development is spent implementing views. The display contents and layout of the view change dynamically depending on the state of the application. Therefore, while developing a view, it is necessary to frequently launch iOS Simualtor and actually operate the app to check whether the displayed content is as expected. In addition, when displaying on a small screen terminal, when dark mode is enabled, or when enlarging characters with Dynamic Type, it is troublesome to check whether the layout is collapsed. It is very difficult because every time you change something, you need to start iOS Simulator and check the operation.\nXcode Preview introduced in Xcode11 solves this problem. It is a function to preview the display result of the view in various situations on the editor. If you change the View implementation, it will be reflected in the preview immediately, so you do not need to launch the iOS simulator many times to confirm.\nAnd while Xcode Preview has the impression that it supports development using SwiftUI, it can actually be used for application development based on conventional UIKit! You can start using Xcode Preview today as a tool to streamline your existing app development. No more waiting for SwiftUI to spread.\nIn this talk, I will show you how to introduce Xcode Preview to existing UIKit-based app development and how to use it with demos.",
+          "description_ja": "iOSアプリ開発の大部分の時間はViewの実装に費やされます。Viewはアプリの状態によって表示内容やレイアウトが動的に変わります。そのためViewの開発中は、頻繁にiOS Simualtorを起動し、実際にアプリを操作して期待通りの表示内容になっているかを確認する必要があります。また、小さい画面の端末での表示時、ダークモード有効時、Dynamic Typeで文字を大きくした際などに、レイアウトが崩れてないかを確認する作業も面倒なものです。何か変更するたびにiOS Simulatorを起動して動作確認する必要があるので非常に大変です。\nこの問題を解決してくれるのが、Xcode11で導入されたXcode Previewです。Xcode Previewは、様々な状況下におけるViewの表示結果をエディタ上でプレビュー表示する機能です。Viewの実装を変更すると即座にプレビューに反映されるため、確認のためにiOS simulatorを何度も起動する必要はありません。\nそして、Xcode PreviewといえばSwiftUIのための開発支援機能というイメージがありますが、実は従来のUIKitベースのアプリ開発にも使うことができます！あなたの既存のアプリ開発を効率化するための道具として、今日からXcode Previewを使い始めることができるのです。SwiftUIの普及を待つ必要はありません。\nこのトークでは既存のUIKitベースのアプリ開発にXcode Previewを導入する方法とその活用方法を、デモを交えながら紹介します。",
+          "speakers": [
+            {
+              "name": "Kentaro Matsumae",
+              "image_name": "kentaro",
+              "bio": "Kentaro works at Merpay as an iOS developer. He talked about CoreML on try! Swift Tokyo2018 and NYC2018, but his interest goes back to pure mobile app development. Recently, he loves building a mobile app using Flutter as well as iOS SDK.",
+              "bio_ja": "Kentaro は Merpay でiOS開発者として働いています。try! Swift Tokyo 2018 と NYC2018 で CoreML について話しましたが、彼の関心は純粋なモバイルアプリ開発に戻ります。 最近はiOS SDKと同様にFlutterを使用してモバイルアプリを構築するのにハマっています。",
+              "job_title": "iOS Developer at merpay",
+              "job_title_ja": "iOS Developer at merpay",
+              "links": [
+                {
+                  "name": "@kenmaz",
+                  "url": "https://x.com/kenmaz"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2020-03-19T10:40:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "(TBD)",
+          "title_ja": "(TBD)"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2020-03-19T11:05:00+09:00",
+      "sessions": [
+        {
+          "id": 6,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2020-03-19T11:35:00+09:00",
+      "sessions": [
+        {
+          "id": 7,
+          "title": "Property Wrappers or How Swift decided to become Java 🙃",
+          "title_ja": "Property Wrappers、あるいはSwiftがJavaのようになることを決めたこと 🙃",
+          "description": "Swift 5.1 brought a new construct to the language: Property Wrappers. SwiftUI, for instance, relies heavily on it to provide its system of data-binding through annotations like @State, @EnvironmentObjects, etc.\nUnlike other language improvements, Codable for instance, Apple hasn’t restricted the use of this new feature to its own frameworks: any codebase is free to leverage it to implement custom property attributes that will suit its own specific needs.\nWhile this is a great opportunity to factorise common behaviours throughout a project, one can still wonder: won’t it hurt code readability and predictability on the long run? Keeping code short is good, but if it’s achieved through a collection of arcane annotations, it might end up defying the original intent.\nIn this talk, I want to introduce what Property Wrappers are, give some example of how they can be leveraged, and try to provide some guidelines on when we they should or shouldn’t be use.",
+          "description_ja": "Swift 5.1では、言語に新しい構成要素であるProperty Wrappersが導入されました。たとえば、SwiftUIは、@State、@EnvironmentObjectsなどのアノテーションを介してデータバインディングのシステムを提供するために、これに大きく依存しています。\n他の言語の改善、たとえばCodableとは異なり、Appleはこの新機能の使用を独自のフレームワークに制限していません。コードベースはそれを自由に活用して、独自の特定のニーズに合うカスタムプロパティ属性を実装できます。\nこれはプロジェクト全体の一般的な動作を分解する絶好の機会ですが、長期的にはコードの可読性と予測可能性を損なうことはないでしょうか？コードを短くすることは良いことですが、難解な注釈のコレクションによって達成された場合、元の意図に反する可能性があります。\nこの講演では、Property Wrappersの概要を説明し、Property Wrappersを活用する方法の例を示し、使うべきタイミング、使うべきではないタイミングについてガイドラインを示します。",
+          "speakers": [
+            {
+              "name": "Vincent Pradeilles",
+              "image_name": "5090957-fd658909-636c-48ed-af52-6fac409659ba",
+              "bio": "Vincent started working on iOS apps back in 2011. For the last years, he’s been working at Worldline, where he contributes to building great apps for major French banks. He loves Swift and enjoys sharing about it on the Internet. Most notably, he built the framework KeyPathKit that implements a SQL-like syntax for data manipulation.  He is also the person behind the Twitter account @ios_memes.",
+              "bio_ja": "Vincentは2011年にiOSアプリの開発に着手しました。ここ数年、彼はWorldlineで働いており、フランスの主要銀行向けの優れたアプリの開発に貢献しています。彼はSwiftが大好きで、インターネットでの知識の共有を楽しんでいます。最も注目すべきは、データ操作用のSQLのような構文を実装するフレームワークKeyPathKitを構築したことです。@ios_memesの中の人でもあります。",
+              "job_title": "iOS @ Worldline",
+              "job_title_ja": "iOS @ Worldline",
+              "links": [
+                {
+                  "name": "@v_pradeilles",
+                  "url": "https://x.com/v_pradeilles"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2020-03-19T12:10:00+09:00",
+      "sessions": [
+        {
+          "id": 8,
+          "title": "Practical Dependency Injection with Legacy Codebase",
+          "title_ja": "レガシーコードにおける実践Dependency Injection",
+          "description": "We already know what Dependency Injection is. But we don't do it. Because we are living in the real world with tons of legacy code. This talk introduces a practical way to do Dependency Injection in iOS projects.",
+          "description_ja": "依存性を注入 (Dependency Injection) するとはどういうことかすでにご存知かと思いますが、我々は普段使いません。なぜなら、現実世界はレガシーコードに満ち溢れているからです。このトークではiOSのプロジェクトに依存性を注入するための実践的なやり方をご紹介します。",
+          "speakers": [
+            {
+              "name": "Suyeol Jeon",
+              "image_name": "devxoul",
+              "bio": "Suyeol introduces himself as a lazy developer who writes many code to write less code. He enjoys contributing to open source community. He is also an author of several famous open source libraries such as ReactorKit, Then and URLNavigator.",
+              "bio_ja": "Suyeolは、より少ないコードを書くために多くのコードを書く怠惰な開発者を自称しています。彼はオープンソースコミュニティへの貢献を楽しんでいます。また、ReactorKit、Then、URLNavigatorなどの有名なオープンソースライブラリの著者でもあります。",
+              "job_title": "Lead iOS engineer at StyleShare",
+              "job_title_ja": "Lead iOS engineer at StyleShare",
+              "links": [
+                {
+                  "name": "@Suyeol Jeon",
+                  "url": "https://x.com/Suyeol Jeon"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2020-03-19T12:35:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "The multiple faces of an unidirectional data flow",
+          "title_ja": "単方向データフローについてのあれこれ",
+          "description": "At WWDC '19 Apple released Swift UI: a new UI framework to easily build user interfaces for all Apple platforms. Besides its powerful Swift API and internals, this framework adopted innovative and well known programming paradigms designed by the industry and the open source community to create captive, efficient and scalable UI. We will dive into some of these paradigms, ethos of Swift UI and most of the major UI frameworks to understand the mindset of their APIs, analyzing the tradeoffs and challenges to consider during development and finally build the skills to drive an educated decision of what fits best for the scale and priorities of your products.",
+          "description_ja": "WWDC '19にてAppleはSwift UIを発表し、新しいUIフレームワークによって、全てのAppleプラットフォーム上でUIが簡単に構築できる方法を紹介しました。Swiftの強力なAPIと内部構造だけでなく、業界とオープンソースコミュニティでデザインされてきた革新的で知名度のある、効率的でスケーラブルなプログラミングパラダイムを踏襲しています。今回ご紹介するのはそのようなパラダイムと、Swift UIとメジャーなUIフレームワークの思想、トレードオフや課題、そして技術選定のためのスキルの構築についてお話しします。",
+          "speakers": [
+            {
+              "name": "Fabio",
+              "image_name": "iamfabiomilano",
+              "links": [
+                {
+                  "name": "@iamfabiomilano",
+                  "url": "https://x.com/iamfabiomilano"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2020-03-19T13:00:00+09:00",
+      "sessions": [
+        {
+          "id": 10,
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2020-03-19T14:30:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "Pattern Matching Superpowers",
+          "title_ja": "パターンマッチの超能力",
+          "description": "Most of us use pattern matching every day when writing Swift: we all know `switch` and `if let` for example. But did you know that pattern matching can be way more powerful than this and that you can extend them for your own benefit?\nEmbark in a deep dive into Swift pattern matching syntax to discover how far it can go and how powerful they can get, and learn how to create your own custom matching logic to give your `switch` and other pattern matching expressions some more superpowers.",
+          "description_ja": "Swift開発者である我々は、Swiftを書くときに毎回パターンマッチングを使います。たとえば、 `switch` と `if let`についてはすべて知っています。しかし、パターンマッチはこれよりもはるかに強力であり、自分でパターンマッチを拡張できることをご存知ですか？\nSwiftのパターンマッチ構文を深く掘り下げて、それがどこまで行けるのか、どれだけ強力なのかを発見し、独自のカスタムマッチングロジックを作成して `switch` やその他のパタ​​ーンマッチ式にさらなる超能力を与える方法を学びます。",
+          "speakers": [
+            {
+              "name": "Olivier Halligon",
+              "image_name": "216089-64793e94-1fb4-4555-ae07-dd7ed312f4e4",
+              "bio": "Olivier is an iOS engineer passionate about Swift, Tooling and Automation, teaching and sharing knowledge. He also likes contributing to the OSS community (author of SwiftGen, OHHTTPStubs, Reusable…; Sourcery contributor; previously core contributor at CocoaPods and Fastlane). He currently lives in west of France, currently works remotely on Platform, CI and Tooling at Babylon Health (London, UK), and loves Dr Who, Sherlock, Ghibli, and good food (especially takoyakis",
+              "bio_ja": "OlivierはSwiftやツール、自動化、教育や知識の共有に情熱を持ったiOSエンジニアです。OSSコミュニティに貢献するのも好きで、SwiftGenやOHHTTPStubs、Reusableの作者であり、SourceryのContributorです。以前はCocoaPodsやFastlaneのCore Contributorをしていました。今はフランス西部に住んでおり、イギリスのロンドンにあるBabylon Healthでリモートワークをしながら、プラットフォームやCI、ツールの仕事をしています。Doctor WhoやSherlock, ジブリそして食べ物が大好きで、特にたこ焼きが大好きです。",
+              "job_title": "Mobile Tooling Engineer at Babylon Health",
+              "job_title_ja": "Mobile Tooling Engineer at Babylon Health",
+              "links": [
+                {
+                  "name": "@aligatr",
+                  "url": "https://x.com/aligatr"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2020-03-19T14:55:00+09:00",
+      "sessions": [
+        {
+          "id": 12,
+          "title": "Ultrasonic communication: Bus Ticketing Use-Case",
+          "title_ja": "超音波通信 〜バスのチケットを例に〜",
+          "description": "We all exchange data over the internet, but what if we have unreliable internet connectivity? Ultrasonic communication can exchange data reliably via inaudible sound waves. It’s practically hardware-agnostic and requires nothing more than a microphone and speaker. Let’s discuss the concept, implementation, practical use cases and our journey to solve bus-ticketing via sound.",
+          "description_ja": "私たちは普段インターネットを介してデータを交換していますが、インターネット接続が信頼できない場合はどうしましょう？超音波通信は、人間の耳には聞こえない音波を介してデータを確実にやり取りできます。これは実質的にハードウェアに依存せず、マイクとスピーカーのみで実現できます。音声によるバスチケットを解決するための概念、実装、実際の使用例、および私たちが何に取り組んだかを説明します。",
+          "speakers": [
+            {
+              "name": "Soaurabh Kakkar",
+              "image_name": "soaurabh",
+              "bio": "Soaurabh Kakkar is a Principal iOS engineer at Tokopedia, Indonesia’s technology unicorn. Apart from contributing to large scale consumer apps, he likes to experiment and co-invented a security algorithm that can be read on Google Patents. He has previously spoken on topics like HLS In-Depth, Myths about Application Architecture, Functional Paradigm at Swift India Conference and in company-wide talks. When he’s not programming, he spends time watching Cricket and playing Mortal Kombat on Xbox.",
+              "bio_ja": "Soaurabh Kakkarは、インドネシアのテクノロジーユニコーンであるTokopediaのプリンシパルiOSエンジニアです。大規模なコンシューマ向けアプリへの貢献とは別に、彼は実験し、Google特許で読むことができるセキュリティアルゴリズムを共同で発明しました。彼は以前、HLSの詳細、アプリケーションアーキテクチャに関する神話、Swift India Conferenceでの関数型パラダイム、全社的な講演などのトピックについて講演しました。プログラミングをしていないときは、クリケットを見て、XboxでMortal Kombatをプレイしています。",
+              "job_title": "Principal iOS Engineer at Tokopedia",
+              "job_title_ja": "Principal iOS Engineer at Tokopedia",
+              "links": [
+                {
+                  "name": "@soaurabh",
+                  "url": "https://x.com/soaurabh"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2020-03-19T15:10:00+09:00",
+      "sessions": [
+        {
+          "id": 13,
+          "title": "Break Up and Bounce Back: On Working Well While Distributed",
+          "title_ja": "離れていてもより良く働く",
+          "description": "Though it can be advantageous for small startups to retain a separate iOS engineering team, growth forces even the most tight-knit of iOS teams to disperse. This can often isolate iOS engineers, leaving them all alone in their efforts to maintain the integrity of the iOS codebase on a multi-platform product team. In this talk, I’ll share how my iOS engineering teammates and I navigated the transition from working together on one team to spearheading shared infrastructural projects and communicating effectively across multiple teams.",
+          "description_ja": "小さなスタートアップのメリットとして、iOSエンジニアをひとつのチームで維持できることがあります。しかし、グロースによって、最も緊密なiOSチームでさえも解散させられます。これにより、多くの場合、iOSエンジニアを隔離し、マルチプラットフォームのプロダクトチームでiOSコードベースの整合性を維持するための努力を強いられます。このトークでは、iOSエンジニアのチームメイトと、1つのチームで一緒に作業していたフェーズから、共有インフラプロジェクトの先頭に立って、複数のチーム間で効果的にコミュニケーションを行う体制へ移行する方法をご紹介します。",
+          "speakers": [
+            {
+              "name": "Alaina Kafkes",
+              "image_name": "alainakafkes",
+              "bio": "Alaina Kafkes is a software engineer at Medium, where she works predominantly on iOS development and petting other people’s dogs. She has spoken and written extensively about the intersection of technology and the humanities. Current interests include swimming laps and loafing around bookstores.",
+              "bio_ja": "Alaina KafkesはMediumのソフトウェアエンジニアで、主にiOSの開発と他人の犬とのふれあいに取り組んでいます。技術と人文科学の共通部分について広く話し、記事を書いています。今の趣味は、水泳や書店巡りです。",
+              "job_title": "iOS Engineer at Medium",
+              "job_title_ja": "iOS Engineer at Medium",
+              "links": [
+                {
+                  "name": "@alainakafkes",
+                  "url": "https://x.com/alainakafkes"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2020-03-19T15:35:00+09:00",
+      "sessions": [
+        {
+          "id": 14,
+          "title": "(TBD)",
+          "title_ja": "(TBD)"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "time": "2020-03-19T16:05:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2020-03-19T16:35:00+09:00",
+      "sessions": [
+        {
+          "id": 16,
+          "title": "Getting Started with Combine",
+          "title_ja": "Getting Started with Combine",
+          "description": "In the last WWDC, Apple has finally released it's very own framework for declarative processing of values over time, making the skill of Reactive Programming a must for your toolset. But what does it actually mean, and why is it at all helpful for you as a developer? What are the tools and constructs Apple provide for us as developers? In this talk you'll learn: * What _is_ Reactive Programming? * How Combine differs from other Reactive Declarative frameworks * Basic building blocks: Publisher, Subscriber, Subscription, Subjects and more * The anatomy and lifecycle of a Combine event * Combine vocabulary: Operators - the 'words' that make up your Combine chain * Combine & Foundation: Apple-provided APIs to ease your day-to-day development with Combine and existing Swift APIs * Combine's role in SwiftUI * What is Backpressure? * And much more ...",
+          "description_ja": "前回のWWDCで、Appleはついに値を宣言的に処理するための独自のフレームワークをリリースしました。これにより、リアクティブプログラミングのスキルがツールセットに必須になります。しかし、それは実際には何を意味し、なぜ開発者にとって役に立つのでしょうか？ Appleが開発者である我々に提供するツールや構成はどんなものでしょうか？\nこのトークでは次のことを学びます。 - リアクティブプログラミングとは何か - Combineは他のリアクティブ宣言的フレームワークと何が異なるのか - 基本的な構成要素：Publisher, Subscriber, Subscription, Subjectなど - Combineイベントの構造とライフサイクル - Combineに登場する単語：Operators - Combineのチェーンを構成する単語 - Combine＆Foundation：Appleが提供するAPIにより、Combineおよび既存のSwift APIを使用した日々の開発を容易にする - SwiftUIにおけるCombineの役割 - Backpressureとはなにか - その他",
+          "speakers": [
+            {
+              "name": "Shai Mishal",
+              "image_name": "freak4pc",
+              "links": [
+                {
+                  "name": "@freak4pc",
+                  "url": "https://x.com/freak4pc"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2020-03-19T17:10:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "A/Bout Testing: The Learnings, The Pitfalls and why it matters",
+          "title_ja": "A/Bテストにおける学び、落とし穴、そして重要性",
+          "description": "A/B Testing has become a staple in our industry to validate assumptions. In fact each one of us has unknowingly conducted an A/B Testing when we rolled out a new version and compared metrics from our old App with our newly released version. This talk is going over different ways to conduct A/B tests, what to consider and how to read results and avoiding certain pitfalls.",
+          "description_ja": "この業界で、A/Bテストは仮説の検証をするためになくてはならないものです。新しいバージョンのアプリを過去のバージョンと比較する場合に、あまり深く考えることなくA/Bテストされてきたと思います。このトークでは様々なA/Bテスト手法、結果の読み解き方、そして、よくある落とし穴にはまらないための方法を学びます。",
+          "speakers": [
+            {
+              "name": "Carola Nitz",
+              "image_name": "2445653-9e33672b-5bf8-449f-a31e-76b01ea4a298",
+              "bio": "Carola is a Senior Software Engineer at Netflix with many years of experience working on various iOS Apps. She spent the some time working on big complex projects like Apple Maps and VLC for iOS where she learned to navigate matured projects with legacy code. She’s become known for her Debugging talks and tweets but her passion is Open Source, where she enjoys working in a diverse team and sharing her knowledge",
+              "bio_ja": "CarolaはNetflixのシニアソフトウェアエンジニアであり、長年さまざまなiOSアプリを作ってきました。彼女は、Apple MapsやVLC for iOSなどの大きな複雑なプロジェクトに時間を費やし、成熟したプロジェクトをレガシーコードでナビゲートすることを学びました。彼女はデバッグに関するトークやツイートで知られるようになりましたが、彼女の情熱はオープンソースに注がれており、多様なチームで働き、知識を共有することを楽しんでいます。",
+              "job_title": "Senior Software Developer at Netflix",
+              "job_title_ja": "Senior Software Developer at Netflix",
+              "links": [
+                {
+                  "name": "@_caro_n",
+                  "url": "https://x.com/_caro_n"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "time": "2020-03-19T17:35:00+09:00",
+      "sessions": [
+        {
+          "id": 18,
+          "title": "The Science of Learning",
+          "title_ja": "学習の科学",
+          "description": "Have you ever watched a WWDC talk, and only a few days later, not remember what it was about? Why does this happen?  In this talk, we'll look at how adult humans learn new things, and how to apply this to the workplace. We'll survey the different techniques we have at our disposal to transmit new information within teams and how they stack up to each other.",
+          "description_ja": "WWDCのトークを見たことがありますが、数日後、それが何であったか覚えていないことはありませんか？なぜこんなことが起こるのでしょう？このトークでは、大人の人間が新しいことを学ぶ方法と、これを職場に適用する方法について見ていきます。チーム内で新しい情報を送信するために自由に使用できるさまざまな手法と、それらが互いに積み重なる方法を調査します。",
+          "speakers": [
+            {
+              "name": "Frank Courville",
+              "image_name": "avatar-d0532788-d411-4ba2-8431-c53ae28cdda9",
+              "bio": "Frank has been building iOS apps since the era of felt backgrounds. He now works as full-time Swift and iOS educator, helping teams stay on the cutting edge of iOS development. He likes to write about iOS on his website, talk about productivity on his podcast, and ramble about Transformers to anyone who’ll listen.",
+              "bio_ja": "フランクは、背景がフェルトだった時代からiOSアプリを構築してきました。現在、フルタイムのSwiftとiOSの教育者として働いており、チームがiOS開発の最先端を走り続けることを支援しています。彼は自分のウェブサイトでiOSについて書いたり、ポッドキャストで生産性について話したり、誰にでもとりあえずトランスフォーマーの話しをするのが好きです。",
+              "job_title": "Swift and iOS trainer at iOSCoachFrank",
+              "job_title_ja": "Swift and iOS trainer at iOSCoachFrank",
+              "links": [
+                {
+                  "name": "@frankacy",
+                  "url": "https://x.com/frankacy"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "time": "2020-03-19T18:00:00+09:00",
+      "sessions": [
+        {
+          "id": 19,
+          "title": "Closing / Announcements",
+          "title_ja": "Closing / Announcements"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "time": "2020-03-19T18:30:00+09:00",
+      "sessions": [
+        {
+          "id": 20,
+          "title": "🎉Party",
+          "title_ja": "🎉Party"
+        }
+      ]
+    }
+  ]
+}

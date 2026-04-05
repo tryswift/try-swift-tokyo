@@ -52,11 +52,13 @@ The Android version uses [Skip](https://skip.tools) to transpile Swift/SwiftUI t
    ```bash
    swift build
    ```
-4. Run on Android emulator or device:
+4. Install the debug app from the Android root project:
    ```bash
-   cd .build/plugins/outputs/skipstone/AndroidApp/skipstone
-   ./gradlew installDebug
+   ./gradlew app:installDebug
    ```
+5. Launch the installed app from the emulator or device.
+
+If Gradle cannot find your JDK, export `JAVA_HOME` before running `./gradlew`.
 
 #### Android Features
 

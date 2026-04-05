@@ -19,40 +19,43 @@ import VenueFeature
 public struct ContentView: View {
   @State private var selectedTab = 0
 
+  private let accentColor = Color(red: 0.11, green: 0.35, blue: 0.85)
+
   public init() {}
 
   public var body: some View {
     TabView(selection: $selectedTab) {
       ScheduleScreen()
         .tabItem {
-          Label("Schedule", systemImage: "calendar")
+          Label("Schedule", systemImage: "calendar.circle.fill")
         }
         .tag(0)
 
       LiveTranslationScreen()
         .tabItem {
-          Label("Translation", systemImage: "envelope")
+          Label("Live", systemImage: "message.fill")
         }
         .tag(1)
 
       SponsorsScreen()
         .tabItem {
-          Label("Sponsors", systemImage: "star")
+          Label("Sponsors", systemImage: "building.2.fill")
         }
         .tag(2)
 
       VenueScreen()
         .tabItem {
-          Label("Venue", systemImage: "location")
+          Label("Venue", systemImage: "map.fill")
         }
         .tag(3)
 
       AboutScreen()
         .tabItem {
-          Label("About", systemImage: "info.circle")
+          Label("About", systemImage: "info.circle.fill")
         }
         .tag(4)
     }
+    .tint(accentColor)
   }
 }
 
