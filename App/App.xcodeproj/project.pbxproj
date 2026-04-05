@@ -225,6 +225,9 @@
 				Base,
 			);
 			mainGroup = D56361522B931FF800E4F789;
+			packageReferences = (
+				D54B19582B932BBF0065B7E5 /* XCLocalSwiftPackageReference "../iOS" */,
+			);
 			productRefGroup = D563615C2B931FF800E4F789 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -625,13 +628,22 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		D54B19582B932BBF0065B7E5 /* XCLocalSwiftPackageReference "../iOS" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../iOS;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		D54B19592B932BBF0065B7E5 /* AppFeature */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = D54B19582B932BBF0065B7E5 /* XCLocalSwiftPackageReference "../iOS" */;
 			productName = AppFeature;
 		};
 		D583D7DB2B9B639900B94F73 /* AppFeature */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = D54B19582B932BBF0065B7E5 /* XCLocalSwiftPackageReference "../iOS" */;
 			productName = AppFeature;
 		};
 /* End XCSwiftPackageProductDependency section */

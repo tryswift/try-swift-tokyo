@@ -38,6 +38,13 @@ public struct LiveTranslation: Sendable {
     /// Show speed control
     var isShowingSpeedControl: Bool = false
 
+    /// Auto-read confirmed translations (persisted)
+    @Shared(.isAutoReadEnabled) var isAutoReadEnabled: Bool = false
+    /// ID of the last auto-read item
+    var lastAutoReadItemId: String? = nil
+    /// Whether auto-read is currently speaking
+    var isAutoReading: Bool = false
+
     /// Number of most recent items to display in transcript mode
     private static let transcriptItemCount = 3
 
@@ -58,6 +65,8 @@ public struct LiveTranslation: Sendable {
     case binding(BindingAction<State>)
     case storeStateUpdated(StoreState)
     case validateSelectedLangCode([String])
+    case autoReadNextItem
+    case autoReadDidFinish
     case view(View)
 
     public enum View {
@@ -72,6 +81,7 @@ public struct LiveTranslation: Sendable {
       case setSpeechRate(Float)
       case setShowingSpeedControl(Bool)
       case speechDidFinish
+      case setAutoReadEnabled(Bool)
     }
   }
 
@@ -80,6 +90,7 @@ public struct LiveTranslation: Sendable {
   @Dependency(\.speechSynthesizer) var speechSynthesizer
 
   private let observationTaskId: String = "observationTask"
+  private let autoReadTaskId: String = "autoReadTask"
 
   public init() {}
 
@@ -110,10 +121,13 @@ public struct LiveTranslation: Sendable {
 
       case .view(.disconnectStream):
         state.isConnected = false
+        state.isAutoReading = false
         return .merge(
           .cancel(id: observationTaskId),
+          .cancel(id: autoReadTaskId),
           .run { _ in
             await liveTranslationServiceClient.disconnect()
+            await speechSynthesizer.stop()
           }
         )
 
@@ -133,10 +147,14 @@ public struct LiveTranslation: Sendable {
 
       case .view(.speakText(let text, let itemId)):
         state.speakingItemId = itemId
-        return .run { [state] send in
-          await speechSynthesizer.speak(text, state.selectedLangCode, state.speechRate)
-          await send(.view(.speechDidFinish))
-        }
+        state.isAutoReading = false
+        return .merge(
+          .cancel(id: autoReadTaskId),
+          .run { [state] send in
+            await speechSynthesizer.speak(text, state.selectedLangCode, state.speechRate)
+            await send(.view(.speechDidFinish))
+          }
+        )
 
       case .view(.stopSpeaking):
         state.speakingItemId = nil
@@ -154,6 +172,9 @@ public struct LiveTranslation: Sendable {
 
       case .view(.speechDidFinish):
         state.speakingItemId = nil
+        if state.isAutoReadEnabled {
+          return .send(.autoReadNextItem)
+        }
         return .none
 
       case .storeStateUpdated(let storeState):
@@ -163,12 +184,17 @@ public struct LiveTranslation: Sendable {
         state.isConnected = storeState.isConnected
         state.roomTitle = storeState.roomTitle
         state.lastErrorMessage = storeState.isConnected ? nil : storeState.lastErrorMessage
+        var effects: [Effect<Action>] = []
         if storeState.supportLanguages != previousLanguages
           && !storeState.supportLanguages.isEmpty
         {
-          return .send(.validateSelectedLangCode(storeState.supportLanguages.map(\.languageCode)))
+          effects.append(
+            .send(.validateSelectedLangCode(storeState.supportLanguages.map(\.languageCode))))
         }
-        return .none
+        if state.isAutoReadEnabled {
+          effects.append(.send(.autoReadNextItem))
+        }
+        return effects.isEmpty ? .none : .concatenate(effects)
 
       case .validateSelectedLangCode(let langCodes):
         let currentCode = state.selectedLangCode
@@ -184,6 +210,55 @@ public struct LiveTranslation: Sendable {
           }
         }
         return .none
+
+      case .view(.setAutoReadEnabled(let enabled)):
+        state.$isAutoReadEnabled.withLock { $0 = enabled }
+        if !enabled {
+          let wasAutoReading = state.isAutoReading
+          state.isAutoReading = false
+          if wasAutoReading {
+            return .merge(
+              .cancel(id: autoReadTaskId),
+              .run { _ in await speechSynthesizer.stop() }
+            )
+          }
+          return .cancel(id: autoReadTaskId)
+        }
+        return .send(.autoReadNextItem)
+
+      case .autoReadNextItem:
+        guard state.isAutoReadEnabled else { return .none }
+        guard state.speakingItemId == nil else { return .none }
+        guard !state.isAutoReading else { return .none }
+
+        let unreadItems: [ChatItemEntity]
+        if let lastId = state.lastAutoReadItemId,
+          let lastIndex = state.chatList.firstIndex(where: { $0.id == lastId })
+        {
+          unreadItems = Array(
+            state.chatList.suffix(from: state.chatList.index(after: lastIndex))
+          ).filter { !$0.isRealTime }
+        } else {
+          // First time: only read the latest confirmed item
+          unreadItems = Array(state.chatList.suffix(1).filter { !$0.isRealTime })
+        }
+
+        guard let nextItem = unreadItems.first else { return .none }
+
+        state.isAutoReading = true
+        state.lastAutoReadItemId = nextItem.id
+        let text = nextItem.textForTr.isEmpty ? nextItem.text : nextItem.textForTr
+        let langCode = state.selectedLangCode
+        let rate = state.speechRate
+
+        return .run { send in
+          await speechSynthesizer.speak(text, langCode, rate)
+          await send(.autoReadDidFinish)
+        }.cancellable(id: autoReadTaskId, cancelInFlight: false)
+
+      case .autoReadDidFinish:
+        state.isAutoReading = false
+        return .send(.autoReadNextItem)
 
       case .binding:
         return .none
@@ -266,11 +341,13 @@ public struct LiveTranslationView: View {
         send(.onAppear)
       }
       .navigationTitle(Text("Live translation", bundle: .module))
-      .safeAreaInset(edge: .bottom) {
-        if store.isShowingSpeedControl {
+      #if !os(macOS) && !os(visionOS)
+        .sheet(isPresented: $store.isShowingSpeedControl) {
           speedControlView
+          .presentationDetents([.height(180)])
+          .presentationDragIndicator(.visible)
         }
-      }
+      #endif
       .toolbar {
         if !store.isConnected {
           ToolbarItem(placement: .navigation) {
@@ -298,6 +375,12 @@ public struct LiveTranslationView: View {
             } label: {
               Image(systemName: "speedometer")
             }
+            #if os(macOS) || os(visionOS)
+              .popover(isPresented: $store.isShowingSpeedControl) {
+                speedControlView
+                .frame(width: 280)
+              }
+            #endif
             Button {
               send(.setSelectedLanguageSheet(!store.isSelectedLanguageSheet))
             } label: {
@@ -336,7 +419,23 @@ public struct LiveTranslationView: View {
 
   @ViewBuilder
   var speedControlView: some View {
-    VStack(spacing: 8) {
+    VStack(spacing: 12) {
+      Toggle(
+        isOn: Binding(
+          get: { store.isAutoReadEnabled },
+          set: { send(.setAutoReadEnabled($0)) }
+        )
+      ) {
+        Label {
+          Text("Auto-Read", bundle: .module)
+        } icon: {
+          Image(systemName: "headphones")
+        }
+        .font(.subheadline)
+      }
+
+      Divider()
+
       HStack {
         Text("Speech Speed", bundle: .module)
           .font(.subheadline)
@@ -355,7 +454,6 @@ public struct LiveTranslationView: View {
       )
     }
     .padding()
-    .background(.regularMaterial)
   }
 
   private var speedLabel: String {
@@ -399,7 +497,7 @@ public struct LiveTranslationView: View {
           )
         }
         .padding()
-        .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 16))
+        .glassEffectIfAvailable(item.isRealTime ? .clear : .regular, in: .rect(cornerRadius: 16))
         .onAppear {
           guard item == store.chatList.last else { return }
           send(.setShowingLastChat(true))
@@ -445,6 +543,12 @@ extension SharedKey where Self == AppStorageKey<String> {
   }
 }
 
+extension SharedKey where Self == AppStorageKey<Bool> {
+  static var isAutoReadEnabled: Self {
+    appStorage("isAutoReadEnabled")
+  }
+}
+
 // MARK: - Transcript Window View
 
 public struct TranscriptWindowView: View {
@@ -477,7 +581,8 @@ public struct TranscriptWindowView: View {
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 24)
             .padding(.vertical, 16)
-            .glassEffectIfAvailable(.regular, in: .rect(cornerRadius: 20))
+            .glassEffectIfAvailable(
+              item.isRealTime ? .clear : .regular, in: .rect(cornerRadius: 20))
         }
         .animation(.easeInOut(duration: 0.3), value: store.chatList.last?.id)
       }
