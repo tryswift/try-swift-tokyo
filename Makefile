@@ -53,13 +53,12 @@ android-skipstone-setup:
 	fi
 
 android-run: android-build android-emulator android-skipstone-setup
-	cd $(SKIPSTONE_DIR) && gradle :app:installDebug
-	adb shell am start -n $(ANDROID_ACTIVITY)
+	cd $(SKIPSTONE_DIR) && ANDROID_SERIAL=$$(adb devices | grep 'emulator' | head -1 | cut -f1) gradle :app:installDebug
+	adb -e shell am start -n $(ANDROID_ACTIVITY)
 
 android-run-device: android-build android-skipstone-setup
 	@DEVICE=$$(adb devices | grep -v emulator | grep 'device$$' | head -1 | cut -f1); \
 	if [ -z "$$DEVICE" ]; then echo "No physical device found. Connect via USB or adb connect." && exit 1; fi; \
-	echo "Installing to device: $$DEVICE"
-	cd $(SKIPSTONE_DIR) && gradle :app:installDebug
-	@DEVICE=$$(adb devices | grep -v emulator | grep 'device$$' | head -1 | cut -f1); \
+	echo "Installing to device: $$DEVICE"; \
+	cd $(SKIPSTONE_DIR) && ANDROID_SERIAL=$$DEVICE gradle :app:installDebug && \
 	adb -s $$DEVICE shell am start -n $(ANDROID_ACTIVITY)
