@@ -56,7 +56,7 @@ public final class LiveTranslationViewModel {
   public var messagesType: String = ""
 
   #if SKIP
-    private let scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private var scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private var chatJob: Job? = nil
     private var connectionStateJob: Job? = nil
     private var languagesJob: Job? = nil
@@ -76,6 +76,11 @@ public final class LiveTranslationViewModel {
     #if SKIP
       // Guard against duplicate connections
       if chatJob != nil { return }
+
+      // Recreate scope if it was cancelled by a previous cleanup()
+      if scope.coroutineContext[Job.Key]?.isActive != true {
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+      }
 
       let vm = self
 

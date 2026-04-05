@@ -1,1 +1,8 @@
 # Skip configuration for SponsorFeature module
+
+build:
+  contents:
+    - block: 'android'
+      contents:
+        - 'sourceSets.getByName("main").assets.srcDir(file("../../../../../../../../Sources/SponsorFeature/Resources"))'
+        - 'sourceSets.getByName("main").assets.srcDir(file("../../../../../../../../Sources/SponsorFeature/AndroidAssets"))'

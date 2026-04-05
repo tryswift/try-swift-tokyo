@@ -1,1 +1,8 @@
 # Skip configuration for ScheduleFeature module
+
+build:
+  contents:
+    - block: 'android'
+      contents:
+        - 'sourceSets.getByName("main").assets.srcDir(file("../../../../../../../../Sources/ScheduleFeature/Resources"))'
+        - 'sourceSets.getByName("main").assets.srcDir(file("../../../../../../../../Sources/ScheduleFeature/AndroidAssets"))'

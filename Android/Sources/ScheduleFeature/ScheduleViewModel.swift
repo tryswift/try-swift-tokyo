@@ -5,6 +5,17 @@ import SkipModel
 // MARK: - API Configuration
 
 private let apiBaseURLString = "https://tryswift-cfp-api.fly.dev/api/v1"
+private let resourceBaseURLString =
+  "https://raw.githubusercontent.com/tryswift/try-swift-tokyo/main/DataClient/Sources/DataClient/Resources"
+
+private func androidAssetBundle() -> Bundle? {
+  #if SKIP
+    guard let rootURL = URL(string: "asset:/") else { return nil }
+    return Bundle(url: rootURL)
+  #else
+    return nil
+  #endif
+}
 
 // MARK: - Device Identifier
 
@@ -84,6 +95,7 @@ public final class ScheduleViewModel {
   // Favorites
   public var favoriteProposalIds: Set<String> = []
   public var favoriteCounts: [String: Int] = [:]
+  private var favoritesLoaded = false
 
   // Feedback
   public var feedbackText: String = ""
@@ -130,19 +142,22 @@ public final class ScheduleViewModel {
   public init() {}
 
   public func loadSchedules() {
+    guard day1 == nil else { return }
     isLoading = true
     errorMessage = nil
 
-    do {
-      day1 = try loadConference(fileName: "\(selectedYear)-day1")
-      day2 = try? loadConference(fileName: "\(selectedYear)-day2")
-      day3 = try? loadConference(fileName: "\(selectedYear)-day3")
-    } catch {
-      errorMessage = error.localizedDescription
+    let year = selectedYear
+    Task {
+      do {
+        day1 = try await loadConference(fileName: "\(year)-day1")
+        day2 = try? await loadConference(fileName: "\(year)-day2")
+        day3 = try? await loadConference(fileName: "\(year)-day3")
+      } catch {
+        errorMessage = error.localizedDescription
+      }
+      isLoading = false
+      startTimer()
     }
-
-    isLoading = false
-    startTimer()
   }
 
   private func startTimer() {
@@ -167,28 +182,34 @@ public final class ScheduleViewModel {
 
   public func loadAllSessions() {
     guard allSearchableSessions.isEmpty else { return }
-    var results: [SearchableSession] = []
-    for year in ScheduleViewModel.availableYears {
-      for dayNum in 1...3 {
-        let fileName = "\(year)-day\(dayNum)"
-        guard let conference = try? loadConference(fileName: fileName) else { continue }
-        for schedule in conference.schedules {
-          for session in schedule.sessions {
-            guard session.description != nil else { continue }
-            let corpus = ScheduleViewModel.buildSearchCorpus(session: session)
-            results.append(
-              SearchableSession(
-                year: year, session: session, searchCorpus: corpus))
+    Task {
+      var results: [SearchableSession] = []
+      for year in ScheduleViewModel.availableYears {
+        for dayNum in 1...3 {
+          let fileName = "\(year)-day\(dayNum)"
+          guard let conference = try? await loadConference(fileName: fileName) else {
+            continue
+          }
+          for schedule in conference.schedules {
+            for session in schedule.sessions {
+              guard session.description != nil else { continue }
+              let corpus = ScheduleViewModel.buildSearchCorpus(session: session)
+              results.append(
+                SearchableSession(
+                  year: year, session: session, searchCorpus: corpus))
+            }
           }
         }
       }
+      allSearchableSessions = results
     }
-    allSearchableSessions = results
   }
 
   // MARK: - Favorites
 
   public func loadFavorites() {
+    guard !favoritesLoaded else { return }
+    favoritesLoaded = true
     Task {
       do {
         guard
@@ -344,11 +365,22 @@ public final class ScheduleViewModel {
     return parts.joined(separator: " ").lowercased()
   }
 
-  private func loadConference(fileName: String) throws -> Conference {
-    guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else {
+  private func loadConference(fileName: String) async throws -> Conference {
+    let data: Data
+    if let url = Bundle.module.url(forResource: fileName, withExtension: "json") {
+      data = try Data(contentsOf: url)
+    } else if
+      let assetBundle = androidAssetBundle(),
+      let assetURL = assetBundle.url(forResource: fileName, withExtension: "json")
+    {
+      data = try Data(contentsOf: assetURL)
+    } else if let remoteURL = URL(string: "\(resourceBaseURLString)/\(fileName).json") {
+      let (remoteData, _) = try await URLSession.shared.data(from: remoteURL)
+      data = remoteData
+    } else {
       throw DataError.fileNotFound(fileName)
     }
-    let data = try Data(contentsOf: url)
+
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .iso8601
     decoder.keyDecodingStrategy = .convertFromSnakeCase

@@ -43,9 +43,17 @@ public struct SponsorSectionView: View {
 
   public var body: some View {
     VStack(spacing: 16) {
-      Text(plan.rawValue.capitalized)
-        .font(Font.title2.bold())
-        .frame(maxWidth: CGFloat.infinity, alignment: Alignment.leading)
+      HStack {
+        Text(plan.rawValue.capitalized)
+          .font(Font.title2.bold())
+        Spacer()
+        Text("\(sponsors.count)")
+          .font(Font.caption.bold())
+          .foregroundStyle(Color.secondary)
+          .padding(.horizontal, 10)
+          .padding(.vertical, 6)
+          .background(Color.secondary.opacity(0.12), in: Capsule())
+      }
 
       LazyVGrid(columns: gridColumns, spacing: 16) {
         ForEach(sponsors) { sponsor in
@@ -79,19 +87,62 @@ public struct SponsorCardView: View {
   }
 
   public var body: some View {
-    VStack {
-      RoundedRectangle(cornerRadius: 8)
-        .fill(Color.secondary.opacity(0.1))
-        .aspectRatio(1.778, contentMode: ContentMode.fit)
-        .overlay(alignment: Alignment.center) {
-          if let name = sponsor.name {
-            Text(name)
-              .font(Font.caption)
-              .foregroundStyle(Color.secondary)
-              .multilineTextAlignment(TextAlignment.center)
-              .padding(8)
-          }
+    ZStack {
+      RoundedRectangle(cornerRadius: 20)
+        .fill(Color.white)
+        .shadow(color: Color.black.opacity(0.08), radius: 14, x: 0, y: 6)
+
+      VStack(spacing: 10) {
+        ModuleImageView(imageName: sponsor.imageName, contentMode: .fit) {
+          sponsorPlaceholder
         }
+        .frame(maxWidth: .infinity, minHeight: 56, maxHeight: 72)
+
+        if let name = sponsor.name {
+          Text(name)
+            .font(Font.caption.weight(.semibold))
+            .foregroundStyle(Color.secondary)
+            .lineLimit(1)
+            .minimumScaleFactor(0.7)
+        }
+      }
+      .padding(12)
+    }
+    .frame(maxWidth: .infinity, minHeight: 112)
+  }
+
+  private var sponsorInitials: String {
+    guard let name = sponsor.name?.trimmingCharacters(in: .whitespacesAndNewlines),
+      !name.isEmpty
+    else {
+      return String(sponsor.imageName.prefix(2)).uppercased()
+    }
+    let words = name.split(separator: " ")
+    if words.count >= 2 {
+      let first = words[0].prefix(1)
+      let second = words[1].prefix(1)
+      return String(first + second).uppercased()
+    }
+    return String(name.prefix(2)).uppercased()
+  }
+
+  private var sponsorPlaceholder: some View {
+    ZStack {
+      RoundedRectangle(cornerRadius: 16)
+        .fill(
+          LinearGradient(
+            colors: [
+              Color(red: 1.0, green: 0.61, blue: 0.35).opacity(0.18),
+              Color(red: 0.92, green: 0.33, blue: 0.34).opacity(0.14),
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+          )
+        )
+
+      Text(sponsorInitials)
+        .font(Font.title2.bold())
+        .foregroundStyle(Color(red: 0.92, green: 0.33, blue: 0.34))
     }
   }
 }

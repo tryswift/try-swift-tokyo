@@ -9,10 +9,10 @@ let package = Package(
     .library(name: "AndroidApp", type: .dynamic, targets: ["AndroidApp"])
   ],
   dependencies: [
-    .package(url: "https://source.skip.tools/skip.git", from: "1.2.0"),
-    .package(url: "https://source.skip.tools/skip-ui.git", from: "1.0.0"),
-    .package(url: "https://source.skip.tools/skip-foundation.git", from: "1.0.0"),
-    .package(url: "https://source.skip.tools/skip-model.git", from: "1.0.0"),
+    .package(url: "https://source.skip.tools/skip.git", from: "1.8.2"),
+    .package(url: "https://source.skip.tools/skip-ui.git", from: "1.51.0"),
+    .package(url: "https://source.skip.tools/skip-foundation.git", from: "1.3.16"),
+    .package(url: "https://source.skip.tools/skip-model.git", from: "1.7.2"),
     .package(name: "SharedModels", path: "../SharedModels"),
   ],
   targets: [
@@ -47,6 +47,10 @@ let package = Package(
         .product(name: "SkipFoundation", package: "skip-foundation"),
         .product(name: "SkipModel", package: "skip-model"),
       ],
+      resources: [
+        .process("Resources"),
+        .copy("AndroidAssets"),
+      ],
       plugins: [.plugin(name: "skipstone", package: "skip")]
     ),
     .target(
@@ -56,6 +60,10 @@ let package = Package(
         .product(name: "SkipUI", package: "skip-ui"),
         .product(name: "SkipFoundation", package: "skip-foundation"),
         .product(name: "SkipModel", package: "skip-model"),
+      ],
+      resources: [
+        .process("Resources"),
+        .copy("AndroidAssets"),
       ],
       plugins: [.plugin(name: "skipstone", package: "skip")]
     ),
@@ -76,6 +84,9 @@ let package = Package(
         .product(name: "SkipUI", package: "skip-ui"),
         .product(name: "SkipFoundation", package: "skip-foundation"),
         .product(name: "SkipModel", package: "skip-model"),
+      ],
+      resources: [
+        .process("Resources")
       ],
       plugins: [.plugin(name: "skipstone", package: "skip")]
     ),

@@ -1,0 +1,376 @@
+{
+  "id": 3,
+  "title": "Day 3",
+  "title_ja": "3日目",
+  "date": "2016-03-04T09:00:00+09:00",
+  "schedules": [
+    {
+      "id": 1,
+      "time": "2016-03-04T08:30:00+09:00",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Registration & Breakfast",
+          "title_ja": "受付・朝食"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2016-03-04T09:45:00+09:00",
+      "sessions": [
+        {
+          "id": 2,
+          "title": "Opening Remarks",
+          "title_ja": "開会"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2016-03-04T10:00:00+09:00",
+      "sessions": [
+        {
+          "id": 3,
+          "title": "Motivation-Based Library Abstraction",
+          "title_ja": "モチベーションに基づくライブラリの抽象化",
+          "description": "Designing good library abstractions is hard. In this talk, we will explore a motivation-based approach to library design in Swift, where the abstraction level is driven by the actual needs and motivations of the library's users rather than theoretical purity.",
+          "description_ja": "良いライブラリの抽象化を設計することは困難です。このトークでは、理論的な純粋さではなく、ライブラリのユーザーの実際のニーズとモチベーションによって抽象化レベルが決定される、モチベーションに基づくSwiftのライブラリ設計アプローチを探ります。",
+          "speakers": [
+            {
+              "name": "Hiroki Kato",
+              "image_name": "hiroki_kato",
+              "bio": "Software Engineer, working at Hatena in Kyoto. I started my career as a developer of OS X/iOS apps when I was a student. I'm loving Apple, Cocoa (touch), Objective-C and Swift.",
+              "bio_ja": "はてなのソフトウェアエンジニアです。学生時代にMac/iOSアプリ開発からエンジニアとしてのキャリアをスタートしました。Apple、Cocoa (touch), Objective-C そして Swift が大好きです。",
+              "links": [
+                {
+                  "name": "@cockscomb",
+                  "url": "https://x.com/cockscomb"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2016-03-04T10:30:00+09:00",
+      "sessions": [
+        {
+          "id": 4,
+          "title": "Soaring Swiftly -- Server Side Swift",
+          "title_ja": "颯爽とSwift — サーバーサイドSwift",
+          "description": "Swift is no longer limited to Apple platforms. In this talk, we will explore the state of server-side Swift, looking at the available frameworks and tools for building web applications and APIs in Swift, and discuss the advantages and challenges of using Swift on the server.",
+          "description_ja": "SwiftはもはやAppleプラットフォームに限定されません。このトークでは、サーバーサイドSwiftの現状を探り、SwiftでWebアプリケーションやAPIを構築するための利用可能なフレームワークとツールを見て、サーバーでSwiftを使用する利点と課題について議論します。",
+          "speakers": [
+            {
+              "name": "Caesar Wirth",
+              "image_name": "caesar_wirth",
+              "bio": "Caesar Wirth is software engineer at CyberAgent, Inc. where he's made a number of iOS apps involving e-commerce, social networks, and streaming video. Just like Swift is cross-platform, he's also written Android apps and backend servers. When not writing code, you can often find him hiking, bouldering, or scouting out delicious Taco Rice around Tokyo.",
+              "bio_ja": "CyberAgent, Inc.のソフトウェアエンジニアで、eコマース、ソーシャルネットワーク、ストリーミングビデオに関するiOSアプリを開発しています。Swiftがクロスプラットフォームであるように、AndroidアプリやバックエンドサーバーもSwiftで書いています。コードを書いていないときは、ハイキング、ボルダリング、東京で美味しいタコライスを探しています。",
+              "links": [
+                {
+                  "name": "@cjwirth",
+                  "url": "https://x.com/cjwirth"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2016-03-04T11:00:00+09:00",
+      "sessions": [
+        {
+          "id": 5,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2016-03-04T11:30:00+09:00",
+      "sessions": [
+        {
+          "id": 6,
+          "title": "Real World Mocking in Swift",
+          "title_ja": "実践的なSwiftのモック",
+          "description": "Mocks allow us to write fast tests that do not mess with production data. Without OCMock, we will need to write our own mocks, but it does not have to be much work. In this talk Veronica Ray looks at the techniques for practical mocking in Swift that allow us to create simple, easy-to-maintain mocks for the most important parts of our codebase.",
+          "description_ja": "モックはテスト可能なコードを書くための不可欠なテクニックです。このトークでは、プロトコルベースのモック、依存性注入、外部サービスやAPIとやりとりするコードをテストするための戦略をカバーし、Swiftにおけるモックの実践的なアプローチを探ります。",
+          "youtube_video_id": "AL118shRlYY",
+          "speakers": [
+            {
+              "name": "Veronica Ray",
+              "image_name": "veronica_ray",
+              "bio": "Veronica Ray is a software engineer at LinkedIn on the Video team. Once she rode her bike between two moose. She blogs on Medium and is on Twitter as @nerdonica.",
+              "bio_ja": "LinkedInのビデオチームに所属するソフトウェアエンジニアです。以前自転車でヘラジカの間を通り抜けたことがあります。MediumのブログとTwitterでは@nerdonicaとして活動しています。",
+              "links": [
+                {
+                  "name": "@nerdonica",
+                  "url": "https://x.com/nerdonica"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2016-03-04T12:00:00+09:00",
+      "sessions": [
+        {
+          "id": 7,
+          "title": "Hipster Swift",
+          "title_ja": "ヒップスターSwift",
+          "description": "At a high level, Swift is amazing and brings so much to us developers to use on a daily basis. However, there are many little-known things in Swift that can save us time and energy if we memorize a few key features. This talk will cover many features that look weird and translates them for beginners and experts alike to understand. Armed with this information, developers should hopefully be able to save lots of time decrypting the weird things they see on a day-to-day basis!",
+          "description_ja": "Swiftには、コードをより表現力豊かでエレガントにする多くの隠れた宝石やあまり知られていない機能があります。このトークでは、高度なパターンマッチングからジェネリクスや演算子オーバーロードの巧みな使用まで、Swiftのより知られていないクリエイティブな使い方を探ります。",
+          "youtube_video_id": "5kQYDXr0HSw",
+          "speakers": [
+            {
+              "name": "Hector Matos",
+              "image_name": "hector_matos",
+              "bio": "Raised by llamas in the great state of Texas, Hector grew to be an avid couch potato who likes spending his precious couch time playing the Legend of Zelda or yelling at the TV whilst watching Game of Thrones. While he isn't sitting at home vegging out, blogging or working on KrakenDev.io, you can find him sitting at the office writing iOS & Android mobile apps for Capital One. With a particular penchant for great mobile UI/UX, Hector writes the code that makes the world go round. Boris, ya tu sabes.",
+              "bio_ja": "素晴らしい州であるテキサスでラマによって育てられ、ゼルダの伝説をしたり、Game of Thronesを見ながらテレビの前で叫んだりするカウチポテトとして成長しました。家では座ってのんびり過ごさず、KrakenDev.ioでブログを書いている一方、Capital Oneのオフィスではデスクに座ってiOSやAndroidのモバイルアプリの開発をしています。モバイルのUI/UXに強いこだわりをもっており、彼の書くコードは世界をよくしています。Boris, ya tu sabes.",
+              "links": [
+                {
+                  "name": "@allonsykraken",
+                  "url": "https://x.com/allonsykraken"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2016-03-04T12:30:00+09:00",
+      "sessions": [
+        {
+          "id": 8,
+          "title": "Advanced Image Processing with Core Image",
+          "title_ja": "Core Imageによる高度な画像処理",
+          "description": "Core Image provides a powerful pipeline for image processing on iOS and macOS. In this talk, we will explore advanced techniques for using Core Image filters, building custom filter chains, and leveraging the GPU for real-time image processing in Swift applications.",
+          "description_ja": "Core ImageはiOSとmacOSで強力な画像処理パイプラインを提供しています。このトークでは、Core Imageフィルターの使用、カスタムフィルターチェーンの構築、Swiftアプリケーションでのリアルタイム画像処理のためのGPUの活用に関する高度なテクニックを探ります。",
+          "speakers": [
+            {
+              "name": "Simon Gladman",
+              "image_name": "simon_gladman",
+              "bio": "An early champion of Apple's Swift language, Simon's blog, http://flexmonkey.blogspot.co.uk, has become a popular source for articles exploring and experimenting with iOS technology. Simon has published several iOS apps including Nodality, a node based image editing app for iPads. In his spare time, his coding takes a more creative direction where his interests include topics such as physics and particle simulations, image processing and novel user interaction patterns.",
+              "bio_ja": "Simonは初期のSwift言語のチャンピオンです。彼のブログ(http://flexmonkey.blogspot.co.uk)はiOSのテクノロジーを探求・検証する際の人気のソースになっています。いくつものiOSアプリをリリースしており、その中にnode.jsベースのiPad用画像処理アプリであるNodalityも含まれています。余暇は、物理・粒子シミュレーション・画像処理・今までにないユーザインタラクションといったよりクリエイティブな方向性の取り組みをしています。",
+              "links": [
+                {
+                  "name": "@FlexMonkey",
+                  "url": "https://x.com/FlexMonkey"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2016-03-04T13:00:00+09:00",
+      "sessions": [
+        {
+          "id": 9,
+          "title": "Lunch",
+          "title_ja": "ランチ"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2016-03-04T14:30:00+09:00",
+      "sessions": [
+        {
+          "id": 10,
+          "title": "Train Your Swift: Computational Statistics in Swift Examples",
+          "title_ja": "Swiftを鍛えよう: 計算統計学",
+          "description": "Swift's ease of use and elegance of form make it perfect for math hobbyists looking to explore simple mathematical concepts. In this talk Diana Zmuda presents a statistical model to rank data, a bag-of-words model to classify new elements, and a Markov Chain algorithm to generate entirely new data points. Over the course of the session, she walks through a variety of examples of exciting formulas implemented entirely in Swift, building up to a program trained to sort, classify, and generate data.",
+          "description_ja": "Swiftはアプリを構築するためだけのものではなく、計算作業のための強力なツールにもなります。このトークでは、基本的な統計関数からモンテカルロシミュレーションや仮説検定などのより高度なテクニックまで、計算統計学にSwiftを使用する方法を探ります。",
+          "youtube_video_id": "bwDTziTY9UU",
+          "speakers": [
+            {
+              "name": "Diana Zmuda",
+              "image_name": "diana_zmuda",
+              "bio": "Diana is an iOS developer at thoughtbot. She co-wrote a book about building mobile apps in tandem with APIs called iOS on Rails. She's also an instructor for App Camp for Girls, a summer camp where young girls learn how to write software. Occasionally, she tweets iOS related puns @dazmuda.",
+              "bio_ja": "thoughtbotに所属しているiOSエンジニアです。iOS on Railsと呼ばれるAPIと連携するモバイルアプリ開発に関する書籍を共同執筆しました。また、App Camp for Girlsのインストラクターもしています。ときおり、iOS関連のジョークを@dazmudaにてツイートしています。",
+              "links": [
+                {
+                  "name": "@dazmuda",
+                  "url": "https://x.com/dazmuda"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "time": "2016-03-04T15:00:00+09:00",
+      "sessions": [
+        {
+          "id": 11,
+          "title": "xcodeless -- the build system",
+          "title_ja": "xcodeless — ビルドシステム",
+          "description": "Xcode is the standard tool for building iOS apps, but it is not the only option. In this talk, we will explore alternative build systems and tools for Swift development, discussing how to build Swift projects without relying on Xcode and the benefits of a more modular build process.",
+          "description_ja": "XcodeはiOSアプリを構築するための標準ツールですが、唯一の選択肢ではありません。このトークでは、Swift開発のための代替ビルドシステムとツールを探り、Xcodeに頼らずにSwiftプロジェクトを構築する方法と、よりモジュラーなビルドプロセスの利点について議論します。",
+          "speakers": [
+            {
+              "name": "Daniel Haight",
+              "image_name": "daniel_haight",
+              "bio": "Daniel is an iOS Developer, whenever he is not pretending to be one. He runs a small product consultancy - Many Things. He wears tight jeans and he is slowly becoming an expert at travel packing.",
+              "bio_ja": "iOSエンジニアです。そうではないふりをしますが。小さなプロダクトコンサルタント会社を経営しています。タイトなジーンズを着て、ゆっくりと旅行の荷造りのエキスパートになっています。",
+              "links": [
+                {
+                  "name": "@daniel1of1",
+                  "url": "https://x.com/daniel1of1"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "time": "2016-03-04T15:30:00+09:00",
+      "sessions": [
+        {
+          "id": 12,
+          "title": "10 Ways to Get Designers Into Your Swift Codebase",
+          "title_ja": "デザイナーをSwiftコードベースに引き込む10の方法",
+          "description": "The gap between design and development is a common challenge in app development. In this talk, we will explore ten practical ways to make your Swift codebase more accessible to designers, from Playgrounds and live previews to shared design tokens and collaborative workflows.",
+          "description_ja": "デザインと開発のギャップは、アプリ開発における一般的な課題です。このトークでは、PlaygroundsやライブプレビューからDデザイントークンの共有や協力的なワークフローまで、Swiftコードベースをデザイナーにとってよりアクセスしやすくする10の実践的な方法を探ります。",
+          "speakers": [
+            {
+              "name": "Helen Holmes",
+              "image_name": "helen_holmes",
+              "bio": "Helen is a designer who figures anyone can learn to program with the right support. A big proponent of making tech a healthy community for all, she helped found Women Who Code DC's chapter and has mentored at student hackathons all over the U.S. She's currently at Mozilla helping make devtools a little better for everyone.",
+              "bio_ja": "誰でも正しいサポートがあればプログラミングを学べると考えているデザイナーです。技術を全ての人に対して適切なコミュニティにすることの提唱者です。Women Who Code DC's chapterの設立に協力し、アメリカ全土で学生ハッカソンのメンターをしています。現在、Mozillaで開発ツールを誰にとってもより良くする仕事をしています。",
+              "links": [
+                {
+                  "name": "@helenvholmes",
+                  "url": "https://x.com/helenvholmes"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "time": "2016-03-04T16:00:00+09:00",
+      "sessions": [
+        {
+          "id": 13,
+          "title": "Break",
+          "title_ja": "休憩"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "time": "2016-03-04T16:30:00+09:00",
+      "sessions": [
+        {
+          "id": 14,
+          "title": "Parser Combinators in Swift",
+          "title_ja": "Swiftのパーサーコンビネーター",
+          "description": "Parser combinators are one of the most awesome functional techniques for parsing strings into trees, like constructing JSON. In this talk Yasuhiro Inami describes how they work by combining small parsers together to form more complex and practical ones.",
+          "description_ja": "パーサーコンビネーターは、小さく構成可能な部品からパーサーを構築するための強力な関数型プログラミングのテクニックです。このトークでは、Swiftでパーサーコンビネーターを実装し、柔軟で型安全なパースライブラリをゼロから構築する方法を探ります。",
+          "youtube_video_id": "6JLpO1RwPU8",
+          "speakers": [
+            {
+              "name": "Yasuhiro Inami",
+              "image_name": "yasuhiro_inami",
+              "bio": "Yasuhiro is an iOS developer at LINE Corporation. While creating iPhone apps such as messenger, camera, news app in his work, he also spends time on making open source projects, e.g. ReactKit and SwiftTask. He is a big fan of Apple, Swift, and Hearthstone. You can find him at Battle.net or GitHub: https://github.com/inamiy .",
+              "bio_ja": "LINEでiOSエンジニアをしています。業務ではメッセンジャー、カメラ、ニュースといったアプリ開発に関わる一方、プライベートではReactKitやSwiftTaskといったオープンソースプロジェクトにコントリビュートしています。Apple、SwiftそしてHearthstoneの大ファンです。Battle.netやGitHub: https://github.com/inamiy で出会うことができます。",
+              "links": [
+                {
+                  "name": "@inamiy",
+                  "url": "https://x.com/inamiy"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "time": "2016-03-04T17:00:00+09:00",
+      "sessions": [
+        {
+          "id": 15,
+          "title": "Contributing to Open Source Swift",
+          "title_ja": "オープンソースSwiftへのコントリビュート",
+          "description": "Do you want to contribute to Swift? Not sure how or where to begin? It can be overwhelming! In this talk Jesse will help you explore the different parts of Swift, see how the various Swift projects are related, discuss the skills you need to get started, and learn the best ways to get your first fix accepted.",
+          "description_ja": "Swiftはオープンソースであり、誰でも貢献できます。このトークでは、良いファーストイシューの見つけ方から、コントリビューションのワークフロー、レビュープロセス、そしてSwiftコミュニティがどのように運営されているかまで、Swiftプロジェクトへの貢献を始める方法を探ります。",
+          "youtube_video_id": "Ysa2n8ZX-YY",
+          "speakers": [
+            {
+              "name": "Jesse Squires",
+              "image_name": "jesse_squires",
+              "bio": "Jesse is a software developer who works on iOS at Instagram. He writes about Swift and Objective-C on his blog at jessesquires.com, and contributes to many open-source projects on GitHub. He loves running and learning new things, and is fueled primarily by black coffee and black metal.",
+              "bio_ja": "InstagramでiOSアプリを開発しているソフトウェアエンジニアです。jessesquires.comにてSwiftやObjective-Cに関するブログを書いています。Github上で多くのオープンソースプロジェクトにコントリビュートしています。走ることと新しいことを学ぶのが好きで、主にブラックコーヒーとブラックメタルによって元気になります。",
+              "links": [
+                {
+                  "name": "@jesse_squires",
+                  "url": "https://x.com/jesse_squires"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "time": "2016-03-04T17:30:00+09:00",
+      "sessions": [
+        {
+          "id": 16,
+          "title": "An Artsy Testing Tour",
+          "title_ja": "Artsyのテストツアー",
+          "description": "Testing is a critical part of building reliable software. In this talk, we will take a tour of the testing practices at Artsy, exploring how they test their Swift and Objective-C iOS applications, from unit tests and snapshot tests to integration testing and continuous deployment.",
+          "description_ja": "テストは信頼性の高いソフトウェアを構築する上で重要な部分です。このトークでは、Artsyのテストプラクティスのツアーを行い、ユニットテストやスナップショットテストからインテグレーションテストと継続的デプロイメントまで、SwiftとObjective-CのiOSアプリケーションをどのようにテストしているかを探ります。",
+          "speakers": [
+            {
+              "name": "Ash Furrow",
+              "image_name": "ash_furrow",
+              "bio": "Ash Furrow is a Canadian iOS developer and author, currently working at Artsy. He has published four books, built many apps, and is a contributor to the open source community. On his blog, he writes about a range of topics, from interesting programming to explorations of analogue film photography.",
+              "bio_ja": "iOSエンジニアおよび著者としてArtsyで働くカナダ人です。多くのアプリを開発し、これまで4冊の書籍を出版しています。また、オープンソースのコントリビューターとしてコミュニティに関わっています。ブログでは、興味深いプログラミングのネタからフィルムカメラにまでおよぶ様々なトピックを扱っています。",
+              "links": [
+                {
+                  "name": "@ashfurrow",
+                  "url": "https://x.com/ashfurrow"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "time": "2016-03-04T18:00:00+09:00",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "Closing",
+          "title_ja": "閉会"
+        }
+      ]
+    }
+  ]
+}

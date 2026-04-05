@@ -7,6 +7,10 @@ import SwiftUI
 public struct ScheduleScreen: View {
   @State private var viewModel = ScheduleViewModel()
 
+  private let screenBackground = Color(red: 0.95, green: 0.96, blue: 0.98)
+  private let cardBackground = Color.white
+  private let accentColor = Color(red: 0.11, green: 0.35, blue: 0.85)
+
   public init() {}
 
   public var body: some View {
@@ -68,6 +72,7 @@ public struct ScheduleScreen: View {
         }
       #endif
     }
+    .background(screenBackground)
     .onAppear {
       viewModel.loadSchedules()
       viewModel.loadAllSessions()
@@ -126,6 +131,7 @@ public struct ScheduleScreen: View {
         }
         .padding()
       }
+      .background(screenBackground)
     }
   }
 
@@ -154,8 +160,9 @@ public struct ScheduleScreen: View {
       }
       .frame(maxWidth: CGFloat.infinity, alignment: Alignment.leading)
     }
-    .background(Color.secondary.opacity(0.1))
-    .clipShape(RoundedRectangle(cornerRadius: 12))
+    .background(Color.white)
+    .clipShape(RoundedRectangle(cornerRadius: 20))
+    .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 4)
   }
 
   private func speakerNames(_ speakers: [Speaker]) -> String {
@@ -172,6 +179,8 @@ public struct ScheduleScreen: View {
   private var normalScheduleContent: some View {
     ScrollView {
       VStack(spacing: 16) {
+        scheduleHeader
+
         dayPicker
 
         if viewModel.isLoading {
@@ -185,7 +194,43 @@ public struct ScheduleScreen: View {
           conferenceList(conference: conference)
         }
       }
+      .padding(.top, 8)
     }
+    .background(screenBackground)
+  }
+
+  private var scheduleHeader: some View {
+    HStack(alignment: .top, spacing: 14) {
+      Image(systemName: "calendar.badge.clock")
+        .font(.title2)
+        .foregroundStyle(accentColor)
+        .frame(width: 44, height: 44)
+        .background(accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
+
+      VStack(alignment: .leading, spacing: 6) {
+        Text("Schedule")
+          .font(.title2.bold())
+        Text("try! Swift Tokyo \(viewModel.selectedYear)")
+          .font(.subheadline)
+          .foregroundStyle(.secondary)
+
+        if let conference = viewModel.currentConference {
+          Text(conference.date, style: .date)
+            .font(.footnote.weight(.semibold))
+            .foregroundStyle(accentColor)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 6)
+            .background(accentColor.opacity(0.10), in: Capsule())
+        }
+      }
+
+      Spacer()
+    }
+    .padding(18)
+    .background(cardBackground)
+    .clipShape(RoundedRectangle(cornerRadius: 20))
+    .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 3)
+    .padding(.horizontal)
   }
 
   // MARK: - Day Picker
@@ -200,21 +245,19 @@ public struct ScheduleScreen: View {
     }
     .pickerStyle(.segmented)
     .padding(Edge.Set.horizontal)
+    .tint(accentColor)
   }
 
   // MARK: - Conference List
 
   private func conferenceList(conference: Conference) -> some View {
     VStack(alignment: HorizontalAlignment.leading, spacing: 16) {
-      Text(conference.date, style: Text.DateStyle.date)
-        .font(Font.title2)
-        .padding(Edge.Set.horizontal)
-
       ForEach(Array(conference.schedules.enumerated()), id: \.element.time) { index, schedule in
         scheduleSection(schedule: schedule, isLive: viewModel.liveScheduleIndex == index)
       }
     }
-    .padding()
+    .padding(.horizontal)
+    .padding(.bottom, 20)
   }
 
   private func scheduleSection(schedule: SharedModels.Schedule, isLive: Bool) -> some View {
@@ -267,6 +310,10 @@ public struct ScheduleScreen: View {
         }
       }
     }
+    .padding(16)
+    .background(cardBackground)
+    .clipShape(RoundedRectangle(cornerRadius: 18))
+    .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 3)
   }
 
   // MARK: - Office Hour
@@ -307,8 +354,8 @@ public struct ScheduleScreen: View {
       }
     }
     .padding()
-    .background(Color.secondary.opacity(0.1))
-    .clipShape(RoundedRectangle(cornerRadius: 12))
+    .background(accentColor.opacity(0.08))
+    .clipShape(RoundedRectangle(cornerRadius: 16))
   }
 }
 

@@ -59,6 +59,8 @@ public struct VenueScreen: View {
     NavigationStack {
       ScrollView {
         VStack(spacing: 20) {
+          venueHeader
+
           transportPicker
 
           venueMapPlaceholder
@@ -71,8 +73,20 @@ public struct VenueScreen: View {
         }
         .padding()
       }
+      .background(Color(red: 0.98, green: 0.97, blue: 0.96))
       .navigationTitle("Venue")
     }
+  }
+
+  private var venueHeader: some View {
+    VStack(alignment: .leading, spacing: 8) {
+      Text("Tachikawa Stage Garden")
+        .font(Font.largeTitle.bold())
+      Text("3-3-20 Midoricho, Tachikawa City, Tokyo 190-0014")
+        .font(Font.subheadline)
+        .foregroundStyle(Color.secondary)
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
   }
 
   private var transportPicker: some View {
@@ -86,8 +100,17 @@ public struct VenueScreen: View {
 
   private var venueMapPlaceholder: some View {
     ZStack {
-      RoundedRectangle(cornerRadius: 12)
-        .fill(Color.gray.opacity(0.2))
+      RoundedRectangle(cornerRadius: 28)
+        .fill(
+          LinearGradient(
+            colors: [
+              Color(red: 0.90, green: 0.95, blue: 1.0),
+              Color(red: 0.98, green: 0.90, blue: 0.88),
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+          )
+        )
         .aspectRatio(1.6, contentMode: ContentMode.fit)
 
       VStack(spacing: 8) {
@@ -102,8 +125,9 @@ public struct VenueScreen: View {
           .font(Font.caption)
           .foregroundStyle(Color.secondary)
           .multilineTextAlignment(TextAlignment.center)
-          .padding(Edge.Set.horizontal)
+          .padding(.horizontal)
       }
+      .padding()
     }
   }
 
@@ -111,7 +135,10 @@ public struct VenueScreen: View {
     Button {
       openInMaps()
     } label: {
-      Label("Open in Maps", systemImage: "map")
+      Label("Open in Maps", systemImage: "location.fill")
+        .font(Font.body.weight(.semibold))
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 8)
     }
     .buttonStyle(.borderedProminent)
   }
@@ -148,8 +175,8 @@ public struct VenueScreen: View {
       }
     }
     .padding()
-    .background(Color.gray.opacity(0.1))
-    .clipShape(RoundedRectangle(cornerRadius: 12))
+    .background(Color.white)
+    .clipShape(RoundedRectangle(cornerRadius: 24))
   }
 
   private var venueInfoSection: some View {
@@ -168,8 +195,8 @@ public struct VenueScreen: View {
     }
     .frame(maxWidth: CGFloat.infinity, alignment: Alignment.leading)
     .padding()
-    .background(Color.gray.opacity(0.1))
-    .clipShape(RoundedRectangle(cornerRadius: 12))
+    .background(Color.white)
+    .clipShape(RoundedRectangle(cornerRadius: 24))
   }
 
   private func openInMaps() {

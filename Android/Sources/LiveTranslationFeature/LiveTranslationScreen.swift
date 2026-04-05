@@ -42,7 +42,6 @@ public struct LiveTranslationScreen: View {
       }
       .onDisappear {
         viewModel.disconnect()
-        viewModel.cleanup()
       }
       .onChange(of: scenePhase) { oldPhase, newPhase in
         switch newPhase {
