@@ -43,8 +43,7 @@ public final class AboutViewModel {
     let data: Data
     if let url = Bundle.module.url(forResource: "2026-organizers", withExtension: "json") {
       data = try Data(contentsOf: url)
-    } else if
-      let assetBundle = androidAssetBundle(),
+    } else if let assetBundle = androidAssetBundle(),
       let assetURL = assetBundle.url(forResource: "2026-organizers", withExtension: "json")
     {
       data = try Data(contentsOf: assetURL)

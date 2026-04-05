@@ -369,8 +369,7 @@ public final class ScheduleViewModel {
     let data: Data
     if let url = Bundle.module.url(forResource: fileName, withExtension: "json") {
       data = try Data(contentsOf: url)
-    } else if
-      let assetBundle = androidAssetBundle(),
+    } else if let assetBundle = androidAssetBundle(),
       let assetURL = assetBundle.url(forResource: fileName, withExtension: "json")
     {
       data = try Data(contentsOf: assetURL)

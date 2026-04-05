@@ -95,10 +95,10 @@ public struct SponsorsListView: View {
               Button {
                 send(.sponsorTapped(sponsor))
               } label: {
-                  Image(sponsor.imageName, bundle: .module)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 300)
+                Image(sponsor.imageName, bundle: .module)
+                  .resizable()
+                  .aspectRatio(contentMode: .fit)
+                  .frame(maxWidth: 300)
                   .padding()
               }
               #if os(macOS)
