@@ -14,6 +14,8 @@ format:
 		./Website/
 
 SKIPSTONE_DIR = Android/.build/plugins/outputs/android/AndroidApp/destination/skipstone
+ANDROID_APP_ID = tokyo.tryswift.android
+ANDROID_ACTIVITY = $(ANDROID_APP_ID)/.MainActivity
 
 android-build:
 	cd Android && INCLUDE_SKIP=1 swift build
@@ -30,7 +32,7 @@ android-emulator:
 		adb shell 'while [ "$$(getprop sys.boot_completed)" != "1" ]; do sleep 1; done'; \
 	fi
 
-android-run: android-build android-emulator
+android-skipstone-setup:
 	@rm -rf $(SKIPSTONE_DIR)/app
 	@cp -R Android/app-wrapper $(SKIPSTONE_DIR)/app
 	@chmod u+w $(SKIPSTONE_DIR)/settings.gradle.kts
@@ -49,5 +51,14 @@ android-run: android-build android-emulator
 			echo "Error: Android SDK not found. Set ANDROID_HOME." >&2; exit 1; \
 		fi; \
 	fi
-	cd $(SKIPSTONE_DIR) && gradle :app:installDebug
-	adb shell am start -n tokyo.tryswift.android/.MainActivity
+
+android-run: android-build android-emulator android-skipstone-setup
+	cd $(SKIPSTONE_DIR) && ANDROID_SERIAL=$$(adb devices | grep 'emulator' | head -1 | cut -f1) gradle :app:installDebug
+	adb -e shell am start -n $(ANDROID_ACTIVITY)
+
+android-run-device: android-build android-skipstone-setup
+	@DEVICE=$$(adb devices | grep -v emulator | grep 'device$$' | head -1 | cut -f1); \
+	if [ -z "$$DEVICE" ]; then echo "No physical device found. Connect via USB or adb connect." && exit 1; fi; \
+	echo "Installing to device: $$DEVICE"; \
+	cd $(SKIPSTONE_DIR) && ANDROID_SERIAL=$$DEVICE gradle :app:installDebug && \
+	adb -s $$DEVICE shell am start -n $(ANDROID_ACTIVITY)

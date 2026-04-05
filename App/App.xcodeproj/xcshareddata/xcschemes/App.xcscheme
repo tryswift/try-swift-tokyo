@@ -58,7 +58,7 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "LIVE_TRANSLATION_KEY"
-            value = "490294"
+            value = "754036"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
