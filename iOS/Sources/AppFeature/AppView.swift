@@ -197,7 +197,7 @@ public struct AppReducer {
             favoriteCount: let favoriteCount, relatedSessions: let relatedSessions,
             tagCandidates: let tagCandidates))
       ):
-        guard let description = session.description else {
+        guard let description = session.localizedDescription else {
           return .none
         }
         state.detailColumn = .scheduleDetail(
@@ -255,7 +255,7 @@ extension AppReducer {
     year: ConferenceYear,
     state: State
   ) -> RelatedSessionNavigation? {
-    guard session.description != nil else { return nil }
+    guard session.localizedDescription != nil else { return nil }
     if let videoId = session.youtubeVideoId {
       let videoMeta =
         state.schedule.videoMetadata[videoId]

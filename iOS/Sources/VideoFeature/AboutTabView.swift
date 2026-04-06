@@ -29,7 +29,7 @@ struct AboutTabView: View {
 
   @ViewBuilder
   private var descriptionSection: some View {
-    if let description = session.description {
+    if let description = session.localizedDescription {
       VStack(alignment: .leading, spacing: 8) {
         VStack(alignment: .leading, spacing: 4) {
           Text(session.localizedTitle)
@@ -38,7 +38,7 @@ struct AboutTabView: View {
             .font(.subheadline)
             .foregroundStyle(.secondary)
         }
-        Text(session.localizedDescription ?? description)
+        Text(description)
           .font(.body)
       }
     }

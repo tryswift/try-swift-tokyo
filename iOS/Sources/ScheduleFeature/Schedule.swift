@@ -231,7 +231,7 @@ public struct Schedule {
           await send(.favoriteToggled(proposalId, wasFavorite, previousCount))
         }
       case .view(.disclosureTapped(let session)):
-        guard session.description != nil else {
+        guard session.localizedDescription != nil else {
           return .none
         }
         if let videoId = session.youtubeVideoId {
@@ -375,7 +375,7 @@ public struct Schedule {
           title: session.localizedTitle,
           description: session.localizedDescription!,
           requirements: session.localizedRequirements,
-          speakers: session.speakers!,
+          speakers: session.speakers ?? [],
           relatedSessions: relatedSessions,
           tagCandidates: tagCandidates
         )
@@ -433,7 +433,7 @@ public struct Schedule {
             title: session.localizedTitle,
             description: session.localizedDescription!,
             requirements: session.localizedRequirements,
-            speakers: session.speakers!,
+            speakers: session.speakers ?? [],
             relatedSessions: relatedSessions,
             tagCandidates: tagCandidates
           ))
@@ -919,7 +919,9 @@ public struct ScheduleView: View {
             .foregroundStyle(labelColor)
             .multilineTextAlignment(.leading)
         }
-        if session.summary != nil {
+        if session.localizedSummary != nil
+          || (session.title == "Office hour" && session.speakers != nil)
+        {
           if session.title == "Office hour", let speakers = session.speakers {
             let description = officeHourDescription(speakers: speakers)
             Text(description)

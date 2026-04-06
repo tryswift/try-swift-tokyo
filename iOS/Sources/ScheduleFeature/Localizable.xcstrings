@@ -338,7 +338,14 @@
       }
     },
     "Select a Session" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セッションを選択"
+          }
+        }
+      }
     },
     "Share your thoughts..." : {
       "localizations" : {

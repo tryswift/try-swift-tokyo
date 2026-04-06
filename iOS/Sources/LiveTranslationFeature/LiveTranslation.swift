@@ -386,7 +386,13 @@ public struct LiveTranslationView: View {
                 systemName: store.isTranscriptWindowOpen
                   ? "rectangle.on.rectangle.slash" : "rectangle.on.rectangle")
             }
-            .accessibilityLabel(Text("Open transcript window", bundle: .module))
+            .accessibilityLabel(
+              Text(
+                store.isTranscriptWindowOpen
+                  ? "Close transcript window" : "Open transcript window",
+                bundle: .module
+              )
+            )
           }
         #endif
         ToolbarItem(placement: .primaryAction) {
