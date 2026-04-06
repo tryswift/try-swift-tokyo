@@ -36,6 +36,12 @@ export const test = base.extend<{ roomPage: Page; hostPage: Page }>({
 export { expect };
 ```
 
+Save this snippet as a shared fixture module (for example `e2e/fixtures.ts` or `e2e/fixtures.js`) and then import from it in your tests, e.g.:
+
+```typescript
+import { test, expect } from "./fixtures.js";
+```
+
 ## 3. Selectors (prefer accessibility-based)
 
 - Role: `page.getByRole("button", { name: /english/i })`
