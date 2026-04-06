@@ -6,7 +6,7 @@
   "schedules": [
     {
       "time": "2026-04-13T08:00:00+09:00",
-      "end_time": "2026-04-13T10:00:00+09:00",
+      "end_time": "2026-04-13T09:00:00+09:00",
       "sessions": [
         {
           "title": "🏃Run & Walk the Park",
@@ -225,6 +225,20 @@
               "links": []
             }
           ]
+        },
+        {
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Joannis Orlandos and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Joannis Orlandosさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "name": "Joannis Orlandos",
+              "image_name": "Speaker/2026/2026_JoannisOrlandos"
+            }
+          ]
         }
       ]
     },
@@ -234,6 +248,20 @@
         {
           "title": "Break",
           "title_ja": "休憩"
+        },
+        {
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Ryo Tsuzukihashi and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Ryo Tsuzukihashiさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "name": "Ryo Tsuzukihashi",
+              "image_name": "Speaker/2026/2026_RyoTsuzukihashi"
+            }
+          ]
         }
       ]
     },
@@ -313,6 +341,20 @@
               "links": []
             }
           ]
+        },
+        {
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Yasuhiro Inami and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Yasuhiro Inamiさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "name": "Yasuhiro Inami",
+              "image_name": "Speaker/2026/2026_YasuhiroInami"
+            }
+          ]
         }
       ]
     },
@@ -322,6 +364,20 @@
         {
           "title": "Break",
           "title_ja": "休憩"
+        },
+        {
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Satsuki Hashiba and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Satsuki Hashibaさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "name": "Satsuki Hashiba",
+              "image_name": "Speaker/2026/2026_SatsukiHashiba"
+            }
+          ]
         }
       ]
     },
@@ -413,11 +469,25 @@
               ]
             }
           ]
+        },
+        {
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Nishant Bhasin and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Nishant Bhasinさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "name": "Nishant Bhasin",
+              "image_name": "Speaker/2026/2026_NishantBhasin"
+            }
+          ]
         }
       ]
     },
     {
-      "time": "2026-04-13T17:35:00+09:00",
+      "time": "2026-04-13T17:50:00+09:00",
       "sessions": [
         {
           "title": "Closing",
@@ -426,7 +496,7 @@
       ]
     },
     {
-      "time": "2026-04-13T18:00:00+09:00",
+      "time": "2026-04-13T18:30:00+09:00",
       "sessions": [
         {
           "title": "Party",

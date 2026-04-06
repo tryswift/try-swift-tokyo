@@ -45,6 +45,9 @@ public struct LiveTranslation: Sendable {
     /// Whether auto-read is currently speaking
     var isAutoReading: Bool = false
 
+    /// Whether the transcript window is currently open (macOS/visionOS)
+    var isTranscriptWindowOpen: Bool = false
+
     /// Number of most recent items to display in transcript mode
     private static let transcriptItemCount = 3
 
@@ -82,6 +85,8 @@ public struct LiveTranslation: Sendable {
       case setShowingSpeedControl(Bool)
       case speechDidFinish
       case setAutoReadEnabled(Bool)
+      case toggleTranscriptWindow
+      case transcriptWindowClosed
     }
   }
 
@@ -260,6 +265,14 @@ public struct LiveTranslation: Sendable {
         state.isAutoReading = false
         return .send(.autoReadNextItem)
 
+      case .view(.toggleTranscriptWindow):
+        state.isTranscriptWindowOpen.toggle()
+        return .none
+
+      case .view(.transcriptWindowClosed):
+        state.isTranscriptWindowOpen = false
+        return .none
+
       case .binding:
         return .none
       }
@@ -274,6 +287,7 @@ public struct LiveTranslationView: View {
   @Environment(\.scenePhase) var scenePhase
   #if os(macOS) || os(visionOS)
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
   #endif
 
   private let scrollContentBottomID: String = "atBottom"
@@ -361,11 +375,24 @@ public struct LiveTranslationView: View {
         #if os(macOS) || os(visionOS)
           ToolbarItem(placement: .primaryAction) {
             Button {
-              openWindow(id: "transcript")
+              if store.isTranscriptWindowOpen {
+                dismissWindow(id: "transcript")
+              } else {
+                openWindow(id: "transcript")
+              }
+              send(.toggleTranscriptWindow)
             } label: {
-              Image(systemName: "rectangle.on.rectangle")
+              Image(
+                systemName: store.isTranscriptWindowOpen
+                  ? "rectangle.on.rectangle.slash" : "rectangle.on.rectangle")
             }
-            .accessibilityLabel(Text("Open transcript window", bundle: .module))
+            .accessibilityLabel(
+              Text(
+                store.isTranscriptWindowOpen
+                  ? "Close transcript window" : "Open transcript window",
+                bundle: .module
+              )
+            )
           }
         #endif
         ToolbarItem(placement: .primaryAction) {
@@ -594,6 +621,9 @@ public struct TranscriptWindowView: View {
     .glassEffectContainerIfAvailable()
     .task {
       store.send(.view(.onAppear))
+    }
+    .onDisappear {
+      store.send(.view(.transcriptWindowClosed))
     }
     .onChange(of: scenePhase) {
       switch scenePhase {

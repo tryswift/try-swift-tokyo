@@ -89,7 +89,7 @@ public struct SponsorsListView: View {
             .accessibilityAddTraits(.isHeader)
           LazyVGrid(
             columns: Array(repeating: plan.gridItem, count: plan.columnCount),
-            spacing: 64
+            spacing: 8
           ) {
             ForEach(allPlans[plan]!, id: \.self) { sponsor in
               Button {
@@ -113,7 +113,7 @@ public struct SponsorsListView: View {
               #if os(macOS)
                 .buttonStyle(.plain)
               #else
-                .glassEffectIfAvailable(.clear.interactive(), in: .rect(cornerRadius: 16))
+                .glassIfAvailable()
               #endif
               .accessibilityAddTraits(.isLink)
               .accessibilityIgnoresInvertColors()

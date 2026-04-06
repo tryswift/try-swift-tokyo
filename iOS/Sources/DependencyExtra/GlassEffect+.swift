@@ -40,7 +40,7 @@ extension View {
     #if os(iOS) || os(macOS)
       self.buttonStyle(.glass)
     #else
-      self.buttonStyle(.bordered)
+      self.buttonStyle(.plain)
     #endif
   }
 

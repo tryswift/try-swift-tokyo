@@ -1,6 +1,7 @@
 import AppFeature
 import ComposableArchitecture
 import LiveTranslationFeature
+import ScheduleFeature
 import SwiftUI
 
 @main
@@ -14,12 +15,25 @@ struct ConferenceApp: App {
       AppView(store: store)
     }
     #if os(macOS) || os(visionOS)
-      WindowGroup("Transcript", id: "transcript") {
+      Window("Transcript", id: "transcript") {
         TranscriptWindowView(
           store: store.scope(state: \.liveTranslation, action: \.liveTranslation)
         )
       }
-      .defaultSize(width: 600, height: 200)
+      #if os(visionOS)
+        .defaultSize(width: 1000, height: 400)
+        .windowStyle(.plain)
+      #else
+        .defaultSize(width: 600, height: 200)
+      #endif
+    #endif
+    #if os(visionOS)
+      Window("Session Detail", id: "scheduleDetail") {
+        ScheduleDetailWindowView(
+          store: store.scope(state: \.schedule, action: \.schedule)
+        )
+      }
+      .defaultSize(width: 800, height: 600)
     #endif
   }
 }

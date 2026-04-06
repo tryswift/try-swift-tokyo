@@ -85,6 +85,7 @@ let package = Package(
       dependencies: [
         .product(name: "DataClient", package: "DataClient"),
         "DependencyExtra",
+        "VideoFeature",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
       ]
     ),
