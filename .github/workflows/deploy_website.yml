@@ -52,6 +52,9 @@ jobs:
           cd Website
           swift run Website
 
+      - name: Disable Jekyll processing
+        run: touch Website/Build/.nojekyll
+
       - name: Create CfP redirect to Fly.io SSR
         run: |
           mkdir -p Website/Build/cfp
