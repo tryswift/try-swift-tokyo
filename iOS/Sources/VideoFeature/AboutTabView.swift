@@ -32,13 +32,13 @@ struct AboutTabView: View {
     if let description = session.description {
       VStack(alignment: .leading, spacing: 8) {
         VStack(alignment: .leading, spacing: 4) {
-          Text(session.title)
+          Text(session.localizedTitle)
             .font(.title2.bold())
           Text("try! Swift Tokyo \(String(conferenceYear.rawValue))")
             .font(.subheadline)
             .foregroundStyle(.secondary)
         }
-        Text(description)
+        Text(session.localizedDescription ?? description)
           .font(.body)
       }
     }
@@ -67,7 +67,7 @@ struct AboutTabView: View {
               VStack(alignment: .leading, spacing: 4) {
                 Text(speaker.name)
                   .font(.headline)
-                if let jobTitle = speaker.jobTitle {
+                if let jobTitle = speaker.localizedJobTitle {
                   Text(jobTitle)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
@@ -86,7 +86,7 @@ struct AboutTabView: View {
               }
             }
 
-            if let bio = speaker.bio {
+            if let bio = speaker.localizedBio {
               Text(bio)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
@@ -191,7 +191,7 @@ struct AboutTabView: View {
           .accessibilityIgnoresInvertColors()
       }
       VStack(alignment: .leading, spacing: 2) {
-        Text(related.session.title)
+        Text(related.session.localizedTitle)
           .font(.body)
           .multilineTextAlignment(.leading)
         if let speakerName = related.speakerName {

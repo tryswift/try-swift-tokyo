@@ -161,17 +161,22 @@ public struct ScheduleDetailView: View {
   public var body: some View {
     ScrollView {
       VStack(alignment: .leading, spacing: 16) {
-        Text(LocalizedStringKey(store.title), bundle: .module)
+        Text(store.title)
           .font(.title.bold())
           .accessibilityAddTraits(.isHeader)
-        Text(LocalizedStringKey(store.description), bundle: .module)
-          .font(.callout)
+        Text(
+          (try? AttributedString(
+            markdown: store.description,
+            options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)
+          )) ?? AttributedString(store.description)
+        )
+        .font(.callout)
         if let requirements = store.requirements {
           VStack(alignment: .leading) {
             Text("Requirements", bundle: .module)
               .font(.subheadline.bold())
               .foregroundStyle(Color.accentColor)
-            Text(LocalizedStringKey(requirements), bundle: .module)
+            Text(requirements)
               .font(.callout)
           }
           .padding()
@@ -179,19 +184,25 @@ public struct ScheduleDetailView: View {
         }
       }
       .padding()
-      .frame(maxWidth: 700)  // Readable content width for iPad
-
-      speakers
+      #if os(iOS)
         .frame(maxWidth: 700)  // Readable content width for iPad
-
+      #endif
+      speakers
+        #if os(iOS)
+          .frame(maxWidth: 700)  // Readable content width for iPad
+        #endif
       if !store.relatedSessions.isEmpty {
         relatedSessionsSection
-          .frame(maxWidth: 700)
+          #if os(iOS)
+            .frame(maxWidth: 700)
+          #endif
       }
 
       if store.proposalId != nil {
         feedbackSection
-          .frame(maxWidth: 700)
+          #if os(iOS)
+            .frame(maxWidth: 700)
+          #endif
       }
     }
     .task { await send(.task).finish() }
@@ -242,7 +253,7 @@ public struct ScheduleDetailView: View {
               .clipShape(Circle())
               .accessibilityIgnoresInvertColors()
             VStack {
-              Text(LocalizedStringKey(speaker.name), bundle: .module)
+              Text(speaker.name)
                 .font(.title3.bold())
                 .frame(maxWidth: .infinity, alignment: .leading)
               if let links = speaker.links {
@@ -258,8 +269,8 @@ public struct ScheduleDetailView: View {
               }
             }
           }
-          if let bio = speaker.bio {
-            Text(LocalizedStringKey(bio), bundle: .module)
+          if let bio = speaker.localizedBio {
+            Text(bio)
               .frame(maxWidth: .infinity, alignment: .leading)
           }
         }
@@ -303,7 +314,7 @@ public struct ScheduleDetailView: View {
           .accessibilityIgnoresInvertColors()
       }
       VStack(alignment: .leading, spacing: 2) {
-        Text(LocalizedStringKey(related.session.title), bundle: .module)
+        Text(related.session.localizedTitle)
           .font(.body)
           .multilineTextAlignment(.leading)
         if let speakerName = related.speakerName {

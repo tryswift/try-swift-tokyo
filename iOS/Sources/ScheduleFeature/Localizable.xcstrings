@@ -154,13 +154,12 @@
         }
       }
     },
-    "LIVE" : {
-      "extractionState" : "manual",
+    "Leave Feedback" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LIVE"
+            "value" : "フィードバック"
           }
         }
       }
@@ -172,6 +171,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "いよいよ始まりますよ！"
+          }
+        }
+      }
+    },
+    "LIVE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LIVE"
           }
         }
       }
@@ -287,22 +297,22 @@
         }
       }
     },
-    "Remove from favorites" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "お気に入りから削除"
-          }
-        }
-      }
-    },
     "Related Sessions" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "関連セッション"
+          }
+        }
+      }
+    },
+    "Remove from favorites" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お気に入りから削除"
           }
         }
       }
@@ -327,6 +337,30 @@
         }
       }
     },
+    "Select a Session" : {
+
+    },
+    "Share your thoughts..." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "感想を書いてください..."
+          }
+        }
+      }
+    },
+    "Sign in with Luma and show QR code of your ticket at the reception." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LumaにログインしてQRコードを掲示してください。"
+          }
+        }
+      }
+    },
     "Sponsored by %@" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -344,13 +378,12 @@
         }
       }
     },
-    "Sign in with Luma and show QR code of your ticket at the reception." : {
-      "extractionState" : "manual",
+    "Submit" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LumaにログインしてQRコードを掲示してください。"
+            "value" : "送信"
           }
         }
       }
@@ -384,36 +417,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "お弁当を持って、他の参加者やスポンサーと交流しましょう。"
-          }
-        }
-      }
-    },
-    "Leave Feedback" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "フィードバック"
-          }
-        }
-      }
-    },
-    "Share your thoughts..." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "感想を書いてください..."
-          }
-        }
-      }
-    },
-    "Submit" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "送信"
           }
         }
       }

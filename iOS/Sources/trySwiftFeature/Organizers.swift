@@ -76,7 +76,7 @@ public struct OrganizersView: View {
                 .frame(width: 60, height: 60)
                 .clipShape(Circle())
                 .accessibilityIgnoresInvertColors()
-              Text(LocalizedStringKey(organizer.name), bundle: .module)
+              Text(organizer.name)
                 .font(.body)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }

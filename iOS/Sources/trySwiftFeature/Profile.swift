@@ -73,12 +73,14 @@ public struct ProfileView: View {
             }
           }
         }
-        Text(LocalizedStringKey(store.organizer.bio), bundle: .module)
+        Text(store.organizer.localizedBio)
           .frame(maxWidth: .infinity, alignment: .leading)
           .padding()
-          .frame(maxWidth: 700)
+          #if os(iOS)
+            .frame(maxWidth: 700)
+          #endif
       }
-      .navigationTitle(Text(LocalizedStringKey(store.organizer.name), bundle: .module))
+      .navigationTitle(Text(store.organizer.name))
     }
   }
 }

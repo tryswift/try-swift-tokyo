@@ -38,7 +38,7 @@ public struct AppReducer {
 
   @ObservableState
   public struct State: Equatable {
-    var schedule = ScheduleFeature.Schedule.State()
+    public var schedule = ScheduleFeature.Schedule.State()
     public var liveTranslation = LiveTranslation.State()
     var guidance = Guidance.State()
     var sponsors = SponsorsList.State()
@@ -56,9 +56,6 @@ public struct AppReducer {
 
     // macOS: 3rd column detail
     @Presents var detailColumn: DetailColumn.State?
-
-    // iOS: Video detail (presented as sheet from schedule)
-    @Presents var videoDetail: VideoDetail.State?
 
     public init() {
       try? Tips.configure([.displayFrequency(.immediate)])
@@ -84,8 +81,6 @@ public struct AppReducer {
     // Detail column (macOS 3rd column)
     case detailColumn(PresentationAction<DetailColumn.Action>)
 
-    // Video detail (iOS sheet)
-    case videoDetail(PresentationAction<VideoDetail.Action>)
   }
 
   public init() {}
@@ -125,6 +120,7 @@ public struct AppReducer {
         }
         state.selectedSidebarItem = item
         state.detailColumn = nil
+        state.schedule.path.removeAll()
         let targetDay: ScheduleFeature.Schedule.Days
         let targetYear: ConferenceYear
         switch item {
@@ -188,16 +184,10 @@ public struct AppReducer {
             let session, let videoMeta, let year,
             relatedSessions: let relatedSessions))
       ):
-        #if os(macOS)
-          state.detailColumn = .videoDetail(
-            .init(
-              session: session, videoMetadata: videoMeta, conferenceYear: year,
-              relatedSessions: relatedSessions))
-        #else
-          state.videoDetail = .init(
+        state.detailColumn = .videoDetail(
+          .init(
             session: session, videoMetadata: videoMeta, conferenceYear: year,
-            relatedSessions: relatedSessions)
-        #endif
+            relatedSessions: relatedSessions))
         return .none
 
       case .schedule(
@@ -207,7 +197,7 @@ public struct AppReducer {
             favoriteCount: let favoriteCount, relatedSessions: let relatedSessions,
             tagCandidates: let tagCandidates))
       ):
-        guard let description = session.description, let speakers = session.speakers else {
+        guard let description = session.description else {
           return .none
         }
         state.detailColumn = .scheduleDetail(
@@ -215,10 +205,10 @@ public struct AppReducer {
             proposalId: proposalId,
             isFavorite: isFavorite,
             favoriteCount: favoriteCount,
-            title: session.title,
+            title: session.localizedTitle,
             description: description,
-            requirements: session.requirements,
-            speakers: speakers,
+            requirements: session.localizedRequirements,
+            speakers: session.speakers ?? [],
             relatedSessions: relatedSessions,
             tagCandidates: tagCandidates
           ))
@@ -241,24 +231,9 @@ public struct AppReducer {
         }
         return .none
 
-      case .videoDetail(
-        .presented(.delegate(.showRelatedSession(let session, let year)))
-      ):
-        guard let nav = Self.resolveRelatedSession(session, year: year, state: state) else {
-          return .none
-        }
-        switch nav {
-        case .video(let videoState):
-          state.videoDetail = videoState
-        case .schedule(let scheduleState):
-          state.videoDetail = nil
-          state.schedule.path.append(.detail(scheduleState))
-        }
-        return .none
-
       case .schedule, .liveTranslation, .guidance, .sponsors, .trySwift,
         .sidebarOrganizers, .sidebarProfile, .sidebarAcknowledgements,
-        .detailColumn, .videoDetail:
+        .detailColumn:
         return .none
       }
     }
@@ -266,9 +241,6 @@ public struct AppReducer {
       Profile()
     }
     .ifLet(\.$detailColumn, action: \.detailColumn)
-    .ifLet(\.$videoDetail, action: \.videoDetail) {
-      VideoDetail()
-    }
   }
 }
 
@@ -283,7 +255,7 @@ extension AppReducer {
     year: ConferenceYear,
     state: State
   ) -> RelatedSessionNavigation? {
-    guard session.description != nil, session.speakers != nil else { return nil }
+    guard session.description != nil else { return nil }
     if let videoId = session.youtubeVideoId {
       let videoMeta =
         state.schedule.videoMetadata[videoId]
@@ -309,10 +281,10 @@ extension AppReducer {
           proposalId: session.proposalId,
           isFavorite: isFavorite,
           favoriteCount: favoriteCount,
-          title: session.title,
-          description: session.description!,
-          requirements: session.requirements,
-          speakers: session.speakers!,
+          title: session.localizedTitle,
+          description: session.localizedDescription!,
+          requirements: session.localizedRequirements,
+          speakers: session.speakers ?? [],
           relatedSessions: relatedSessions,
           tagCandidates: tagCandidates
         ))
@@ -348,20 +320,6 @@ public struct AppView: View {
         }
       #endif
     }
-    #if !os(macOS)
-      .sheet(
-        item: $store.scope(state: \.videoDetail, action: \.videoDetail)
-      ) { videoDetailStore in
-        NavigationStack {
-          VideoDetailView(store: videoDetailStore, speakerImageBundle: scheduleFeatureBundle)
-          .toolbar {
-            Button(role: .close) {
-              store.send(.videoDetail(.dismiss))
-            }
-          }
-        }
-      }
-    #endif
   }
 
   // MARK: iPhone TabView

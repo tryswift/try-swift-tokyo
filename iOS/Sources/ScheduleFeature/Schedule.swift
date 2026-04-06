@@ -5,6 +5,7 @@ import Foundation
 import SharedModels
 import SwiftUI
 import TipKit
+import VideoFeature
 import os
 
 private let logger = Logger(subsystem: "jp.tryswift.tokyo.App", category: "Schedule")
@@ -100,11 +101,13 @@ public struct Schedule {
   @Reducer
   public enum Path {
     case detail(ScheduleDetail)
+    case videoDetail(VideoDetail)
   }
 
   @Reducer
   public enum Destination {
     case detail(ScheduleDetail)
+    case videoDetail(VideoDetail)
   }
 
   private enum CancelID { case timer }
@@ -228,7 +231,7 @@ public struct Schedule {
           await send(.favoriteToggled(proposalId, wasFavorite, previousCount))
         }
       case .view(.disclosureTapped(let session)):
-        guard session.description != nil, session.speakers != nil else {
+        guard session.description != nil else {
           return .none
         }
         if let videoId = session.youtubeVideoId {
@@ -237,11 +240,23 @@ public struct Schedule {
             ?? VideoMetadata(sessionTitle: session.title, youtubeVideoId: videoId)
           let relatedSessions = Schedule.findRelatedSessions(
             for: session, from: state.allSessions)
-          return .send(
-            .delegate(
-              .showVideoDetail(
-                session, videoMeta, state.selectedYear,
-                relatedSessions: relatedSessions)))
+          #if os(macOS)
+            return .send(
+              .delegate(
+                .showVideoDetail(
+                  session, videoMeta, state.selectedYear,
+                  relatedSessions: relatedSessions)))
+          #else
+            let videoState = VideoDetail.State(
+              session: session, videoMetadata: videoMeta,
+              conferenceYear: state.selectedYear, relatedSessions: relatedSessions)
+            #if os(visionOS)
+              state.destination = .videoDetail(videoState)
+            #else
+              state.path.append(.videoDetail(videoState))
+            #endif
+            return .none
+          #endif
         } else {
           let isFavorite =
             session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
@@ -264,14 +279,18 @@ public struct Schedule {
               proposalId: session.proposalId,
               isFavorite: isFavorite,
               favoriteCount: favoriteCount,
-              title: session.title,
-              description: session.description!,
-              requirements: session.requirements,
-              speakers: session.speakers!,
+              title: session.localizedTitle,
+              description: session.localizedDescription!,
+              requirements: session.localizedRequirements,
+              speakers: session.speakers ?? [],
               relatedSessions: relatedSessions,
               tagCandidates: tagCandidates
             )
-            state.path.append(.detail(detailState))
+            #if os(visionOS)
+              state.destination = .detail(detailState)
+            #else
+              state.path.append(.detail(detailState))
+            #endif
             return .none
           #endif
         }
@@ -323,17 +342,22 @@ public struct Schedule {
         return .none
       case .path(
         .element(_, action: .detail(.delegate(.showRelatedSession(let session, let year))))
-      ):
-        guard session.description != nil, session.speakers != nil else { return .none }
+      ),
+        .path(
+          .element(_, action: .videoDetail(.delegate(.showRelatedSession(let session, let year))))
+        ):
+        guard session.description != nil else { return .none }
         if let videoId = session.youtubeVideoId {
           let videoMeta =
             state.videoMetadata[videoId]
             ?? VideoMetadata(sessionTitle: session.title, youtubeVideoId: videoId)
           let relatedSessions = Schedule.findRelatedSessions(
             for: session, from: state.allSessions)
-          return .send(
-            .delegate(
-              .showVideoDetail(session, videoMeta, year, relatedSessions: relatedSessions)))
+          let videoState = VideoDetail.State(
+            session: session, videoMetadata: videoMeta,
+            conferenceYear: year, relatedSessions: relatedSessions)
+          state.path.append(.videoDetail(videoState))
+          return .none
         }
         let isFavorite =
           session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
@@ -348,14 +372,71 @@ public struct Schedule {
           proposalId: session.proposalId,
           isFavorite: isFavorite,
           favoriteCount: favoriteCount,
-          title: session.title,
-          description: session.description!,
-          requirements: session.requirements,
+          title: session.localizedTitle,
+          description: session.localizedDescription!,
+          requirements: session.localizedRequirements,
           speakers: session.speakers!,
           relatedSessions: relatedSessions,
           tagCandidates: tagCandidates
         )
-        state.path.append(.detail(detailState))
+        #if os(visionOS)
+          state.destination = .detail(detailState)
+        #else
+          state.path.append(.detail(detailState))
+        #endif
+        return .none
+      case .destination(.presented(.detail(.favoriteToggled(let isFavorite, let count)))):
+        if case .detail(let detail) = state.destination,
+          let proposalId = detail.proposalId
+        {
+          if isFavorite {
+            state.favoriteProposalIds.insert(proposalId)
+          } else {
+            state.favoriteProposalIds.remove(proposalId)
+          }
+          state.favoriteCounts[proposalId] = count
+        }
+        return .none
+      case .destination(
+        .presented(.detail(.delegate(.showRelatedSession(let session, let year))))
+      ),
+        .destination(
+          .presented(.videoDetail(.delegate(.showRelatedSession(let session, let year))))
+        ):
+        guard session.localizedDescription != nil else { return .none }
+        if let videoId = session.youtubeVideoId {
+          let videoMeta =
+            state.videoMetadata[videoId]
+            ?? VideoMetadata(sessionTitle: session.title, youtubeVideoId: videoId)
+          let relatedSessions = Schedule.findRelatedSessions(
+            for: session, from: state.allSessions)
+          state.destination = .videoDetail(
+            .init(
+              session: session, videoMetadata: videoMeta,
+              conferenceYear: year, relatedSessions: relatedSessions))
+          return .none
+        }
+        let isFavorite =
+          session.proposalId.map { state.favoriteProposalIds.contains($0) } ?? false
+        let favoriteCount =
+          session.proposalId.flatMap { state.favoriteCounts[$0] } ?? 0
+        let relatedSessions = Schedule.findRelatedSessions(
+          for: session, from: state.allSessions)
+        let sameSpeakerIds = Set(relatedSessions.filter(\.isSameSpeaker).map(\.id))
+        let tagCandidates = Schedule.findTagCandidates(
+          for: session, from: state.allSessions, excludingIds: sameSpeakerIds)
+        state.destination = .detail(
+          .init(
+            proposalId: session.proposalId,
+            isFavorite: isFavorite,
+            favoriteCount: favoriteCount,
+            title: session.localizedTitle,
+            description: session.localizedDescription!,
+            requirements: session.localizedRequirements,
+            speakers: session.speakers!,
+            relatedSessions: relatedSessions,
+            tagCandidates: tagCandidates
+          ))
         return .none
       case .timerTicked:
         state.currentTime = date.now
@@ -522,6 +603,9 @@ public let scheduleFeatureBundle: Bundle = .module
 public struct ScheduleView: View {
 
   @Bindable public var store: StoreOf<Schedule>
+  #if os(visionOS)
+    @Environment(\.openWindow) private var openWindow
+  #endif
 
   public init(store: StoreOf<Schedule>) {
     self.store = store
@@ -530,6 +614,15 @@ public struct ScheduleView: View {
   public var body: some View {
     #if os(macOS)
       root
+    #elseif os(visionOS)
+      NavigationStack {
+        root
+      }
+      .onChange(of: store.destination != nil) { _, isPresented in
+        if isPresented {
+          openWindow(id: "scheduleDetail")
+        }
+      }
     #else
       NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
         root
@@ -538,6 +631,10 @@ public struct ScheduleView: View {
         case .detail:
           if let store = store.scope(state: \.detail, action: \.detail) {
             ScheduleDetailView(store: store)
+          }
+        case .videoDetail:
+          if let store = store.scope(state: \.videoDetail, action: \.videoDetail) {
+            VideoDetailView(store: store, speakerImageBundle: .module)
           }
         }
       }
@@ -659,7 +756,7 @@ public struct ScheduleView: View {
           .accessibilityIgnoresInvertColors()
       }
       VStack(alignment: .leading, spacing: 2) {
-        Text(LocalizedStringKey(result.session.title), bundle: .module)
+        Text(result.session.localizedTitle)
           .font(.body)
           .multilineTextAlignment(.leading)
         if let speakers = result.session.speakers {
@@ -813,7 +910,7 @@ public struct ScheduleView: View {
             .font(.title3)
             .multilineTextAlignment(.leading)
         } else {
-          Text(LocalizedStringKey(session.title), bundle: .module)
+          Text(session.localizedTitle)
             .font(.title3)
             .multilineTextAlignment(.leading)
         }
@@ -822,14 +919,14 @@ public struct ScheduleView: View {
             .foregroundStyle(labelColor)
             .multilineTextAlignment(.leading)
         }
-        if let summary = session.summary {
+        if session.summary != nil {
           if session.title == "Office hour", let speakers = session.speakers {
             let description = officeHourDescription(speakers: speakers)
             Text(description)
               .lineLimit(2)
               .foregroundStyle(secondaryLabelColor)
-          } else {
-            Text(LocalizedStringKey(summary), bundle: .module)
+          } else if let localizedSummary = session.localizedSummary {
+            Text(localizedSummary)
               .lineLimit(2)
               .foregroundStyle(secondaryLabelColor)
           }

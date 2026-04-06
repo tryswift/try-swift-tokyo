@@ -92,6 +92,20 @@
               ]
             }
           ]
+        },
+        {
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Daniel Steinberg and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Daniel Steinbergさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "name": "Daniel Steinberg",
+              "image_name": "Speaker/2026/2026_DanielSteinberg"
+            }
+          ]
         }
       ]
     },
@@ -134,6 +148,20 @@
         {
           "title": "☕️Break",
           "title_ja": "☕️休憩"
+        },
+        {
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Paul Hudson and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Paul Hudsonさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "name": "Paul Hudson",
+              "image_name": "Speaker/2026/2026_Speaker_PaulHudson"
+            }
+          ]
         }
       ]
     },
@@ -226,6 +254,20 @@
               ]
             }
           ]
+        },
+        {
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet kishikawa katsumi and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "kishikawa katsumiさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "name": "kishikawa katsumi",
+              "image_name": "Speaker/2026/2026_KishikawaKatsumi"
+            }
+          ]
         }
       ]
     },
@@ -269,6 +311,20 @@
                   "name": "@natpanferova"
                 }
               ]
+            }
+          ]
+        },
+        {
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Kazushi Oenoki and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Kazushi Oenokiさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "name": "Kazushi Oenoki",
+              "image_name": "Speaker/2026/2026_KazushiOenoki"
             }
           ]
         }
@@ -331,6 +387,20 @@
               ]
             }
           ]
+        },
+        {
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Natalia Panferova and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Natalia Panferovaさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "name": "Natalia Panferova",
+              "image_name": "Speaker/2026/2026_NataliaPanferova"
+            }
+          ]
         }
       ]
     },
@@ -340,6 +410,20 @@
         {
           "title": "Break",
           "title_ja": "休憩"
+        },
+        {
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Yusuke Kita and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Yusuke Kitaさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "name": "Yusuke Kita",
+              "image_name": "Speaker/2026/2026_YusukeKita"
+            }
+          ]
         }
       ]
     },
@@ -400,6 +484,20 @@
               ]
             }
           ]
+        },
+        {
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Yuta Koshizawa and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Yuta Koshizawaさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "name": "Yuta Koshizawa",
+              "image_name": "Speaker/2026/2026_YutaKoshizawa"
+            }
+          ]
         }
       ]
     },
@@ -426,6 +524,20 @@
                   "name": "@adamlyttleapps"
                 }
               ]
+            }
+          ]
+        },
+        {
+          "title": "Office hour",
+          "title_ja": "Q&A",
+          "place": "Ask the Speaker",
+          "place_ja": "Ask the Speaker",
+          "summary": "Meet Akira Fukunaga and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+          "summary_ja": "Akira Fukunagaさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+          "speakers": [
+            {
+              "name": "Akira Fukunaga",
+              "image_name": "Speaker/2026/2026_AkiraFukunaga"
             }
           ]
         }

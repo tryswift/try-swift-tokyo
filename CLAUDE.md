@@ -81,3 +81,4 @@ gh api repos/$REPO/pulls/<PR_NUMBER>/reviews/<REVIEW_ID>/comments \
 
 - **パス限定CIトリガー**: 変更パスに該当しないワークフローは実行されない
 - **複数回のCopilotレビュー**: push後に再レビューされた場合、最新のレビュー（配列の最後）を使用する
+@ASC.md

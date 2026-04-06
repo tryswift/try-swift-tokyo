@@ -52,7 +52,7 @@ public struct VideoDetailView: View {
         // Tab Content
         tabContent
       }
-      #if !os(macOS)
+      #if os(iOS)
         .frame(maxWidth: 700)
       #endif
     }

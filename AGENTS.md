@@ -56,3 +56,7 @@ Please generate the necessary Swift code and file structure.
 - Implement the `OrganizerMiddleware` and the Auth logic as specified.
 
 Let's start building.
+
+## asc cli reference
+
+See `ASC.md` for the command catalog and workflows.
