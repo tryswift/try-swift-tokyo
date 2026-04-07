@@ -114,19 +114,19 @@
         }
       }
     },
-    "Apr. 12th – 14th, 2026 (JST)<br><br>Apr. 12: Workshop & TBD<br>Apr. 13 - 14: Conference" : {
+    "Apr. 12th – 14th, 2026 (JST)<br><br>Apr. 12: Workshop<br>Apr. 13 - 14: Conference" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apr. 12th – 14th, 2026 (JST)<br><br>Apr. 12: Workshop & TBD<br>Apr. 13 - 14: Conference"
+            "value" : "Apr. 12th – 14th, 2026 (JST)<br><br>Apr. 12: Workshop<br>Apr. 13 - 14: Conference"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "2026年4月12日（日）〜 14日（火）<br><br>4/12：ワークショップ & TBD<br>4/13〜14：カンファレンス"
+            "value" : "2026年4月12日（日）〜 14日（火）<br><br>4/12：ワークショップ<br>4/13〜14：カンファレンス"
           }
         }
       }

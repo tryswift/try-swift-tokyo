@@ -104,7 +104,7 @@ private struct OutlineData {
   static let year2026 = OutlineData(
     firstLabel: "Date and time",
     firstValue:
-      "Apr. 12th – 14th, 2026 (JST)<br><br>Apr. 12: Workshop & TBD<br>Apr. 13 - 14: Conference",
+      "Apr. 12th – 14th, 2026 (JST)<br><br>Apr. 12: Workshop<br>Apr. 13 - 14: Conference",
     secondLabel: "Venue",
     secondValue:
       "Apr. 12: Tachikawa City, Tokyo, Japan<br>Apr. 13 - 14: <a href=\"#access\">TACHIKAWA STAGE GARDEN</a>"
