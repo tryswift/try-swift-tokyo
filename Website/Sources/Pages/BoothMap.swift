@@ -17,7 +17,9 @@ struct BoothMap: StaticPage {
     .style(.alignItems, "center")
     .style(.justifyContent, "center")
     .background(
-      Gradient(colors: [.init(hex: "#BDA4C4"), .init(hex: "#B29AC2"), .init(hex: "#9881BF")], type: .linear(angle: 180))
+      Gradient(
+        colors: [.init(hex: "#BDA4C4"), .init(hex: "#B29AC2"), .init(hex: "#9881BF")],
+        type: .linear(angle: 180))
     )
   }
 }
