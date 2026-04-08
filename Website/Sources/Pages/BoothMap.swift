@@ -14,7 +14,7 @@ struct BoothMap: StaticPage {
     .ignorePageGutters()
     .frame(height: .vh(100%))
     .style(.display, "flex")
-    .style(.alignItems, "center")
+    .style(.alignItems, "flex-start")
     .style(.justifyContent, "center")
     .background(
       Gradient(
