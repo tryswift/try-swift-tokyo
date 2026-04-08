@@ -412,24 +412,24 @@ public struct LiveTranslationView: View {
         }
         ToolbarSpacer(placement: .primaryAction)
         ToolbarItem(placement: .primaryAction) {
-            Button {
+          Button {
             send(.setSelectedLanguageSheet(!store.isSelectedLanguageSheet))
-            } label: {
+          } label: {
             Text(store.selectedLanguageName)
             Image(systemName: "globe")
-            }
-            #if os(macOS)
+          }
+          #if os(macOS)
             .popover(isPresented: $store.isSelectedLanguageSheet) {
-                SelectLanguageSheet(
+              SelectLanguageSheet(
                 languageList: store.supportLanguages,
                 selectedLanguageAction: { langItem in
-                    send(.selectLangCode(langItem.languageCode))
-                    send(.setSelectedLanguageSheet(false))
+                  send(.selectLangCode(langItem.languageCode))
+                  send(.setSelectedLanguageSheet(false))
                 }
-                )
-                .frame(width: 280, height: 400)
+              )
+              .frame(width: 280, height: 400)
             }
-            #endif
+          #endif
         }
       }
     }
