@@ -1118,7 +1118,7 @@ struct WorkshopRoutes: RouteCollection {
         language: language,
         currentPath: "/workshops/status"
       ) {
-        WorkshopDeleteConfirmationView(language: language)
+        WorkshopDeleteConfirmationView(language: language, isCancellation: true)
       }
     }
     return try await html.encodeResponse(for: req)
