@@ -34,6 +34,7 @@ struct WorkshopRoutes: RouteCollection {
     csrf.get("workshops", "status", use: workshopStatusPage)
     csrf.post("workshops", "status", use: handleCheckStatus)
     csrf.post("workshops", "delete", use: handleDeleteOwnApplication)
+    csrf.post("workshops", "cancel", use: handleCancelApplication)
 
     // Public routes - Japanese
     let ja = csrf.grouped("ja")
@@ -44,6 +45,7 @@ struct WorkshopRoutes: RouteCollection {
     ja.get("workshops", "status", use: workshopStatusPageJa)
     ja.post("workshops", "status", use: handleCheckStatusJa)
     ja.post("workshops", "delete", use: handleDeleteOwnApplicationJa)
+    ja.post("workshops", "cancel", use: handleCancelApplicationJa)
 
     // Organizer routes (reuse existing organizer group pattern)
     let organizer = csrf.grouped("organizer")
@@ -252,6 +254,16 @@ struct WorkshopRoutes: RouteCollection {
   @Sendable
   func handleDeleteOwnApplicationJa(req: Request) async throws -> Response {
     try await processDeleteOwnApplication(req: req, language: .ja)
+  }
+
+  @Sendable
+  func handleCancelApplication(req: Request) async throws -> Response {
+    try await processCancelApplication(req: req, language: .en)
+  }
+
+  @Sendable
+  func handleCancelApplicationJa(req: Request) async throws -> Response {
+    try await processCancelApplication(req: req, language: .ja)
   }
 
   // MARK: - Shared Rendering
@@ -916,6 +928,15 @@ struct WorkshopRoutes: RouteCollection {
       deleteToken = nil
     }
 
+    // Generate a short-lived cancel token for won applications
+    let cancelToken: String?
+    if application.status == .won {
+      let payload = WorkshopVerifyPayload(email: application.email, name: "")
+      cancelToken = try await req.jwt.sign(payload)
+    } else {
+      cancelToken = nil
+    }
+
     // Determine if user can reapply (lost + workshops with remaining capacity)
     let canReapply: Bool
     if application.status == .lost {
@@ -935,7 +956,8 @@ struct WorkshopRoutes: RouteCollection {
       assignedWorkshop: assignedTitle,
       canModify: application.status == .pending,
       canReapply: canReapply,
-      deleteToken: deleteToken
+      deleteToken: deleteToken,
+      cancelToken: cancelToken
     )
 
     let html = try await renderWorkshopStatusPage(
@@ -1011,7 +1033,8 @@ struct WorkshopRoutes: RouteCollection {
         assignedWorkshop: assignedTitle,
         canModify: false,
         canReapply: canReapplyAfterDelete,
-        deleteToken: nil
+        deleteToken: nil,
+        cancelToken: nil
       )
       let html = try await renderWorkshopStatusPage(
         req: req, language: language, application: info)
@@ -1022,6 +1045,75 @@ struct WorkshopRoutes: RouteCollection {
     let html = HTMLResponse {
       CfPLayout(
         title: language == .ja ? "申し込み取り消し完了" : "Application Deleted",
+        user: user,
+        language: language,
+        currentPath: "/workshops/status"
+      ) {
+        WorkshopDeleteConfirmationView(language: language)
+      }
+    }
+    return try await html.encodeResponse(for: req)
+  }
+
+  private func processCancelApplication(req: Request, language: CfPLanguage) async throws
+    -> Response
+  {
+    struct CancelForm: Content {
+      let cancel_token: String
+    }
+
+    let form = try req.content.decode(CancelForm.self)
+
+    // Verify JWT to authenticate the cancel request
+    let payload: WorkshopVerifyPayload
+    do {
+      payload = try await req.jwt.verify(form.cancel_token, as: WorkshopVerifyPayload.self)
+    } catch {
+      let html = try await renderWorkshopStatusPage(req: req, language: language)
+      return try await html.encodeResponse(for: req)
+    }
+
+    let email = payload.subject.value
+
+    // Find the won application
+    guard
+      let application = try await WorkshopApplication.query(on: req.db)
+        .filter(\.$email == email)
+        .filter(\.$status == .won)
+        .first()
+    else {
+      let html = try await renderWorkshopStatusPage(req: req, language: language)
+      return try await html.encodeResponse(for: req)
+    }
+
+    // Decline on Luma (best-effort)
+    if let lumaGuestID = application.lumaGuestID,
+      let assignedWorkshopID = application.$assignedWorkshop.id,
+      let workshop = try await WorkshopRegistration.find(assignedWorkshopID, on: req.db),
+      let lumaEventID = workshop.lumaEventID
+    {
+      do {
+        try await LumaClient.updateGuestStatus(
+          eventID: lumaEventID,
+          guest: lumaGuestID,
+          status: "declined",
+          client: req.client,
+          logger: req.logger
+        )
+      } catch {
+        req.logger.error(
+          "Failed to decline guest on Luma for \(email): \(error). Proceeding with local deletion."
+        )
+      }
+    }
+
+    // Delete the application to free the slot
+    try await application.delete(on: req.db)
+
+    let user = try? await req.authenticatedUser()
+    let html = HTMLResponse {
+      CfPLayout(
+        title: language == .ja ? "参加取り消し完了" : "Participation Cancelled",
         user: user,
         language: language,
         currentPath: "/workshops/status"
