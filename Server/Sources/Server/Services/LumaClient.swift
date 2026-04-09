@@ -258,6 +258,44 @@ enum LumaClient {
 
     return try response.content.decode(LumaAddGuestResponse.self)
   }
+
+  /// Update guest status (e.g. decline) on a Luma event
+  static func updateGuestStatus(
+    eventID: String,
+    guest: String,
+    status: String,
+    client: Client,
+    logger: Logger
+  ) async throws {
+    guard let apiKey = Environment.get("LUMA_API_KEY") else {
+      throw Abort(.internalServerError, reason: "Luma API not configured")
+    }
+
+    let payload = LumaUpdateGuestStatusRequest(
+      event_id: eventID,
+      guest: guest,
+      status: status
+    )
+
+    let response = try await client.post(
+      URI(string: "\(baseURL)/event/update-guest-status")
+    ) { req in
+      req.headers.add(name: "x-luma-api-key", value: apiKey)
+      req.headers.contentType = .json
+      try req.content.encode(payload)
+    }
+
+    guard response.status == .ok else {
+      let body = response.body.map { String(buffer: $0) } ?? "no body"
+      let truncatedBody = String(body.prefix(1000))
+      logger.error(
+        "Luma update-guest-status failed for guest=\(guest) event=\(eventID): \(response.status.code) - \(truncatedBody)"
+      )
+      throw Abort(.badGateway, reason: "Failed to update guest status on Luma")
+    }
+
+    logger.info("Successfully updated guest \(guest) status to \(status) on event \(eventID)")
+  }
 }
 
 // MARK: - Luma API Models
@@ -337,4 +375,10 @@ struct LumaGuestInput: Content, Sendable {
 struct LumaAddGuestResponse: Content, Sendable {
   let id: String?
   let email: String?
+}
+
+struct LumaUpdateGuestStatusRequest: Content, Sendable {
+  let event_id: String
+  let guest: String
+  let status: String
 }

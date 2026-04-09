@@ -18,6 +18,7 @@ struct WorkshopStatusPageView: HTML, Sendable {
     let canModify: Bool
     let canReapply: Bool
     let deleteToken: String?
+    let cancelToken: String?
   }
 
   var body: some HTML {
@@ -119,6 +120,27 @@ struct WorkshopStatusPageView: HTML, Sendable {
                 language == .ja ? "当選ワークショップ: " : "Assigned Workshop: "
               }
               HTMLText(assigned)
+            }
+          }
+        }
+
+        if let cancelToken = app.cancelToken, app.status == .won {
+          div(.class("mt-4 pt-3 border-top")) {
+            form(
+              .method(.post),
+              .action(language.path(for: "/workshops/cancel")),
+              .custom(
+                name: "onsubmit",
+                value: language == .ja
+                  ? "return confirm('ワークショップ参加を取り消しますか？この操作は元に戻せません。');"
+                  : "return confirm('Are you sure you want to cancel your workshop participation? This action cannot be undone.');"
+              )
+            ) {
+              input(.type(.hidden), .name("_csrf"), .value(csrfToken))
+              input(.type(.hidden), .name("cancel_token"), .value(cancelToken))
+              button(.type(.submit), .class("btn btn-outline-danger w-100")) {
+                language == .ja ? "参加を取り消す" : "Cancel Participation"
+              }
             }
           }
         }

@@ -80,6 +80,15 @@ struct WorkshopListPageView: HTML, Sendable {
             }
           }
         }
+
+        div(.class("text-center mt-3")) {
+          a(
+            .class("btn btn-outline-secondary"),
+            .href(language.path(for: "/workshops/status"))
+          ) {
+            language == .ja ? "申し込み状況を確認する" : "Check Application Status"
+          }
+        }
       }
     }
   }
