@@ -14,6 +14,12 @@ struct ConferenceApp: App {
     WindowGroup {
       AppView(store: store)
     }
+    #if os(macOS)
+      .defaultSize(width: 1100, height: 700)
+      .commands {
+        SidebarCommands()
+      }
+    #endif
     #if os(macOS) || os(visionOS)
       Window("Transcript", id: "transcript") {
         TranscriptWindowView(

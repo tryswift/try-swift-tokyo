@@ -1,0 +1,43 @@
+name: Build macOS
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "App/**"
+      - "iOS/**"
+      - "SharedModels/**"
+      - "DataClient/**"
+      - "Shared/**"
+      - ".github/workflows/build-macos.yml"
+  push:
+    paths:
+      - "App/**"
+      - "iOS/**"
+      - "SharedModels/**"
+      - "DataClient/**"
+      - "Shared/**"
+      - ".github/workflows/build-macos.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build macOS
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build for macOS
+        run: |
+          cd App
+          xcodebuild build \
+            -project App.xcodeproj \
+            -scheme App \
+            -destination 'platform=macOS' \
+            -skipMacroValidation \
+            -skipPackagePluginValidation \
+            CODE_SIGNING_ALLOWED=NO
