@@ -96,10 +96,7 @@ public struct SponsorsListView: View {
                 send(.sponsorTapped(sponsor))
               } label: {
                 VStack(spacing: 8) {
-                  Image(sponsor.imageName, bundle: .module)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 300)
+                  plan.image(of: sponsor)
                   if plan.showsName, let name = sponsor.name {
                     Text(name)
                       .font(plan.nameFont)
@@ -113,7 +110,8 @@ public struct SponsorsListView: View {
               #if os(macOS)
                 .buttonStyle(.plain)
               #else
-                .glassIfAvailable()
+                .buttonStyle(.plain)
+                .glassEffectIfAvailable(.regular.interactive())
               #endif
               .accessibilityAddTraits(.isLink)
               .accessibilityIgnoresInvertColors()
@@ -172,6 +170,29 @@ extension Plan {
       return false
     default:
       return true
+    }
+  }
+
+  @ViewBuilder
+  func image(of sponsor: Sponsor) -> some View {
+    switch self {
+    case .individual:
+      Image(sponsor.imageName, bundle: .module)
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .frame(maxWidth: 300)
+        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .contentShape(RoundedRectangle(cornerRadius: 24))
+    default:
+      Image(sponsor.imageName, bundle: .module)
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .padding()
+        .background(.white)
+        .frame(maxWidth: 300)
+        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .contentShape(RoundedRectangle(cornerRadius: 24))
+        .compositingGroup()
     }
   }
 }
