@@ -10,7 +10,7 @@ struct TimetableComponent: HTML {
   private let imageGap = 4
 
   var body: some HTML {
-    Text(conference.title)
+    Text(conference.localizedTitle(for: language))
       .font(.title2)
       .fontWeight(.bold)
       .foregroundStyle(accentColor)

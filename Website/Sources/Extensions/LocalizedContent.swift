@@ -63,3 +63,12 @@ extension Session {
     }
   }
 }
+
+extension Conference {
+  func localizedTitle(for language: SupportedLanguage) -> String {
+    switch language {
+    case .ja: return titleJa ?? title
+    case .en: return title
+    }
+  }
+}
