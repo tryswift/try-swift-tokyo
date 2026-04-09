@@ -4,8 +4,6 @@
 <dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>CFBundleIdentifier</key>
-	<string></string>
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>en</string>
