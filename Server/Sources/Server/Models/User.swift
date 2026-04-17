@@ -2,7 +2,7 @@ import Fluent
 import SharedModels
 import Vapor
 
-/// User model for CfP system
+/// User model for the API.
 /// Stores GitHub authentication data and role information
 final class User: Model, Content, @unchecked Sendable {
   static let schema = "users"

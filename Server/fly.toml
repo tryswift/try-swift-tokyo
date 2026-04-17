@@ -1,7 +1,7 @@
-# fly.toml - Fly.io configuration for trySwiftCfP Server
+# fly.toml - Fly.io configuration for trySwift API Server
 # See https://fly.io/docs/reference/configuration/ for information about this file.
 
-app = 'tryswift-cfp-api'
+app = 'tryswift-api'
 primary_region = 'nrt'  # Tokyo region
 
 [build]

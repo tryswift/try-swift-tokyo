@@ -2,7 +2,7 @@ import Fluent
 import SharedModels
 import Vapor
 
-/// Conference model for CfP
+/// Conference model for the submission platform.
 final class Conference: Model, Content, @unchecked Sendable {
   static let schema = "conferences"
 
@@ -29,11 +29,11 @@ final class Conference: Model, Content, @unchecked Sendable {
   @Field(key: "year")
   var year: Int
 
-  /// Whether CfP is currently open
+  /// Whether submissions are currently open.
   @Field(key: "is_open")
   var isOpen: Bool
 
-  /// CfP submission deadline
+  /// Submission deadline.
   @OptionalField(key: "deadline")
   var deadline: Date?
 

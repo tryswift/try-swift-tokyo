@@ -36,7 +36,7 @@ struct CSVExportTests {
   // MARK: - escapeCSV Logic
 
   // These tests verify the CSV escaping logic used in the export.
-  // The escapeCSV function is private in CfPRoutes, so we test the same logic here.
+  // The CSV escaping helper is private in production code, so we test the same logic here.
 
   private func escapeCSV(_ value: String) -> String {
     // Prevent CSV formula injection: prefix leading formula characters with

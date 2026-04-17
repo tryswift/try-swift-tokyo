@@ -7,7 +7,7 @@ extension Request {
   /// Try to authenticate the current user from cookie or bearer token
   func authenticatedUser() async throws -> UserDTO? {
     let token: String?
-    if let cookieToken = cookies["cfp_token"]?.string, !cookieToken.isEmpty {
+    if let cookieToken = cookies["auth_token"]?.string, !cookieToken.isEmpty {
       token = cookieToken
     } else if let authHeader = headers.bearerAuthorization?.token {
       token = authHeader

@@ -1,11 +1,11 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: tryswift-cfp-db
+    container_name: tryswift-api-db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: tryswift_cfp
+      POSTGRES_DB: tryswift_api
     ports:
       - "5432:5432"
     volumes:

@@ -2,7 +2,7 @@ import Fluent
 import SharedModels
 import Vapor
 
-/// Proposal model for CfP submissions
+/// Proposal model for speaker submissions.
 final class Proposal: Model, Content, @unchecked Sendable {
   static let schema = "proposals"
 

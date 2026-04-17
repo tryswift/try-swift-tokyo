@@ -3,28 +3,14 @@ import Vapor
 enum AppRoutes {
   /// Register all routes for the application
   static func register(_ app: Application) throws {
-    // Serve static files for CfP (images, CSS, JS)
-    // FileMiddleware maps request paths directly to filesystem paths
-    // e.g., /cfp/images/riko.png -> Public/cfp/images/riko.png
-    let cfpPublicDirectory = app.directory.workingDirectory + "Public/"
-    app.middleware.use(
-      FileMiddleware(
-        publicDirectory: cfpPublicDirectory,
-        defaultFile: nil,
-        directoryAction: .none,
-        advancedETagComparison: true
-      )
-    )
-
-    // Root endpoint - handled by CfPRoutes for production
     // Status endpoint for monitoring
     app.get("status") { req in
-      return ["status": "ok", "service": "trySwiftCfP"]
+      return ["status": "ok", "service": "trySwiftAPI"]
     }
 
     // Health check endpoint for Fly.io
     app.get("health") { req in
-      return ["status": "healthy", "service": "trySwiftCfP"]
+      return ["status": "healthy", "service": "trySwiftAPI"]
     }
 
     // API version prefix
@@ -34,13 +20,11 @@ enum AppRoutes {
     try api.register(collection: AuthController())
     try api.register(collection: ConferenceController())
     try api.register(collection: ProposalController())
+    try api.register(collection: AdminProposalController())
+    try api.register(collection: AdminTimetableController())
+    try api.register(collection: WorkshopController())
+    try api.register(collection: AdminWorkshopController())
     try api.register(collection: FeedbackController())
     try api.register(collection: FavoritesController())
-
-    // Register CfP SSR pages
-    try app.register(collection: CfPRoutes())
-
-    // Register Workshop registration pages
-    try app.register(collection: WorkshopRoutes())
   }
 }

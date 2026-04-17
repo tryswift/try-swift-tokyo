@@ -28,7 +28,7 @@ enum SlackNotifier {
       blocks: [
         SlackBlock(
           type: "header",
-          text: SlackTextObject(type: "plain_text", text: "📝 新しいCfPプロポーザルが投稿されました")
+          text: SlackTextObject(type: "plain_text", text: "📝 新しいプロポーザルが投稿されました")
         ),
         SlackBlock(
           type: "section",

@@ -94,8 +94,7 @@ struct ResolveSpeakerIDTests {
   @Test("nil username returns import user ID")
   func resolveNilUsername() async throws {
     try await withTestApp { app in
-      let routes = CfPRoutes()
-      let id = try await routes.resolveSpeakerID(githubUsername: nil, on: app.db)
+      let id = try await AdminAPIService.resolveSpeakerID(githubUsername: nil, on: app.db)
       #expect(id == AddPaperCallImportUser.paperCallUserID)
     }
   }
@@ -103,8 +102,7 @@ struct ResolveSpeakerIDTests {
   @Test("empty string returns import user ID")
   func resolveEmptyUsername() async throws {
     try await withTestApp { app in
-      let routes = CfPRoutes()
-      let id = try await routes.resolveSpeakerID(githubUsername: "", on: app.db)
+      let id = try await AdminAPIService.resolveSpeakerID(githubUsername: "", on: app.db)
       #expect(id == AddPaperCallImportUser.paperCallUserID)
     }
   }
@@ -112,8 +110,7 @@ struct ResolveSpeakerIDTests {
   @Test("whitespace-only string returns import user ID")
   func resolveWhitespaceUsername() async throws {
     try await withTestApp { app in
-      let routes = CfPRoutes()
-      let id = try await routes.resolveSpeakerID(githubUsername: "   ", on: app.db)
+      let id = try await AdminAPIService.resolveSpeakerID(githubUsername: "   ", on: app.db)
       #expect(id == AddPaperCallImportUser.paperCallUserID)
     }
   }
@@ -126,8 +123,7 @@ struct ResolveSpeakerIDTests {
       let user = User(githubID: 12345, username: "octocat", role: .speaker)
       try await user.save(on: app.db)
 
-      let routes = CfPRoutes()
-      let id = try await routes.resolveSpeakerID(githubUsername: "octocat", on: app.db)
+      let id = try await AdminAPIService.resolveSpeakerID(githubUsername: "octocat", on: app.db)
       #expect(id == user.id)
     }
   }
@@ -138,8 +134,7 @@ struct ResolveSpeakerIDTests {
       let user = User(githubID: 99999, username: "trimtest", role: .speaker)
       try await user.save(on: app.db)
 
-      let routes = CfPRoutes()
-      let id = try await routes.resolveSpeakerID(githubUsername: "  trimtest  ", on: app.db)
+      let id = try await AdminAPIService.resolveSpeakerID(githubUsername: "  trimtest  ", on: app.db)
       #expect(id == user.id)
     }
   }
@@ -149,8 +144,7 @@ struct ResolveSpeakerIDTests {
   @Test("non-existent username returns import user ID (deferred resolution)")
   func resolveNonExistentUser() async throws {
     try await withTestApp { app in
-      let routes = CfPRoutes()
-      let id = try await routes.resolveSpeakerID(githubUsername: "no-such-user", on: app.db)
+      let id = try await AdminAPIService.resolveSpeakerID(githubUsername: "no-such-user", on: app.db)
       #expect(id == AddPaperCallImportUser.paperCallUserID)
     }
   }
@@ -190,8 +184,10 @@ struct ResolveSpeakerIDTests {
       if !githubUsername.isEmpty {
         Issue.record("Should not enter this branch")
       } else if proposal.$speaker.id != AddPaperCallImportUser.paperCallUserID {
-        let routes = CfPRoutes()
-        let importUserID = try await routes.resolveSpeakerID(githubUsername: nil, on: app.db)
+        let importUserID = try await AdminAPIService.resolveSpeakerID(
+          githubUsername: nil,
+          on: app.db
+        )
         proposal.$speaker.id = importUserID
         proposal.paperCallUsername = nil
       }
@@ -284,8 +280,7 @@ struct ResolveSpeakerIDTests {
       try await proposal.save(on: app.db)
 
       // Simulate the update-github handler logic
-      let routes = CfPRoutes()
-      let resolvedID = try await routes.resolveSpeakerID(
+      let resolvedID = try await AdminAPIService.resolveSpeakerID(
         githubUsername: "newowner", on: app.db)
       proposal.$speaker.id = resolvedID
       proposal.paperCallUsername = "newowner"
