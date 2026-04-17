@@ -9,6 +9,7 @@ enum WorkshopAPIService {
     let titleJA: String?
     let speakerName: String
     let abstract: String
+    let talkDetail: String
     let abstractJA: String?
     let bio: String
     let bioJa: String?
@@ -102,6 +103,7 @@ enum WorkshopAPIService {
           titleJA: proposal.titleJA,
           speakerName: proposal.speakerName,
           abstract: proposal.abstract,
+          talkDetail: proposal.talkDetail,
           abstractJA: proposal.abstractJA,
           bio: proposal.bio,
           bioJa: proposal.bioJa,

@@ -8,6 +8,7 @@ struct WorkshopListItemContent: Content {
   let titleJA: String?
   let speakerName: String
   let abstract: String
+  let talkDetail: String
   let abstractJA: String?
   let bio: String
   let bioJa: String?
@@ -143,6 +144,7 @@ struct WorkshopController: RouteCollection {
           titleJA: $0.titleJA,
           speakerName: $0.speakerName,
           abstract: $0.abstract,
+          talkDetail: $0.talkDetail,
           abstractJA: $0.abstractJA,
           bio: $0.bio,
           bioJa: $0.bioJa,

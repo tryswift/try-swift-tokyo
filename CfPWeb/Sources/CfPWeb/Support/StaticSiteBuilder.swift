@@ -88,12 +88,12 @@ struct StaticSiteBuilder {
   private func writePages() throws {
     for route in SiteRoutes.concrete {
       let destination = destinationURL(for: route.path)
-      let html = AppLayout(page: route.page, apiBaseURL: options.apiBaseURL).render()
+      let html = AppLayout(routePath: route.path, page: route.page, apiBaseURL: options.apiBaseURL).render()
       try write(html, to: destination)
     }
 
     let rootIndex = options.outputDirectory.appending(path: "index.html", directoryHint: .notDirectory)
-    let fallback = AppLayout(page: .home, apiBaseURL: options.apiBaseURL).render()
+    let fallback = AppLayout(routePath: "/", page: .home, apiBaseURL: options.apiBaseURL).render()
     try write(fallback, to: rootIndex)
     try write(fallback, to: options.outputDirectory.appending(path: "404.html", directoryHint: .notDirectory))
   }

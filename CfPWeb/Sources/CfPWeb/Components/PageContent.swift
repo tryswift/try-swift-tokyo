@@ -2,929 +2,556 @@ import Elementary
 
 struct PageContent: HTML, Sendable {
   let page: CfPPage
+  let language: AppLanguage
+
+  var body: some HTML {
+    switch page {
+    case .home:
+      HomeLanding(language: language)
+    case .guidelines:
+      GuidelinesContent(language: language)
+    case .submit:
+      SubmitContent(language: language)
+    case .workshops:
+      WorkshopsContent(language: language)
+    default:
+      section(.class("hero-card")) {
+        h1 { HTMLText(page.title(for: language)) }
+        p(
+          .id("page-description"),
+          .data("signed-out-copy", value: signedOutDescription ?? pageDescription),
+          .data("signed-in-copy", value: pageDescription)
+        ) { HTMLText(initialPageDescription) }
+      }
+
+      section(.class("status-card")) {
+        h2 { HTMLText(language == .ja ? "セッション" : "Session") }
+        p(.id("auth-status")) {
+          HTMLText(language == .ja ? "サインイン状態を確認しています..." : "Checking sign-in state...")
+        }
+      }
+
+      section(.class("detail-card")) {
+        p(
+          .id("page-detail-copy"),
+          .data("signed-out-copy", value: signedOutDescription ?? pageDescription),
+          .data("signed-in-copy", value: pageDescription)
+        ) { HTMLText(initialPageDescription) }
+      }
+    }
+  }
+
+  private var initialPageDescription: String {
+    signedOutDescription ?? pageDescription
+  }
+
+  private var pageDescription: String {
+    switch page {
+    case .login:
+      return language == .ja
+        ? "GitHubアカウントでログインすると、応募の提出や管理ができます。"
+        : "Sign in with your GitHub account to submit and manage your proposals."
+    case .profile:
+      return language == .ja
+        ? "スピーカー情報やプロフィールを確認、更新できます。"
+        : "Review and update your speaker profile information."
+    case .submit:
+      return language == .ja
+        ? "トークタイトルや概要を入力して、プロポーザルを提出できます。"
+        : "Fill in your talk title, abstract, and details to submit a proposal."
+    case .workshops:
+      return language == .ja
+        ? "ワークショップの確認、応募、結果の確認ができます。"
+        : "Browse workshops, apply, and check your application status."
+    case .myProposals:
+      return language == .ja
+        ? "提案の状態確認、編集、取り下げをここで行います。"
+        : "Review the status of your proposals, edit them, or withdraw them."
+    case .feedback:
+      return language == .ja
+        ? "あなたのセッションに寄せられたフィードバックを確認できます。"
+        : "Check feedback submitted for your sessions."
+    case .organizer:
+      return language == .ja
+        ? "運営メンバー向けの管理機能です。"
+        : "Organizer tools for managing proposals, workshops, and scheduling."
+    default:
+      return page.description(for: language)
+    }
+  }
+
+  private var signedOutDescription: String? {
+    switch page {
+    case .submit:
+      return language == .ja
+        ? "プロポーザルを提出するには、GitHubアカウントでサインインしてください。"
+        : "Sign in with your GitHub account to submit a proposal."
+    case .myProposals:
+      return language == .ja
+        ? "応募内容を確認するには、GitHubアカウントでサインインしてください。"
+        : "Sign in with your GitHub account to review your proposals."
+    case .profile:
+      return language == .ja
+        ? "プロフィールを編集するには、GitHubアカウントでサインインしてください。"
+        : "Sign in with your GitHub account to edit your speaker profile."
+    case .feedback:
+      return language == .ja
+        ? "フィードバックを確認するには、GitHubアカウントでサインインしてください。"
+        : "Sign in with your GitHub account to review feedback for your talks."
+    case .organizer:
+      return language == .ja
+        ? "運営向け画面にアクセスするには、権限のあるアカウントでサインインしてください。"
+        : "Sign in with an organizer account to access admin tools."
+    default:
+      return nil
+    }
+  }
+}
+
+private struct SubmitContent: HTML, Sendable {
+  let language: AppLanguage
+
+  var body: some HTML {
+    section(.class("submit-shell")) {
+      div(.class("submit-shell-inner")) {
+        h1 { HTMLText(language == .ja ? "プロポーザルを提出" : "Submit Your Proposal") }
+        p(.class("submit-lead")) {
+          HTMLText(language == .ja
+            ? "あなたのSwiftの知見を、世界中の開発者と共有しませんか。"
+            : "Share your Swift expertise with developers from around the world.")
+        }
+
+        article(.class("detail-card submit-auth-card")) {
+          p(.class("submit-auth-icon"), .custom(name: "aria-hidden", value: "true")) { "🔐" }
+          h3(
+            .id("page-description"),
+            .data("signed-out-copy", value: language == .ja ? "サインインが必要です" : "Sign In Required"),
+            .data("signed-in-copy", value: language == .ja ? "サインイン済みです" : "You're Signed In")
+          ) {
+            HTMLText(language == .ja ? "サインインが必要です" : "Sign In Required")
+          }
+          p(
+            .id("page-detail-copy"),
+            .class("submit-auth-copy"),
+            .data("signed-out-copy", value: language == .ja
+              ? "GitHubアカウントを連携すると、プロポーザルの提出と応募状況の確認ができます。"
+              : "Connect your GitHub account to submit proposals and track your submissions."),
+            .data("signed-in-copy", value: language == .ja
+              ? "GitHubアカウントとの連携が完了しています。応募状況の確認や管理をこのアカウントで行えます。"
+              : "Your GitHub account is connected. You can use this account to manage your submissions.")
+          ) {
+            HTMLText(language == .ja
+              ? "GitHubアカウントを連携すると、プロポーザルの提出と応募状況の確認ができます。"
+              : "Connect your GitHub account to submit proposals and track your submissions.")
+          }
+          p(.id("auth-status"), .class("submit-auth-status")) {
+            HTMLText(language == .ja ? "サインイン状態を確認しています..." : "Checking sign-in state...")
+          }
+          button(
+            .type(.button),
+            .id("submit-login-button"),
+            .class("button submit-login-button"),
+            .data("login-button", value: "true")
+          ) {
+            HTMLText(language == .ja ? "GitHubでサインイン" : "Sign in with GitHub")
+          }
+        }
+      }
+    }
+  }
+}
+
+private struct WorkshopsContent: HTML, Sendable {
+  let language: AppLanguage
+
+  var body: some HTML {
+    section(.class("workshops-shell")) {
+      div(.class("workshops-shell-inner")) {
+        h1 { HTMLText(language == .ja ? "ワークショップ" : "Workshops") }
+        p(.class("workshops-lead")) {
+          HTMLText(language == .ja
+            ? "try! Swift Tokyo 2026 のワークショップに応募できます。第3希望まで選択でき、割り当ては抽選で決定されます。"
+            : "Apply for try! Swift Tokyo 2026 workshops. You can select up to 3 preferences, and assignments are determined by lottery.")
+        }
+
+        p(.id("workshops-status"), .class("status-banner"), .hidden) {}
+
+        section(.class("workshops-list-section")) {
+          div(.id("workshop-list"), .class("workshops-list")) {}
+        }
+
+        section(.id("workshop-modal"), .class("workshop-modal"), .hidden) {
+          div(.class("workshop-modal-backdrop"), .data("workshop-modal-close", value: "true")) {}
+          div(.class("workshop-modal-dialog"), .custom(name: "role", value: "dialog"), .custom(name: "aria-modal", value: "true")) {
+            button(.type(.button), .class("workshop-modal-close"), .data("workshop-modal-close", value: "true"), .custom(name: "aria-label", value: language == .ja ? "閉じる" : "Close")) { "×" }
+            div(.id("workshop-modal-body"), .class("workshop-modal-body")) {}
+          }
+        }
+
+        div(.class("workshop-cta-row")) {
+          a(.href("#workshop-apply"), .class("button secondary button-link")) {
+            HTMLText(language == .ja ? "ワークショップに応募する" : "Apply for Workshops")
+          }
+          a(.href("#workshop-status"), .class("button ghost button-link workshop-cta-secondary")) {
+            HTMLText(language == .ja ? "応募状況を確認する" : "Check Application Status")
+          }
+        }
+
+        div(.class("workshop-tools-grid")) {
+          article(.id("workshop-apply"), .class("detail-card workshop-tool-card")) {
+            h3 { HTMLText(language == .ja ? "ワークショップに応募する" : "Apply for Workshops") }
+            p {
+              HTMLText(language == .ja
+                ? "チケット購入時に使用したメールアドレスを入力して、応募手続きを開始してください。"
+                : "Enter the email address you used for your ticket to begin your workshop application.")
+            }
+
+            form(.id("workshop-verify-form"), .class("workshop-form")) {
+              label(.class("form-field")) {
+                span(.class("field-label")) { HTMLText(language == .ja ? "メールアドレス" : "Email Address") }
+                input(.type(.email), .name("email"), .required, .placeholder(language == .ja ? "you@example.com" : "you@example.com"))
+              }
+              div(.class("form-actions")) {
+                button(.type(.submit), .class("button secondary")) {
+                  HTMLText(language == .ja ? "チケットを確認" : "Verify Ticket")
+                }
+              }
+            }
+
+            p(.id("workshop-verify-status"), .class("inline-status"), .hidden) {}
+
+            form(.id("workshop-apply-form"), .class("workshop-form"), .hidden) {
+              input(.type(.hidden), .name("verifyToken"))
+              label(.class("form-field")) {
+                span(.class("field-label")) { HTMLText(language == .ja ? "参加者名" : "Applicant Name") }
+                input(.type(.text), .name("applicantName"), .required)
+              }
+              label(.class("form-field")) {
+                span(.class("field-label")) { HTMLText(language == .ja ? "第1希望" : "First Choice") }
+                select(.name("firstChoiceID"), .id("workshop-first-choice"), .required) {}
+              }
+              label(.class("form-field")) {
+                span(.class("field-label")) { HTMLText(language == .ja ? "第2希望" : "Second Choice") }
+                select(.name("secondChoiceID"), .id("workshop-second-choice")) {}
+              }
+              label(.class("form-field")) {
+                span(.class("field-label")) { HTMLText(language == .ja ? "第3希望" : "Third Choice") }
+                select(.name("thirdChoiceID"), .id("workshop-third-choice")) {}
+              }
+              div(.class("form-actions")) {
+                button(.type(.submit), .class("button secondary")) {
+                  HTMLText(language == .ja ? "応募を保存" : "Save Application")
+                }
+              }
+            }
+          }
+
+          article(.id("workshop-status"), .class("detail-card workshop-tool-card")) {
+            h3 { HTMLText(language == .ja ? "応募状況を確認する" : "Check Application Status") }
+            p {
+              HTMLText(language == .ja
+                ? "メールアドレスを入力すると、現在の応募状況や割り当て結果を確認できます。"
+                : "Enter your email address to check your current workshop application or assignment.")
+            }
+
+            form(.id("workshop-status-form"), .class("workshop-form")) {
+              label(.class("form-field")) {
+                span(.class("field-label")) { HTMLText(language == .ja ? "メールアドレス" : "Email Address") }
+                input(.type(.email), .name("email"), .required, .placeholder(language == .ja ? "you@example.com" : "you@example.com"))
+              }
+              div(.class("form-actions")) {
+                button(.type(.submit), .class("button secondary")) {
+                  HTMLText(language == .ja ? "状況を確認" : "Check Status")
+                }
+              }
+            }
+
+            p(.id("workshop-status-check-status"), .class("inline-status"), .hidden) {}
+            div(.id("workshop-status-result"), .class("workshop-status-result")) {}
+          }
+        }
+      }
+    }
+  }
+}
+
+private struct HomeLanding: HTML, Sendable {
+  let language: AppLanguage
+
+  var body: some HTML {
+    section(.class("hero-card hero-landing")) {
+      div(.class("section-inner")) {
+        p(.class("eyebrow")) { "try! Swift Tokyo 2026" }
+        h1 { HTMLText(language == .ja ? "プロポーザル募集" : "Call for Proposals") }
+        p(.class("hero-copy")) {
+          HTMLText(language == .ja
+            ? "あなたのSwiftの知識を世界中の開発者と共有しませんか？try! Swift Tokyo 2026でトークプロポーザルを提出してください！"
+            : "Share your Swift expertise with developers from around the world. Submit your talk proposal for try! Swift Tokyo 2026!")
+        }
+        div(.class("hero-actions")) {
+          a(.href(CfPPage.submit.path(for: language)), .class("button secondary button-link")) {
+            HTMLText(language == .ja ? "プロポーザルを提出する" : "Submit Your Proposal")
+          }
+          a(.href(CfPPage.guidelines.path(for: language)), .class("button ghost button-link")) {
+            HTMLText(language == .ja ? "ガイドラインを見る" : "View Guidelines")
+          }
+          a(.href(CfPPage.myProposals.path(for: language)), .class("button ghost button-link")) {
+            HTMLText(language == .ja ? "応募履歴" : "My Proposals")
+          }
+        }
+      }
+    }
+
+    section(.class("content-section")) {
+      div(.class("section-inner")) {
+        h2 { HTMLText(language == .ja ? "重要な日程" : "Important Dates") }
+        div(.class("card-grid dates-grid")) {
+          for item in importantDates {
+            article(.class("detail-card center-card")) {
+              h5 { HTMLText(item.title) }
+              p(.class("date-copy")) { HTMLText(item.date) }
+              if item.emoji != nil {
+                p(.class("date-emoji")) { HTMLText(item.emoji!) }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    section(.class("content-section alt-section")) {
+      div(.class("section-inner")) {
+        h2 { HTMLText(language == .ja ? "トークの形式" : "Talk Formats") }
+        div(.class("card-grid formats-grid")) {
+          for item in talkFormats {
+            article(.class("detail-card")) {
+              h3 {
+                if let emoji = item.emoji {
+                  span(.class("title-emoji")) { HTMLText(emoji) }
+                }
+                HTMLText(item.title)
+              }
+              p(.class("format-duration")) { HTMLText(item.duration) }
+              p { HTMLText(item.description) }
+            }
+          }
+        }
+      }
+    }
+
+    section(.class("content-section")) {
+      div(.class("section-inner")) {
+        h2 { HTMLText(language == .ja ? "募集しているトピック" : "Topics We're Looking For") }
+        div(.class("card-grid info-grid")) {
+          for item in topics {
+            article(.class("detail-card")) {
+              h5 { HTMLText(item.title) }
+              p { HTMLText(item.description) }
+            }
+          }
+        }
+      }
+    }
+
+    section(.class("cta-card")) {
+      div(.class("cta-card-inner")) {
+      h2 { HTMLText(language == .ja ? "あなたの知識を共有しませんか？" : "Ready to Share Your Knowledge?") }
+      p {
+        HTMLText(language == .ja
+          ? "経験レベルに関係なく、すべてのスピーカーを歓迎します。初めての登壇者の方も、ぜひご応募ください！"
+          : "We welcome speakers of all experience levels. First-time speakers are encouraged to apply!")
+      }
+      a(.href(CfPPage.submit.path(for: language)), .class("button secondary button-link")) {
+        HTMLText(language == .ja ? "プロポーザルを提出する" : "Submit Your Proposal")
+      }
+      }
+    }
+  }
+
+  private var importantDates: [(title: String, date: String, emoji: String?)] {
+    language == .ja
+      ? [
+        ("CfP開始", "2026年1月15日", "📅"),
+        ("応募締切", "2026年2月1日", "⏰"),
+        ("結果発表", "2026年2月8日", "📣"),
+        ("カンファレンス", "2026年4月12-14日", "🎤"),
+      ]
+      : [
+        ("CfP Opens", "January 15, 2026", "📅"),
+        ("Submission Deadline", "February 1, 2026", "⏰"),
+        ("Notifications", "February 8, 2026", "📣"),
+        ("Conference", "April 12-14, 2026", "🎤"),
+      ]
+  }
+
+  private var talkFormats: [(emoji: String?, title: String, duration: String, description: String)] {
+    language == .ja
+      ? [
+        ("🎯", "レギュラートーク", "20分", "特定のトピックについて詳しく解説し、具体的な例やライブデモを交えてお話しください。Swiftの開発に関する包括的な知識を共有するのに最適です。"),
+        ("⚡", "ライトニングトーク", "5分", "1つのアイデア、ヒント、ツールに焦点を当てた短くて集中したプレゼンテーションです。初めての登壇者や、ちょっとしたアイデアの共有に最適です！"),
+      ]
+      : [
+        ("🎯", "Regular Talk", "20 minutes", "Deep dive into a specific topic with detailed examples and live demos. Perfect for sharing comprehensive knowledge about Swift development."),
+        ("⚡", "Lightning Talk", "5 minutes", "Quick, focused presentation on a single idea, tip, or tool. Great for first-time speakers or sharing quick wins!"),
+      ]
+  }
+
+  private var topics: [(title: String, description: String)] {
+    language == .ja
+      ? [
+        ("Swift言語", "新機能、ベストプラクティス、言語の進化"),
+        ("SwiftUI", "モダンなUI開発、アニメーション、アーキテクチャ"),
+        ("iOS/macOS/visionOS", "プラットフォーム固有の開発とAPI"),
+        ("サーバーサイドSwift", "Vapor、バックエンド開発、クラウドデプロイメント"),
+        ("テストと品質", "ユニットテスト、UIテスト、コード品質"),
+        ("ツールと生産性", "Xcode、デバッグ、開発者体験"),
+      ]
+      : [
+        ("Swift Language", "New features, best practices, and language evolution"),
+        ("SwiftUI", "Modern UI development, animations, and architecture"),
+        ("iOS/macOS/visionOS", "Platform-specific development and APIs"),
+        ("Server-Side Swift", "Vapor, backend development, and cloud deployment"),
+        ("Testing & Quality", "Unit testing, UI testing, and code quality"),
+        ("Tools & Productivity", "Xcode, debugging, and developer experience"),
+      ]
+  }
+}
+
+private struct GuidelinesContent: HTML, Sendable {
+  let language: AppLanguage
 
   var body: some HTML {
     section(.class("hero-card")) {
-      h1 { HTMLText(page.title) }
-      p(.id("page-description")) { HTMLText(description) }
+      h1 { HTMLText(language == .ja ? "応募ガイドライン" : "Submission Guidelines") }
+      p(.id("page-description")) {
+        HTMLText(language == .ja
+          ? "try! Swift Tokyo 2026にトークプロポーザルを提出するために必要な情報をまとめました。"
+          : "Everything you need to know about submitting a talk proposal for try! Swift Tokyo 2026.")
+      }
     }
 
-    section(.class("status-card")) {
-      h2 { "Session" }
-      p(.id("auth-status")) { "Checking sign-in state..." }
-    }
-
-    switch page {
-    case .home:
-      section(.class("card-grid")) {
-        FeatureCard(
-          title: "API-driven auth",
-          copy: "This frontend reads session state from /api/v1/auth/me and never inspects auth cookies directly."
-        )
-        FeatureCard(
-          title: "Speaker workflows",
-          copy: "Proposal creation, update, withdraw, and profile updates are intended to move to API-backed requests."
-        )
-        FeatureCard(
-          title: "Organizer workflows",
-          copy: "Organizer proposal and timetable operations now have dedicated /api/v1/admin endpoints."
-        )
-      }
-    case .guidelines:
-      section(.class("detail-card")) {
-        p { "This page is now an independent frontend route and can later be enriched without coupling to the API server renderer." }
-      }
-    case .login:
-      section(.class("detail-card")) {
-        p { "Login starts at the API domain and returns back to the current web app route." }
-      }
-    case .profile:
-      section(.class("page-grid")) {
+    section(.class("guidelines-stack")) {
+      for section in sections {
         article(.class("detail-card")) {
-          h3 { "Speaker Profile" }
-          p { "This page reads and updates your profile through /api/v1/auth/me." }
-          FormStatus(id: "profile-status")
-          form(.id("profile-form"), .class("app-form")) {
-            div(.class("form-grid")) {
-              FormField(
-                label: "Display Name",
-                field: input(.type(.text), .name("displayName"))
-              )
-              FormField(
-                label: "Email",
-                field: input(.type(.email), .name("email"))
-              )
-            }
-            FormField(label: "Bio", field: textarea(.name("bio"), .custom(name: "rows", value: "6")) {})
-            div(.class("form-grid")) {
-              FormField(
-                label: "Website URL",
-                field: input(.type(.url), .name("url"))
-              )
-              FormField(
-                label: "Organization",
-                field: input(.type(.text), .name("organization"))
-              )
-            }
-            FormField(
-              label: "Avatar URL",
-              field: input(.type(.url), .name("avatarURL"))
-            )
-            div(.class("form-actions")) {
-              button(.type(.submit), .class("button secondary")) { "Save Profile" }
+          h2 { HTMLText(section.title) }
+          if let intro = section.intro {
+            p { HTMLText(intro) }
+          }
+          if !section.bullets.isEmpty {
+            ul(.class("plain-list")) {
+              for bullet in section.bullets {
+                li { HTMLText(bullet) }
+              }
             }
           }
-        }
-        article(.class("detail-card")) {
-          h3 { "Why this matters" }
-          ul(.class("plain-list")) {
-            li { "The web app no longer needs to read cookies or server-side session state." }
-            li { "Speaker defaults for submit pages can come from this profile response." }
-            li { "The API remains the single source of truth for auth and user data." }
-          }
-        }
-      }
-    case .submit:
-      section(.class("page-grid")) {
-        article(.class("detail-card")) {
-          h3 { "Submit a Proposal" }
-          p { "This form posts directly to the API. It uses the active conference list from /api/v1/conferences/open." }
-          FormStatus(id: "submit-status")
-          form(.id("submit-form"), .class("app-form")) {
-            div(.class("form-grid")) {
-              FormField(
-                label: "Conference",
-                field: select(.name("conferencePath"), .id("submit-conference-path")) {}
-              )
-              FormField(
-                label: "Talk Duration",
-                field: select(.name("talkDuration"), .required, .id("submit-talk-duration")) {
-                  option(.value("20min")) { "20 minutes" }
-                  option(.value("LT")) { "Lightning Talk" }
-                  option(.value("workshop")) { "Workshop" }
-                  option(.value("invited")) { "Invited" }
+          if !section.items.isEmpty {
+            div(.class("guideline-items")) {
+              for item in section.items {
+                div(.class("guideline-item")) {
+                  h4 { HTMLText(item.title) }
+                  p { HTMLText(item.copy) }
                 }
-              )
-            }
-            FormField(label: "Title", field: input(.type(.text), .name("title"), .required))
-            FormField(
-              label: "Abstract",
-              field: textarea(.name("abstract"), .required, .custom(name: "rows", value: "5")) {}
-            )
-            FormField(
-              label: "Talk Detail",
-              field: textarea(.name("talkDetail"), .required, .custom(name: "rows", value: "8")) {}
-            )
-            WorkshopFields(prefix: "submit")
-            div(.class("form-grid")) {
-              FormField(
-                label: "Speaker Name",
-                field: input(.type(.text), .name("speakerName"), .required)
-              )
-              FormField(
-                label: "Speaker Email",
-                field: input(.type(.email), .name("speakerEmail"), .required)
-              )
-            }
-            FormField(label: "Bio", field: textarea(.name("bio"), .required, .custom(name: "rows", value: "6")) {})
-            div(.class("form-grid")) {
-              FormField(
-                label: "Avatar URL",
-                field: input(.type(.url), .name("iconURL"))
-              )
-              FormField(
-                label: "Notes",
-                field: input(.type(.text), .name("notes"))
-              )
-            }
-            div(.class("form-actions")) {
-              button(.type(.submit), .class("button secondary")) { "Submit Proposal" }
-            }
-          }
-        }
-        article(.class("detail-card")) {
-          h3 { "Submission Notes" }
-          ul(.class("plain-list")) {
-            li { "Unauthenticated visitors will be asked to sign in first." }
-            li { "The API owns validation, authorization, and proposal persistence." }
-            li { "The web app now handles only page state, form input, and errors." }
-          }
-        }
-      }
-    case .workshops:
-      section(.class("page-grid")) {
-        article(.class("detail-card")) {
-          div(.class("section-heading")) {
-            h3 { "Workshop Catalog" }
-            button(.type(.button), .class("button ghost"), .id("workshops-refresh")) { "Refresh" }
-          }
-          FormStatus(id: "workshops-status")
-          div(.id("workshop-list"), .class("proposal-list")) {}
-        }
-        article(.class("detail-card")) {
-          h3 { "Verify Ticket" }
-          p { "Workshop applications stay API-driven. First verify your conference ticket, then choose your workshop." }
-          FormStatus(id: "workshop-verify-status")
-          form(.id("workshop-verify-form"), .class("app-form")) {
-            FormField(
-              label: "Ticket Email",
-              field: input(.type(.email), .name("email"), .required)
-            )
-            div(.class("form-actions")) {
-              button(.type(.submit), .class("button secondary")) { "Verify Ticket" }
-            }
-          }
-          form(
-            .id("workshop-apply-form"),
-            .class("app-form"),
-            .custom(name: "hidden", value: "hidden")
-          ) {
-            input(.type(.hidden), .name("verifyToken"))
-            FormField(
-              label: "Applicant Name",
-              field: input(.type(.text), .name("applicantName"), .required)
-            )
-            FormField(
-              label: "First Choice",
-              field: select(.name("firstChoiceID"), .required, .id("workshop-first-choice")) {}
-            )
-            FormField(
-              label: "Second Choice",
-              field: select(.name("secondChoiceID"), .id("workshop-second-choice")) {}
-            )
-            FormField(
-              label: "Third Choice",
-              field: select(.name("thirdChoiceID"), .id("workshop-third-choice")) {}
-            )
-            div(.class("form-actions")) {
-              button(.type(.submit), .class("button secondary")) { "Apply for Workshop" }
+              }
             }
           }
         }
       }
-      section(.class("page-grid")) {
-        article(.class("detail-card")) {
-          h3 { "Check Application Status" }
-          FormStatus(id: "workshop-status-check-status")
-          form(.id("workshop-status-form"), .class("app-form")) {
-            FormField(
-              label: "Application Email",
-              field: input(.type(.email), .name("email"), .required)
-            )
-            div(.class("form-actions")) {
-              button(.type(.submit), .class("button ghost")) { "Check Status" }
-            }
-          }
-        }
-        article(.class("detail-card")) {
-          h3 { "Application Snapshot" }
-          div(.id("workshop-status-result"), .class("empty-state")) {
-            p { "Verify your ticket or check your status to load your current workshop application." }
-          }
-        }
-      }
-    case .myProposals:
-      section(.class("page-grid")) {
-        article(.class("detail-card")) {
-          div(.class("section-heading")) {
-            h3 { "My Proposals" }
-            button(.type(.button), .class("button ghost"), .id("my-proposals-refresh")) { "Refresh" }
-          }
-          FormStatus(id: "my-proposals-status")
-          div(.id("my-proposals-empty"), .class("empty-state")) {
-            p { "Your proposals will appear here after sign-in." }
-          }
-          div(.id("my-proposals-list"), .class("proposal-list")) {}
-        }
-        article(.class("detail-card")) {
-          h3 { "Edit Proposal" }
-          p { "Select a proposal from the list to edit or withdraw it." }
-          FormStatus(id: "proposal-editor-status")
-          form(
-            .id("proposal-editor-form"),
-            .class("app-form"),
-            .custom(name: "hidden", value: "hidden")
-          ) {
-            input(.type(.hidden), .name("proposalID"), .id("editor-proposal-id"))
-            div(.class("form-grid")) {
-              FormField(
-                label: "Talk Duration",
-                field: select(.name("talkDuration"), .required) {
-                  option(.value("20min")) { "20 minutes" }
-                  option(.value("LT")) { "Lightning Talk" }
-                  option(.value("workshop")) { "Workshop" }
-                  option(.value("invited")) { "Invited" }
-                }
-              )
-              FormField(
-                label: "Avatar URL",
-                field: input(.type(.url), .name("iconURL"))
-              )
-            }
-            FormField(label: "Title", field: input(.type(.text), .name("title"), .required))
-            FormField(
-              label: "Abstract",
-              field: textarea(.name("abstract"), .required, .custom(name: "rows", value: "5")) {}
-            )
-            FormField(
-              label: "Talk Detail",
-              field: textarea(.name("talkDetail"), .required, .custom(name: "rows", value: "8")) {}
-            )
-            WorkshopFields(prefix: "speaker-edit")
-            div(.class("form-grid")) {
-              FormField(
-                label: "Speaker Name",
-                field: input(.type(.text), .name("speakerName"), .required)
-              )
-              FormField(
-                label: "Speaker Email",
-                field: input(.type(.email), .name("speakerEmail"), .required)
-              )
-            }
-            FormField(label: "Bio", field: textarea(.name("bio"), .required, .custom(name: "rows", value: "6")) {})
-            FormField(label: "Notes", field: input(.type(.text), .name("notes")))
-            div(.class("form-actions split")) {
-              button(.type(.submit), .class("button secondary")) { "Save Changes" }
-              button(.type(.button), .class("button danger"), .id("proposal-withdraw-button")) { "Withdraw Proposal" }
-            }
-          }
-          div(.id("proposal-editor-placeholder"), .class("empty-state")) {
-            p { "Choose a proposal to load it into the editor." }
-          }
-        }
-      }
-    case .feedback:
-      section(.class("page-grid")) {
-        article(.class("detail-card")) {
-          div(.class("section-heading")) {
-            h3 { "Talk Feedback" }
-            button(.type(.button), .class("button ghost"), .id("feedback-refresh")) { "Refresh" }
-          }
-          FormStatus(id: "feedback-status")
-          div(.id("feedback-empty"), .class("empty-state")) {
-            p { "Feedback for your talks will appear here." }
-          }
-          div(.id("feedback-list"), .class("proposal-list")) {}
-        }
-        article(.class("detail-card")) {
-          h3 { "Feedback Flow" }
-          ul(.class("plain-list")) {
-            li { "Audience comments stay anonymous, but speakers can review them after sign-in." }
-            li { "The page uses /api/v1/feedback/my-talks as the single source of truth." }
-            li { "No server-rendered feedback page is needed once this route is in place." }
-          }
-        }
-      }
-    case .organizer:
-      section(.class("organizer-stack")) {
-        div(.class("page-grid")) {
-          article(.class("detail-card")) {
-            div(.class("section-heading")) {
-              h3 { "Organizer Proposal Desk" }
-              button(.type(.button), .class("button ghost"), .id("organizer-refresh")) { "Refresh" }
-            }
-            FormStatus(id: "organizer-status")
-            div(.class("toolbar-row")) {
-              FormField(
-                label: "Conference Filter",
-                field: select(.id("organizer-conference-filter")) {}
-              )
-            }
-            div(.id("organizer-proposals"), .class("proposal-list")) {}
-          }
-          article(.class("detail-card")) {
-            h3 { "Create Proposal as Organizer" }
-            FormStatus(id: "organizer-create-status")
-            form(.id("organizer-create-form"), .class("app-form")) {
-              div(.class("form-grid")) {
-                FormField(
-                  label: "Conference",
-                  field: select(.name("conferenceId"), .required, .id("organizer-conference-id")) {}
-                )
-                FormField(
-                  label: "Talk Duration",
-                  field: select(.name("talkDuration"), .required) {
-                    option(.value("20min")) { "20 minutes" }
-                    option(.value("LT")) { "Lightning Talk" }
-                    option(.value("workshop")) { "Workshop" }
-                    option(.value("invited")) { "Invited" }
-                  }
-                )
-              }
-              FormField(
-                label: "GitHub Username",
-                field: input(.type(.text), .name("githubUsername"), .id("organizer-github-username"))
-              )
-              FormField(label: "Title", field: input(.type(.text), .name("title"), .required))
-              FormField(
-                label: "Abstract",
-                field: textarea(.name("abstract"), .required, .custom(name: "rows", value: "4")) {}
-              )
-              FormField(
-                label: "Talk Detail",
-                field: textarea(.name("talkDetail"), .required, .custom(name: "rows", value: "6")) {}
-              )
-              WorkshopFields(prefix: "organizer-create")
-              div(.class("form-grid")) {
-                FormField(
-                  label: "Speaker Name",
-                  field: input(.type(.text), .name("speakerName"), .required, .id("organizer-speaker-name"))
-                )
-                FormField(
-                  label: "Speaker Email",
-                  field: input(.type(.email), .name("speakerEmail"), .required, .id("organizer-speaker-email"))
-                )
-              }
-              FormField(
-                label: "Bio",
-                field: textarea(.name("bio"), .required, .custom(name: "rows", value: "5"), .id("organizer-speaker-bio")) {}
-              )
-              div(.class("form-grid")) {
-                FormField(
-                  label: "Avatar URL",
-                  field: input(.type(.url), .name("iconURL"), .id("organizer-speaker-avatar"))
-                )
-                FormField(
-                  label: "Notes",
-                  field: input(.type(.text), .name("notes"))
-                )
-              }
-              div(.class("form-actions split")) {
-                button(.type(.button), .class("button ghost"), .id("organizer-lookup-button")) { "Lookup User" }
-                button(.type(.submit), .class("button secondary")) { "Create Proposal" }
-              }
-            }
-          }
-        }
-        div(.class("page-grid")) {
-          article(.class("detail-card")) {
-            h3 { "Import and Export" }
-            FormStatus(id: "organizer-import-status")
-            form(
-              .id("organizer-import-form"),
-              .class("app-form"),
-              .custom(name: "enctype", value: "multipart/form-data")
-            ) {
-              div(.class("form-grid")) {
-                FormField(
-                  label: "Conference",
-                  field: select(.name("conferenceId"), .required, .id("organizer-import-conference-id")) {}
-                )
-                FormField(
-                  label: "GitHub Username Override",
-                  field: input(.type(.text), .name("githubUsername"))
-                )
-              }
-              FormField(
-                label: "Proposal File",
-                field: input(.type(.file), .name("csvFile"), .accept(".csv,.json"), .required)
-              )
-              label(.class("checkbox-row")) {
-                input(.type(.checkbox), .name("skipDuplicates"))
-                span { "Skip rows that already exist" }
-              }
-              div(.class("form-actions")) {
-                button(.type(.submit), .class("button secondary")) { "Import File" }
-              }
-            }
-            div(.class("export-links")) {
-              a(.href("#"), .class("button ghost"), .id("export-proposals-link")) { "Export Proposals CSV" }
-              a(.href("#"), .class("button ghost"), .id("export-speakers-link")) { "Export Speakers JSON" }
-              a(.href("#"), .class("button ghost"), .id("export-timetable-link")) { "Export Timetable JSON" }
-            }
-          }
-          article(.class("detail-card")) {
-            h3 { "Timetable" }
-            FormStatus(id: "organizer-timetable-status")
-            form(.id("organizer-slot-form"), .class("app-form")) {
-              div(.class("form-grid")) {
-                FormField(
-                  label: "Conference",
-                  field: select(.name("conferenceId"), .required, .id("organizer-slot-conference-id")) {}
-                )
-                FormField(
-                  label: "Day",
-                  field: input(.type(.number), .name("day"), .required, .value("1"), .custom(name: "min", value: "1"))
-                )
-              }
-              div(.class("form-grid")) {
-                FormField(
-                  label: "Slot Type",
-                  field: select(.name("slotType"), .required) {
-                    option(.value("talk")) { "Talk" }
-                    option(.value("lightning_talk")) { "Lightning Talk" }
-                    option(.value("break")) { "Break" }
-                    option(.value("lunch")) { "Lunch" }
-                    option(.value("opening")) { "Opening" }
-                    option(.value("closing")) { "Closing" }
-                    option(.value("party")) { "Party" }
-                    option(.value("custom")) { "Custom" }
-                  }
-                )
-                FormField(
-                  label: "Proposal",
-                  field: select(.name("proposalId"), .id("organizer-slot-proposal-id")) {}
-                )
-              }
-              div(.class("form-grid")) {
-                FormField(
-                  label: "Start Time",
-                  field: input(.type(.datetimeLocal), .name("startTime"), .required)
-                )
-                FormField(
-                  label: "End Time",
-                  field: input(.type(.datetimeLocal), .name("endTime"))
-                )
-              }
-              div(.class("form-grid")) {
-                FormField(
-                  label: "Custom Title",
-                  field: input(.type(.text), .name("customTitle"))
-                )
-                FormField(
-                  label: "Place",
-                  field: input(.type(.text), .name("place"))
-                )
-              }
-              div(.class("form-actions")) {
-                button(.type(.submit), .class("button secondary")) { "Add Timetable Slot" }
-              }
-            }
-            div(.class("toolbar-row")) {
-              FormField(
-                label: "Timetable Conference",
-                field: select(.id("organizer-slot-conference-filter")) {}
-              )
-            }
-            div(.id("organizer-slot-list"), .class("proposal-list compact-list")) {}
-          }
-        }
-        article(.class("detail-card")) {
-          div(.class("section-heading")) {
-            h3 { "Edit Selected Slot" }
-            button(.type(.button), .class("button ghost"), .id("organizer-slot-editor-reset")) { "Clear" }
-          }
-          FormStatus(id: "organizer-slot-editor-status")
-          form(
-            .id("organizer-slot-editor-form"),
-            .class("app-form"),
-            .custom(name: "hidden", value: "hidden")
-          ) {
-            input(.type(.hidden), .name("slotID"))
-            div(.class("form-grid")) {
-              FormField(
-                label: "Day",
-                field: input(.type(.number), .name("day"), .required, .custom(name: "min", value: "1"))
-              )
-              FormField(
-                label: "Slot Type",
-                field: select(.name("slotType"), .required) {
-                  option(.value("talk")) { "Talk" }
-                  option(.value("lightning_talk")) { "Lightning Talk" }
-                  option(.value("break")) { "Break" }
-                  option(.value("lunch")) { "Lunch" }
-                  option(.value("opening")) { "Opening" }
-                  option(.value("closing")) { "Closing" }
-                  option(.value("party")) { "Party" }
-                  option(.value("custom")) { "Custom" }
-                }
-              )
-            }
-            div(.class("form-grid")) {
-              FormField(
-                label: "Proposal",
-                field: select(.name("proposalId"), .id("organizer-slot-editor-proposal-id")) {}
-              )
-              FormField(
-                label: "Place",
-                field: input(.type(.text), .name("place"))
-              )
-            }
-            div(.class("form-grid")) {
-              FormField(
-                label: "Start Time",
-                field: input(.type(.datetimeLocal), .name("startTime"))
-              )
-              FormField(
-                label: "End Time",
-                field: input(.type(.datetimeLocal), .name("endTime"))
-              )
-            }
-            FormField(
-              label: "Custom Title",
-              field: input(.type(.text), .name("customTitle"))
-            )
-            div(.class("form-actions split")) {
-              button(.type(.submit), .class("button secondary")) { "Save Slot" }
-              button(.type(.button), .class("button ghost"), .id("organizer-slot-reorder-button")) { "Apply Day Order" }
-            }
-          }
-          div(.id("organizer-slot-editor-placeholder"), .class("empty-state")) {
-            p { "Choose a slot from the timetable list to edit its time, type, or order." }
-          }
-        }
-        article(.class("detail-card")) {
-          div(.class("section-heading")) {
-            h3 { "Edit Selected Proposal" }
-            button(.type(.button), .class("button ghost"), .id("organizer-editor-reset")) { "Clear" }
-          }
-          p { "Select a proposal from the organizer list to load the full editor." }
-          FormStatus(id: "organizer-editor-status")
-          form(
-            .id("organizer-editor-form"),
-            .class("app-form"),
-            .custom(name: "hidden", value: "hidden")
-          ) {
-            input(.type(.hidden), .name("proposalID"))
-            div(.class("form-grid")) {
-              FormField(
-                label: "Conference",
-                field: select(.name("conferenceId"), .required, .id("organizer-editor-conference-id")) {}
-              )
-              FormField(
-                label: "Talk Duration",
-                field: select(.name("talkDuration"), .required) {
-                  option(.value("20min")) { "20 minutes" }
-                  option(.value("LT")) { "Lightning Talk" }
-                  option(.value("workshop")) { "Workshop" }
-                  option(.value("invited")) { "Invited" }
-                }
-              )
-            }
-            div(.class("form-grid")) {
-              FormField(
-                label: "GitHub Username",
-                field: input(.type(.text), .name("githubUsername"))
-              )
-              FormField(
-                label: "Avatar URL",
-                field: input(.type(.url), .name("iconURL"))
-              )
-            }
-            FormField(label: "Title", field: input(.type(.text), .name("title"), .required))
-            FormField(
-              label: "Title (JA)",
-              field: input(.type(.text), .name("titleJA"))
-            )
-            FormField(
-              label: "Abstract",
-              field: textarea(.name("abstract"), .required, .custom(name: "rows", value: "4")) {}
-            )
-            FormField(
-              label: "Abstract (JA)",
-              field: textarea(.name("abstractJA"), .custom(name: "rows", value: "4")) {}
-            )
-            FormField(
-              label: "Talk Detail",
-              field: textarea(.name("talkDetail"), .required, .custom(name: "rows", value: "7")) {}
-            )
-            WorkshopFields(prefix: "organizer-edit", includeJapaneseFields: true)
-            div(.class("form-grid")) {
-              FormField(
-                label: "Speaker Name",
-                field: input(.type(.text), .name("speakerName"), .required)
-              )
-              FormField(
-                label: "Speaker Email",
-                field: input(.type(.email), .name("speakerEmail"), .required)
-              )
-            }
-            div(.class("form-grid")) {
-              FormField(
-                label: "Job Title",
-                field: input(.type(.text), .name("jobTitle"))
-              )
-              FormField(
-                label: "Job Title (JA)",
-                field: input(.type(.text), .name("jobTitleJa"))
-              )
-            }
-            FormField(label: "Bio", field: textarea(.name("bio"), .required, .custom(name: "rows", value: "5")) {})
-            FormField(label: "Bio (JA)", field: textarea(.name("bioJa"), .custom(name: "rows", value: "5")) {})
-            FormField(label: "Notes", field: input(.type(.text), .name("notes")))
-            div(.class("form-actions split")) {
-              button(.type(.submit), .class("button secondary")) { "Save Proposal" }
-              button(.type(.button), .class("button danger"), .id("organizer-delete-proposal-button")) { "Delete Proposal" }
-            }
-          }
-          div(.id("organizer-editor-placeholder"), .class("empty-state")) {
-            p { "Choose a proposal from the desk to edit it here." }
-          }
-        }
-        div(.class("page-grid")) {
-          article(.class("detail-card")) {
-            div(.class("section-heading")) {
-              h3 { "Workshop Management" }
-              button(.type(.button), .class("button ghost"), .id("organizer-workshops-refresh")) { "Refresh" }
-            }
-            FormStatus(id: "organizer-workshops-status")
-            div(.id("organizer-workshops-list"), .class("proposal-list")) {}
-            div(.class("form-actions split")) {
-              button(.type(.button), .class("button secondary"), .id("organizer-workshop-lottery-button")) { "Run Lottery" }
-              button(.type(.button), .class("button ghost"), .id("organizer-workshop-send-tickets-button")) { "Send Luma Tickets" }
-            }
-          }
-          article(.class("detail-card")) {
-            div(.class("section-heading")) {
-              h3 { "Workshop Applications" }
-              button(.type(.button), .class("button ghost"), .id("organizer-workshop-applications-refresh")) { "Refresh" }
-            }
-            FormStatus(id: "organizer-workshop-applications-status")
-            div(.class("toolbar-row")) {
-              FormField(
-                label: "Workshop Filter",
-                field: select(.id("organizer-workshop-filter")) {}
-              )
-            }
-            div(.id("organizer-workshop-applications-list"), .class("proposal-list compact-list")) {}
-          }
-        }
-        article(.class("detail-card")) {
-          div(.class("section-heading")) {
-            h3 { "Workshop Lottery Results" }
-            button(.type(.button), .class("button ghost"), .id("organizer-workshop-results-refresh")) { "Refresh" }
-          }
-          FormStatus(id: "organizer-workshop-results-status")
-          div(.id("organizer-workshop-results-list"), .class("proposal-list compact-list")) {}
+
+      section(.class("detail-card cta-card")) {
+        a(.href(CfPPage.submit.path(for: language)), .class("button secondary button-link")) {
+          HTMLText(language == .ja ? "プロポーザルを提出" : "Submit Your Proposal")
         }
       }
     }
   }
 
-  private var description: String {
-    switch page {
-    case .home:
-      return "Standalone CfP frontend served separately from the API."
-    case .guidelines:
-      return "Public guidance lives here, while proposal and auth logic stay on the API."
-    case .login:
-      return "Authentication starts here but is executed entirely by api.tryswift.jp."
-    case .profile:
-      return "Profile data is loaded from the API and updated without relying on legacy SSR routes."
-    case .submit:
-      return "Speaker submission flow should call the API rather than post back to Server-side CfPRoutes."
-    case .workshops:
-      return "Workshop verification, application, and status checks now run through /api/v1/workshops."
-    case .myProposals:
-      return "Proposal status, edits, and withdraw actions should all run through /api/v1."
-    case .feedback:
-      return "Feedback remains a normal app page while data is loaded cross-subdomain from the API."
-    case .organizer:
-      return "Organizer tools belong in the frontend, but authorization and business rules remain API-owned."
+  private var sections: [(title: String, intro: String?, bullets: [String], items: [(title: String, copy: String)])] {
+    if language == .ja {
+      return [
+        ("私たちが求めているもの", nil, [
+          "他の主要なカンファレンスで発表されていないオリジナルコンテンツ",
+          "参加者が実際の仕事に活かせる実践的な知識",
+          "聴衆にとって明確な学習成果",
+          "デモを含む、よく構成されたプレゼンテーション",
+          "Swiftコミュニティに関連するトピック",
+        ], []),
+        ("トーク形式", nil, [], [
+          ("レギュラートーク（20分）", "トピックを深く掘り下げる包括的なセッションです。コンテキスト、例、重要なポイントを含める時間があります。ライブコーディングやデモも歓迎します！"),
+          ("ライトニングトーク（5分）", "1つのコンセプト、ツール、またはヒントをカバーする、焦点を絞った短いプレゼンテーションです。新しいアイデアの紹介や、ちょっとした発見の共有に最適です。"),
+        ]),
+        ("プロポーザルの要件", nil, [], [
+          ("タイトル", "トーク内容を正確に表す、明確で説明的なタイトル。"),
+          ("概要", "トークが採択された場合に公開される2〜3文の要約。参加者が何を学べるかを説明してください。"),
+          ("トークの詳細", "レビュアー向けのトークの詳細な説明。アウトライン、重要なポイント、予定しているデモなどを含めてください。これはあなたのビジョンを理解するのに役立ちます。"),
+          ("スピーカー自己紹介", "あなたについて教えてください！経歴、経験、このトピックに興味を持った理由などを書いてください。"),
+          ("備考（任意）", "主催者への追加情報。アクセシビリティの要件、スケジュールの制約、以前にこのトークを行ったことがあるかどうかなど。"),
+        ]),
+        ("選考基準", "レビュー委員会は以下の基準でプロポーザルを評価します：", [
+          "Swiftコミュニティへの関連性",
+          "コンテンツの独自性とユニークさ",
+          "プロポーザルと学習成果の明確さ",
+          "スピーカーの専門知識とプレゼンテーション能力",
+          "カンファレンスプログラム全体でのトピックの多様性",
+        ], []),
+        ("素晴らしいプロポーザルのためのヒント", nil, [
+          "参加者が何を学ぶか具体的に書く",
+          "明確なアウトラインや構成を含める",
+          "デモやライブコーディングの予定があれば記載する",
+          "トピックへの情熱を示す",
+          "提出前によく校正する",
+          "複数のプロポーザルを提出することをためらわない！",
+        ], []),
+        ("スピーカー特典", nil, [
+          "カンファレンスチケット無料",
+          "他のスピーカーや主催者とのスピーカーディナー",
+          "海外からのスピーカーには渡航サポートあり",
+          "トークのプロフェッショナルなビデオ撮影",
+          "世界中のSwift開発者とのネットワーキングの機会",
+        ], []),
+      ]
     }
-  }
-}
 
-private struct FeatureCard: HTML, Sendable {
-  let title: String
-  let copy: String
-
-  var body: some HTML {
-    article(.class("detail-card")) {
-      h3 { HTMLText(title) }
-      p { HTMLText(copy) }
-    }
-  }
-}
-
-private struct APIPreviewCard: HTML, Sendable {
-  let heading: String
-  let endpoint: String
-  let copy: String
-
-  var body: some HTML {
-    article(.class("detail-card")) {
-      h3 { HTMLText(heading) }
-      p(.class("endpoint")) { HTMLText(endpoint) }
-      p { HTMLText(copy) }
-      pre(.class("api-preview"), .id("api-preview")) { "Waiting for frontend wiring..." }
-    }
-  }
-}
-
-private struct FormField<Field: HTML>: HTML {
-  let label: String
-  let field: Field
-
-  var body: some HTML {
-    Elementary.label(.class("form-field")) {
-      span(.class("field-label")) { HTMLText(label) }
-      field
-    }
-  }
-}
-
-private struct WorkshopFields: HTML, Sendable {
-  let prefix: String
-  var includeJapaneseFields: Bool = false
-
-  var body: some HTML {
-    section(.class("workshop-section"), .id("\(prefix)-workshop-section")) {
-      h4 { "Workshop Details" }
-      p(.class("field-hint")) { "These fields are used only when Talk Duration is set to Workshop." }
-      div(.class("form-grid")) {
-        FormField(
-          label: "Workshop Language",
-          field: select(.name("workshopLanguage")) {
-            option(.value("english")) { "English" }
-            option(.value("japanese")) { "Japanese" }
-            option(.value("bilingual")) { "Bilingual" }
-            option(.value("other")) { "Other" }
-          }
-        )
-        FormField(
-          label: "Number of Tutors",
-          field: input(.type(.number), .name("workshopNumberOfTutors"), .custom(name: "min", value: "1"), .value("1"))
-        )
-      }
-      FormField(
-        label: "Key Takeaways",
-        field: textarea(.name("workshopKeyTakeaways"), .custom(name: "rows", value: "4")) {}
-      )
-      if includeJapaneseFields {
-        FormField(
-          label: "Key Takeaways (JA)",
-          field: textarea(.name("workshopKeyTakeawaysJa"), .custom(name: "rows", value: "4")) {}
-        )
-      }
-      FormField(
-        label: "Prerequisites",
-        field: textarea(.name("workshopPrerequisites"), .custom(name: "rows", value: "3")) {}
-      )
-      if includeJapaneseFields {
-        FormField(
-          label: "Prerequisites (JA)",
-          field: textarea(.name("workshopPrerequisitesJa"), .custom(name: "rows", value: "3")) {}
-        )
-      }
-      FormField(
-        label: "Agenda Schedule",
-        field: textarea(.name("workshopAgendaSchedule"), .custom(name: "rows", value: "4")) {}
-      )
-      if includeJapaneseFields {
-        FormField(
-          label: "Agenda Schedule (JA)",
-          field: textarea(.name("workshopAgendaScheduleJa"), .custom(name: "rows", value: "4")) {}
-        )
-      }
-      FormField(
-        label: "Participant Requirements",
-        field: textarea(.name("workshopParticipantRequirements"), .custom(name: "rows", value: "4")) {}
-      )
-      if includeJapaneseFields {
-        FormField(
-          label: "Participant Requirements (JA)",
-          field: textarea(.name("workshopParticipantRequirementsJa"), .custom(name: "rows", value: "4")) {}
-        )
-      }
-      FormField(
-        label: "Required Software",
-        field: textarea(.name("workshopRequiredSoftware"), .custom(name: "rows", value: "3")) {}
-      )
-      if includeJapaneseFields {
-        FormField(
-          label: "Required Software (JA)",
-          field: textarea(.name("workshopRequiredSoftwareJa"), .custom(name: "rows", value: "3")) {}
-        )
-      }
-      FormField(
-        label: "Network Requirements",
-        field: textarea(.name("workshopNetworkRequirements"), .custom(name: "rows", value: "3")) {}
-      )
-      if includeJapaneseFields {
-        FormField(
-          label: "Network Requirements (JA)",
-          field: textarea(.name("workshopNetworkRequirementsJa"), .custom(name: "rows", value: "3")) {}
-        )
-      }
-      div(.class("detail-card inset-card")) {
-        h5 { "Facilities" }
-        div(.class("checkbox-grid")) {
-          FacilityCheckbox(name: "workshopFacilityProjector", label: "Projector")
-          FacilityCheckbox(name: "workshopFacilityMicrophone", label: "Microphone")
-          FacilityCheckbox(name: "workshopFacilityWhiteboard", label: "Whiteboard")
-          FacilityCheckbox(name: "workshopFacilityPowerStrips", label: "Power Strips")
-        }
-        FormField(
-          label: "Other Facility Needs",
-          field: input(.type(.text), .name("workshopFacilityOther"))
-        )
-      }
-      FormField(
-        label: "Motivation",
-        field: textarea(.name("workshopMotivation"), .custom(name: "rows", value: "4")) {}
-      )
-      FormField(
-        label: "Uniqueness",
-        field: textarea(.name("workshopUniqueness"), .custom(name: "rows", value: "4")) {}
-      )
-      FormField(
-        label: "Potential Risks",
-        field: textarea(.name("workshopPotentialRisks"), .custom(name: "rows", value: "3")) {}
-      )
-      div(.class("detail-card inset-card")) {
-        h5 { "Co-Instructors" }
-        CoInstructorFields(prefix: "\(prefix)-co1")
-        CoInstructorFields(prefix: "\(prefix)-co2")
-      }
-    }
-  }
-}
-
-private struct FacilityCheckbox: HTML, Sendable {
-  let name: String
-  let label: String
-
-  var body: some HTML {
-    Elementary.label(.class("checkbox-row")) {
-      input(.type(.checkbox), .name(name))
-      span { HTMLText(label) }
-    }
-  }
-}
-
-private struct CoInstructorFields: HTML, Sendable {
-  let prefix: String
-
-  var body: some HTML {
-    div(.class("co-instructor-card")) {
-      h6 { "Co-Instructor" }
-      div(.class("form-grid")) {
-        FormField(
-          label: "Name",
-          field: input(.type(.text), .name("\(prefix)Name"))
-        )
-        FormField(
-          label: "Email",
-          field: input(.type(.email), .name("\(prefix)Email"))
-        )
-      }
-      div(.class("form-grid")) {
-        FormField(
-          label: "GitHub Username",
-          field: input(.type(.text), .name("\(prefix)GithubUsername"))
-        )
-        FormField(
-          label: "SNS",
-          field: input(.type(.text), .name("\(prefix)Sns"))
-        )
-      }
-      FormField(
-        label: "Bio",
-        field: textarea(.name("\(prefix)Bio"), .custom(name: "rows", value: "3")) {}
-      )
-      FormField(
-        label: "Icon URL",
-        field: input(.type(.url), .name("\(prefix)IconURL"))
-      )
-    }
-  }
-}
-
-private struct FormStatus: HTML, Sendable {
-  let id: String
-
-  var body: some HTML {
-    p(.id(id), .class("form-status"), .custom(name: "hidden", value: "hidden")) {}
+    return [
+      ("What We're Looking For", nil, [
+        "Original content that hasn't been presented at other major conferences",
+        "Practical knowledge that attendees can apply in their work",
+        "Clear learning outcomes for the audience",
+        "Well-structured presentations with demos when applicable",
+        "Topics relevant to the Swift community",
+      ], []),
+      ("Talk Formats", nil, [], [
+        ("Regular Talk (20 minutes)", "A comprehensive session covering a topic in depth. Include time for context, examples, and key takeaways. Live coding and demos are welcome!"),
+        ("Lightning Talk (5 minutes)", "A focused, fast-paced presentation covering a single concept, tool, or tip. Perfect for sharing quick wins or introducing new ideas."),
+      ]),
+      ("Proposal Requirements", nil, [], [
+        ("Title", "A clear, descriptive title that accurately represents your talk content."),
+        ("Abstract", "A 2-3 sentence summary that will be shown publicly if your talk is accepted. This should explain what attendees will learn."),
+        ("Talk Details", "A detailed description of your talk for reviewers. Include your outline, key points, and any demos you plan to show. This helps us understand your vision."),
+        ("Speaker Bio", "Tell us about yourself! Your background, experience, and what makes you excited about this topic."),
+        ("Notes (Optional)", "Any additional information for organizers, such as accessibility needs, scheduling constraints, or whether you've given this talk before."),
+      ]),
+      ("Selection Criteria", "Our review committee evaluates proposals based on:", [
+        "Relevance to the Swift community",
+        "Originality and uniqueness of content",
+        "Clarity of proposal and learning outcomes",
+        "Speaker's expertise and presentation ability",
+        "Diversity of topics across the conference program",
+      ], []),
+      ("Tips for a Great Proposal", nil, [
+        "Be specific about what attendees will learn",
+        "Include a clear outline or structure",
+        "Mention any demos or live coding",
+        "Show your passion for the topic",
+        "Proofread your submission carefully",
+        "Don't be afraid to submit multiple proposals!",
+      ], []),
+      ("Speaker Benefits", nil, [
+        "Free conference ticket",
+        "Speaker dinner with other speakers and organizers",
+        "Travel support available for international speakers",
+        "Professional video recording of your talk",
+        "Networking opportunities with Swift developers worldwide",
+      ], []),
+    ]
   }
 }

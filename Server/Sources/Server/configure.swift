@@ -62,6 +62,7 @@ enum AppConfiguration {
     app.migrations.add(CreateFavorite())
     app.migrations.add(AddFavoriteIndexes())
     app.migrations.add(AddFeedbackIndexes())
+    app.migrations.add(SeedTrySwiftTokyo2026Workshops())
 
     // Auto-migrate on startup (safe for production as Fluent tracks completed migrations)
     try await app.autoMigrate()

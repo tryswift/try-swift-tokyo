@@ -46,7 +46,7 @@ extension HomeSectionType {
       ].contains(self)
     case .year2026:
       [
-        .about, .outline, .tickets, .timetable, .speaker, .workshop, .sponsor, .communityEvents,
+        .about, .outline, .tickets, .cfp, .timetable, .speaker, .workshop, .sponsor, .communityEvents,
         .meetTheHosts,
         .meetTheOrganizers, .access,
       ].contains(self)

@@ -114,28 +114,48 @@
   function updateAuthState(user) {
     var authStatus = document.getElementById("auth-status");
     var loginButton = document.getElementById("login-button");
+    var submitLoginButton = document.getElementById("submit-login-button");
     var logoutButton = document.getElementById("logout-button");
 
+    updatePageCopy(user);
     if (!authStatus || !loginButton || !logoutButton) return;
 
     if (user) {
       authStatus.textContent = "Signed in as " + user.username + " (" + user.role + ")";
       loginButton.hidden = true;
+      if (submitLoginButton) submitLoginButton.hidden = true;
       logoutButton.hidden = false;
     } else {
       authStatus.textContent = "Not signed in";
       loginButton.hidden = false;
+      if (submitLoginButton) submitLoginButton.hidden = false;
       logoutButton.hidden = true;
     }
   }
 
-  function wireLogin() {
-    var button = document.getElementById("login-button");
-    if (!button) return;
+  function updatePageCopy(user) {
+    var description = document.getElementById("page-description");
+    var detailCopy = document.getElementById("page-detail-copy");
+    [description, detailCopy].forEach(function (node) {
+      if (!node) return;
+      var signedInCopy = node.getAttribute("data-signed-in-copy");
+      var signedOutCopy = node.getAttribute("data-signed-out-copy");
+      var nextCopy = user ? signedInCopy : signedOutCopy;
+      if (nextCopy) {
+        node.textContent = nextCopy;
+      }
+    });
+  }
 
-    button.addEventListener("click", function () {
-      var returnTo = window.location.origin + currentPagePath();
-      window.location.href = apiBaseURL() + "/api/v1/auth/github?returnTo=" + encodeURIComponent(returnTo);
+  function wireLogin() {
+    var buttons = document.querySelectorAll('[data-login-button], #login-button');
+    if (!buttons.length) return;
+
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var returnTo = window.location.origin + currentPagePath();
+        window.location.href = apiBaseURL() + "/api/v1/auth/github?returnTo=" + encodeURIComponent(returnTo);
+      });
     });
   }
 
@@ -391,6 +411,155 @@
     return html;
   }
 
+  function currentLanguage() {
+    var lang = (document.documentElement.lang || "en").toLowerCase();
+    return lang.indexOf("ja") === 0 ? "ja" : "en";
+  }
+
+  function workshopLanguageLabel(language) {
+    var pageLanguage = currentLanguage();
+
+    if (pageLanguage === "ja") {
+      if (language === "english") return "英語";
+      if (language === "japanese") return "日本語";
+      if (language === "bilingual") return "バイリンガル";
+      if (language === "other") return "その他";
+      return "未設定";
+    }
+
+    if (language === "english") return "English";
+    if (language === "japanese") return "Japanese";
+    if (language === "bilingual") return "Bilingual";
+    if (language === "other") return "Other";
+    return "Language not set";
+  }
+
+  function capacityLabel() {
+    return currentLanguage() === "ja" ? "定員" : "Capacity";
+  }
+
+  function speakerAvatarURL(workshop) {
+    if (workshop.iconURL) return workshop.iconURL;
+    if (workshop.githubUsername) return "https://github.com/" + workshop.githubUsername + ".png?size=240";
+    return "https://cfp.tryswift.jp/cfp/images/riko.png";
+  }
+
+  function renderTextBlocks(text) {
+    if (!text) return "<p>N/A</p>";
+
+    return String(text)
+      .split(/\n\s*\n/)
+      .map(function (block) {
+        return "<p>" + escapeHTML(block.trim()).replace(/\n/g, "<br>") + "</p>";
+      })
+      .join("");
+  }
+
+  function renderValueBlock(text) {
+    if (!text) return "<p>N/A</p>";
+    return "<p>" + escapeHTML(String(text)) + "</p>";
+  }
+
+  function renderCoInstructors(items) {
+    if (!items || !items.length) return "";
+
+    return (
+      '<div class="workshop-subsection">' +
+        "<h6>Co-Instructors</h6>" +
+        items.map(function (item) {
+          var links = [];
+          if (item.githubUsername) {
+            links.push('<a href="https://github.com/' + encodeURIComponent(item.githubUsername) + '" target="_blank" rel="noreferrer">GitHub ' + escapeHTML(item.githubUsername) + "</a>");
+          }
+          if (item.sns) {
+            links.push('<a href="' + escapeHTML(item.sns) + '" target="_blank" rel="noreferrer">' + escapeHTML(item.sns) + "</a>");
+          }
+
+          return (
+            '<div class="co-instructor-card">' +
+              "<h6>" + escapeHTML(item.name) + "</h6>" +
+              (links.length ? '<p class="co-instructor-links">' + links.join(" ") + "</p>" : "") +
+              "<p>" + escapeHTML(item.bio || "") + "</p>" +
+            "</div>"
+          );
+        }).join("") +
+      "</div>"
+    );
+  }
+
+  function renderWorkshopDetailContent(workshop) {
+    var details = workshop.workshopDetails || {};
+
+    return (
+      '<article class="workshop-detail-card" id="workshop-' + escapeHTML(workshop.registrationID) + '">' +
+        "<h5>" + escapeHTML(workshop.title) + "</h5>" +
+        '<div class="workshop-detail-speaker">' +
+          '<img class="workshop-avatar" src="' + escapeHTML(speakerAvatarURL(workshop)) + '" alt="' + escapeHTML(workshop.speakerName) + '">' +
+          '<div class="workshop-speaker-copy">' +
+            "<h6>" + escapeHTML(workshop.speakerName) + "</h6>" +
+            renderTextBlocks(workshop.bio) +
+            '<p class="workshop-language-label">' + escapeHTML(workshopLanguageLabel(workshop.workshopLanguage)) + "</p>" +
+          "</div>" +
+        "</div>" +
+        '<div class="workshop-subsection"><h6>Description</h6>' + renderTextBlocks(workshop.talkDetail || workshop.abstract) + "</div>" +
+        '<div class="workshop-subsection"><h6>Key Takeaways</h6>' + renderValueBlock(details.keyTakeaways) + "</div>" +
+        (details.prerequisites ? '<div class="workshop-subsection"><h6>Prerequisites</h6>' + renderValueBlock(details.prerequisites) + "</div>" : "") +
+        '<div class="workshop-subsection"><h6>Agenda / Schedule</h6>' + renderValueBlock(details.agendaSchedule) + "</div>" +
+        '<div class="workshop-subsection"><h6>What to Bring</h6>' + renderValueBlock(details.participantRequirements) + "</div>" +
+        (details.requiredSoftware ? '<div class="workshop-subsection"><h6>Required Software</h6>' + renderValueBlock(details.requiredSoftware) + "</div>" : "") +
+        '<div class="workshop-subsection"><h6>Network Requirements</h6>' + renderValueBlock(details.networkRequirements) + "</div>" +
+        renderCoInstructors(workshop.coInstructors) +
+      "</article>"
+    );
+  }
+
+  function openWorkshopModal(registrationID) {
+    var workshop = state.workshops.find(function (item) {
+      return String(item.registrationID) === String(registrationID);
+    });
+    var modal = document.getElementById("workshop-modal");
+    var body = document.getElementById("workshop-modal-body");
+    if (!workshop || !modal || !body) return;
+
+    body.innerHTML = renderWorkshopDetailContent(workshop);
+    modal.hidden = false;
+    document.body.classList.add("modal-open");
+  }
+
+  function closeWorkshopModal() {
+    var modal = document.getElementById("workshop-modal");
+    var body = document.getElementById("workshop-modal-body");
+    if (!modal) return;
+
+    modal.hidden = true;
+    if (body) body.innerHTML = "";
+    document.body.classList.remove("modal-open");
+  }
+
+  function wireWorkshopModal() {
+    var list = document.getElementById("workshop-list");
+    var modal = document.getElementById("workshop-modal");
+    if (!list || !modal) return;
+
+    list.addEventListener("click", function (event) {
+      var trigger = event.target.closest("[data-workshop-open]");
+      if (!trigger) return;
+      openWorkshopModal(trigger.getAttribute("data-workshop-open"));
+    });
+
+    modal.addEventListener("click", function (event) {
+      if (event.target.closest("[data-workshop-modal-close]")) {
+        closeWorkshopModal();
+      }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeWorkshopModal();
+      }
+    });
+  }
+
   function renderWorkshops() {
     var list = document.getElementById("workshop-list");
     if (!list) return;
@@ -401,19 +570,19 @@
     }
 
     list.innerHTML = state.workshops.map(function (workshop) {
-      var meta = [
-        workshop.speakerName,
-        String(workshop.remainingCapacity) + " seats left",
-        workshop.workshopLanguage || "language not set"
-      ];
+      var capacity = workshop.capacity || workshop.remainingCapacity;
 
       return (
-        '<article class="proposal-card">' +
-          "<h4>" + escapeHTML(workshop.title) + "</h4>" +
-          '<div class="proposal-meta">' +
-            meta.map(function (item) { return '<span class="pill">' + escapeHTML(item) + "</span>"; }).join("") +
-          "</div>" +
-          '<p class="proposal-summary">' + escapeHTML(truncate(workshop.abstract, 240)) + "</p>" +
+        '<article class="proposal-card workshop-card">' +
+          '<button type="button" class="workshop-summary-link" data-workshop-open="' + escapeHTML(workshop.registrationID) + '">' +
+            "<h4>" + escapeHTML(workshop.title) + "</h4>" +
+            '<p class="workshop-speaker">' + escapeHTML(workshop.speakerName || "") + "</p>" +
+            '<p class="proposal-summary">' + escapeHTML(truncate(workshop.abstract, 320)) + "</p>" +
+            '<div class="proposal-meta workshop-summary-meta">' +
+              '<span class="pill capacity-pill">' + escapeHTML(capacityLabel()) + ': ' + escapeHTML(String(capacity || 0)) + "</span>" +
+              '<span class="pill language-pill">' + escapeHTML(workshopLanguageLabel(workshop.workshopLanguage)) + "</span>" +
+            "</div>" +
+          "</button>" +
         "</article>"
       );
     }).join("");
@@ -437,7 +606,7 @@
     }
 
     container.innerHTML = (
-      '<div class="proposal-card">' +
+      '<div class="proposal-card workshop-status-card">' +
         "<h4>" + escapeHTML(application.applicantName) + "</h4>" +
         '<div class="proposal-meta">' +
           '<span class="pill">' + escapeHTML(application.status) + "</span>" +
@@ -1077,11 +1246,11 @@
       var payload = await apiRequest("/api/v1/workshops");
       state.workshops = payload.workshops || [];
       renderWorkshops();
-      showStatus("workshops-status", payload.applicationOpen ? "Applications are currently open." : "Workshop applications are currently closed.", payload.applicationOpen ? "success" : "error");
+      showStatus("workshops-status", null);
     } catch (error) {
       state.workshops = [];
       renderWorkshops();
-      showStatus("workshops-status", error.message, "error");
+      showStatus("workshops-status", null);
     }
   }
 
@@ -1106,9 +1275,13 @@
     var applyForm = document.getElementById("workshop-apply-form");
     var statusForm = document.getElementById("workshop-status-form");
     var statusResult = document.getElementById("workshop-status-result");
-    if (!refreshButton || !verifyForm || !applyForm || !statusForm || !statusResult) return;
+    if (!verifyForm || !applyForm || !statusForm || !statusResult) return;
 
-    refreshButton.addEventListener("click", refreshWorkshops);
+    wireWorkshopModal();
+
+    if (refreshButton) {
+      refreshButton.addEventListener("click", refreshWorkshops);
+    }
 
     verifyForm.addEventListener("submit", async function (event) {
       event.preventDefault();
