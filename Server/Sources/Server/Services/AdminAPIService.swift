@@ -12,7 +12,7 @@ enum AdminAPIService {
   }
 
   static func requireAdmin(_ req: Request) async throws -> UserJWTPayload {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await req.requireAuthenticatedUserPayload()
     guard payload.role.isAdmin else {
       throw Abort(.forbidden, reason: "Admin access required")
     }

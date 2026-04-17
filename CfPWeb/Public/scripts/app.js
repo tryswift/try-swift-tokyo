@@ -35,6 +35,9 @@
     } else if (path === "/ja") {
       path = "/";
     }
+    if (path.length > 1 && path.charAt(path.length - 1) === "/") {
+      path = path.slice(0, -1);
+    }
     return path;
   }
 

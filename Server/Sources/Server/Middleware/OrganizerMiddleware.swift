@@ -6,8 +6,7 @@ import Vapor
 /// Returns 403 Forbidden if the user's role is not admin
 struct OrganizerMiddleware: AsyncMiddleware {
   func respond(to request: Request, chainingTo next: AsyncResponder) async throws -> Response {
-    // Extract JWT payload from request
-    let payload = try await request.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await request.requireAuthenticatedUserPayload()
 
     // Check if user is admin
     guard payload.role == .admin else {

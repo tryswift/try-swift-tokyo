@@ -170,7 +170,7 @@ struct ProposalController: RouteCollection {
   /// POST /proposals
   @Sendable
   func createProposal(req: Request) async throws -> ProposalDTOContent {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await req.requireAuthenticatedUserPayload()
 
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
@@ -323,7 +323,7 @@ struct ProposalController: RouteCollection {
   /// GET /proposals/mine
   @Sendable
   func getMyProposals(req: Request) async throws -> [ProposalDTOContent] {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await req.requireAuthenticatedUserPayload()
 
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
@@ -345,7 +345,7 @@ struct ProposalController: RouteCollection {
   /// GET /proposals/mine/:conferencePath
   @Sendable
   func getMyProposalsByConference(req: Request) async throws -> [ProposalDTOContent] {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await req.requireAuthenticatedUserPayload()
 
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
@@ -380,7 +380,7 @@ struct ProposalController: RouteCollection {
   /// PUT /proposals/:proposalID
   @Sendable
   func updateOwnProposal(req: Request) async throws -> ProposalDTOContent {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await req.requireAuthenticatedUserPayload()
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
     }
@@ -472,7 +472,7 @@ struct ProposalController: RouteCollection {
   /// POST /proposals/:proposalID/withdraw
   @Sendable
   func withdrawOwnProposal(req: Request) async throws -> HTTPStatus {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await req.requireAuthenticatedUserPayload()
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
     }

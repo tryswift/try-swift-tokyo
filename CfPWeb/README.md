@@ -1,6 +1,6 @@
 # CfPWeb
 
-Standalone frontend for `cfp.tryswift.jp`.
+Static frontend build for `cfp.tryswift.jp`.
 
 ## Purpose
 
@@ -31,21 +31,33 @@ Default:
 https://api.tryswift.jp
 ```
 
-## Local Run
+## Build
 
 ```bash
 cd CfPWeb
-swift run
+swift run CfPWeb
+```
+
+This generates a static site into `CfPWeb/Build` by default.
+
+Optional overrides:
+
+```bash
+swift run CfPWeb --output Dist --public-dir Public --api-base-url https://api.tryswift.jp
 ```
 
 ## Current Scope
 
 This package currently provides:
 
-- a standalone Vapor frontend app
+- a static HTML build generated from `Elementary`
 - separate public routes for key CfP pages
 - login/logout wiring to the API
 - API-backed session bootstrap
-- preview fetching for speaker and organizer pages
+- generated rewrite hints for deep links and legacy `/cfp/**` paths
 
-It is intentionally a scaffold for the ongoing migration, not yet a full feature-complete replacement for the old SSR pages.
+It is intentionally a scaffold for the ongoing migration, while removing the need for a Vapor process in front of the frontend.
+
+## Related Docs
+
+- [Vapor Removal Handoff](/Users/soya.ichikawa/Projects/Private/try-swift-tokyo/CfPWeb/VAPOR_REMOVAL_HANDOFF.md)

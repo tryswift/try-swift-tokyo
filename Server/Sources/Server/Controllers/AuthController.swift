@@ -522,7 +522,7 @@ struct AuthController: RouteCollection {
   /// Get current authenticated user
   @Sendable
   func getCurrentUser(req: Request) async throws -> UserDTOContent {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await req.requireAuthenticatedUserPayload()
 
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
@@ -538,7 +538,7 @@ struct AuthController: RouteCollection {
   /// Update current user's profile
   @Sendable
   func updateProfile(req: Request) async throws -> UserDTOContent {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await req.requireAuthenticatedUserPayload()
 
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")

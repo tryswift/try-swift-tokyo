@@ -1,15 +1,11 @@
-import Vapor
+import Foundation
 
-var env = try Environment.detect()
-try LoggingSystem.bootstrap(from: &env)
-
-let app = try await Application.make(env)
 do {
-  try await CfPWebConfiguration.configure(app)
-  try await app.execute()
-  try await app.asyncShutdown()
+  let arguments = Array(CommandLine.arguments.dropFirst())
+  let options = try BuildOptions(arguments: arguments)
+  try StaticSiteBuilder(options: options).build()
+  print("Built CfPWeb static site at \(options.outputDirectory.path())")
 } catch {
-  app.logger.report(error: error)
-  try await app.asyncShutdown()
-  throw error
+  fputs("CfPWeb build failed: \(error.localizedDescription)\n", stderr)
+  exit(1)
 }

@@ -2,6 +2,7 @@ import Elementary
 
 struct AppLayout: HTMLDocument, Sendable {
   let page: CfPPage
+  let apiBaseURL: String
 
   var title: String { "\(page.title) - try! Swift CfP" }
   var lang: String { "en" }
@@ -11,7 +12,7 @@ struct AppLayout: HTMLDocument, Sendable {
     meta(.name(.viewport), .content("width=device-width, initial-scale=1"))
     link(.rel(.stylesheet), .href("/styles/app.css"))
     script(.src("/scripts/app.js"), .custom(name: "defer", value: "defer")) {}
-    meta(.custom(name: "cfp-api-base-url", value: AppConfiguration.apiBaseURL()))
+    meta(.custom(name: "name", value: "cfp-api-base-url"), .content(apiBaseURL))
   }
 
   var body: some HTML {
