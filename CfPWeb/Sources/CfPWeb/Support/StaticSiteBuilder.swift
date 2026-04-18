@@ -60,7 +60,6 @@ struct StaticSiteBuilder {
     try resetOutputDirectory()
     try copyPublicAssets()
     try writePages()
-    try writeHealthCheck()
     try writeRedirects()
     try writeRouteManifest()
   }
@@ -98,25 +97,9 @@ struct StaticSiteBuilder {
     try write(fallback, to: options.outputDirectory.appending(path: "404.html", directoryHint: .notDirectory))
   }
 
-  private func writeHealthCheck() throws {
-    let healthHTML = """
-    <!DOCTYPE html>
-    <html lang="en">
-    <head><meta charset="utf-8"><title>CfPWeb Health</title></head>
-    <body><pre>{\"status\":\"ok\",\"service\":\"CfPWeb\"}</pre></body>
-    </html>
-    """
-    try write(healthHTML, to: destinationURL(for: "/health"))
-  }
-
   private func writeRedirects() throws {
     let contents = SiteRoutes.rewriteRules
-      .map { rule in
-        if rule.from.hasPrefix("/cfp") {
-          return "\(rule.from) \(rule.to) 301"
-        }
-        return "\(rule.from) \(rule.to) 200"
-      }
+      .map { rule in "\(rule.from) \(rule.to) 200" }
       .joined(separator: "\n") + "\n"
     try write(contents, to: options.outputDirectory.appending(path: "_redirects", directoryHint: .notDirectory))
   }

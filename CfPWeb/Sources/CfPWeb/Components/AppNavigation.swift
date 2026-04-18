@@ -11,7 +11,7 @@ struct AppNavigation: HTML, Sendable {
         div(.class("topbar-row")) {
           div(.class("brand")) {
             a(.href(language.rootPath)) {
-              img(.src("https://cfp.tryswift.jp/cfp/images/riko.png"), .alt("Riko"), .class("brand-icon"))
+              img(.src("/images/riko.png"), .alt("Riko"), .class("brand-icon"))
               span { "try! Swift Tokyo CfP" }
             }
           }

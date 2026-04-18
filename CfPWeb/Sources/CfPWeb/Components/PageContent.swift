@@ -242,7 +242,7 @@ private struct SubmitBasicFields: HTML, Sendable {
         div(.class("avatar-preview"), .id("submit-avatar-preview")) {
           img(
             .id("submit-avatar-image"),
-            .src("https://cfp.tryswift.jp/cfp/images/riko.png"),
+            .src("/images/riko.png"),
             .alt(language == .ja ? "アバタープレビュー" : "Avatar preview")
           )
         }

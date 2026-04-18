@@ -16,15 +16,10 @@ enum SiteRoutes {
       SiteRoute(path: "/", page: .home),
       SiteRoute(path: "/guidelines", page: .guidelines),
       SiteRoute(path: "/login", page: .login),
-      SiteRoute(path: "/login-page", page: .login),
       SiteRoute(path: "/profile", page: .profile),
       SiteRoute(path: "/submit", page: .submit),
-      SiteRoute(path: "/submit-page", page: .submit),
       SiteRoute(path: "/workshops", page: .workshops),
-      SiteRoute(path: "/workshops/apply", page: .workshops),
-      SiteRoute(path: "/workshops/status", page: .workshops),
       SiteRoute(path: "/my-proposals", page: .myProposals),
-      SiteRoute(path: "/my-proposals-page", page: .myProposals),
       SiteRoute(path: "/feedback", page: .feedback),
       SiteRoute(path: "/organizer", page: .organizer),
       SiteRoute(path: "/organizer/proposals", page: .organizer),
@@ -43,8 +38,6 @@ enum SiteRoutes {
       SiteRoute(path: "/ja/profile", page: .profile),
       SiteRoute(path: "/ja/submit", page: .submit),
       SiteRoute(path: "/ja/workshops", page: .workshops),
-      SiteRoute(path: "/ja/workshops/apply", page: .workshops),
-      SiteRoute(path: "/ja/workshops/status", page: .workshops),
       SiteRoute(path: "/ja/my-proposals", page: .myProposals),
       SiteRoute(path: "/ja/feedback", page: .feedback),
       SiteRoute(path: "/ja/organizer/proposals", page: .organizer),
@@ -56,16 +49,10 @@ enum SiteRoutes {
       SiteRoute(path: "/ja/organizer/workshops/results", page: .organizer),
     ]
 
-    let legacyCFP = english.map { route in
-      SiteRoute(path: "/cfp" + (route.path == "/" ? "" : route.path), page: route.page)
-    }
-
-    return english + japanese + legacyCFP
+    return english + japanese
   }()
 
   static let rewriteRules: [RewriteRule] = [
-    RewriteRule(from: "/cfp", to: "/"),
-    RewriteRule(from: "/cfp/*", to: "/:splat"),
     RewriteRule(from: "/organizer/*", to: "/organizer/index.html"),
     RewriteRule(from: "/my-proposals/*", to: "/my-proposals/index.html"),
     RewriteRule(from: "/workshops/*", to: "/workshops/index.html"),

@@ -25,11 +25,6 @@
 
   function normalizedPathname() {
     var path = window.location.pathname || "/";
-    if (path.indexOf("/cfp/") === 0) {
-      path = path.slice(4) || "/";
-    } else if (path === "/cfp") {
-      path = "/";
-    }
     if (path.indexOf("/ja/") === 0) {
       path = path.slice(3) || "/";
     } else if (path === "/ja") {
@@ -240,7 +235,7 @@
     if (!image) return;
 
     var value = (form.elements.iconURL.value || "").trim();
-    image.src = value || "https://cfp.tryswift.jp/cfp/images/riko.png";
+    image.src = value || "/images/riko.png";
   }
 
   function readFormJSON(form, allowedKeys) {
@@ -464,7 +459,7 @@
   function speakerAvatarURL(workshop) {
     if (workshop.iconURL) return workshop.iconURL;
     if (workshop.githubUsername) return "https://github.com/" + workshop.githubUsername + ".png?size=240";
-    return "https://cfp.tryswift.jp/cfp/images/riko.png";
+    return "/images/riko.png";
   }
 
   function renderTextBlocks(text) {
@@ -2038,15 +2033,15 @@
       await bootstrapProfilePage();
       return;
     }
-    if (path === "/submit" || path === "/submit-page") {
+    if (path === "/submit") {
       await bootstrapSubmitPage();
       return;
     }
-    if (path === "/workshops" || path === "/workshops/apply" || path === "/workshops/status") {
+    if (path === "/workshops") {
       await bootstrapWorkshopsPage();
       return;
     }
-    if (path === "/my-proposals" || path === "/my-proposals-page" || path.indexOf("/my-proposals/") === 0) {
+    if (path === "/my-proposals" || path.indexOf("/my-proposals/") === 0) {
       await bootstrapMyProposalsPage();
       return;
     }

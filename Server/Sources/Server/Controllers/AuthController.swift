@@ -276,7 +276,7 @@ struct AuthController: RouteCollection {
       if let error = req.query[String.self, at: "error"] {
         let description = req.query[String.self, at: "error_description"] ?? "Unknown error"
         req.logger.warning("GitHub returned error: \(error) - \(description)")
-        return req.redirect(to: "\(Self.frontendURL)/login-page?error=\(error)")
+        return req.redirect(to: "\(Self.frontendURL)/login?error=\(error)")
       }
       throw OAuthError.missingCode
     }
@@ -413,7 +413,7 @@ struct AuthController: RouteCollection {
 
     // 9. Generate JWT token
     guard let userID = user.id else {
-      return req.redirect(to: "\(Self.frontendURL)/login-page?error=user_creation_failed")
+      return req.redirect(to: "\(Self.frontendURL)/login?error=user_creation_failed")
     }
 
     let payload = UserJWTPayload(
