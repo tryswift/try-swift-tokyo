@@ -662,6 +662,9 @@
     empty.hidden = true;
     list.innerHTML = state.myProposals.map(function (proposal) {
       var isWithdrawn = proposal.status === "withdrawn";
+      var actionLabel = isWithdrawn
+        ? (currentLanguage() === "ja" ? "表示" : "View")
+        : (currentLanguage() === "ja" ? "編集" : "Edit");
       return (
         '<article class="proposal-card' + (isWithdrawn ? " is-withdrawn" : "") + '">' +
           "<h4>" + escapeHTML(proposal.title) + "</h4>" +
@@ -671,11 +674,39 @@
           "</div>" +
           '<p class="proposal-summary">' + escapeHTML(truncate(proposal.abstract, 220)) + "</p>" +
           '<div class="proposal-actions">' +
-            '<button type="button" class="button neutral" data-edit-proposal="' + escapeHTML(proposal.id) + '">Edit</button>' +
+            '<button type="button" class="button neutral" data-edit-proposal="' + escapeHTML(proposal.id) + '">' + escapeHTML(actionLabel) + "</button>" +
           "</div>" +
         "</article>"
       );
     }).join("");
+  }
+
+  function setProposalEditorReadOnly(form, proposal) {
+    if (!form || !proposal) return;
+
+    var isWithdrawn = proposal.status === "withdrawn";
+    var saveButton = form.querySelector('button[type="submit"]');
+    var withdrawButton = document.getElementById("proposal-withdraw-button");
+
+    Array.prototype.forEach.call(form.elements, function (element) {
+      if (!element || !element.name) return;
+      if (element.name === "proposalID") return;
+      element.disabled = isWithdrawn;
+    });
+
+    if (saveButton) saveButton.hidden = isWithdrawn;
+    if (withdrawButton) withdrawButton.hidden = isWithdrawn;
+
+    showStatus(
+      "proposal-editor-status",
+      isWithdrawn
+        ? (
+          currentLanguage() === "ja"
+            ? "このプロポーザルは取り下げ済みのため編集できません。内容の確認のみ可能です。"
+            : "This proposal has been withdrawn and can no longer be edited. You can still review its contents."
+        )
+        : null
+    );
   }
 
   function loadProposalIntoEditor(proposalID) {
@@ -699,6 +730,7 @@
     });
     updateAvatarPreview(form, "iconURL", "proposal-avatar-image");
     toggleWorkshopSection(form, "speaker-edit-workshop-section", form.elements.talkDuration.value);
+    setProposalEditorReadOnly(form, proposal);
     showMyProposalEditorView(proposalID);
   }
 
@@ -1244,13 +1276,23 @@
       var proposalID = button.getAttribute("data-edit-proposal");
       window.history.pushState({}, "", myProposalsBasePath() + "/" + encodeURIComponent(proposalID));
       loadProposalIntoEditor(proposalID);
-      showStatus("proposal-editor-status", null);
     });
 
     editorForm.addEventListener("submit", async function (event) {
       event.preventDefault();
       var proposalID = editorForm.elements.proposalID.value;
       if (!proposalID) return;
+      var proposal = state.myProposals.find(function (item) { return item.id === proposalID; });
+      if (proposal && proposal.status === "withdrawn") {
+        showStatus(
+          "proposal-editor-status",
+          currentLanguage() === "ja"
+            ? "取り下げ済みのプロポーザルは編集できません。"
+            : "Withdrawn proposals can no longer be edited.",
+          "error"
+        );
+        return;
+      }
 
       var payload = readFormJSON(editorForm, [
         "title",
