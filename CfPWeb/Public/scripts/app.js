@@ -111,8 +111,8 @@
     var loginButton = document.getElementById("login-button");
     var submitLoginButton = document.getElementById("submit-login-button");
     var logoutButton = document.getElementById("logout-button");
-    var submitAuthCard = document.querySelector(".submit-auth-card");
-    var submitFormCard = document.getElementById("submit-form-card");
+    var guestCards = document.querySelectorAll("[data-auth-guest-card]");
+    var signedInCards = document.querySelectorAll("[data-auth-signed-in-card]");
 
     updatePageCopy(user);
 
@@ -122,8 +122,8 @@
       }
       if (loginButton) loginButton.hidden = true;
       if (submitLoginButton) submitLoginButton.hidden = true;
-      if (submitAuthCard) submitAuthCard.hidden = true;
-      if (submitFormCard) submitFormCard.hidden = false;
+      guestCards.forEach(function (node) { node.hidden = true; });
+      signedInCards.forEach(function (node) { node.hidden = false; });
       if (logoutButton) logoutButton.hidden = false;
     } else {
       if (authStatus) {
@@ -131,8 +131,8 @@
       }
       if (loginButton) loginButton.hidden = false;
       if (submitLoginButton) submitLoginButton.hidden = false;
-      if (submitAuthCard) submitAuthCard.hidden = false;
-      if (submitFormCard) submitFormCard.hidden = true;
+      guestCards.forEach(function (node) { node.hidden = false; });
+      signedInCards.forEach(function (node) { node.hidden = true; });
       if (logoutButton) logoutButton.hidden = true;
     }
   }
@@ -226,15 +226,15 @@
     if (form.elements.iconURL && !form.elements.iconURL.value && user.avatarURL) {
       form.elements.iconURL.value = user.avatarURL;
     }
-    updateAvatarPreview(form);
+    updateAvatarPreview(form, "iconURL", "submit-avatar-image");
   }
 
-  function updateAvatarPreview(form) {
-    if (!form || !form.elements.iconURL) return;
-    var image = document.getElementById("submit-avatar-image");
+  function updateAvatarPreview(form, inputName, imageID) {
+    if (!form || !form.elements[inputName]) return;
+    var image = document.getElementById(imageID);
     if (!image) return;
 
-    var value = (form.elements.iconURL.value || "").trim();
+    var value = (form.elements[inputName].value || "").trim();
     image.src = value || "/images/riko.png";
   }
 
@@ -649,27 +649,25 @@
 
     if (!state.user) {
       list.innerHTML = "";
-      empty.hidden = false;
-      empty.innerHTML = "<p>Sign in to view and edit your proposals.</p>";
+      empty.hidden = true;
       return;
     }
 
     if (!state.myProposals.length) {
       list.innerHTML = "";
       empty.hidden = false;
-      empty.innerHTML = "<p>No proposals found yet. You can submit one from the Submit page.</p>";
       return;
     }
 
     empty.hidden = true;
     list.innerHTML = state.myProposals.map(function (proposal) {
+      var isWithdrawn = proposal.status === "withdrawn";
       return (
-        '<article class="proposal-card">' +
+        '<article class="proposal-card' + (isWithdrawn ? " is-withdrawn" : "") + '">' +
           "<h4>" + escapeHTML(proposal.title) + "</h4>" +
           '<div class="proposal-meta">' +
             '<span class="pill">' + escapeHTML(proposal.conferenceDisplayName) + "</span>" +
             '<span class="pill">' + escapeHTML(proposal.talkDuration) + "</span>" +
-            '<span class="pill">' + escapeHTML(proposal.status) + "</span>" +
           "</div>" +
           '<p class="proposal-summary">' + escapeHTML(truncate(proposal.abstract, 220)) + "</p>" +
           '<div class="proposal-actions">' +
@@ -683,11 +681,7 @@
   function loadProposalIntoEditor(proposalID) {
     var proposal = state.myProposals.find(function (item) { return item.id === proposalID; });
     var form = document.getElementById("proposal-editor-form");
-    var placeholder = document.getElementById("proposal-editor-placeholder");
-    if (!proposal || !form || !placeholder) return;
-
-    form.hidden = false;
-    placeholder.hidden = true;
+    if (!proposal || !form) return;
 
     form.elements.proposalID.value = proposal.id;
     form.elements.title.value = proposal.title || "";
@@ -703,7 +697,67 @@
       coInstructorPrefixes: ["speaker-edit-co1", "speaker-edit-co2"],
       includeJapaneseFields: false
     });
+    updateAvatarPreview(form, "iconURL", "proposal-avatar-image");
     toggleWorkshopSection(form, "speaker-edit-workshop-section", form.elements.talkDuration.value);
+    showMyProposalEditorView(proposalID);
+  }
+
+  function myProposalsBasePath() {
+    return currentLanguage() === "ja" ? "/ja/my-proposals" : "/my-proposals";
+  }
+
+  function showMyProposalListView() {
+    var listView = document.getElementById("my-proposals-list-view");
+    var detailView = document.getElementById("my-proposals-detail-view");
+    if (listView) listView.hidden = false;
+    if (detailView) detailView.hidden = true;
+  }
+
+  function showMyProposalEditorView(proposalID) {
+    var listView = document.getElementById("my-proposals-list-view");
+    var detailView = document.getElementById("my-proposals-detail-view");
+    var backLink = document.getElementById("proposal-editor-back-link");
+    if (listView) listView.hidden = true;
+    if (detailView) detailView.hidden = false;
+    if (backLink) backLink.href = myProposalsBasePath();
+    if (proposalID) {
+      var target = myProposalsBasePath() + "/" + encodeURIComponent(proposalID);
+      if (window.location.pathname !== target) {
+        window.history.replaceState({}, "", target);
+      }
+    }
+  }
+
+  function returnToMyProposalsList() {
+    window.history.pushState({}, "", myProposalsBasePath());
+    showStatus("proposal-editor-status", null);
+    showStatus("my-proposals-status", null);
+    showMyProposalListView();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function wireProposalEditorPage() {
+    var form = document.getElementById("proposal-editor-form");
+    var backLink = document.getElementById("proposal-editor-back-link");
+    if (!form) return;
+
+    if (form.elements.iconURL) {
+      form.elements.iconURL.addEventListener("input", function () {
+        updateAvatarPreview(form, "iconURL", "proposal-avatar-image");
+      });
+      form.elements.iconURL.addEventListener("change", function () {
+        updateAvatarPreview(form, "iconURL", "proposal-avatar-image");
+      });
+    }
+
+    if (backLink) {
+      backLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        window.history.pushState({}, "", myProposalsBasePath());
+        showStatus("proposal-editor-status", null);
+        showMyProposalListView();
+      });
+    }
   }
 
   function renderOrganizerProposals() {
@@ -964,15 +1018,13 @@
 
     if (!state.user) {
       list.innerHTML = "";
-      empty.hidden = false;
-      empty.innerHTML = "<p>Sign in to review feedback for your talks.</p>";
+      empty.hidden = true;
       return;
     }
 
     if (!state.feedbackGroups.length) {
       list.innerHTML = "";
       empty.hidden = false;
-      empty.innerHTML = "<p>No feedback has been submitted for your talks yet.</p>";
       return;
     }
 
@@ -1020,13 +1072,13 @@
     var form = document.getElementById("submit-form");
     if (!form) return;
     wireWorkshopToggle(form, "talkDuration", "submit-workshop-section");
-    updateAvatarPreview(form);
+    updateAvatarPreview(form, "iconURL", "submit-avatar-image");
     if (form.elements.iconURL) {
       form.elements.iconURL.addEventListener("input", function () {
-        updateAvatarPreview(form);
+        updateAvatarPreview(form, "iconURL", "submit-avatar-image");
       });
       form.elements.iconURL.addEventListener("change", function () {
-        updateAvatarPreview(form);
+        updateAvatarPreview(form, "iconURL", "submit-avatar-image");
       });
     }
 
@@ -1076,7 +1128,7 @@
         form.reset();
         populateSelect("submit-conference-path", state.openConferences, null, "path", "displayName");
         prefillSpeakerFields(form, state.user);
-        updateAvatarPreview(form);
+        updateAvatarPreview(form, "iconURL", "submit-avatar-image");
         toggleWorkshopSection(form, "submit-workshop-section", form.elements.talkDuration.value);
       } catch (error) {
         showStatus("submit-status", error.message, "error");
@@ -1089,7 +1141,7 @@
     if (!form) return;
 
     if (!state.user) {
-      showStatus("profile-status", "Sign in to edit your profile.", "error");
+      showStatus("profile-status", null);
       return;
     }
 
@@ -1099,6 +1151,14 @@
     form.elements.url.value = state.user.url || "";
     form.elements.organization.value = state.user.organization || "";
     form.elements.avatarURL.value = state.user.avatarURL || "";
+    updateAvatarPreview(form, "avatarURL", "profile-avatar-image");
+
+    form.elements.avatarURL.addEventListener("input", function () {
+      updateAvatarPreview(form, "avatarURL", "profile-avatar-image");
+    });
+    form.elements.avatarURL.addEventListener("change", function () {
+      updateAvatarPreview(form, "avatarURL", "profile-avatar-image");
+    });
 
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
@@ -1126,6 +1186,13 @@
   }
 
   async function refreshFeedback() {
+    if (!state.user) {
+      state.feedbackGroups = [];
+      renderFeedback();
+      showStatus("feedback-status", null);
+      return;
+    }
+
     try {
       state.feedbackGroups = await apiRequest("/api/v1/feedback/my-talks");
       renderFeedback();
@@ -1145,10 +1212,17 @@
   }
 
   async function refreshMyProposals() {
+    if (!state.user) {
+      state.myProposals = [];
+      renderMyProposals();
+      showStatus("my-proposals-status", null);
+      return;
+    }
+
     try {
       state.myProposals = await apiRequest("/api/v1/proposals/mine");
       renderMyProposals();
-      showStatus("my-proposals-status", "Loaded " + state.myProposals.length + " proposal(s).", "success");
+      showStatus("my-proposals-status", null);
     } catch (error) {
       state.myProposals = [];
       renderMyProposals();
@@ -1157,19 +1231,19 @@
   }
 
   async function bootstrapMyProposalsPage() {
-    var refreshButton = document.getElementById("my-proposals-refresh");
     var list = document.getElementById("my-proposals-list");
     var editorForm = document.getElementById("proposal-editor-form");
     var withdrawButton = document.getElementById("proposal-withdraw-button");
-    if (!refreshButton || !list || !editorForm || !withdrawButton) return;
+    if (!list || !editorForm || !withdrawButton) return;
     wireWorkshopToggle(editorForm, "talkDuration", "speaker-edit-workshop-section");
-
-    refreshButton.addEventListener("click", refreshMyProposals);
+    wireProposalEditorPage();
 
     list.addEventListener("click", function (event) {
       var button = event.target.closest("[data-edit-proposal]");
       if (!button) return;
-      loadProposalIntoEditor(button.getAttribute("data-edit-proposal"));
+      var proposalID = button.getAttribute("data-edit-proposal");
+      window.history.pushState({}, "", myProposalsBasePath() + "/" + encodeURIComponent(proposalID));
+      loadProposalIntoEditor(proposalID);
       showStatus("proposal-editor-status", null);
     });
 
@@ -1201,9 +1275,8 @@
           method: "PUT",
           body: JSON.stringify(payload)
         });
-        showStatus("proposal-editor-status", "Proposal updated.", "success");
         await refreshMyProposals();
-        loadProposalIntoEditor(proposalID);
+        returnToMyProposalsList();
       } catch (error) {
         showStatus("proposal-editor-status", error.message, "error");
       }
@@ -1212,13 +1285,19 @@
     withdrawButton.addEventListener("click", async function () {
       var proposalID = editorForm.elements.proposalID.value;
       if (!proposalID) return;
+      var confirmed = window.confirm(
+        currentLanguage() === "ja"
+          ? "このプロポーザルを取り下げますか？この操作は元に戻せません。"
+          : "Withdraw this proposal? This action cannot be undone."
+      );
+      if (!confirmed) return;
 
       try {
         await apiRequest("/api/v1/proposals/" + encodeURIComponent(proposalID) + "/withdraw", {
           method: "POST"
         });
-        showStatus("proposal-editor-status", "Proposal withdrawn.", "success");
         await refreshMyProposals();
+        returnToMyProposalsList();
       } catch (error) {
         showStatus("proposal-editor-status", error.message, "error");
       }
@@ -1228,6 +1307,8 @@
     var initialProposalID = extractMyProposalRouteID();
     if (initialProposalID) {
       loadProposalIntoEditor(initialProposalID);
+    } else {
+      showMyProposalListView();
     }
   }
 

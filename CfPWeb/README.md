@@ -57,7 +57,3 @@ This package currently provides:
 - generated rewrite hints for deep links and legacy `/cfp/**` paths
 
 It is intentionally a scaffold for the ongoing migration, while removing the need for a Vapor process in front of the frontend.
-
-## Related Docs
-
-- [Vapor Removal Handoff](/Users/soya.ichikawa/Projects/Private/try-swift-tokyo/CfPWeb/VAPOR_REMOVAL_HANDOFF.md)

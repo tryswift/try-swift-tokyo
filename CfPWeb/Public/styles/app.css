@@ -74,18 +74,25 @@ a {
   display: flex;
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+}
+
 .brand a {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  height: 42px;
   color: #fff;
   font-weight: 700;
 }
 
 .brand-icon {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   object-fit: cover;
+  align-self: center;
 }
 
 .nav-toggle {
@@ -115,6 +122,7 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 18px;
+  align-items: center;
 }
 
 .nav-link {
@@ -329,6 +337,30 @@ a {
   padding: 32px 24px;
 }
 
+.editor-header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.editor-header-row h3 {
+  margin: 0;
+}
+
+#proposal-editor-back-link {
+  min-width: 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
 .submit-form-intro {
   margin: 0 0 20px;
   color: var(--muted);
@@ -515,6 +547,12 @@ a {
   font-weight: 700;
 }
 
+.proposal-card.is-withdrawn h4,
+.proposal-card.is-withdrawn .proposal-summary {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
 .workshop-summary-link {
   color: inherit;
   display: flex;
@@ -649,6 +687,15 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+.form-actions.split {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-actions.split .button.danger {
+  margin-left: auto;
 }
 
 .workshop-status-result {
@@ -1043,12 +1090,16 @@ body.modal-open {
     width: auto !important;
     flex: 1 !important;
     padding: 0 !important;
+    gap: 32px !important;
   }
 
   .nav {
     width: auto !important;
     flex-direction: row !important;
-    margin: 0 auto !important;
+    margin: 0 !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    min-height: 28px;
   }
 
   .auth-area {
@@ -1056,6 +1107,7 @@ body.modal-open {
     flex-direction: row !important;
     align-items: center !important;
     margin-left: auto !important;
+    justify-content: flex-end !important;
   }
 
   .nav-toggle {
