@@ -248,7 +248,8 @@ struct CallForProposalComponent: HTML {
   private var finalDescription: String {
     switch language {
     case .ja: "登壇経験は問いません。初めての CfP 応募も歓迎しています。"
-    case .en: "We welcome speakers of all experience levels. First-time speakers are encouraged to apply!"
+    case .en:
+      "We welcome speakers of all experience levels. First-time speakers are encouraged to apply!"
     }
   }
 
@@ -294,13 +295,15 @@ struct CallForProposalComponent: HTML {
           id: "regular",
           title: "Regular Talk",
           duration: "20 minutes",
-          description: "Deep dive into a specific topic with detailed examples and live demos. Perfect for sharing comprehensive knowledge about Swift development."
+          description:
+            "Deep dive into a specific topic with detailed examples and live demos. Perfect for sharing comprehensive knowledge about Swift development."
         ),
         .init(
           id: "lightning",
           title: "Lightning Talk",
           duration: "5 minutes",
-          description: "Quick, focused presentation on a single idea, tip, or tool. Great for first-time speakers or sharing quick wins!"
+          description:
+            "Quick, focused presentation on a single idea, tip, or tool. Great for first-time speakers or sharing quick wins!"
         ),
       ]
     }
@@ -319,12 +322,24 @@ struct CallForProposalComponent: HTML {
       ]
     case .en:
       [
-        .init(id: "swift", title: "Swift Language", description: "New features, best practices, and language evolution"),
-        .init(id: "swiftui", title: "SwiftUI", description: "Modern UI development, animations, and architecture"),
-        .init(id: "platforms", title: "iOS/macOS/visionOS", description: "Platform-specific development and APIs"),
-        .init(id: "server", title: "Server-Side Swift", description: "Vapor, backend development, and cloud deployment"),
-        .init(id: "testing", title: "Testing & Quality", description: "Unit testing, UI testing, and code quality"),
-        .init(id: "tools", title: "Tools & Productivity", description: "Xcode, debugging, and developer experience"),
+        .init(
+          id: "swift", title: "Swift Language",
+          description: "New features, best practices, and language evolution"),
+        .init(
+          id: "swiftui", title: "SwiftUI",
+          description: "Modern UI development, animations, and architecture"),
+        .init(
+          id: "platforms", title: "iOS/macOS/visionOS",
+          description: "Platform-specific development and APIs"),
+        .init(
+          id: "server", title: "Server-Side Swift",
+          description: "Vapor, backend development, and cloud deployment"),
+        .init(
+          id: "testing", title: "Testing & Quality",
+          description: "Unit testing, UI testing, and code quality"),
+        .init(
+          id: "tools", title: "Tools & Productivity",
+          description: "Xcode, debugging, and developer experience"),
       ]
     }
   }

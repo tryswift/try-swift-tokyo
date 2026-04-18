@@ -191,7 +191,9 @@ struct AdminTimetableController: RouteCollection {
     if let customTitle = body.customTitle { slot.customTitle = customTitle.value }
     if let customTitleJa = body.customTitleJa { slot.customTitleJa = customTitleJa.value }
     if let descriptionText = body.descriptionText { slot.descriptionText = descriptionText.value }
-    if let descriptionTextJa = body.descriptionTextJa { slot.descriptionTextJa = descriptionTextJa.value }
+    if let descriptionTextJa = body.descriptionTextJa {
+      slot.descriptionTextJa = descriptionTextJa.value
+    }
     if let place = body.place { slot.place = place.value }
     if let placeJa = body.placeJa { slot.placeJa = placeJa.value }
 

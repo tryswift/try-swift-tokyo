@@ -134,7 +134,8 @@ struct ResolveSpeakerIDTests {
       let user = User(githubID: 99999, username: "trimtest", role: .speaker)
       try await user.save(on: app.db)
 
-      let id = try await AdminAPIService.resolveSpeakerID(githubUsername: "  trimtest  ", on: app.db)
+      let id = try await AdminAPIService.resolveSpeakerID(
+        githubUsername: "  trimtest  ", on: app.db)
       #expect(id == user.id)
     }
   }
@@ -144,7 +145,8 @@ struct ResolveSpeakerIDTests {
   @Test("non-existent username returns import user ID (deferred resolution)")
   func resolveNonExistentUser() async throws {
     try await withTestApp { app in
-      let id = try await AdminAPIService.resolveSpeakerID(githubUsername: "no-such-user", on: app.db)
+      let id = try await AdminAPIService.resolveSpeakerID(
+        githubUsername: "no-such-user", on: app.db)
       #expect(id == AddPaperCallImportUser.paperCallUserID)
     }
   }

@@ -44,7 +44,9 @@ struct AdminProposalRequestContent: Content {
     guard !abstract.isEmpty else { throw Abort(.badRequest, reason: "Abstract is required") }
     guard !talkDetail.isEmpty else { throw Abort(.badRequest, reason: "Talk detail is required") }
     guard !speakerName.isEmpty else { throw Abort(.badRequest, reason: "Speaker name is required") }
-    guard !speakerEmail.isEmpty else { throw Abort(.badRequest, reason: "Speaker email is required") }
+    guard !speakerEmail.isEmpty else {
+      throw Abort(.badRequest, reason: "Speaker email is required")
+    }
     guard !bio.isEmpty else { throw Abort(.badRequest, reason: "Bio is required") }
     if duration.isWorkshop, workshopDetails == nil {
       throw Abort(.badRequest, reason: "Workshop details are required for workshop talks")
@@ -169,7 +171,8 @@ struct AdminProposalController: RouteCollection {
       coInstructors: talkDuration.isWorkshop ? request.coInstructors : nil
     )
     proposal.workshopDetailsJA = talkDuration.isWorkshop ? request.workshopDetailsJA : nil
-    let githubUsername = request.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    let githubUsername =
+      request.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
     if !githubUsername.isEmpty {
       proposal.paperCallUsername = githubUsername
       proposal.githubUsername = githubUsername
@@ -213,7 +216,8 @@ struct AdminProposalController: RouteCollection {
       throw Abort(.notFound, reason: "Conference not found")
     }
 
-    let githubUsername = request.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    let githubUsername =
+      request.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
     let speakerID = try await AdminAPIService.resolveSpeakerID(
       githubUsername: request.githubUsername, on: req.db)
 
@@ -237,7 +241,8 @@ struct AdminProposalController: RouteCollection {
     proposal.githubUsername = githubUsername.isEmpty ? nil : githubUsername
     proposal.workshopDetails = talkDuration.isWorkshop ? request.workshopDetails : nil
     proposal.workshopDetailsJA = talkDuration.isWorkshop ? request.workshopDetailsJA : nil
-    proposal.coInstructors = talkDuration.isWorkshop ? request.coInstructors.map(CoInstructorList.init) : nil
+    proposal.coInstructors =
+      talkDuration.isWorkshop ? request.coInstructors.map(CoInstructorList.init) : nil
 
     try await proposal.save(on: req.db)
     guard
@@ -330,9 +335,10 @@ struct AdminProposalController: RouteCollection {
     let formatter = ISO8601DateFormatter()
 
     for proposal in proposals {
-      let coInstructorSummary = proposal.coInstructors?.items.map {
-        "\($0.name) <\($0.email)> @\($0.githubUsername)"
-      }.joined(separator: "; ") ?? ""
+      let coInstructorSummary =
+        proposal.coInstructors?.items.map {
+          "\($0.name) <\($0.email)> @\($0.githubUsername)"
+        }.joined(separator: "; ") ?? ""
       let row = [
         proposal.id?.uuidString ?? "",
         escapeCSV(proposal.title),
@@ -344,7 +350,8 @@ struct AdminProposalController: RouteCollection {
         proposal.status.rawValue,
         escapeCSV(proposal.speakerName),
         escapeCSV(proposal.speakerEmail),
-        escapeCSV(proposal.githubUsername ?? proposal.paperCallUsername ?? proposal.speaker.username),
+        escapeCSV(
+          proposal.githubUsername ?? proposal.paperCallUsername ?? proposal.speaker.username),
         escapeCSV(proposal.bio),
         escapeCSV(proposal.iconURL ?? ""),
         escapeCSV(proposal.notes ?? ""),
@@ -408,7 +415,8 @@ struct AdminProposalController: RouteCollection {
       var links: [TimetableExportLink] = []
       if let githubUsername = proposal.githubUsername, !githubUsername.isEmpty {
         links.append(
-          TimetableExportLink(name: "@\(githubUsername)", url: "https://github.com/\(githubUsername)")
+          TimetableExportLink(
+            name: "@\(githubUsername)", url: "https://github.com/\(githubUsername)")
         )
       }
       return SpeakerExportDTO(

@@ -1,13 +1,14 @@
 import Fluent
 import FluentSQLiteDriver
 import JWT
-import enum SharedModels.FacilityRequirement
-import enum SharedModels.ProposalStatus
-import enum SharedModels.WorkshopLanguage
-import struct SharedModels.WorkshopDetails
 import Testing
 import Vapor
 import VaporTesting
+
+import enum SharedModels.FacilityRequirement
+import enum SharedModels.ProposalStatus
+import struct SharedModels.WorkshopDetails
+import enum SharedModels.WorkshopLanguage
 
 @testable import Server
 
@@ -78,7 +79,9 @@ private struct CreateWorkshopAPITestSchema: AsyncMigration {
 
     try await database.schema(WorkshopRegistration.schema)
       .id()
-      .field("proposal_id", .uuid, .required, .references(Proposal.schema, "id", onDelete: .cascade))
+      .field(
+        "proposal_id", .uuid, .required, .references(Proposal.schema, "id", onDelete: .cascade)
+      )
       .field("capacity", .int, .required)
       .field("luma_event_id", .string)
       .field("created_at", .datetime)
@@ -90,10 +93,21 @@ private struct CreateWorkshopAPITestSchema: AsyncMigration {
       .id()
       .field("email", .string, .required)
       .field("applicant_name", .string, .required)
-      .field("first_choice_id", .uuid, .required, .references(WorkshopRegistration.schema, "id", onDelete: .cascade))
-      .field("second_choice_id", .uuid, .references(WorkshopRegistration.schema, "id", onDelete: .cascade))
-      .field("third_choice_id", .uuid, .references(WorkshopRegistration.schema, "id", onDelete: .cascade))
-      .field("assigned_workshop_id", .uuid, .references(WorkshopRegistration.schema, "id", onDelete: .setNull))
+      .field(
+        "first_choice_id", .uuid, .required,
+        .references(WorkshopRegistration.schema, "id", onDelete: .cascade)
+      )
+      .field(
+        "second_choice_id", .uuid,
+        .references(WorkshopRegistration.schema, "id", onDelete: .cascade)
+      )
+      .field(
+        "third_choice_id", .uuid, .references(WorkshopRegistration.schema, "id", onDelete: .cascade)
+      )
+      .field(
+        "assigned_workshop_id", .uuid,
+        .references(WorkshopRegistration.schema, "id", onDelete: .setNull)
+      )
       .field("status", .string, .required)
       .field("luma_guest_id", .string)
       .field("created_at", .datetime)
@@ -146,14 +160,18 @@ struct WorkshopAPITests {
     )
   }
 
-  private func makeWorkshopVerifyToken(email: String, name: String, on app: Application) async throws -> String {
+  private func makeWorkshopVerifyToken(email: String, name: String, on app: Application)
+    async throws -> String
+  {
     try await app.jwt.keys.sign(WorkshopVerifyPayload(email: email, name: name))
   }
 
   private func seedWorkshop(
     on db: Database,
     capacity: Int = 2
-  ) async throws -> (conference: Conference, speaker: User, proposal: Proposal, registration: WorkshopRegistration) {
+  ) async throws -> (
+    conference: Conference, speaker: User, proposal: Proposal, registration: WorkshopRegistration
+  ) {
     let speaker = User(githubID: 10, username: "workshop-speaker", role: .speaker)
     try await speaker.save(on: db)
 
@@ -209,7 +227,8 @@ struct WorkshopAPITests {
     try await withTestApp { app in
       let seeded = try await seedWorkshop(on: app.db, capacity: 2)
       let registrationID = try seeded.registration.requireID()
-      let verifyToken = try await makeWorkshopVerifyToken(email: "attendee@example.com", name: "Attendee", on: app)
+      let verifyToken = try await makeWorkshopVerifyToken(
+        email: "attendee@example.com", name: "Attendee", on: app)
 
       try await app.testing().test(.GET, "api/v1/workshops") { response in
         #expect(response.status == .ok)

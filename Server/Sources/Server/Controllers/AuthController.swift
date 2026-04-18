@@ -164,7 +164,8 @@ struct AuthController: RouteCollection {
       return callbackURL
     }
     if let apiBaseURL = Environment.get("API_BASE_URL") {
-      return "\(apiBaseURL.trimmingCharacters(in: CharacterSet(charactersIn: "/")))/api/v1/auth/github/callback"
+      return
+        "\(apiBaseURL.trimmingCharacters(in: CharacterSet(charactersIn: "/")))/api/v1/auth/github/callback"
     }
     return "http://localhost:8080/api/v1/auth/github/callback"
   }

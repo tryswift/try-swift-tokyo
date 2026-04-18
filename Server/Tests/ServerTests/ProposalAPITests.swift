@@ -2,12 +2,13 @@ import Fluent
 import FluentSQLiteDriver
 import Foundation
 import JWT
-import enum SharedModels.FacilityRequirement
-import enum SharedModels.TalkDuration
-import struct SharedModels.WorkshopDetails
 import Testing
 import Vapor
 import VaporTesting
+
+import enum SharedModels.FacilityRequirement
+import enum SharedModels.TalkDuration
+import struct SharedModels.WorkshopDetails
 
 @testable import Server
 
@@ -113,7 +114,9 @@ struct ProposalAPITests {
     try await app.asyncShutdown()
   }
 
-  private func seedProposal(on db: Database) async throws -> (speaker: User, conference: Conference, proposal: Proposal) {
+  private func seedProposal(on db: Database) async throws -> (
+    speaker: User, conference: Conference, proposal: Proposal
+  ) {
     let user = User(githubID: 1, username: "speaker", role: .speaker)
     try await user.save(on: db)
 

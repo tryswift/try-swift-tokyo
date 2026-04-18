@@ -400,7 +400,8 @@ struct ProposalController: RouteCollection {
     let request = try req.content.decode(UpdateProposalRequestContent.self)
     let talkDuration = try request.validate(for: payload.role)
 
-    if let githubUsername = request.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines) {
+    if let githubUsername = request.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines)
+    {
       guard !githubUsername.isEmpty else {
         throw Abort(.badRequest, reason: "GitHub ID is required")
       }
@@ -422,7 +423,9 @@ struct ProposalController: RouteCollection {
       proposal.talkDuration = talkDuration
     }
     if let speakerName = request.speakerName {
-      guard !speakerName.isEmpty else { throw Abort(.badRequest, reason: "Speaker name is required") }
+      guard !speakerName.isEmpty else {
+        throw Abort(.badRequest, reason: "Speaker name is required")
+      }
       proposal.speakerName = speakerName
     }
     if let speakerEmail = request.speakerEmail {

@@ -1,11 +1,12 @@
 import Fluent
 import FluentSQLiteDriver
 import JWT
-import enum SharedModels.ProposalStatus
-import enum SharedModels.TalkDuration
 import Testing
 import Vapor
 import VaporTesting
+
+import enum SharedModels.ProposalStatus
+import enum SharedModels.TalkDuration
 
 @testable import Server
 
@@ -149,7 +150,8 @@ struct AdminAPITests {
         role: .speaker
       )
       try await importUser.save(on: app.db)
-      let conference = Conference(path: "conf-2026", displayName: "Conf 2026", year: 2026, isOpen: true)
+      let conference = Conference(
+        path: "conf-2026", displayName: "Conf 2026", year: 2026, isOpen: true)
       try await conference.save(on: app.db)
       let token = try await makeToken(for: admin, on: app)
 
@@ -194,7 +196,8 @@ struct AdminAPITests {
         .POST, "api/v1/admin/proposals/\(proposalID.uuidString)/status",
         beforeRequest: { req in
           req.headers.bearerAuthorization = .init(token: token)
-          try req.content.encode(ProposalStatusChangeRequestContent(status: ProposalStatus.accepted.rawValue))
+          try req.content.encode(
+            ProposalStatusChangeRequestContent(status: ProposalStatus.accepted.rawValue))
         },
         afterResponse: { response in
           #expect(response.status == .ok)
@@ -211,7 +214,8 @@ struct AdminAPITests {
     try await withTestApp { app in
       let admin = User(githubID: 200, username: "admin", role: .admin)
       try await admin.save(on: app.db)
-      let conference = Conference(path: "conf-2026", displayName: "Conf 2026", year: 2026, isOpen: true)
+      let conference = Conference(
+        path: "conf-2026", displayName: "Conf 2026", year: 2026, isOpen: true)
       try await conference.save(on: app.db)
       let token = try await makeToken(for: admin, on: app)
 

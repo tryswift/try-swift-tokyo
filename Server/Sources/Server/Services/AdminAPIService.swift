@@ -120,7 +120,8 @@ enum AdminAPIService {
         continuation.resume(returning: speakers)
       }
     }
-    let speakerMap = Dictionary(knownSpeakers.map { ($0.name, $0) }, uniquingKeysWith: { first, _ in first })
+    let speakerMap = Dictionary(
+      knownSpeakers.map { ($0.name, $0) }, uniquingKeysWith: { first, _ in first })
 
     var schedulesByTime: [(time: Date, slots: [ScheduleSlot])] = []
     var currentTime: Date?
@@ -145,7 +146,8 @@ enum AdminAPIService {
       let sessions = group.slots.map { slot -> TimetableExportSession in
         if let proposal = slot.proposal {
           let matched = speakerMap[proposal.speakerName]
-          let fallbackImageName = proposal.speakerName.lowercased().replacingOccurrences(of: " ", with: "_")
+          let fallbackImageName = proposal.speakerName.lowercased().replacingOccurrences(
+            of: " ", with: "_")
           return TimetableExportSession(
             proposalId: proposal.id?.uuidString,
             title: proposal.title,

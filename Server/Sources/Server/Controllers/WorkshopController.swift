@@ -476,10 +476,11 @@ struct WorkshopController: RouteCollection {
       throw Abort(.notFound, reason: "Workshop application not found")
     }
 
-    let firstTitle = try await WorkshopAPIService.workshopTitle(
-      for: application.$firstChoice.id,
-      on: req.db
-    ) ?? "Unknown"
+    let firstTitle =
+      try await WorkshopAPIService.workshopTitle(
+        for: application.$firstChoice.id,
+        on: req.db
+      ) ?? "Unknown"
     let secondTitle: String? =
       if let id = application.$secondChoice.id {
         try await WorkshopAPIService.workshopTitle(for: id, on: req.db)
