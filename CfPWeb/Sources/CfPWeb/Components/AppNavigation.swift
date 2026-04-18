@@ -53,8 +53,8 @@ struct AppNavigation: HTML, Sendable {
             div(.class("language-switch")) {
               span(.class("language-switch-icon"), .custom(name: "aria-hidden", value: "true")) { "🌐" }
               div(.class("language-switch-track")) {
-                a(.href(currentPage.path(for: .en)), .class(language == .en ? "lang-link active" : "lang-link")) { "EN" }
-                a(.href(currentPage.path(for: .ja)), .class(language == .ja ? "lang-link active" : "lang-link")) { "JP" }
+                a(.href(languageSwitchPath(for: .en)), .class(language == .en ? "lang-link active" : "lang-link")) { "EN" }
+                a(.href(languageSwitchPath(for: .ja)), .class(language == .ja ? "lang-link active" : "lang-link")) { "JP" }
               }
             }
           }
@@ -65,5 +65,39 @@ struct AppNavigation: HTML, Sendable {
 
   private var navigationPages: [CfPPage] {
     [.home, .guidelines, .submit, .workshops]
+  }
+
+  private func languageSwitchPath(for target: AppLanguage) -> String {
+    let concretePaths = Set(SiteRoutes.concrete.map(\.path))
+    let candidate: String
+
+    switch target {
+    case .en:
+      if routePath == "/ja" {
+        candidate = "/"
+      } else if routePath.hasPrefix("/ja/") {
+        candidate = String(routePath.dropFirst(3))
+      } else {
+        candidate = routePath
+      }
+    case .ja:
+      if routePath == "/" {
+        candidate = "/ja"
+      } else if routePath.hasPrefix("/ja") {
+        candidate = routePath
+      } else {
+        candidate = "/ja\(routePath)"
+      }
+    }
+
+    if concretePaths.contains(candidate) {
+      return candidate
+    }
+
+    if currentPage == .organizer {
+      return target == .ja ? "/ja/organizer/proposals" : "/organizer"
+    }
+
+    return currentPage.path(for: target)
   }
 }
