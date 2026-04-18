@@ -697,7 +697,7 @@
   }
 
   function setProposalEditorReadOnly(form, proposal) {
-    if (!form || !proposal) return;
+    if (!proposal) return;
 
     var isWithdrawn = proposal.status === "withdrawn";
     var saveButton = form.querySelector('button[type="submit"]');
