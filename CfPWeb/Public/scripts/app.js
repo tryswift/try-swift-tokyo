@@ -235,7 +235,22 @@
     if (!image) return;
 
     var value = (form.elements[inputName].value || "").trim();
-    image.src = value || "/images/riko.png";
+    image.src = safePreviewImageURL(value);
+  }
+
+  function safePreviewImageURL(value) {
+    if (!value) return "/images/riko.png";
+
+    try {
+      var url = new URL(value, window.location.origin);
+      if (url.protocol === "http:" || url.protocol === "https:") {
+        return url.href;
+      }
+    } catch (_error) {
+      return "/images/riko.png";
+    }
+
+    return "/images/riko.png";
   }
 
   function readFormJSON(form, allowedKeys) {
