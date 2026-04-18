@@ -1081,11 +1081,6 @@
     }).join("");
   }
 
-  function selectedConferencePathFromID(conferenceID) {
-    var conference = state.conferences.find(function (item) { return item.id === conferenceID; });
-    return conference ? conference.path : "";
-  }
-
   function updateExportLinks() {
     var filter = document.getElementById("organizer-conference-filter");
     var conferencePath = filter ? filter.value : "";
