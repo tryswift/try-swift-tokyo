@@ -116,20 +116,29 @@
     var loginButton = document.getElementById("login-button");
     var submitLoginButton = document.getElementById("submit-login-button");
     var logoutButton = document.getElementById("logout-button");
+    var submitAuthCard = document.querySelector(".submit-auth-card");
+    var submitFormCard = document.getElementById("submit-form-card");
 
     updatePageCopy(user);
-    if (!authStatus || !loginButton || !logoutButton) return;
 
     if (user) {
-      authStatus.textContent = "Signed in as " + user.username + " (" + user.role + ")";
-      loginButton.hidden = true;
+      if (authStatus) {
+        authStatus.textContent = "Signed in as " + user.username + " (" + user.role + ")";
+      }
+      if (loginButton) loginButton.hidden = true;
       if (submitLoginButton) submitLoginButton.hidden = true;
-      logoutButton.hidden = false;
+      if (submitAuthCard) submitAuthCard.hidden = true;
+      if (submitFormCard) submitFormCard.hidden = false;
+      if (logoutButton) logoutButton.hidden = false;
     } else {
-      authStatus.textContent = "Not signed in";
-      loginButton.hidden = false;
+      if (authStatus) {
+        authStatus.textContent = "Not signed in";
+      }
+      if (loginButton) loginButton.hidden = false;
       if (submitLoginButton) submitLoginButton.hidden = false;
-      logoutButton.hidden = true;
+      if (submitAuthCard) submitAuthCard.hidden = false;
+      if (submitFormCard) submitFormCard.hidden = true;
+      if (logoutButton) logoutButton.hidden = true;
     }
   }
 
@@ -222,6 +231,16 @@
     if (form.elements.iconURL && !form.elements.iconURL.value && user.avatarURL) {
       form.elements.iconURL.value = user.avatarURL;
     }
+    updateAvatarPreview(form);
+  }
+
+  function updateAvatarPreview(form) {
+    if (!form || !form.elements.iconURL) return;
+    var image = document.getElementById("submit-avatar-image");
+    if (!image) return;
+
+    var value = (form.elements.iconURL.value || "").trim();
+    image.src = value || "https://cfp.tryswift.jp/cfp/images/riko.png";
   }
 
   function readFormJSON(form, allowedKeys) {
@@ -416,6 +435,10 @@
     return lang.indexOf("ja") === 0 ? "ja" : "en";
   }
 
+  function localizedCopy(english, japanese) {
+    return currentLanguage() === "ja" ? japanese : english;
+  }
+
   function workshopLanguageLabel(language) {
     var pageLanguage = currentLanguage();
 
@@ -582,6 +605,7 @@
               '<span class="pill capacity-pill">' + escapeHTML(capacityLabel()) + ': ' + escapeHTML(String(capacity || 0)) + "</span>" +
               '<span class="pill language-pill">' + escapeHTML(workshopLanguageLabel(workshop.workshopLanguage)) + "</span>" +
             "</div>" +
+            '<span class="workshop-summary-action">' + escapeHTML(localizedCopy("View details", "詳細を見る")) + "</span>" +
           "</button>" +
         "</article>"
       );
@@ -654,7 +678,7 @@
           "</div>" +
           '<p class="proposal-summary">' + escapeHTML(truncate(proposal.abstract, 220)) + "</p>" +
           '<div class="proposal-actions">' +
-            '<button type="button" class="button ghost" data-edit-proposal="' + escapeHTML(proposal.id) + '">Edit</button>' +
+            '<button type="button" class="button neutral" data-edit-proposal="' + escapeHTML(proposal.id) + '">Edit</button>' +
           "</div>" +
         "</article>"
       );
@@ -717,11 +741,11 @@
           "</div>" +
           '<p class="proposal-summary">' + escapeHTML(truncate(proposal.abstract, 220)) + "</p>" +
           '<div class="proposal-actions compact">' +
-            '<button type="button" class="button ghost" data-edit-admin-proposal="' + escapeHTML(proposal.id) + '">Edit</button>' +
+            '<button type="button" class="button neutral" data-edit-admin-proposal="' + escapeHTML(proposal.id) + '">Edit</button>' +
             '<select data-status-select="' + escapeHTML(proposal.id) + '">' +
               renderStatusOptions(proposal.status) +
             "</select>" +
-            '<button type="button" class="button ghost" data-save-status="' + escapeHTML(proposal.id) + '">Save Status</button>' +
+            '<button type="button" class="button neutral" data-save-status="' + escapeHTML(proposal.id) + '">Save Status</button>' +
           "</div>" +
         "</article>"
       );
@@ -836,9 +860,9 @@
             meta.map(function (item) { return '<span class="pill">' + escapeHTML(item) + "</span>"; }).join("") +
           "</div>" +
           '<div class="proposal-actions compact">' +
-            '<button type="button" class="button ghost" data-edit-slot="' + escapeHTML(slot.id) + '">Edit</button>' +
-            '<button type="button" class="button ghost" data-move-slot-up="' + escapeHTML(slot.id) + '">Move Up</button>' +
-            '<button type="button" class="button ghost" data-move-slot-down="' + escapeHTML(slot.id) + '">Move Down</button>' +
+            '<button type="button" class="button neutral" data-edit-slot="' + escapeHTML(slot.id) + '">Edit</button>' +
+            '<button type="button" class="button neutral" data-move-slot-up="' + escapeHTML(slot.id) + '">Move Up</button>' +
+            '<button type="button" class="button neutral" data-move-slot-down="' + escapeHTML(slot.id) + '">Move Down</button>' +
             '<button type="button" class="button danger" data-delete-slot="' + escapeHTML(slot.id) + '">Delete Slot</button>' +
           "</div>" +
         "</article>"
@@ -1001,6 +1025,15 @@
     var form = document.getElementById("submit-form");
     if (!form) return;
     wireWorkshopToggle(form, "talkDuration", "submit-workshop-section");
+    updateAvatarPreview(form);
+    if (form.elements.iconURL) {
+      form.elements.iconURL.addEventListener("input", function () {
+        updateAvatarPreview(form);
+      });
+      form.elements.iconURL.addEventListener("change", function () {
+        updateAvatarPreview(form);
+      });
+    }
 
     try {
       var openConferences = await loadOpenConferences();
@@ -1048,6 +1081,7 @@
         form.reset();
         populateSelect("submit-conference-path", state.openConferences, null, "path", "displayName");
         prefillSpeakerFields(form, state.user);
+        updateAvatarPreview(form);
         toggleWorkshopSection(form, "submit-workshop-section", form.elements.talkDuration.value);
       } catch (error) {
         showStatus("submit-status", error.message, "error");
@@ -1404,9 +1438,9 @@
             '<label class="form-field"><span class="field-label">Luma Event ID</span><input type="text" data-workshop-luma-event="' + escapeHTML(workshop.registrationID) + '" value="' + escapeHTML(workshop.lumaEventID || "") + '"></label>' +
           "</div>" +
           '<div class="form-actions split">' +
-            '<button type="button" class="button ghost" data-save-workshop-capacity="' + escapeHTML(workshop.registrationID) + '">Save Capacity</button>' +
-            '<button type="button" class="button ghost" data-save-workshop-luma="' + escapeHTML(workshop.registrationID) + '">Save Luma ID</button>' +
-            '<button type="button" class="button secondary" data-create-workshop-luma="' + escapeHTML(workshop.registrationID) + '">Create Luma Event</button>' +
+            '<button type="button" class="button neutral" data-save-workshop-capacity="' + escapeHTML(workshop.registrationID) + '">Save Capacity</button>' +
+            '<button type="button" class="button neutral" data-save-workshop-luma="' + escapeHTML(workshop.registrationID) + '">Save Luma ID</button>' +
+            '<button type="button" class="button primary" data-create-workshop-luma="' + escapeHTML(workshop.registrationID) + '">Create Luma Event</button>' +
           "</div>" +
         "</article>"
       );

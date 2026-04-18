@@ -120,42 +120,242 @@ private struct SubmitContent: HTML, Sendable {
             ? "あなたのSwiftの知見を、世界中の開発者と共有しませんか。"
             : "Share your Swift expertise with developers from around the world.")
         }
+        SubmitAuthCard(language: language)
+        SubmitFormCard(language: language)
+      }
+    }
+  }
+}
 
-        article(.class("detail-card submit-auth-card")) {
-          p(.class("submit-auth-icon"), .custom(name: "aria-hidden", value: "true")) { "🔐" }
-          h3(
-            .id("page-description"),
-            .data("signed-out-copy", value: language == .ja ? "サインインが必要です" : "Sign In Required"),
-            .data("signed-in-copy", value: language == .ja ? "サインイン済みです" : "You're Signed In")
-          ) {
-            HTMLText(language == .ja ? "サインインが必要です" : "Sign In Required")
-          }
-          p(
-            .id("page-detail-copy"),
-            .class("submit-auth-copy"),
-            .data("signed-out-copy", value: language == .ja
-              ? "GitHubアカウントを連携すると、プロポーザルの提出と応募状況の確認ができます。"
-              : "Connect your GitHub account to submit proposals and track your submissions."),
-            .data("signed-in-copy", value: language == .ja
-              ? "GitHubアカウントとの連携が完了しています。応募状況の確認や管理をこのアカウントで行えます。"
-              : "Your GitHub account is connected. You can use this account to manage your submissions.")
-          ) {
-            HTMLText(language == .ja
-              ? "GitHubアカウントを連携すると、プロポーザルの提出と応募状況の確認ができます。"
-              : "Connect your GitHub account to submit proposals and track your submissions.")
-          }
-          p(.id("auth-status"), .class("submit-auth-status")) {
-            HTMLText(language == .ja ? "サインイン状態を確認しています..." : "Checking sign-in state...")
-          }
-          button(
-            .type(.button),
-            .id("submit-login-button"),
-            .class("button submit-login-button"),
-            .data("login-button", value: "true")
-          ) {
-            HTMLText(language == .ja ? "GitHubでサインイン" : "Sign in with GitHub")
+private struct SubmitAuthCard: HTML, Sendable {
+  let language: AppLanguage
+
+  var body: some HTML {
+    article(.class("detail-card submit-auth-card")) {
+      p(.class("submit-auth-icon"), .custom(name: "aria-hidden", value: "true")) { "🔐" }
+      h3(
+        .id("page-description"),
+        .data("signed-out-copy", value: language == .ja ? "サインインが必要です" : "Sign In Required"),
+        .data("signed-in-copy", value: language == .ja ? "サインイン済みです" : "You're Signed In")
+      ) {
+        HTMLText(language == .ja ? "サインインが必要です" : "Sign In Required")
+      }
+      p(
+        .id("page-detail-copy"),
+        .class("submit-auth-copy"),
+        .data("signed-out-copy", value: language == .ja
+          ? "GitHubアカウントを連携すると、プロポーザルの提出と応募状況の確認ができます。"
+          : "Connect your GitHub account to submit proposals and track your submissions."),
+        .data("signed-in-copy", value: language == .ja
+          ? "GitHubアカウントとの連携が完了しています。応募状況の確認や管理をこのアカウントで行えます。"
+          : "Your GitHub account is connected. You can use this account to manage your submissions.")
+      ) {
+        HTMLText(language == .ja
+          ? "GitHubアカウントを連携すると、プロポーザルの提出と応募状況の確認ができます。"
+          : "Connect your GitHub account to submit proposals and track your submissions.")
+      }
+      p(.id("auth-status"), .class("submit-auth-status")) {
+        HTMLText(language == .ja ? "サインイン状態を確認しています..." : "Checking sign-in state...")
+      }
+      button(
+        .type(.button),
+        .id("submit-login-button"),
+        .class("button submit-login-button"),
+        .data("login-button", value: "true")
+      ) {
+        HTMLText(language == .ja ? "GitHubでサインイン" : "Sign in with GitHub")
+      }
+    }
+  }
+}
+
+private struct SubmitFormCard: HTML, Sendable {
+  let language: AppLanguage
+
+  var body: some HTML {
+    article(.id("submit-form-card"), .class("detail-card submit-form-card"), .hidden) {
+      h3 { HTMLText(language == .ja ? "プロポーザル詳細" : "Proposal Details") }
+      p(.class("submit-form-intro")) {
+        HTMLText(language == .ja
+          ? "タイトル、概要、スピーカー情報を入力して応募できます。"
+          : "Fill in your talk details and speaker information to submit.")
+      }
+      p(.id("submit-status"), .class("inline-status"), .hidden) {}
+
+      form(.id("submit-form"), .class("submit-form-grid")) {
+        SubmitBasicFields(language: language)
+        SubmitWorkshopFields(language: language)
+        div(.class("form-actions submit-form-full")) {
+          button(.type(.submit), .class("button primary")) {
+            HTMLText(language == .ja ? "プロポーザルを提出する" : "Submit Proposal")
           }
         }
+      }
+    }
+  }
+}
+
+private struct SubmitBasicFields: HTML, Sendable {
+  let language: AppLanguage
+
+  var body: some HTML {
+    label(.class("form-field")) {
+      span(.class("field-label")) { HTMLText(language == .ja ? "カンファレンス" : "Conference") }
+      select(.id("submit-conference-path"), .name("conferencePath"), .required) {}
+    }
+    label(.class("form-field")) {
+      span(.class("field-label")) { HTMLText(language == .ja ? "形式" : "Format") }
+      select(.name("talkDuration"), .required) {
+        option(.value("20min")) { HTMLText(language == .ja ? "レギュラートーク (20分)" : "Regular Talk (20 min)") }
+        option(.value("LT")) { HTMLText(language == .ja ? "ライトニングトーク (5分)" : "Lightning Talk (5 min)") }
+        option(.value("workshop")) { HTMLText(language == .ja ? "ワークショップ" : "Workshop") }
+      }
+    }
+    label(.class("form-field submit-form-full")) {
+      span(.class("field-label")) { HTMLText(language == .ja ? "タイトル" : "Title") }
+      input(.type(.text), .name("title"), .required)
+    }
+    label(.class("form-field submit-form-full")) {
+      span(.class("field-label")) { HTMLText(language == .ja ? "概要" : "Abstract") }
+      textarea(.name("abstract"), .required, .custom(name: "rows", value: "5")) {}
+    }
+    label(.class("form-field submit-form-full")) {
+      span(.class("field-label")) { HTMLText(language == .ja ? "詳細" : "Talk Details") }
+      textarea(.name("talkDetail"), .required, .custom(name: "rows", value: "8")) {}
+    }
+    label(.class("form-field")) {
+      span(.class("field-label")) { HTMLText(language == .ja ? "登壇者名" : "Speaker Name") }
+      input(.type(.text), .name("speakerName"), .required)
+    }
+    label(.class("form-field")) {
+      span(.class("field-label")) { HTMLText(language == .ja ? "メールアドレス" : "Speaker Email") }
+      input(.type(.email), .name("speakerEmail"), .required)
+    }
+    label(.class("form-field submit-form-full")) {
+      span(.class("field-label")) { HTMLText("Bio") }
+      textarea(.name("bio"), .required, .custom(name: "rows", value: "5")) {}
+    }
+    div(.class("form-field avatar-field submit-form-full")) {
+      span(.class("field-label")) { HTMLText(language == .ja ? "アイコンURL" : "Avatar URL") }
+      div(.class("avatar-field-row")) {
+        input(.type(.url), .name("iconURL"), .placeholder(language == .ja ? "https://example.com/avatar.png" : "https://example.com/avatar.png"))
+        div(.class("avatar-preview"), .id("submit-avatar-preview")) {
+          img(
+            .id("submit-avatar-image"),
+            .src("https://cfp.tryswift.jp/cfp/images/riko.png"),
+            .alt(language == .ja ? "アバタープレビュー" : "Avatar preview")
+          )
+        }
+      }
+    }
+    label(.class("form-field submit-form-full")) {
+      span(.class("field-label")) { HTMLText(language == .ja ? "メモ" : "Notes for Organizers") }
+      textarea(.name("notes"), .custom(name: "rows", value: "4")) {}
+    }
+  }
+}
+
+private struct SubmitWorkshopFields: HTML, Sendable {
+  let language: AppLanguage
+
+  var body: some HTML {
+    div(.id("submit-workshop-section"), .class("submit-workshop-section submit-form-full"), .hidden) {
+      h4 { HTMLText(language == .ja ? "ワークショップ詳細" : "Workshop Details") }
+      label(.class("form-field")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "言語" : "Language") }
+        select(.name("workshopLanguage")) {
+          option(.value("english")) { HTMLText(language == .ja ? "英語" : "English") }
+          option(.value("japanese")) { HTMLText(language == .ja ? "日本語" : "Japanese") }
+          option(.value("bilingual")) { HTMLText(language == .ja ? "バイリンガル" : "Bilingual") }
+        }
+      }
+      label(.class("form-field")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "講師数" : "Number of Tutors") }
+        input(.type(.number), .name("workshopNumberOfTutors"), .custom(name: "min", value: "1"), .value("1"))
+      }
+      label(.class("form-field submit-form-full")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "学べること" : "Key Takeaways") }
+        textarea(.name("workshopKeyTakeaways"), .custom(name: "rows", value: "4")) {}
+      }
+      label(.class("form-field submit-form-full")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "前提知識" : "Prerequisites") }
+        textarea(.name("workshopPrerequisites"), .custom(name: "rows", value: "3")) {}
+      }
+      label(.class("form-field submit-form-full")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "アジェンダ" : "Agenda / Schedule") }
+        textarea(.name("workshopAgendaSchedule"), .custom(name: "rows", value: "5")) {}
+      }
+      label(.class("form-field submit-form-full")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "持ち物" : "What to Bring") }
+        textarea(.name("workshopParticipantRequirements"), .custom(name: "rows", value: "3")) {}
+      }
+      label(.class("form-field submit-form-full")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "必要なソフトウェア" : "Required Software") }
+        textarea(.name("workshopRequiredSoftware"), .custom(name: "rows", value: "3")) {}
+      }
+      label(.class("form-field submit-form-full")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "ネットワーク要件" : "Network Requirements") }
+        textarea(.name("workshopNetworkRequirements"), .custom(name: "rows", value: "3")) {}
+      }
+      label(.class("form-field submit-form-full")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "企画意図" : "Motivation") }
+        textarea(.name("workshopMotivation"), .custom(name: "rows", value: "3")) {}
+      }
+      label(.class("form-field submit-form-full")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "独自性" : "Uniqueness") }
+        textarea(.name("workshopUniqueness"), .custom(name: "rows", value: "3")) {}
+      }
+      label(.class("form-field submit-form-full")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "懸念点" : "Potential Risks") }
+        textarea(.name("workshopPotentialRisks"), .custom(name: "rows", value: "3")) {}
+      }
+      div(.class("submit-form-full workshop-facilities")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "必要設備" : "Required Facilities") }
+        label { input(.type(.checkbox), .name("workshopFacilityProjector")); HTMLText(language == .ja ? "プロジェクター" : "Projector") }
+        label { input(.type(.checkbox), .name("workshopFacilityMicrophone")); HTMLText(language == .ja ? "マイク" : "Microphone") }
+        label { input(.type(.checkbox), .name("workshopFacilityWhiteboard")); HTMLText(language == .ja ? "ホワイトボード" : "Whiteboard") }
+        label { input(.type(.checkbox), .name("workshopFacilityPowerStrips")); HTMLText(language == .ja ? "電源タップ" : "Power Strips") }
+      }
+      label(.class("form-field submit-form-full")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "その他設備" : "Other Facilities") }
+        input(.type(.text), .name("workshopFacilityOther"))
+      }
+      SubmitCoInstructorFields(language: language, prefix: "submit-co1")
+      SubmitCoInstructorFields(language: language, prefix: "submit-co2")
+    }
+  }
+}
+
+private struct SubmitCoInstructorFields: HTML, Sendable {
+  let language: AppLanguage
+  let prefix: String
+
+  var body: some HTML {
+    div(.class("submit-form-full co-instructor-fields")) {
+      h4 { HTMLText(language == .ja ? "共同講師" : "Co-Instructor") }
+      label(.class("form-field")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "名前" : "Name") }
+        input(.type(.text), .name("\(prefix)Name"))
+      }
+      label(.class("form-field")) {
+        span(.class("field-label")) { HTMLText("Email") }
+        input(.type(.email), .name("\(prefix)Email"))
+      }
+      label(.class("form-field")) {
+        span(.class("field-label")) { HTMLText("GitHub") }
+        input(.type(.text), .name("\(prefix)GithubUsername"))
+      }
+      label(.class("form-field submit-form-full")) {
+        span(.class("field-label")) { HTMLText("Bio") }
+        textarea(.name("\(prefix)Bio"), .custom(name: "rows", value: "3")) {}
+      }
+      label(.class("form-field")) {
+        span(.class("field-label")) { HTMLText("SNS") }
+        input(.type(.url), .name("\(prefix)Sns"))
+      }
+      label(.class("form-field")) {
+        span(.class("field-label")) { HTMLText(language == .ja ? "アイコンURL" : "Avatar URL") }
+        input(.type(.url), .name("\(prefix)IconURL"))
       }
     }
   }
@@ -188,15 +388,6 @@ private struct WorkshopsContent: HTML, Sendable {
           }
         }
 
-        div(.class("workshop-cta-row")) {
-          a(.href("#workshop-apply"), .class("button secondary button-link")) {
-            HTMLText(language == .ja ? "ワークショップに応募する" : "Apply for Workshops")
-          }
-          a(.href("#workshop-status"), .class("button ghost button-link workshop-cta-secondary")) {
-            HTMLText(language == .ja ? "応募状況を確認する" : "Check Application Status")
-          }
-        }
-
         div(.class("workshop-tools-grid")) {
           article(.id("workshop-apply"), .class("detail-card workshop-tool-card")) {
             h3 { HTMLText(language == .ja ? "ワークショップに応募する" : "Apply for Workshops") }
@@ -212,7 +403,7 @@ private struct WorkshopsContent: HTML, Sendable {
                 input(.type(.email), .name("email"), .required, .placeholder(language == .ja ? "you@example.com" : "you@example.com"))
               }
               div(.class("form-actions")) {
-                button(.type(.submit), .class("button secondary")) {
+                button(.type(.submit), .class("button primary")) {
                   HTMLText(language == .ja ? "チケットを確認" : "Verify Ticket")
                 }
               }
@@ -239,7 +430,7 @@ private struct WorkshopsContent: HTML, Sendable {
                 select(.name("thirdChoiceID"), .id("workshop-third-choice")) {}
               }
               div(.class("form-actions")) {
-                button(.type(.submit), .class("button secondary")) {
+                button(.type(.submit), .class("button primary")) {
                   HTMLText(language == .ja ? "応募を保存" : "Save Application")
                 }
               }
@@ -260,7 +451,7 @@ private struct WorkshopsContent: HTML, Sendable {
                 input(.type(.email), .name("email"), .required, .placeholder(language == .ja ? "you@example.com" : "you@example.com"))
               }
               div(.class("form-actions")) {
-                button(.type(.submit), .class("button secondary")) {
+                button(.type(.submit), .class("button primary")) {
                   HTMLText(language == .ja ? "状況を確認" : "Check Status")
                 }
               }
@@ -289,13 +480,13 @@ private struct HomeLanding: HTML, Sendable {
             : "Share your Swift expertise with developers from around the world. Submit your talk proposal for try! Swift Tokyo 2026!")
         }
         div(.class("hero-actions")) {
-          a(.href(CfPPage.submit.path(for: language)), .class("button secondary button-link")) {
+          a(.href(CfPPage.submit.path(for: language)), .class("button primary button-link")) {
             HTMLText(language == .ja ? "プロポーザルを提出する" : "Submit Your Proposal")
           }
-          a(.href(CfPPage.guidelines.path(for: language)), .class("button ghost button-link")) {
+          a(.href(CfPPage.guidelines.path(for: language)), .class("button light button-link")) {
             HTMLText(language == .ja ? "ガイドラインを見る" : "View Guidelines")
           }
-          a(.href(CfPPage.myProposals.path(for: language)), .class("button ghost button-link")) {
+          a(.href(CfPPage.myProposals.path(for: language)), .class("button light button-link")) {
             HTMLText(language == .ja ? "応募履歴" : "My Proposals")
           }
         }
@@ -361,7 +552,7 @@ private struct HomeLanding: HTML, Sendable {
           ? "経験レベルに関係なく、すべてのスピーカーを歓迎します。初めての登壇者の方も、ぜひご応募ください！"
           : "We welcome speakers of all experience levels. First-time speakers are encouraged to apply!")
       }
-      a(.href(CfPPage.submit.path(for: language)), .class("button secondary button-link")) {
+      a(.href(CfPPage.submit.path(for: language)), .class("button primary button-link")) {
         HTMLText(language == .ja ? "プロポーザルを提出する" : "Submit Your Proposal")
       }
       }
@@ -458,7 +649,7 @@ private struct GuidelinesContent: HTML, Sendable {
       }
 
       section(.class("detail-card cta-card")) {
-        a(.href(CfPPage.submit.path(for: language)), .class("button secondary button-link")) {
+        a(.href(CfPPage.submit.path(for: language)), .class("button primary button-link")) {
           HTMLText(language == .ja ? "プロポーザルを提出" : "Submit Your Proposal")
         }
       }
