@@ -6,6 +6,7 @@ do {
   try StaticSiteBuilder(options: options).build()
   print("Built CfPWeb static site at \(options.outputDirectory.path())")
 } catch {
-  fputs("CfPWeb build failed: \(error.localizedDescription)\n", stderr)
+  let message = "CfPWeb build failed: \(error.localizedDescription)\n"
+  FileHandle.standardError.write(Data(message.utf8))
   exit(1)
 }
