@@ -14,7 +14,7 @@ Create the following directory structure:
 
 ### Technology Stack
 
-- Language: Swift 6.2
+- Language: Swift 6.3
 - Backend: Vapor latest stable
 - Database: PostgreSQL (Use Fluent)
 - Auth: GitHub OAuth + JWT
