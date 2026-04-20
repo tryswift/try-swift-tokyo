@@ -1,5 +1,6 @@
 # fly.toml - Fly.io configuration for trySwift API Server
 # See https://fly.io/docs/reference/configuration/ for information about this file.
+# Custom domain: api.tryswift.jp (via Cloudflare proxy)
 
 app = 'tryswift-api'
 primary_region = 'nrt'  # Tokyo region
