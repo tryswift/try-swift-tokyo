@@ -1,0 +1,50 @@
+name: Deploy CfPWeb to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "CfPWeb/**"
+      - ".github/workflows/deploy-cfpweb.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: cfpweb-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build & Deploy CfPWeb
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@364295d9c23900ce04d4e5cc708387921b4e50f9 # v3
+        with:
+          swift-version: "6.3"
+          skip-verify-signature: true
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v5
+        with:
+          key: spm-cfpweb-${{ runner.os }}-swift-6.3-${{ hashFiles('CfPWeb/Package.resolved', 'CfPWeb/Package.swift') }}
+          restore-keys: spm-cfpweb-${{ runner.os }}-swift-6.3-
+          path: CfPWeb/.build
+
+      - name: Build static site
+        run: |
+          cd CfPWeb
+          swift run CfPWeb --api-base-url https://api.tryswift.jp
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy CfPWeb/Build --project-name=tryswift-cfp
