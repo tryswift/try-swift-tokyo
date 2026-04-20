@@ -1,7 +1,8 @@
-# fly.production.toml - Fly.io configuration for trySwiftCfP Server (Production)
+# fly.production.toml - Fly.io configuration for trySwift API Server (Production)
 # Deploy from project root: fly deploy --config fly.production.toml
+# Custom domain: api.tryswift.jp (via Cloudflare proxy)
 
-app = 'tryswift-cfp-api-prod'
+app = 'tryswift-api-prod'
 primary_region = 'nrt'
 
 [build]
