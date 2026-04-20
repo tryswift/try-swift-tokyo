@@ -39,7 +39,7 @@ jobs:
       - name: Build static site
         run: |
           cd CfPWeb
-          swift run CfPWeb --api-base-url https://api.tryswift.jp
+          swift run CfPWeb --api-base-url https://api.tryswift.jp --output Build
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
