@@ -14,10 +14,6 @@ let package = Package(
     .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.10.0"),
     .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: "4.7.0"),
     .package(url: "https://github.com/vapor/jwt.git", from: "5.1.0"),
-    .package(url: "https://github.com/vapor-community/vapor-elementary.git", from: "0.2.0"),
-    // Pinned for Linux Docker builds: combine-schedulers requires OpenCombine on non-Darwin platforms,
-    // but SPM resolves to an unreachable commit without an explicit pin.
-    .package(url: "https://github.com/OpenCombine/OpenCombine.git", exact: "0.14.0"),
     .package(name: "SharedModels", path: "../SharedModels"),
     .package(name: "DataClient", path: "../DataClient"),
   ],
@@ -31,7 +27,6 @@ let package = Package(
         .product(name: "Fluent", package: "fluent"),
         .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
         .product(name: "JWT", package: "jwt"),
-        .product(name: "VaporElementary", package: "vapor-elementary"),
       ],
       swiftSettings: [
         .swiftLanguageMode(.v6)

@@ -28,7 +28,7 @@ enum AppConfiguration {
             port: Environment.get("DB_PORT").flatMap(Int.init) ?? 5432,
             username: Environment.get("DB_USER") ?? "postgres",
             password: Environment.get("DB_PASSWORD") ?? "postgres",
-            database: Environment.get("DB_NAME") ?? "tryswift_cfp",
+            database: Environment.get("DB_NAME") ?? "tryswift_api",
             tls: .disable
           ),
           maxConnectionsPerEventLoop: 4,
@@ -85,7 +85,7 @@ enum AppConfiguration {
     // MARK: - Middleware
 
     // Enable CORS for frontend and iOS client
-    // Allow tryswift.jp (main site + CfP) and localhost for development
+    // Allow tryswift.jp properties and localhost for development.
     let corsConfiguration = CORSMiddleware.Configuration(
       allowedOrigin: .originBased,
       allowedMethods: [.GET, .POST, .PUT, .DELETE, .OPTIONS],

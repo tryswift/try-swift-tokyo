@@ -142,7 +142,7 @@ enum GitHubOAuth {
       req.headers.add(name: .authorization, value: "Bearer \(accessToken)")
       req.headers.add(name: .accept, value: "application/vnd.github+json")
       req.headers.add(name: "X-GitHub-Api-Version", value: "2022-11-28")
-      req.headers.add(name: .userAgent, value: "try-swift-tokyo-cfp")
+      req.headers.add(name: .userAgent, value: "try-swift-tokyo-api")
     }
 
     guard response.status == .ok else {
@@ -168,7 +168,7 @@ enum GitHubOAuth {
       req.headers.add(name: .authorization, value: "Bearer \(accessToken)")
       req.headers.add(name: .accept, value: "application/vnd.github+json")
       req.headers.add(name: "X-GitHub-Api-Version", value: "2022-11-28")
-      req.headers.add(name: .userAgent, value: "try-swift-tokyo-cfp")
+      req.headers.add(name: .userAgent, value: "try-swift-tokyo-api")
     }
 
     // 200 = member, 404 = not a member

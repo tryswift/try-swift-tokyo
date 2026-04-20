@@ -155,13 +155,19 @@ enum OAuthError: AbortError {
 struct AuthController: RouteCollection {
   /// The frontend URL to redirect to after authentication
   static var frontendURL: String {
-    Environment.get("FRONTEND_URL") ?? "https://cfp.tryswift.jp"
+    Environment.get("FRONTEND_URL") ?? "http://localhost:3000"
   }
 
   /// The callback URL for GitHub OAuth
   static var callbackURL: String {
-    Environment.get("GITHUB_CALLBACK_URL")
-      ?? "https://tryswift-cfp-api.fly.dev/api/v1/auth/github/callback"
+    if let callbackURL = Environment.get("GITHUB_CALLBACK_URL") {
+      return callbackURL
+    }
+    if let apiBaseURL = Environment.get("API_BASE_URL") {
+      return
+        "\(apiBaseURL.trimmingCharacters(in: CharacterSet(charactersIn: "/")))/api/v1/auth/github/callback"
+    }
+    return "http://localhost:8080/api/v1/auth/github/callback"
   }
 
   func boot(routes: RoutesBuilder) throws {
@@ -172,6 +178,7 @@ struct AuthController: RouteCollection {
     let authenticated = auth.grouped(AuthMiddleware())
     authenticated.get("me", use: getCurrentUser)
     authenticated.put("me", use: updateProfile)
+    authenticated.post("logout", use: logout)
   }
 
   // MARK: - GitHub OAuth Start
@@ -270,7 +277,7 @@ struct AuthController: RouteCollection {
       if let error = req.query[String.self, at: "error"] {
         let description = req.query[String.self, at: "error_description"] ?? "Unknown error"
         req.logger.warning("GitHub returned error: \(error) - \(description)")
-        return req.redirect(to: "\(Self.frontendURL)/login-page?error=\(error)")
+        return req.redirect(to: "\(Self.frontendURL)/login?error=\(error)")
       }
       throw OAuthError.missingCode
     }
@@ -407,7 +414,7 @@ struct AuthController: RouteCollection {
 
     // 9. Generate JWT token
     guard let userID = user.id else {
-      return req.redirect(to: "\(Self.frontendURL)/login-page?error=user_creation_failed")
+      return req.redirect(to: "\(Self.frontendURL)/login?error=user_creation_failed")
     }
 
     let payload = UserJWTPayload(
@@ -430,13 +437,12 @@ struct AuthController: RouteCollection {
         "returnTo": .string(returnTo),
       ])
 
-    // Create response with redirect and set HTTP-only cookie
-    // Since CfP pages are now served from the same Vapor server, we can set cookies directly
+    // Create response with redirect and set HTTP-only auth cookies for the frontend app.
     let response = Response(status: .seeOther)
     response.headers.replaceOrAdd(name: .location, value: returnTo)
 
     // Set HTTP-only cookie for authentication
-    response.cookies["cfp_token"] = HTTPCookies.Value(
+    response.cookies["auth_token"] = HTTPCookies.Value(
       string: token,
       expires: Date().addingTimeInterval(86400 * 7),  // 7 days
       maxAge: 86400 * 7,
@@ -447,7 +453,7 @@ struct AuthController: RouteCollection {
     )
 
     // Also set username cookie (not HTTP-only, for display purposes)
-    response.cookies["cfp_username"] = HTTPCookies.Value(
+    response.cookies["auth_username"] = HTTPCookies.Value(
       string: user.username,
       expires: Date().addingTimeInterval(86400 * 7),
       maxAge: 86400 * 7,
@@ -501,12 +507,13 @@ struct AuthController: RouteCollection {
       return false
     }
 
-    let allowedHosts = [
-      "tryswift-cfp-website.fly.dev",
-      "tryswift.jp",
-      "cfp.tryswift.jp",
-      "localhost",
-    ]
+    var allowedHosts = Set(["localhost", "127.0.0.1", "tryswift.jp"])
+    if let frontendHost = URL(string: Self.frontendURL)?.host?.lowercased() {
+      allowedHosts.insert(frontendHost)
+    }
+    if let callbackHost = URL(string: Self.callbackURL)?.host?.lowercased() {
+      allowedHosts.insert(callbackHost)
+    }
 
     return allowedHosts.contains { host == $0 || host.hasSuffix(".\($0)") }
   }
@@ -516,7 +523,7 @@ struct AuthController: RouteCollection {
   /// Get current authenticated user
   @Sendable
   func getCurrentUser(req: Request) async throws -> UserDTOContent {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await req.requireAuthenticatedUserPayload()
 
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
@@ -532,7 +539,7 @@ struct AuthController: RouteCollection {
   /// Update current user's profile
   @Sendable
   func updateProfile(req: Request) async throws -> UserDTOContent {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await req.requireAuthenticatedUserPayload()
 
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
@@ -566,5 +573,31 @@ struct AuthController: RouteCollection {
     try await user.save(on: req.db)
 
     return UserDTOContent(from: try user.toDTO())
+  }
+
+  /// Clear auth cookies owned by the API.
+  /// POST /auth/logout
+  @Sendable
+  func logout(req: Request) async throws -> Response {
+    let response = Response(status: .ok)
+    response.cookies["auth_token"] = HTTPCookies.Value(
+      string: "",
+      expires: Date(timeIntervalSince1970: 0),
+      maxAge: 0,
+      path: "/",
+      isSecure: Environment.get("APP_ENV") == "production",
+      isHTTPOnly: true,
+      sameSite: .lax
+    )
+    response.cookies["auth_username"] = HTTPCookies.Value(
+      string: "",
+      expires: Date(timeIntervalSince1970: 0),
+      maxAge: 0,
+      path: "/",
+      isSecure: Environment.get("APP_ENV") == "production",
+      isHTTPOnly: false,
+      sameSite: .lax
+    )
+    return response
   }
 }

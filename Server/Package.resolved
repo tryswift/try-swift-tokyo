@@ -1,5 +1,5 @@
 {
-  "originHash" : "211d0ddd9f98a94aaa526b1b486d7c854014617be2802bf9d6c66662922d00ef",
+  "originHash" : "b70c149fd7efe44d9e5b6d92aad00b950976f4e61fb415a43f656e34c59c09fe",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -35,15 +35,6 @@
       "state" : {
         "revision" : "742f624a998cba2a9e653d9b1e91ad3f3a5dff6b",
         "version" : "4.15.2"
-      }
-    },
-    {
-      "identity" : "elementary",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/elementary-swift/elementary.git",
-      "state" : {
-        "revision" : "37b26923e73156f524b52e649855277bc7ead2c2",
-        "version" : "0.7.1"
       }
     },
     {
@@ -107,15 +98,6 @@
       "state" : {
         "revision" : "3498e60218e6003894ff95192d756e238c01f44e",
         "version" : "4.7.1"
-      }
-    },
-    {
-      "identity" : "opencombine",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/OpenCombine/OpenCombine.git",
-      "state" : {
-        "revision" : "8576f0d579b27020beccbccc3ea6844f3ddfc2c2",
-        "version" : "0.14.0"
       }
     },
     {
@@ -413,15 +395,6 @@
       "state" : {
         "revision" : "a8db2dbda8b3cdc8a61bd35128590bd296e85563",
         "version" : "4.121.3"
-      }
-    },
-    {
-      "identity" : "vapor-elementary",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor-community/vapor-elementary.git",
-      "state" : {
-        "revision" : "e1326d2439a9d4bd271c24b9765c195f7f793e77",
-        "version" : "0.2.2"
       }
     },
     {

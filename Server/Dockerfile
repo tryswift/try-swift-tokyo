@@ -9,7 +9,7 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
 
 WORKDIR /build
 
-# Copy SharedModels package (CfP types shared with iOS)
+# Copy SharedModels package (shared types used by the app and API)
 COPY ./SharedModels ./SharedModels
 
 # Copy DataClient package (speaker data for timetable export)
@@ -67,7 +67,6 @@ RUN ldd /app/Server | tee /tmp/server-ldd.txt \
 
 # Copy static assets (images)
 COPY ./Website/Assets/images ./Public/images
-COPY ./Server/Public/cfp ./Public/cfp
 
 ENV SWIFT_BACKTRACE=enable=yes,sanitize=yes,threads=all,images=all,interactive=no,swift-backtrace=./swift-backtrace-static
 

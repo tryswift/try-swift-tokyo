@@ -92,7 +92,7 @@ struct ConferenceController: RouteCollection {
     }
   }
 
-  /// Get open conferences (CfP is active)
+  /// Get conferences that are currently accepting submissions.
   /// GET /conferences/open
   @Sendable
   func getOpenConferences(req: Request) async throws -> [ConferenceDTOContent] {

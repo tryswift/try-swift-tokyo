@@ -23,10 +23,14 @@ struct ProposalDTOContent: Content {
   let notes: String?
   let speakerID: UUID
   let speakerUsername: String
+  let githubUsername: String?
   let status: String
   let createdAt: Date?
   let updatedAt: Date?
+  let titleJA: String?
+  let abstractJA: String?
   let workshopDetails: WorkshopDetails?
+  let workshopDetailsJA: WorkshopDetailsJA?
   let coInstructors: [CoInstructor]?
 
   init(from dto: ProposalDTO) {
@@ -48,10 +52,14 @@ struct ProposalDTOContent: Content {
     self.notes = dto.notes
     self.speakerID = dto.speakerID
     self.speakerUsername = dto.speakerUsername
+    self.githubUsername = dto.githubUsername
     self.status = dto.status.rawValue
     self.createdAt = dto.createdAt
     self.updatedAt = dto.updatedAt
+    self.titleJA = dto.titleJA
+    self.abstractJA = dto.abstractJA
     self.workshopDetails = dto.workshopDetails
+    self.workshopDetailsJA = dto.workshopDetailsJA
     self.coInstructors = dto.coInstructors
   }
 }
@@ -106,6 +114,37 @@ struct CreateProposalRequestContent: Content {
   }
 }
 
+/// Vapor Content wrapper for updating an existing proposal.
+struct UpdateProposalRequestContent: Content {
+  let title: String?
+  let abstract: String?
+  let talkDetail: String?
+  let talkDuration: String?
+  let githubUsername: String?
+  let speakerName: String?
+  let speakerEmail: String?
+  let bio: String?
+  let bioJa: String?
+  let jobTitle: String?
+  let jobTitleJa: String?
+  let iconURL: String?
+  let notes: String?
+  let workshopDetails: WorkshopDetails?
+  let coInstructors: [CoInstructor]?
+
+  func validate(for role: UserRole) throws -> TalkDuration? {
+    guard let talkDuration else { return nil }
+    guard let duration = TalkDuration(rawValue: talkDuration) else {
+      throw Abort(
+        .badRequest, reason: "Invalid talk duration. Use '20min', 'LT', 'workshop', or 'invited'")
+    }
+    if duration.isInvitedOnly && !role.isInvitedSpeaker {
+      throw Abort(.forbidden, reason: "Only invited speakers can submit invited talks")
+    }
+    return duration
+  }
+}
+
 /// Controller for proposal endpoints
 struct ProposalController: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
@@ -116,6 +155,8 @@ struct ProposalController: RouteCollection {
     authenticated.post(use: createProposal)
     authenticated.get("mine", use: getMyProposals)
     authenticated.get("mine", ":conferencePath", use: getMyProposalsByConference)
+    authenticated.put(":proposalID", use: updateOwnProposal)
+    authenticated.post(":proposalID", "withdraw", use: withdrawOwnProposal)
 
     // Admin-only routes (Organizer access)
     let adminOnly = proposals.grouped(AuthMiddleware()).grouped(OrganizerMiddleware())
@@ -129,7 +170,7 @@ struct ProposalController: RouteCollection {
   /// POST /proposals
   @Sendable
   func createProposal(req: Request) async throws -> ProposalDTOContent {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await req.requireAuthenticatedUserPayload()
 
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
@@ -168,7 +209,7 @@ struct ProposalController: RouteCollection {
     }
 
     guard conference.isOpen else {
-      throw Abort(.badRequest, reason: "CfP is closed for \(conference.displayName)")
+      throw Abort(.badRequest, reason: "Submissions are closed for \(conference.displayName)")
     }
 
     guard let conferenceID = conference.id else {
@@ -282,7 +323,7 @@ struct ProposalController: RouteCollection {
   /// GET /proposals/mine
   @Sendable
   func getMyProposals(req: Request) async throws -> [ProposalDTOContent] {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await req.requireAuthenticatedUserPayload()
 
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
@@ -304,7 +345,7 @@ struct ProposalController: RouteCollection {
   /// GET /proposals/mine/:conferencePath
   @Sendable
   func getMyProposalsByConference(req: Request) async throws -> [ProposalDTOContent] {
-    let payload = try await req.jwt.verify(as: UserJWTPayload.self)
+    let payload = try await req.requireAuthenticatedUserPayload()
 
     guard let userID = payload.userID else {
       throw Abort(.unauthorized, reason: "Invalid token")
@@ -333,6 +374,126 @@ struct ProposalController: RouteCollection {
         from: try proposal.toDTO(speakerUsername: payload.username, conference: proposal.conference)
       )
     }
+  }
+
+  /// Update a proposal owned by the current user.
+  /// PUT /proposals/:proposalID
+  @Sendable
+  func updateOwnProposal(req: Request) async throws -> ProposalDTOContent {
+    let payload = try await req.requireAuthenticatedUserPayload()
+    guard let userID = payload.userID else {
+      throw Abort(.unauthorized, reason: "Invalid token")
+    }
+    guard let proposalID = req.parameters.get("proposalID", as: UUID.self) else {
+      throw Abort(.badRequest, reason: "Invalid proposal ID")
+    }
+    guard
+      let proposal = try await Proposal.query(on: req.db)
+        .filter(\.$id == proposalID)
+        .filter(\.$speaker.$id == userID)
+        .with(\.$conference)
+        .first()
+    else {
+      throw Abort(.notFound, reason: "Proposal not found")
+    }
+
+    let request = try req.content.decode(UpdateProposalRequestContent.self)
+    let talkDuration = try request.validate(for: payload.role)
+
+    if let githubUsername = request.githubUsername?.trimmingCharacters(in: .whitespacesAndNewlines)
+    {
+      guard !githubUsername.isEmpty else {
+        throw Abort(.badRequest, reason: "GitHub ID is required")
+      }
+      proposal.githubUsername = githubUsername
+    }
+    if let title = request.title {
+      guard !title.isEmpty else { throw Abort(.badRequest, reason: "Title is required") }
+      proposal.title = title
+    }
+    if let abstract = request.abstract {
+      guard !abstract.isEmpty else { throw Abort(.badRequest, reason: "Abstract is required") }
+      proposal.abstract = abstract
+    }
+    if let talkDetail = request.talkDetail {
+      guard !talkDetail.isEmpty else { throw Abort(.badRequest, reason: "Talk detail is required") }
+      proposal.talkDetail = talkDetail
+    }
+    if let talkDuration {
+      proposal.talkDuration = talkDuration
+    }
+    if let speakerName = request.speakerName {
+      guard !speakerName.isEmpty else {
+        throw Abort(.badRequest, reason: "Speaker name is required")
+      }
+      proposal.speakerName = speakerName
+    }
+    if let speakerEmail = request.speakerEmail {
+      guard !speakerEmail.isEmpty else {
+        throw Abort(.badRequest, reason: "Speaker email is required")
+      }
+      proposal.speakerEmail = speakerEmail
+    }
+    if let bio = request.bio {
+      guard !bio.isEmpty else { throw Abort(.badRequest, reason: "Bio is required") }
+      proposal.bio = bio
+    }
+
+    if let bioJa = request.bioJa {
+      proposal.bioJa = bioJa.isEmpty ? nil : bioJa
+    }
+    if let jobTitle = request.jobTitle {
+      proposal.jobTitle = jobTitle.isEmpty ? nil : jobTitle
+    }
+    if let jobTitleJa = request.jobTitleJa {
+      proposal.jobTitleJa = jobTitleJa.isEmpty ? nil : jobTitleJa
+    }
+    if let iconURL = request.iconURL {
+      guard !iconURL.isEmpty else { throw Abort(.badRequest, reason: "Icon URL is required") }
+      proposal.iconURL = iconURL
+    }
+    if let notes = request.notes {
+      proposal.notes = notes.isEmpty ? nil : notes
+    }
+
+    if proposal.talkDuration.isWorkshop {
+      proposal.workshopDetails = request.workshopDetails
+      proposal.coInstructors = request.coInstructors.map(CoInstructorList.init)
+    } else {
+      proposal.workshopDetails = nil
+      proposal.coInstructors = nil
+    }
+
+    try await proposal.save(on: req.db)
+
+    return ProposalDTOContent(
+      from: try proposal.toDTO(speakerUsername: payload.username, conference: proposal.conference)
+    )
+  }
+
+  /// Withdraw a proposal owned by the current user.
+  /// POST /proposals/:proposalID/withdraw
+  @Sendable
+  func withdrawOwnProposal(req: Request) async throws -> HTTPStatus {
+    let payload = try await req.requireAuthenticatedUserPayload()
+    guard let userID = payload.userID else {
+      throw Abort(.unauthorized, reason: "Invalid token")
+    }
+    guard let proposalID = req.parameters.get("proposalID", as: UUID.self) else {
+      throw Abort(.badRequest, reason: "Invalid proposal ID")
+    }
+    guard
+      let proposal = try await Proposal.query(on: req.db)
+        .filter(\.$id == proposalID)
+        .filter(\.$speaker.$id == userID)
+        .first()
+    else {
+      throw Abort(.notFound, reason: "Proposal not found")
+    }
+
+    proposal.status = .withdrawn
+    try await proposal.save(on: req.db)
+    return .ok
   }
 
   /// Get a specific proposal (admin only)

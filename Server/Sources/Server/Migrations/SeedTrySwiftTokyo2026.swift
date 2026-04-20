@@ -1,7 +1,7 @@
 import Fluent
 import Foundation
 
-/// Seeds the try! Swift Tokyo 2026 conference with CfP open
+/// Seeds the try! Swift Tokyo 2026 conference with submissions open.
 struct SeedTrySwiftTokyo2026: AsyncMigration {
   func prepare(on database: Database) async throws {
     // Check if the conference already exists

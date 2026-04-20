@@ -2,7 +2,7 @@
 
 ## Project Structure
 
-- `Server/` - Vapor backend (Swift 6.2). Tests: `cd Server && swift test`
+- `Server/` - Vapor backend (Swift 6.3). Tests: `cd Server && swift test`
 - `Website/` - Ignite static site. Build: `cd Website && swift build`
 - `Android/` - Skip framework (Swift → Kotlin). Build: `cd Android && swift build`
 - `App/` - iOS app (SwiftUI + TCA)
