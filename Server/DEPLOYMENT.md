@@ -130,3 +130,29 @@ fly dashboard --app tryswift-api-prod
 # Check database
 fly postgres connect --app tryswift-api-db-prod
 ```
+
+## Custom Domain (api.tryswift.jp)
+
+### Fly.io Certificate
+
+```bash
+fly certs create api.tryswift.jp --app tryswift-api-prod
+fly certs show api.tryswift.jp --app tryswift-api-prod
+```
+
+### Cloudflare DNS
+
+1. Add a CNAME record: `api` → `tryswift-api-prod.fly.dev` (Proxy enabled / orange cloud)
+2. SSL/TLS mode: **Full (Strict)** (fly.io terminates TLS on its end)
+3. Cache: API responses are not cached by default (dynamic content bypass)
+4. Security: Enable WAF / Rate Limiting as needed
+
+### Update OAuth Callback URL
+
+After the domain is active, update the callback URL:
+
+```bash
+fly secrets set GITHUB_CALLBACK_URL="https://api.tryswift.jp/api/v1/auth/github/callback" --app tryswift-api-prod
+```
+
+Also update the callback URL in the [GitHub OAuth App settings](https://github.com/settings/developers).

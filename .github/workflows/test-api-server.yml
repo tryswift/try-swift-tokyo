@@ -1,11 +1,11 @@
-name: Test CfP Server
+name: Test API Server
 
 on:
   push:
     paths:
       - "Server/**"
       - "SharedModels/**"
-      - ".github/workflows/test-cfp-server.yml"
+      - ".github/workflows/test-api-server.yml"
 
 jobs:
   test:

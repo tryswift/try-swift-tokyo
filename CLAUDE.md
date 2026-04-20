@@ -13,7 +13,7 @@
 ## CI Workflows
 
 - **format.yml** - PR to main で swift-format を実行。non-fork PR では自動コミットする
-- **test-cfp-server.yml** - `Server/**`, `SharedModels/**` 変更時に `swift test`
+- **test-api-server.yml** - `Server/**`, `SharedModels/**` 変更時に `swift test`
 - **test-website.yml** - `Website/**`, `SharedModels/**`, `DataClient/**`, `LocalizationGenerated/**` 変更時に `swift build`
 - **build-android.yml** - `Android/**`, `SharedModels/**`, `DataClient/**` 変更時に `swift build`
 - **e2e-live-translation.yml** - `e2e/**` 変更時に Playwright テスト
