@@ -142,7 +142,7 @@ fly certs show api.tryswift.jp --app tryswift-api-prod
 
 ### Cloudflare DNS
 
-1. Add a CNAME record: `api` → `tryswift-cfp-api-prod.fly.dev` (Proxy enabled / orange cloud)
+1. Add a CNAME record: `api` → `tryswift-api-prod.fly.dev` (Proxy enabled / orange cloud)
 2. SSL/TLS mode: **Full (Strict)** (fly.io terminates TLS on its end)
 3. Cache: API responses are not cached by default (dynamic content bypass)
 4. Security: Enable WAF / Rate Limiting as needed
