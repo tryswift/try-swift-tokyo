@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: read
+  deployments: write
 
 concurrency:
   group: cfpweb-deploy
@@ -39,7 +40,7 @@ jobs:
       - name: Build static site
         run: |
           cd CfPWeb
-          swift run CfPWeb --api-base-url https://api.tryswift.jp --output Build
+          swift run CfPWeb --api-base-url https://api.tryswift.jp
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
