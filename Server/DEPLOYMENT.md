@@ -52,8 +52,14 @@
    fly secrets set GITHUB_ORG="tryswift" --app tryswift-api-prod
    fly secrets set GITHUB_TEAM="tokyo" --app tryswift-api-prod
 
-   # Callback URL (update after deployment)
-   fly secrets set GITHUB_CALLBACK_URL="https://tryswift-api-prod.fly.dev/api/v1/auth/github/callback" --app tryswift-api-prod
+   # Frontend URL (for cookie domain and redirect)
+   fly secrets set FRONTEND_URL="https://cfp.tryswift.jp" --app tryswift-api-prod
+
+   # Production environment (enables Secure cookies)
+   fly secrets set APP_ENV="production" --app tryswift-api-prod
+
+   # Callback URL
+   fly secrets set GITHUB_CALLBACK_URL="https://api.tryswift.jp/api/v1/auth/github/callback" --app tryswift-api-prod
    ```
 
 ### Deploy
@@ -93,7 +99,7 @@ fly ssh console --app tryswift-api-prod
 2. Create a new OAuth App:
    - **Application name**: trySwift API
    - **Homepage URL**: <https://tryswift.jp>
-   - **Authorization callback URL**: <https://tryswift-api-prod.fly.dev/api/v1/auth/github/callback>
+   - **Authorization callback URL**: <https://api.tryswift.jp/api/v1/auth/github/callback>
 3. Copy the Client ID and Client Secret to Fly.io secrets
 
 ## Environment Variables
@@ -105,6 +111,9 @@ fly ssh console --app tryswift-api-prod
 | `GITHUB_CLIENT_ID` | GitHub OAuth App Client ID | Yes |
 | `GITHUB_CLIENT_SECRET` | GitHub OAuth App Client Secret | Yes |
 | `GITHUB_CALLBACK_URL` | OAuth callback URL | Yes |
+| `FRONTEND_URL` | Frontend URL for cookie domain (e.g., `https://cfp.tryswift.jp`) | Yes |
+| `APP_ENV` | Set to `production` for secure cookies | Yes |
+| `API_BASE_URL` | API server URL (e.g., `https://api.tryswift.jp`) | No |
 | `GITHUB_ORG` | GitHub organization name (default: tryswift) | No |
 | `GITHUB_TEAM` | Team slug for admin access (default: tokyo) | No |
 | `GITHUB_ORG_NAME` | Legacy alias for `GITHUB_ORG` | No |

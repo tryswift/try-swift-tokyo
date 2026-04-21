@@ -427,7 +427,7 @@ struct AuthController: RouteCollection {
 
     // 10. Set secure HTTP-only cookie and redirect to frontend
     // Use returnTo from state if provided, otherwise default to login page
-    let returnTo = statePayload.returnTo ?? "/login"
+    let returnTo = statePayload.returnTo ?? Self.frontendURL
 
     req.logger.info(
       "OAuth flow completed, redirecting",
