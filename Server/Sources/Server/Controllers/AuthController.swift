@@ -442,14 +442,17 @@ struct AuthController: RouteCollection {
     response.headers.replaceOrAdd(name: .location, value: returnTo)
 
     // Set HTTP-only cookie for authentication
+    let cookieDomain = Self.getCookieDomain()
+    let isSecure = Environment.get("APP_ENV") == "production"
     response.cookies["auth_token"] = HTTPCookies.Value(
       string: token,
       expires: Date().addingTimeInterval(86400 * 7),  // 7 days
       maxAge: 86400 * 7,
+      domain: cookieDomain,
       path: "/",
-      isSecure: Environment.get("APP_ENV") == "production",
+      isSecure: isSecure,
       isHTTPOnly: true,
-      sameSite: .lax
+      sameSite: HTTPCookies.SameSitePolicy.none
     )
 
     // Also set username cookie (not HTTP-only, for display purposes)
@@ -457,10 +460,11 @@ struct AuthController: RouteCollection {
       string: user.username,
       expires: Date().addingTimeInterval(86400 * 7),
       maxAge: 86400 * 7,
+      domain: cookieDomain,
       path: "/",
-      isSecure: Environment.get("APP_ENV") == "production",
+      isSecure: isSecure,
       isHTTPOnly: false,
-      sameSite: .lax
+      sameSite: HTTPCookies.SameSitePolicy.none
     )
 
     return response
@@ -580,23 +584,27 @@ struct AuthController: RouteCollection {
   @Sendable
   func logout(req: Request) async throws -> Response {
     let response = Response(status: .ok)
+    let cookieDomain = Self.getCookieDomain()
+    let isSecure = Environment.get("APP_ENV") == "production"
     response.cookies["auth_token"] = HTTPCookies.Value(
       string: "",
       expires: Date(timeIntervalSince1970: 0),
       maxAge: 0,
+      domain: cookieDomain,
       path: "/",
-      isSecure: Environment.get("APP_ENV") == "production",
+      isSecure: isSecure,
       isHTTPOnly: true,
-      sameSite: .lax
+      sameSite: HTTPCookies.SameSitePolicy.none
     )
     response.cookies["auth_username"] = HTTPCookies.Value(
       string: "",
       expires: Date(timeIntervalSince1970: 0),
       maxAge: 0,
+      domain: cookieDomain,
       path: "/",
-      isSecure: Environment.get("APP_ENV") == "production",
+      isSecure: isSecure,
       isHTTPOnly: false,
-      sameSite: .lax
+      sameSite: HTTPCookies.SameSitePolicy.none
     )
     return response
   }
