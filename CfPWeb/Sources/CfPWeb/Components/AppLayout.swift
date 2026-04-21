@@ -34,7 +34,7 @@ struct AppLayout: HTMLDocument, Sendable {
     div(.class("site-shell")) {
       AppNavigation(routePath: routePath, currentPage: page, language: language)
       main(.class("content-shell")) {
-        PageContent(page: page, language: language)
+        PageContent(page: page, language: language, routePath: routePath)
       }
       footer(.class("footer")) {
         div(.class("footer-links")) {

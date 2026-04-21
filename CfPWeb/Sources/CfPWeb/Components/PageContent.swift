@@ -3,6 +3,7 @@ import Elementary
 struct PageContent: HTML, Sendable {
   let page: CfPPage
   let language: AppLanguage
+  let routePath: String
 
   var body: some HTML {
     switch page {
@@ -20,8 +21,10 @@ struct PageContent: HTML, Sendable {
       MyProposalsContent(language: language)
     case .feedback:
       FeedbackContent(language: language)
-    case .login, .organizer:
+    case .login:
       AuthRequiredPageContent(page: page, language: language)
+    case .organizer:
+      AuthRequiredPageContent(page: page, language: language)  // replaced in Task 10
     }
   }
 }
