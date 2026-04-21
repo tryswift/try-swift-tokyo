@@ -24,11 +24,11 @@ enum OrganizerSection: Sendable, CaseIterable {
   func path(for language: AppLanguage) -> String {
     let prefix = language == .ja ? "/ja" : ""
     switch self {
-    case .proposals:            return "\(prefix)/organizer/proposals"
-    case .timetable:            return "\(prefix)/organizer/timetable"
-    case .workshops:            return "\(prefix)/organizer/workshops"
+    case .proposals: return "\(prefix)/organizer/proposals"
+    case .timetable: return "\(prefix)/organizer/timetable"
+    case .workshops: return "\(prefix)/organizer/workshops"
     case .workshopApplications: return "\(prefix)/organizer/workshops/applications"
-    case .workshopResults:      return "\(prefix)/organizer/workshops/results"
+    case .workshopResults: return "\(prefix)/organizer/workshops/results"
     }
   }
 

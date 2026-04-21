@@ -45,13 +45,17 @@ private struct OrganizerProposalsCreateCard: HTML, Sendable {
     article(.class("detail-card submit-form-card")) {
       h3 { HTMLText(language == .ja ? "プロポーザルを追加" : "Add Proposal") }
       p(.class("submit-form-intro")) {
-        HTMLText(language == .ja
-          ? "運営側でプロポーザルを新規登録します。GitHub ユーザー名からスピーカー情報を補完できます。"
-          : "Create a proposal on behalf of a speaker. Use GitHub lookup to auto-fill speaker info.")
+        HTMLText(
+          language == .ja
+            ? "運営側でプロポーザルを新規登録します。GitHub ユーザー名からスピーカー情報を補完できます。"
+            : "Create a proposal on behalf of a speaker. Use GitHub lookup to auto-fill speaker info."
+        )
       }
       form(.id("organizer-create-form"), .class("submit-form-grid")) {
         div(.class("form-field submit-form-full organizer-lookup-row")) {
-          span(.class("field-label")) { HTMLText(language == .ja ? "GitHub ユーザー名" : "GitHub Username") }
+          span(.class("field-label")) {
+            HTMLText(language == .ja ? "GitHub ユーザー名" : "GitHub Username")
+          }
           div(.class("organizer-lookup-input-row")) {
             input(.type(.text), .name("githubUsername"))
             button(.type(.button), .id("organizer-lookup-button"), .class("button neutral")) {
@@ -67,8 +71,12 @@ private struct OrganizerProposalsCreateCard: HTML, Sendable {
         label(.class("form-field")) {
           span(.class("field-label")) { HTMLText(language == .ja ? "形式" : "Format") }
           select(.name("talkDuration"), .required) {
-            option(.value("20min")) { HTMLText(language == .ja ? "レギュラートーク (20分)" : "Regular Talk (20 min)") }
-            option(.value("LT")) { HTMLText(language == .ja ? "ライトニングトーク (5分)" : "Lightning Talk (5 min)") }
+            option(.value("20min")) {
+              HTMLText(language == .ja ? "レギュラートーク (20分)" : "Regular Talk (20 min)")
+            }
+            option(.value("LT")) {
+              HTMLText(language == .ja ? "ライトニングトーク (5分)" : "Lightning Talk (5 min)")
+            }
             option(.value("workshop")) { HTMLText(language == .ja ? "ワークショップ" : "Workshop") }
           }
         }
@@ -131,9 +139,10 @@ private struct OrganizerProposalsImportCard: HTML, Sendable {
     article(.class("detail-card submit-form-card")) {
       h3 { HTMLText(language == .ja ? "CSV / JSON をインポート" : "Import CSV / JSON") }
       p(.class("submit-form-intro")) {
-        HTMLText(language == .ja
-          ? "プロポーザルを一括取り込みします。既存のものと重複する場合のスキップを選択できます。"
-          : "Bulk import proposals. Choose whether to skip entries that already exist.")
+        HTMLText(
+          language == .ja
+            ? "プロポーザルを一括取り込みします。既存のものと重複する場合のスキップを選択できます。"
+            : "Bulk import proposals. Choose whether to skip entries that already exist.")
       }
       form(.id("organizer-import-form"), .class("submit-form-grid")) {
         label(.class("form-field")) {
@@ -142,14 +151,18 @@ private struct OrganizerProposalsImportCard: HTML, Sendable {
         }
         label(.class("form-field submit-form-full")) {
           span(.class("field-label")) { HTMLText(language == .ja ? "ファイル" : "File") }
-          input(.type(.file), .name("csvFile"), .custom(name: "accept", value: ".csv,.json"), .required)
+          input(
+            .type(.file), .name("csvFile"), .custom(name: "accept", value: ".csv,.json"), .required)
         }
         label(.class("form-field")) {
-          span(.class("field-label")) { HTMLText(language == .ja ? "GitHub ユーザー名 (任意)" : "GitHub Username (optional)") }
+          span(.class("field-label")) {
+            HTMLText(language == .ja ? "GitHub ユーザー名 (任意)" : "GitHub Username (optional)")
+          }
           input(.type(.text), .name("githubUsername"))
         }
         label(.class("form-field submit-form-full organizer-checkbox-row")) {
-          input(.type(.checkbox), .name("skipDuplicates"), .custom(name: "checked", value: "checked"))
+          input(
+            .type(.checkbox), .name("skipDuplicates"), .custom(name: "checked", value: "checked"))
           span { HTMLText(language == .ja ? "重複をスキップ" : "Skip duplicates") }
         }
         div(.class("form-actions submit-form-full")) {
@@ -182,9 +195,10 @@ private struct OrganizerProposalsEditorCard: HTML, Sendable {
     article(.class("detail-card submit-form-card")) {
       h3 { HTMLText(language == .ja ? "プロポーザルを編集" : "Edit Proposal") }
       p(.id("organizer-editor-placeholder"), .class("submit-form-intro")) {
-        HTMLText(language == .ja
-          ? "一覧から Edit を選ぶとフォームに読み込まれます。"
-          : "Choose Edit on a proposal above to load it here.")
+        HTMLText(
+          language == .ja
+            ? "一覧から Edit を選ぶとフォームに読み込まれます。"
+            : "Choose Edit on a proposal above to load it here.")
       }
       form(.id("organizer-editor-form"), .class("submit-form-grid")) {
         input(.type(.hidden), .name("proposalID"))
@@ -196,8 +210,12 @@ private struct OrganizerProposalsEditorCard: HTML, Sendable {
         label(.class("form-field")) {
           span(.class("field-label")) { HTMLText(language == .ja ? "形式" : "Format") }
           select(.name("talkDuration"), .required) {
-            option(.value("20min")) { HTMLText(language == .ja ? "レギュラートーク (20分)" : "Regular Talk (20 min)") }
-            option(.value("LT")) { HTMLText(language == .ja ? "ライトニングトーク (5分)" : "Lightning Talk (5 min)") }
+            option(.value("20min")) {
+              HTMLText(language == .ja ? "レギュラートーク (20分)" : "Regular Talk (20 min)")
+            }
+            option(.value("LT")) {
+              HTMLText(language == .ja ? "ライトニングトーク (5分)" : "Lightning Talk (5 min)")
+            }
             option(.value("workshop")) { HTMLText(language == .ja ? "ワークショップ" : "Workshop") }
           }
         }
@@ -246,7 +264,9 @@ private struct OrganizerProposalsEditorCard: HTML, Sendable {
           input(.type(.text), .name("jobTitleJa"))
         }
         label(.class("form-field")) {
-          span(.class("field-label")) { HTMLText(language == .ja ? "GitHub ユーザー名" : "GitHub Username") }
+          span(.class("field-label")) {
+            HTMLText(language == .ja ? "GitHub ユーザー名" : "GitHub Username")
+          }
           input(.type(.text), .name("githubUsername"))
         }
         label(.class("form-field submit-form-full")) {

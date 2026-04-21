@@ -8,7 +8,9 @@ struct OrganizerWorkshopResultsContent: HTML, Sendable {
       h3 { HTMLText(language == .ja ? "抽選結果" : "Workshop Results") }
       div(.class("organizer-toolbar-row")) {
         div(.class("organizer-toolbar-actions")) {
-          button(.type(.button), .id("organizer-workshop-results-refresh"), .class("button neutral")) {
+          button(
+            .type(.button), .id("organizer-workshop-results-refresh"), .class("button neutral")
+          ) {
             HTMLText(language == .ja ? "更新" : "Refresh")
           }
         }

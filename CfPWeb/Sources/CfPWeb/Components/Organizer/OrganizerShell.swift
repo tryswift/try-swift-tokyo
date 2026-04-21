@@ -13,14 +13,18 @@ struct OrganizerShell: HTML, Sendable {
       div(.class("submit-shell-inner")) {
         h1 { HTMLText(CfPPage.organizer.title(for: language)) }
         p(.class("submit-lead")) {
-          HTMLText(language == .ja
-            ? "運営向けのプロポーザル・タイムテーブル・ワークショップ管理ツールです。"
-            : "Admin tools for managing proposals, timetable, and workshops.")
+          HTMLText(
+            language == .ja
+              ? "運営向けのプロポーザル・タイムテーブル・ワークショップ管理ツールです。"
+              : "Admin tools for managing proposals, timetable, and workshops.")
         }
 
         OrganizerSignInCard(language: language)
 
-        Elementary.section(.class("organizer-signed-in-wrapper"), .data("auth-signed-in-card", value: "true"), .hidden) {
+        Elementary.section(
+          .class("organizer-signed-in-wrapper"), .data("auth-signed-in-card", value: "true"),
+          .hidden
+        ) {
           OrganizerSubnav(activeSection: section, language: language)
           div(.class("organizer-section")) {
             renderActiveSection()
@@ -66,16 +70,21 @@ private struct OrganizerSignInCard: HTML, Sendable {
       p(
         .id("page-detail-copy"),
         .class("submit-auth-copy"),
-        .data("signed-out-copy", value: language == .ja
-          ? "運営向け画面にアクセスするには、権限のあるアカウントでサインインしてください。"
-          : "Sign in with an organizer account to access admin tools."),
-        .data("signed-in-copy", value: language == .ja
-          ? "GitHubアカウントとの連携が完了しています。運営向け機能をこのアカウントで利用できます。"
-          : "Your GitHub account is connected. You can access organizer tools with this account.")
+        .data(
+          "signed-out-copy",
+          value: language == .ja
+            ? "運営向け画面にアクセスするには、権限のあるアカウントでサインインしてください。"
+            : "Sign in with an organizer account to access admin tools."),
+        .data(
+          "signed-in-copy",
+          value: language == .ja
+            ? "GitHubアカウントとの連携が完了しています。運営向け機能をこのアカウントで利用できます。"
+            : "Your GitHub account is connected. You can access organizer tools with this account.")
       ) {
-        HTMLText(language == .ja
-          ? "運営向け画面にアクセスするには、権限のあるアカウントでサインインしてください。"
-          : "Sign in with an organizer account to access admin tools.")
+        HTMLText(
+          language == .ja
+            ? "運営向け画面にアクセスするには、権限のあるアカウントでサインインしてください。"
+            : "Sign in with an organizer account to access admin tools.")
       }
       p(.id("auth-status"), .class("submit-auth-status")) {
         HTMLText(language == .ja ? "サインイン状態を確認しています..." : "Checking sign-in state...")
@@ -101,7 +110,8 @@ private struct OrganizerSubnav: HTML, Sendable {
       for section in OrganizerSection.allCases {
         a(
           .href(section.path(for: language)),
-          .class(section == activeSection ? "organizer-subnav-link active" : "organizer-subnav-link")
+          .class(
+            section == activeSection ? "organizer-subnav-link active" : "organizer-subnav-link")
         ) {
           HTMLText(section.navigationTitle(for: language))
         }

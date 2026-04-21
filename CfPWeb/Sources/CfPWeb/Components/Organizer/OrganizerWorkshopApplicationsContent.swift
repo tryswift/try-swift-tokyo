@@ -12,7 +12,9 @@ struct OrganizerWorkshopApplicationsContent: HTML, Sendable {
           select(.id("organizer-workshop-filter"), .name("workshopID")) {}
         }
         div(.class("organizer-toolbar-actions")) {
-          button(.type(.button), .id("organizer-workshop-applications-refresh"), .class("button neutral")) {
+          button(
+            .type(.button), .id("organizer-workshop-applications-refresh"), .class("button neutral")
+          ) {
             HTMLText(language == .ja ? "更新" : "Refresh")
           }
         }

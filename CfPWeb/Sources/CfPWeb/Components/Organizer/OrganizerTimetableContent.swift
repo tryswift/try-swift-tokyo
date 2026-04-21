@@ -44,19 +44,25 @@ private struct OrganizerTimetableCreateCard: HTML, Sendable {
         }
         label(.class("form-field")) {
           span(.class("field-label")) { HTMLText(language == .ja ? "Day" : "Day") }
-          input(.type(.number), .name("day"), .custom(name: "min", value: "1"), .custom(name: "max", value: "3"), .value("1"), .required)
+          input(
+            .type(.number), .name("day"), .custom(name: "min", value: "1"),
+            .custom(name: "max", value: "3"), .value("1"), .required)
         }
         label(.class("form-field")) {
           span(.class("field-label")) { HTMLText(language == .ja ? "開始時刻" : "Start Time") }
           input(.type(.datetimeLocal), .name("startTime"), .required)
         }
         label(.class("form-field")) {
-          span(.class("field-label")) { HTMLText(language == .ja ? "終了時刻 (任意)" : "End Time (optional)") }
+          span(.class("field-label")) {
+            HTMLText(language == .ja ? "終了時刻 (任意)" : "End Time (optional)")
+          }
           input(.type(.datetimeLocal), .name("endTime"))
         }
         slotTypeSelect()
         label(.class("form-field submit-form-full")) {
-          span(.class("field-label")) { HTMLText(language == .ja ? "プロポーザル (任意)" : "Proposal (optional)") }
+          span(.class("field-label")) {
+            HTMLText(language == .ja ? "プロポーザル (任意)" : "Proposal (optional)")
+          }
           select(.id("organizer-slot-proposal-id"), .name("proposalId")) {}
         }
         label(.class("form-field")) {
@@ -113,27 +119,34 @@ private struct OrganizerTimetableEditorCard: HTML, Sendable {
     article(.class("detail-card submit-form-card")) {
       h3 { HTMLText(language == .ja ? "スロットを編集" : "Edit Slot") }
       p(.id("organizer-slot-editor-placeholder"), .class("submit-form-intro")) {
-        HTMLText(language == .ja
-          ? "一覧から Edit を選ぶとフォームに読み込まれます。"
-          : "Choose Edit on a slot above to load it here.")
+        HTMLText(
+          language == .ja
+            ? "一覧から Edit を選ぶとフォームに読み込まれます。"
+            : "Choose Edit on a slot above to load it here.")
       }
       form(.id("organizer-slot-editor-form"), .class("submit-form-grid")) {
         input(.type(.hidden), .name("slotID"))
         label(.class("form-field")) {
           span(.class("field-label")) { HTMLText(language == .ja ? "Day" : "Day") }
-          input(.type(.number), .name("day"), .custom(name: "min", value: "1"), .custom(name: "max", value: "3"), .required)
+          input(
+            .type(.number), .name("day"), .custom(name: "min", value: "1"),
+            .custom(name: "max", value: "3"), .required)
         }
         label(.class("form-field")) {
           span(.class("field-label")) { HTMLText(language == .ja ? "開始時刻" : "Start Time") }
           input(.type(.datetimeLocal), .name("startTime"))
         }
         label(.class("form-field")) {
-          span(.class("field-label")) { HTMLText(language == .ja ? "終了時刻 (任意)" : "End Time (optional)") }
+          span(.class("field-label")) {
+            HTMLText(language == .ja ? "終了時刻 (任意)" : "End Time (optional)")
+          }
           input(.type(.datetimeLocal), .name("endTime"))
         }
         slotTypeSelect()
         label(.class("form-field submit-form-full")) {
-          span(.class("field-label")) { HTMLText(language == .ja ? "プロポーザル (任意)" : "Proposal (optional)") }
+          span(.class("field-label")) {
+            HTMLText(language == .ja ? "プロポーザル (任意)" : "Proposal (optional)")
+          }
           select(.id("organizer-slot-editor-proposal-id"), .name("proposalId")) {}
         }
         label(.class("form-field")) {

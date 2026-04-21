@@ -15,10 +15,13 @@ struct OrganizerWorkshopsContent: HTML, Sendable {
           button(.type(.button), .id("organizer-workshops-refresh"), .class("button neutral")) {
             HTMLText(language == .ja ? "更新" : "Refresh")
           }
-          button(.type(.button), .id("organizer-workshop-lottery-button"), .class("button primary")) {
+          button(.type(.button), .id("organizer-workshop-lottery-button"), .class("button primary"))
+          {
             HTMLText(language == .ja ? "抽選を実行" : "Run Lottery")
           }
-          button(.type(.button), .id("organizer-workshop-send-tickets-button"), .class("button primary")) {
+          button(
+            .type(.button), .id("organizer-workshop-send-tickets-button"), .class("button primary")
+          ) {
             HTMLText(language == .ja ? "チケットを送信" : "Send Tickets")
           }
         }
