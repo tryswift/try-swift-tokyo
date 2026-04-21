@@ -427,7 +427,7 @@ struct AuthController: RouteCollection {
 
     // 10. Set secure HTTP-only cookie and redirect to frontend
     // Use returnTo from state if provided, otherwise default to login page
-    let returnTo = statePayload.returnTo ?? "/login"
+    let returnTo = statePayload.returnTo ?? Self.frontendURL
 
     req.logger.info(
       "OAuth flow completed, redirecting",
@@ -442,23 +442,28 @@ struct AuthController: RouteCollection {
     response.headers.replaceOrAdd(name: .location, value: returnTo)
 
     // Set HTTP-only cookie for authentication
+    // Use parent domain (.tryswift.jp) so the cookie is shared across subdomains
+    // (api.tryswift.jp and cfp.tryswift.jp are same-site, so SameSite=Lax works)
+    let cookieDomain = Self.getCookieDomain()
+    let isSecure = Environment.get("APP_ENV") == "production"
     response.cookies["auth_token"] = HTTPCookies.Value(
       string: token,
       expires: Date().addingTimeInterval(86400 * 7),  // 7 days
       maxAge: 86400 * 7,
+      domain: cookieDomain,
       path: "/",
-      isSecure: Environment.get("APP_ENV") == "production",
+      isSecure: isSecure,
       isHTTPOnly: true,
       sameSite: .lax
     )
 
-    // Also set username cookie (not HTTP-only, for display purposes)
+    // Username cookie kept host-scoped (no domain) for minimal exposure
     response.cookies["auth_username"] = HTTPCookies.Value(
       string: user.username,
       expires: Date().addingTimeInterval(86400 * 7),
       maxAge: 86400 * 7,
       path: "/",
-      isSecure: Environment.get("APP_ENV") == "production",
+      isSecure: isSecure,
       isHTTPOnly: false,
       sameSite: .lax
     )
@@ -477,7 +482,7 @@ struct AuthController: RouteCollection {
     }
 
     // For tryswift.jp domains, use .tryswift.jp to allow subdomains
-    if host.hasSuffix("tryswift.jp") {
+    if host == "tryswift.jp" || host.hasSuffix(".tryswift.jp") {
       return ".tryswift.jp"
     }
 
@@ -580,12 +585,15 @@ struct AuthController: RouteCollection {
   @Sendable
   func logout(req: Request) async throws -> Response {
     let response = Response(status: .ok)
+    let cookieDomain = Self.getCookieDomain()
+    let isSecure = Environment.get("APP_ENV") == "production"
     response.cookies["auth_token"] = HTTPCookies.Value(
       string: "",
       expires: Date(timeIntervalSince1970: 0),
       maxAge: 0,
+      domain: cookieDomain,
       path: "/",
-      isSecure: Environment.get("APP_ENV") == "production",
+      isSecure: isSecure,
       isHTTPOnly: true,
       sameSite: .lax
     )
@@ -594,7 +602,7 @@ struct AuthController: RouteCollection {
       expires: Date(timeIntervalSince1970: 0),
       maxAge: 0,
       path: "/",
-      isSecure: Environment.get("APP_ENV") == "production",
+      isSecure: isSecure,
       isHTTPOnly: false,
       sameSite: .lax
     )

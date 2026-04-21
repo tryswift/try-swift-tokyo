@@ -106,6 +106,10 @@
     }
   }
 
+  function isJapanese() {
+    return window.location.pathname.indexOf("/ja") === 0;
+  }
+
   function updateAuthState(user) {
     var authStatus = document.getElementById("auth-status");
     var loginButton = document.getElementById("login-button");
@@ -115,6 +119,22 @@
     var signedInCards = document.querySelectorAll("[data-auth-signed-in-card]");
 
     updatePageCopy(user);
+
+    // Dynamically show/hide Organizer nav link based on admin role
+    var nav = document.querySelector(".topbar-panel .nav");
+    var existingOrgLink = document.getElementById("organizer-nav-link");
+    if (user && user.role === "admin") {
+      if (!existingOrgLink && nav) {
+        var link = document.createElement("a");
+        link.id = "organizer-nav-link";
+        link.href = isJapanese() ? "/ja/organizer/proposals" : "/organizer";
+        link.className = "nav-link";
+        link.textContent = isJapanese() ? "運営向け" : "Organizer";
+        nav.appendChild(link);
+      }
+    } else {
+      if (existingOrgLink) existingOrgLink.remove();
+    }
 
     if (user) {
       if (authStatus) {
