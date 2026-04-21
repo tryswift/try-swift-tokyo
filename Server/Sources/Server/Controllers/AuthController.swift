@@ -442,6 +442,8 @@ struct AuthController: RouteCollection {
     response.headers.replaceOrAdd(name: .location, value: returnTo)
 
     // Set HTTP-only cookie for authentication
+    // Use parent domain (.tryswift.jp) so the cookie is shared across subdomains
+    // (api.tryswift.jp and cfp.tryswift.jp are same-site, so SameSite=Lax works)
     let cookieDomain = Self.getCookieDomain()
     let isSecure = Environment.get("APP_ENV") == "production"
     response.cookies["auth_token"] = HTTPCookies.Value(
@@ -452,19 +454,18 @@ struct AuthController: RouteCollection {
       path: "/",
       isSecure: isSecure,
       isHTTPOnly: true,
-      sameSite: HTTPCookies.SameSitePolicy.none
+      sameSite: .lax
     )
 
-    // Also set username cookie (not HTTP-only, for display purposes)
+    // Username cookie kept host-scoped (no domain) for minimal exposure
     response.cookies["auth_username"] = HTTPCookies.Value(
       string: user.username,
       expires: Date().addingTimeInterval(86400 * 7),
       maxAge: 86400 * 7,
-      domain: cookieDomain,
       path: "/",
       isSecure: isSecure,
       isHTTPOnly: false,
-      sameSite: HTTPCookies.SameSitePolicy.none
+      sameSite: .lax
     )
 
     return response
@@ -481,7 +482,7 @@ struct AuthController: RouteCollection {
     }
 
     // For tryswift.jp domains, use .tryswift.jp to allow subdomains
-    if host.hasSuffix("tryswift.jp") {
+    if host == "tryswift.jp" || host.hasSuffix(".tryswift.jp") {
       return ".tryswift.jp"
     }
 
@@ -594,17 +595,16 @@ struct AuthController: RouteCollection {
       path: "/",
       isSecure: isSecure,
       isHTTPOnly: true,
-      sameSite: HTTPCookies.SameSitePolicy.none
+      sameSite: .lax
     )
     response.cookies["auth_username"] = HTTPCookies.Value(
       string: "",
       expires: Date(timeIntervalSince1970: 0),
       maxAge: 0,
-      domain: cookieDomain,
       path: "/",
       isSecure: isSecure,
       isHTTPOnly: false,
-      sameSite: HTTPCookies.SameSitePolicy.none
+      sameSite: .lax
     )
     return response
   }
