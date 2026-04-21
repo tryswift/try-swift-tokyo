@@ -24,7 +24,7 @@ struct PageContent: HTML, Sendable {
     case .login:
       AuthRequiredPageContent(page: page, language: language)
     case .organizer:
-      AuthRequiredPageContent(page: page, language: language)  // replaced in Task 10
+      OrganizerShell(routePath: routePath, language: language)
     }
   }
 }
