@@ -503,6 +503,7 @@ public struct LiveTranslationView: View {
       ForEach(store.chatList) { item in
         HStack(alignment: .top, spacing: 8) {
           Text(item.textForTr.isEmpty ? item.text : item.textForTr)
+            .textSelection(.enabled)
             .frame(maxWidth: .infinity, alignment: .leading)
             .multilineTextAlignment(.leading)
             .foregroundStyle(item.isRealTime ? .secondary : .primary)
