@@ -43,7 +43,7 @@ private struct OrganizerTimetableCreateCard: HTML, Sendable {
           select(.id("organizer-slot-conference-id"), .name("conferenceId"), .required) {}
         }
         label(.class("form-field")) {
-          span(.class("field-label")) { HTMLText(language == .ja ? "Day" : "Day") }
+          span(.class("field-label")) { HTMLText(language == .ja ? "開催日" : "Day") }
           input(
             .type(.number), .name("day"), .custom(name: "min", value: "1"),
             .custom(name: "max", value: "3"), .value("1"), .required)
@@ -127,7 +127,7 @@ private struct OrganizerTimetableEditorCard: HTML, Sendable {
       form(.id("organizer-slot-editor-form"), .class("submit-form-grid")) {
         input(.type(.hidden), .name("slotID"))
         label(.class("form-field")) {
-          span(.class("field-label")) { HTMLText(language == .ja ? "Day" : "Day") }
+          span(.class("field-label")) { HTMLText(language == .ja ? "開催日" : "Day") }
           input(
             .type(.number), .name("day"), .custom(name: "min", value: "1"),
             .custom(name: "max", value: "3"), .required)

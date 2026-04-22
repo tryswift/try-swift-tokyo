@@ -1708,7 +1708,11 @@
       populateSelect("organizer-editor-conference-id", state.conferences, null, "id", "displayName");
       updateExportLinks();
     } catch (error) {
-      showStatus("organizer-status", error.message, "error");
+      if (document.getElementById("organizer-status")) {
+        showStatus("organizer-status", error.message, "error");
+      } else {
+        console.error("[organizer] shell bootstrap failed:", error);
+      }
     }
   }
 
