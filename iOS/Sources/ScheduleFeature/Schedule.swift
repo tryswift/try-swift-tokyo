@@ -89,6 +89,7 @@ public struct Schedule {
       case favoriteTapped(Session)
     }
 
+    @CasePathable
     public enum Delegate: Equatable {
       case showVideoDetail(
         Session, VideoMetadata, ConferenceYear, relatedSessions: [RelatedSession])
