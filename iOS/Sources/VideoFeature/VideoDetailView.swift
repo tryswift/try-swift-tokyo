@@ -56,6 +56,11 @@ public struct VideoDetailView: View {
         .frame(maxWidth: 700)
       #endif
     }
+    .overlay {
+      if store.videoMetadata.youtubeVideoId == "7EeDpR65FZA" {
+        TomOliverParticleView()
+      }
+    }
   }
 
   private var hasAdditionalTabs: Bool {

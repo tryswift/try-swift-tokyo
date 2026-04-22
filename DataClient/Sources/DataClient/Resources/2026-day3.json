@@ -59,7 +59,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "youtube_video_id": "f-xhPNkxG6Y"
         }
       ]
     },
@@ -91,7 +92,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "youtube_video_id": "9RYovBxDbs8"
         },
         {
           "title": "Office hour",
@@ -138,7 +140,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "youtube_video_id": "INlzHNbQ9Eg"
         }
       ]
     },
@@ -193,7 +196,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "youtube_video_id": "vDQ_yxD6JZ4"
         }
       ]
     },
@@ -225,7 +229,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "youtube_video_id": "0OcOFBe0jbQ"
         }
       ]
     },
@@ -253,7 +258,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "youtube_video_id": "_5xHECNGJNY"
         },
         {
           "title": "Office hour",
@@ -284,50 +290,84 @@
       "time": "2026-04-14T14:00:00+09:00",
       "sessions": [
         {
-          "title": "The Evolution of SwiftUI: An Insider's View",
-          "title_ja": "進化し続けるSwiftUI：内部から見たその変化",
-          "description": "SwiftUI has been evolving rapidly since its introduction, with major API changes shaping how we build apps today. In this talk, I will share an insider's perspective on what drives these changes, drawing on my experience as a former engineer on the SwiftUI team at Apple and as an iOS developer who has used SwiftUI in production since day one. You will learn how and why SwiftUI evolves, how to evaluate when to move from older APIs to newer ones, and why embracing these changes is essential for building robust SwiftUI apps.",
-          "description_ja": "SwiftUIは登場以来急速に進化を続けており、大きなAPIの変更が、現在のアプリ開発のあり方に影響を与えています。\n\n本セッションでは、AppleのSwiftUIチームでエンジニアとして働いていた経験と、リリース当初からSwiftUIをプロダクションで活用してきたiOS開発者としての視点をもとに、これらの変化を生み出している背景を内側から解説します。\n\nSwiftUIがどのように、そしてなぜ進化していくのか、古いAPIから新しいAPIへいつ移行すべきかをどのように判断するのか、そしてこれらの変化を受け入れることが堅牢なSwiftUIアプリを構築するうえでなぜ重要なのかを学ぶことができます。",
-          "summary": "SwiftUI has been evolving rapidly since its introduction, with major API changes shaping how we build apps today. In this talk, I will share an insider's perspective on what drives these changes, draw",
-          "summary_ja": "SwiftUIは登場以来急速に進化を続けており、主要なAPI変更が今日のアプリ構築方法を形作っています。このトークでは、AppleのSwiftUIチームの元エンジニアとしての経験を活かし、これらの変更を推進する要因についてインサイダーの視点を共有します。",
+          "title": "⚡️The Legend of Tom Oliver",
+          "title_ja": "⚡️Tom Oliverの伝説",
+          "description": "What exactly is \"Tom Oliver,\" the legendary meme that has been passed down in the iOS community for 10 years? In this Lightning Talk at try! Swift Tokyo 2026, Tim Oliver himself reveals the entire surprising (and hilarious) history behind it!\nIn this talk, Tim explains that \"Tom Oliver\" isn't just a single meme, but actually a combination of three distinct elements.",
+          "description_ja": "iOSコミュニティで10年にわたって語り継がれてきた伝説のミーム「Tom Oliver」とは一体何なのでしょうか？このLTでは、Tim Oliver本人がその驚くべき（そして面白い）歴史のすべてを明かします！\nこのトークでは、「Tom Oliver」は単なるひとつのミームではなく、実は3つの異なる要素の組み合わせであることをTimが解説します。",
+          "summary": "What exactly is \"Tom Oliver,\" the legendary meme that has been passed down in the iOS community for 10 years? Tim Oliver himself reveals the entire surprising (and hilarious) history behind it!",
+          "summary_ja": "iOSコミュニティで10年にわたって語り継がれてきた伝説のミーム「Tom Oliver」とは一体何なのでしょうか？Tim Oliver本人がその驚くべき歴史のすべてを明かします！",
           "speakers": [
             {
-              "name": "Natalia Panferova",
-              "image_name": "Speaker/2026/2026_NataliaPanferova",
-              "bio": "Natalia has been working in tech for over ten years, and most of her career has been dedicated to iOS development. She's worked in both small startups and large companies, and now she's focusing on her own projects at Nil Coalescing, a company she founded with her partner back in 2022. Right before that, she was part of the SwiftUI team at Apple, designing and building SwiftUI APIs.\n\nShe's very passionate about creating apps for Apple platforms and sharing her knowledge through her blog and books for Swift and SwiftUI developers. She lives in the South Island of New Zealand, and when she's not coding or writing, she loves going on nature walks with her partner and their two dogs.",
-              "bio_ja": "Nataliaはテック業界で10年以上の経験があり、そのほとんどを iOS 開発に携わってきました。スタートアップから大企業までさまざまな環境で働いた経験があり、現在は 2022 年にパートナーとともに設立した会社「Nil Coalescing」で自身のプロジェクトに取り組んでいます。その前は Apple の SwiftUI チームに所属し、SwiftUI の API の設計と実装に携わっていました。\n\nApple プラットフォーム向けのアプリ開発に強い情熱を持っており、ブログや Swift / SwiftUI 開発者向けの書籍を通じて知識を共有することにも力を入れています。ニュージーランド南島在住で、コーディングや執筆をしていないときは、パートナーと 2 匹の犬と一緒に自然の中を散歩するのが好きです。",
-              "job_title": "iOS Developer, Tech Blogger, Book Author",
+              "name": "Tim Oliver",
+              "image_name": "TimOliver",
+              "bio": "Tim is an iOS developer from Australia and is currently working in Tokyo. He presented at try! Swift Tokyo 2016 and has been volunteering at the conference since 2018. In his free time, he loves video games, writing open source software and karaoke.",
+              "bio_ja": "Timはオーストラリア出身のiOS開発者で、現在東京で働いています。try! Swift Tokyo 2016で発表し、2018年からカンファレンスでボランティアをしています。暇な時は、ビデオゲーム、オープンソースソフトウェアの執筆、カラオケが大好きです。",
+              "job_title": "iOS Developer",
               "links": [
                 {
-                  "url": "https://github.com/nataliapanferova",
-                  "name": "@nataliapanferova"
+                  "name": "@TimOliverAU",
+                  "url": "https://x.com/TimOliverAU"
                 },
                 {
-                  "url": "https://x.com/natpanferova",
-                  "name": "@natpanferova"
-                },
-                {
-                  "url": "https://bsky.app/profile/natpanferova.bsky.social",
-                  "name": "@natpanferova"
+                  "name": "@TimOliver",
+                  "url": "https://github.com/TimOliver"
                 }
               ]
             }
-          ]
-        },
-        {
-          "title": "Office hour",
-          "title_ja": "Q&A",
-          "place": "Ask the Speaker",
-          "place_ja": "Ask the Speaker",
-          "summary": "Meet Kazushi Oenoki and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
-          "summary_ja": "Kazushi Oenokiさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
-          "speakers": [
-            {
-              "name": "Kazushi Oenoki",
-              "image_name": "Speaker/2026/2026_KazushiOenoki"
-            }
-          ]
+          ],
+          "youtube_video_id": "7EeDpR65FZA"
         }
+      ]
+    },
+    {
+      "time": "2026-04-14T14:05:00+9:00",
+      "sessions": [
+          {
+            "title": "The Evolution of SwiftUI: An Insider's View",
+            "title_ja": "進化し続けるSwiftUI：内部から見たその変化",
+            "description": "SwiftUI has been evolving rapidly since its introduction, with major API changes shaping how we build apps today. In this talk, I will share an insider's perspective on what drives these changes, drawing on my experience as a former engineer on the SwiftUI team at Apple and as an iOS developer who has used SwiftUI in production since day one. You will learn how and why SwiftUI evolves, how to evaluate when to move from older APIs to newer ones, and why embracing these changes is essential for building robust SwiftUI apps.",
+            "description_ja": "SwiftUIは登場以来急速に進化を続けており、大きなAPIの変更が、現在のアプリ開発のあり方に影響を与えています。\n\n本セッションでは、AppleのSwiftUIチームでエンジニアとして働いていた経験と、リリース当初からSwiftUIをプロダクションで活用してきたiOS開発者としての視点をもとに、これらの変化を生み出している背景を内側から解説します。\n\nSwiftUIがどのように、そしてなぜ進化していくのか、古いAPIから新しいAPIへいつ移行すべきかをどのように判断するのか、そしてこれらの変化を受け入れることが堅牢なSwiftUIアプリを構築するうえでなぜ重要なのかを学ぶことができます。",
+            "summary": "SwiftUI has been evolving rapidly since its introduction, with major API changes shaping how we build apps today. In this talk, I will share an insider's perspective on what drives these changes, draw",
+            "summary_ja": "SwiftUIは登場以来急速に進化を続けており、主要なAPI変更が今日のアプリ構築方法を形作っています。このトークでは、AppleのSwiftUIチームの元エンジニアとしての経験を活かし、これらの変更を推進する要因についてインサイダーの視点を共有します。",
+            "speakers": [
+              {
+                "name": "Natalia Panferova",
+                "image_name": "Speaker/2026/2026_NataliaPanferova",
+                "bio": "Natalia has been working in tech for over ten years, and most of her career has been dedicated to iOS development. She's worked in both small startups and large companies, and now she's focusing on her own projects at Nil Coalescing, a company she founded with her partner back in 2022. Right before that, she was part of the SwiftUI team at Apple, designing and building SwiftUI APIs.\n\nShe's very passionate about creating apps for Apple platforms and sharing her knowledge through her blog and books for Swift and SwiftUI developers. She lives in the South Island of New Zealand, and when she's not coding or writing, she loves going on nature walks with her partner and their two dogs.",
+                "bio_ja": "Nataliaはテック業界で10年以上の経験があり、そのほとんどを iOS 開発に携わってきました。スタートアップから大企業までさまざまな環境で働いた経験があり、現在は 2022 年にパートナーとともに設立した会社「Nil Coalescing」で自身のプロジェクトに取り組んでいます。その前は Apple の SwiftUI チームに所属し、SwiftUI の API の設計と実装に携わっていました。\n\nApple プラットフォーム向けのアプリ開発に強い情熱を持っており、ブログや Swift / SwiftUI 開発者向けの書籍を通じて知識を共有することにも力を入れています。ニュージーランド南島在住で、コーディングや執筆をしていないときは、パートナーと 2 匹の犬と一緒に自然の中を散歩するのが好きです。",
+                "job_title": "iOS Developer, Tech Blogger, Book Author",
+                "links": [
+                  {
+                    "url": "https://github.com/nataliapanferova",
+                    "name": "@nataliapanferova"
+                  },
+                  {
+                    "url": "https://x.com/natpanferova",
+                    "name": "@natpanferova"
+                  },
+                  {
+                    "url": "https://bsky.app/profile/natpanferova.bsky.social",
+                    "name": "@natpanferova"
+                  }
+                ]
+              }
+            ],
+            "youtube_video_id": "SQ-bn9iC5gw"
+          },
+          {
+            "title": "Office hour",
+            "title_ja": "Q&A",
+            "place": "Ask the Speaker",
+            "place_ja": "Ask the Speaker",
+            "summary": "Meet Kazushi Oenoki and ask questions about the talk. This is a great opportunity to get more insights and learn more about the topic.",
+            "summary_ja": "Kazushi Oenokiさんに会って、トークについて質問しましょう。これは、さらに洞察を得て、トピックについてより深く学ぶ絶好の機会です。",
+            "speakers": [
+              {
+                "name": "Kazushi Oenoki",
+                "image_name": "Speaker/2026/2026_KazushiOenoki"
+              }
+            ]
+          }
       ]
     },
     {
@@ -358,7 +398,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "youtube_video_id": "t7ARgg7VbM8"
         }
       ]
     },
@@ -386,7 +427,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "youtube_video_id": "YEspwwJ4wFU"
         },
         {
           "title": "Office hour",
@@ -455,7 +497,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "youtube_video_id": "ddOFVcZ2X6M"
         }
       ]
     },
@@ -483,7 +526,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "youtube_video_id": "imtB1AAOR3c"
         },
         {
           "title": "Office hour",
@@ -525,7 +569,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "youtube_video_id": "8RuThk27-BQ"
         },
         {
           "title": "Office hour",
