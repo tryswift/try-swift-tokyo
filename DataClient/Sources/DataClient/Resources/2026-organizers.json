@@ -119,23 +119,6 @@
     ]
   },
   {
-    "id": 8,
-    "name": "Shoko Sato",
-    "image_name": "satoshoco",
-    "bio": "Shoko joined the DevRel team at LINE (now LY Corporation) in September 2019, after working as a front-end engineer at a venture company. There, she was responsible for tech branding, marketing, training, and managing technical conferences for the engineering organization. Subsequently, in March 2024, she founded THE BIGLE Inc., a company that provides support for Developer Relations, including technical PR, technical communities, and technical conferences, and became independent.",
-    "bio_ja": "ベンチャー企業のフロントエンドエンジニアを経て、2019年9月よりLINE（現・LINEヤフー）のDevRelチームにてエンジニア組織のTech Branding、Trainingや技術カンファレンスの運営を担当。イベントやブログ、動画などを中心に社内外の技術コミュニティの盛り上げや機会づくりなど各組織のサポートに従事。その後、2024年3月よりDeveloper Relationsのサポート事業（技術広報・技術コミュニティ・技術カンファレンスの支援）を行うTHE BIGLE株式会社を立ち上げ、独立。",
-    "links": [
-      {
-        "name": "@satoshoco",
-        "url": "https://x.com/satoshoco"
-      },
-      {
-        "name": "@shoco310",
-        "url": "https://github.com/shoco310"
-      }
-    ]
-  },
-  {
     "id": 9,
     "name": "Shota Ebara",
     "image_name": "elmetal",
@@ -183,23 +166,6 @@
       {
         "name": "@TimOliver",
         "url": "https://github.com/TimOliver"
-      }
-    ]
-  },
-  {
-    "id": 12,
-    "name": "Naoki Muramoto",
-    "image_name": "Naoki",
-    "bio": "Naoki is a 3rd year software engineer working in Tokyo who loves Swift.\nHe loves beer and often drinks it when he's not working.",
-    "bio_ja": "Swiftが好きな東京で働いている3年目のソフトウェアエンジニアです。\nビールが大好きで、仕事以外でもよく飲んでいます。",
-    "links": [
-      {
-        "name": "@naoki_mrmt",
-        "url": "https://x.com/naoki_mrmt"
-      },
-      {
-        "name": "@naoki-mrmt",
-        "url": "https://github.com/naoki-mrmt"
       }
     ]
   },
