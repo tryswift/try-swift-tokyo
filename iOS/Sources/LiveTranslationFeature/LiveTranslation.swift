@@ -410,7 +410,9 @@ public struct LiveTranslationView: View {
             #endif
           }
         }
-        ToolbarSpacer(placement: .primaryAction)
+        #if !os(visionOS)
+          ToolbarSpacer(placement: .primaryAction)
+        #endif
         ToolbarItem(placement: .primaryAction) {
           Button {
             send(.setSelectedLanguageSheet(!store.isSelectedLanguageSheet))

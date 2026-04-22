@@ -299,6 +299,13 @@ struct ScheduleTests {
     #if os(macOS)
       await store.send(.view(.disclosureTapped(.mock1)))
       await store.receive(\.delegate.showVideoDetail)
+    #elseif os(visionOS)
+      await store.send(.view(.disclosureTapped(.mock1))) {
+        $0.destination = .videoDetail(
+          VideoDetail.State(
+            session: .mock1, videoMetadata: .mock1,
+            conferenceYear: .year2026))
+      }
     #else
       await store.send(.view(.disclosureTapped(.mock1))) {
         $0.path.append(
@@ -325,6 +332,13 @@ struct ScheduleTests {
     #if os(macOS)
       await store.send(.view(.disclosureTapped(.mock1)))
       await store.receive(\.delegate.showVideoDetail)
+    #elseif os(visionOS)
+      await store.send(.view(.disclosureTapped(.mock1))) {
+        $0.destination = .videoDetail(
+          VideoDetail.State(
+            session: .mock1, videoMetadata: fallbackMetadata,
+            conferenceYear: .year2026))
+      }
     #else
       await store.send(.view(.disclosureTapped(.mock1))) {
         $0.path.append(
@@ -348,6 +362,16 @@ struct ScheduleTests {
     #if os(macOS)
       await store.send(.view(.disclosureTapped(.mock2)))
       await store.receive(\.delegate.showScheduleDetail)
+    #elseif os(visionOS)
+      await store.send(.view(.disclosureTapped(.mock2))) {
+        $0.destination = .detail(
+          ScheduleDetail.State(
+            title: "session2",
+            description: "description2",
+            requirements: "requirements2",
+            speakers: [.mock2]
+          ))
+      }
     #else
       await store.send(.view(.disclosureTapped(.mock2))) {
         $0.path.append(
