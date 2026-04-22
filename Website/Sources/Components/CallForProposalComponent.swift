@@ -64,7 +64,7 @@ struct CallForProposalComponent: HTML {
       .margin(.bottom, .px(56))
 
       sectionTitle(title: importantDatesTitle)
-      Grid(alignment: .stretch, spacing: 20) {
+      Grid(alignment: .top, spacing: 20) {
         ForEach(importantDates) { item in
           VStack(alignment: .center) {
             Text(item.title)
@@ -88,7 +88,7 @@ struct CallForProposalComponent: HTML {
       .margin(.bottom, .px(56))
 
       sectionTitle(title: talkFormatsTitle)
-      Grid(alignment: .stretch, spacing: 20) {
+      Grid(alignment: .top, spacing: 20) {
         ForEach(talkFormats) { format in
           VStack(alignment: .leading) {
             Text(format.title)
@@ -116,7 +116,7 @@ struct CallForProposalComponent: HTML {
       .margin(.bottom, .px(56))
 
       sectionTitle(title: topicsTitle)
-      Grid(alignment: .stretch, spacing: 20) {
+      Grid(alignment: .top, spacing: 20) {
         ForEach(topics) { topic in
           VStack(alignment: .leading) {
             Text(topic.title)
