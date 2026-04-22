@@ -466,7 +466,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 26.4.0;
+				MARKETING_VERSION = 26.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.tryswift.tokyo.App;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -521,7 +521,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 26.4.0;
+				MARKETING_VERSION = 26.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.tryswift.tokyo.App;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -555,7 +555,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 26.4.0;
+				MARKETING_VERSION = 26.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.tryswift.tokyo.App.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -586,7 +586,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 26.4.0;
+				MARKETING_VERSION = 26.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.tryswift.tokyo.App.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;

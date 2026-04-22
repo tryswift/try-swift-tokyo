@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import Foundation
 import Testing
 
 @testable import LiveTranslationFeature
@@ -26,7 +27,7 @@ struct LiveTranslationTests {
   }
 
   @Test
-  func validateSelectedLangCode_invalidCode_fallbackToEn() async {
+  func validateSelectedLangCode_invalidCode_fallbackToDeviceOrEn() async {
     @Shared(.selectedLangCode) var selectedLangCode = "xx"
     let state = LiveTranslation.State()
 
@@ -37,8 +38,14 @@ struct LiveTranslationTests {
     }
     store.exhaustivity = .off
 
-    await store.send(.validateSelectedLangCode(["en", "ja", "ko"])) {
-      $0.$selectedLangCode.withLock { $0 = "en" }
+    // The reducer picks the device locale if it's in the list, otherwise "en".
+    let deviceCode =
+      Locale.autoupdatingCurrent.language.languageCode?.identifier ?? "en"
+    let langCodes = ["en", "ja", "ko"]
+    let expected = langCodes.contains(deviceCode) ? deviceCode : "en"
+
+    await store.send(.validateSelectedLangCode(langCodes)) {
+      $0.$selectedLangCode.withLock { $0 = expected }
     }
   }
 
@@ -54,8 +61,14 @@ struct LiveTranslationTests {
     }
     store.exhaustivity = .off
 
-    await store.send(.validateSelectedLangCode(["ja", "ko"])) {
-      $0.$selectedLangCode.withLock { $0 = "en" }
+    // When the device locale is in the list, it picks that; otherwise "en"
+    let deviceCode =
+      Locale.autoupdatingCurrent.language.languageCode?.identifier ?? "en"
+    let langCodes = ["ja", "ko"]
+    let expected = langCodes.contains(deviceCode) ? deviceCode : "en"
+
+    await store.send(.validateSelectedLangCode(langCodes)) {
+      $0.$selectedLangCode.withLock { $0 = expected }
     }
   }
 
