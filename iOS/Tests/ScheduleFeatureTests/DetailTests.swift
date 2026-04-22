@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import Foundation
 import SharedModels
 import Testing
 
@@ -77,7 +78,9 @@ struct DetailTests {
       $0.scheduleAPIClient.submitFeedback = { @Sendable _, _, _ in }
     }
 
-    store.state.feedbackText = "Great talk!"
+    await store.send(.binding(.set(\.feedbackText, "Great talk!"))) {
+      $0.feedbackText = "Great talk!"
+    }
 
     await store.send(.view(.submitFeedbackTapped)) {
       $0.isSubmittingFeedback = true
@@ -108,7 +111,9 @@ struct DetailTests {
       $0.scheduleAPIClient.submitFeedback = { @Sendable _, _, _ in throw FeedbackError() }
     }
 
-    store.state.feedbackText = "Great talk!"
+    await store.send(.binding(.set(\.feedbackText, "Great talk!"))) {
+      $0.feedbackText = "Great talk!"
+    }
 
     await store.send(.view(.submitFeedbackTapped)) {
       $0.isSubmittingFeedback = true
@@ -132,7 +137,9 @@ struct DetailTests {
       ScheduleDetail()
     }
 
-    store.state.feedbackText = "  "
+    await store.send(.binding(.set(\.feedbackText, "  "))) {
+      $0.feedbackText = "  "
+    }
 
     await store.send(.view(.submitFeedbackTapped))
   }
