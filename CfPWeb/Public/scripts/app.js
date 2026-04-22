@@ -1697,34 +1697,7 @@
     }
   }
 
-  async function bootstrapOrganizerPage() {
-    var createForm = document.getElementById("organizer-create-form");
-    var refreshButton = document.getElementById("organizer-refresh");
-    var filter = document.getElementById("organizer-conference-filter");
-    var list = document.getElementById("organizer-proposals");
-    var lookupButton = document.getElementById("organizer-lookup-button");
-    var importForm = document.getElementById("organizer-import-form");
-    var slotForm = document.getElementById("organizer-slot-form");
-    var slotList = document.getElementById("organizer-slot-list");
-    var slotFilter = document.getElementById("organizer-slot-conference-filter");
-    var slotEditorForm = document.getElementById("organizer-slot-editor-form");
-    var slotEditorResetButton = document.getElementById("organizer-slot-editor-reset");
-    var slotReorderButton = document.getElementById("organizer-slot-reorder-button");
-    var editorForm = document.getElementById("organizer-editor-form");
-    var editorResetButton = document.getElementById("organizer-editor-reset");
-    var deleteProposalButton = document.getElementById("organizer-delete-proposal-button");
-    var workshopRefreshButton = document.getElementById("organizer-workshops-refresh");
-    var workshopList = document.getElementById("organizer-workshops-list");
-    var workshopFilter = document.getElementById("organizer-workshop-filter");
-    var workshopApplicationsRefreshButton = document.getElementById("organizer-workshop-applications-refresh");
-    var workshopApplicationsList = document.getElementById("organizer-workshop-applications-list");
-    var workshopLotteryButton = document.getElementById("organizer-workshop-lottery-button");
-    var workshopSendTicketsButton = document.getElementById("organizer-workshop-send-tickets-button");
-    var workshopResultsRefreshButton = document.getElementById("organizer-workshop-results-refresh");
-    if (!createForm || !refreshButton || !filter || !list || !lookupButton || !importForm || !slotForm || !slotList || !slotFilter || !slotEditorForm || !slotEditorResetButton || !slotReorderButton || !editorForm || !editorResetButton || !deleteProposalButton || !workshopRefreshButton || !workshopList || !workshopFilter || !workshopApplicationsRefreshButton || !workshopApplicationsList || !workshopLotteryButton || !workshopSendTicketsButton || !workshopResultsRefreshButton) return;
-    wireWorkshopToggle(createForm, "talkDuration", "organizer-create-workshop-section");
-    wireWorkshopToggle(editorForm, "talkDuration", "organizer-edit-workshop-section");
-
+  async function bootstrapOrganizerShell() {
     try {
       await loadAllConferences();
       populateSelect("organizer-conference-id", state.conferences, null, "id", "displayName");
@@ -1735,21 +1708,35 @@
       populateSelect("organizer-editor-conference-id", state.conferences, null, "id", "displayName");
       updateExportLinks();
     } catch (error) {
-      showStatus("organizer-status", error.message, "error");
+      if (document.getElementById("organizer-status")) {
+        showStatus("organizer-status", error.message, "error");
+      } else {
+        console.error("[organizer] shell bootstrap failed:", error);
+      }
     }
+  }
+
+  async function bootstrapOrganizerProposalsSection() {
+    var createForm = document.getElementById("organizer-create-form");
+    var refreshButton = document.getElementById("organizer-refresh");
+    var filter = document.getElementById("organizer-conference-filter");
+    var list = document.getElementById("organizer-proposals");
+    var lookupButton = document.getElementById("organizer-lookup-button");
+    var importForm = document.getElementById("organizer-import-form");
+    var editorForm = document.getElementById("organizer-editor-form");
+    var editorResetButton = document.getElementById("organizer-editor-reset");
+    var deleteProposalButton = document.getElementById("organizer-delete-proposal-button");
+    if (!createForm || !refreshButton || !filter || !list || !lookupButton || !importForm || !editorForm || !editorResetButton || !deleteProposalButton) return;
+
+    wireWorkshopToggle(createForm, "talkDuration", "organizer-create-workshop-section");
+    wireWorkshopToggle(editorForm, "talkDuration", "organizer-edit-workshop-section");
 
     refreshButton.addEventListener("click", refreshOrganizerProposals);
     filter.addEventListener("change", function () {
       refreshOrganizerProposals();
       updateExportLinks();
     });
-    slotFilter.addEventListener("change", refreshOrganizerSlots);
-    workshopRefreshButton.addEventListener("click", refreshOrganizerWorkshops);
-    workshopApplicationsRefreshButton.addEventListener("click", refreshOrganizerWorkshopApplications);
-    workshopResultsRefreshButton.addEventListener("click", refreshOrganizerWorkshopResults);
-    workshopFilter.addEventListener("change", refreshOrganizerWorkshopApplications);
     editorResetButton.addEventListener("click", resetOrganizerEditor);
-    slotEditorResetButton.addEventListener("click", resetSlotEditor);
 
     lookupButton.addEventListener("click", async function () {
       var username = (createForm.elements.githubUsername.value || "").trim();
@@ -1757,7 +1744,6 @@
         showStatus("organizer-create-status", "Enter a GitHub username first.", "error");
         return;
       }
-
       try {
         var lookup = await apiRequest("/api/v1/admin/users/lookup/" + encodeURIComponent(username));
         if (lookup.name) createForm.elements.speakerName.value = lookup.name;
@@ -1773,17 +1759,8 @@
     createForm.addEventListener("submit", async function (event) {
       event.preventDefault();
       var payload = readFormJSON(createForm, [
-        "conferenceId",
-        "title",
-        "abstract",
-        "talkDetail",
-        "talkDuration",
-        "speakerName",
-        "speakerEmail",
-        "bio",
-        "githubUsername",
-        "iconURL",
-        "notes"
+        "conferenceId", "title", "abstract", "talkDetail", "talkDuration",
+        "speakerName", "speakerEmail", "bio", "githubUsername", "iconURL", "notes"
       ]);
       if (payload.talkDuration === "workshop") {
         Object.assign(payload, readWorkshopPayload(createForm, {
@@ -1791,12 +1768,8 @@
           includeJapaneseFields: false
         }));
       }
-
       try {
-        await apiRequest("/api/v1/admin/proposals", {
-          method: "POST",
-          body: JSON.stringify(payload)
-        });
+        await apiRequest("/api/v1/admin/proposals", { method: "POST", body: JSON.stringify(payload) });
         showStatus("organizer-create-status", "Proposal created.", "success");
         createForm.reset();
         populateSelect("organizer-conference-id", state.conferences, null, "id", "displayName");
@@ -1810,13 +1783,11 @@
 
     importForm.addEventListener("submit", async function (event) {
       event.preventDefault();
-
       var fileInput = importForm.elements.csvFile;
       if (!fileInput || !fileInput.files || !fileInput.files[0]) {
         showStatus("organizer-import-status", "Choose a CSV or JSON file to import.", "error");
         return;
       }
-
       var formData = new FormData();
       formData.append("csvFile", fileInput.files[0]);
       formData.append("conferenceId", importForm.elements.conferenceId.value);
@@ -1824,12 +1795,8 @@
         formData.append("githubUsername", importForm.elements.githubUsername.value.trim());
       }
       formData.append("skipDuplicates", importForm.elements.skipDuplicates.checked ? "true" : "false");
-
       try {
-        await apiRequest("/api/v1/admin/proposals/import", {
-          method: "POST",
-          body: formData
-        });
+        await apiRequest("/api/v1/admin/proposals/import", { method: "POST", body: formData });
         showStatus("organizer-import-status", "Import completed.", "success");
         importForm.reset();
         populateSelect("organizer-import-conference-id", state.conferences, null, "id", "displayName");
@@ -1839,65 +1806,20 @@
       }
     });
 
-    slotForm.addEventListener("submit", async function (event) {
-      event.preventDefault();
-
-      var payload = {
-        conferenceId: slotForm.elements.conferenceId.value,
-        day: Number(slotForm.elements.day.value),
-        startTime: toISODateTime(slotForm.elements.startTime.value),
-        slotType: slotForm.elements.slotType.value
-      };
-
-      var proposalId = slotForm.elements.proposalId.value.trim();
-      var endTime = toISODateTime(slotForm.elements.endTime.value);
-      var customTitle = slotForm.elements.customTitle.value.trim();
-      var place = slotForm.elements.place.value.trim();
-      if (proposalId) payload.proposalId = proposalId;
-      if (endTime) payload.endTime = endTime;
-      if (customTitle) payload.customTitle = customTitle;
-      if (place) payload.place = place;
-
-      if (!payload.startTime) {
-        showStatus("organizer-timetable-status", "Start time is required.", "error");
-        return;
-      }
-
-      try {
-        await apiRequest("/api/v1/admin/timetable/slots", {
-          method: "POST",
-          body: JSON.stringify(payload)
-        });
-        showStatus("organizer-timetable-status", "Timetable slot created.", "success");
-        slotForm.reset();
-        slotForm.elements.day.value = "1";
-        populateSelect("organizer-slot-conference-id", state.conferences, null, "id", "displayName");
-        populateProposalSelectForSlots();
-        populateSlotEditorProposalSelect();
-        await refreshOrganizerSlots();
-      } catch (error) {
-        showStatus("organizer-timetable-status", error.message, "error");
-      }
-    });
-
     list.addEventListener("click", async function (event) {
       var editButton = event.target.closest("[data-edit-admin-proposal]");
       if (editButton) {
         loadOrganizerProposalIntoEditor(editButton.getAttribute("data-edit-admin-proposal"));
         return;
       }
-
       var saveButton = event.target.closest("[data-save-status]");
       if (!saveButton) return;
-
       var proposalID = saveButton.getAttribute("data-save-status");
       var select = list.querySelector('[data-status-select="' + proposalID + '"]');
       if (!proposalID || !select) return;
-
       try {
         await apiRequest("/api/v1/admin/proposals/" + encodeURIComponent(proposalID) + "/status", {
-          method: "POST",
-          body: JSON.stringify({ status: select.value })
+          method: "POST", body: JSON.stringify({ status: select.value })
         });
         showStatus("organizer-status", "Updated proposal status.", "success");
         await refreshOrganizerProposals();
@@ -1913,7 +1835,6 @@
         showStatus("organizer-editor-status", "Choose a proposal first.", "error");
         return;
       }
-
       var payload = {
         conferenceId: editorForm.elements.conferenceId.value.trim(),
         title: editorForm.elements.title.value.trim(),
@@ -1938,11 +1859,9 @@
           includeJapaneseFields: true
         }));
       }
-
       try {
         await apiRequest("/api/v1/admin/proposals/" + encodeURIComponent(proposalID), {
-          method: "PUT",
-          body: JSON.stringify(payload)
+          method: "PUT", body: JSON.stringify(payload)
         });
         showStatus("organizer-editor-status", "Proposal updated.", "success");
         await refreshOrganizerProposals();
@@ -1958,11 +1877,8 @@
         showStatus("organizer-editor-status", "Choose a proposal first.", "error");
         return;
       }
-
       try {
-        await apiRequest("/api/v1/admin/proposals/" + encodeURIComponent(proposalID), {
-          method: "DELETE"
-        });
+        await apiRequest("/api/v1/admin/proposals/" + encodeURIComponent(proposalID), { method: "DELETE" });
         showStatus("organizer-editor-status", "Proposal deleted.", "success");
         await refreshOrganizerProposals();
         resetOrganizerEditor();
@@ -1971,35 +1887,73 @@
       }
     });
 
+    await refreshOrganizerProposals();
+    resetOrganizerEditor();
+    var initialProposalID = extractOrganizerProposalRouteID();
+    if (initialProposalID) {
+      loadOrganizerProposalIntoEditor(initialProposalID);
+    }
+  }
+
+  async function bootstrapOrganizerTimetableSection() {
+    var slotForm = document.getElementById("organizer-slot-form");
+    var slotList = document.getElementById("organizer-slot-list");
+    var slotFilter = document.getElementById("organizer-slot-conference-filter");
+    var slotEditorForm = document.getElementById("organizer-slot-editor-form");
+    var slotEditorResetButton = document.getElementById("organizer-slot-editor-reset");
+    var slotReorderButton = document.getElementById("organizer-slot-reorder-button");
+    if (!slotForm || !slotList || !slotFilter || !slotEditorForm || !slotEditorResetButton || !slotReorderButton) return;
+
+    slotFilter.addEventListener("change", refreshOrganizerSlots);
+    slotEditorResetButton.addEventListener("click", resetSlotEditor);
+
+    slotForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      var payload = {
+        conferenceId: slotForm.elements.conferenceId.value,
+        day: Number(slotForm.elements.day.value),
+        startTime: toISODateTime(slotForm.elements.startTime.value),
+        slotType: slotForm.elements.slotType.value
+      };
+      var proposalId = slotForm.elements.proposalId.value.trim();
+      var endTime = toISODateTime(slotForm.elements.endTime.value);
+      var customTitle = slotForm.elements.customTitle.value.trim();
+      var place = slotForm.elements.place.value.trim();
+      if (proposalId) payload.proposalId = proposalId;
+      if (endTime) payload.endTime = endTime;
+      if (customTitle) payload.customTitle = customTitle;
+      if (place) payload.place = place;
+      if (!payload.startTime) {
+        showStatus("organizer-timetable-status", "Start time is required.", "error");
+        return;
+      }
+      try {
+        await apiRequest("/api/v1/admin/timetable/slots", { method: "POST", body: JSON.stringify(payload) });
+        showStatus("organizer-timetable-status", "Timetable slot created.", "success");
+        slotForm.reset();
+        slotForm.elements.day.value = "1";
+        populateSelect("organizer-slot-conference-id", state.conferences, null, "id", "displayName");
+        populateProposalSelectForSlots();
+        populateSlotEditorProposalSelect();
+        await refreshOrganizerSlots();
+      } catch (error) {
+        showStatus("organizer-timetable-status", error.message, "error");
+      }
+    });
+
     slotList.addEventListener("click", async function (event) {
       var editButton = event.target.closest("[data-edit-slot]");
-      if (editButton) {
-        loadSlotIntoEditor(editButton.getAttribute("data-edit-slot"));
-        return;
-      }
-
+      if (editButton) { loadSlotIntoEditor(editButton.getAttribute("data-edit-slot")); return; }
       var moveUpButton = event.target.closest("[data-move-slot-up]");
-      if (moveUpButton) {
-        moveSlot(moveUpButton.getAttribute("data-move-slot-up"), "up");
-        return;
-      }
-
+      if (moveUpButton) { moveSlot(moveUpButton.getAttribute("data-move-slot-up"), "up"); return; }
       var moveDownButton = event.target.closest("[data-move-slot-down]");
-      if (moveDownButton) {
-        moveSlot(moveDownButton.getAttribute("data-move-slot-down"), "down");
-        return;
-      }
-
+      if (moveDownButton) { moveSlot(moveDownButton.getAttribute("data-move-slot-down"), "down"); return; }
       var deleteButton = event.target.closest("[data-delete-slot]");
       if (!deleteButton) return;
-
       var slotID = deleteButton.getAttribute("data-delete-slot");
       if (!slotID) return;
-
       try {
-        await apiRequest("/api/v1/admin/timetable/slots/" + encodeURIComponent(slotID), {
-          method: "DELETE"
-        });
+        await apiRequest("/api/v1/admin/timetable/slots/" + encodeURIComponent(slotID), { method: "DELETE" });
         showStatus("organizer-timetable-status", "Timetable slot deleted.", "success");
         await refreshOrganizerSlots();
       } catch (error) {
@@ -2014,11 +1968,7 @@
         showStatus("organizer-slot-editor-status", "Choose a slot first.", "error");
         return;
       }
-
-      var payload = {
-        day: Number(slotEditorForm.elements.day.value),
-        slotType: slotEditorForm.elements.slotType.value
-      };
+      var payload = { day: Number(slotEditorForm.elements.day.value), slotType: slotEditorForm.elements.slotType.value };
       var proposalId = slotEditorForm.elements.proposalId.value.trim();
       var place = slotEditorForm.elements.place.value.trim();
       var startTime = toISODateTime(slotEditorForm.elements.startTime.value);
@@ -2029,11 +1979,9 @@
       payload.startTime = startTime || null;
       payload.endTime = endTime || null;
       payload.customTitle = customTitle ? customTitle : null;
-
       try {
         await apiRequest("/api/v1/admin/timetable/slots/" + encodeURIComponent(slotID), {
-          method: "PUT",
-          body: JSON.stringify(payload)
+          method: "PUT", body: JSON.stringify(payload)
         });
         showStatus("organizer-slot-editor-status", "Slot updated.", "success");
         await refreshOrganizerSlots();
@@ -2049,20 +1997,13 @@
         showStatus("organizer-slot-editor-status", "Choose a slot first.", "error");
         return;
       }
-
       var day = Number(slotEditorForm.elements.day.value);
       var sameDay = state.organizerSlots
         .filter(function (item) { return item.day === day; })
         .sort(function (lhs, rhs) { return lhs.sortOrder - rhs.sortOrder; })
-        .map(function (item, index) {
-          return { id: item.id, sortOrder: index };
-        });
-
+        .map(function (item, index) { return { id: item.id, sortOrder: index }; });
       try {
-        await apiRequest("/api/v1/admin/timetable/reorder", {
-          method: "POST",
-          body: JSON.stringify(sameDay)
-        });
+        await apiRequest("/api/v1/admin/timetable/reorder", { method: "POST", body: JSON.stringify(sameDay) });
         showStatus("organizer-slot-editor-status", "Day order saved.", "success");
         await refreshOrganizerSlots();
       } catch (error) {
@@ -2070,17 +2011,33 @@
       }
     });
 
-    workshopList.addEventListener("click", async function (event) {
+    // Timetable needs proposals loaded to populate the proposalId selects.
+    await refreshOrganizerProposals();
+    populateProposalSelectForSlots();
+    populateSlotEditorProposalSelect();
+    await refreshOrganizerSlots();
+    resetSlotEditor();
+  }
+
+  async function bootstrapOrganizerWorkshopsSection() {
+    var refreshButton = document.getElementById("organizer-workshops-refresh");
+    var list = document.getElementById("organizer-workshops-list");
+    var filter = document.getElementById("organizer-workshop-filter");
+    var lotteryButton = document.getElementById("organizer-workshop-lottery-button");
+    var sendTicketsButton = document.getElementById("organizer-workshop-send-tickets-button");
+    if (!refreshButton || !list || !filter || !lotteryButton || !sendTicketsButton) return;
+
+    refreshButton.addEventListener("click", refreshOrganizerWorkshops);
+
+    list.addEventListener("click", async function (event) {
       var capacityButton = event.target.closest("[data-save-workshop-capacity]");
       if (capacityButton) {
         var registrationID = capacityButton.getAttribute("data-save-workshop-capacity");
-        var capacityInput = workshopList.querySelector('[data-workshop-capacity="' + registrationID + '"]');
+        var capacityInput = list.querySelector('[data-workshop-capacity="' + registrationID + '"]');
         if (!registrationID || !capacityInput) return;
-
         try {
           await apiRequest("/api/v1/admin/workshops/" + encodeURIComponent(registrationID) + "/capacity", {
-            method: "PUT",
-            body: JSON.stringify({ capacity: Number(capacityInput.value) })
+            method: "PUT", body: JSON.stringify({ capacity: Number(capacityInput.value) })
           });
           showStatus("organizer-workshops-status", "Capacity updated.", "success");
           await refreshOrganizerWorkshops();
@@ -2093,13 +2050,11 @@
       var lumaButton = event.target.closest("[data-save-workshop-luma]");
       if (lumaButton) {
         var lumaRegistrationID = lumaButton.getAttribute("data-save-workshop-luma");
-        var lumaInput = workshopList.querySelector('[data-workshop-luma-event="' + lumaRegistrationID + '"]');
+        var lumaInput = list.querySelector('[data-workshop-luma-event="' + lumaRegistrationID + '"]');
         if (!lumaRegistrationID || !lumaInput) return;
-
         try {
           await apiRequest("/api/v1/admin/workshops/" + encodeURIComponent(lumaRegistrationID) + "/luma-event", {
-            method: "PUT",
-            body: JSON.stringify({ lumaEventID: lumaInput.value.trim() || null })
+            method: "PUT", body: JSON.stringify({ lumaEventID: lumaInput.value.trim() || null })
           });
           showStatus("organizer-workshops-status", "Luma event ID updated.", "success");
           await refreshOrganizerWorkshops();
@@ -2111,14 +2066,10 @@
 
       var createLumaButton = event.target.closest("[data-create-workshop-luma]");
       if (!createLumaButton) return;
-
       var createRegistrationID = createLumaButton.getAttribute("data-create-workshop-luma");
       if (!createRegistrationID) return;
-
       try {
-        var createResponse = await apiRequest("/api/v1/admin/workshops/" + encodeURIComponent(createRegistrationID) + "/create-luma-event", {
-          method: "POST"
-        });
+        var createResponse = await apiRequest("/api/v1/admin/workshops/" + encodeURIComponent(createRegistrationID) + "/create-luma-event", { method: "POST" });
         showStatus("organizer-workshops-status", createResponse.message || "Luma event created.", "success");
         await refreshOrganizerWorkshops();
       } catch (error) {
@@ -2126,16 +2077,45 @@
       }
     });
 
-    workshopApplicationsList.addEventListener("click", async function (event) {
+    lotteryButton.addEventListener("click", async function () {
+      try {
+        var lottery = await apiRequest("/api/v1/admin/workshops/lottery", { method: "POST" });
+        showStatus("organizer-workshops-status", "Lottery complete: " + lottery.assigned + " assigned, " + lottery.unassigned + " unassigned.", "success");
+        await refreshOrganizerWorkshops();
+      } catch (error) {
+        showStatus("organizer-workshops-status", error.message, "error");
+      }
+    });
+
+    sendTicketsButton.addEventListener("click", async function () {
+      try {
+        var ticketResponse = await apiRequest("/api/v1/admin/workshops/send-tickets", { method: "POST" });
+        showStatus("organizer-workshops-status", "Tickets sent: " + ticketResponse.sent + " success, " + ticketResponse.skipped + " skipped, " + ticketResponse.errors + " errors.", "success");
+        await refreshOrganizerWorkshops();
+      } catch (error) {
+        showStatus("organizer-workshops-status", error.message, "error");
+      }
+    });
+
+    await refreshOrganizerWorkshops();
+  }
+
+  async function bootstrapOrganizerWorkshopApplicationsSection() {
+    var refreshButton = document.getElementById("organizer-workshop-applications-refresh");
+    var list = document.getElementById("organizer-workshop-applications-list");
+    var filter = document.getElementById("organizer-workshop-filter");
+    if (!refreshButton || !list || !filter) return;
+
+    refreshButton.addEventListener("click", refreshOrganizerWorkshopApplications);
+    filter.addEventListener("change", refreshOrganizerWorkshopApplications);
+
+    list.addEventListener("click", async function (event) {
       var deleteButton = event.target.closest("[data-delete-workshop-application]");
       if (!deleteButton) return;
       var applicationID = deleteButton.getAttribute("data-delete-workshop-application");
       if (!applicationID) return;
-
       try {
-        await apiRequest("/api/v1/admin/workshop-applications/" + encodeURIComponent(applicationID), {
-          method: "DELETE"
-        });
+        await apiRequest("/api/v1/admin/workshop-applications/" + encodeURIComponent(applicationID), { method: "DELETE" });
         showStatus("organizer-workshop-applications-status", "Workshop application deleted.", "success");
         await refreshOrganizerWorkshopApplications();
       } catch (error) {
@@ -2143,40 +2123,27 @@
       }
     });
 
-    workshopLotteryButton.addEventListener("click", async function () {
-      try {
-        var lottery = await apiRequest("/api/v1/admin/workshops/lottery", { method: "POST" });
-        showStatus("organizer-workshops-status", "Lottery complete: " + lottery.assigned + " assigned, " + lottery.unassigned + " unassigned.", "success");
-        await refreshOrganizerWorkshops();
-        await refreshOrganizerWorkshopApplications();
-        await refreshOrganizerWorkshopResults();
-      } catch (error) {
-        showStatus("organizer-workshops-status", error.message, "error");
-      }
-    });
-
-    workshopSendTicketsButton.addEventListener("click", async function () {
-      try {
-        var ticketResponse = await apiRequest("/api/v1/admin/workshops/send-tickets", { method: "POST" });
-        showStatus("organizer-workshops-status", "Tickets sent: " + ticketResponse.sent + " success, " + ticketResponse.skipped + " skipped, " + ticketResponse.errors + " errors.", "success");
-        await refreshOrganizerWorkshops();
-        await refreshOrganizerWorkshopResults();
-      } catch (error) {
-        showStatus("organizer-workshops-status", error.message, "error");
-      }
-    });
-
-    await refreshOrganizerProposals();
-    await refreshOrganizerSlots();
+    // The filter select needs workshop data to populate.
     await refreshOrganizerWorkshops();
     await refreshOrganizerWorkshopApplications();
+  }
+
+  async function bootstrapOrganizerWorkshopResultsSection() {
+    var refreshButton = document.getElementById("organizer-workshop-results-refresh");
+    var list = document.getElementById("organizer-workshop-results-list");
+    if (!refreshButton || !list) return;
+
+    refreshButton.addEventListener("click", refreshOrganizerWorkshopResults);
     await refreshOrganizerWorkshopResults();
-    resetOrganizerEditor();
-    resetSlotEditor();
-    var initialProposalID = extractOrganizerProposalRouteID();
-    if (initialProposalID) {
-      loadOrganizerProposalIntoEditor(initialProposalID);
-    }
+  }
+
+  async function bootstrapOrganizerPage() {
+    await bootstrapOrganizerShell();
+    await bootstrapOrganizerProposalsSection();
+    await bootstrapOrganizerTimetableSection();
+    await bootstrapOrganizerWorkshopsSection();
+    await bootstrapOrganizerWorkshopApplicationsSection();
+    await bootstrapOrganizerWorkshopResultsSection();
   }
 
   async function bootstrapPage() {
