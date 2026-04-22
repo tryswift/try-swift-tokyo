@@ -299,7 +299,7 @@
           "speakers": [
             {
               "name": "Tim Oliver",
-              "image_name": "TimOliver",
+              "image_name": "tim_oliver",
               "bio": "Tim is an iOS developer from Australia and is currently working in Tokyo. He presented at try! Swift Tokyo 2016 and has been volunteering at the conference since 2018. In his free time, he loves video games, writing open source software and karaoke.",
               "bio_ja": "Timはオーストラリア出身のiOS開発者で、現在東京で働いています。try! Swift Tokyo 2016で発表し、2018年からカンファレンスでボランティアをしています。暇な時は、ビデオゲーム、オープンソースソフトウェアの執筆、カラオケが大好きです。",
               "job_title": "iOS Developer",

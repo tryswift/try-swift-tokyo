@@ -16,7 +16,6 @@ struct TomOliverParticle: Identifiable {
 struct TomOliverParticleView: View {
 
   @State private var particles: [TomOliverParticle] = []
-  @State private var emitTask: Task<Void, Never>?
 
   private let maxParticles = 30
 
@@ -39,20 +38,15 @@ struct TomOliverParticleView: View {
       }
     }
     .allowsHitTesting(false)
-    .onDisappear {
-      emitTask?.cancel()
-    }
   }
 
   private func startEmitting(in size: CGSize) async {
-    // Initial burst
     for _ in 0..<15 {
       guard !Task.isCancelled else { return }
       spawnParticle(in: size)
       try? await Task.sleep(for: .milliseconds(80))
     }
 
-    // Continue emitting
     while !Task.isCancelled {
       try? await Task.sleep(for: .milliseconds(400))
       guard !Task.isCancelled else { return }
@@ -86,7 +80,7 @@ struct TomOliverParticleView: View {
       }
     }
 
-    Task {
+    Task { @MainActor in
       try? await Task.sleep(for: .seconds(duration))
       particles.removeAll { $0.id == particleId }
     }
