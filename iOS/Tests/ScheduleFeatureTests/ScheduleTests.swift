@@ -2,6 +2,7 @@ import ComposableArchitecture
 import DataClient
 import SharedModels
 import Testing
+import VideoFeature
 
 @testable import ScheduleFeature
 
@@ -295,8 +296,18 @@ struct ScheduleTests {
       ScheduleReducer()
     }
 
-    await store.send(.view(.disclosureTapped(.mock1)))
-    await store.receive(\.delegate.showVideoDetail)
+    #if os(macOS)
+      await store.send(.view(.disclosureTapped(.mock1)))
+      await store.receive(\.delegate.showVideoDetail)
+    #else
+      await store.send(.view(.disclosureTapped(.mock1))) {
+        $0.path.append(
+          .videoDetail(
+            VideoDetail.State(
+              session: .mock1, videoMetadata: .mock1,
+              conferenceYear: .year2026)))
+      }
+    #endif
   }
 
   @Test
@@ -308,8 +319,21 @@ struct ScheduleTests {
       ScheduleReducer()
     }
 
-    await store.send(.view(.disclosureTapped(.mock1)))
-    await store.receive(\.delegate.showVideoDetail)
+    let fallbackMetadata = VideoMetadata(
+      sessionTitle: "session1", youtubeVideoId: "abc123def45")
+
+    #if os(macOS)
+      await store.send(.view(.disclosureTapped(.mock1)))
+      await store.receive(\.delegate.showVideoDetail)
+    #else
+      await store.send(.view(.disclosureTapped(.mock1))) {
+        $0.path.append(
+          .videoDetail(
+            VideoDetail.State(
+              session: .mock1, videoMetadata: fallbackMetadata,
+              conferenceYear: .year2026)))
+      }
+    #endif
   }
 
   @Test
