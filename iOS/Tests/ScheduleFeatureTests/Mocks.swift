@@ -78,7 +78,8 @@ extension Session {
       .mock1
     ],
     place: "place3",
-    description: "description3"
+    description: "description3",
+    requirements: nil
   )
 }
 
