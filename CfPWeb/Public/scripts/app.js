@@ -227,6 +227,176 @@
     return state.openConferences;
   }
 
+  function formatEventDate(value) {
+    if (!value) return "";
+    var locale = currentLanguage() === "ja" ? "ja-JP" : "en-US";
+    var formatOptions = { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" };
+
+    // Format the calendar date as authored by the API (ISO `YYYY-MM-DD...`),
+    // ignoring the viewer's local timezone so a +09:00 conference date does
+    // not render off-by-one for users in earlier timezones.
+    if (typeof value === "string") {
+      var match = value.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (match) {
+        var fromParts = new Date(Date.UTC(parseInt(match[1], 10), parseInt(match[2], 10) - 1, parseInt(match[3], 10)));
+        if (!isNaN(fromParts.getTime())) {
+          return fromParts.toLocaleDateString(locale, formatOptions);
+        }
+      }
+    }
+
+    var date = new Date(value);
+    if (isNaN(date.getTime())) return "";
+    return date.toLocaleDateString(locale, formatOptions);
+  }
+
+  function formatEventDateRange(start, end) {
+    var startText = formatEventDate(start);
+    var endText = formatEventDate(end);
+    if (startText && endText && startText !== endText) {
+      return startText + " – " + endText;
+    }
+    return startText || endText;
+  }
+
+  function localizedConferenceDescription(conference) {
+    var description = conference && conference.description;
+    if (!description) return "";
+    return currentLanguage() === "ja"
+      ? (description.ja || description.en || "")
+      : (description.en || description.ja || "");
+  }
+
+  function renderCfPEventsList() {
+    var container = document.getElementById("cfp-events-list");
+    if (!container) return;
+
+    var statusEl = document.getElementById("cfp-events-status");
+    var conferences = state.openConferences || [];
+
+    if (!conferences.length) {
+      container.innerHTML = "";
+      if (statusEl) {
+        statusEl.textContent = localizedCopy(
+          "There are no open calls for proposals right now.",
+          "現在募集中のイベントはありません。"
+        );
+        statusEl.hidden = false;
+      }
+      return;
+    }
+
+    if (statusEl) {
+      statusEl.hidden = true;
+      statusEl.textContent = "";
+    }
+
+    var deadlineLabel = localizedCopy("Submission Deadline", "応募締切");
+    var datesLabel = localizedCopy("Conference Dates", "開催日");
+    var locationLabel = localizedCopy("Location", "会場");
+    var openBadgeText = localizedCopy("Open", "募集中");
+    var submitButtonText = localizedCopy("Submit a Proposal", "このイベントに応募");
+    var detailsButtonText = localizedCopy("Event Details ↗", "イベント詳細 ↗");
+    var submitBasePath = isJapanese() ? "/ja/submit" : "/submit";
+
+    var html = "";
+    conferences.forEach(function (conference) {
+      var displayName = escapeHTML(String(conference.displayName || ""));
+      var description = escapeHTML(localizedConferenceDescription(conference));
+      var deadline = escapeHTML(formatEventDate(conference.deadline));
+      var dateRange = escapeHTML(formatEventDateRange(conference.startDate, conference.endDate));
+      var location = escapeHTML(String(conference.location || ""));
+      var path = encodeURIComponent(String(conference.path || ""));
+      var websiteURL = conference.websiteURL ? safeExternalURL(conference.websiteURL) : "";
+
+      html += '<article class="detail-card event-card">';
+      html += '<div class="event-card-header">';
+      html += "<h3>" + displayName + "</h3>";
+      html += '<span class="event-status-badge open">' + escapeHTML(openBadgeText) + "</span>";
+      html += "</div>";
+      if (description) {
+        html += '<p class="event-description">' + description + "</p>";
+      }
+      html += '<dl class="event-meta">';
+      if (deadline) {
+        html += '<div class="event-meta-row">';
+        html += "<dt>" + escapeHTML(deadlineLabel) + "</dt>";
+        html += "<dd>" + deadline + "</dd>";
+        html += "</div>";
+      }
+      if (dateRange) {
+        html += '<div class="event-meta-row">';
+        html += "<dt>" + escapeHTML(datesLabel) + "</dt>";
+        html += "<dd>" + dateRange + "</dd>";
+        html += "</div>";
+      }
+      if (location) {
+        html += '<div class="event-meta-row">';
+        html += "<dt>" + escapeHTML(locationLabel) + "</dt>";
+        html += "<dd>" + location + "</dd>";
+        html += "</div>";
+      }
+      html += "</dl>";
+      html += '<div class="event-actions">';
+      html += '<a class="button primary button-link" href="' + submitBasePath + "?conference=" + path + '">';
+      html += escapeHTML(submitButtonText);
+      html += "</a>";
+      if (websiteURL) {
+        html += '<a class="button light button-link" target="_blank" rel="noopener" href="' + escapeHTML(websiteURL) + '">';
+        html += escapeHTML(detailsButtonText);
+        html += "</a>";
+      }
+      html += "</div>";
+      html += "</article>";
+    });
+
+    container.innerHTML = html;
+  }
+
+  function safeExternalURL(value) {
+    try {
+      var url = new URL(value, window.location.origin);
+      if (url.protocol === "http:" || url.protocol === "https:") {
+        return url.href;
+      }
+    } catch (_error) {
+      return "";
+    }
+    return "";
+  }
+
+  async function bootstrapHomePage() {
+    if (!document.getElementById("cfp-events-list")) return;
+    try {
+      await loadOpenConferences();
+      renderCfPEventsList();
+    } catch (_error) {
+      state.openConferences = [];
+      var statusEl = document.getElementById("cfp-events-status");
+      if (statusEl) {
+        statusEl.textContent = localizedCopy(
+          "Failed to load open calls for proposals. Please try again later.",
+          "募集中のイベントを読み込めませんでした。時間をおいて再度お試しください。"
+        );
+        statusEl.hidden = false;
+      }
+    }
+  }
+
+  function preselectConferenceFromQuery(conferences) {
+    var select = document.getElementById("submit-conference-path");
+    if (!select) return;
+    var params = new URLSearchParams(window.location.search);
+    var requested = params.get("conference");
+    if (!requested) return;
+    var match = (conferences || []).some(function (item) {
+      return String(item.path) === requested;
+    });
+    if (match) {
+      select.value = requested;
+    }
+  }
+
   async function loadAllConferences() {
     state.conferences = await apiRequest("/api/v1/conferences");
     return state.conferences;
@@ -1147,6 +1317,7 @@
     try {
       var openConferences = await loadOpenConferences();
       populateSelect("submit-conference-path", openConferences, null, "path", "displayName");
+      preselectConferenceFromQuery(openConferences);
       prefillSpeakerFields(form, state.user);
       if (!openConferences.length) {
         showStatus("submit-status", "There is no open conference right now.", "error");
@@ -2149,6 +2320,10 @@
   async function bootstrapPage() {
     var path = normalizedPathname();
 
+    if (path === "/") {
+      await bootstrapHomePage();
+      return;
+    }
     if (path === "/profile") {
       await bootstrapProfilePage();
       return;
