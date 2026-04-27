@@ -229,10 +229,25 @@
 
   function formatEventDate(value) {
     if (!value) return "";
+    var locale = currentLanguage() === "ja" ? "ja-JP" : "en-US";
+    var formatOptions = { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" };
+
+    // Format the calendar date as authored by the API (ISO `YYYY-MM-DD...`),
+    // ignoring the viewer's local timezone so a +09:00 conference date does
+    // not render off-by-one for users in earlier timezones.
+    if (typeof value === "string") {
+      var match = value.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (match) {
+        var fromParts = new Date(Date.UTC(parseInt(match[1], 10), parseInt(match[2], 10) - 1, parseInt(match[3], 10)));
+        if (!isNaN(fromParts.getTime())) {
+          return fromParts.toLocaleDateString(locale, formatOptions);
+        }
+      }
+    }
+
     var date = new Date(value);
     if (isNaN(date.getTime())) return "";
-    var locale = currentLanguage() === "ja" ? "ja-JP" : "en-US";
-    return date.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" });
+    return date.toLocaleDateString(locale, formatOptions);
   }
 
   function formatEventDateRange(start, end) {
@@ -354,10 +369,18 @@
     if (!document.getElementById("cfp-events-list")) return;
     try {
       await loadOpenConferences();
+      renderCfPEventsList();
     } catch (_error) {
       state.openConferences = [];
+      var statusEl = document.getElementById("cfp-events-status");
+      if (statusEl) {
+        statusEl.textContent = localizedCopy(
+          "Failed to load open calls for proposals. Please try again later.",
+          "募集中のイベントを読み込めませんでした。時間をおいて再度お試しください。"
+        );
+        statusEl.hidden = false;
+      }
     }
-    renderCfPEventsList();
   }
 
   function preselectConferenceFromQuery(conferences) {
