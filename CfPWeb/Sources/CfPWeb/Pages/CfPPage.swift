@@ -70,12 +70,12 @@ enum CfPPage: String, CaseIterable, Sendable {
     switch self {
     case .home:
       return language == .ja
-        ? "try! Swift Tokyo 2026 のセッション提案を募集しています。"
-        : "Submit your talk proposal for try! Swift Tokyo 2026."
+        ? "try! Swift Tokyo の各イベントへのセッション提案を募集しています。"
+        : "Submit your talk proposal for try! Swift Tokyo events."
     case .guidelines:
       return language == .ja
-        ? "try! Swift Tokyo 2026 の応募に必要な情報をまとめています。"
-        : "Everything you need to know about submitting a talk proposal for try! Swift Tokyo 2026."
+        ? "try! Swift Tokyo への応募に必要な情報をまとめています。"
+        : "Everything you need to know about submitting a talk proposal for try! Swift Tokyo."
     default:
       return title(for: language)
     }

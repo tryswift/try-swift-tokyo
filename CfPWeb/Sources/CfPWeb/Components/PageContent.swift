@@ -114,9 +114,10 @@ private struct SubmitContent: HTML, Sendable {
       div(.class("submit-shell-inner")) {
         h1 { HTMLText(language == .ja ? "プロポーザルを提出" : "Submit Your Proposal") }
         p(.class("submit-lead")) {
-          HTMLText(language == .ja
-            ? "あなたのSwiftの知見を、世界中の開発者と共有しませんか。"
-            : "Share your Swift expertise with developers from around the world.")
+          HTMLText(
+            language == .ja
+              ? "あなたのSwiftの知見を、世界中の開発者と共有しませんか。"
+              : "Share your Swift expertise with developers from around the world.")
         }
         SignInPromptCard(
           language: language,
@@ -143,7 +144,10 @@ private struct SignInPromptCard: HTML, Sendable {
 
   var body: some HTML {
     if togglesWithSignedInContent {
-      article(.class("detail-card submit-auth-card \(extraClasses)"), .data("auth-guest-card", value: "true")) {
+      article(
+        .class("detail-card submit-auth-card \(extraClasses)"),
+        .data("auth-guest-card", value: "true")
+      ) {
         cardBody
       }
     } else {
@@ -189,12 +193,16 @@ private struct SubmitFormCard: HTML, Sendable {
   let language: AppLanguage
 
   var body: some HTML {
-    article(.id("submit-form-card"), .class("detail-card submit-form-card"), .data("auth-signed-in-card", value: "true"), .hidden) {
+    article(
+      .id("submit-form-card"), .class("detail-card submit-form-card"),
+      .data("auth-signed-in-card", value: "true"), .hidden
+    ) {
       h3 { HTMLText(language == .ja ? "プロポーザル詳細" : "Proposal Details") }
       p(.class("submit-form-intro")) {
-        HTMLText(language == .ja
-          ? "タイトル、概要、スピーカー情報を入力して応募できます。"
-          : "Fill in your talk details and speaker information to submit.")
+        HTMLText(
+          language == .ja
+            ? "タイトル、概要、スピーカー情報を入力して応募できます。"
+            : "Fill in your talk details and speaker information to submit.")
       }
 
       form(.id("submit-form"), .class("submit-form-grid")) {
@@ -219,9 +227,10 @@ private struct ProfileContent: HTML, Sendable {
       div(.class("submit-shell-inner")) {
         h1 { HTMLText(language == .ja ? "プロフィール" : "Profile") }
         p(.class("submit-lead")) {
-          HTMLText(language == .ja
-            ? "スピーカープロフィールを更新して、応募情報に反映できます。"
-            : "Update your speaker profile and keep your submission details current.")
+          HTMLText(
+            language == .ja
+              ? "スピーカープロフィールを更新して、応募情報に反映できます。"
+              : "Update your speaker profile and keep your submission details current.")
         }
         SignInPromptCard(
           language: language,
@@ -233,12 +242,16 @@ private struct ProfileContent: HTML, Sendable {
             : "Your GitHub account is connected. You can manage your speaker profile with this account.",
           togglesWithSignedInContent: true
         )
-        article(.class("detail-card submit-form-card"), .data("auth-signed-in-card", value: "true"), .hidden) {
+        article(
+          .class("detail-card submit-form-card"), .data("auth-signed-in-card", value: "true"),
+          .hidden
+        ) {
           h3 { HTMLText(language == .ja ? "プロフィール情報" : "Profile Details") }
           p(.class("submit-form-intro")) {
-            HTMLText(language == .ja
-              ? "表示名や自己紹介など、CfP で利用するプロフィールを更新できます。"
-              : "Update the profile information used across the CfP experience.")
+            HTMLText(
+              language == .ja
+                ? "表示名や自己紹介など、CfP で利用するプロフィールを更新できます。"
+                : "Update the profile information used across the CfP experience.")
           }
           form(.id("profile-form"), .class("submit-form-grid")) {
             label(.class("form-field")) {
@@ -264,7 +277,11 @@ private struct ProfileContent: HTML, Sendable {
             div(.class("form-field avatar-field submit-form-full")) {
               span(.class("field-label")) { HTMLText(language == .ja ? "アイコンURL" : "Avatar URL") }
               div(.class("avatar-field-row")) {
-                input(.type(.url), .name("avatarURL"), .placeholder(language == .ja ? "https://example.com/avatar.png" : "https://example.com/avatar.png"))
+                input(
+                  .type(.url), .name("avatarURL"),
+                  .placeholder(
+                    language == .ja
+                      ? "https://example.com/avatar.png" : "https://example.com/avatar.png"))
                 div(.class("avatar-preview"), .id("profile-avatar-preview")) {
                   img(
                     .id("profile-avatar-image"),
@@ -295,9 +312,10 @@ private struct MyProposalsContent: HTML, Sendable {
       div(.class("submit-shell-inner")) {
         h1 { HTMLText(language == .ja ? "応募履歴" : "My Proposals") }
         p(.class("submit-lead")) {
-          HTMLText(language == .ja
-            ? "応募したプロポーザルの確認や編集、取り下げができます。"
-            : "Review, edit, or withdraw the proposals linked to your account.")
+          HTMLText(
+            language == .ja
+              ? "応募したプロポーザルの確認や編集、取り下げができます。"
+              : "Review, edit, or withdraw the proposals linked to your account.")
         }
         SignInPromptCard(
           language: language,
@@ -314,9 +332,10 @@ private struct MyProposalsContent: HTML, Sendable {
             p(.id("my-proposals-status"), .class("inline-status"), .hidden) {}
             article(.id("my-proposals-empty"), .class("detail-card empty-state"), .hidden) {
               p {
-                HTMLText(language == .ja
-                  ? "まだプロポーザルはありません。Submit ページから応募できます。"
-                  : "No proposals found yet. You can submit one from the Submit page.")
+                HTMLText(
+                  language == .ja
+                    ? "まだプロポーザルはありません。Submit ページから応募できます。"
+                    : "No proposals found yet. You can submit one from the Submit page.")
               }
             }
             div(.id("my-proposals-list"), .class("proposal-list")) {}
@@ -335,13 +354,19 @@ private struct MyProposalEditorPage: HTML, Sendable {
     section(.id("my-proposals-detail-view"), .hidden) {
       article(.class("detail-card submit-form-card")) {
         div(.class("editor-header-row")) {
-          a(.id("proposal-editor-back-link"), .href(CfPPage.myProposals.path(for: language)), .class("button neutral button-link")) {
+          a(
+            .id("proposal-editor-back-link"), .href(CfPPage.myProposals.path(for: language)),
+            .class("button neutral button-link")
+          ) {
             span(.custom(name: "aria-hidden", value: "true")) { "←" }
           }
           h3 { HTMLText(language == .ja ? "応募内容を編集" : "Edit Proposal") }
         }
         p(.class("submit-form-intro")) {
-          HTMLText(language == .ja ? "内容を更新すると、このアカウントの応募に反映されます。" : "Update the details for this proposal in your account.")
+          HTMLText(
+            language == .ja
+              ? "内容を更新すると、このアカウントの応募に反映されます。"
+              : "Update the details for this proposal in your account.")
         }
         form(.id("proposal-editor-form"), .class("submit-form-grid")) {
           input(.type(.hidden), .name("proposalID"))
@@ -360,8 +385,12 @@ private struct MyProposalEditorPage: HTML, Sendable {
           label(.class("form-field")) {
             span(.class("field-label")) { HTMLText(language == .ja ? "形式" : "Format") }
             select(.name("talkDuration"), .required) {
-              option(.value("20min")) { HTMLText(language == .ja ? "レギュラートーク (20分)" : "Regular Talk (20 min)") }
-              option(.value("LT")) { HTMLText(language == .ja ? "ライトニングトーク (5分)" : "Lightning Talk (5 min)") }
+              option(.value("20min")) {
+                HTMLText(language == .ja ? "レギュラートーク (20分)" : "Regular Talk (20 min)")
+              }
+              option(.value("LT")) {
+                HTMLText(language == .ja ? "ライトニングトーク (5分)" : "Lightning Talk (5 min)")
+              }
               option(.value("workshop")) { HTMLText(language == .ja ? "ワークショップ" : "Workshop") }
             }
           }
@@ -380,7 +409,11 @@ private struct MyProposalEditorPage: HTML, Sendable {
           div(.class("form-field avatar-field submit-form-full")) {
             span(.class("field-label")) { HTMLText(language == .ja ? "アイコンURL" : "Avatar URL") }
             div(.class("avatar-field-row")) {
-              input(.type(.url), .name("iconURL"), .placeholder(language == .ja ? "https://example.com/avatar.png" : "https://example.com/avatar.png"))
+              input(
+                .type(.url), .name("iconURL"),
+                .placeholder(
+                  language == .ja
+                    ? "https://example.com/avatar.png" : "https://example.com/avatar.png"))
               div(.class("avatar-preview")) {
                 img(
                   .id("proposal-avatar-image"),
@@ -391,7 +424,9 @@ private struct MyProposalEditorPage: HTML, Sendable {
             }
           }
           label(.class("form-field submit-form-full")) {
-            span(.class("field-label")) { HTMLText(language == .ja ? "メモ" : "Notes for Organizers") }
+            span(.class("field-label")) {
+              HTMLText(language == .ja ? "メモ" : "Notes for Organizers")
+            }
             textarea(.name("notes"), .custom(name: "rows", value: "4")) {}
           }
           EditWorkshopFields(language: language)
@@ -414,7 +449,10 @@ private struct EditWorkshopFields: HTML, Sendable {
   let language: AppLanguage
 
   var body: some HTML {
-    div(.id("speaker-edit-workshop-section"), .class("submit-workshop-section submit-form-full"), .hidden) {
+    div(
+      .id("speaker-edit-workshop-section"), .class("submit-workshop-section submit-form-full"),
+      .hidden
+    ) {
       h4 { HTMLText(language == .ja ? "ワークショップ詳細" : "Workshop Details") }
       label(.class("form-field")) {
         span(.class("field-label")) { HTMLText(language == .ja ? "言語" : "Language") }
@@ -426,7 +464,9 @@ private struct EditWorkshopFields: HTML, Sendable {
       }
       label(.class("form-field")) {
         span(.class("field-label")) { HTMLText(language == .ja ? "講師数" : "Number of Tutors") }
-        input(.type(.number), .name("workshopNumberOfTutors"), .custom(name: "min", value: "1"), .value("1"))
+        input(
+          .type(.number), .name("workshopNumberOfTutors"), .custom(name: "min", value: "1"),
+          .value("1"))
       }
       label(.class("form-field submit-form-full")) {
         span(.class("field-label")) { HTMLText(language == .ja ? "学べること" : "Key Takeaways") }
@@ -445,11 +485,15 @@ private struct EditWorkshopFields: HTML, Sendable {
         textarea(.name("workshopParticipantRequirements"), .custom(name: "rows", value: "3")) {}
       }
       label(.class("form-field submit-form-full")) {
-        span(.class("field-label")) { HTMLText(language == .ja ? "必要なソフトウェア" : "Required Software") }
+        span(.class("field-label")) {
+          HTMLText(language == .ja ? "必要なソフトウェア" : "Required Software")
+        }
         textarea(.name("workshopRequiredSoftware"), .custom(name: "rows", value: "3")) {}
       }
       label(.class("form-field submit-form-full")) {
-        span(.class("field-label")) { HTMLText(language == .ja ? "ネットワーク要件" : "Network Requirements") }
+        span(.class("field-label")) {
+          HTMLText(language == .ja ? "ネットワーク要件" : "Network Requirements")
+        }
         textarea(.name("workshopNetworkRequirements"), .custom(name: "rows", value: "3")) {}
       }
       label(.class("form-field submit-form-full")) {
@@ -466,10 +510,22 @@ private struct EditWorkshopFields: HTML, Sendable {
       }
       div(.class("submit-form-full workshop-facilities")) {
         span(.class("field-label")) { HTMLText(language == .ja ? "必要設備" : "Required Facilities") }
-        label { input(.type(.checkbox), .name("workshopFacilityProjector")); HTMLText(language == .ja ? "プロジェクター" : "Projector") }
-        label { input(.type(.checkbox), .name("workshopFacilityMicrophone")); HTMLText(language == .ja ? "マイク" : "Microphone") }
-        label { input(.type(.checkbox), .name("workshopFacilityWhiteboard")); HTMLText(language == .ja ? "ホワイトボード" : "Whiteboard") }
-        label { input(.type(.checkbox), .name("workshopFacilityPowerStrips")); HTMLText(language == .ja ? "電源タップ" : "Power Strips") }
+        label {
+          input(.type(.checkbox), .name("workshopFacilityProjector"))
+          HTMLText(language == .ja ? "プロジェクター" : "Projector")
+        }
+        label {
+          input(.type(.checkbox), .name("workshopFacilityMicrophone"))
+          HTMLText(language == .ja ? "マイク" : "Microphone")
+        }
+        label {
+          input(.type(.checkbox), .name("workshopFacilityWhiteboard"))
+          HTMLText(language == .ja ? "ホワイトボード" : "Whiteboard")
+        }
+        label {
+          input(.type(.checkbox), .name("workshopFacilityPowerStrips"))
+          HTMLText(language == .ja ? "電源タップ" : "Power Strips")
+        }
       }
       label(.class("form-field submit-form-full")) {
         span(.class("field-label")) { HTMLText(language == .ja ? "その他設備" : "Other Facilities") }
@@ -489,9 +545,10 @@ private struct FeedbackContent: HTML, Sendable {
       div(.class("submit-shell-inner")) {
         h1 { HTMLText(language == .ja ? "フィードバック" : "Feedback") }
         p(.class("submit-lead")) {
-          HTMLText(language == .ja
-            ? "あなたのセッションに届いたフィードバックを確認できます。"
-            : "Review feedback submitted for your accepted sessions.")
+          HTMLText(
+            language == .ja
+              ? "あなたのセッションに届いたフィードバックを確認できます。"
+              : "Review feedback submitted for your accepted sessions.")
         }
         SignInPromptCard(
           language: language,
@@ -512,9 +569,10 @@ private struct FeedbackContent: HTML, Sendable {
           p(.id("feedback-status"), .class("inline-status"), .hidden) {}
           article(.id("feedback-empty"), .class("detail-card empty-state"), .hidden) {
             p {
-              HTMLText(language == .ja
-                ? "まだフィードバックは届いていません。"
-                : "No feedback has been submitted for your talks yet.")
+              HTMLText(
+                language == .ja
+                  ? "まだフィードバックは届いていません。"
+                  : "No feedback has been submitted for your talks yet.")
             }
           }
           div(.id("feedback-list"), .class("proposal-list")) {}
@@ -535,8 +593,12 @@ private struct SubmitBasicFields: HTML, Sendable {
     label(.class("form-field")) {
       span(.class("field-label")) { HTMLText(language == .ja ? "形式" : "Format") }
       select(.name("talkDuration"), .required) {
-        option(.value("20min")) { HTMLText(language == .ja ? "レギュラートーク (20分)" : "Regular Talk (20 min)") }
-        option(.value("LT")) { HTMLText(language == .ja ? "ライトニングトーク (5分)" : "Lightning Talk (5 min)") }
+        option(.value("20min")) {
+          HTMLText(language == .ja ? "レギュラートーク (20分)" : "Regular Talk (20 min)")
+        }
+        option(.value("LT")) {
+          HTMLText(language == .ja ? "ライトニングトーク (5分)" : "Lightning Talk (5 min)")
+        }
         option(.value("workshop")) { HTMLText(language == .ja ? "ワークショップ" : "Workshop") }
       }
     }
@@ -567,7 +629,10 @@ private struct SubmitBasicFields: HTML, Sendable {
     div(.class("form-field avatar-field submit-form-full")) {
       span(.class("field-label")) { HTMLText(language == .ja ? "アイコンURL" : "Avatar URL") }
       div(.class("avatar-field-row")) {
-        input(.type(.url), .name("iconURL"), .placeholder(language == .ja ? "https://example.com/avatar.png" : "https://example.com/avatar.png"))
+        input(
+          .type(.url), .name("iconURL"),
+          .placeholder(
+            language == .ja ? "https://example.com/avatar.png" : "https://example.com/avatar.png"))
         div(.class("avatar-preview"), .id("submit-avatar-preview")) {
           img(
             .id("submit-avatar-image"),
@@ -588,7 +653,8 @@ private struct SubmitWorkshopFields: HTML, Sendable {
   let language: AppLanguage
 
   var body: some HTML {
-    div(.id("submit-workshop-section"), .class("submit-workshop-section submit-form-full"), .hidden) {
+    div(.id("submit-workshop-section"), .class("submit-workshop-section submit-form-full"), .hidden)
+    {
       h4 { HTMLText(language == .ja ? "ワークショップ詳細" : "Workshop Details") }
       label(.class("form-field")) {
         span(.class("field-label")) { HTMLText(language == .ja ? "言語" : "Language") }
@@ -600,7 +666,9 @@ private struct SubmitWorkshopFields: HTML, Sendable {
       }
       label(.class("form-field")) {
         span(.class("field-label")) { HTMLText(language == .ja ? "講師数" : "Number of Tutors") }
-        input(.type(.number), .name("workshopNumberOfTutors"), .custom(name: "min", value: "1"), .value("1"))
+        input(
+          .type(.number), .name("workshopNumberOfTutors"), .custom(name: "min", value: "1"),
+          .value("1"))
       }
       label(.class("form-field submit-form-full")) {
         span(.class("field-label")) { HTMLText(language == .ja ? "学べること" : "Key Takeaways") }
@@ -619,11 +687,15 @@ private struct SubmitWorkshopFields: HTML, Sendable {
         textarea(.name("workshopParticipantRequirements"), .custom(name: "rows", value: "3")) {}
       }
       label(.class("form-field submit-form-full")) {
-        span(.class("field-label")) { HTMLText(language == .ja ? "必要なソフトウェア" : "Required Software") }
+        span(.class("field-label")) {
+          HTMLText(language == .ja ? "必要なソフトウェア" : "Required Software")
+        }
         textarea(.name("workshopRequiredSoftware"), .custom(name: "rows", value: "3")) {}
       }
       label(.class("form-field submit-form-full")) {
-        span(.class("field-label")) { HTMLText(language == .ja ? "ネットワーク要件" : "Network Requirements") }
+        span(.class("field-label")) {
+          HTMLText(language == .ja ? "ネットワーク要件" : "Network Requirements")
+        }
         textarea(.name("workshopNetworkRequirements"), .custom(name: "rows", value: "3")) {}
       }
       label(.class("form-field submit-form-full")) {
@@ -640,10 +712,22 @@ private struct SubmitWorkshopFields: HTML, Sendable {
       }
       div(.class("submit-form-full workshop-facilities")) {
         span(.class("field-label")) { HTMLText(language == .ja ? "必要設備" : "Required Facilities") }
-        label { input(.type(.checkbox), .name("workshopFacilityProjector")); HTMLText(language == .ja ? "プロジェクター" : "Projector") }
-        label { input(.type(.checkbox), .name("workshopFacilityMicrophone")); HTMLText(language == .ja ? "マイク" : "Microphone") }
-        label { input(.type(.checkbox), .name("workshopFacilityWhiteboard")); HTMLText(language == .ja ? "ホワイトボード" : "Whiteboard") }
-        label { input(.type(.checkbox), .name("workshopFacilityPowerStrips")); HTMLText(language == .ja ? "電源タップ" : "Power Strips") }
+        label {
+          input(.type(.checkbox), .name("workshopFacilityProjector"))
+          HTMLText(language == .ja ? "プロジェクター" : "Projector")
+        }
+        label {
+          input(.type(.checkbox), .name("workshopFacilityMicrophone"))
+          HTMLText(language == .ja ? "マイク" : "Microphone")
+        }
+        label {
+          input(.type(.checkbox), .name("workshopFacilityWhiteboard"))
+          HTMLText(language == .ja ? "ホワイトボード" : "Whiteboard")
+        }
+        label {
+          input(.type(.checkbox), .name("workshopFacilityPowerStrips"))
+          HTMLText(language == .ja ? "電源タップ" : "Power Strips")
+        }
       }
       label(.class("form-field submit-form-full")) {
         span(.class("field-label")) { HTMLText(language == .ja ? "その他設備" : "Other Facilities") }
@@ -663,9 +747,11 @@ private struct WorkshopsContent: HTML, Sendable {
       div(.class("workshops-shell-inner")) {
         h1 { HTMLText(language == .ja ? "ワークショップ" : "Workshops") }
         p(.class("workshops-lead")) {
-          HTMLText(language == .ja
-            ? "try! Swift Tokyo 2026 のワークショップに応募できます。第3希望まで選択でき、割り当ては抽選で決定されます。"
-            : "Apply for try! Swift Tokyo 2026 workshops. You can select up to 3 preferences, and assignments are determined by lottery.")
+          HTMLText(
+            language == .ja
+              ? "try! Swift Tokyo のワークショップに応募できます。第3希望まで選択でき、割り当ては抽選で決定されます。"
+              : "Apply for try! Swift Tokyo workshops. You can select up to 3 preferences, and assignments are determined by lottery."
+          )
         }
 
         p(.id("workshops-status"), .class("status-banner"), .hidden) {}
@@ -676,8 +762,15 @@ private struct WorkshopsContent: HTML, Sendable {
 
         section(.id("workshop-modal"), .class("workshop-modal"), .hidden) {
           div(.class("workshop-modal-backdrop"), .data("workshop-modal-close", value: "true")) {}
-          div(.class("workshop-modal-dialog"), .custom(name: "role", value: "dialog"), .custom(name: "aria-modal", value: "true")) {
-            button(.type(.button), .class("workshop-modal-close"), .data("workshop-modal-close", value: "true"), .custom(name: "aria-label", value: language == .ja ? "閉じる" : "Close")) { "×" }
+          div(
+            .class("workshop-modal-dialog"), .custom(name: "role", value: "dialog"),
+            .custom(name: "aria-modal", value: "true")
+          ) {
+            button(
+              .type(.button), .class("workshop-modal-close"),
+              .data("workshop-modal-close", value: "true"),
+              .custom(name: "aria-label", value: language == .ja ? "閉じる" : "Close")
+            ) { "×" }
             div(.id("workshop-modal-body"), .class("workshop-modal-body")) {}
           }
         }
@@ -686,15 +779,21 @@ private struct WorkshopsContent: HTML, Sendable {
           article(.id("workshop-apply"), .class("detail-card workshop-tool-card")) {
             h3 { HTMLText(language == .ja ? "ワークショップに応募する" : "Apply for Workshops") }
             p {
-              HTMLText(language == .ja
-                ? "チケット購入時に使用したメールアドレスを入力して、応募手続きを開始してください。"
-                : "Enter the email address you used for your ticket to begin your workshop application.")
+              HTMLText(
+                language == .ja
+                  ? "チケット購入時に使用したメールアドレスを入力して、応募手続きを開始してください。"
+                  : "Enter the email address you used for your ticket to begin your workshop application."
+              )
             }
 
             form(.id("workshop-verify-form"), .class("workshop-form")) {
               label(.class("form-field")) {
-                span(.class("field-label")) { HTMLText(language == .ja ? "メールアドレス" : "Email Address") }
-                input(.type(.email), .name("email"), .required, .placeholder(language == .ja ? "you@example.com" : "you@example.com"))
+                span(.class("field-label")) {
+                  HTMLText(language == .ja ? "メールアドレス" : "Email Address")
+                }
+                input(
+                  .type(.email), .name("email"), .required,
+                  .placeholder(language == .ja ? "you@example.com" : "you@example.com"))
               }
               div(.class("form-actions")) {
                 button(.type(.submit), .class("button primary")) {
@@ -708,7 +807,9 @@ private struct WorkshopsContent: HTML, Sendable {
             form(.id("workshop-apply-form"), .class("workshop-form"), .hidden) {
               input(.type(.hidden), .name("verifyToken"))
               label(.class("form-field")) {
-                span(.class("field-label")) { HTMLText(language == .ja ? "参加者名" : "Applicant Name") }
+                span(.class("field-label")) {
+                  HTMLText(language == .ja ? "参加者名" : "Applicant Name")
+                }
                 input(.type(.text), .name("applicantName"), .required)
               }
               label(.class("form-field")) {
@@ -734,15 +835,21 @@ private struct WorkshopsContent: HTML, Sendable {
           article(.id("workshop-status"), .class("detail-card workshop-tool-card")) {
             h3 { HTMLText(language == .ja ? "応募状況を確認する" : "Check Application Status") }
             p {
-              HTMLText(language == .ja
-                ? "メールアドレスを入力すると、現在の応募状況や割り当て結果を確認できます。"
-                : "Enter your email address to check your current workshop application or assignment.")
+              HTMLText(
+                language == .ja
+                  ? "メールアドレスを入力すると、現在の応募状況や割り当て結果を確認できます。"
+                  : "Enter your email address to check your current workshop application or assignment."
+              )
             }
 
             form(.id("workshop-status-form"), .class("workshop-form")) {
               label(.class("form-field")) {
-                span(.class("field-label")) { HTMLText(language == .ja ? "メールアドレス" : "Email Address") }
-                input(.type(.email), .name("email"), .required, .placeholder(language == .ja ? "you@example.com" : "you@example.com"))
+                span(.class("field-label")) {
+                  HTMLText(language == .ja ? "メールアドレス" : "Email Address")
+                }
+                input(
+                  .type(.email), .name("email"), .required,
+                  .placeholder(language == .ja ? "you@example.com" : "you@example.com"))
               }
               div(.class("form-actions")) {
                 button(.type(.submit), .class("button primary")) {
@@ -766,12 +873,14 @@ private struct HomeLanding: HTML, Sendable {
   var body: some HTML {
     section(.class("hero-card hero-landing")) {
       div(.class("section-inner")) {
-        p(.class("eyebrow")) { "try! Swift Tokyo 2026" }
+        p(.class("eyebrow")) { "try! Swift Tokyo CfP" }
         h1 { HTMLText(language == .ja ? "プロポーザル募集" : "Call for Proposals") }
         p(.class("hero-copy")) {
-          HTMLText(language == .ja
-            ? "あなたのSwiftの知識を世界中の開発者と共有しませんか？try! Swift Tokyo 2026でトークプロポーザルを提出してください！"
-            : "Share your Swift expertise with developers from around the world. Submit your talk proposal for try! Swift Tokyo 2026!")
+          HTMLText(
+            language == .ja
+              ? "あなたのSwiftの知識を世界中の開発者と共有しませんか？try! Swift Tokyo の各イベントにトークプロポーザルを提出してください！"
+              : "Share your Swift expertise with developers from around the world. Submit your talk proposal to try! Swift Tokyo events!"
+          )
         }
         div(.class("hero-actions")) {
           a(.href(CfPPage.submit.path(for: language)), .class("button primary button-link")) {
@@ -789,18 +898,9 @@ private struct HomeLanding: HTML, Sendable {
 
     section(.class("content-section")) {
       div(.class("section-inner")) {
-        h2 { HTMLText(language == .ja ? "重要な日程" : "Important Dates") }
-        div(.class("card-grid dates-grid")) {
-          for item in importantDates {
-            article(.class("detail-card center-card")) {
-              h5 { HTMLText(item.title) }
-              p(.class("date-copy")) { HTMLText(item.date) }
-              if item.emoji != nil {
-                p(.class("date-emoji")) { HTMLText(item.emoji!) }
-              }
-            }
-          }
-        }
+        h2 { HTMLText(language == .ja ? "募集中のイベント" : "Open Calls for Proposals") }
+        p(.id("cfp-events-status"), .class("inline-status events-status"), .hidden) {}
+        div(.id("cfp-events-list"), .class("card-grid events-grid")) {}
       }
     }
 
@@ -840,44 +940,43 @@ private struct HomeLanding: HTML, Sendable {
 
     section(.class("cta-card")) {
       div(.class("cta-card-inner")) {
-      h2 { HTMLText(language == .ja ? "あなたの知識を共有しませんか？" : "Ready to Share Your Knowledge?") }
-      p {
-        HTMLText(language == .ja
-          ? "経験レベルに関係なく、すべてのスピーカーを歓迎します。初めての登壇者の方も、ぜひご応募ください！"
-          : "We welcome speakers of all experience levels. First-time speakers are encouraged to apply!")
-      }
-      a(.href(CfPPage.submit.path(for: language)), .class("button primary button-link")) {
-        HTMLText(language == .ja ? "プロポーザルを提出する" : "Submit Your Proposal")
-      }
+        h2 { HTMLText(language == .ja ? "あなたの知識を共有しませんか？" : "Ready to Share Your Knowledge?") }
+        p {
+          HTMLText(
+            language == .ja
+              ? "経験レベルに関係なく、すべてのスピーカーを歓迎します。初めての登壇者の方も、ぜひご応募ください！"
+              : "We welcome speakers of all experience levels. First-time speakers are encouraged to apply!"
+          )
+        }
+        a(.href(CfPPage.submit.path(for: language)), .class("button primary button-link")) {
+          HTMLText(language == .ja ? "プロポーザルを提出する" : "Submit Your Proposal")
+        }
       }
     }
   }
 
-  private var importantDates: [(title: String, date: String, emoji: String?)] {
+  private var talkFormats: [(emoji: String?, title: String, duration: String, description: String)]
+  {
     language == .ja
       ? [
-        ("CfP開始", "2026年1月15日", "📅"),
-        ("応募締切", "2026年2月1日", "⏰"),
-        ("結果発表", "2026年2月8日", "📣"),
-        ("カンファレンス", "2026年4月12-14日", "🎤"),
+        (
+          "🎯", "レギュラートーク", "20分",
+          "特定のトピックについて詳しく解説し、具体的な例やライブデモを交えてお話しください。Swiftの開発に関する包括的な知識を共有するのに最適です。"
+        ),
+        (
+          "⚡", "ライトニングトーク", "5分",
+          "1つのアイデア、ヒント、ツールに焦点を当てた短くて集中したプレゼンテーションです。初めての登壇者や、ちょっとしたアイデアの共有に最適です！"
+        ),
       ]
       : [
-        ("CfP Opens", "January 15, 2026", "📅"),
-        ("Submission Deadline", "February 1, 2026", "⏰"),
-        ("Notifications", "February 8, 2026", "📣"),
-        ("Conference", "April 12-14, 2026", "🎤"),
-      ]
-  }
-
-  private var talkFormats: [(emoji: String?, title: String, duration: String, description: String)] {
-    language == .ja
-      ? [
-        ("🎯", "レギュラートーク", "20分", "特定のトピックについて詳しく解説し、具体的な例やライブデモを交えてお話しください。Swiftの開発に関する包括的な知識を共有するのに最適です。"),
-        ("⚡", "ライトニングトーク", "5分", "1つのアイデア、ヒント、ツールに焦点を当てた短くて集中したプレゼンテーションです。初めての登壇者や、ちょっとしたアイデアの共有に最適です！"),
-      ]
-      : [
-        ("🎯", "Regular Talk", "20 minutes", "Deep dive into a specific topic with detailed examples and live demos. Perfect for sharing comprehensive knowledge about Swift development."),
-        ("⚡", "Lightning Talk", "5 minutes", "Quick, focused presentation on a single idea, tip, or tool. Great for first-time speakers or sharing quick wins!"),
+        (
+          "🎯", "Regular Talk", "20 minutes",
+          "Deep dive into a specific topic with detailed examples and live demos. Perfect for sharing comprehensive knowledge about Swift development."
+        ),
+        (
+          "⚡", "Lightning Talk", "5 minutes",
+          "Quick, focused presentation on a single idea, tip, or tool. Great for first-time speakers or sharing quick wins!"
+        ),
       ]
   }
 
@@ -909,9 +1008,11 @@ private struct GuidelinesContent: HTML, Sendable {
     section(.class("hero-card")) {
       h1 { HTMLText(language == .ja ? "応募ガイドライン" : "Submission Guidelines") }
       p(.id("page-description")) {
-        HTMLText(language == .ja
-          ? "try! Swift Tokyo 2026にトークプロポーザルを提出するために必要な情報をまとめました。"
-          : "Everything you need to know about submitting a talk proposal for try! Swift Tokyo 2026.")
+        HTMLText(
+          language == .ja
+            ? "try! Swift Tokyo にトークプロポーザルを提出するために必要な情報をまとめました。"
+            : "Everything you need to know about submitting a talk proposal for try! Swift Tokyo."
+        )
       }
     }
 
@@ -950,93 +1051,158 @@ private struct GuidelinesContent: HTML, Sendable {
     }
   }
 
-  private var sections: [(title: String, intro: String?, bullets: [String], items: [(title: String, copy: String)])] {
+  private var sections:
+    [(title: String, intro: String?, bullets: [String], items: [(title: String, copy: String)])]
+  {
     if language == .ja {
       return [
-        ("私たちが求めているもの", nil, [
-          "他の主要なカンファレンスで発表されていないオリジナルコンテンツ",
-          "参加者が実際の仕事に活かせる実践的な知識",
-          "聴衆にとって明確な学習成果",
-          "デモを含む、よく構成されたプレゼンテーション",
-          "Swiftコミュニティに関連するトピック",
-        ], []),
-        ("トーク形式", nil, [], [
-          ("レギュラートーク（20分）", "トピックを深く掘り下げる包括的なセッションです。コンテキスト、例、重要なポイントを含める時間があります。ライブコーディングやデモも歓迎します！"),
-          ("ライトニングトーク（5分）", "1つのコンセプト、ツール、またはヒントをカバーする、焦点を絞った短いプレゼンテーションです。新しいアイデアの紹介や、ちょっとした発見の共有に最適です。"),
-        ]),
-        ("プロポーザルの要件", nil, [], [
-          ("タイトル", "トーク内容を正確に表す、明確で説明的なタイトル。"),
-          ("概要", "トークが採択された場合に公開される2〜3文の要約。参加者が何を学べるかを説明してください。"),
-          ("トークの詳細", "レビュアー向けのトークの詳細な説明。アウトライン、重要なポイント、予定しているデモなどを含めてください。これはあなたのビジョンを理解するのに役立ちます。"),
-          ("スピーカー自己紹介", "あなたについて教えてください！経歴、経験、このトピックに興味を持った理由などを書いてください。"),
-          ("備考（任意）", "主催者への追加情報。アクセシビリティの要件、スケジュールの制約、以前にこのトークを行ったことがあるかどうかなど。"),
-        ]),
-        ("選考基準", "レビュー委員会は以下の基準でプロポーザルを評価します：", [
-          "Swiftコミュニティへの関連性",
-          "コンテンツの独自性とユニークさ",
-          "プロポーザルと学習成果の明確さ",
-          "スピーカーの専門知識とプレゼンテーション能力",
-          "カンファレンスプログラム全体でのトピックの多様性",
-        ], []),
-        ("素晴らしいプロポーザルのためのヒント", nil, [
-          "参加者が何を学ぶか具体的に書く",
-          "明確なアウトラインや構成を含める",
-          "デモやライブコーディングの予定があれば記載する",
-          "トピックへの情熱を示す",
-          "提出前によく校正する",
-          "複数のプロポーザルを提出することをためらわない！",
-        ], []),
-        ("スピーカー特典", nil, [
-          "カンファレンスチケット無料",
-          "他のスピーカーや主催者とのスピーカーディナー",
-          "海外からのスピーカーには渡航サポートあり",
-          "トークのプロフェッショナルなビデオ撮影",
-          "世界中のSwift開発者とのネットワーキングの機会",
-        ], []),
+        (
+          "私たちが求めているもの", nil,
+          [
+            "他の主要なカンファレンスで発表されていないオリジナルコンテンツ",
+            "参加者が実際の仕事に活かせる実践的な知識",
+            "聴衆にとって明確な学習成果",
+            "デモを含む、よく構成されたプレゼンテーション",
+            "Swiftコミュニティに関連するトピック",
+          ], []
+        ),
+        (
+          "トーク形式", nil, [],
+          [
+            (
+              "レギュラートーク（20分）",
+              "トピックを深く掘り下げる包括的なセッションです。コンテキスト、例、重要なポイントを含める時間があります。ライブコーディングやデモも歓迎します！"
+            ),
+            (
+              "ライトニングトーク（5分）",
+              "1つのコンセプト、ツール、またはヒントをカバーする、焦点を絞った短いプレゼンテーションです。新しいアイデアの紹介や、ちょっとした発見の共有に最適です。"
+            ),
+          ]
+        ),
+        (
+          "プロポーザルの要件", nil, [],
+          [
+            ("タイトル", "トーク内容を正確に表す、明確で説明的なタイトル。"),
+            ("概要", "トークが採択された場合に公開される2〜3文の要約。参加者が何を学べるかを説明してください。"),
+            (
+              "トークの詳細",
+              "レビュアー向けのトークの詳細な説明。アウトライン、重要なポイント、予定しているデモなどを含めてください。これはあなたのビジョンを理解するのに役立ちます。"
+            ),
+            ("スピーカー自己紹介", "あなたについて教えてください！経歴、経験、このトピックに興味を持った理由などを書いてください。"),
+            ("備考（任意）", "主催者への追加情報。アクセシビリティの要件、スケジュールの制約、以前にこのトークを行ったことがあるかどうかなど。"),
+          ]
+        ),
+        (
+          "選考基準", "レビュー委員会は以下の基準でプロポーザルを評価します：",
+          [
+            "Swiftコミュニティへの関連性",
+            "コンテンツの独自性とユニークさ",
+            "プロポーザルと学習成果の明確さ",
+            "スピーカーの専門知識とプレゼンテーション能力",
+            "カンファレンスプログラム全体でのトピックの多様性",
+          ], []
+        ),
+        (
+          "素晴らしいプロポーザルのためのヒント", nil,
+          [
+            "参加者が何を学ぶか具体的に書く",
+            "明確なアウトラインや構成を含める",
+            "デモやライブコーディングの予定があれば記載する",
+            "トピックへの情熱を示す",
+            "提出前によく校正する",
+            "複数のプロポーザルを提出することをためらわない！",
+          ], []
+        ),
+        (
+          "スピーカー特典", nil,
+          [
+            "カンファレンスチケット無料",
+            "他のスピーカーや主催者とのスピーカーディナー",
+            "海外からのスピーカーには渡航サポートあり",
+            "トークのプロフェッショナルなビデオ撮影",
+            "世界中のSwift開発者とのネットワーキングの機会",
+          ], []
+        ),
       ]
     }
 
     return [
-      ("What We're Looking For", nil, [
-        "Original content that hasn't been presented at other major conferences",
-        "Practical knowledge that attendees can apply in their work",
-        "Clear learning outcomes for the audience",
-        "Well-structured presentations with demos when applicable",
-        "Topics relevant to the Swift community",
-      ], []),
-      ("Talk Formats", nil, [], [
-        ("Regular Talk (20 minutes)", "A comprehensive session covering a topic in depth. Include time for context, examples, and key takeaways. Live coding and demos are welcome!"),
-        ("Lightning Talk (5 minutes)", "A focused, fast-paced presentation covering a single concept, tool, or tip. Perfect for sharing quick wins or introducing new ideas."),
-      ]),
-      ("Proposal Requirements", nil, [], [
-        ("Title", "A clear, descriptive title that accurately represents your talk content."),
-        ("Abstract", "A 2-3 sentence summary that will be shown publicly if your talk is accepted. This should explain what attendees will learn."),
-        ("Talk Details", "A detailed description of your talk for reviewers. Include your outline, key points, and any demos you plan to show. This helps us understand your vision."),
-        ("Speaker Bio", "Tell us about yourself! Your background, experience, and what makes you excited about this topic."),
-        ("Notes (Optional)", "Any additional information for organizers, such as accessibility needs, scheduling constraints, or whether you've given this talk before."),
-      ]),
-      ("Selection Criteria", "Our review committee evaluates proposals based on:", [
-        "Relevance to the Swift community",
-        "Originality and uniqueness of content",
-        "Clarity of proposal and learning outcomes",
-        "Speaker's expertise and presentation ability",
-        "Diversity of topics across the conference program",
-      ], []),
-      ("Tips for a Great Proposal", nil, [
-        "Be specific about what attendees will learn",
-        "Include a clear outline or structure",
-        "Mention any demos or live coding",
-        "Show your passion for the topic",
-        "Proofread your submission carefully",
-        "Don't be afraid to submit multiple proposals!",
-      ], []),
-      ("Speaker Benefits", nil, [
-        "Free conference ticket",
-        "Speaker dinner with other speakers and organizers",
-        "Travel support available for international speakers",
-        "Professional video recording of your talk",
-        "Networking opportunities with Swift developers worldwide",
-      ], []),
+      (
+        "What We're Looking For", nil,
+        [
+          "Original content that hasn't been presented at other major conferences",
+          "Practical knowledge that attendees can apply in their work",
+          "Clear learning outcomes for the audience",
+          "Well-structured presentations with demos when applicable",
+          "Topics relevant to the Swift community",
+        ], []
+      ),
+      (
+        "Talk Formats", nil, [],
+        [
+          (
+            "Regular Talk (20 minutes)",
+            "A comprehensive session covering a topic in depth. Include time for context, examples, and key takeaways. Live coding and demos are welcome!"
+          ),
+          (
+            "Lightning Talk (5 minutes)",
+            "A focused, fast-paced presentation covering a single concept, tool, or tip. Perfect for sharing quick wins or introducing new ideas."
+          ),
+        ]
+      ),
+      (
+        "Proposal Requirements", nil, [],
+        [
+          ("Title", "A clear, descriptive title that accurately represents your talk content."),
+          (
+            "Abstract",
+            "A 2-3 sentence summary that will be shown publicly if your talk is accepted. This should explain what attendees will learn."
+          ),
+          (
+            "Talk Details",
+            "A detailed description of your talk for reviewers. Include your outline, key points, and any demos you plan to show. This helps us understand your vision."
+          ),
+          (
+            "Speaker Bio",
+            "Tell us about yourself! Your background, experience, and what makes you excited about this topic."
+          ),
+          (
+            "Notes (Optional)",
+            "Any additional information for organizers, such as accessibility needs, scheduling constraints, or whether you've given this talk before."
+          ),
+        ]
+      ),
+      (
+        "Selection Criteria", "Our review committee evaluates proposals based on:",
+        [
+          "Relevance to the Swift community",
+          "Originality and uniqueness of content",
+          "Clarity of proposal and learning outcomes",
+          "Speaker's expertise and presentation ability",
+          "Diversity of topics across the conference program",
+        ], []
+      ),
+      (
+        "Tips for a Great Proposal", nil,
+        [
+          "Be specific about what attendees will learn",
+          "Include a clear outline or structure",
+          "Mention any demos or live coding",
+          "Show your passion for the topic",
+          "Proofread your submission carefully",
+          "Don't be afraid to submit multiple proposals!",
+        ], []
+      ),
+      (
+        "Speaker Benefits", nil,
+        [
+          "Free conference ticket",
+          "Speaker dinner with other speakers and organizers",
+          "Travel support available for international speakers",
+          "Professional video recording of your talk",
+          "Networking opportunities with Swift developers worldwide",
+        ], []
+      ),
     ]
   }
 }

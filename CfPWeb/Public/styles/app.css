@@ -920,6 +920,90 @@ body.modal-open {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.events-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.events-status {
+  display: block;
+  margin: 0 0 16px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.event-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+
+.event-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.event-card-header h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  flex: 1 1 auto;
+}
+
+.event-status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: rgba(33, 150, 83, 0.12);
+  color: #1f7a3a;
+  white-space: nowrap;
+}
+
+.event-description {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.event-meta {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.event-meta-row {
+  display: grid;
+  grid-template-columns: minmax(0, 90px) minmax(0, 1fr);
+  gap: 8px;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.event-meta-row dt {
+  margin: 0;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.event-meta-row dd {
+  margin: 0;
+  color: inherit;
+}
+
+.event-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+
 .detail-card,
 .status-card {
   background: #fff;
@@ -1151,7 +1235,8 @@ body.modal-open {
   }
 
   .dates-grid,
-  .info-grid {
+  .info-grid,
+  .events-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1255,7 +1340,8 @@ body.modal-open {
   }
 
   .dates-grid,
-  .info-grid {
+  .info-grid,
+  .events-grid {
     grid-template-columns: 1fr;
   }
 }
