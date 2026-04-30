@@ -2519,8 +2519,10 @@
     if (!iso) return "";
     var date = new Date(iso);
     if (isNaN(date.getTime())) return "";
-    return date.getUTCFullYear() + "-" + pad2(date.getUTCMonth() + 1) + "-" + pad2(date.getUTCDate())
+    var base = date.getUTCFullYear() + "-" + pad2(date.getUTCMonth() + 1) + "-" + pad2(date.getUTCDate())
       + "T" + pad2(date.getUTCHours()) + ":" + pad2(date.getUTCMinutes());
+    var seconds = date.getUTCSeconds();
+    return seconds === 0 ? base : base + ":" + pad2(seconds);
   }
 
   function conferenceDateInputToIso(value) {
@@ -2530,18 +2532,21 @@
     return match[1] + "-" + match[2] + "-" + match[3] + "T00:00:00Z";
   }
 
-  function conferenceUTCDatetimeToIso(value) {
-    if (!value) return null;
+  // Returns { ok: true, value: <iso string|null> } when the input is empty or
+  // matches the strict UTC format, and { ok: false } when a non-empty value
+  // can't be interpreted unambiguously. Falling back to Date parsing here
+  // would silently treat the input as local time and shift the saved instant.
+  function parseConferenceUTCDatetime(value) {
+    if (value === undefined || value === null) return { ok: true, value: null };
     var trimmed = String(value).trim();
-    if (!trimmed) return null;
+    if (!trimmed) return { ok: true, value: null };
     var match = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?$/);
-    if (match) {
-      var seconds = match[6] || "00";
-      return match[1] + "-" + match[2] + "-" + match[3] + "T" + match[4] + ":" + match[5] + ":" + seconds + "Z";
-    }
-    var fallback = new Date(trimmed);
-    if (!isNaN(fallback.getTime())) return fallback.toISOString();
-    return null;
+    if (!match) return { ok: false };
+    var seconds = match[6] || "00";
+    return {
+      ok: true,
+      value: match[1] + "-" + match[2] + "-" + match[3] + "T" + match[4] + ":" + match[5] + ":" + seconds + "Z"
+    };
   }
 
   function showOrganizerConferenceForm(conference) {
@@ -2605,26 +2610,49 @@
 
   function readOrganizerConferenceForm(form) {
     var year = parseInt(form.elements.year.value, 10);
+    var deadlineParsed = parseConferenceUTCDatetime(form.elements.deadline.value);
     return {
-      path: form.elements.path.value.trim(),
-      displayName: form.elements.displayName.value.trim(),
-      descriptionEn: (form.elements.descriptionEn.value || "").trim() || null,
-      descriptionJa: (form.elements.descriptionJa.value || "").trim() || null,
-      year: isNaN(year) ? null : year,
-      isOpen: form.elements.isOpen.checked,
-      isPublished: form.elements.isPublished.checked,
-      deadline: conferenceUTCDatetimeToIso(form.elements.deadline.value),
-      startDate: conferenceDateInputToIso(form.elements.startDate.value),
-      endDate: conferenceDateInputToIso(form.elements.endDate.value),
-      location: (form.elements.location.value || "").trim() || null,
-      websiteURL: (form.elements.websiteURL.value || "").trim() || null
+      ok: deadlineParsed.ok,
+      payload: {
+        path: form.elements.path.value.trim(),
+        displayName: form.elements.displayName.value.trim(),
+        descriptionEn: (form.elements.descriptionEn.value || "").trim() || null,
+        descriptionJa: (form.elements.descriptionJa.value || "").trim() || null,
+        year: isNaN(year) ? null : year,
+        isOpen: form.elements.isOpen.checked,
+        isPublished: form.elements.isPublished.checked,
+        deadline: deadlineParsed.ok ? deadlineParsed.value : null,
+        startDate: conferenceDateInputToIso(form.elements.startDate.value),
+        endDate: conferenceDateInputToIso(form.elements.endDate.value),
+        location: (form.elements.location.value || "").trim() || null,
+        websiteURL: (form.elements.websiteURL.value || "").trim() || null
+      }
     };
   }
 
   async function submitOrganizerConferenceForm() {
     var form = document.getElementById("organizer-conference-form");
     if (!form) return;
-    var payload = readOrganizerConferenceForm(form);
+
+    // Run the browser's HTML5 validation so pattern/min/max constraints on
+    // path / year are enforced before we hit the API.
+    if (typeof form.reportValidity === "function" && !form.reportValidity()) {
+      return;
+    }
+
+    var read = readOrganizerConferenceForm(form);
+    if (!read.ok) {
+      showStatus(
+        "organizer-conference-form-status",
+        localizedCopy(
+          'Deadline must be in the format "YYYY-MM-DDTHH:mm" (UTC).',
+          "応募締切は \"YYYY-MM-DDTHH:mm\" (UTC) の形式で入力してください。"
+        ),
+        "error"
+      );
+      return;
+    }
+    var payload = read.payload;
     var mode = form.dataset.mode || "create";
     var originalPath = form.elements.originalPath.value;
 

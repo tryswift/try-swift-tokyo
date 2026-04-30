@@ -1492,6 +1492,8 @@ body.modal-open {
 .organizer-conferences-toolbar {
   display: flex;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   margin-bottom: 0.75rem;
 }
 
@@ -1562,11 +1564,6 @@ body.modal-open {
   margin: 0.75rem 0 0;
   color: var(--muted);
   font-style: italic;
-}
-
-.organizer-conferences-toolbar {
-  gap: 0.5rem;
-  flex-wrap: wrap;
 }
 
 .organizer-conference-form-card {
