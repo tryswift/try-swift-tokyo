@@ -6,6 +6,7 @@ enum OrganizerSection: Sendable, CaseIterable {
   case workshops
   case workshopApplications
   case workshopResults
+  case conferences
 
   static func from(routePath: String) -> OrganizerSection {
     var path = routePath
@@ -18,6 +19,7 @@ enum OrganizerSection: Sendable, CaseIterable {
     if path == "/organizer/workshops" { return .workshops }
     if path == "/organizer/workshops/applications" { return .workshopApplications }
     if path == "/organizer/workshops/results" { return .workshopResults }
+    if path == "/organizer/conferences" { return .conferences }
     return .proposals
   }
 
@@ -29,6 +31,7 @@ enum OrganizerSection: Sendable, CaseIterable {
     case .workshops: return "\(prefix)/organizer/workshops"
     case .workshopApplications: return "\(prefix)/organizer/workshops/applications"
     case .workshopResults: return "\(prefix)/organizer/workshops/results"
+    case .conferences: return "\(prefix)/organizer/conferences"
     }
   }
 
@@ -44,6 +47,8 @@ enum OrganizerSection: Sendable, CaseIterable {
       return language == .ja ? "応募" : "Applications"
     case .workshopResults:
       return language == .ja ? "結果" : "Results"
+    case .conferences:
+      return language == .ja ? "カンファレンス" : "Conferences"
     }
   }
 }

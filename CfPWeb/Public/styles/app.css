@@ -968,7 +968,53 @@ body.modal-open {
 .event-description {
   margin: 0;
   color: var(--muted);
-  line-height: 1.5;
+  line-height: 1.6;
+}
+
+.event-description > :first-child {
+  margin-top: 0;
+}
+
+.event-description > :last-child {
+  margin-bottom: 0;
+}
+
+.event-description p {
+  margin: 0 0 0.6rem;
+}
+
+.event-description h4,
+.event-description h5,
+.event-description h6 {
+  margin: 0.8rem 0 0.4rem;
+  color: inherit;
+  font-weight: 600;
+}
+
+.event-description h4 { font-size: 1rem; }
+.event-description h5 { font-size: 0.95rem; }
+.event-description h6 { font-size: 0.9rem; }
+
+.event-description ul,
+.event-description ol {
+  margin: 0 0 0.6rem;
+  padding-left: 1.25rem;
+}
+
+.event-description li {
+  margin-bottom: 0.25rem;
+}
+
+.event-description code {
+  background: rgba(127, 127, 127, 0.15);
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.event-description a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .event-meta {
@@ -1437,4 +1483,55 @@ body.modal-open {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+}
+
+.organizer-conferences-card .organizer-conferences-header {
+  margin-bottom: 0.75rem;
+}
+
+.organizer-conferences-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.organizer-conferences-table-wrapper {
+  overflow-x: auto;
+}
+
+.organizer-conferences-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.25rem;
+}
+
+.organizer-conferences-table th,
+.organizer-conferences-table td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  vertical-align: middle;
+}
+
+.organizer-conferences-table th {
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.organizer-conferences-table .organizer-conferences-actions-col {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.event-status-badge.closed {
+  background: rgba(120, 120, 128, 0.18);
+  color: #6b6b75;
+}
+
+.organizer-conferences-empty {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-style: italic;
 }

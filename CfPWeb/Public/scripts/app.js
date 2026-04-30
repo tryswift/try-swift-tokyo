@@ -259,6 +259,42 @@
     return startText || endText;
   }
 
+  var MARKDOWN_ALLOWED_TAGS = [
+    "p", "br", "strong", "em", "del", "code", "pre",
+    "ul", "ol", "li",
+    "a",
+    "h4", "h5", "h6",
+    "blockquote", "hr"
+  ];
+  var MARKDOWN_ALLOWED_ATTR = ["href", "title"];
+
+  function renderMarkdown(text) {
+    if (!text) return "";
+    var fallback = escapeHTML(String(text)).replace(/\r\n|\r|\n/g, "<br>");
+    if (typeof window === "undefined" || typeof window.marked === "undefined") {
+      return fallback;
+    }
+    // Without DOMPurify, marked would pass raw HTML and javascript: URLs from
+    // API-supplied descriptions through to innerHTML, so refuse to render.
+    if (typeof window.DOMPurify === "undefined") {
+      return fallback;
+    }
+    try {
+      var html = window.marked.parse(String(text), { breaks: true, gfm: true });
+      // Demote headings so card content stays subordinate to the card title.
+      html = html.replace(/<(\/?)h([1-6])(\s|>)/g, function (_, slash, level, tail) {
+        var demoted = Math.min(parseInt(level, 10) + 3, 6);
+        return "<" + slash + "h" + demoted + tail;
+      });
+      return window.DOMPurify.sanitize(html, {
+        ALLOWED_TAGS: MARKDOWN_ALLOWED_TAGS,
+        ALLOWED_ATTR: MARKDOWN_ALLOWED_ATTR
+      });
+    } catch (_error) {
+      return fallback;
+    }
+  }
+
   function localizedConferenceDescription(conference) {
     var description = conference && conference.description;
     if (!description) return "";
@@ -302,7 +338,7 @@
     var html = "";
     conferences.forEach(function (conference) {
       var displayName = escapeHTML(String(conference.displayName || ""));
-      var description = escapeHTML(localizedConferenceDescription(conference));
+      var description = renderMarkdown(localizedConferenceDescription(conference));
       var deadline = escapeHTML(formatEventDate(conference.deadline));
       var dateRange = escapeHTML(formatEventDateRange(conference.startDate, conference.endDate));
       var location = escapeHTML(String(conference.location || ""));
@@ -315,7 +351,7 @@
       html += '<span class="event-status-badge open">' + escapeHTML(openBadgeText) + "</span>";
       html += "</div>";
       if (description) {
-        html += '<p class="event-description">' + description + "</p>";
+        html += '<div class="event-description">' + description + "</div>";
       }
       html += '<dl class="event-meta">';
       if (deadline) {
@@ -2308,6 +2344,129 @@
     await refreshOrganizerWorkshopResults();
   }
 
+  function renderOrganizerConferencesTable() {
+    var tbody = document.getElementById("organizer-conferences-tbody");
+    var emptyMessage = document.getElementById("organizer-conferences-empty");
+    if (!tbody) return;
+
+    var conferences = state.conferences || [];
+    if (!conferences.length) {
+      tbody.innerHTML = "";
+      if (emptyMessage) emptyMessage.hidden = false;
+      return;
+    }
+
+    if (emptyMessage) emptyMessage.hidden = true;
+    var ja = currentLanguage() === "ja";
+    var html = "";
+    conferences.forEach(function (conference) {
+      var pathAttr = escapeHTML(String(conference.path || ""));
+      var displayName = escapeHTML(String(conference.displayName || conference.path || ""));
+      var year = escapeHTML(String(conference.year || ""));
+      var deadline = formatEventDate(conference.deadline) || (ja ? "未設定" : "—");
+      var isOpen = conference.isOpen === true;
+      var statusClass = isOpen ? "event-status-badge open" : "event-status-badge closed";
+      var statusLabel = isOpen ? (ja ? "募集中" : "Open") : (ja ? "終了" : "Closed");
+      var actionLabel = isOpen ? (ja ? "受付を閉じる" : "Close CfP") : (ja ? "受付を開ける" : "Open CfP");
+      var actionClass = isOpen ? "button neutral" : "button primary";
+
+      html += '<tr data-conference-path="' + pathAttr + '">';
+      html += "<td>" + displayName + "</td>";
+      html += "<td>" + year + "</td>";
+      html += "<td>" + escapeHTML(deadline) + "</td>";
+      html += '<td><span class="' + statusClass + '">' + escapeHTML(statusLabel) + "</span></td>";
+      html += '<td class="organizer-conferences-actions-col">';
+      html += '<button type="button" class="' + actionClass + '"';
+      html += ' data-toggle-conference="' + pathAttr + '">';
+      html += escapeHTML(actionLabel);
+      html += "</button>";
+      html += "</td>";
+      html += "</tr>";
+    });
+    tbody.innerHTML = html;
+  }
+
+  async function refreshOrganizerConferences() {
+    try {
+      await loadAllConferences();
+      renderOrganizerConferencesTable();
+      showStatus("organizer-conferences-status", "", null);
+    } catch (error) {
+      showStatus("organizer-conferences-status", error.message, "error");
+    }
+  }
+
+  async function toggleOrganizerConferenceOpen(path, button) {
+    var conference = (state.conferences || []).find(function (item) {
+      return item.path === path;
+    });
+    if (!conference) return;
+
+    var nextIsOpen = !conference.isOpen;
+    var ja = currentLanguage() === "ja";
+    if (button) {
+      button.disabled = true;
+      button.textContent = ja ? "更新中…" : "Updating…";
+    }
+
+    var payload = {
+      path: conference.path,
+      displayName: conference.displayName,
+      descriptionEn: conference.description ? conference.description.en : null,
+      descriptionJa: conference.description ? conference.description.ja : null,
+      year: conference.year,
+      isOpen: nextIsOpen,
+      deadline: conference.deadline || null,
+      startDate: conference.startDate || null,
+      endDate: conference.endDate || null,
+      location: conference.location || null,
+      websiteURL: conference.websiteURL || null
+    };
+
+    try {
+      var updated = await apiRequest("/api/v1/conferences/" + encodeURIComponent(path), {
+        method: "PUT",
+        body: JSON.stringify(payload)
+      });
+      var index = state.conferences.findIndex(function (item) { return item.path === path; });
+      if (index >= 0) state.conferences[index] = updated;
+      renderOrganizerConferencesTable();
+      var successMessage = nextIsOpen
+        ? localizedCopy(
+          conference.displayName + " is now accepting proposals.",
+          conference.displayName + " の応募受付を開始しました。"
+        )
+        : localizedCopy(
+          conference.displayName + " has stopped accepting proposals.",
+          conference.displayName + " の応募受付を停止しました。"
+        );
+      showStatus("organizer-conferences-status", successMessage, "success");
+    } catch (error) {
+      showStatus("organizer-conferences-status", error.message, "error");
+      // renderOrganizerConferencesTable() rebuilds the row, replacing the
+      // button reference, so no manual re-enable is needed here.
+      renderOrganizerConferencesTable();
+    }
+  }
+
+  async function bootstrapOrganizerConferencesSection() {
+    var tbody = document.getElementById("organizer-conferences-tbody");
+    var refreshButton = document.getElementById("organizer-conferences-refresh");
+    if (!tbody || !refreshButton) return;
+
+    refreshButton.addEventListener("click", refreshOrganizerConferences);
+
+    tbody.addEventListener("click", function (event) {
+      var button = event.target.closest("[data-toggle-conference]");
+      if (!button) return;
+      var path = button.getAttribute("data-toggle-conference");
+      if (!path) return;
+      toggleOrganizerConferenceOpen(path, button);
+    });
+
+    await refreshOrganizerConferences();
+  }
+
   async function bootstrapOrganizerPage() {
     await bootstrapOrganizerShell();
     await bootstrapOrganizerProposalsSection();
@@ -2315,6 +2474,7 @@
     await bootstrapOrganizerWorkshopsSection();
     await bootstrapOrganizerWorkshopApplicationsSection();
     await bootstrapOrganizerWorkshopResultsSection();
+    await bootstrapOrganizerConferencesSection();
   }
 
   async function bootstrapPage() {

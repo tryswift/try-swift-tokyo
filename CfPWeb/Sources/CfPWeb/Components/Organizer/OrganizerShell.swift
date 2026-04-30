@@ -47,6 +47,8 @@ struct OrganizerShell: HTML, Sendable {
       OrganizerWorkshopApplicationsContent(language: language)
     case .workshopResults:
       OrganizerWorkshopResultsContent(language: language)
+    case .conferences:
+      OrganizerConferencesContent(language: language)
     }
   }
 }

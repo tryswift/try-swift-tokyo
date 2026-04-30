@@ -29,6 +29,7 @@ enum SiteRoutes {
       SiteRoute(path: "/organizer/workshops", page: .organizer),
       SiteRoute(path: "/organizer/workshops/applications", page: .organizer),
       SiteRoute(path: "/organizer/workshops/results", page: .organizer),
+      SiteRoute(path: "/organizer/conferences", page: .organizer),
     ]
 
     let japanese: [SiteRoute] = [
@@ -47,6 +48,7 @@ enum SiteRoutes {
       SiteRoute(path: "/ja/organizer/workshops", page: .organizer),
       SiteRoute(path: "/ja/organizer/workshops/applications", page: .organizer),
       SiteRoute(path: "/ja/organizer/workshops/results", page: .organizer),
+      SiteRoute(path: "/ja/organizer/conferences", page: .organizer),
     ]
 
     return english + japanese
