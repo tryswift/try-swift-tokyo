@@ -63,6 +63,7 @@ enum AppConfiguration {
     app.migrations.add(AddFavoriteIndexes())
     app.migrations.add(AddFeedbackIndexes())
     app.migrations.add(AddIsAcceptingSponsorsToConference())
+    app.migrations.add(CreateSponsorUser())
 
     // Auto-migrate on startup (safe for production as Fluent tracks completed migrations)
     try await app.autoMigrate()
