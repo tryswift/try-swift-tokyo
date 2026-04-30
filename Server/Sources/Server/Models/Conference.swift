@@ -33,6 +33,10 @@ final class Conference: Model, Content, @unchecked Sendable {
   @Field(key: "is_open")
   var isOpen: Bool
 
+  /// Whether sponsor applications are currently being accepted for this conference.
+  @Field(key: "is_accepting_sponsors")
+  var isAcceptingSponsors: Bool
+
   /// Submission deadline.
   @OptionalField(key: "deadline")
   var deadline: Date?
@@ -78,6 +82,7 @@ final class Conference: Model, Content, @unchecked Sendable {
     descriptionJa: String? = nil,
     year: Int,
     isOpen: Bool = true,
+    isAcceptingSponsors: Bool = false,
     deadline: Date? = nil,
     startDate: Date? = nil,
     endDate: Date? = nil,
@@ -91,6 +96,7 @@ final class Conference: Model, Content, @unchecked Sendable {
     self.descriptionJa = descriptionJa
     self.year = year
     self.isOpen = isOpen
+    self.isAcceptingSponsors = isAcceptingSponsors
     self.deadline = deadline
     self.startDate = startDate
     self.endDate = endDate
