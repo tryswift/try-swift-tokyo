@@ -1563,3 +1563,31 @@ body.modal-open {
   color: var(--muted);
   font-style: italic;
 }
+
+.organizer-conferences-toolbar {
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.organizer-conference-form-card {
+  margin-top: 1rem;
+}
+
+.organizer-conference-form-card textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 8rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.95rem;
+}
+
+.organizer-conference-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.organizer-conference-form-actions .button.danger {
+  margin-left: auto;
+}
