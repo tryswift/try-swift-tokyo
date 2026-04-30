@@ -259,9 +259,18 @@
     return startText || endText;
   }
 
+  var MARKDOWN_ALLOWED_TAGS = [
+    "p", "br", "strong", "em", "del", "code", "pre",
+    "ul", "ol", "li",
+    "a",
+    "h4", "h5", "h6",
+    "blockquote", "hr"
+  ];
+  var MARKDOWN_ALLOWED_ATTR = ["href", "title"];
+
   function renderMarkdown(text) {
     if (!text) return "";
-    var fallback = escapeHTML(String(text)).replace(/\n/g, "<br>");
+    var fallback = escapeHTML(String(text)).replace(/\r\n|\r|\n/g, "<br>");
     if (typeof window === "undefined" || typeof window.marked === "undefined") {
       return fallback;
     }
@@ -277,7 +286,10 @@
         var demoted = Math.min(parseInt(level, 10) + 3, 6);
         return "<" + slash + "h" + demoted + tail;
       });
-      return window.DOMPurify.sanitize(html);
+      return window.DOMPurify.sanitize(html, {
+        ALLOWED_TAGS: MARKDOWN_ALLOWED_TAGS,
+        ALLOWED_ATTR: MARKDOWN_ALLOWED_ATTR
+      });
     } catch (_error) {
       return fallback;
     }
@@ -2431,9 +2443,8 @@
       showStatus("organizer-conferences-status", successMessage, "success");
     } catch (error) {
       showStatus("organizer-conferences-status", error.message, "error");
-      if (button) {
-        button.disabled = false;
-      }
+      // renderOrganizerConferencesTable() rebuilds the row, replacing the
+      // button reference, so no manual re-enable is needed here.
       renderOrganizerConferencesTable();
     }
   }
