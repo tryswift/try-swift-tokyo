@@ -16,6 +16,7 @@ final class SponsorOrganization: Model, Content, @unchecked Sendable {
   @Timestamp(key: "updated_at", on: .update) var updatedAt: Date?
 
   @Children(for: \.$organization) var memberships: [SponsorMembership]
+  @Children(for: \.$organization) var applications: [SponsorApplication]
 
   init() {}
 
