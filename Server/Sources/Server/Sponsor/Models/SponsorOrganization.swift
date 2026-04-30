@@ -15,6 +15,8 @@ final class SponsorOrganization: Model, Content, @unchecked Sendable {
   @Timestamp(key: "created_at", on: .create) var createdAt: Date?
   @Timestamp(key: "updated_at", on: .update) var updatedAt: Date?
 
+  @Children(for: \.$organization) var memberships: [SponsorMembership]
+
   init() {}
 
   init(
