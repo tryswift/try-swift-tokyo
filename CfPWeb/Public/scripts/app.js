@@ -261,18 +261,25 @@
 
   function renderMarkdown(text) {
     if (!text) return "";
+    var fallback = escapeHTML(String(text)).replace(/\n/g, "<br>");
     if (typeof window === "undefined" || typeof window.marked === "undefined") {
-      return escapeHTML(String(text)).replace(/\n/g, "<br>");
+      return fallback;
+    }
+    // Without DOMPurify, marked would pass raw HTML and javascript: URLs from
+    // API-supplied descriptions through to innerHTML, so refuse to render.
+    if (typeof window.DOMPurify === "undefined") {
+      return fallback;
     }
     try {
       var html = window.marked.parse(String(text), { breaks: true, gfm: true });
       // Demote headings so card content stays subordinate to the card title.
-      return html.replace(/<(\/?)h([1-6])(\s|>)/g, function (_, slash, level, tail) {
+      html = html.replace(/<(\/?)h([1-6])(\s|>)/g, function (_, slash, level, tail) {
         var demoted = Math.min(parseInt(level, 10) + 3, 6);
         return "<" + slash + "h" + demoted + tail;
       });
+      return window.DOMPurify.sanitize(html);
     } catch (_error) {
-      return escapeHTML(String(text)).replace(/\n/g, "<br>");
+      return fallback;
     }
   }
 
@@ -2446,7 +2453,7 @@
       toggleOrganizerConferenceOpen(path, button);
     });
 
-    renderOrganizerConferencesTable();
+    await refreshOrganizerConferences();
   }
 
   async function bootstrapOrganizerPage() {
