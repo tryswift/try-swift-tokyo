@@ -5,6 +5,7 @@ on:
     paths:
       - "Server/**"
       - "SharedModels/**"
+      - "Web/**"
       - ".github/workflows/test-api-server.yml"
 
 jobs:

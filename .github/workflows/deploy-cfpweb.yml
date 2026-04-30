@@ -4,7 +4,10 @@ on:
   push:
     branches: [main]
     paths:
-      - "CfPWeb/**"
+      - "Web/Sources/WebCfP/**"
+      - "Web/Public/**"
+      - "Web/Package.swift"
+      - "Web/Package.resolved"
       - ".github/workflows/deploy-cfpweb.yml"
   workflow_dispatch:
 
@@ -32,18 +35,18 @@ jobs:
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v5
         with:
-          key: spm-cfpweb-${{ runner.os }}-swift-6.3-${{ hashFiles('CfPWeb/Package.resolved', 'CfPWeb/Package.swift') }}
+          key: spm-cfpweb-${{ runner.os }}-swift-6.3-${{ hashFiles('Web/Package.resolved', 'Web/Package.swift') }}
           restore-keys: spm-cfpweb-${{ runner.os }}-swift-6.3-
-          path: CfPWeb/.build
+          path: Web/.build
 
       - name: Build static site
         run: |
-          cd CfPWeb
-          swift run CfPWeb --api-base-url https://api.tryswift.jp --output Build
+          cd Web
+          swift run WebCfP --api-base-url https://api.tryswift.jp --public-dir Public --output Build
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy CfPWeb/Build --project-name=tryswift-cfp
+          command: pages deploy Web/Build --project-name=tryswift-cfp

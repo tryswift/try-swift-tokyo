@@ -5,8 +5,10 @@ on:
     branches:
       - "main"
     paths:
-      - "Website/Sources/**"
-      - "Website/Assets/**"
+      - "Web/Sources/WebConference/**"
+      - "Web/Assets/**"
+      - "Web/Package.swift"
+      - "Web/Package.resolved"
       - "SharedModels/**"
       - "trySwiftTokyo.xcworkspace/xcshareddata/swiftpm/Package.resolved"
       - ".github/workflows/deploy_website.yml"
@@ -49,16 +51,16 @@ jobs:
 
       - name: Build and Run Website
         run: |
-          cd Website
-          swift run Website
+          cd Web
+          swift run WebConference
 
       - name: Disable Jekyll processing
-        run: touch Website/Build/.nojekyll
+        run: touch Web/Build/.nojekyll
 
       - name: Create CfP redirect to Fly.io SSR
         run: |
-          mkdir -p Website/Build/cfp
-          cat > Website/Build/cfp/index.html << 'EOF'
+          mkdir -p Web/Build/cfp
+          cat > Web/Build/cfp/index.html << 'EOF'
           <!DOCTYPE html>
           <html lang="en">
           <head>
@@ -78,7 +80,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          path: "./Website/Build"
+          path: "./Web/Build"
 
       - name: Deploy to GitHub Pages
         id: deployment
