@@ -15,11 +15,11 @@ struct LocalizationCodegenPlugin: BuildToolPlugin {
     let packageDirectory = context.package.directory
     var commands: [Command] = []
 
-    // Known .xcstrings file paths in the iOS and Website packages (sibling directories)
+    // Known .xcstrings file paths in the iOS and Web packages (sibling directories)
     let xcstringsConfigs: [(path: String, featureName: String)] = [
       ("../iOS/Sources/ScheduleFeature/Localizable.xcstrings", "Schedule"),
       ("../iOS/Sources/trySwiftFeature/Localizable.xcstrings", "TrySwift"),
-      ("../Website/Sources/Resources/Localizable.xcstrings", "Website"),
+      ("../Web/Sources/WebConference/Resources/Localizable.xcstrings", "Website"),
     ]
 
     for config in xcstringsConfigs {

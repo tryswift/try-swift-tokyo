@@ -4,6 +4,7 @@ import PackageDescription
 
 let package = Package(
   name: "Web",
+  defaultLocalization: "en",
   platforms: [.macOS(.v15)],
   products: [
     .library(name: "WebShared", targets: ["WebShared"]),
@@ -52,6 +53,9 @@ let package = Package(
         .product(name: "Dependencies", package: "swift-dependencies"),
         .product(name: "DataClient", package: "DataClient"),
         .product(name: "LocalizationGenerated", package: "LocalizationGenerated"),
+      ],
+      resources: [
+        .process("Resources")
       ],
       swiftSettings: [.swiftLanguageMode(.v6)]
     ),
