@@ -27,19 +27,20 @@ struct ConferenceWebsite {
 
     let websiteDirectory = try URL.selectDirectories(from: #file).source
     let websiteAssetsDirectory = websiteDirectory.appending(path: "Assets")
-    let iosAppDirectory = websiteDirectory.deletingLastPathComponent().appending(path: "iOS")
+    let conferencePackageDirectory = websiteDirectory.deletingLastPathComponent().appending(
+      path: "Conference")
 
-    let sponsorMediaDirectory = iosAppDirectory.appending(
+    let sponsorMediaDirectory = conferencePackageDirectory.appending(
       path: "Sources/SponsorFeature/Media.xcassets")
     let sponsorMediaEnumerator = fileManager.enumerator(
       at: sponsorMediaDirectory, includingPropertiesForKeys: nil)
 
-    let scheduleMediaDirectory = iosAppDirectory.appending(
+    let scheduleMediaDirectory = conferencePackageDirectory.appending(
       path: "Sources/ScheduleFeature/Media.xcassets")
     let scheduleMediaEnumerator = fileManager.enumerator(
       at: scheduleMediaDirectory, includingPropertiesForKeys: nil)
 
-    let trySwiftMediaDirectory = iosAppDirectory.appending(
+    let trySwiftMediaDirectory = conferencePackageDirectory.appending(
       path: "Sources/trySwiftFeature/Media.xcassets")
     let trySwiftMediaEnumerator = fileManager.enumerator(
       at: trySwiftMediaDirectory, includingPropertiesForKeys: nil)
