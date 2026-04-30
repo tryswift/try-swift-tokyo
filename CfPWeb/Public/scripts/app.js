@@ -2308,6 +2308,130 @@
     await refreshOrganizerWorkshopResults();
   }
 
+  function renderOrganizerConferencesTable() {
+    var tbody = document.getElementById("organizer-conferences-tbody");
+    var emptyMessage = document.getElementById("organizer-conferences-empty");
+    if (!tbody) return;
+
+    var conferences = state.conferences || [];
+    if (!conferences.length) {
+      tbody.innerHTML = "";
+      if (emptyMessage) emptyMessage.hidden = false;
+      return;
+    }
+
+    if (emptyMessage) emptyMessage.hidden = true;
+    var ja = currentLanguage() === "ja";
+    var html = "";
+    conferences.forEach(function (conference) {
+      var pathAttr = escapeHTML(String(conference.path || ""));
+      var displayName = escapeHTML(String(conference.displayName || conference.path || ""));
+      var year = escapeHTML(String(conference.year || ""));
+      var deadline = formatEventDate(conference.deadline) || (ja ? "未設定" : "—");
+      var isOpen = conference.isOpen === true;
+      var statusClass = isOpen ? "event-status-badge open" : "event-status-badge closed";
+      var statusLabel = isOpen ? (ja ? "募集中" : "Open") : (ja ? "終了" : "Closed");
+      var actionLabel = isOpen ? (ja ? "受付を閉じる" : "Close CfP") : (ja ? "受付を開ける" : "Open CfP");
+      var actionClass = isOpen ? "button neutral" : "button primary";
+
+      html += '<tr data-conference-path="' + pathAttr + '">';
+      html += "<td>" + displayName + "</td>";
+      html += "<td>" + year + "</td>";
+      html += "<td>" + escapeHTML(deadline) + "</td>";
+      html += '<td><span class="' + statusClass + '">' + escapeHTML(statusLabel) + "</span></td>";
+      html += '<td class="organizer-conferences-actions-col">';
+      html += '<button type="button" class="' + actionClass + '"';
+      html += ' data-toggle-conference="' + pathAttr + '">';
+      html += escapeHTML(actionLabel);
+      html += "</button>";
+      html += "</td>";
+      html += "</tr>";
+    });
+    tbody.innerHTML = html;
+  }
+
+  async function refreshOrganizerConferences() {
+    try {
+      await loadAllConferences();
+      renderOrganizerConferencesTable();
+      showStatus("organizer-conferences-status", "", null);
+    } catch (error) {
+      showStatus("organizer-conferences-status", error.message, "error");
+    }
+  }
+
+  async function toggleOrganizerConferenceOpen(path, button) {
+    var conference = (state.conferences || []).find(function (item) {
+      return item.path === path;
+    });
+    if (!conference) return;
+
+    var nextIsOpen = !conference.isOpen;
+    var ja = currentLanguage() === "ja";
+    if (button) {
+      button.disabled = true;
+      button.textContent = ja ? "更新中…" : "Updating…";
+    }
+
+    var payload = {
+      path: conference.path,
+      displayName: conference.displayName,
+      descriptionEn: conference.description ? conference.description.en : null,
+      descriptionJa: conference.description ? conference.description.ja : null,
+      year: conference.year,
+      isOpen: nextIsOpen,
+      deadline: conference.deadline || null,
+      startDate: conference.startDate || null,
+      endDate: conference.endDate || null,
+      location: conference.location || null,
+      websiteURL: conference.websiteURL || null
+    };
+
+    try {
+      var updated = await apiRequest("/api/v1/conferences/" + encodeURIComponent(path), {
+        method: "PUT",
+        body: JSON.stringify(payload)
+      });
+      var index = state.conferences.findIndex(function (item) { return item.path === path; });
+      if (index >= 0) state.conferences[index] = updated;
+      renderOrganizerConferencesTable();
+      var successMessage = nextIsOpen
+        ? localizedCopy(
+          conference.displayName + " is now accepting proposals.",
+          conference.displayName + " の応募受付を開始しました。"
+        )
+        : localizedCopy(
+          conference.displayName + " has stopped accepting proposals.",
+          conference.displayName + " の応募受付を停止しました。"
+        );
+      showStatus("organizer-conferences-status", successMessage, "success");
+    } catch (error) {
+      showStatus("organizer-conferences-status", error.message, "error");
+      if (button) {
+        button.disabled = false;
+      }
+      renderOrganizerConferencesTable();
+    }
+  }
+
+  async function bootstrapOrganizerConferencesSection() {
+    var tbody = document.getElementById("organizer-conferences-tbody");
+    var refreshButton = document.getElementById("organizer-conferences-refresh");
+    if (!tbody || !refreshButton) return;
+
+    refreshButton.addEventListener("click", refreshOrganizerConferences);
+
+    tbody.addEventListener("click", function (event) {
+      var button = event.target.closest("[data-toggle-conference]");
+      if (!button) return;
+      var path = button.getAttribute("data-toggle-conference");
+      if (!path) return;
+      toggleOrganizerConferenceOpen(path, button);
+    });
+
+    renderOrganizerConferencesTable();
+  }
+
   async function bootstrapOrganizerPage() {
     await bootstrapOrganizerShell();
     await bootstrapOrganizerProposalsSection();
@@ -2315,6 +2439,7 @@
     await bootstrapOrganizerWorkshopsSection();
     await bootstrapOrganizerWorkshopApplicationsSection();
     await bootstrapOrganizerWorkshopResultsSection();
+    await bootstrapOrganizerConferencesSection();
   }
 
   async function bootstrapPage() {

@@ -1438,3 +1438,54 @@ body.modal-open {
   flex-direction: column;
   gap: 0.75rem;
 }
+
+.organizer-conferences-card .organizer-conferences-header {
+  margin-bottom: 0.75rem;
+}
+
+.organizer-conferences-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.organizer-conferences-table-wrapper {
+  overflow-x: auto;
+}
+
+.organizer-conferences-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.25rem;
+}
+
+.organizer-conferences-table th,
+.organizer-conferences-table td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  vertical-align: middle;
+}
+
+.organizer-conferences-table th {
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.organizer-conferences-table .organizer-conferences-actions-col {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.event-status-badge.closed {
+  background: rgba(120, 120, 128, 0.18);
+  color: #6b6b75;
+}
+
+.organizer-conferences-empty {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-style: italic;
+}
