@@ -32,6 +32,10 @@
     public let year: Int
     /// Whether CfP is currently open for this conference
     public let isOpen: Bool
+    /// Whether the conference is visible to public consumers. Defaults to
+    /// `true` when decoding responses from older servers that don't yet emit
+    /// the field.
+    public let isPublished: Bool
     /// CfP submission deadline
     public let deadline: Date?
     /// Conference start date
@@ -53,6 +57,7 @@
       description: LocalizedString? = nil,
       year: Int,
       isOpen: Bool = true,
+      isPublished: Bool = true,
       deadline: Date? = nil,
       startDate: Date? = nil,
       endDate: Date? = nil,
@@ -67,6 +72,7 @@
       self.description = description
       self.year = year
       self.isOpen = isOpen
+      self.isPublished = isPublished
       self.deadline = deadline
       self.startDate = startDate
       self.endDate = endDate
@@ -74,6 +80,41 @@
       self.websiteURL = websiteURL
       self.createdAt = createdAt
       self.updatedAt = updatedAt
+    }
+
+    private enum CodingKeys: String, CodingKey {
+      case id
+      case path
+      case displayName
+      case description
+      case year
+      case isOpen
+      case isPublished
+      case deadline
+      case startDate
+      case endDate
+      case location
+      case websiteURL
+      case createdAt
+      case updatedAt
+    }
+
+    public init(from decoder: Decoder) throws {
+      let container = try decoder.container(keyedBy: CodingKeys.self)
+      self.id = try container.decode(UUID.self, forKey: .id)
+      self.path = try container.decode(String.self, forKey: .path)
+      self.displayName = try container.decode(String.self, forKey: .displayName)
+      self.description = try container.decodeIfPresent(LocalizedString.self, forKey: .description)
+      self.year = try container.decode(Int.self, forKey: .year)
+      self.isOpen = try container.decode(Bool.self, forKey: .isOpen)
+      self.isPublished = try container.decodeIfPresent(Bool.self, forKey: .isPublished) ?? true
+      self.deadline = try container.decodeIfPresent(Date.self, forKey: .deadline)
+      self.startDate = try container.decodeIfPresent(Date.self, forKey: .startDate)
+      self.endDate = try container.decodeIfPresent(Date.self, forKey: .endDate)
+      self.location = try container.decodeIfPresent(String.self, forKey: .location)
+      self.websiteURL = try container.decodeIfPresent(String.self, forKey: .websiteURL)
+      self.createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt)
+      self.updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
     }
   }
 
@@ -84,6 +125,7 @@
     public let description: LocalizedString?
     public let year: Int
     public let isOpen: Bool
+    public let isPublished: Bool?
     public let deadline: Date?
     public let startDate: Date?
     public let endDate: Date?
@@ -96,6 +138,7 @@
       description: LocalizedString? = nil,
       year: Int,
       isOpen: Bool = true,
+      isPublished: Bool? = nil,
       deadline: Date? = nil,
       startDate: Date? = nil,
       endDate: Date? = nil,
@@ -107,6 +150,7 @@
       self.description = description
       self.year = year
       self.isOpen = isOpen
+      self.isPublished = isPublished
       self.deadline = deadline
       self.startDate = startDate
       self.endDate = endDate

@@ -36,6 +36,7 @@ private struct CreateTestLotterySchema: AsyncMigration {
       .field("description_ja", .string)
       .field("year", .int, .required)
       .field("is_open", .bool, .required)
+      .field("is_published", .bool, .required, .sql(.default(true)))
       .field("deadline", .datetime)
       .field("start_date", .datetime)
       .field("end_date", .datetime)
