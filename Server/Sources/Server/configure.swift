@@ -43,9 +43,10 @@ enum AppConfiguration {
     app.migrations.add(CreateUser())
     app.migrations.add(CreateConference())
     app.migrations.add(CreateProposal())
-    // Adding is_published before the seed so fresh databases have the column
+    // Add is_published before the seed so fresh databases have the column
     // when SeedTrySwiftTokyo2026 saves through the Conference model. Existing
-    // databases will simply pick this migration up at the end of their queue.
+    // databases apply this on their next startup if it is still pending,
+    // following Fluent's registered migration order.
     app.migrations.add(AddConferenceIsPublished())
     app.migrations.add(SeedTrySwiftTokyo2026())
     app.migrations.add(AddUserEmail())

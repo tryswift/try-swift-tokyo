@@ -435,7 +435,7 @@
 
   async function loadAllConferences() {
     // Organizer-only endpoint that includes unpublished drafts. Public callers
-    // continue to use /api/v1/conferences via loadOpenConferences().
+    // continue to use /api/v1/conferences/open via loadOpenConferences().
     state.conferences = await apiRequest("/api/v1/conferences/admin/all");
     return state.conferences;
   }
