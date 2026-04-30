@@ -5,8 +5,8 @@ format:
 		--recursive \
 		./Android/ \
 		./App/ \
+		./Conference/ \
 		./DataClient/ \
-		./iOS/ \
 		./LocalizationGenerated/ \
 		./Server/ \
 		./Shared/ \
