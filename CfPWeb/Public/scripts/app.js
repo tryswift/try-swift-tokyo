@@ -434,7 +434,9 @@
   }
 
   async function loadAllConferences() {
-    state.conferences = await apiRequest("/api/v1/conferences");
+    // Organizer-only endpoint that includes unpublished drafts. Public callers
+    // continue to use /api/v1/conferences via loadOpenConferences().
+    state.conferences = await apiRequest("/api/v1/conferences/admin/all");
     return state.conferences;
   }
 
@@ -2365,21 +2367,40 @@
       var year = escapeHTML(String(conference.year || ""));
       var deadline = formatEventDate(conference.deadline) || (ja ? "未設定" : "—");
       var isOpen = conference.isOpen === true;
-      var statusClass = isOpen ? "event-status-badge open" : "event-status-badge closed";
-      var statusLabel = isOpen ? (ja ? "募集中" : "Open") : (ja ? "終了" : "Closed");
-      var actionLabel = isOpen ? (ja ? "受付を閉じる" : "Close CfP") : (ja ? "受付を開ける" : "Open CfP");
-      var actionClass = isOpen ? "button neutral" : "button primary";
+      var isPublished = conference.isPublished !== false;
 
-      html += '<tr data-conference-path="' + pathAttr + '">';
+      var openStatusClass = isOpen ? "event-status-badge open" : "event-status-badge closed";
+      var openStatusLabel = isOpen ? (ja ? "募集中" : "Open") : (ja ? "終了" : "Closed");
+      var openActionLabel = isOpen ? (ja ? "受付を閉じる" : "Close CfP") : (ja ? "受付を開ける" : "Open CfP");
+      var openActionClass = isOpen ? "button neutral" : "button primary";
+
+      var publishStatusBadge = isPublished
+        ? ""
+        : '<span class="event-status-badge unpublished">' + escapeHTML(ja ? "未公開" : "Unpublished") + "</span>";
+      var publishActionLabel = isPublished ? (ja ? "非公開にする" : "Unpublish") : (ja ? "公開する" : "Publish");
+      var publishActionClass = isPublished ? "button neutral" : "button primary";
+
+      var rowClass = isPublished ? "" : ' class="organizer-conferences-row-unpublished"';
+
+      html += "<tr" + rowClass + ' data-conference-path="' + pathAttr + '">';
       html += "<td>" + displayName + "</td>";
       html += "<td>" + year + "</td>";
       html += "<td>" + escapeHTML(deadline) + "</td>";
-      html += '<td><span class="' + statusClass + '">' + escapeHTML(statusLabel) + "</span></td>";
+      html += '<td><div class="organizer-conferences-status-cell">';
+      html += publishStatusBadge;
+      html += '<span class="' + openStatusClass + '">' + escapeHTML(openStatusLabel) + "</span>";
+      html += "</div></td>";
       html += '<td class="organizer-conferences-actions-col">';
-      html += '<button type="button" class="' + actionClass + '"';
-      html += ' data-toggle-conference="' + pathAttr + '">';
-      html += escapeHTML(actionLabel);
+      html += '<div class="organizer-conferences-actions-stack">';
+      html += '<button type="button" class="' + publishActionClass + '"';
+      html += ' data-toggle-published="' + pathAttr + '">';
+      html += escapeHTML(publishActionLabel);
       html += "</button>";
+      html += '<button type="button" class="' + openActionClass + '"';
+      html += ' data-toggle-conference="' + pathAttr + '">';
+      html += escapeHTML(openActionLabel);
+      html += "</button>";
+      html += "</div>";
       html += "</td>";
       html += "</tr>";
     });
@@ -2396,50 +2417,43 @@
     }
   }
 
-  async function toggleOrganizerConferenceOpen(path, button) {
-    var conference = (state.conferences || []).find(function (item) {
-      return item.path === path;
-    });
-    if (!conference) return;
-
-    var nextIsOpen = !conference.isOpen;
-    var ja = currentLanguage() === "ja";
-    if (button) {
-      button.disabled = true;
-      button.textContent = ja ? "更新中…" : "Updating…";
-    }
-
+  function buildConferenceUpdatePayload(conference, overrides) {
     var payload = {
       path: conference.path,
       displayName: conference.displayName,
       descriptionEn: conference.description ? conference.description.en : null,
       descriptionJa: conference.description ? conference.description.ja : null,
       year: conference.year,
-      isOpen: nextIsOpen,
+      isOpen: conference.isOpen,
+      isPublished: conference.isPublished !== false,
       deadline: conference.deadline || null,
       startDate: conference.startDate || null,
       endDate: conference.endDate || null,
       location: conference.location || null,
       websiteURL: conference.websiteURL || null
     };
+    if (overrides) {
+      Object.keys(overrides).forEach(function (key) { payload[key] = overrides[key]; });
+    }
+    return payload;
+  }
 
+  async function applyConferenceUpdate(conference, overrides, button, successMessage) {
+    var ja = currentLanguage() === "ja";
+    if (button) {
+      button.disabled = true;
+      button.textContent = ja ? "更新中…" : "Updating…";
+    }
+
+    var payload = buildConferenceUpdatePayload(conference, overrides);
     try {
-      var updated = await apiRequest("/api/v1/conferences/" + encodeURIComponent(path), {
+      var updated = await apiRequest("/api/v1/conferences/" + encodeURIComponent(conference.path), {
         method: "PUT",
         body: JSON.stringify(payload)
       });
-      var index = state.conferences.findIndex(function (item) { return item.path === path; });
+      var index = state.conferences.findIndex(function (item) { return item.path === conference.path; });
       if (index >= 0) state.conferences[index] = updated;
       renderOrganizerConferencesTable();
-      var successMessage = nextIsOpen
-        ? localizedCopy(
-          conference.displayName + " is now accepting proposals.",
-          conference.displayName + " の応募受付を開始しました。"
-        )
-        : localizedCopy(
-          conference.displayName + " has stopped accepting proposals.",
-          conference.displayName + " の応募受付を停止しました。"
-        );
       showStatus("organizer-conferences-status", successMessage, "success");
     } catch (error) {
       showStatus("organizer-conferences-status", error.message, "error");
@@ -2447,6 +2461,42 @@
       // button reference, so no manual re-enable is needed here.
       renderOrganizerConferencesTable();
     }
+  }
+
+  function findOrganizerConference(path) {
+    return (state.conferences || []).find(function (item) { return item.path === path; });
+  }
+
+  async function toggleOrganizerConferenceOpen(path, button) {
+    var conference = findOrganizerConference(path);
+    if (!conference) return;
+    var nextIsOpen = !conference.isOpen;
+    var successMessage = nextIsOpen
+      ? localizedCopy(
+        conference.displayName + " is now accepting proposals.",
+        conference.displayName + " の応募受付を開始しました。"
+      )
+      : localizedCopy(
+        conference.displayName + " has stopped accepting proposals.",
+        conference.displayName + " の応募受付を停止しました。"
+      );
+    await applyConferenceUpdate(conference, { isOpen: nextIsOpen }, button, successMessage);
+  }
+
+  async function toggleOrganizerConferencePublished(path, button) {
+    var conference = findOrganizerConference(path);
+    if (!conference) return;
+    var nextIsPublished = !(conference.isPublished !== false);
+    var successMessage = nextIsPublished
+      ? localizedCopy(
+        conference.displayName + " is now public.",
+        conference.displayName + " を公開しました。"
+      )
+      : localizedCopy(
+        conference.displayName + " is now hidden from public listings.",
+        conference.displayName + " を非公開にしました。"
+      );
+    await applyConferenceUpdate(conference, { isPublished: nextIsPublished }, button, successMessage);
   }
 
   async function bootstrapOrganizerConferencesSection() {
@@ -2457,11 +2507,17 @@
     refreshButton.addEventListener("click", refreshOrganizerConferences);
 
     tbody.addEventListener("click", function (event) {
-      var button = event.target.closest("[data-toggle-conference]");
-      if (!button) return;
-      var path = button.getAttribute("data-toggle-conference");
-      if (!path) return;
-      toggleOrganizerConferenceOpen(path, button);
+      var openButton = event.target.closest("[data-toggle-conference]");
+      if (openButton) {
+        var openPath = openButton.getAttribute("data-toggle-conference");
+        if (openPath) toggleOrganizerConferenceOpen(openPath, openButton);
+        return;
+      }
+      var publishButton = event.target.closest("[data-toggle-published]");
+      if (publishButton) {
+        var publishPath = publishButton.getAttribute("data-toggle-published");
+        if (publishPath) toggleOrganizerConferencePublished(publishPath, publishButton);
+      }
     });
 
     await refreshOrganizerConferences();
