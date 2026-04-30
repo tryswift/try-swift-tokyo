@@ -12,9 +12,9 @@ let package = Package(
     .executable(name: "WebConference", targets: ["WebConference"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/sliemeobn/elementary.git", from: "0.7.1"),
+    .package(url: "https://github.com/elementary-swift/elementary.git", from: "0.7.1"),
     .package(url: "https://github.com/twostraws/Ignite.git", from: "0.6.0"),
-    .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.0.0"),
+    .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.2.0"),
     .package(name: "SharedModels", path: "../SharedModels"),
     .package(name: "DataClient", path: "../DataClient"),
     .package(name: "LocalizationGenerated", path: "../LocalizationGenerated"),
