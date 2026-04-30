@@ -259,6 +259,23 @@
     return startText || endText;
   }
 
+  function renderMarkdown(text) {
+    if (!text) return "";
+    if (typeof window === "undefined" || typeof window.marked === "undefined") {
+      return escapeHTML(String(text)).replace(/\n/g, "<br>");
+    }
+    try {
+      var html = window.marked.parse(String(text), { breaks: true, gfm: true });
+      // Demote headings so card content stays subordinate to the card title.
+      return html.replace(/<(\/?)h([1-6])(\s|>)/g, function (_, slash, level, tail) {
+        var demoted = Math.min(parseInt(level, 10) + 3, 6);
+        return "<" + slash + "h" + demoted + tail;
+      });
+    } catch (_error) {
+      return escapeHTML(String(text)).replace(/\n/g, "<br>");
+    }
+  }
+
   function localizedConferenceDescription(conference) {
     var description = conference && conference.description;
     if (!description) return "";
@@ -302,7 +319,7 @@
     var html = "";
     conferences.forEach(function (conference) {
       var displayName = escapeHTML(String(conference.displayName || ""));
-      var description = escapeHTML(localizedConferenceDescription(conference));
+      var description = renderMarkdown(localizedConferenceDescription(conference));
       var deadline = escapeHTML(formatEventDate(conference.deadline));
       var dateRange = escapeHTML(formatEventDateRange(conference.startDate, conference.endDate));
       var location = escapeHTML(String(conference.location || ""));
@@ -315,7 +332,7 @@
       html += '<span class="event-status-badge open">' + escapeHTML(openBadgeText) + "</span>";
       html += "</div>";
       if (description) {
-        html += '<p class="event-description">' + description + "</p>";
+        html += '<div class="event-description">' + description + "</div>";
       }
       html += '<dl class="event-meta">';
       if (deadline) {

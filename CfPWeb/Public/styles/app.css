@@ -968,7 +968,53 @@ body.modal-open {
 .event-description {
   margin: 0;
   color: var(--muted);
-  line-height: 1.5;
+  line-height: 1.6;
+}
+
+.event-description > :first-child {
+  margin-top: 0;
+}
+
+.event-description > :last-child {
+  margin-bottom: 0;
+}
+
+.event-description p {
+  margin: 0 0 0.6rem;
+}
+
+.event-description h4,
+.event-description h5,
+.event-description h6 {
+  margin: 0.8rem 0 0.4rem;
+  color: inherit;
+  font-weight: 600;
+}
+
+.event-description h4 { font-size: 1rem; }
+.event-description h5 { font-size: 0.95rem; }
+.event-description h6 { font-size: 0.9rem; }
+
+.event-description ul,
+.event-description ol {
+  margin: 0 0 0.6rem;
+  padding-left: 1.25rem;
+}
+
+.event-description li {
+  margin-bottom: 0.25rem;
+}
+
+.event-description code {
+  background: rgba(127, 127, 127, 0.15);
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.event-description a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .event-meta {

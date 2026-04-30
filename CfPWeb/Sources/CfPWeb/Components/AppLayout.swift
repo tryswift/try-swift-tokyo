@@ -33,6 +33,10 @@ struct AppLayout: HTMLDocument, Sendable {
     link(
       .rel(.icon), .custom(name: "type", value: "image/png"),
       .href("https://tryswift.jp/images/favicon.png"))
+    script(
+      .src("https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"),
+      .custom(name: "defer", value: "defer")
+    ) {}
     script(.src("/scripts/app.js"), .custom(name: "defer", value: "defer")) {}
     script(.src("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js")) {}
     meta(.custom(name: "name", value: "cfp-api-base-url"), .content(apiBaseURL))
