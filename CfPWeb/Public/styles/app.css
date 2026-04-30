@@ -1530,6 +1530,34 @@ body.modal-open {
   color: #6b6b75;
 }
 
+.event-status-badge.unpublished {
+  background: rgba(180, 35, 24, 0.12);
+  color: #b42318;
+}
+
+.organizer-conferences-status-cell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.organizer-conferences-actions-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.organizer-conferences-actions-stack .button {
+  width: 100%;
+  justify-content: center;
+}
+
+.organizer-conferences-row-unpublished td {
+  background: rgba(180, 35, 24, 0.04);
+}
+
 .organizer-conferences-empty {
   margin: 0.75rem 0 0;
   color: var(--muted);

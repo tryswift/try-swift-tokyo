@@ -10,8 +10,8 @@ struct OrganizerConferencesContent: HTML, Sendable {
         p(.class("submit-form-intro")) {
           HTMLText(
             language == .ja
-              ? "各カンファレンスの CfP の受付状態を切り替えます。"
-              : "Toggle whether each conference is currently accepting proposals."
+              ? "各カンファレンスの公開状態と CfP 受付状態を切り替えます。未公開のカンファレンスは運営にしか表示されません。"
+              : "Toggle each conference's published state and CfP availability. Unpublished conferences are visible only to organizers."
           )
         }
       }

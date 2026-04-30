@@ -186,16 +186,18 @@ struct ProposalController: RouteCollection {
       guard
         let found = try await Conference.query(on: req.db)
           .filter(\.$path == path)
+          .filter(\.$isPublished == true)
           .first()
       else {
         throw Abort(.notFound, reason: "Conference not found: \(path)")
       }
       conference = found
     } else {
-      // Get the current open conference
+      // Get the current open and published conference
       guard
         let current = try await Conference.query(on: req.db)
           .filter(\.$isOpen == true)
+          .filter(\.$isPublished == true)
           .sort(\.$year, .descending)
           .first()
       else {
@@ -358,6 +360,7 @@ struct ProposalController: RouteCollection {
     guard
       let conference = try await Conference.query(on: req.db)
         .filter(\.$path == conferencePath)
+        .filter(\.$isPublished == true)
         .first()
     else {
       throw Abort(.notFound, reason: "Conference not found")
