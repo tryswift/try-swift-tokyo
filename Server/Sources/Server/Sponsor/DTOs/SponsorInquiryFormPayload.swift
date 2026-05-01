@@ -6,5 +6,4 @@ struct SponsorInquiryFormPayload: Content {
   let contactName: String
   let email: String
   let message: String?
-  let desiredPlanSlug: String?
 }

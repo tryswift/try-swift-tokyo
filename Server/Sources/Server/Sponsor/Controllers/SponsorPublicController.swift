@@ -42,7 +42,6 @@ struct SponsorPublicController: RouteCollection {
       companyName: payload.companyName,
       contactName: payload.contactName,
       email: payload.email,
-      desiredPlanSlug: payload.desiredPlanSlug,
       message: payload.message ?? "",
       locale: req.sponsorLocale
     )
@@ -95,7 +94,7 @@ struct SponsorPublicController: RouteCollection {
 
     await SponsorSlackNotifier.notifyInquiry(
       companyName: payload.companyName,
-      planSlug: payload.desiredPlanSlug,
+      planSlug: nil,
       client: req.client,
       logger: req.logger)
 

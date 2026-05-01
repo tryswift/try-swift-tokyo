@@ -25,8 +25,7 @@ struct SponsorInquiryFlowTests {
             companyName: "Acme",
             contactName: "Alice",
             email: "alice@example.com",
-            message: "interested in Gold",
-            desiredPlanSlug: "gold"
+            message: "interested in Gold"
           ))
       }
     ) { res in
