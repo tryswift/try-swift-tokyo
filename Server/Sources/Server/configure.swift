@@ -105,6 +105,9 @@ enum AppConfiguration {
     )
     app.middleware.use(CORSMiddleware(configuration: corsConfiguration))
 
+    // Identify sponsor.tryswift.jp host so SponsorHostOnlyMiddleware can gate routes.
+    app.middleware.use(HostRoutingMiddleware())
+
     // Serve static files from Public directory
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 

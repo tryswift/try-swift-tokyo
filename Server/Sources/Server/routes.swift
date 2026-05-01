@@ -26,5 +26,8 @@ enum AppRoutes {
     try api.register(collection: AdminWorkshopController())
     try api.register(collection: FeedbackController())
     try api.register(collection: FavoritesController())
+
+    // Sponsor portal routes (host-filtered to sponsor.tryswift.jp)
+    try app.register(collection: SponsorRoutes())
   }
 }
