@@ -42,6 +42,9 @@ enum AppConfiguration {
 
     app.migrations.add(CreateUser())
     app.migrations.add(CreateConference())
+    // Conference's is_accepting_sponsors column must exist before SeedTrySwiftTokyo2026
+    // saves a Conference row (the model now has a non-optional `isAcceptingSponsors` field).
+    app.migrations.add(AddIsAcceptingSponsorsToConference())
     app.migrations.add(CreateProposal())
     app.migrations.add(SeedTrySwiftTokyo2026())
     app.migrations.add(AddUserEmail())
@@ -62,7 +65,6 @@ enum AppConfiguration {
     app.migrations.add(CreateFavorite())
     app.migrations.add(AddFavoriteIndexes())
     app.migrations.add(AddFeedbackIndexes())
-    app.migrations.add(AddIsAcceptingSponsorsToConference())
     app.migrations.add(CreateSponsorOrganization())
     app.migrations.add(CreateSponsorUser())
     app.migrations.add(CreateSponsorMembership())
