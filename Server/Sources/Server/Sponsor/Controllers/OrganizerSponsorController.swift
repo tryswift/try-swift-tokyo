@@ -21,9 +21,9 @@ struct OrganizerSponsorController: RouteCollection {
       .with(\.$memberships)
       .with(\.$applications)
       .all()
-    let rows: [OrganizerSponsorListPage.Row] = orgs.map { o in
+    let rows: [OrganizerSponsorListPage.Row] = try orgs.map { o in
       OrganizerSponsorListPage.Row(
-        id: o.id?.uuidString ?? "",
+        id: try o.requireID().uuidString,
         displayName: o.displayName,
         memberCount: o.memberships.count,
         applicationCount: o.applications.count
@@ -43,8 +43,8 @@ struct OrganizerSponsorController: RouteCollection {
 
     let memberEmails = org.memberships.map { $0.user.email }
     let apps: [(id: String, planSlug: String, status: SponsorApplicationStatus)] =
-      org.applications.map { app in
-        (id: app.id?.uuidString ?? "", planSlug: app.plan.slug, status: app.status)
+      try org.applications.map { app in
+        (id: try app.requireID().uuidString, planSlug: app.plan.slug, status: app.status)
       }
     return try respond(
       OrganizerSponsorDetailPage(
@@ -69,9 +69,9 @@ struct OrganizerSponsorController: RouteCollection {
       .with(\.$plan)
       .sort(\.$createdAt, .descending)
       .all()
-    let rows: [OrganizerApplicationListPage.Row] = applications.map { app in
+    let rows: [OrganizerApplicationListPage.Row] = try applications.map { app in
       OrganizerApplicationListPage.Row(
-        id: app.id?.uuidString ?? "",
+        id: try app.requireID().uuidString,
         orgName: app.organization.displayName,
         planSlug: app.plan.slug,
         status: app.status
