@@ -37,6 +37,7 @@ private struct CreateAdminAPITestSchema: AsyncMigration {
       .field("description_ja", .string)
       .field("year", .int, .required)
       .field("is_open", .bool, .required)
+      .field("is_accepting_sponsors", .bool, .required, .sql(.default(false)))
       .field("deadline", .datetime)
       .field("start_date", .datetime)
       .field("end_date", .datetime)
