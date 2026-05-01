@@ -245,12 +245,7 @@ struct SponsorPortalController: RouteCollection {
   }
 
   private func randomURLSafeToken(byteCount: Int) -> String {
-    var bytes = [UInt8](repeating: 0, count: byteCount)
-    for i in 0..<byteCount { bytes[i] = UInt8.random(in: .min ... .max) }
-    return Data(bytes).base64EncodedString()
-      .replacingOccurrences(of: "+", with: "-")
-      .replacingOccurrences(of: "/", with: "_")
-      .replacingOccurrences(of: "=", with: "")
+    SecureToken.urlSafe(byteCount: byteCount)
   }
 
   private func respond<Page: HTML>(_ page: Page) -> Response {

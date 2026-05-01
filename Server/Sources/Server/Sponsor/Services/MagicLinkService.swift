@@ -1,4 +1,3 @@
-import Crypto
 import Fluent
 import Foundation
 import Vapor
@@ -51,22 +50,10 @@ enum MagicLinkService {
   }
 
   static func hash(_ raw: String) -> String {
-    let digest = SHA256.hash(data: Data(raw.utf8))
-    return digest.map { String(format: "%02x", $0) }.joined()
+    SecureToken.sha256Hex(raw)
   }
 
   private static func randomURLSafeToken(byteCount: Int) -> String {
-    var bytes = [UInt8](repeating: 0, count: byteCount)
-    for i in 0..<byteCount { bytes[i] = UInt8.random(in: .min ... .max) }
-    return Data(bytes).base64URLEncodedString()
-  }
-}
-
-extension Data {
-  fileprivate func base64URLEncodedString() -> String {
-    base64EncodedString()
-      .replacingOccurrences(of: "+", with: "-")
-      .replacingOccurrences(of: "/", with: "_")
-      .replacingOccurrences(of: "=", with: "")
+    SecureToken.urlSafe(byteCount: byteCount)
   }
 }
