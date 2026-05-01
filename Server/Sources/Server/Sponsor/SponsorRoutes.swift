@@ -9,6 +9,7 @@ struct SponsorRoutes: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
     let sponsorOnly = routes.grouped(SponsorHostOnlyMiddleware())
       .grouped(LocaleMiddleware())
+      .grouped(CSRFMiddleware())
 
     try sponsorOnly.register(collection: SponsorPublicController())
 

@@ -26,7 +26,7 @@ struct SponsorApplicationController: RouteCollection {
     let preselect = req.query[String.self, at: "plan"]
     return try respond(
       ApplicationFormPage(
-        locale: req.sponsorLocale, csrfToken: "",
+        locale: req.sponsorLocale, csrfToken: req.csrfToken,
         plans: dtos, preselectedSlug: preselect))
   }
 
@@ -121,7 +121,7 @@ struct SponsorApplicationController: RouteCollection {
 
     return try respond(
       ApplicationDetailPage(
-        locale: req.sponsorLocale, csrfToken: "",
+        locale: req.sponsorLocale, csrfToken: req.csrfToken,
         application: try application.toDTO(),
         planName: planName,
         canWithdraw: canWithdraw

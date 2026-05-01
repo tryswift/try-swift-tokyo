@@ -93,7 +93,7 @@ struct OrganizerSponsorController: RouteCollection {
       .first(where: { $0.locale == req.sponsorLocale })?.name ?? application.plan.slug
     return try respond(
       OrganizerApplicationDetailPage(
-        locale: req.sponsorLocale, csrfToken: "",
+        locale: req.sponsorLocale, csrfToken: req.csrfToken,
         application: try application.toDTO(),
         orgName: application.organization.displayName,
         planName: planName

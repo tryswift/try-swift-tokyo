@@ -23,7 +23,7 @@ struct SponsorPublicController: RouteCollection {
   }
 
   func renderInquiry(_ req: Request) async throws -> Response {
-    respond(InquiryFormPage(locale: req.sponsorLocale, csrfToken: ""))
+    respond(InquiryFormPage(locale: req.sponsorLocale, csrfToken: req.csrfToken))
   }
 
   func submitInquiry(_ req: Request) async throws -> Response {
@@ -102,7 +102,7 @@ struct SponsorPublicController: RouteCollection {
   }
 
   func renderLogin(_ req: Request) async throws -> Response {
-    respond(LoginRequestPage(locale: req.sponsorLocale, csrfToken: ""))
+    respond(LoginRequestPage(locale: req.sponsorLocale, csrfToken: req.csrfToken))
   }
 
   func requestMagicLink(_ req: Request) async throws -> Response {

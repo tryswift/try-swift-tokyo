@@ -34,7 +34,7 @@ struct SponsorPortalController: RouteCollection {
     let (org, isOwner) = try await currentMembership(for: user, on: req.db)
     return respond(
       ProfilePage(
-        locale: req.sponsorLocale, csrfToken: "",
+        locale: req.sponsorLocale, csrfToken: req.csrfToken,
         legalName: org?.legalName ?? "",
         displayName: org?.displayName ?? "",
         country: org?.country ?? "",
@@ -94,7 +94,7 @@ struct SponsorPortalController: RouteCollection {
     }
     return respond(
       MembersPage(
-        locale: req.sponsorLocale, csrfToken: "",
+        locale: req.sponsorLocale, csrfToken: req.csrfToken,
         members: rows, isOwner: isOwner))
   }
 
