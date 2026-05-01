@@ -25,9 +25,7 @@ struct SponsorRoutes: RouteCollection {
 /// Returns 404 for non-sponsor host requests so api.tryswift.jp can't reach Sponsor routes.
 struct SponsorHostOnlyMiddleware: AsyncMiddleware {
   func respond(to request: Request, chainingTo next: AsyncResponder) async throws -> Response {
-    if Environment.get("APP_ENV") == "testing" || request.isSponsorHost {
-      return try await next.respond(to: request)
-    }
-    throw Abort(.notFound)
+    guard request.isSponsorHost else { throw Abort(.notFound) }
+    return try await next.respond(to: request)
   }
 }
