@@ -257,17 +257,17 @@ struct CallForProposalComponent: HTML {
     switch language {
     case .ja:
       [
-        ImportantDate(id: "open", title: "CfP 開始", date: "未定"),
-        ImportantDate(id: "deadline", title: "提出締切", date: "未定"),
-        ImportantDate(id: "notification", title: "結果通知", date: "未定"),
-        ImportantDate(id: "conference", title: "カンファレンス", date: "2027 年春予定"),
+        .init(id: "open", title: "CfP 開始", date: "未定"),
+        .init(id: "deadline", title: "提出締切", date: "未定"),
+        .init(id: "notification", title: "結果通知", date: "未定"),
+        .init(id: "conference", title: "カンファレンス", date: "2027年春予定"),
       ]
     case .en:
       [
-        ImportantDate(id: "open", title: "CfP Opens", date: "TBA"),
-        ImportantDate(id: "deadline", title: "Submission Deadline", date: "TBA"),
-        ImportantDate(id: "notification", title: "Notifications", date: "TBA"),
-        ImportantDate(id: "conference", title: "Conference", date: "Spring 2027"),
+        .init(id: "open", title: "CfP Opens", date: "TBA"),
+        .init(id: "deadline", title: "Submission Deadline", date: "TBA"),
+        .init(id: "notification", title: "Notifications", date: "TBA"),
+        .init(id: "conference", title: "Conference", date: "Spring 2027"),
       ]
     }
   }
