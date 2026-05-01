@@ -47,16 +47,12 @@ struct SponsorPublicController: RouteCollection {
     )
     try await inquiry.save(on: req.db)
 
-    let user: SponsorUser
-    if let existing = try await SponsorUser.query(on: req.db)
-      .filter(\.$email == payload.email.lowercased()).first()
-    {
-      user = existing
-    } else {
-      user = SponsorUser(
-        email: payload.email, displayName: payload.contactName, locale: req.sponsorLocale)
-      try await user.save(on: req.db)
-    }
+    let user = try await Self.findOrCreateUser(
+      email: payload.email,
+      displayName: payload.contactName,
+      locale: req.sponsorLocale,
+      on: req.db
+    )
 
     let issued = try await MagicLinkService.issue(for: user, on: req.db)
     let baseURL = Environment.get("SPONSOR_BASE_URL") ?? "https://sponsor.tryswift.jp"
@@ -172,6 +168,36 @@ struct SponsorPublicController: RouteCollection {
       isHTTPOnly: true,
       sameSite: .lax)
     return response
+  }
+
+  /// Returns an existing SponsorUser for `email` or creates a new one. Handles the
+  /// concurrent-insert race where two requests both miss the existence check and
+  /// then race the `sponsor_users.email` unique constraint.
+  static func findOrCreateUser(
+    email: String, displayName: String?,
+    locale: SponsorPortalLocale,
+    on db: Database
+  ) async throws -> SponsorUser {
+    let lowercased = email.lowercased()
+    if let existing = try await SponsorUser.query(on: db)
+      .filter(\.$email == lowercased).first()
+    {
+      return existing
+    }
+    let candidate = SponsorUser(email: email, displayName: displayName, locale: locale)
+    do {
+      try await candidate.save(on: db)
+      return candidate
+    } catch {
+      // Most likely cause: another concurrent request inserted the row first.
+      // Re-query and return the winner.
+      if let existing = try await SponsorUser.query(on: db)
+        .filter(\.$email == lowercased).first()
+      {
+        return existing
+      }
+      throw error
+    }
   }
 
   private func respond<Page: HTML>(_ page: Page) -> Response {

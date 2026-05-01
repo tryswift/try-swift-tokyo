@@ -183,15 +183,10 @@ struct SponsorPortalController: RouteCollection {
       throw Abort(.gone)
     }
 
-    let user: SponsorUser
-    if let existing = try await SponsorUser.query(on: req.db)
-      .filter(\.$email == invitation.email).first()
-    {
-      user = existing
-    } else {
-      user = SponsorUser(email: invitation.email, displayName: nil, locale: req.sponsorLocale)
-      try await user.save(on: req.db)
-    }
+    let user = try await SponsorPublicController.findOrCreateUser(
+      email: invitation.email, displayName: nil,
+      locale: req.sponsorLocale, on: req.db
+    )
 
     if try await SponsorMembership.query(on: req.db)
       .filter(\.$organization.$id == invitation.$organization.id)
