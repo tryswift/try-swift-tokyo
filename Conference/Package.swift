@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-  name: "iOS",
+  name: "Conference",
   defaultLocalization: "en",
   platforms: [.iOS(.v26), .macOS(.v26), .watchOS(.v26), .tvOS(.v26), .visionOS(.v26)],
   products: [
