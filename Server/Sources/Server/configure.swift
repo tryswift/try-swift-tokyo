@@ -72,6 +72,7 @@ enum AppConfiguration {
     app.migrations.add(CreateSponsorApplication())
     app.migrations.add(CreateMagicLinkToken())
     app.migrations.add(CreateSponsorInvitation())
+    app.migrations.add(SeedSponsorPlans2026())
 
     // Auto-migrate on startup (safe for production as Fluent tracks completed migrations)
     try await app.autoMigrate()
