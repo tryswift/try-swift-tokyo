@@ -33,18 +33,21 @@ enum MagicLinkService {
     now: @Sendable () -> Date = { Date() }
   ) async throws -> SponsorUser? {
     let hashed = hash(rawToken)
-    guard
-      let token = try await MagicLinkToken.query(on: db)
-        .filter(\.$tokenHash == hashed)
-        .with(\.$user)
-        .first()
-    else { return nil }
-    if token.usedAt != nil { return nil }
-    if token.expiresAt <= now() { return nil }
+    let nowDate = now()
+    return try await db.transaction { transaction in
+      guard
+        let token = try await MagicLinkToken.query(on: transaction)
+          .filter(\.$tokenHash == hashed)
+          .with(\.$user)
+          .first()
+      else { return nil }
+      if token.usedAt != nil { return nil }
+      if token.expiresAt <= nowDate { return nil }
 
-    token.usedAt = now()
-    try await token.save(on: db)
-    return token.user
+      token.usedAt = nowDate
+      try await token.save(on: transaction)
+      return token.user
+    }
   }
 
   static func hash(_ raw: String) -> String {
