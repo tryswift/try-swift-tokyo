@@ -4,6 +4,10 @@ import SharedModels
 import Vapor
 import WebSponsor
 
+/// Lists active SponsorPlan rows for the currently-accepting Conference.
+/// Mounted under the authenticated sponsor route group: requiring login here
+/// is for parity with the rest of the sponsor portal UX (and to discourage
+/// scraping of pricing) — the plan data itself is not sensitive.
 struct SponsorPlansController: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
     routes.get("plans", use: list)
