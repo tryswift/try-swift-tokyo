@@ -24,7 +24,11 @@ enum SponsorApplicationService {
       application.plan.localizations
       .first(where: { $0.locale == application.payload.locale })?.name ?? application.plan.slug
     let baseURL = Environment.get("SPONSOR_BASE_URL") ?? "https://sponsor.tryswift.jp"
-    let nextStepsURL = URL(string: "\(baseURL)/applications/\(application.id?.uuidString ?? "")")!
+    let applicationID = try application.requireID()
+    guard let nextStepsURL = URL(string: "\(baseURL)/applications/\(applicationID.uuidString)")
+    else {
+      throw Abort(.internalServerError, reason: "Invalid SPONSOR_BASE_URL")
+    }
     let mail = SponsorEmailTemplates.render(
       .applicationApproved(planName: planName, nextStepsURL: nextStepsURL),
       locale: application.payload.locale,
