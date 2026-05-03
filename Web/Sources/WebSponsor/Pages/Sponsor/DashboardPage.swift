@@ -3,18 +3,23 @@ import SharedModels
 
 public struct DashboardPage: HTML {
   public let locale: SponsorPortalLocale
+  public let csrfToken: String
   public let userEmail: String
   public let orgName: String?
 
-  public init(locale: SponsorPortalLocale, userEmail: String, orgName: String?) {
+  public init(
+    locale: SponsorPortalLocale, csrfToken: String = "", userEmail: String, orgName: String?
+  ) {
     self.locale = locale
+    self.csrfToken = csrfToken
     self.userEmail = userEmail
     self.orgName = orgName
   }
 
   public var body: some HTML {
     PortalLayout(
-      pageTitle: PortalStrings.t(.dashboardTitle, locale), locale: locale, isAuthenticated: true
+      pageTitle: PortalStrings.t(.dashboardTitle, locale), locale: locale, isAuthenticated: true,
+      csrfToken: csrfToken
     ) {
       h1 { PortalStrings.t(.dashboardTitle, locale) }
       p { "\(locale == .ja ? "ようこそ" : "Welcome"), \(userEmail)" }

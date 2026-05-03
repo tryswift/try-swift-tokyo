@@ -30,7 +30,7 @@ struct SponsorPlansController: RouteCollection {
       .all()
     let dtos = try plans.map { try $0.toDTO() }
 
-    let html = PlansPage(locale: req.sponsorLocale, plans: dtos).render()
+    let html = PlansPage(locale: req.sponsorLocale, csrfToken: req.csrfToken, plans: dtos).render()
     var headers = HTTPHeaders()
     headers.contentType = .html
     return Response(status: .ok, headers: headers, body: .init(string: html))

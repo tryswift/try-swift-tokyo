@@ -29,7 +29,8 @@ struct OrganizerSponsorController: RouteCollection {
         applicationCount: o.applications.count
       )
     }
-    return try respond(OrganizerSponsorListPage(locale: req.sponsorLocale, rows: rows))
+    return try respond(
+      OrganizerSponsorListPage(locale: req.sponsorLocale, csrfToken: req.csrfToken, rows: rows))
   }
 
   func sponsorDetail(_ req: Request) async throws -> Response {
@@ -49,6 +50,7 @@ struct OrganizerSponsorController: RouteCollection {
     return try respond(
       OrganizerSponsorDetailPage(
         locale: req.sponsorLocale,
+        csrfToken: req.csrfToken,
         organization: try org.toDTO(),
         memberEmails: memberEmails,
         applications: apps
@@ -60,7 +62,9 @@ struct OrganizerSponsorController: RouteCollection {
       .sort(\.$createdAt, .descending)
       .all()
     let dtos = try inquiries.map { try $0.toDTO() }
-    return try respond(OrganizerInquiryListPage(locale: req.sponsorLocale, inquiries: dtos))
+    return try respond(
+      OrganizerInquiryListPage(locale: req.sponsorLocale, csrfToken: req.csrfToken, inquiries: dtos)
+    )
   }
 
   func listApplications(_ req: Request) async throws -> Response {
@@ -77,7 +81,9 @@ struct OrganizerSponsorController: RouteCollection {
         status: app.status
       )
     }
-    return try respond(OrganizerApplicationListPage(locale: req.sponsorLocale, rows: rows))
+    return try respond(
+      OrganizerApplicationListPage(
+        locale: req.sponsorLocale, csrfToken: req.csrfToken, rows: rows))
   }
 
   func applicationDetail(_ req: Request) async throws -> Response {

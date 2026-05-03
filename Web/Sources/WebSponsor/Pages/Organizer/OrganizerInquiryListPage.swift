@@ -3,17 +3,19 @@ import SharedModels
 
 public struct OrganizerInquiryListPage: HTML {
   public let locale: SponsorPortalLocale
+  public let csrfToken: String
   public let inquiries: [SponsorInquiryDTO]
 
-  public init(locale: SponsorPortalLocale, inquiries: [SponsorInquiryDTO]) {
+  public init(locale: SponsorPortalLocale, csrfToken: String = "", inquiries: [SponsorInquiryDTO]) {
     self.locale = locale
+    self.csrfToken = csrfToken
     self.inquiries = inquiries
   }
 
   public var body: some HTML {
     PortalLayout(
       pageTitle: PortalStrings.t(.organizerInquiries, locale),
-      locale: locale, isAuthenticated: true
+      locale: locale, isAuthenticated: true, csrfToken: csrfToken
     ) {
       h1 { PortalStrings.t(.organizerInquiries, locale) }
       table {

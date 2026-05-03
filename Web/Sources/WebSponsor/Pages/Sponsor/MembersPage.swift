@@ -33,7 +33,7 @@ public struct MembersPage: HTML {
   public var body: some HTML {
     PortalLayout(
       pageTitle: PortalStrings.t(.teamTitle, locale),
-      locale: locale, isAuthenticated: true, flash: flash
+      locale: locale, isAuthenticated: true, flash: flash, csrfToken: csrfToken
     ) {
       h1 { PortalStrings.t(.teamTitle, locale) }
       ul {

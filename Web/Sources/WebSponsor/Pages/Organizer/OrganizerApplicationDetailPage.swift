@@ -23,7 +23,7 @@ public struct OrganizerApplicationDetailPage: HTML {
   public var body: some HTML {
     PortalLayout(
       pageTitle: PortalStrings.t(.applicationDetailTitle, locale),
-      locale: locale, isAuthenticated: true
+      locale: locale, isAuthenticated: true, csrfToken: csrfToken
     ) {
       h1 { "\(orgName) — \(planName)" }
       p { StatusBadge(application.status) }

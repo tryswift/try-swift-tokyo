@@ -22,7 +22,7 @@ public struct ApplicationDetailPage: HTML {
   public var body: some HTML {
     PortalLayout(
       pageTitle: PortalStrings.t(.applicationDetailTitle, locale),
-      locale: locale, isAuthenticated: true
+      locale: locale, isAuthenticated: true, csrfToken: csrfToken
     ) {
       h1 { PortalStrings.t(.applicationDetailTitle, locale) }
       p { "Plan: \(planName)" }

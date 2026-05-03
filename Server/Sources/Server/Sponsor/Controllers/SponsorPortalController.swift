@@ -24,7 +24,9 @@ struct SponsorPortalController: RouteCollection {
     guard let user = req.sponsorUser else { throw Abort(.unauthorized) }
     let orgName = try await currentOrganization(for: user, on: req.db)?.displayName
     return respond(
-      DashboardPage(locale: req.sponsorLocale, userEmail: user.email, orgName: orgName))
+      DashboardPage(
+        locale: req.sponsorLocale, csrfToken: req.csrfToken,
+        userEmail: user.email, orgName: orgName))
   }
 
   // MARK: - Profile
@@ -168,7 +170,8 @@ struct SponsorPortalController: RouteCollection {
       InvitationAcceptPage(
         locale: req.sponsorLocale,
         orgName: invitation.organization.displayName,
-        token: token))
+        token: token,
+        csrfToken: req.csrfToken))
   }
 
   func acceptInvitation(_ req: Request) async throws -> Response {

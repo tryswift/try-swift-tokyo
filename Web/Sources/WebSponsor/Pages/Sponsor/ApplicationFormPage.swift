@@ -20,7 +20,7 @@ public struct ApplicationFormPage: HTML {
   public var body: some HTML {
     PortalLayout(
       pageTitle: PortalStrings.t(.applicationFormTitle, locale),
-      locale: locale, isAuthenticated: true
+      locale: locale, isAuthenticated: true, csrfToken: csrfToken
     ) {
       h1 { PortalStrings.t(.applicationFormTitle, locale) }
       form(.method(.post), .action("/applications")) {

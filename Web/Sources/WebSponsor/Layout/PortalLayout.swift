@@ -7,6 +7,7 @@ public struct PortalLayout<Inner: HTML>: HTML {
   public let locale: SponsorPortalLocale
   public let isAuthenticated: Bool
   public let flash: String?
+  public let csrfToken: String
   public let inner: Inner
 
   public init(
@@ -14,19 +15,21 @@ public struct PortalLayout<Inner: HTML>: HTML {
     locale: SponsorPortalLocale,
     isAuthenticated: Bool,
     flash: String? = nil,
+    csrfToken: String = "",
     @HTMLBuilder inner: () -> Inner
   ) {
     self.pageTitle = pageTitle
     self.locale = locale
     self.isAuthenticated = isAuthenticated
     self.flash = flash
+    self.csrfToken = csrfToken
     self.inner = inner()
   }
 
   public var body: some HTML {
     let webLocale: WebLocale = locale == .ja ? .ja : .en
-    WebLayout(pageTitle: pageTitle, locale: webLocale) {
-      PortalNav(locale: locale, isAuthenticated: isAuthenticated)
+    return WebLayout(pageTitle: pageTitle, locale: webLocale) {
+      PortalNav(locale: locale, isAuthenticated: isAuthenticated, csrfToken: csrfToken)
       if let flash {
         div(.class("flash")) { flash }
       }

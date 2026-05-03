@@ -16,17 +16,19 @@ public struct OrganizerApplicationListPage: HTML {
   }
 
   public let locale: SponsorPortalLocale
+  public let csrfToken: String
   public let rows: [Row]
 
-  public init(locale: SponsorPortalLocale, rows: [Row]) {
+  public init(locale: SponsorPortalLocale, csrfToken: String = "", rows: [Row]) {
     self.locale = locale
+    self.csrfToken = csrfToken
     self.rows = rows
   }
 
   public var body: some HTML {
     PortalLayout(
       pageTitle: PortalStrings.t(.organizerApplications, locale),
-      locale: locale, isAuthenticated: true
+      locale: locale, isAuthenticated: true, csrfToken: csrfToken
     ) {
       h1 { PortalStrings.t(.organizerApplications, locale) }
       table {

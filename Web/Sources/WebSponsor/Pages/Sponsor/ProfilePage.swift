@@ -32,7 +32,7 @@ public struct ProfilePage: HTML {
   public var body: some HTML {
     PortalLayout(
       pageTitle: PortalStrings.t(.profileTitle, locale),
-      locale: locale, isAuthenticated: true, flash: flash
+      locale: locale, isAuthenticated: true, flash: flash, csrfToken: csrfToken
     ) {
       h1 { PortalStrings.t(.profileTitle, locale) }
       form(.method(.post), .action("/profile")) {
