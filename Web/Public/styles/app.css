@@ -1466,6 +1466,17 @@ body.modal-open {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
+}
+
+/* The base .form-field input rule stretches inputs to 100% width, which
+   pushes checkbox/radio inputs out of place inside .organizer-checkbox-row.
+   Restore the natural intrinsic width so the box sits next to its label. */
+.organizer-checkbox-row input[type="checkbox"],
+.organizer-checkbox-row input[type="radio"] {
+  width: auto;
+  flex: 0 0 auto;
+  margin: 0;
 }
 
 .form-actions.split {
