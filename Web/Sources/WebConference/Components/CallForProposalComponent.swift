@@ -175,8 +175,8 @@ struct CallForProposalComponent: HTML {
 
   private var heroEyebrow: String {
     switch language {
-    case .ja: "try! Swift Tokyo 2026"
-    case .en: "try! Swift Tokyo 2026"
+    case .ja: "try! Swift Tokyo 2027"
+    case .en: "try! Swift Tokyo 2027"
     }
   }
 
@@ -190,9 +190,9 @@ struct CallForProposalComponent: HTML {
   private var heroDescription: String {
     switch language {
     case .ja:
-      "世界中の Swift 開発者に向けて、あなたの知見を共有しませんか。try! Swift Tokyo 2026 のセッション提案を募集しています。"
+      "世界中の Swift 開発者に向けて、あなたの知見を共有しませんか。try! Swift Tokyo 2027 をはじめとする来年度の各イベントで、セッション提案を募集しています。"
     case .en:
-      "Share your Swift expertise with developers from around the world. Submit your talk proposal for try! Swift Tokyo 2026."
+      "Share your Swift expertise with developers from around the world. Submit your talk proposal for try! Swift Tokyo 2027 and our other upcoming events."
     }
   }
 
@@ -257,17 +257,17 @@ struct CallForProposalComponent: HTML {
     switch language {
     case .ja:
       [
-        .init(id: "open", title: "CfP 開始", date: "2026年1月15日"),
-        .init(id: "deadline", title: "提出締切", date: "2026年2月1日"),
-        .init(id: "notification", title: "結果通知", date: "2026年2月8日"),
-        .init(id: "conference", title: "カンファレンス", date: "2026年4月12日 - 14日"),
+        .init(id: "open", title: "CfP 開始", date: "未定"),
+        .init(id: "deadline", title: "提出締切", date: "未定"),
+        .init(id: "notification", title: "結果通知", date: "未定"),
+        .init(id: "conference", title: "カンファレンス", date: "2027年春予定"),
       ]
     case .en:
       [
-        .init(id: "open", title: "CfP Opens", date: "January 15, 2026"),
-        .init(id: "deadline", title: "Submission Deadline", date: "February 1, 2026"),
-        .init(id: "notification", title: "Notifications", date: "February 8, 2026"),
-        .init(id: "conference", title: "Conference", date: "April 12-14, 2026"),
+        .init(id: "open", title: "CfP Opens", date: "TBA"),
+        .init(id: "deadline", title: "Submission Deadline", date: "TBA"),
+        .init(id: "notification", title: "Notifications", date: "TBA"),
+        .init(id: "conference", title: "Conference", date: "Spring 2027"),
       ]
     }
   }

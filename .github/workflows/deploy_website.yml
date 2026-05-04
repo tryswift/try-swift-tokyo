@@ -12,8 +12,8 @@ on:
       - "SharedModels/**"
       - "trySwiftTokyo.xcworkspace/xcshareddata/swiftpm/Package.resolved"
       - ".github/workflows/deploy_website.yml"
-      - "iOS/Sources/SponsorFeature/Media.xcassets/**"
-      - "iOS/Sources/ScheduleFeature/Media.xcassets/**"
+      - "Conference/Sources/SponsorFeature/Media.xcassets/**"
+      - "Conference/Sources/ScheduleFeature/Media.xcassets/**"
       - "DataClient/Sources/DataClient/Resources/**"
   workflow_dispatch:
 

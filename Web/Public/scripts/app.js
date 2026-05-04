@@ -259,6 +259,42 @@
     return startText || endText;
   }
 
+  var MARKDOWN_ALLOWED_TAGS = [
+    "p", "br", "strong", "em", "del", "code", "pre",
+    "ul", "ol", "li",
+    "a",
+    "h4", "h5", "h6",
+    "blockquote", "hr"
+  ];
+  var MARKDOWN_ALLOWED_ATTR = ["href", "title"];
+
+  function renderMarkdown(text) {
+    if (!text) return "";
+    var fallback = escapeHTML(String(text)).replace(/\r\n|\r|\n/g, "<br>");
+    if (typeof window === "undefined" || typeof window.marked === "undefined") {
+      return fallback;
+    }
+    // Without DOMPurify, marked would pass raw HTML and javascript: URLs from
+    // API-supplied descriptions through to innerHTML, so refuse to render.
+    if (typeof window.DOMPurify === "undefined") {
+      return fallback;
+    }
+    try {
+      var html = window.marked.parse(String(text), { breaks: true, gfm: true });
+      // Demote headings so card content stays subordinate to the card title.
+      html = html.replace(/<(\/?)h([1-6])(\s|>)/g, function (_, slash, level, tail) {
+        var demoted = Math.min(parseInt(level, 10) + 3, 6);
+        return "<" + slash + "h" + demoted + tail;
+      });
+      return window.DOMPurify.sanitize(html, {
+        ALLOWED_TAGS: MARKDOWN_ALLOWED_TAGS,
+        ALLOWED_ATTR: MARKDOWN_ALLOWED_ATTR
+      });
+    } catch (_error) {
+      return fallback;
+    }
+  }
+
   function localizedConferenceDescription(conference) {
     var description = conference && conference.description;
     if (!description) return "";
@@ -302,7 +338,7 @@
     var html = "";
     conferences.forEach(function (conference) {
       var displayName = escapeHTML(String(conference.displayName || ""));
-      var description = escapeHTML(localizedConferenceDescription(conference));
+      var description = renderMarkdown(localizedConferenceDescription(conference));
       var deadline = escapeHTML(formatEventDate(conference.deadline));
       var dateRange = escapeHTML(formatEventDateRange(conference.startDate, conference.endDate));
       var location = escapeHTML(String(conference.location || ""));
@@ -315,7 +351,7 @@
       html += '<span class="event-status-badge open">' + escapeHTML(openBadgeText) + "</span>";
       html += "</div>";
       if (description) {
-        html += '<p class="event-description">' + description + "</p>";
+        html += '<div class="event-description">' + description + "</div>";
       }
       html += '<dl class="event-meta">';
       if (deadline) {
@@ -398,7 +434,9 @@
   }
 
   async function loadAllConferences() {
-    state.conferences = await apiRequest("/api/v1/conferences");
+    // Organizer-only endpoint that includes unpublished drafts. Public callers
+    // continue to use /api/v1/conferences/open via loadOpenConferences().
+    state.conferences = await apiRequest("/api/v1/conferences/admin/all");
     return state.conferences;
   }
 
@@ -2308,6 +2346,409 @@
     await refreshOrganizerWorkshopResults();
   }
 
+  function renderOrganizerConferencesTable() {
+    var tbody = document.getElementById("organizer-conferences-tbody");
+    var emptyMessage = document.getElementById("organizer-conferences-empty");
+    if (!tbody) return;
+
+    var conferences = state.conferences || [];
+    if (!conferences.length) {
+      tbody.innerHTML = "";
+      if (emptyMessage) emptyMessage.hidden = false;
+      return;
+    }
+
+    if (emptyMessage) emptyMessage.hidden = true;
+    var ja = currentLanguage() === "ja";
+    var html = "";
+    conferences.forEach(function (conference) {
+      var pathAttr = escapeHTML(String(conference.path || ""));
+      var displayName = escapeHTML(String(conference.displayName || conference.path || ""));
+      var year = escapeHTML(String(conference.year || ""));
+      var deadline = formatEventDate(conference.deadline) || (ja ? "未設定" : "—");
+      var isOpen = conference.isOpen === true;
+      var isPublished = conference.isPublished !== false;
+
+      var openStatusClass = isOpen ? "event-status-badge open" : "event-status-badge closed";
+      var openStatusLabel = isOpen ? (ja ? "募集中" : "Open") : (ja ? "終了" : "Closed");
+      var openActionLabel = isOpen ? (ja ? "受付を閉じる" : "Close CfP") : (ja ? "受付を開ける" : "Open CfP");
+      var openActionClass = isOpen ? "button neutral" : "button primary";
+
+      var publishStatusBadge = isPublished
+        ? ""
+        : '<span class="event-status-badge unpublished">' + escapeHTML(ja ? "未公開" : "Unpublished") + "</span>";
+      var publishActionLabel = isPublished ? (ja ? "非公開にする" : "Unpublish") : (ja ? "公開する" : "Publish");
+      var publishActionClass = isPublished ? "button neutral" : "button primary";
+
+      var rowClass = isPublished ? "" : ' class="organizer-conferences-row-unpublished"';
+
+      html += "<tr" + rowClass + ' data-conference-path="' + pathAttr + '">';
+      html += "<td>" + displayName + "</td>";
+      html += "<td>" + year + "</td>";
+      html += "<td>" + escapeHTML(deadline) + "</td>";
+      html += '<td><div class="organizer-conferences-status-cell">';
+      html += publishStatusBadge;
+      html += '<span class="' + openStatusClass + '">' + escapeHTML(openStatusLabel) + "</span>";
+      html += "</div></td>";
+      html += '<td class="organizer-conferences-actions-col">';
+      html += '<div class="organizer-conferences-actions-stack">';
+      html += '<button type="button" class="' + publishActionClass + '"';
+      html += ' data-toggle-published="' + pathAttr + '">';
+      html += escapeHTML(publishActionLabel);
+      html += "</button>";
+      html += '<button type="button" class="' + openActionClass + '"';
+      html += ' data-toggle-conference="' + pathAttr + '">';
+      html += escapeHTML(openActionLabel);
+      html += "</button>";
+      html += '<button type="button" class="button light"';
+      html += ' data-edit-conference="' + pathAttr + '">';
+      html += escapeHTML(ja ? "編集" : "Edit");
+      html += "</button>";
+      html += "</div>";
+      html += "</td>";
+      html += "</tr>";
+    });
+    tbody.innerHTML = html;
+  }
+
+  async function refreshOrganizerConferences() {
+    try {
+      await loadAllConferences();
+      renderOrganizerConferencesTable();
+      showStatus("organizer-conferences-status", "", null);
+    } catch (error) {
+      showStatus("organizer-conferences-status", error.message, "error");
+    }
+  }
+
+  function buildConferenceUpdatePayload(conference, overrides) {
+    var payload = {
+      path: conference.path,
+      displayName: conference.displayName,
+      descriptionEn: conference.description ? conference.description.en : null,
+      descriptionJa: conference.description ? conference.description.ja : null,
+      year: conference.year,
+      isOpen: conference.isOpen,
+      isPublished: conference.isPublished !== false,
+      deadline: conference.deadline || null,
+      startDate: conference.startDate || null,
+      endDate: conference.endDate || null,
+      location: conference.location || null,
+      websiteURL: conference.websiteURL || null
+    };
+    if (overrides) {
+      Object.keys(overrides).forEach(function (key) { payload[key] = overrides[key]; });
+    }
+    return payload;
+  }
+
+  async function applyConferenceUpdate(conference, overrides, button, successMessage) {
+    var ja = currentLanguage() === "ja";
+    if (button) {
+      button.disabled = true;
+      button.textContent = ja ? "更新中…" : "Updating…";
+    }
+
+    var payload = buildConferenceUpdatePayload(conference, overrides);
+    try {
+      var updated = await apiRequest("/api/v1/conferences/" + encodeURIComponent(conference.path), {
+        method: "PUT",
+        body: JSON.stringify(payload)
+      });
+      var index = state.conferences.findIndex(function (item) { return item.path === conference.path; });
+      if (index >= 0) state.conferences[index] = updated;
+      renderOrganizerConferencesTable();
+      showStatus("organizer-conferences-status", successMessage, "success");
+    } catch (error) {
+      showStatus("organizer-conferences-status", error.message, "error");
+      // renderOrganizerConferencesTable() rebuilds the row, replacing the
+      // button reference, so no manual re-enable is needed here.
+      renderOrganizerConferencesTable();
+    }
+  }
+
+  function findOrganizerConference(path) {
+    return (state.conferences || []).find(function (item) { return item.path === path; });
+  }
+
+  async function toggleOrganizerConferenceOpen(path, button) {
+    var conference = findOrganizerConference(path);
+    if (!conference) return;
+    var nextIsOpen = !conference.isOpen;
+    var successMessage = nextIsOpen
+      ? localizedCopy(
+        conference.displayName + " is now accepting proposals.",
+        conference.displayName + " の応募受付を開始しました。"
+      )
+      : localizedCopy(
+        conference.displayName + " has stopped accepting proposals.",
+        conference.displayName + " の応募受付を停止しました。"
+      );
+    await applyConferenceUpdate(conference, { isOpen: nextIsOpen }, button, successMessage);
+  }
+
+  async function toggleOrganizerConferencePublished(path, button) {
+    var conference = findOrganizerConference(path);
+    if (!conference) return;
+    var nextIsPublished = !(conference.isPublished !== false);
+    var successMessage = nextIsPublished
+      ? localizedCopy(
+        conference.displayName + " is now public.",
+        conference.displayName + " を公開しました。"
+      )
+      : localizedCopy(
+        conference.displayName + " is now hidden from public listings.",
+        conference.displayName + " を非公開にしました。"
+      );
+    await applyConferenceUpdate(conference, { isPublished: nextIsPublished }, button, successMessage);
+  }
+
+  function pad2(value) {
+    var str = String(value);
+    return str.length >= 2 ? str : "0" + str;
+  }
+
+  function isoToConferenceDateInputValue(iso) {
+    if (!iso) return "";
+    var date = new Date(iso);
+    if (isNaN(date.getTime())) return "";
+    return date.getUTCFullYear() + "-" + pad2(date.getUTCMonth() + 1) + "-" + pad2(date.getUTCDate());
+  }
+
+  function isoToConferenceUTCDatetimeString(iso) {
+    if (!iso) return "";
+    var date = new Date(iso);
+    if (isNaN(date.getTime())) return "";
+    return date.getUTCFullYear() + "-" + pad2(date.getUTCMonth() + 1) + "-" + pad2(date.getUTCDate())
+      + "T" + pad2(date.getUTCHours()) + ":" + pad2(date.getUTCMinutes());
+  }
+
+  function conferenceDateInputToIso(value) {
+    if (!value) return null;
+    var match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!match) return null;
+    return match[1] + "-" + match[2] + "-" + match[3] + "T00:00:00Z";
+  }
+
+  function conferenceUTCDatetimeToIso(value) {
+    if (!value) return null;
+    var trimmed = String(value).trim();
+    if (!trimmed) return null;
+    var match = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?$/);
+    if (match) {
+      var seconds = match[6] || "00";
+      return match[1] + "-" + match[2] + "-" + match[3] + "T" + match[4] + ":" + match[5] + ":" + seconds + "Z";
+    }
+    var fallback = new Date(trimmed);
+    if (!isNaN(fallback.getTime())) return fallback.toISOString();
+    return null;
+  }
+
+  function showOrganizerConferenceForm(conference) {
+    var card = document.getElementById("organizer-conference-form-card");
+    var form = document.getElementById("organizer-conference-form");
+    if (!card || !form) return;
+
+    var ja = currentLanguage() === "ja";
+    var titleEl = document.getElementById("organizer-conference-form-title");
+    var deleteButton = document.getElementById("organizer-conference-form-delete");
+    var submitButton = document.getElementById("organizer-conference-form-submit");
+
+    form.reset();
+    if (conference) {
+      form.dataset.mode = "edit";
+      if (titleEl) {
+        titleEl.textContent = ja
+          ? "編集: " + conference.displayName
+          : "Edit: " + conference.displayName;
+      }
+      form.elements.originalPath.value = conference.path;
+      form.elements.path.value = conference.path;
+      form.elements.displayName.value = conference.displayName || "";
+      form.elements.year.value = String(conference.year || "");
+      form.elements.deadline.value = isoToConferenceUTCDatetimeString(conference.deadline);
+      form.elements.startDate.value = isoToConferenceDateInputValue(conference.startDate);
+      form.elements.endDate.value = isoToConferenceDateInputValue(conference.endDate);
+      form.elements.location.value = conference.location || "";
+      form.elements.websiteURL.value = conference.websiteURL || "";
+      form.elements.isOpen.checked = conference.isOpen === true;
+      form.elements.isPublished.checked = conference.isPublished !== false;
+      form.elements.descriptionEn.value = conference.description ? conference.description.en : "";
+      form.elements.descriptionJa.value = conference.description ? conference.description.ja : "";
+      if (deleteButton) deleteButton.hidden = false;
+      if (submitButton) submitButton.textContent = ja ? "保存" : "Save";
+    } else {
+      form.dataset.mode = "create";
+      if (titleEl) titleEl.textContent = ja ? "新規カンファレンス" : "New Conference";
+      form.elements.originalPath.value = "";
+      form.elements.isOpen.checked = false;
+      form.elements.isPublished.checked = false;
+      if (deleteButton) deleteButton.hidden = true;
+      if (submitButton) submitButton.textContent = ja ? "作成" : "Create";
+    }
+
+    showStatus("organizer-conference-form-status", "", null);
+    card.hidden = false;
+    card.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function hideOrganizerConferenceForm() {
+    var card = document.getElementById("organizer-conference-form-card");
+    var form = document.getElementById("organizer-conference-form");
+    if (form) {
+      form.reset();
+      form.dataset.mode = "create";
+    }
+    if (card) card.hidden = true;
+    showStatus("organizer-conference-form-status", "", null);
+  }
+
+  function readOrganizerConferenceForm(form) {
+    var year = parseInt(form.elements.year.value, 10);
+    return {
+      path: form.elements.path.value.trim(),
+      displayName: form.elements.displayName.value.trim(),
+      descriptionEn: (form.elements.descriptionEn.value || "").trim() || null,
+      descriptionJa: (form.elements.descriptionJa.value || "").trim() || null,
+      year: isNaN(year) ? null : year,
+      isOpen: form.elements.isOpen.checked,
+      isPublished: form.elements.isPublished.checked,
+      deadline: conferenceUTCDatetimeToIso(form.elements.deadline.value),
+      startDate: conferenceDateInputToIso(form.elements.startDate.value),
+      endDate: conferenceDateInputToIso(form.elements.endDate.value),
+      location: (form.elements.location.value || "").trim() || null,
+      websiteURL: (form.elements.websiteURL.value || "").trim() || null
+    };
+  }
+
+  async function submitOrganizerConferenceForm() {
+    var form = document.getElementById("organizer-conference-form");
+    if (!form) return;
+    var payload = readOrganizerConferenceForm(form);
+    var mode = form.dataset.mode || "create";
+    var originalPath = form.elements.originalPath.value;
+
+    if (!payload.path || !payload.displayName || payload.year === null) {
+      showStatus(
+        "organizer-conference-form-status",
+        localizedCopy(
+          "Path, display name, and year are required.",
+          "スラッグ・表示名・年度は必須です。"
+        ),
+        "error"
+      );
+      return;
+    }
+
+    var url, method;
+    if (mode === "edit" && originalPath) {
+      url = "/api/v1/conferences/" + encodeURIComponent(originalPath);
+      method = "PUT";
+    } else {
+      url = "/api/v1/conferences";
+      method = "POST";
+    }
+
+    try {
+      await apiRequest(url, { method: method, body: JSON.stringify(payload) });
+      var successMessage = mode === "edit"
+        ? localizedCopy(
+          payload.displayName + " was updated.",
+          payload.displayName + " を更新しました。"
+        )
+        : localizedCopy(
+          payload.displayName + " was created.",
+          payload.displayName + " を作成しました。"
+        );
+      hideOrganizerConferenceForm();
+      await refreshOrganizerConferences();
+      showStatus("organizer-conferences-status", successMessage, "success");
+    } catch (error) {
+      showStatus("organizer-conference-form-status", error.message, "error");
+    }
+  }
+
+  async function deleteOrganizerConferenceFromForm() {
+    var form = document.getElementById("organizer-conference-form");
+    if (!form || form.dataset.mode !== "edit") return;
+    var path = form.elements.originalPath.value;
+    if (!path) return;
+    var conference = findOrganizerConference(path);
+    var displayName = conference ? conference.displayName : path;
+    var confirmMessage = localizedCopy(
+      'Delete conference "' + displayName + '"? This cannot be undone.',
+      "「" + displayName + "」を削除しますか？この操作は取り消せません。"
+    );
+    if (!window.confirm(confirmMessage)) return;
+    try {
+      await apiRequest("/api/v1/conferences/" + encodeURIComponent(path), { method: "DELETE" });
+      hideOrganizerConferenceForm();
+      await refreshOrganizerConferences();
+      showStatus(
+        "organizer-conferences-status",
+        localizedCopy(
+          displayName + " was deleted.",
+          displayName + " を削除しました。"
+        ),
+        "success"
+      );
+    } catch (error) {
+      showStatus("organizer-conference-form-status", error.message, "error");
+    }
+  }
+
+  async function bootstrapOrganizerConferencesSection() {
+    var tbody = document.getElementById("organizer-conferences-tbody");
+    var refreshButton = document.getElementById("organizer-conferences-refresh");
+    if (!tbody || !refreshButton) return;
+
+    refreshButton.addEventListener("click", refreshOrganizerConferences);
+
+    var addButton = document.getElementById("organizer-conference-add");
+    var form = document.getElementById("organizer-conference-form");
+    var cancelButton = document.getElementById("organizer-conference-form-cancel");
+    var deleteButton = document.getElementById("organizer-conference-form-delete");
+
+    if (addButton) {
+      addButton.addEventListener("click", function () {
+        showOrganizerConferenceForm(null);
+      });
+    }
+    if (cancelButton) cancelButton.addEventListener("click", hideOrganizerConferenceForm);
+    if (deleteButton) deleteButton.addEventListener("click", deleteOrganizerConferenceFromForm);
+    if (form) {
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        submitOrganizerConferenceForm();
+      });
+    }
+
+    tbody.addEventListener("click", function (event) {
+      var openButton = event.target.closest("[data-toggle-conference]");
+      if (openButton) {
+        var openPath = openButton.getAttribute("data-toggle-conference");
+        if (openPath) toggleOrganizerConferenceOpen(openPath, openButton);
+        return;
+      }
+      var publishButton = event.target.closest("[data-toggle-published]");
+      if (publishButton) {
+        var publishPath = publishButton.getAttribute("data-toggle-published");
+        if (publishPath) toggleOrganizerConferencePublished(publishPath, publishButton);
+        return;
+      }
+      var editButton = event.target.closest("[data-edit-conference]");
+      if (editButton) {
+        var editPath = editButton.getAttribute("data-edit-conference");
+        if (editPath) {
+          var conference = findOrganizerConference(editPath);
+          if (conference) showOrganizerConferenceForm(conference);
+        }
+      }
+    });
+
+    await refreshOrganizerConferences();
+  }
+
   async function bootstrapOrganizerPage() {
     await bootstrapOrganizerShell();
     await bootstrapOrganizerProposalsSection();
@@ -2315,6 +2756,7 @@
     await bootstrapOrganizerWorkshopsSection();
     await bootstrapOrganizerWorkshopApplicationsSection();
     await bootstrapOrganizerWorkshopResultsSection();
+    await bootstrapOrganizerConferencesSection();
   }
 
   async function bootstrapPage() {

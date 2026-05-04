@@ -19,28 +19,28 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:..\/iOS",
+        "containerPath" : "container:..\/Conference",
         "identifier" : "LiveTranslationFeatureTests",
         "name" : "LiveTranslationFeatureTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/iOS",
+        "containerPath" : "container:..\/Conference",
         "identifier" : "ScheduleFeatureTests",
         "name" : "ScheduleFeatureTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/iOS",
+        "containerPath" : "container:..\/Conference",
         "identifier" : "SponsorFeatureTests",
         "name" : "SponsorFeatureTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/iOS",
+        "containerPath" : "container:..\/Conference",
         "identifier" : "trySwiftFeatureTests",
         "name" : "trySwiftFeatureTests"
       }

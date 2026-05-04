@@ -39,6 +39,7 @@ private struct CreateFavoritesTestSchema: AsyncMigration {
       .field("year", .int, .required)
       .field("is_open", .bool, .required)
       .field("is_accepting_sponsors", .bool, .required, .sql(.default(false)))
+      .field("is_published", .bool, .required, .sql(.default(true)))
       .field("deadline", .datetime)
       .field("start_date", .datetime)
       .field("end_date", .datetime)

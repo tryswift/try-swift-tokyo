@@ -8,7 +8,7 @@
       location = "group:App/App.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:iOS">
+      location = "group:Conference">
    </FileRef>
    <FileRef
       location = "group:DataClient">

@@ -22,6 +22,7 @@ struct ConferenceDTOContent: Content {
   let description: LocalizedStringContent?
   let year: Int
   let isOpen: Bool
+  let isPublished: Bool
   let deadline: Date?
   let startDate: Date?
   let endDate: Date?
@@ -37,6 +38,7 @@ struct ConferenceDTOContent: Content {
     self.description = dto.description.map { LocalizedStringContent(from: $0) }
     self.year = dto.year
     self.isOpen = dto.isOpen
+    self.isPublished = dto.isPublished
     self.deadline = dto.deadline
     self.startDate = dto.startDate
     self.endDate = dto.endDate
@@ -55,6 +57,7 @@ struct CreateConferenceRequestContent: Content {
   let descriptionJa: String?
   let year: Int
   let isOpen: Bool?
+  let isPublished: Bool?
   let deadline: Date?
   let startDate: Date?
   let endDate: Date?
@@ -67,22 +70,37 @@ struct ConferenceController: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
     let conferences = routes.grouped("conferences")
 
-    // Public routes
+    // Public routes (only published conferences are exposed)
     conferences.get(use: getAllConferences)
     conferences.get("open", use: getOpenConferences)
     conferences.get(":path", use: getConference)
 
     // Admin-only routes (Organizer access)
     let adminOnly = conferences.grouped(AuthMiddleware()).grouped(OrganizerMiddleware())
+    adminOnly.get("admin", "all", use: getAllConferencesAdmin)
     adminOnly.post(use: createConference)
     adminOnly.put(":path", use: updateConference)
     adminOnly.delete(":path", use: deleteConference)
   }
 
-  /// Get all conferences
+  /// Get all published conferences.
   /// GET /conferences
   @Sendable
   func getAllConferences(req: Request) async throws -> [ConferenceDTOContent] {
+    let conferences = try await Conference.query(on: req.db)
+      .filter(\.$isPublished == true)
+      .sort(\.$year, .descending)
+      .all()
+
+    return try conferences.map { conference in
+      ConferenceDTOContent(from: try conference.toDTO())
+    }
+  }
+
+  /// Get every conference, including unpublished drafts, for organizers.
+  /// GET /conferences/admin/all
+  @Sendable
+  func getAllConferencesAdmin(req: Request) async throws -> [ConferenceDTOContent] {
     let conferences = try await Conference.query(on: req.db)
       .sort(\.$year, .descending)
       .all()
@@ -98,6 +116,7 @@ struct ConferenceController: RouteCollection {
   func getOpenConferences(req: Request) async throws -> [ConferenceDTOContent] {
     let conferences = try await Conference.query(on: req.db)
       .filter(\.$isOpen == true)
+      .filter(\.$isPublished == true)
       .sort(\.$year, .descending)
       .all()
 
@@ -106,7 +125,8 @@ struct ConferenceController: RouteCollection {
     }
   }
 
-  /// Get a specific conference by path
+  /// Get a specific conference by path. Unpublished conferences are hidden
+  /// behind a 404 from public consumers.
   /// GET /conferences/:path
   @Sendable
   func getConference(req: Request) async throws -> ConferenceDTOContent {
@@ -117,6 +137,7 @@ struct ConferenceController: RouteCollection {
     guard
       let conference = try await Conference.query(on: req.db)
         .filter(\.$path == path)
+        .filter(\.$isPublished == true)
         .first()
     else {
       throw Abort(.notFound, reason: "Conference not found")
@@ -147,6 +168,7 @@ struct ConferenceController: RouteCollection {
       descriptionJa: request.descriptionJa,
       year: request.year,
       isOpen: request.isOpen ?? true,
+      isPublished: request.isPublished ?? true,
       deadline: request.deadline,
       startDate: request.startDate,
       endDate: request.endDate,
@@ -183,6 +205,7 @@ struct ConferenceController: RouteCollection {
     conference.descriptionJa = request.descriptionJa
     conference.year = request.year
     conference.isOpen = request.isOpen ?? conference.isOpen
+    conference.isPublished = request.isPublished ?? conference.isPublished
     conference.deadline = request.deadline
     conference.startDate = request.startDate
     conference.endDate = request.endDate

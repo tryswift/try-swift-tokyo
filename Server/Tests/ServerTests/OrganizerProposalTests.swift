@@ -70,6 +70,7 @@ struct ResolveSpeakerIDTests {
     app.migrations.add(AddUserEmail())
     app.migrations.add(CreateConference())
     app.migrations.add(AddIsAcceptingSponsorsToConference())
+    app.migrations.add(AddConferenceIsPublished())
     app.migrations.add(SeedTrySwiftTokyo2026())
     app.migrations.add(AddPaperCallImportUser())
     app.migrations.add(CreateTestProposalSchema())

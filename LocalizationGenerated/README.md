@@ -1,6 +1,6 @@
 # LocalizationGenerated
 
-This directory contains auto-generated Swift code from iOS String Catalogs (.xcstrings).
+This directory contains auto-generated Swift code from Conference String Catalogs (.xcstrings).
 
 ## Generated Files
 
@@ -18,7 +18,7 @@ All files are regenerated during build time by parsing .xcstrings JSON files.
 ## Source of Truth
 
 The authoritative source for localization strings is:
-- `iOS/Sources/ScheduleFeature/Localizable.xcstrings`
-- `iOS/Sources/trySwiftFeature/Localizable.xcstrings`
+- `Conference/Sources/ScheduleFeature/Localizable.xcstrings`
+- `Conference/Sources/trySwiftFeature/Localizable.xcstrings`
 
 To update translations, edit the .xcstrings files using Xcode's String Catalog editor or directly as JSON.
