@@ -35,7 +35,9 @@ public struct ContentView: View {
   {
     let reducer = SponsorsList(
       fetchSponsors: { try DataClient.live.fetchSponsors(.latest) },
-      safari: { url in await SafariEffect.live(url) }
+      safari: { url in
+        _ = await SafariEffect.live(url)
+      }
     )
     return SkipTCA.Store(
       initialState: SponsorsList.State(),
