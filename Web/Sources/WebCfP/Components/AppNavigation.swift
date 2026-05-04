@@ -51,10 +51,18 @@ struct AppNavigation: HTML, Sendable {
               .custom(name: "hidden", value: "hidden")
             ) { HTMLText(language == .ja ? "ログアウト" : "Logout") }
             div(.class("language-switch")) {
-              span(.class("language-switch-icon"), .custom(name: "aria-hidden", value: "true")) { "🌐" }
+              span(.class("language-switch-icon"), .custom(name: "aria-hidden", value: "true")) {
+                "🌐"
+              }
               div(.class("language-switch-track")) {
-                a(.href(languageSwitchPath(for: .en)), .class(language == .en ? "lang-link active" : "lang-link")) { "EN" }
-                a(.href(languageSwitchPath(for: .ja)), .class(language == .ja ? "lang-link active" : "lang-link")) { "JP" }
+                a(
+                  .href(languageSwitchPath(for: .en)),
+                  .class(language == .en ? "lang-link active" : "lang-link")
+                ) { "EN" }
+                a(
+                  .href(languageSwitchPath(for: .ja)),
+                  .class(language == .ja ? "lang-link active" : "lang-link")
+                ) { "JP" }
               }
             }
           }

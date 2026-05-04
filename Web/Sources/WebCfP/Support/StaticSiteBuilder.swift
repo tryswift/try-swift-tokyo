@@ -5,8 +5,12 @@ struct BuildOptions: Sendable {
   let publicDirectory: URL
   let apiBaseURL: String
 
-  init(arguments: [String], environment: [String: String] = ProcessInfo.processInfo.environment) throws {
-    var outputDirectory = URL(fileURLWithPath: AppConfiguration.outputDirectory(environment: environment), isDirectory: true)
+  init(arguments: [String], environment: [String: String] = ProcessInfo.processInfo.environment)
+    throws
+  {
+    var outputDirectory = URL(
+      fileURLWithPath: AppConfiguration.outputDirectory(environment: environment), isDirectory: true
+    )
     var publicDirectory = URL(fileURLWithPath: "Public", isDirectory: true)
     var apiBaseURL = AppConfiguration.apiBaseURL(environment: environment)
 
@@ -79,7 +83,8 @@ struct StaticSiteBuilder {
     )
 
     for entry in publicContents {
-      let destination = options.outputDirectory.appending(path: entry.lastPathComponent, directoryHint: .notDirectory)
+      let destination = options.outputDirectory.appending(
+        path: entry.lastPathComponent, directoryHint: .notDirectory)
       try fileManager.copyItem(at: entry, to: destination)
     }
   }
@@ -87,21 +92,28 @@ struct StaticSiteBuilder {
   private func writePages() throws {
     for route in SiteRoutes.concrete {
       let destination = destinationURL(for: route.path)
-      let html = AppLayout(routePath: route.path, page: route.page, apiBaseURL: options.apiBaseURL).render()
+      let html = AppLayout(routePath: route.path, page: route.page, apiBaseURL: options.apiBaseURL)
+        .render()
       try write(html, to: destination)
     }
 
-    let rootIndex = options.outputDirectory.appending(path: "index.html", directoryHint: .notDirectory)
+    let rootIndex = options.outputDirectory.appending(
+      path: "index.html", directoryHint: .notDirectory)
     let fallback = AppLayout(routePath: "/", page: .home, apiBaseURL: options.apiBaseURL).render()
     try write(fallback, to: rootIndex)
-    try write(fallback, to: options.outputDirectory.appending(path: "404.html", directoryHint: .notDirectory))
+    try write(
+      fallback,
+      to: options.outputDirectory.appending(path: "404.html", directoryHint: .notDirectory))
   }
 
   private func writeRedirects() throws {
-    let contents = SiteRoutes.rewriteRules
+    let contents =
+      SiteRoutes.rewriteRules
       .map { rule in "\(rule.from) \(rule.to) 200" }
       .joined(separator: "\n") + "\n"
-    try write(contents, to: options.outputDirectory.appending(path: "_redirects", directoryHint: .notDirectory))
+    try write(
+      contents,
+      to: options.outputDirectory.appending(path: "_redirects", directoryHint: .notDirectory))
   }
 
   private func writeRouteManifest() throws {
@@ -113,9 +125,12 @@ struct StaticSiteBuilder {
       "rewrites": rewrites,
     ]
 
-    let data = try JSONSerialization.data(withJSONObject: manifest, options: [.prettyPrinted, .sortedKeys])
-    let destination = options.outputDirectory.appending(path: "route-manifest.json", directoryHint: .notDirectory)
-    try fileManager.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
+    let data = try JSONSerialization.data(
+      withJSONObject: manifest, options: [.prettyPrinted, .sortedKeys])
+    let destination = options.outputDirectory.appending(
+      path: "route-manifest.json", directoryHint: .notDirectory)
+    try fileManager.createDirectory(
+      at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
     try data.write(to: destination)
   }
 
@@ -131,7 +146,8 @@ struct StaticSiteBuilder {
   }
 
   private func write(_ contents: String, to destination: URL) throws {
-    try fileManager.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
+    try fileManager.createDirectory(
+      at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
     try contents.write(to: destination, atomically: true, encoding: .utf8)
   }
 }
