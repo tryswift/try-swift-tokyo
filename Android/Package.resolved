@@ -1,13 +1,40 @@
 {
-  "originHash" : "e59f45ac5d4c60d4e959b21ee2d2b0f211901c9317468c07f130c30f2e9cb799",
+  "originHash" : "b99111d418fa67adf65d89ea3f79fc44451f669cce288759eee7c70028134187",
   "pins" : [
+    {
+      "identity" : "combine-schedulers",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/combine-schedulers",
+      "state" : {
+        "revision" : "dcccb979a2183b8df3334237e3dc1ae2b4116a86",
+        "version" : "1.2.0"
+      }
+    },
+    {
+      "identity" : "licensesplugin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/maiyama18/LicensesPlugin",
+      "state" : {
+        "revision" : "3061787a7eca7ba801d7a3abccfc077053e79d73",
+        "version" : "0.2.0"
+      }
+    },
+    {
+      "identity" : "rtt_sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/flitto/rtt_sdk",
+      "state" : {
+        "revision" : "3a9d65b2f86c1b8c76118e4012db5e3313f0a389",
+        "version" : "0.2.0"
+      }
+    },
     {
       "identity" : "skip",
       "kind" : "remoteSourceControl",
       "location" : "https://source.skip.tools/skip.git",
       "state" : {
-        "revision" : "cb37ee25489f9b580435946be1882caf2f5b9b08",
-        "version" : "1.8.2"
+        "revision" : "1fd2e5c79264ad323d739d06ee366997c616408c",
+        "version" : "1.8.13"
       }
     },
     {
@@ -15,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://source.skip.tools/skip-foundation.git",
       "state" : {
-        "revision" : "b25e20ee614ea3081632345c4fdb5fdd9f4df695",
-        "version" : "1.3.16"
+        "revision" : "bca98267dd2555469c486d9b1772b652b7a708e2",
+        "version" : "1.4.0"
       }
     },
     {
@@ -24,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://source.skip.tools/skip-lib.git",
       "state" : {
-        "revision" : "5236223ac5bb80e25f0b11fbc5e7b87035b6753c",
-        "version" : "1.3.9"
+        "revision" : "76e7da8a870b5b66ea0c3264f648b58b73bcdc0d",
+        "version" : "1.4.0"
       }
     },
     {
@@ -33,8 +60,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://source.skip.tools/skip-model.git",
       "state" : {
-        "revision" : "400a13cf64387a0ae81403084c61eb15ca151096",
-        "version" : "1.7.2"
+        "revision" : "1f6ae8b6c9ce37a31c83444314ea527399e8636a",
+        "version" : "1.7.3"
+      }
+    },
+    {
+      "identity" : "skip-tca",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/d-date/skip-tca",
+      "state" : {
+        "revision" : "aa92e40524c1fbdbca7bb3945d1534a1bd2ed3b5",
+        "version" : "0.2.0"
       }
     },
     {
@@ -42,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://source.skip.tools/skip-ui.git",
       "state" : {
-        "revision" : "cf9d157d78f07abdb91c22255063c6211ca4d306",
-        "version" : "1.50.3"
+        "revision" : "71d6296eeefce819b88f2a93f5d1a477d6722742",
+        "version" : "1.52.0"
       }
     },
     {
@@ -51,8 +87,134 @@
       "kind" : "remoteSourceControl",
       "location" : "https://source.skip.tools/skip-unit.git",
       "state" : {
-        "revision" : "9a7b4d2aa4c5d5784f3294fba24cf606ac109c75",
-        "version" : "1.6.0"
+        "revision" : "920adff2065224ad592745a4cc028e9c2df137d4",
+        "version" : "1.6.1"
+      }
+    },
+    {
+      "identity" : "swift-case-paths",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-case-paths",
+      "state" : {
+        "revision" : "206cbce3882b4de9aee19ce62ac5b7306cadd45b",
+        "version" : "1.7.3"
+      }
+    },
+    {
+      "identity" : "swift-clocks",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-clocks",
+      "state" : {
+        "revision" : "cc46202b53476d64e824e0b6612da09d84ffde8e",
+        "version" : "1.0.6"
+      }
+    },
+    {
+      "identity" : "swift-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-collections",
+      "state" : {
+        "revision" : "6675bc0ff86e61436e615df6fc5174e043e57924",
+        "version" : "1.4.1"
+      }
+    },
+    {
+      "identity" : "swift-composable-architecture",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-composable-architecture",
+      "state" : {
+        "revision" : "1eaa6fa2ee57ac42843283b9fd3457af408c858d",
+        "version" : "1.25.5"
+      }
+    },
+    {
+      "identity" : "swift-concurrency-extras",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-concurrency-extras",
+      "state" : {
+        "revision" : "5a3825302b1a0d744183200915a47b508c828e6f",
+        "version" : "1.3.2"
+      }
+    },
+    {
+      "identity" : "swift-custom-dump",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-custom-dump",
+      "state" : {
+        "revision" : "06c57924455064182d6b217f06ebc05d00cb2990",
+        "version" : "1.5.0"
+      }
+    },
+    {
+      "identity" : "swift-dependencies",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-dependencies",
+      "state" : {
+        "revision" : "706feb7858a7f6c242879d137b8ee30926aa5b26",
+        "version" : "1.12.0"
+      }
+    },
+    {
+      "identity" : "swift-identified-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-identified-collections",
+      "state" : {
+        "revision" : "322d9ffeeba85c9f7c4984b39422ec7cc3c56597",
+        "version" : "1.1.1"
+      }
+    },
+    {
+      "identity" : "swift-navigation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-navigation",
+      "state" : {
+        "revision" : "32f35241b8be0719c4c7f00eb27713b1cadb6248",
+        "version" : "2.8.0"
+      }
+    },
+    {
+      "identity" : "swift-perception",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-perception",
+      "state" : {
+        "revision" : "25ac73741c3436605d61eceb5207e896973918e7",
+        "version" : "2.0.10"
+      }
+    },
+    {
+      "identity" : "swift-sharing",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-sharing",
+      "state" : {
+        "revision" : "bc27f8322bc30f6ce7d864d137dc77a6de8b57eb",
+        "version" : "2.8.0"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax",
+      "state" : {
+        "revision" : "9de99a78f099e59caf2b2beec65a4c45d54b2081",
+        "version" : "603.0.1"
+      }
+    },
+    {
+      "identity" : "xctest-dynamic-overlay",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
+      "state" : {
+        "revision" : "dfd70507def84cb5fb821278448a262c6ff2bbad",
+        "version" : "1.9.0"
+      }
+    },
+    {
+      "identity" : "youtubeplayerkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SvenTiigi/YouTubePlayerKit.git",
+      "state" : {
+        "revision" : "1ae827573024ab13dd6adea33b25d3eef6ff667c",
+        "version" : "2.0.5"
       }
     }
   ],
