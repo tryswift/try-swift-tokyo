@@ -1,71 +1,66 @@
-import ComposableArchitecture
 import DataClient
 import DependencyExtra
 import Foundation
 import SharedModels
+import SkipTCA
 import SwiftUI
 
-@Reducer
-public struct SponsorsList: Sendable {
-  @ObservableState
-  public struct State: Equatable {
+public struct SponsorsList: Reducer, Sendable {
 
-    var searchText: String = ""
-    var isSearchBarPresented: Bool = false
-    var sponsors: Sponsors?
-    @Presents var destination: Destination.State?
+  public struct State: Equatable, Sendable {
+    public var sponsors: Sponsors?
 
     public init() {}
   }
 
-  public enum Action: ViewAction, BindableAction {
-    case destination(PresentationAction<Destination.Action>)
-    case binding(BindingAction<State>)
+  public enum Action: Equatable, Sendable, ViewAction {
     case view(View)
+    case dataResponse(Sponsors?)
 
-    @CasePathable
-    public enum View {
+    public enum View: Equatable, Sendable {
       case onAppear
       case sponsorTapped(Sponsor)
     }
   }
 
-  public init() {}
+  let fetchSponsors: @Sendable () async throws -> Sponsors
+  let safari: @Sendable (URL) async -> Void
 
-  @Dependency(DataClient.self) var dataClient
-  @Dependency(\.safari) var safari
-
-  public var body: some ReducerOf<Self> {
-    BindingReducer()
-    Reduce { state, action in
-      switch action {
-      case .view(.onAppear):
-        state.sponsors = try? dataClient.fetchSponsors(.latest)
-        return .none
-
-      case .view(.sponsorTapped(let sponsor)):
-        guard let url = sponsor.link else { return .none }
-        return .run { _ in await safari(url) }
-      case .binding:
-        return .none
-      case .destination:
-        return .none
-      }
-    }
-    .ifLet(\.$destination, action: \.destination)
+  public init(
+    fetchSponsors: @escaping @Sendable () async throws -> Sponsors,
+    safari: @escaping @Sendable (URL) async -> Void
+  ) {
+    self.fetchSponsors = fetchSponsors
+    self.safari = safari
   }
 
-  @Reducer
-  public enum Destination {}
+  public func reduce(into state: inout State, action: Action) -> Effect<Action> {
+    switch action {
+    case .view(let viewAction):
+      switch viewAction {
+      case .onAppear:
+        return .run { send in
+          let sponsors = try? await fetchSponsors()
+          send(SponsorsList.Action.dataResponse(sponsors))
+        }
+      case .sponsorTapped(let sponsor):
+        guard let url = sponsor.link else { return .none }
+        return .run { _ in
+          await safari(url)
+        }
+      }
+
+    case .dataResponse(let sponsors):
+      state.sponsors = sponsors
+      return .none
+    }
+  }
 }
 
-extension SponsorsList.Destination.State: Equatable {}
-
-@ViewAction(for: SponsorsList.self)
 public struct SponsorsListView: View {
-  @Bindable public var store: StoreOf<SponsorsList>
+  let store: Store<SponsorsList.State, SponsorsList.Action>
 
-  public init(store: StoreOf<SponsorsList>) {
+  public init(store: Store<SponsorsList.State, SponsorsList.Action>) {
     self.store = store
   }
 
@@ -73,27 +68,29 @@ public struct SponsorsListView: View {
     NavigationStack {
       root
         .onAppear {
-          send(.onAppear)
+          store.send(view: SponsorsList.Action.View.onAppear)
         }
     }
   }
 
   @ViewBuilder var root: some View {
-    if let allPlans = store.sponsors?.allPlans {
+    if let allPlans = store.state.sponsors?.allPlans {
       ScrollView {
         ForEach(Plan.allCases, id: \.self) { plan in
           Text(plan.rawValue.localizedCapitalized)
             .font(.title.bold())
             .padding(.top, 64)
             .foregroundStyle(.primary)
-            .accessibilityAddTraits(.isHeader)
+            #if !SKIP
+              .accessibilityAddTraits(.isHeader)
+            #endif
           LazyVGrid(
             columns: Array(repeating: plan.gridItem, count: plan.columnCount),
             spacing: 8
           ) {
             ForEach(allPlans[plan]!, id: \.self) { sponsor in
               Button {
-                send(.sponsorTapped(sponsor))
+                store.send(view: SponsorsList.Action.View.sponsorTapped(sponsor))
               } label: {
                 VStack(spacing: 8) {
                   plan.image(of: sponsor)
@@ -113,8 +110,10 @@ public struct SponsorsListView: View {
                 .buttonStyle(.plain)
                 .glassEffectIfAvailable(.regular.interactive())
               #endif
-              .accessibilityAddTraits(.isLink)
-              .accessibilityIgnoresInvertColors()
+              #if !SKIP
+                .accessibilityAddTraits(.isLink)
+                .accessibilityIgnoresInvertColors()
+              #endif
             }
           }
         }
@@ -182,7 +181,9 @@ extension Plan {
         .aspectRatio(contentMode: .fit)
         .frame(maxWidth: 300)
         .clipShape(RoundedRectangle(cornerRadius: 24))
-        .contentShape(RoundedRectangle(cornerRadius: 24))
+        #if !SKIP
+          .contentShape(RoundedRectangle(cornerRadius: 24))
+        #endif
     default:
       Image(sponsor.imageName, bundle: .module)
         .resizable()
@@ -191,7 +192,9 @@ extension Plan {
         .background(.white)
         .frame(maxWidth: 300)
         .clipShape(RoundedRectangle(cornerRadius: 24))
-        .contentShape(RoundedRectangle(cornerRadius: 24))
+        #if !SKIP
+          .contentShape(RoundedRectangle(cornerRadius: 24))
+        #endif
         .compositingGroup()
     }
   }

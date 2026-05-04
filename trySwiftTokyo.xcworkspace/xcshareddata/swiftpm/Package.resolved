@@ -1,5 +1,5 @@
 {
-  "originHash" : "8e9b9676e95266dedb8df851879ad560fa66761ea3c3fd7a28f9796bc6b37667",
+  "originHash" : "4d1ce0f87b04558d75644951f4fb79cd27d84f81a79c1c86ae6f175aa787443a",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -25,6 +25,15 @@
       "location" : "https://github.com/flitto/rtt_sdk",
       "state" : {
         "revision" : "3a9d65b2f86c1b8c76118e4012db5e3313f0a389",
+        "version" : "0.2.0"
+      }
+    },
+    {
+      "identity" : "skip-tca",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/d-date/skip-tca",
+      "state" : {
+        "revision" : "aa92e40524c1fbdbca7bb3945d1534a1bd2ed3b5",
         "version" : "0.2.0"
       }
     },
