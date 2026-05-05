@@ -17,6 +17,9 @@ let package = Package(
       name: "ScheduleFeature",
       targets: ["ScheduleFeature"]),
     .library(
+      name: "SponsorFeature",
+      targets: ["SponsorFeature"]),
+    .library(
       name: "trySwiftFeature",
       targets: ["trySwiftFeature"]),
     .library(

@@ -1,5 +1,5 @@
 {
-  "originHash" : "af97e9367887e846604344ecf100f498a15064040889f8e3025d083403f51a2e",
+  "originHash" : "57ee8e0f2a483643df9c05c76795311c04786092cf48dd4021cedb90ffdca4bc",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -26,6 +26,15 @@
       "state" : {
         "revision" : "3a9d65b2f86c1b8c76118e4012db5e3313f0a389",
         "version" : "0.2.0"
+      }
+    },
+    {
+      "identity" : "skip",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.tools/skip.git",
+      "state" : {
+        "revision" : "1fd2e5c79264ad323d739d06ee366997c616408c",
+        "version" : "1.8.13"
       }
     },
     {

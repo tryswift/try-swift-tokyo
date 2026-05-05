@@ -1,7 +1,8 @@
 import AboutFeature
-import LiveTranslationFeature
-import ScheduleFeature
-import SponsorFeature
+import AndroidLiveTranslationFeature
+import AndroidScheduleFeature
+import ComposableArchitecture
+import SponsorFeature  // Conference の SponsorFeature を Skip Fuse 経由でそのまま使う
 import SwiftUI
 import VenueFeature
 
@@ -19,6 +20,13 @@ import VenueFeature
 public struct ContentView: View {
   @State private var selectedTab = 0
 
+  // Conference 側の TCA reducer をそのままマウント。Skip Fuse なら macro
+  // (`@Reducer` / `@DependencyClient` / `@ObservableState`) は Swift コンパイラ
+  // が普通に展開するので、SkipTCA Store ブリッジは不要。
+  @State private var sponsorsStore = Store(initialState: SponsorsList.State()) {
+    SponsorsList()
+  }
+
   public init() {}
 
   public var body: some View {
@@ -35,7 +43,7 @@ public struct ContentView: View {
         }
         .tag(1)
 
-      SponsorsScreen()
+      SponsorsListView(store: sponsorsStore)
         .tabItem {
           Label("Sponsors", systemImage: "star")
         }
