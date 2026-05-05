@@ -6,14 +6,12 @@ on:
       - main
     paths:
       - "Android/**"
-      - "Conference/**"
       - "SharedModels/**"
       - "DataClient/**"
       - ".github/workflows/build-android.yml"
   push:
     paths:
       - "Android/**"
-      - "Conference/**"
       - "SharedModels/**"
       - "DataClient/**"
       - ".github/workflows/build-android.yml"

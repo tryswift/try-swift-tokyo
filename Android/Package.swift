@@ -14,20 +14,16 @@ let package = Package(
     .package(url: "https://source.skip.tools/skip-foundation.git", from: "1.0.0"),
     .package(url: "https://source.skip.tools/skip-model.git", from: "1.0.0"),
     .package(name: "SharedModels", path: "../SharedModels"),
-    .package(name: "DataClient", path: "../DataClient"),
-    .package(name: "Conference", path: "../Conference"),
   ],
   targets: [
     .target(
       name: "AndroidApp",
       dependencies: [
-        "AndroidScheduleFeature",
+        "ScheduleFeature",
+        "SponsorFeature",
         "VenueFeature",
         "AboutFeature",
-        "AndroidLiveTranslationFeature",
-        .product(name: "SponsorFeature", package: "Conference"),
-        .product(name: "DependencyExtra", package: "Conference"),
-        .product(name: "DataClient", package: "DataClient"),
+        "LiveTranslationFeature",
         .product(name: "SkipUI", package: "skip-ui"),
         .product(name: "SkipFoundation", package: "skip-foundation"),
         .product(name: "SkipModel", package: "skip-model"),
@@ -35,24 +31,32 @@ let package = Package(
       plugins: [.plugin(name: "skipstone", package: "skip")]
     ),
     .target(
-      name: "AndroidLiveTranslationFeature",
+      name: "LiveTranslationFeature",
       dependencies: [
         .product(name: "SkipUI", package: "skip-ui"),
         .product(name: "SkipFoundation", package: "skip-foundation"),
         .product(name: "SkipModel", package: "skip-model"),
       ],
-      path: "Sources/AndroidLiveTranslationFeature",
       plugins: [.plugin(name: "skipstone", package: "skip")]
     ),
     .target(
-      name: "AndroidScheduleFeature",
+      name: "ScheduleFeature",
       dependencies: [
         .product(name: "SharedModels", package: "SharedModels"),
         .product(name: "SkipUI", package: "skip-ui"),
         .product(name: "SkipFoundation", package: "skip-foundation"),
         .product(name: "SkipModel", package: "skip-model"),
       ],
-      path: "Sources/AndroidScheduleFeature",
+      plugins: [.plugin(name: "skipstone", package: "skip")]
+    ),
+    .target(
+      name: "SponsorFeature",
+      dependencies: [
+        .product(name: "SharedModels", package: "SharedModels"),
+        .product(name: "SkipUI", package: "skip-ui"),
+        .product(name: "SkipFoundation", package: "skip-foundation"),
+        .product(name: "SkipModel", package: "skip-model"),
+      ],
       plugins: [.plugin(name: "skipstone", package: "skip")]
     ),
     .target(

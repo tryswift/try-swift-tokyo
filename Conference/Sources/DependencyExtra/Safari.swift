@@ -71,14 +71,6 @@ import Dependencies
     }
   }
 
-  extension SafariEffect {
-    /// Apple-side live implementation. Mirrors the `@Dependency(\.safari)`
-    /// liveValue so call sites that cannot reach the dependency container
-    /// (e.g. Skip-target wrappers compiling on macOS host) can still link.
-    @available(iOS 15, macOS 11, tvOS 14, watchOS 7, *)
-    public static let live: SafariEffect = SafariKey.liveValue
-  }
-
 #endif
 
 #if canImport(UIKit)
@@ -94,32 +86,4 @@ import Dependencies
     }
   }
 
-#endif
-
-#if SKIP
-  // Skip stub: the iOS SafariEffect lives behind canImport(SafariServices),
-  // which is unavailable on Android. Provide a matching struct so call sites can
-  // type-check, with a `live` value that opens the URL via the system browser.
-  // Phase 3 follow-up: wire this into a Skip-emitted Android Intent when SkipUI
-  // exposes a stable openURL bridge.
-  import Foundation
-
-  public struct SafariEffect: Sendable {
-    private let handler: @Sendable (URL) async -> Bool
-
-    public init(handler: @escaping @Sendable (URL) async -> Bool) {
-      self.handler = handler
-    }
-
-    @discardableResult
-    public func callAsFunction(_ url: URL) async -> Bool {
-      await handler(url)
-    }
-  }
-
-  extension SafariEffect {
-    public static let live = SafariEffect { _ in
-      false
-    }
-  }
 #endif
