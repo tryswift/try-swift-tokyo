@@ -1,12 +1,9 @@
 import ComposableArchitecture
-import DataClient
-import DependencyExtra
 import Foundation
 import GuidanceFeature
 import LiveTranslationFeature
 import ScheduleFeature
 import SharedModels
-import SkipTCA
 import SponsorFeature
 import SwiftUI
 import TipKit
@@ -44,6 +41,7 @@ public struct AppReducer {
     public var schedule = ScheduleFeature.Schedule.State()
     public var liveTranslation = LiveTranslation.State()
     var guidance = Guidance.State()
+    var sponsors = SponsorsList.State()
     var trySwift = TrySwift.State()
 
     // Sidebar
@@ -68,6 +66,7 @@ public struct AppReducer {
     case schedule(ScheduleFeature.Schedule.Action)
     case liveTranslation(LiveTranslation.Action)
     case guidance(Guidance.Action)
+    case sponsors(SponsorsList.Action)
     case trySwift(TrySwift.Action)
 
     // Sidebar
@@ -76,11 +75,11 @@ public struct AppReducer {
 
     // Sidebar detail
     case sidebarOrganizers(Organizers.Action)
-    case sidebarProfile(ComposableArchitecture.PresentationAction<Profile.Action>)
+    case sidebarProfile(PresentationAction<Profile.Action>)
     case sidebarAcknowledgements(Acknowledgements.Action)
 
     // Detail column (macOS 3rd column)
-    case detailColumn(ComposableArchitecture.PresentationAction<DetailColumn.Action>)
+    case detailColumn(PresentationAction<DetailColumn.Action>)
 
   }
 
@@ -95,6 +94,9 @@ public struct AppReducer {
     }
     Scope(state: \.guidance, action: \.guidance) {
       Guidance()
+    }
+    Scope(state: \.sponsors, action: \.sponsors) {
+      SponsorsList()
     }
     Scope(state: \.trySwift, action: \.trySwift) {
       TrySwift()
@@ -229,7 +231,7 @@ public struct AppReducer {
         }
         return .none
 
-      case .schedule, .liveTranslation, .guidance, .trySwift,
+      case .schedule, .liveTranslation, .guidance, .sponsors, .trySwift,
         .sidebarOrganizers, .sidebarProfile, .sidebarAcknowledgements,
         .detailColumn:
         return .none
@@ -298,38 +300,12 @@ public struct AppView: View {
   @Bindable var store: StoreOf<AppReducer>
   @State private var isPastYearsExpanded = false
 
-  // SkipTCA store for the SponsorsList feature, which has been migrated off TCA
-  // and now lives in a Skip-transpilable form in `SponsorFeature`. Iterations
-  // for the rest of the features will land in subsequent phases.
-  @State private var sponsorsStore: SkipTCA.Store<SponsorsList.State, SponsorsList.Action> =
-    AppView.makeSponsorsStore()
-
   #if !os(macOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   #endif
 
   public init(store: StoreOf<AppReducer>) {
     self.store = store
-  }
-
-  private static func makeSponsorsStore() -> SkipTCA.Store<SponsorsList.State, SponsorsList.Action>
-  {
-    let reducer = SponsorsList(
-      fetchSponsors: {
-        @Dependencies.Dependency(DataClient.self) var client: DataClient
-        return try client.fetchSponsors(.latest)
-      },
-      safari: { url in
-        @Dependencies.Dependency(\.safari) var safari: SafariEffect
-        await safari(url)
-      }
-    )
-    return SkipTCA.Store(
-      initialState: SponsorsList.State(),
-      reducer: { state, action in
-        reducer.reduce(into: &state, action: action)
-      }
-    )
   }
 
   public var body: some View {
@@ -365,7 +341,7 @@ public struct AppView: View {
         .tabItem {
           Label(String(localized: "Venue", bundle: .module), systemImage: "map")
         }
-      SponsorsListView(store: sponsorsStore)
+      SponsorsListView(store: store.scope(state: \.sponsors, action: \.sponsors))
         .tabItem {
           Label(String(localized: "Sponsors", bundle: .module), systemImage: "building.2")
         }
@@ -543,7 +519,7 @@ public struct AppView: View {
       case .venue:
         GuidanceView(store: store.scope(state: \.guidance, action: \.guidance))
       case .sponsors:
-        SponsorsListView(store: sponsorsStore)
+        SponsorsListView(store: store.scope(state: \.sponsors, action: \.sponsors))
       case .organizers:
         NavigationStack {
           OrganizersView(
