@@ -42,6 +42,9 @@ enum AppConfiguration {
 
     app.migrations.add(CreateUser())
     app.migrations.add(CreateConference())
+    // Conference's is_accepting_sponsors column must exist before SeedTrySwiftTokyo2026
+    // saves a Conference row (the model now has a non-optional `isAcceptingSponsors` field).
+    app.migrations.add(AddIsAcceptingSponsorsToConference())
     app.migrations.add(CreateProposal())
     // Add is_published before the seed so fresh databases have the column
     // when SeedTrySwiftTokyo2026 saves through the Conference model. Existing
@@ -67,6 +70,16 @@ enum AppConfiguration {
     app.migrations.add(CreateFavorite())
     app.migrations.add(AddFavoriteIndexes())
     app.migrations.add(AddFeedbackIndexes())
+    app.migrations.add(CreateSponsorOrganization())
+    app.migrations.add(CreateSponsorUser())
+    app.migrations.add(CreateSponsorMembership())
+    app.migrations.add(CreateSponsorPlan())
+    app.migrations.add(CreateSponsorPlanLocalization())
+    app.migrations.add(CreateSponsorInquiry())
+    app.migrations.add(CreateSponsorApplication())
+    app.migrations.add(CreateMagicLinkToken())
+    app.migrations.add(CreateSponsorInvitation())
+    app.migrations.add(SeedSponsorPlans2026())
 
     // Auto-migrate on startup (safe for production as Fluent tracks completed migrations)
     try await app.autoMigrate()
@@ -98,6 +111,9 @@ enum AppConfiguration {
       allowCredentials: true
     )
     app.middleware.use(CORSMiddleware(configuration: corsConfiguration))
+
+    // Identify sponsor.tryswift.jp host so SponsorHostOnlyMiddleware can gate routes.
+    app.middleware.use(HostRoutingMiddleware())
 
     // Serve static files from Public directory
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))

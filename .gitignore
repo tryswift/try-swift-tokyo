@@ -92,8 +92,8 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-# Website plugin
-Website/Assets/images/from_app/
+# WebConference plugin (images copied from iOS xcassets at build time)
+Web/Assets/images/from_app/
 
 # Playwright E2E tests
 e2e/node_modules/

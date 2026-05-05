@@ -33,6 +33,10 @@ final class Conference: Model, Content, @unchecked Sendable {
   @Field(key: "is_open")
   var isOpen: Bool
 
+  /// Whether sponsor applications are currently being accepted for this conference.
+  @Field(key: "is_accepting_sponsors")
+  var isAcceptingSponsors: Bool
+
   /// Whether the conference is visible to the public. Unpublished conferences
   /// are returned only to organizer endpoints so admins can stage them before
   /// announcing them to the world.
@@ -84,6 +88,7 @@ final class Conference: Model, Content, @unchecked Sendable {
     descriptionJa: String? = nil,
     year: Int,
     isOpen: Bool = true,
+    isAcceptingSponsors: Bool = false,
     isPublished: Bool = true,
     deadline: Date? = nil,
     startDate: Date? = nil,
@@ -98,6 +103,7 @@ final class Conference: Model, Content, @unchecked Sendable {
     self.descriptionJa = descriptionJa
     self.year = year
     self.isOpen = isOpen
+    self.isAcceptingSponsors = isAcceptingSponsors
     self.isPublished = isPublished
     self.deadline = deadline
     self.startDate = startDate

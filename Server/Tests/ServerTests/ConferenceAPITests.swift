@@ -36,6 +36,7 @@ private struct CreateConferenceAPITestSchema: AsyncMigration {
       .field("description_ja", .string)
       .field("year", .int, .required)
       .field("is_open", .bool, .required)
+      .field("is_accepting_sponsors", .bool, .required, .sql(.default(false)))
       .field("is_published", .bool, .required, .sql(.default(true)))
       .field("deadline", .datetime)
       .field("start_date", .datetime)

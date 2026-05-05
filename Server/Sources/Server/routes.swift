@@ -13,8 +13,9 @@ enum AppRoutes {
       return ["status": "healthy", "service": "trySwiftAPI"]
     }
 
-    // API version prefix
-    let api = app.grouped("api", "v1")
+    // /api/v1 must NOT be reachable from sponsor.tryswift.jp.
+    // Sponsor portal serves SSR HTML only; expose JSON API only on the configured API host.
+    let api = app.grouped(NotSponsorHostMiddleware()).grouped("api", "v1")
 
     // Register API controllers
     try api.register(collection: AuthController())
@@ -26,5 +27,8 @@ enum AppRoutes {
     try api.register(collection: AdminWorkshopController())
     try api.register(collection: FeedbackController())
     try api.register(collection: FavoritesController())
+
+    // Sponsor portal routes (host-filtered to sponsor.tryswift.jp)
+    try app.register(collection: SponsorRoutes())
   }
 }

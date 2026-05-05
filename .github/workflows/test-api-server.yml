@@ -5,6 +5,10 @@ on:
     paths:
       - "Server/**"
       - "SharedModels/**"
+      - "Web/Sources/WebSponsor/**"
+      - "Web/Sources/WebShared/**"
+      - "Web/Package.swift"
+      - "Web/Package.resolved"
       - ".github/workflows/test-api-server.yml"
 
 jobs:
