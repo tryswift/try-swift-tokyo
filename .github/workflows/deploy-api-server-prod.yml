@@ -7,6 +7,10 @@ on:
       - "Server/**"
       - "SharedModels/**"
       - "DataClient/**"
+      # Server/Dockerfile copies static images from Web/Assets/images into the
+      # production image. Trigger a redeploy when those assets change so prod
+      # never serves stale images.
+      - "Web/Assets/images/**"
       - "fly.production.toml"
   workflow_dispatch:
 

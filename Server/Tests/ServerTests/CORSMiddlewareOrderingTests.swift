@@ -1,4 +1,3 @@
-import Foundation
 import Testing
 import Vapor
 import VaporTesting
@@ -84,7 +83,15 @@ struct CORSMiddlewareOrderingTests {
           req.headers.replaceOrAdd(name: "Access-Control-Request-Method", value: "GET")
         }
       ) { res in
+        // Without `res.status == .ok`, this test would still pass if CORSMiddleware
+        // ever stopped short-circuiting OPTIONS — the request would fall through to
+        // a 404 that, post-fix, also carries the allow-origin header. Asserting both
+        // status and allow-methods locks in *preflight handling*, not just header
+        // decoration.
+        #expect(res.status == .ok)
         #expect(res.headers.first(name: "access-control-allow-origin") == Self.allowedOrigin)
+        let allowedMethods = res.headers.first(name: "access-control-allow-methods") ?? ""
+        #expect(allowedMethods.contains("GET"))
       }
     } catch {
       try await app.asyncShutdown()
