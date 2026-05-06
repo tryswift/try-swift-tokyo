@@ -3,12 +3,26 @@
 ## Project Structure
 
 - `Server/` - Vapor backend (Swift 6.3). Tests: `cd Server && swift test`
+  - `Server/Sources/Server/Sponsor/` - sponsor.tryswift.jp portal (auth/controllers/services/SSR via WebSponsor). Host-gated by `SponsorHostOnlyMiddleware`.
+  - `Server/Sources/Server/Scholarship/` - student.tryswift.jp portal (auth/controllers/services/SSR via WebScholarship). Host-gated by `StudentHostOnlyMiddleware`. Magic-link auth on a dedicated `student_users` + `student_magic_link_tokens` tree; organizers reuse the shared `auth_token` cookie + `OrganizerOnlyMiddleware`.
+- `Web/` - SSR libraries and static-site executables (Elementary + Ignite). `WebShared`, `WebSponsor`, `WebScholarship` are libraries linked into Server; `WebCfP` and `WebConference` are executables.
 - `Website/` - Ignite static site. Build: `cd Website && swift build`
 - `Android/` - Skip framework (Swift → Kotlin). Build: `cd Android && swift build`
 - `App/` - iOS app (SwiftUI + TCA)
 - `SharedModels/` - Shared Swift package
 - `DataClient/` - Data access layer
 - `e2e/` - Playwright E2E tests: `cd e2e && npx playwright test`
+
+## Subdomains served by the Server (`tryswift-api-prod`)
+
+A single Fly.io app (`tryswift-api-prod`) serves multiple hosts; `HostRoutingMiddleware` dispatches by `Host` header.
+
+| Host | Routes | Notes |
+|---|---|---|
+| `api.tryswift.jp` | `/api/v1/...` | JSON API. Other hosts return 404 here (`NotSponsorHostMiddleware` + `NotStudentHostMiddleware`). |
+| `sponsor.tryswift.jp` | SponsorRoutes | Magic-link auth on SponsorUser. |
+| `student.tryswift.jp` | ScholarshipRoutes | Magic-link auth on StudentUser. Required env: `STUDENT_BASE_URL`, `ODPT_API_KEY` (optional, for live fare lookups), `SCHOLARSHIP_SLACK_WEBHOOK_URL` (optional, falls back to `SLACK_WEBHOOK_URL`), `RESEND_API_KEY`, `RESEND_FROM_EMAIL`. |
+| `cfp.tryswift.jp` | (separate Cloudflare Pages site) | Built from `Web/Sources/WebCfP`. |
 
 ## CI Workflows
 
