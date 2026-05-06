@@ -110,7 +110,11 @@ enum AppConfiguration {
       allowedHeaders: [.accept, .authorization, .contentType, .origin, .xRequestedWith],
       allowCredentials: true
     )
-    app.middleware.use(CORSMiddleware(configuration: corsConfiguration))
+    // Insert CORS at the very front of the middleware chain so it sits *outside*
+    // the auto-registered ErrorMiddleware. Without this, abort errors (401/403/404)
+    // bypass CORSMiddleware's response decoration and the browser misreports the
+    // failure as a CORS error rather than the underlying status.
+    app.middleware.use(CORSMiddleware(configuration: corsConfiguration), at: .beginning)
 
     // Identify sponsor.tryswift.jp host so SponsorHostOnlyMiddleware can gate routes.
     app.middleware.use(HostRoutingMiddleware())

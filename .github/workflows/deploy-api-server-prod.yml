@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - "Server/**"
-      - "MyLibrary/Sources/SharedModels/**"
+      - "SharedModels/**"
       - "DataClient/**"
       - "fly.production.toml"
   workflow_dispatch:
