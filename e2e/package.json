@@ -9,7 +9,7 @@
     "report": "playwright show-report"
   },
   "devDependencies": {
-    "@playwright/test": "^1.52.0",
+    "@playwright/test": "^1.59.1",
     "dotenv": "^17.4.2"
   }
 }
