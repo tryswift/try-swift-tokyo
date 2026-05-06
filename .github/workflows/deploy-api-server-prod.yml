@@ -7,10 +7,10 @@ on:
       - "Server/**"
       - "SharedModels/**"
       - "DataClient/**"
-      # Server/Dockerfile copies static images from Web/Assets/images into the
-      # production image. Trigger a redeploy when those assets change so prod
-      # never serves stale images.
-      - "Web/Assets/images/**"
+      # Server links WebShared and WebSponsor libraries from the Web package
+      # and copies Web/Assets/images into the production image, so any change
+      # under Web/ should redeploy.
+      - "Web/**"
       - "fly.production.toml"
   workflow_dispatch:
 

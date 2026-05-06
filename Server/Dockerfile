@@ -15,6 +15,9 @@ COPY ./SharedModels ./SharedModels
 # Copy DataClient package (speaker data for timetable export)
 COPY ./DataClient ./DataClient
 
+# Copy Web package (Server links WebShared and WebSponsor libraries)
+COPY ./Web ./Web
+
 # Copy Server package manifest and resolved file for reproducible builds
 COPY ./Server/Package.swift ./Server/Package.swift
 COPY ./Server/Package.resolved ./Server/Package.resolved
