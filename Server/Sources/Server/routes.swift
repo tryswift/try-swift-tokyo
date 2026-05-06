@@ -33,5 +33,8 @@ enum AppRoutes {
 
     // Sponsor portal routes (host-filtered to sponsor.tryswift.jp)
     try app.register(collection: SponsorRoutes())
+
+    // Student scholarship portal routes (host-filtered to student.tryswift.jp)
+    try app.register(collection: ScholarshipRoutes())
   }
 }
