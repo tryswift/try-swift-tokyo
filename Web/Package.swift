@@ -9,6 +9,7 @@ let package = Package(
   products: [
     .library(name: "WebShared", targets: ["WebShared"]),
     .library(name: "WebSponsor", targets: ["WebSponsor"]),
+    .library(name: "WebScholarship", targets: ["WebScholarship"]),
     .executable(name: "WebCfP", targets: ["WebCfP"]),
     .executable(name: "WebConference", targets: ["WebConference"]),
   ],
@@ -30,6 +31,15 @@ let package = Package(
     ),
     .target(
       name: "WebSponsor",
+      dependencies: [
+        "WebShared",
+        .product(name: "Elementary", package: "elementary"),
+        .product(name: "SharedModels", package: "SharedModels"),
+      ],
+      swiftSettings: [.swiftLanguageMode(.v6)]
+    ),
+    .target(
+      name: "WebScholarship",
       dependencies: [
         "WebShared",
         .product(name: "Elementary", package: "elementary"),
