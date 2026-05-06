@@ -66,7 +66,7 @@ RUN ldd /app/Server | tee /tmp/server-ldd.txt \
     && ! grep -q "not found" /tmp/server-ldd.txt
 
 # Copy static assets (images)
-COPY ./Website/Assets/images ./Public/images
+COPY ./Web/Assets/images ./Public/images
 
 ENV SWIFT_BACKTRACE=enable=yes,sanitize=yes,threads=all,images=all,interactive=no,swift-backtrace=./swift-backtrace-static
 

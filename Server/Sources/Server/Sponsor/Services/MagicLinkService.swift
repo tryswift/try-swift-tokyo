@@ -32,7 +32,14 @@ enum MagicLinkService {
     now: @Sendable () -> Date = { Date() }
   ) async throws -> SponsorUser? {
     let hashed = hash(rawToken)
-    let nowDate = now()
+    // Pre-round the claim timestamp to microsecond precision. SQLite stores Date
+    // as a Double via sqlite-nio's SQLiteDataConvertible, which rounds to
+    // microseconds on read (`round(x * 1e6) / 1e6`). On platforms whose `Date()`
+    // carries sub-microsecond resolution (notably Linux's clock_gettime),
+    // skipping this alignment causes the post-UPDATE re-read to come back
+    // micro-rounded and fail the byte-equal comparison against the in-memory
+    // value, breaking single-use verification on Linux while passing on macOS.
+    let nowDate = Self.microsecondAligned(now())
     return try await db.transaction { transaction in
       // Read the token row with its associated user.
       guard
@@ -68,6 +75,13 @@ enum MagicLinkService {
 
   static func hash(_ raw: String) -> String {
     SecureToken.sha256Hex(raw)
+  }
+
+  /// Round a Date down to microsecond precision so it survives a SQLite
+  /// (and PostgreSQL `timestamp`) round-trip unchanged. See `verify` for why.
+  private static func microsecondAligned(_ date: Date) -> Date {
+    let micros = (date.timeIntervalSinceReferenceDate * 1_000_000).rounded()
+    return Date(timeIntervalSinceReferenceDate: micros / 1_000_000)
   }
 
   private static func randomURLSafeToken(byteCount: Int) -> String {
