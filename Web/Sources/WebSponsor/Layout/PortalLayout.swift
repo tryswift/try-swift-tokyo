@@ -8,6 +8,7 @@ public struct PortalLayout<Inner: HTML>: HTML {
   public let isAuthenticated: Bool
   public let flash: String?
   public let csrfToken: String
+  public let apiBaseURL: String?
   public let inner: Inner
 
   public init(
@@ -16,6 +17,7 @@ public struct PortalLayout<Inner: HTML>: HTML {
     isAuthenticated: Bool,
     flash: String? = nil,
     csrfToken: String = "",
+    apiBaseURL: String? = nil,
     @HTMLBuilder inner: () -> Inner
   ) {
     self.pageTitle = pageTitle
@@ -23,12 +25,13 @@ public struct PortalLayout<Inner: HTML>: HTML {
     self.isAuthenticated = isAuthenticated
     self.flash = flash
     self.csrfToken = csrfToken
+    self.apiBaseURL = apiBaseURL
     self.inner = inner()
   }
 
   public var body: some HTML {
     let webLocale: WebLocale = locale == .ja ? .ja : .en
-    return WebLayout(pageTitle: pageTitle, locale: webLocale) {
+    return WebLayout(pageTitle: pageTitle, locale: webLocale, apiBaseURL: apiBaseURL) {
       PortalNav(locale: locale, isAuthenticated: isAuthenticated, csrfToken: csrfToken)
       if let flash {
         div(.class("flash")) { flash }

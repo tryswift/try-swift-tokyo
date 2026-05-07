@@ -11,6 +11,7 @@ let package = Package(
     .library(name: "WebSponsor", targets: ["WebSponsor"]),
     .executable(name: "WebCfP", targets: ["WebCfP"]),
     .executable(name: "WebConference", targets: ["WebConference"]),
+    .executable(name: "WebSponsorBuilder", targets: ["WebSponsorBuilder"]),
   ],
   dependencies: [
     .package(url: "https://github.com/elementary-swift/elementary.git", from: "0.7.1"),
@@ -56,6 +57,16 @@ let package = Package(
       ],
       resources: [
         .process("Resources")
+      ],
+      swiftSettings: [.swiftLanguageMode(.v6)]
+    ),
+    .executableTarget(
+      name: "WebSponsorBuilder",
+      dependencies: [
+        "WebShared",
+        "WebSponsor",
+        .product(name: "Elementary", package: "elementary"),
+        .product(name: "SharedModels", package: "SharedModels"),
       ],
       swiftSettings: [.swiftLanguageMode(.v6)]
     ),
