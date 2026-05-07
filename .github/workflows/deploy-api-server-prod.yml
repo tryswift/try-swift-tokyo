@@ -9,8 +9,11 @@ on:
       - "DataClient/**"
       # Server links WebShared and WebSponsor libraries from the Web package
       # and copies Web/Assets/images into the production image, so any change
-      # under Web/ should redeploy.
+      # under Web/ should redeploy. LocalizationGenerated is a transitive dep
+      # of Web's WebConference target and must also be available for
+      # `swift package resolve` to succeed inside the Docker build stage.
       - "Web/**"
+      - "LocalizationGenerated/**"
       - "fly.production.toml"
   workflow_dispatch:
 
