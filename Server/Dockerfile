@@ -37,8 +37,12 @@ RUN swift package resolve
 COPY ./Server/Sources ./Sources
 COPY ./Server/Tests ./Tests
 
-# Build Server with release configuration
-RUN swift build -c release --static-swift-stdlib \
+# Build Server with release configuration.
+# Cap parallelism to 2 jobs: with the Web package (Elementary, WebSponsor,
+# WebShared, etc.) pulled into the dependency graph, a fully-parallel
+# `swift build -c release` peaks above the Fly remote-builder RAM and the
+# compiler is killed with SIGKILL (`signal 9`) near the end of the build.
+RUN swift build -c release -j 2 --static-swift-stdlib \
     -Xlinker -ljemalloc
 
 # Switch to staging area
