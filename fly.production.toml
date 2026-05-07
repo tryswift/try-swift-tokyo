@@ -1,6 +1,8 @@
 # fly.production.toml - Fly.io configuration for trySwift API Server (Production)
 # Deploy from project root: fly deploy --config fly.production.toml
-# Custom domain: api.tryswift.jp (via Cloudflare proxy)
+# Custom domains (both routed to this single Fly app via Cloudflare):
+#   - api.tryswift.jp     -> JSON API
+#   - sponsor.tryswift.jp -> Sponsor portal SSR (host-routed by HostRoutingMiddleware)
 
 app = 'tryswift-api-prod'
 primary_region = 'nrt'
@@ -10,6 +12,9 @@ primary_region = 'nrt'
 
 [env]
   LOG_LEVEL = 'info'
+  APP_ENV = 'production'
+  SPONSOR_HOST = 'sponsor.tryswift.jp'
+  SPONSOR_BASE_URL = 'https://sponsor.tryswift.jp'
 
 [http_service]
   internal_port = 8080
