@@ -3,55 +3,34 @@ import SharedModels
 
 public struct ApplicationListPage: HTML {
   public let locale: ScholarshipPortalLocale
-  public let applications: [ScholarshipApplicationDTO]
-  public let budget: ScholarshipBudgetSummaryDTO?
+  public let apiBaseURL: String
 
-  public init(
-    locale: ScholarshipPortalLocale,
-    applications: [ScholarshipApplicationDTO],
-    budget: ScholarshipBudgetSummaryDTO?
-  ) {
+  public init(locale: ScholarshipPortalLocale, apiBaseURL: String) {
     self.locale = locale
-    self.applications = applications
-    self.budget = budget
+    self.apiBaseURL = apiBaseURL
   }
 
   public var body: some HTML {
     ScholarshipLayout(
       pageTitle: ScholarshipStrings.t(.orgListTitle, locale),
       locale: locale,
-      isAuthenticated: true,
-      isOrganizer: true
+      apiBaseURL: apiBaseURL,
+      pageKind: "organizer-list"
     ) {
       h1 { ScholarshipStrings.t(.orgListTitle, locale) }
 
-      section(.class("budget-summary")) {
-        if let budget {
-          dl {
-            dt { ScholarshipStrings.t(.infoBudgetTotal, locale) }
-            dd {
-              if let t = budget.totalBudget {
-                "¥\(t)"
-              } else {
-                ScholarshipStrings.t(.infoBudgetNotSet, locale)
-              }
-            }
-            dt { ScholarshipStrings.t(.infoBudgetApproved, locale) }
-            dd { "¥\(budget.approvedTotal)" }
-            if let r = budget.remaining {
-              dt { ScholarshipStrings.t(.infoBudgetRemaining, locale) }
-              dd { "¥\(r)" }
-            }
-          }
-          a(.href("/organizer/budget")) { ScholarshipStrings.t(.orgBudgetTitle, locale) }
+      section(.id("budget-summary"), .class("budget-summary")) {}
+
+      div(.class("toolbar")) {
+        a(.href("\(apiBaseURL)/api/v1/scholarship/organizer/applications.csv")) {
+          ScholarshipStrings.t(.orgExportCSV, locale)
+        }
+        a(.href(locale == .ja ? "/ja/organizer/budget" : "/organizer/budget")) {
+          ScholarshipStrings.t(.orgBudgetTitle, locale)
         }
       }
 
-      div(.class("toolbar")) {
-        a(.href("/organizer/export")) { ScholarshipStrings.t(.orgExportCSV, locale) }
-      }
-
-      table(.class("applications")) {
+      table(.class("applications"), .id("applications-table")) {
         thead {
           tr {
             th { "#" }
@@ -63,25 +42,7 @@ public struct ApplicationListPage: HTML {
             th { "" }
           }
         }
-        tbody {
-          for app in applications {
-            tr {
-              td { String(app.id.uuidString.prefix(8)) }
-              td { app.name }
-              td { app.schoolAndFaculty }
-              td {
-                locale == .ja ? app.supportType.displayNameJa : app.supportType.displayName
-              }
-              td { StatusBadge(status: app.status, locale: locale) }
-              td { app.approvedAmount.map { "¥\($0)" } ?? "—" }
-              td {
-                a(.href("/organizer/\(app.id.uuidString)")) {
-                  ScholarshipStrings.t(.orgDetailTitle, locale)
-                }
-              }
-            }
-          }
-        }
+        tbody(.id("applications-tbody")) {}
       }
     }
   }

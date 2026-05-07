@@ -1,63 +1,36 @@
 import Elementary
 import SharedModels
 
-/// Landing page on student.tryswift.jp. Shows the scholarship summary and
-/// (when an organizer has set one) the remaining budget.
+/// Landing page on student.tryswift.jp. Conference name and budget are
+/// rendered client-side by `scholarship.js` after fetching `/api/v1/scholarship/info`.
 public struct InfoPage: HTML {
   public let locale: ScholarshipPortalLocale
-  public let isAuthenticated: Bool
-  public let conferenceName: String?
-  public let budget: ScholarshipBudgetSummaryDTO?
+  public let apiBaseURL: String
 
-  public init(
-    locale: ScholarshipPortalLocale,
-    isAuthenticated: Bool,
-    conferenceName: String?,
-    budget: ScholarshipBudgetSummaryDTO?
-  ) {
+  public init(locale: ScholarshipPortalLocale, apiBaseURL: String) {
     self.locale = locale
-    self.isAuthenticated = isAuthenticated
-    self.conferenceName = conferenceName
-    self.budget = budget
+    self.apiBaseURL = apiBaseURL
   }
 
   public var body: some HTML {
     ScholarshipLayout(
       pageTitle: ScholarshipStrings.t(.infoTitle, locale),
       locale: locale,
-      isAuthenticated: isAuthenticated
+      apiBaseURL: apiBaseURL,
+      pageKind: "info"
     ) {
       h1 { ScholarshipStrings.t(.infoTitle, locale) }
-      if let conferenceName {
-        p(.class("subtitle")) {
-          "\(conferenceName) — \(ScholarshipStrings.t(.infoSubtitle, locale))"
-        }
-      } else {
-        p(.class("subtitle")) { ScholarshipStrings.t(.infoNoOpenConference, locale) }
+      p(.class("subtitle"), .id("conference-info")) {
+        ScholarshipStrings.t(.infoSubtitle, locale)
       }
 
-      section(.class("budget-summary")) {
+      section(.class("budget-summary"), .id("budget-summary")) {
         h2 { ScholarshipStrings.t(.infoBudgetTotal, locale) }
-        if let budget, let total = budget.totalBudget {
-          dl {
-            dt { ScholarshipStrings.t(.infoBudgetTotal, locale) }
-            dd { "¥\(total)" }
-            dt { ScholarshipStrings.t(.infoBudgetApproved, locale) }
-            dd { "¥\(budget.approvedTotal)" }
-            if let remaining = budget.remaining {
-              dt { ScholarshipStrings.t(.infoBudgetRemaining, locale) }
-              dd { "¥\(remaining)" }
-            }
-          }
-        } else {
-          p { ScholarshipStrings.t(.infoBudgetNotSet, locale) }
-        }
+        p { ScholarshipStrings.t(.infoBudgetNotSet, locale) }
       }
 
-      if conferenceName != nil {
-        a(.href(isAuthenticated ? "/apply" : "/login"), .class("cta")) {
-          ScholarshipStrings.t(.infoApplyCTA, locale)
-        }
+      a(.href(locale == .ja ? "/ja/login" : "/login"), .class("cta"), .id("apply-cta")) {
+        ScholarshipStrings.t(.infoApplyCTA, locale)
       }
     }
   }

@@ -27,7 +27,6 @@ let package = Package(
         .product(name: "DataClient", package: "DataClient"),
         .product(name: "WebShared", package: "Web"),
         .product(name: "WebSponsor", package: "Web"),
-        .product(name: "WebScholarship", package: "Web"),
         .product(name: "Vapor", package: "vapor"),
         .product(name: "Fluent", package: "fluent"),
         .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),

@@ -9,8 +9,8 @@ let package = Package(
   products: [
     .library(name: "WebShared", targets: ["WebShared"]),
     .library(name: "WebSponsor", targets: ["WebSponsor"]),
-    .library(name: "WebScholarship", targets: ["WebScholarship"]),
     .executable(name: "WebCfP", targets: ["WebCfP"]),
+    .executable(name: "WebScholarship", targets: ["WebScholarship"]),
     .executable(name: "WebConference", targets: ["WebConference"]),
   ],
   dependencies: [
@@ -38,7 +38,7 @@ let package = Package(
       ],
       swiftSettings: [.swiftLanguageMode(.v6)]
     ),
-    .target(
+    .executableTarget(
       name: "WebScholarship",
       dependencies: [
         "WebShared",

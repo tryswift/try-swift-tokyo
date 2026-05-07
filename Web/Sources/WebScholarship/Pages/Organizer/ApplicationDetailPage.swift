@@ -1,110 +1,60 @@
 import Elementary
 import SharedModels
 
+/// Organizer detail shell. The page lives at `/organizer/detail/index.html`
+/// and is rewritten from `/organizer/<id>` by Cloudflare Pages; JS reads the
+/// `<id>` from `window.location.pathname` and fetches the application.
 public struct ApplicationDetailPage: HTML {
   public let locale: ScholarshipPortalLocale
-  public let csrfToken: String
-  public let application: ScholarshipApplicationDTO
+  public let apiBaseURL: String
 
-  public init(
-    locale: ScholarshipPortalLocale,
-    csrfToken: String,
-    application: ScholarshipApplicationDTO
-  ) {
+  public init(locale: ScholarshipPortalLocale, apiBaseURL: String) {
     self.locale = locale
-    self.csrfToken = csrfToken
-    self.application = application
+    self.apiBaseURL = apiBaseURL
   }
 
   public var body: some HTML {
     ScholarshipLayout(
       pageTitle: ScholarshipStrings.t(.orgDetailTitle, locale),
       locale: locale,
-      isAuthenticated: true,
-      isOrganizer: true,
-      csrfToken: csrfToken
+      apiBaseURL: apiBaseURL,
+      pageKind: "organizer-detail"
     ) {
       h1 { ScholarshipStrings.t(.orgDetailTitle, locale) }
-      readOnlyDetails
-      decisionForms
-    }
-  }
 
-  private var readOnlyDetails: some HTML {
-    section(.class("application-detail")) {
-      dl {
-        dt { ScholarshipStrings.t(.myAppStatusLabel, locale) }
-        dd { StatusBadge(status: application.status, locale: locale) }
-        dt { ScholarshipStrings.t(.applyEmailLabel, locale) }
-        dd { application.email }
-        dt { ScholarshipStrings.t(.applyNameLabel, locale) }
-        dd { application.name }
-        dt { ScholarshipStrings.t(.applySchoolLabel, locale) }
-        dd { application.schoolAndFaculty }
-        dt { ScholarshipStrings.t(.applyYearLabel, locale) }
-        dd { application.currentYear }
-        dt { ScholarshipStrings.t(.applySupportTypeLabel, locale) }
-        dd {
-          locale == .ja
-            ? application.supportType.displayNameJa : application.supportType.displayName
-        }
-        dt { ScholarshipStrings.t(.applyTotalCostLabel, locale) }
-        dd { application.totalEstimatedCost.map { "¥\($0)" } ?? "—" }
-        dt { ScholarshipStrings.t(.applyDesiredAmountLabel, locale) }
-        dd { application.desiredSupportAmount.map { "¥\($0)" } ?? "—" }
-        if let portfolio = application.portfolio, !portfolio.isEmpty {
-          dt { ScholarshipStrings.t(.applyPortfolioLabel, locale) }
-          dd { portfolio }
-        }
-        if let comments = application.additionalComments, !comments.isEmpty {
-          dt { ScholarshipStrings.t(.applyAdditionalCommentsLabel, locale) }
-          dd { comments }
-        }
-      }
-    }
-  }
+      section(.id("application-detail")) {}
 
-  private var decisionForms: some HTML {
-    section(.class("decision")) {
-      // Approve
-      form(.method(.post), .action("/organizer/\(application.id.uuidString)/approve")) {
-        input(.type(.hidden), .name("_csrf"), .value(csrfToken))
+      // Approve form
+      form(.method(.post), .id("approve-form"), .class("hidden")) {
         FormField(
           label: ScholarshipStrings.t(.orgApprovedAmountLabel, locale),
           name: "approved_amount",
-          value: application.approvedAmount.map { String($0) } ?? "",
           inputType: "number",
           isRequired: true
         )
         FormTextArea(
           label: ScholarshipStrings.t(.orgNotesLabel, locale),
-          name: "organizer_notes",
-          value: application.organizerNotes ?? ""
+          name: "organizer_notes"
         )
         button(.type(.submit), .class("primary")) {
           ScholarshipStrings.t(.orgApprove, locale)
         }
       }
 
-      // Reject
-      form(.method(.post), .action("/organizer/\(application.id.uuidString)/reject")) {
-        input(.type(.hidden), .name("_csrf"), .value(csrfToken))
+      // Reject form
+      form(.method(.post), .id("reject-form"), .class("hidden")) {
         FormTextArea(
           label: ScholarshipStrings.t(.orgNotesLabel, locale),
-          name: "organizer_notes",
-          value: application.organizerNotes ?? ""
+          name: "organizer_notes"
         )
         button(.type(.submit), .class("danger")) {
           ScholarshipStrings.t(.orgReject, locale)
         }
       }
 
-      // Revert (only when not submitted)
-      if application.status != .submitted {
-        form(.method(.post), .action("/organizer/\(application.id.uuidString)/revert")) {
-          input(.type(.hidden), .name("_csrf"), .value(csrfToken))
-          button(.type(.submit)) { ScholarshipStrings.t(.orgRevert, locale) }
-        }
+      // Revert form (only shown by JS when status != submitted)
+      form(.method(.post), .id("revert-form"), .class("hidden")) {
+        button(.type(.submit)) { ScholarshipStrings.t(.orgRevert, locale) }
       }
     }
   }

@@ -1,50 +1,34 @@
 import Elementary
 import SharedModels
 
-/// 7-section apply form. Sections 5 (travel) and 6 (accommodation) are toggled
-/// on the client by inline JavaScript when the support type radio changes.
+/// 7-section apply form. The form posts to api.tryswift.jp; pre-fill of
+/// email/name happens via `scholarship.js`, which fetches `/api/v1/scholarship/me`
+/// on page load and populates the inputs.
 public struct ApplyPage: HTML {
   public let locale: ScholarshipPortalLocale
-  public let csrfToken: String
-  public let prefilledEmail: String
-  public let prefilledName: String
-  public let datalistHTML: String
-  public let educationalSuffixesJS: String
-  public let errorMessage: String?
+  public let apiBaseURL: String
 
-  public init(
-    locale: ScholarshipPortalLocale,
-    csrfToken: String,
-    prefilledEmail: String,
-    prefilledName: String,
-    datalistHTML: String,
-    educationalSuffixesJS: String,
-    errorMessage: String? = nil
-  ) {
+  public init(locale: ScholarshipPortalLocale, apiBaseURL: String) {
     self.locale = locale
-    self.csrfToken = csrfToken
-    self.prefilledEmail = prefilledEmail
-    self.prefilledName = prefilledName
-    self.datalistHTML = datalistHTML
-    self.educationalSuffixesJS = educationalSuffixesJS
-    self.errorMessage = errorMessage
+    self.apiBaseURL = apiBaseURL
   }
 
   public var body: some HTML {
     ScholarshipLayout(
       pageTitle: ScholarshipStrings.t(.applyTitle, locale),
       locale: locale,
-      isAuthenticated: true,
-      flash: errorMessage,
-      csrfToken: csrfToken
+      apiBaseURL: apiBaseURL,
+      pageKind: "apply"
     ) {
       h1 { ScholarshipStrings.t(.applyTitle, locale) }
 
-      HTMLRaw(datalistHTML)
+      HTMLRaw(TravelCostDatalistHTML.render())
 
-      form(.method(.post), .action("/apply"), .id("apply-form")) {
-        input(.type(.hidden), .name("_csrf"), .value(csrfToken))
-
+      form(
+        .method(.post),
+        .action("\(apiBaseURL)/api/v1/scholarship/apply"),
+        .id("apply-form")
+      ) {
         section1
         section2
         section3
@@ -63,10 +47,6 @@ public struct ApplyPage: HTML {
           ScholarshipStrings.t(.applySubmit, locale)
         }
       }
-
-      script {
-        HTMLRaw(applyFormJS)
-      }
     }
   }
 
@@ -78,7 +58,6 @@ public struct ApplyPage: HTML {
       FormField(
         label: ScholarshipStrings.t(.applyEmailLabel, locale),
         name: "email",
-        value: prefilledEmail,
         inputType: "email",
         isRequired: true
       )
@@ -88,7 +67,6 @@ public struct ApplyPage: HTML {
       FormField(
         label: ScholarshipStrings.t(.applyNameLabel, locale),
         name: "name",
-        value: prefilledName,
         isRequired: true
       )
       FormField(
@@ -120,20 +98,13 @@ public struct ApplyPage: HTML {
         Elementary.label { ScholarshipStrings.t(.applyLanguageLabel, locale) }
         Elementary.label {
           input(
-            .type(.radio),
-            .name("language_preference"),
-            .value("ja"),
-            .required,
-            locale == .ja ? .checked : .checked
+            .type(.radio), .name("language_preference"), .value("ja"), .required, .checked
           )
           " " + ScholarshipStrings.t(.applyLanguageJa, locale)
         }
         Elementary.label {
           input(
-            .type(.radio),
-            .name("language_preference"),
-            .value("en"),
-            .required
+            .type(.radio), .name("language_preference"), .value("en"), .required
           )
           " " + ScholarshipStrings.t(.applyLanguageEn, locale)
         }
@@ -148,11 +119,7 @@ public struct ApplyPage: HTML {
         Elementary.label { ScholarshipStrings.t(.applyPurposeLabel, locale) }
         for purpose in ScholarshipPurpose.allCases {
           Elementary.label {
-            input(
-              .type(.checkbox),
-              .name("purposes"),
-              .value(purpose.rawValue)
-            )
+            input(.type(.checkbox), .name("purposes"), .value(purpose.rawValue))
             " " + (locale == .ja ? purpose.displayNameJa : purpose.displayName)
           }
         }
@@ -176,8 +143,7 @@ public struct ApplyPage: HTML {
             .name("support_type"),
             .value(ScholarshipSupportType.ticketOnly.rawValue),
             .required,
-            .checked,
-            .custom(name: "onchange", value: "toggleTravelSections(this.value)")
+            .checked
           )
           " "
             + (locale == .ja
@@ -188,8 +154,7 @@ public struct ApplyPage: HTML {
           input(
             .type(.radio),
             .name("support_type"),
-            .value(ScholarshipSupportType.ticketAndTravel.rawValue),
-            .custom(name: "onchange", value: "toggleTravelSections(this.value)")
+            .value(ScholarshipSupportType.ticketAndTravel.rawValue)
           )
           " "
             + (locale == .ja
@@ -211,11 +176,7 @@ public struct ApplyPage: HTML {
         Elementary.label { ScholarshipStrings.t(.applyTransportLabel, locale) }
         for method in ScholarshipTransportMethod.allCases {
           Elementary.label {
-            input(
-              .type(.checkbox),
-              .name("transportation_methods"),
-              .value(method.rawValue)
-            )
+            input(.type(.checkbox), .name("transportation_methods"), .value(method.rawValue))
             " " + (locale == .ja ? method.displayNameJa : method.displayName)
           }
         }
@@ -315,70 +276,27 @@ public struct ApplyPage: HTML {
       )
     }
   }
+}
 
-  // MARK: Inline JS
+/// Pre-rendered datalist for the city autocomplete. Keys come from a
+/// canonical list embedded at build time so the static page works without
+/// hitting the API for completion options.
+private enum TravelCostDatalistHTML {
+  static let cities: [(en: String, ja: String)] = [
+    ("Chiba", "千葉"), ("Fukuoka", "福岡"), ("Hiroshima", "広島"), ("Kagoshima", "鹿児島"),
+    ("Kanazawa", "金沢"), ("Kobe", "神戸"), ("Kumamoto", "熊本"), ("Kyoto", "京都"),
+    ("Matsuyama", "松山"), ("Nagano", "長野"), ("Nagoya", "名古屋"), ("Naha", "那覇"),
+    ("Niigata", "新潟"), ("Okayama", "岡山"), ("Osaka", "大阪"), ("Saitama", "さいたま"),
+    ("Sapporo", "札幌"), ("Sendai", "仙台"), ("Shizuoka", "静岡"), ("Yokohama", "横浜"),
+  ]
 
-  private var applyFormJS: String {
-    """
-    const EDU_SUFFIXES = \(educationalSuffixesJS);
-
-    function toggleTravelSections(value) {
-      const showTravel = value === 'ticket_and_travel';
-      const t = document.getElementById('section-travel');
-      const a = document.getElementById('section-accommodation');
-      if (t) t.classList.toggle('hidden', !showTravel);
-      if (a) a.classList.toggle('hidden', !showTravel);
+  static func render() -> String {
+    var html = "<datalist id=\"cityList\">"
+    for city in cities {
+      html += "<option value=\"\(city.en)\">"
+      html += "<option value=\"\(city.ja)\">"
     }
-    document.querySelectorAll("[name='support_type']").forEach(el => {
-      if (el.checked) toggleTravelSections(el.value);
-    });
-
-    function checkEmailDomain(value) {
-      const at = value.lastIndexOf('@');
-      if (at < 0) return;
-      const domain = value.slice(at).toLowerCase();
-      const ok = EDU_SUFFIXES.some(s => domain.endsWith(s));
-      const hint = document.getElementById('email-domain-hint');
-      if (hint) hint.classList.toggle('hidden', ok);
-    }
-    const emailInput = document.querySelector("[name='email']");
-    if (emailInput) {
-      emailInput.addEventListener('input', e => checkEmailDomain(e.target.value));
-      checkEmailDomain(emailInput.value);
-    }
-
-    function recalcTotal() {
-      const tripEl = document.querySelector("[name='estimated_round_trip_cost']");
-      const accomEl = document.querySelector("[name='estimated_accommodation_cost']");
-      const totalEl = document.querySelector("[name='total_estimated_cost']");
-      if (!totalEl) return;
-      const t = Number(tripEl?.value || 0);
-      const a = Number(accomEl?.value || 0);
-      totalEl.value = String(t + a);
-    }
-    document.querySelector("[name='estimated_round_trip_cost']")?.addEventListener('input', recalcTotal);
-    document.querySelector("[name='estimated_accommodation_cost']")?.addEventListener('input', recalcTotal);
-
-    document.getElementById('estimate-travel-button')?.addEventListener('click', async () => {
-      const cityEl = document.querySelector("[name='origin_city']");
-      const out = document.getElementById('travel-estimate-result');
-      if (!cityEl || !out) return;
-      const city = cityEl.value;
-      if (!city) { out.textContent = ''; return; }
-      try {
-        const res = await fetch(`/api/travel-cost?from=${encodeURIComponent(city)}`);
-        if (!res.ok) { out.textContent = '—'; return; }
-        const data = await res.json();
-        const parts = [];
-        if (data.bulletTrain != null) parts.push(`新幹線 ¥${data.bulletTrain}`);
-        if (data.airplane != null) parts.push(`飛行機 ¥${data.airplane}`);
-        if (data.bus != null) parts.push(`バス ¥${data.bus}`);
-        if (data.train != null) parts.push(`電車 ¥${data.train}`);
-        out.textContent = parts.length ? parts.join(' / ') : '—';
-      } catch (_) {
-        out.textContent = '—';
-      }
-    });
-    """
+    html += "</datalist>"
+    return html
   }
 }

@@ -1,0 +1,149 @@
+/* student.tryswift.jp baseline styles. Intentionally minimal — pages
+ * inherit the layout primitives from main tryswift.jp eventually; this
+ * file just ensures the portal is legible before that polish lands. */
+
+:root {
+  --fg: #1a1a1a;
+  --muted: #555;
+  --bg: #fafafa;
+  --accent: #ff6700;
+  --danger: #c0392b;
+  --success: #28a745;
+  --border: #ddd;
+  --max-content: 720px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Helvetica Neue",
+    Helvetica, Arial, sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.portal-nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.portal-nav a:first-child { font-weight: 700; text-decoration: none; color: var(--fg); }
+.portal-nav .nav-link { color: var(--muted); text-decoration: none; }
+.portal-nav .nav-link:hover { color: var(--fg); }
+.portal-nav button { margin-left: auto; }
+
+.portal-main {
+  max-width: var(--max-content);
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h1 { font-size: 1.6rem; margin: 0 0 1rem; }
+h2 { font-size: 1.2rem; margin: 1.5rem 0 0.5rem; }
+
+.subtitle { color: var(--muted); }
+
+.flash {
+  background: #fff3cd;
+  border: 1px solid #ffeeba;
+  padding: 0.75rem 1rem;
+  margin: 0 1rem;
+  border-radius: 4px;
+}
+.flash.hidden { display: none; }
+.flash.success { background: #d4edda; border-color: #c3e6cb; }
+.flash.error { background: #f8d7da; border-color: #f5c6cb; }
+
+.cta {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.form-field { display: block; margin-bottom: 0.75rem; }
+.form-field > label,
+.form-field > .field-label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field input[type="number"],
+.form-field input[type="date"],
+.form-field textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font: inherit;
+}
+
+fieldset {
+  border: 1px solid var(--border);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+}
+fieldset.hidden { display: none; }
+legend { padding: 0 0.5rem; font-weight: 600; }
+
+.agreement label { display: block; margin-bottom: 0.25rem; }
+
+button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font: inherit;
+}
+button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+button.danger { background: var(--danger); color: #fff; border-color: var(--danger); }
+
+.applications {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.applications th, .applications td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.budget-summary dl,
+#budget-summary dl,
+#my-application dl,
+#application-detail dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 0.75rem;
+  margin: 0;
+}
+dt { font-weight: 600; color: var(--muted); }
+dd { margin: 0; }
+
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+.bg-secondary { background: #e2e3e5; color: #383d41; }
+.bg-success { background: #d4edda; color: #155724; }
+.bg-danger { background: #f8d7da; color: #721c24; }
+.bg-warning { background: #fff3cd; color: #856404; }
+.text-dark { color: #1a1a1a; }
+
+.hidden { display: none; }
+.hint { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
+.toolbar { margin: 1rem 0; display: flex; gap: 1rem; }
