@@ -13,12 +13,10 @@ enum AppRoutes {
       return ["status": "healthy", "service": "trySwiftAPI"]
     }
 
-    // /api/v1 must NOT be reachable from sponsor.tryswift.jp or student.tryswift.jp.
-    // Those portals serve SSR HTML only; the JSON API is exposed only on the
-    // configured API host (api.tryswift.jp).
-    let api = app.grouped(NotSponsorHostMiddleware())
-      .grouped(NotStudentHostMiddleware())
-      .grouped("api", "v1")
+    // /api/v1 must NOT be reachable from sponsor.tryswift.jp (the sponsor
+    // portal serves SSR HTML only). The student portal is now a static site
+    // hosted on Cloudflare Pages and consumes /api/v1/scholarship/* directly.
+    let api = app.grouped(NotSponsorHostMiddleware()).grouped("api", "v1")
 
     // Register API controllers
     try api.register(collection: AuthController())
@@ -31,10 +29,11 @@ enum AppRoutes {
     try api.register(collection: FeedbackController())
     try api.register(collection: FavoritesController())
 
+    // Student scholarship portal — JSON / form-redirect endpoints consumed
+    // by the static student.tryswift.jp site hosted on Cloudflare Pages.
+    try api.grouped("scholarship").register(collection: ScholarshipAPIController())
+
     // Sponsor portal routes (host-filtered to sponsor.tryswift.jp)
     try app.register(collection: SponsorRoutes())
-
-    // Student scholarship portal routes (host-filtered to student.tryswift.jp)
-    try app.register(collection: ScholarshipRoutes())
   }
 }
