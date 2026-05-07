@@ -5,11 +5,18 @@ public struct LoginRequestPage: HTML {
   public let locale: SponsorPortalLocale
   public let csrfToken: String
   public let errorMessage: String?
+  public let apiBaseURL: String?
 
-  public init(locale: SponsorPortalLocale, csrfToken: String, errorMessage: String? = nil) {
+  public init(
+    locale: SponsorPortalLocale,
+    csrfToken: String,
+    errorMessage: String? = nil,
+    apiBaseURL: String? = nil
+  ) {
     self.locale = locale
     self.csrfToken = csrfToken
     self.errorMessage = errorMessage
+    self.apiBaseURL = apiBaseURL
   }
 
   public var body: some HTML {
@@ -17,7 +24,8 @@ public struct LoginRequestPage: HTML {
       pageTitle: PortalStrings.t(.loginTitle, locale),
       locale: locale,
       isAuthenticated: false,
-      flash: errorMessage
+      flash: errorMessage,
+      apiBaseURL: apiBaseURL
     ) {
       h1 { PortalStrings.t(.loginTitle, locale) }
       form(.method(.post), .action("/login")) {
