@@ -45,6 +45,7 @@ struct BuildOptions: Sendable {
 enum BuildError: LocalizedError {
   case missingValue(String)
   case unknownArgument(String)
+  case missingPublicDirectory(String)
 
   var errorDescription: String? {
     switch self {
@@ -52,6 +53,9 @@ enum BuildError: LocalizedError {
       return "Missing value for \(argument)."
     case .unknownArgument(let argument):
       return "Unknown argument: \(argument)."
+    case .missingPublicDirectory(let path):
+      return
+        "Public asset directory does not exist: \(path). Pass --public-dir <path> to point at an existing directory."
     }
   }
 }

@@ -20,7 +20,9 @@ struct StaticSiteBuilder {
   }
 
   private func copyPublicAssets() throws {
-    guard fileManager.fileExists(atPath: options.publicDirectory.path()) else { return }
+    guard fileManager.fileExists(atPath: options.publicDirectory.path()) else {
+      throw BuildError.missingPublicDirectory(options.publicDirectory.path())
+    }
 
     let publicContents = try fileManager.contentsOfDirectory(
       at: options.publicDirectory,
