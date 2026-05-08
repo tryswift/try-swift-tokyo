@@ -363,7 +363,21 @@
 
   // ---- bootstrap -------------------------------------------------------
 
+  function flashFromQuery() {
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get("error");
+    if (!error) return;
+    const message =
+      error === "invalid"
+        ? (locale === "ja"
+          ? "ログインリンクが無効か期限切れです。再度メールを送ってください。"
+          : "The login link is invalid or expired. Please request a new one.")
+        : error;
+    showFlash(message, "error");
+  }
+
   document.addEventListener("DOMContentLoaded", async () => {
+    flashFromQuery();
     await fetchMe();
     setupLogout();
     const page = document.body.getAttribute("data-page");
