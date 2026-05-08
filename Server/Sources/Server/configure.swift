@@ -79,6 +79,9 @@ enum AppConfiguration {
     app.migrations.add(CreateSponsorApplication())
     app.migrations.add(CreateMagicLinkToken())
     app.migrations.add(CreateSponsorInvitation())
+    // Fix benefits column type for environments where
+    // CreateSponsorPlanLocalization has already run with `.json`.
+    app.migrations.add(AlterSponsorPlanLocalizationBenefitsToStringArray())
     app.migrations.add(SeedSponsorPlans2026())
 
     // Auto-migrate on startup (safe for production as Fluent tracks completed migrations)

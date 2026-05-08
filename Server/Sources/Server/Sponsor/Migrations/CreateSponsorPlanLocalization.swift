@@ -8,7 +8,7 @@ struct CreateSponsorPlanLocalization: AsyncMigration {
       .field("locale", .string, .required)
       .field("name", .string, .required)
       .field("summary", .string, .required)
-      .field("benefits", .json, .required)
+      .field("benefits", .array(of: .string), .required)
       .unique(on: "plan_id", "locale")
       .create()
   }
