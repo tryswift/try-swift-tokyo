@@ -1,0 +1,53 @@
+name: Deploy WebScholarship to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Web/Sources/WebScholarship/**"
+      - "Web/Public/student/**"
+      - "Web/Package.swift"
+      - "Web/Package.resolved"
+      - "SharedModels/**"
+      - ".github/workflows/deploy-webscholarship.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: webscholarship-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build & Deploy WebScholarship
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@364295d9c23900ce04d4e5cc708387921b4e50f9 # v3
+        with:
+          swift-version: "6.3"
+          skip-verify-signature: true
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v5
+        with:
+          key: spm-webscholarship-${{ runner.os }}-swift-6.3-${{ hashFiles('Web/Package.resolved', 'Web/Package.swift') }}
+          restore-keys: spm-webscholarship-${{ runner.os }}-swift-6.3-
+          path: Web/.build
+
+      - name: Build static site
+        run: |
+          cd Web
+          swift run WebScholarship --api-base-url https://api.tryswift.jp --public-dir Public --output Build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy Web/Build --project-name=tryswift-student

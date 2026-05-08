@@ -10,6 +10,7 @@ let package = Package(
     .library(name: "WebShared", targets: ["WebShared"]),
     .library(name: "WebSponsor", targets: ["WebSponsor"]),
     .executable(name: "WebCfP", targets: ["WebCfP"]),
+    .executable(name: "WebScholarship", targets: ["WebScholarship"]),
     .executable(name: "WebConference", targets: ["WebConference"]),
     .executable(name: "WebSponsorBuilder", targets: ["WebSponsorBuilder"]),
   ],
@@ -31,6 +32,15 @@ let package = Package(
     ),
     .target(
       name: "WebSponsor",
+      dependencies: [
+        "WebShared",
+        .product(name: "Elementary", package: "elementary"),
+        .product(name: "SharedModels", package: "SharedModels"),
+      ],
+      swiftSettings: [.swiftLanguageMode(.v6)]
+    ),
+    .executableTarget(
+      name: "WebScholarship",
       dependencies: [
         "WebShared",
         .product(name: "Elementary", package: "elementary"),

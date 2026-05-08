@@ -83,6 +83,12 @@ enum AppConfiguration {
     // CreateSponsorPlanLocalization has already run with `.json`.
     app.migrations.add(AlterSponsorPlanLocalizationBenefitsToStringArray())
     app.migrations.add(SeedSponsorPlans2026())
+    // Scholarship portal (student.tryswift.jp). StudentUser must exist before the
+    // magic-link token table or applications can FK-reference it.
+    app.migrations.add(CreateStudentUser())
+    app.migrations.add(CreateStudentMagicLinkToken())
+    app.migrations.add(CreateScholarshipApplication())
+    app.migrations.add(CreateScholarshipBudget())
 
     // Auto-migrate on startup (safe for production as Fluent tracks completed migrations)
     try await app.autoMigrate()

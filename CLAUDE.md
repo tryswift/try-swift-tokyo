@@ -3,12 +3,26 @@
 ## Project Structure
 
 - `Server/` - Vapor backend (Swift 6.3). Tests: `cd Server && swift test`
+  - `Server/Sources/Server/Sponsor/` - sponsor.tryswift.jp portal (auth/controllers/services/SSR via WebSponsor). Host-gated by `SponsorHostOnlyMiddleware`.
+  - `Server/Sources/Server/Scholarship/` - JSON / form-redirect endpoints under `/api/v1/scholarship/*` consumed by the student.tryswift.jp static site. Magic-link auth on a dedicated `student_users` + `student_magic_link_tokens` tree; organizer routes use a fetch-friendly `ScholarshipOrganizerAuthMiddleware` that returns 401/403 instead of redirecting.
+- `Web/` - SSR libraries and static-site executables (Elementary + Ignite). `WebShared` and `WebSponsor` are libraries linked into Server. `WebCfP`, `WebScholarship`, and `WebConference` are executables that emit static HTML for Cloudflare Pages.
 - `Website/` - Ignite static site. Build: `cd Website && swift build`
 - `Android/` - Skip framework (Swift → Kotlin). Build: `cd Android && swift build`
 - `App/` - iOS app (SwiftUI + TCA)
 - `SharedModels/` - Shared Swift package
 - `DataClient/` - Data access layer
 - `e2e/` - Playwright E2E tests: `cd e2e && npx playwright test`
+
+## Subdomain topology
+
+| Host | Hosting | Notes |
+|---|---|---|
+| `api.tryswift.jp` | Fly.io (`tryswift-api-prod`) | Vapor JSON API. `NotSponsorHostMiddleware` keeps `/api/v1/...` off the sponsor host. |
+| `sponsor.tryswift.jp` | Fly.io (`tryswift-api-prod`) | SSR portal, host-gated by `SponsorHostOnlyMiddleware`. Magic-link auth on `SponsorUser`. |
+| `cfp.tryswift.jp` | Cloudflare Pages (`tryswift-cfp`) | Static site built from `Web/Sources/WebCfP`. Forms POST to api.tryswift.jp. |
+| `student.tryswift.jp` | Cloudflare Pages (`tryswift-student`) | Static site built from `Web/Sources/WebScholarship`; client JS fetches `/api/v1/scholarship/*`. Magic-link auth on `StudentUser`; organizers reuse the shared `auth_token` cookie. |
+
+Required server env vars for scholarship endpoints: `STUDENT_BASE_URL`, `SCHOLARSHIP_API_BASE_URL` (defaults to `API_BASE_URL` then `https://api.tryswift.jp`), `ODPT_API_KEY` (optional, for live fare lookups), `SCHOLARSHIP_SLACK_WEBHOOK_URL` (optional, falls back to `SLACK_WEBHOOK_URL`), `RESEND_API_KEY`, `RESEND_FROM_EMAIL`.
 
 ## CI Workflows
 
