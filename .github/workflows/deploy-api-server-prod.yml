@@ -17,6 +17,15 @@ on:
       - "fly.production.toml"
   workflow_dispatch:
 
+# Serialize prod deploys: the Fly.io remote builder is shared per-app, and
+# running two `flyctl deploy` jobs in parallel makes them fight for builder
+# RAM and OOM-kill the Swift compiler partway through the build. Cancel the
+# in-progress run when a newer commit lands on main so only the latest deploy
+# proceeds.
+concurrency:
+  group: deploy-api-server-prod
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
