@@ -23,6 +23,15 @@ import Vapor
 ///   - `POST /api/v1/sponsor/applications`          — submit a new application
 ///   - `GET  /api/v1/sponsor/applications/:id`      — detail (membership-gated)
 ///   - `POST /api/v1/sponsor/applications/:id/withdraw` — owner-only withdraw
+///
+/// Phase 3c-2 adds the team / profile / invitation surface:
+///   - `GET    /api/v1/sponsor/profile`                        — current org + isOwner
+///   - `PUT    /api/v1/sponsor/profile`                        — update / create org (owner-only on update)
+///   - `GET    /api/v1/sponsor/team`                           — member list + isOwner
+///   - `POST   /api/v1/sponsor/team/invitations`               — owner invites a member by email
+///   - `DELETE /api/v1/sponsor/team/members/:userID`           — owner removes a member
+///   - `GET    /api/v1/sponsor/invitations/:token`             — public invitation lookup
+///   - `POST   /api/v1/sponsor/invitations/:token/accept`      — public accept (creates user + membership + magic link)
 struct SponsorAPIController: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
     routes.get("me", use: me)
@@ -31,6 +40,8 @@ struct SponsorAPIController: RouteCollection {
     routes.post("inquiries", use: createInquiry)
     routes.post("login", use: requestMagicLink)
     routes.get("auth", "verify", use: verifyMagicLink)
+    routes.get("invitations", ":token", use: showInvitation)
+    routes.post("invitations", ":token", "accept", use: acceptInvitation)
 
     // Sponsor-authenticated subgroup. We pass `nil` so missing/invalid
     // cookies surface as 401 JSON instead of redirecting to the SSR /login.
@@ -39,6 +50,11 @@ struct SponsorAPIController: RouteCollection {
     authed.post("applications", use: createApplication)
     authed.get("applications", ":id", use: applicationDetail)
     authed.post("applications", ":id", "withdraw", use: withdrawApplication)
+    authed.get("profile", use: getProfile)
+    authed.put("profile", use: updateProfile)
+    authed.get("team", use: getTeam)
+    authed.post("team", "invitations", use: createInvitation)
+    authed.delete("team", "members", ":userID", use: removeMember)
   }
 
   // MARK: - GET /api/v1/sponsor/me
@@ -478,6 +494,279 @@ struct SponsorAPIController: RouteCollection {
 
   private func inquiryLocale(_ req: Request) -> SponsorPortalLocale {
     SponsorPortalLocale(rawValue: req.headers.first(name: "X-Locale") ?? "") ?? .ja
+  }
+
+  // MARK: - GET /api/v1/sponsor/profile
+
+  /// Returns the signed-in user's organization (legalName / displayName /
+  /// country / billingAddress / websiteURL) along with whether they own it.
+  /// `organization` is `nil` until the user has filled in the profile form.
+  func getProfile(_ req: Request) async throws -> Response {
+    struct ProfileResponse: Content {
+      let organization: SponsorOrganizationDTO?
+      let isOwner: Bool
+    }
+
+    guard let user = req.sponsorUser else { throw Abort(.unauthorized) }
+    let (org, isOwner) = try await currentMembership(for: user, on: req.db)
+    let response = Response(status: .ok)
+    try response.content.encode(
+      ProfileResponse(organization: try org?.toDTO(), isOwner: isOwner)
+    )
+    return response
+  }
+
+  // MARK: - PUT /api/v1/sponsor/profile
+
+  /// Updates the existing organization (owner-only) or, if the signed-in
+  /// user has no organization yet, creates one and grants them an owner
+  /// membership in the same transaction.
+  func updateProfile(_ req: Request) async throws -> Response {
+    guard let user = req.sponsorUser else { throw Abort(.unauthorized) }
+    let payload = try req.content.decode(SponsorProfileUpdatePayload.self)
+    let (existing, isOwner) = try await currentMembership(for: user, on: req.db)
+
+    let savedOrg: SponsorOrganization
+    if let existing {
+      guard isOwner else { throw Abort(.forbidden) }
+      existing.legalName = payload.legalName
+      existing.displayName = payload.displayName
+      existing.country = payload.country
+      existing.billingAddress = payload.billingAddress
+      existing.websiteURL = payload.websiteURL
+      try await existing.save(on: req.db)
+      savedOrg = existing
+    } else {
+      let org = SponsorOrganization(
+        legalName: payload.legalName, displayName: payload.displayName,
+        country: payload.country, billingAddress: payload.billingAddress,
+        websiteURL: payload.websiteURL
+      )
+      try await org.save(on: req.db)
+      let mem = SponsorMembership(
+        organizationID: try org.requireID(),
+        userID: try user.requireID(),
+        role: .owner
+      )
+      try await mem.save(on: req.db)
+      savedOrg = org
+    }
+
+    let response = Response(status: .ok)
+    try response.content.encode(try savedOrg.toDTO())
+    return response
+  }
+
+  // MARK: - GET /api/v1/sponsor/team
+
+  /// Returns the membership roster of the signed-in user's organization.
+  /// Includes `isOwner` so the client can gate the invite/remove controls.
+  func getTeam(_ req: Request) async throws -> Response {
+    struct MemberRow: Content {
+      let userID: UUID
+      let email: String
+      let displayName: String?
+      let role: SponsorMemberRole
+    }
+    struct TeamResponse: Content {
+      let members: [MemberRow]
+      let isOwner: Bool
+    }
+
+    guard let user = req.sponsorUser else { throw Abort(.unauthorized) }
+    let (org, isOwner) = try await currentMembership(for: user, on: req.db)
+    var rows: [MemberRow] = []
+    if let org {
+      let memberships = try await SponsorMembership.query(on: req.db)
+        .filter(\.$organization.$id == (try org.requireID()))
+        .with(\.$user)
+        .all()
+      rows = memberships.map { m in
+        MemberRow(
+          userID: m.$user.id, email: m.user.email,
+          displayName: m.user.displayName, role: m.role
+        )
+      }
+    }
+    let response = Response(status: .ok)
+    try response.content.encode(TeamResponse(members: rows, isOwner: isOwner))
+    return response
+  }
+
+  // MARK: - POST /api/v1/sponsor/team/invitations
+
+  /// Owner-only. Creates a `SponsorInvitation`, emails the recipient an
+  /// accept link valid for 7 days, and returns `{ok: true}`.
+  func createInvitation(_ req: Request) async throws -> Response {
+    guard let user = req.sponsorUser else { throw Abort(.unauthorized) }
+    let payload = try req.content.decode(SponsorTeamInvitePayload.self)
+    let (org, isOwner) = try await currentMembership(for: user, on: req.db)
+    guard let org, isOwner else { throw Abort(.forbidden) }
+
+    let raw = SecureToken.urlSafe(byteCount: 32)
+    let hashed = MagicLinkService.hash(raw)
+    let invitation = SponsorInvitation(
+      organizationID: try org.requireID(),
+      email: payload.email,
+      role: .member,
+      tokenHash: hashed,
+      expiresAt: Date().addingTimeInterval(86400 * 7),
+      invitedByUserID: try user.requireID()
+    )
+    try await invitation.save(on: req.db)
+
+    let baseURL = sponsorBaseURL()
+    if let acceptURL = URL(string: "\(baseURL)/invitations/\(raw)") {
+      let locale = req.sponsorJWT?.locale ?? user.locale
+      let mail = SponsorEmailTemplates.render(
+        .memberInvite(
+          orgName: org.displayName,
+          inviterName: user.displayName ?? user.email,
+          acceptURL: acceptURL),
+        locale: locale, recipientName: nil)
+      let from =
+        Environment.get("RESEND_FROM_EMAIL") ?? "Sponsorship <sponsorship@mail.tryswift.jp>"
+      _ = await ResendClient.send(
+        to: payload.email, from: from,
+        subject: mail.subject, html: mail.htmlBody, text: mail.textBody,
+        client: req.client, logger: req.logger)
+    }
+
+    let response = Response(status: .created)
+    try response.content.encode(["ok": true])
+    return response
+  }
+
+  // MARK: - DELETE /api/v1/sponsor/team/members/:userID
+
+  /// Owner-only. Removes a membership row. Owners cannot remove themselves
+  /// to avoid orphaning the organization.
+  func removeMember(_ req: Request) async throws -> Response {
+    guard let user = req.sponsorUser else { throw Abort(.unauthorized) }
+    guard let targetUserID = req.parameters.get("userID", as: UUID.self) else {
+      throw Abort(.badRequest)
+    }
+    let (org, isOwner) = try await currentMembership(for: user, on: req.db)
+    guard let org, isOwner else { throw Abort(.forbidden) }
+    if targetUserID == user.id {
+      throw Abort(.badRequest, reason: "Owner cannot remove themselves")
+    }
+    try await SponsorMembership.query(on: req.db)
+      .filter(\.$organization.$id == (try org.requireID()))
+      .filter(\.$user.$id == targetUserID)
+      .delete()
+
+    let response = Response(status: .ok)
+    try response.content.encode(["ok": true])
+    return response
+  }
+
+  // MARK: - GET /api/v1/sponsor/invitations/:token
+
+  /// Public lookup for an invitation token. Returns the inviting org's
+  /// displayName so the static page can render "You're invited to <Org>".
+  /// 404 when the token is unknown / 410 when expired or already accepted.
+  func showInvitation(_ req: Request) async throws -> Response {
+    struct InvitationResponse: Content {
+      let token: String
+      let orgName: String
+      let email: String
+      let expiresAt: Date
+    }
+
+    guard let token = req.parameters.get("token") else { throw Abort(.badRequest) }
+    let hashed = MagicLinkService.hash(token)
+    guard
+      let invitation = try await SponsorInvitation.query(on: req.db)
+        .filter(\.$tokenHash == hashed)
+        .with(\.$organization)
+        .first()
+    else { throw Abort(.notFound) }
+    if invitation.acceptedAt != nil || invitation.expiresAt < Date() {
+      throw Abort(.gone, reason: "Invitation already used or expired")
+    }
+    let response = Response(status: .ok)
+    try response.content.encode(
+      InvitationResponse(
+        token: token,
+        orgName: invitation.organization.displayName,
+        email: invitation.email,
+        expiresAt: invitation.expiresAt
+      )
+    )
+    return response
+  }
+
+  // MARK: - POST /api/v1/sponsor/invitations/:token/accept
+
+  /// Public. Verifies the invitation, find-or-creates the SponsorUser, adds
+  /// a membership row (idempotent), marks the invitation accepted, and
+  /// emails the user a magic-link so they can finish signing in.
+  func acceptInvitation(_ req: Request) async throws -> Response {
+    guard let token = req.parameters.get("token") else { throw Abort(.badRequest) }
+    let hashed = MagicLinkService.hash(token)
+    guard
+      let invitation = try await SponsorInvitation.query(on: req.db)
+        .filter(\.$tokenHash == hashed)
+        .first()
+    else { throw Abort(.notFound) }
+    if invitation.acceptedAt != nil || invitation.expiresAt < Date() {
+      throw Abort(.gone)
+    }
+
+    let locale = inquiryLocale(req)
+    let user = try await SponsorPublicController.findOrCreateUser(
+      email: invitation.email, displayName: nil,
+      locale: locale, on: req.db
+    )
+
+    if try await SponsorMembership.query(on: req.db)
+      .filter(\.$organization.$id == invitation.$organization.id)
+      .filter(\.$user.$id == (try user.requireID()))
+      .first() == nil
+    {
+      let mem = SponsorMembership(
+        organizationID: invitation.$organization.id,
+        userID: try user.requireID(),
+        role: invitation.role,
+        invitedByUserID: invitation.invitedByUserID
+      )
+      try await mem.save(on: req.db)
+    }
+
+    invitation.acceptedAt = Date()
+    try await invitation.save(on: req.db)
+
+    let issued = try await MagicLinkService.issue(for: user, on: req.db)
+    let baseURL = sponsorBaseURL()
+    if let url = URL(string: "\(baseURL)/auth/verify?token=\(issued.rawToken)") {
+      let mail = SponsorEmailTemplates.render(
+        .magicLink(verifyURL: url, ttlMinutes: 30),
+        locale: user.locale, recipientName: user.displayName)
+      let from =
+        Environment.get("RESEND_FROM_EMAIL") ?? "Sponsorship <sponsorship@mail.tryswift.jp>"
+      _ = await ResendClient.send(
+        to: user.email, from: from,
+        subject: mail.subject, html: mail.htmlBody, text: mail.textBody,
+        client: req.client, logger: req.logger)
+    }
+
+    let response = Response(status: .ok)
+    try response.content.encode(["ok": true])
+    return response
+  }
+
+  private func currentMembership(
+    for user: SponsorUser, on db: Database
+  ) async throws -> (SponsorOrganization?, Bool) {
+    if let mem = try await SponsorMembership.query(on: db)
+      .filter(\.$user.$id == (try user.requireID()))
+      .with(\.$organization)
+      .first()
+    {
+      return (mem.organization, mem.role == .owner)
+    }
+    return (nil, false)
   }
 
   private func currentConference(on db: Database) async throws -> Conference {
