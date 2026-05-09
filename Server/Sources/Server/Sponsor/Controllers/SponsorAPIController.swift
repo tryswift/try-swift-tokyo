@@ -32,6 +32,15 @@ import Vapor
 ///   - `DELETE /api/v1/sponsor/team/members/:userID`           — owner removes a member
 ///   - `GET    /api/v1/sponsor/invitations/:token`             — public invitation lookup
 ///   - `POST   /api/v1/sponsor/invitations/:token/accept`      — public accept (creates user + membership + magic link)
+///
+/// Phase 3d-1 adds the organizer-admin surface (cfp `auth_token` cookie):
+///   - `GET    /api/v1/sponsor/admin/organizations`            — list with member/application counts
+///   - `GET    /api/v1/sponsor/admin/organizations/:id`        — detail with members + applications
+///   - `GET    /api/v1/sponsor/admin/inquiries`                — all sponsor inquiries (newest first)
+///   - `GET    /api/v1/sponsor/admin/applications`             — all applications (newest first)
+///   - `GET    /api/v1/sponsor/admin/applications/:id`         — application detail
+///   - `POST   /api/v1/sponsor/admin/applications/:id/approve` — approve and notify
+///   - `POST   /api/v1/sponsor/admin/applications/:id/reject`  — reject (with reason) and notify
 struct SponsorAPIController: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
     routes.get("me", use: me)
@@ -55,6 +64,20 @@ struct SponsorAPIController: RouteCollection {
     authed.get("team", use: getTeam)
     authed.post("team", "invitations", use: createInvitation)
     authed.delete("team", "members", ":userID", use: removeMember)
+
+    // Organizer-admin subgroup. Reuses the cfp `auth_token` cookie via
+    // OrganizerOnlyMiddleware, but with `.abortUnauthorized` so a missing
+    // cookie returns 401 JSON instead of redirecting to the SSR login page.
+    let admin =
+      routes.grouped("admin")
+      .grouped(OrganizerOnlyMiddleware(unauthenticatedAction: .abortUnauthorized))
+    admin.get("organizations", use: adminListOrganizations)
+    admin.get("organizations", ":id", use: adminOrganizationDetail)
+    admin.get("inquiries", use: adminListInquiries)
+    admin.get("applications", use: adminListApplications)
+    admin.get("applications", ":id", use: adminApplicationDetail)
+    admin.post("applications", ":id", "approve", use: adminApprove)
+    admin.post("applications", ":id", "reject", use: adminReject)
   }
 
   // MARK: - GET /api/v1/sponsor/me
@@ -753,6 +776,193 @@ struct SponsorAPIController: RouteCollection {
 
     let response = Response(status: .ok)
     try response.content.encode(["ok": true])
+    return response
+  }
+
+  // MARK: - GET /api/v1/sponsor/admin/organizations
+
+  /// Lists every sponsor organization with summary counts so the static
+  /// organizer dashboard can render a roster without a per-row fan-out.
+  func adminListOrganizations(_ req: Request) async throws -> Response {
+    struct Row: Content {
+      let id: UUID
+      let displayName: String
+      let memberCount: Int
+      let applicationCount: Int
+    }
+    struct ListResponse: Content {
+      let organizations: [Row]
+    }
+
+    let orgs = try await SponsorOrganization.query(on: req.db)
+      .with(\.$memberships)
+      .with(\.$applications)
+      .all()
+    let rows: [Row] = try orgs.map { o in
+      Row(
+        id: try o.requireID(),
+        displayName: o.displayName,
+        memberCount: o.memberships.count,
+        applicationCount: o.applications.count
+      )
+    }
+    let response = Response(status: .ok)
+    try response.content.encode(ListResponse(organizations: rows))
+    return response
+  }
+
+  // MARK: - GET /api/v1/sponsor/admin/organizations/:id
+
+  /// One organization plus the email list of its members and a compact
+  /// summary of every application it has filed.
+  func adminOrganizationDetail(_ req: Request) async throws -> Response {
+    struct ApplicationRow: Content {
+      let id: UUID
+      let planSlug: String
+      let status: SponsorApplicationStatus
+    }
+    struct DetailResponse: Content {
+      let organization: SponsorOrganizationDTO
+      let memberEmails: [String]
+      let applications: [ApplicationRow]
+    }
+
+    guard let id = req.parameters.get("id", as: UUID.self) else { throw Abort(.badRequest) }
+    let org = try await SponsorOrganization.query(on: req.db)
+      .filter(\.$id == id)
+      .with(\.$memberships) { $0.with(\.$user) }
+      .with(\.$applications) { $0.with(\.$plan) }
+      .first()
+    guard let org else { throw Abort(.notFound) }
+
+    let memberEmails = org.memberships.map { $0.user.email }
+    let applications: [ApplicationRow] = try org.applications.map { app in
+      ApplicationRow(
+        id: try app.requireID(), planSlug: app.plan.slug, status: app.status)
+    }
+    let response = Response(status: .ok)
+    try response.content.encode(
+      DetailResponse(
+        organization: try org.toDTO(),
+        memberEmails: memberEmails,
+        applications: applications
+      )
+    )
+    return response
+  }
+
+  // MARK: - GET /api/v1/sponsor/admin/inquiries
+
+  func adminListInquiries(_ req: Request) async throws -> Response {
+    struct ListResponse: Content {
+      let inquiries: [SponsorInquiryDTO]
+    }
+    let inquiries = try await SponsorInquiry.query(on: req.db)
+      .sort(\.$createdAt, .descending)
+      .all()
+    let response = Response(status: .ok)
+    try response.content.encode(
+      ListResponse(inquiries: try inquiries.map { try $0.toDTO() })
+    )
+    return response
+  }
+
+  // MARK: - GET /api/v1/sponsor/admin/applications
+
+  func adminListApplications(_ req: Request) async throws -> Response {
+    struct Row: Content {
+      let id: UUID
+      let orgName: String
+      let planSlug: String
+      let status: SponsorApplicationStatus
+    }
+    struct ListResponse: Content {
+      let applications: [Row]
+    }
+    let applications = try await SponsorApplication.query(on: req.db)
+      .with(\.$organization)
+      .with(\.$plan)
+      .sort(\.$createdAt, .descending)
+      .all()
+    let rows: [Row] = try applications.map { app in
+      Row(
+        id: try app.requireID(),
+        orgName: app.organization.displayName,
+        planSlug: app.plan.slug,
+        status: app.status
+      )
+    }
+    let response = Response(status: .ok)
+    try response.content.encode(ListResponse(applications: rows))
+    return response
+  }
+
+  // MARK: - GET /api/v1/sponsor/admin/applications/:id
+
+  func adminApplicationDetail(_ req: Request) async throws -> Response {
+    struct DetailResponse: Content {
+      let application: SponsorApplicationDTO
+      let orgName: String
+      let planName: String
+    }
+
+    guard let id = req.parameters.get("id", as: UUID.self) else { throw Abort(.badRequest) }
+    let application = try await SponsorApplication.query(on: req.db)
+      .filter(\.$id == id)
+      .with(\.$organization)
+      .with(\.$plan) { $0.with(\.$localizations) }
+      .first()
+    guard let application else { throw Abort(.notFound) }
+
+    let locale: SponsorPortalLocale =
+      SponsorPortalLocale(rawValue: req.headers.first(name: "X-Locale") ?? "") ?? .ja
+    let planName =
+      application.plan.localizations
+      .first(where: { $0.locale == locale })?.name ?? application.plan.slug
+
+    let response = Response(status: .ok)
+    try response.content.encode(
+      DetailResponse(
+        application: try application.toDTO(),
+        orgName: application.organization.displayName,
+        planName: planName
+      )
+    )
+    return response
+  }
+
+  // MARK: - POST /api/v1/sponsor/admin/applications/:id/approve
+
+  /// Approves an application via SponsorApplicationService (which also
+  /// emails the applicant and pings Slack). Returns the updated DTO so the
+  /// dashboard can refresh in place.
+  func adminApprove(_ req: Request) async throws -> Response {
+    guard let id = req.parameters.get("id", as: UUID.self) else { throw Abort(.badRequest) }
+    guard let payload = req.organizerJWT, let userID = payload.userID else {
+      throw Abort(.forbidden)
+    }
+    let application = try await SponsorApplicationService.approve(
+      applicationID: id, decidedByUserID: userID,
+      on: req.db, client: req.client, logger: req.logger)
+    let response = Response(status: .ok)
+    try response.content.encode(try application.toDTO())
+    return response
+  }
+
+  // MARK: - POST /api/v1/sponsor/admin/applications/:id/reject
+
+  /// Rejects an application with an optional reason.
+  func adminReject(_ req: Request) async throws -> Response {
+    guard let id = req.parameters.get("id", as: UUID.self) else { throw Abort(.badRequest) }
+    guard let payload = req.organizerJWT, let userID = payload.userID else {
+      throw Abort(.forbidden)
+    }
+    let body = try req.content.decode(OrganizerRejectPayload.self)
+    let application = try await SponsorApplicationService.reject(
+      applicationID: id, reason: body.reason, decidedByUserID: userID,
+      on: req.db, client: req.client, logger: req.logger)
+    let response = Response(status: .ok)
+    try response.content.encode(try application.toDTO())
     return response
   }
 

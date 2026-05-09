@@ -6,6 +6,7 @@ import Vapor
 // on top; we add the conformance here so `SponsorAPIController` can call
 // `response.content.encode(dto)` directly.
 extension SponsorApplicationDTO: @retroactive Content {}
+extension SponsorInquiryDTO: @retroactive Content {}
 extension SponsorOrganizationDTO: @retroactive Content {}
 extension SponsorPlanDTO: @retroactive Content {}
 extension SponsorUserDTO: @retroactive Content {}
