@@ -459,7 +459,10 @@ struct SponsorAPIController: RouteCollection {
       .first() != nil
     guard isOwner else { throw Abort(.forbidden) }
     guard application.status == .submitted else {
-      throw Abort(.conflict, reason: "Cannot withdraw — already in review")
+      throw Abort(
+        .conflict,
+        reason: "Cannot withdraw an application in status: \(application.status.rawValue)"
+      )
     }
 
     application.status = .withdrawn
