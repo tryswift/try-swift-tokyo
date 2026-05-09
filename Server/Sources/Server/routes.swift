@@ -33,6 +33,11 @@ enum AppRoutes {
     // by the static student.tryswift.jp site hosted on Cloudflare Pages.
     try api.grouped("scholarship").register(collection: ScholarshipAPIController())
 
+    // Sponsor portal — JSON endpoints that the (in-progress) static
+    // sponsor.tryswift.jp Cloudflare Pages site will consume. Lives alongside
+    // the existing SSR sponsor routes; both sources of truth for now.
+    try api.grouped("sponsor").register(collection: SponsorAPIController())
+
     // Sponsor portal routes (host-filtered to sponsor.tryswift.jp)
     try app.register(collection: SponsorRoutes())
   }
