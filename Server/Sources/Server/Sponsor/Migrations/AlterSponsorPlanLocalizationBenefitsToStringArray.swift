@@ -17,31 +17,33 @@ struct AlterSponsorPlanLocalizationBenefitsToStringArray: AsyncMigration {
     // column as `.array(of: .string)` after this PR; SQLite stores arrays
     // as JSON strings regardless of the declared type.
     guard let sql = database as? SQLDatabase, sql.dialect.name == "postgresql" else { return }
-    // The SeedSponsorPlans2026 migration could not insert any rows yet, so
-    // the table is empty in practice. Still emit a USING expression so the
-    // ALTER works even if rows somehow exist.
+    // The original ALTER attempted `USING (... ARRAY(SELECT jsonb_array_elements_text(benefits)) ...)`,
+    // but Postgres rejects that with "cannot use subquery in transform expression"
+    // (sqlState 0A000): subqueries are not allowed inside an `ALTER COLUMN ... USING`
+    // expression. We work around it by dropping the column and re-adding it as
+    // `text[]`. SeedSponsorPlans2026 has never finished on production, so the
+    // table is empty there; SQLite tests skip this migration entirely via the
+    // dialect guard above.
+    try await sql.raw("ALTER TABLE sponsor_plan_localizations DROP COLUMN benefits").run()
     try await sql.raw(
       """
       ALTER TABLE sponsor_plan_localizations
-      ALTER COLUMN benefits TYPE text[]
-      USING (
-        CASE
-          WHEN benefits IS NULL THEN ARRAY[]::text[]
-          ELSE ARRAY(SELECT jsonb_array_elements_text(benefits))
-        END
-      )
+      ADD COLUMN benefits text[] NOT NULL DEFAULT ARRAY[]::text[]
       """
+    ).run()
+    try await sql.raw(
+      "ALTER TABLE sponsor_plan_localizations ALTER COLUMN benefits DROP DEFAULT"
     ).run()
   }
 
   func revert(on database: Database) async throws {
     guard let sql = database as? SQLDatabase, sql.dialect.name == "postgresql" else { return }
+    try await sql.raw("ALTER TABLE sponsor_plan_localizations DROP COLUMN benefits").run()
     try await sql.raw(
-      """
-      ALTER TABLE sponsor_plan_localizations
-      ALTER COLUMN benefits TYPE jsonb
-      USING to_jsonb(benefits)
-      """
+      "ALTER TABLE sponsor_plan_localizations ADD COLUMN benefits jsonb NOT NULL DEFAULT '[]'::jsonb"
+    ).run()
+    try await sql.raw(
+      "ALTER TABLE sponsor_plan_localizations ALTER COLUMN benefits DROP DEFAULT"
     ).run()
   }
 }
