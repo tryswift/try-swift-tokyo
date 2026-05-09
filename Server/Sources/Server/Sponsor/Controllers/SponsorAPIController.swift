@@ -18,7 +18,11 @@ import Vapor
 ///                                            `sponsor_auth_token` cookie and
 ///                                            returns JSON
 ///
-/// The authenticated portal endpoints land in Phase 3c.
+/// Phase 3c adds the sponsor-authenticated application surface:
+///   - `GET  /api/v1/sponsor/me/application`        — current latest application
+///   - `POST /api/v1/sponsor/applications`          — submit a new application
+///   - `GET  /api/v1/sponsor/applications/:id`      — detail (membership-gated)
+///   - `POST /api/v1/sponsor/applications/:id/withdraw` — owner-only withdraw
 struct SponsorAPIController: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
     routes.get("me", use: me)
@@ -27,6 +31,14 @@ struct SponsorAPIController: RouteCollection {
     routes.post("inquiries", use: createInquiry)
     routes.post("login", use: requestMagicLink)
     routes.get("auth", "verify", use: verifyMagicLink)
+
+    // Sponsor-authenticated subgroup. We pass `nil` so missing/invalid
+    // cookies surface as 401 JSON instead of redirecting to the SSR /login.
+    let authed = routes.grouped(SponsorAuthMiddleware(onMissingRedirectTo: nil))
+    authed.get("me", "application", use: myApplication)
+    authed.post("applications", use: createApplication)
+    authed.get("applications", ":id", use: applicationDetail)
+    authed.post("applications", ":id", "withdraw", use: withdrawApplication)
   }
 
   // MARK: - GET /api/v1/sponsor/me
@@ -276,6 +288,188 @@ struct SponsorAPIController: RouteCollection {
     return response
   }
 
+  // MARK: - GET /api/v1/sponsor/me/application
+
+  /// Returns the currently-signed-in sponsor user's latest application for
+  /// the active conference, or 404 if they have not yet applied.
+  func myApplication(_ req: Request) async throws -> Response {
+    guard let user = req.sponsorUser else { throw Abort(.unauthorized) }
+
+    guard
+      let membership = try await SponsorMembership.query(on: req.db)
+        .filter(\.$user.$id == (try user.requireID()))
+        .first()
+    else { throw Abort(.notFound) }
+
+    let conference = try await currentConference(on: req.db)
+    guard
+      let application = try await SponsorApplication.query(on: req.db)
+        .filter(\.$organization.$id == membership.$organization.id)
+        .filter(\.$conference.$id == (try conference.requireID()))
+        .sort(\.$createdAt, .descending)
+        .first()
+    else { throw Abort(.notFound) }
+
+    let response = Response(status: .ok)
+    try response.content.encode(try application.toDTO())
+    return response
+  }
+
+  // MARK: - POST /api/v1/sponsor/applications
+
+  /// JSON-friendly application intake. Mirrors the SSR form-post flow but
+  /// expects `acceptedTerms: Bool` instead of the form-encoded "true"/"on"
+  /// string the SSR controller has to coerce.
+  func createApplication(_ req: Request) async throws -> Response {
+    struct CreatePayload: Content {
+      let planSlug: String
+      let billingContactName: String
+      let billingEmail: String
+      let invoicingNotes: String?
+      let logoNote: String?
+      let acceptedTerms: Bool
+    }
+
+    guard let user = req.sponsorUser else { throw Abort(.unauthorized) }
+    let payload = try req.content.decode(CreatePayload.self)
+    guard payload.acceptedTerms else {
+      throw Abort(.badRequest, reason: "Terms must be accepted")
+    }
+
+    guard
+      let membership = try await SponsorMembership.query(on: req.db)
+        .filter(\.$user.$id == (try user.requireID()))
+        .with(\.$organization)
+        .first()
+    else { throw Abort(.forbidden, reason: "No organization") }
+
+    let conference = try await currentConference(on: req.db)
+    guard
+      let plan = try await SponsorPlan.query(on: req.db)
+        .filter(\.$conference.$id == (try conference.requireID()))
+        .filter(\.$slug == payload.planSlug)
+        .first()
+    else { throw Abort(.notFound, reason: "Plan not found") }
+
+    let locale = req.sponsorJWT?.locale ?? user.locale
+    let formPayload = SponsorApplicationFormPayload(
+      billingContactName: payload.billingContactName,
+      billingEmail: payload.billingEmail,
+      invoicingNotes: payload.invoicingNotes,
+      logoNote: payload.logoNote,
+      acceptedTerms: payload.acceptedTerms,
+      locale: locale
+    )
+    let application = SponsorApplication(
+      organizationID: try membership.organization.requireID(),
+      planID: try plan.requireID(),
+      conferenceID: try conference.requireID(),
+      status: .submitted,
+      payload: formPayload,
+      submittedAt: Date()
+    )
+    try await application.save(on: req.db)
+
+    let planName =
+      (try await SponsorPlanLocalization.query(on: req.db)
+      .filter(\.$plan.$id == (try plan.requireID()))
+      .filter(\.$locale == locale)
+      .first())?.name ?? plan.slug
+
+    let mail = SponsorEmailTemplates.render(
+      .applicationReceived(planName: planName),
+      locale: locale, recipientName: payload.billingContactName)
+    let from =
+      Environment.get("RESEND_FROM_EMAIL") ?? "Sponsorship <sponsorship@mail.tryswift.jp>"
+    _ = await ResendClient.send(
+      to: payload.billingEmail, from: from,
+      subject: mail.subject, html: mail.htmlBody, text: mail.textBody,
+      client: req.client, logger: req.logger)
+    await SponsorSlackNotifier.notifyApplicationSubmitted(
+      orgName: membership.organization.displayName, planName: planName,
+      client: req.client, logger: req.logger)
+
+    let response = Response(status: .created)
+    try response.content.encode(try application.toDTO())
+    return response
+  }
+
+  // MARK: - GET /api/v1/sponsor/applications/:id
+
+  /// Returns one application's details if the caller is a member of the
+  /// owning organization. Includes a `canWithdraw` hint so the client can
+  /// gate the withdraw button without a second request.
+  func applicationDetail(_ req: Request) async throws -> Response {
+    struct DetailResponse: Content {
+      let application: SponsorApplicationDTO
+      let planName: String
+      let canWithdraw: Bool
+    }
+
+    guard let user = req.sponsorUser else { throw Abort(.unauthorized) }
+    guard let id = req.parameters.get("id", as: UUID.self) else { throw Abort(.badRequest) }
+
+    let application = try await SponsorApplication.query(on: req.db)
+      .filter(\.$id == id)
+      .with(\.$plan) { $0.with(\.$localizations) }
+      .first()
+    guard let application else { throw Abort(.notFound) }
+
+    let memberships = try await SponsorMembership.query(on: req.db)
+      .filter(\.$organization.$id == application.$organization.id)
+      .filter(\.$user.$id == (try user.requireID()))
+      .all()
+    guard !memberships.isEmpty else { throw Abort(.forbidden) }
+
+    let isOwner = memberships.contains { $0.role == .owner }
+    let canWithdraw = isOwner && application.status == .submitted
+
+    let locale = req.sponsorJWT?.locale ?? user.locale
+    let planName =
+      application.plan.localizations
+      .first(where: { $0.locale == locale })?.name ?? application.plan.slug
+
+    let response = Response(status: .ok)
+    try response.content.encode(
+      DetailResponse(
+        application: try application.toDTO(),
+        planName: planName,
+        canWithdraw: canWithdraw
+      )
+    )
+    return response
+  }
+
+  // MARK: - POST /api/v1/sponsor/applications/:id/withdraw
+
+  /// Owners can withdraw an application that is still in `.submitted`. Any
+  /// other status (already in review, approved, etc.) returns 409 to signal
+  /// the operation is no longer valid.
+  func withdrawApplication(_ req: Request) async throws -> Response {
+    guard let user = req.sponsorUser else { throw Abort(.unauthorized) }
+    guard let id = req.parameters.get("id", as: UUID.self) else { throw Abort(.badRequest) }
+    guard let application = try await SponsorApplication.find(id, on: req.db)
+    else { throw Abort(.notFound) }
+
+    let isOwner =
+      try await SponsorMembership.query(on: req.db)
+      .filter(\.$organization.$id == application.$organization.id)
+      .filter(\.$user.$id == (try user.requireID()))
+      .filter(\.$role == .owner)
+      .first() != nil
+    guard isOwner else { throw Abort(.forbidden) }
+    guard application.status == .submitted else {
+      throw Abort(.conflict, reason: "Cannot withdraw — already in review")
+    }
+
+    application.status = .withdrawn
+    try await application.save(on: req.db)
+
+    let response = Response(status: .ok)
+    try response.content.encode(try application.toDTO())
+    return response
+  }
+
   // MARK: - Helpers
 
   private func sponsorBaseURL() -> String {
@@ -284,5 +478,17 @@ struct SponsorAPIController: RouteCollection {
 
   private func inquiryLocale(_ req: Request) -> SponsorPortalLocale {
     SponsorPortalLocale(rawValue: req.headers.first(name: "X-Locale") ?? "") ?? .ja
+  }
+
+  private func currentConference(on db: Database) async throws -> Conference {
+    guard
+      let conference = try await Conference.query(on: db)
+        .filter(\.$isAcceptingSponsors == true)
+        .sort(\.$year, .descending)
+        .first()
+    else {
+      throw Abort(.serviceUnavailable, reason: "No conference is accepting sponsors")
+    }
+    return conference
   }
 }
