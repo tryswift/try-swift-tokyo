@@ -2434,7 +2434,8 @@
       startDate: conference.startDate || null,
       endDate: conference.endDate || null,
       location: conference.location || null,
-      websiteURL: conference.websiteURL || null
+      websiteURL: conference.websiteURL || null,
+      acceptedFormats: conference.acceptedFormats || []
     };
     if (overrides) {
       Object.keys(overrides).forEach(function (key) { payload[key] = overrides[key]; });
@@ -2575,6 +2576,7 @@
       form.elements.isPublished.checked = conference.isPublished !== false;
       form.elements.descriptionEn.value = conference.description ? conference.description.en : "";
       form.elements.descriptionJa.value = conference.description ? conference.description.ja : "";
+      setConferenceAcceptedFormatChecks(form, conference.acceptedFormats || []);
       if (deleteButton) deleteButton.hidden = false;
       if (submitButton) submitButton.textContent = ja ? "保存" : "Save";
     } else {
@@ -2603,6 +2605,25 @@
     showStatus("organizer-conference-form-status", "", null);
   }
 
+  function organizerConferenceFormatBoxes(form) {
+    return Array.prototype.slice.call(
+      form.querySelectorAll('input[name="acceptedFormats"]')
+    );
+  }
+
+  function setConferenceAcceptedFormatChecks(form, formats) {
+    var selected = formats || [];
+    organizerConferenceFormatBoxes(form).forEach(function (box) {
+      box.checked = selected.indexOf(box.value) >= 0;
+    });
+  }
+
+  function readConferenceAcceptedFormats(form) {
+    return organizerConferenceFormatBoxes(form)
+      .filter(function (box) { return box.checked; })
+      .map(function (box) { return box.value; });
+  }
+
   function readOrganizerConferenceForm(form) {
     var year = parseInt(form.elements.year.value, 10);
     return {
@@ -2617,7 +2638,8 @@
       startDate: conferenceDateInputToIso(form.elements.startDate.value),
       endDate: conferenceDateInputToIso(form.elements.endDate.value),
       location: (form.elements.location.value || "").trim() || null,
-      websiteURL: (form.elements.websiteURL.value || "").trim() || null
+      websiteURL: (form.elements.websiteURL.value || "").trim() || null,
+      acceptedFormats: readConferenceAcceptedFormats(form)
     };
   }
 
