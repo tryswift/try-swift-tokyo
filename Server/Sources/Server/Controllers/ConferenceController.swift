@@ -28,6 +28,7 @@ struct ConferenceDTOContent: Content {
   let endDate: Date?
   let location: String?
   let websiteURL: String?
+  let acceptedFormats: [TalkDuration]
   let createdAt: Date?
   let updatedAt: Date?
 
@@ -44,6 +45,7 @@ struct ConferenceDTOContent: Content {
     self.endDate = dto.endDate
     self.location = dto.location
     self.websiteURL = dto.websiteURL
+    self.acceptedFormats = dto.acceptedFormats
     self.createdAt = dto.createdAt
     self.updatedAt = dto.updatedAt
   }
@@ -63,6 +65,7 @@ struct CreateConferenceRequestContent: Content {
   let endDate: Date?
   let location: String?
   let websiteURL: String?
+  let acceptedFormats: [TalkDuration]?
 }
 
 /// Controller for conference endpoints
@@ -173,7 +176,8 @@ struct ConferenceController: RouteCollection {
       startDate: request.startDate,
       endDate: request.endDate,
       location: request.location,
-      websiteURL: request.websiteURL
+      websiteURL: request.websiteURL,
+      acceptedFormats: request.acceptedFormats
     )
 
     try await conference.save(on: req.db)
@@ -211,6 +215,9 @@ struct ConferenceController: RouteCollection {
     conference.endDate = request.endDate
     conference.location = request.location
     conference.websiteURL = request.websiteURL
+    if let acceptedFormats = request.acceptedFormats {
+      conference.acceptedFormats = AcceptedFormatList(acceptedFormats)
+    }
 
     try await conference.save(on: req.db)
 

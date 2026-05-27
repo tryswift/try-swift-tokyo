@@ -51,6 +51,9 @@ enum AppConfiguration {
     // databases apply this on their next startup if it is still pending,
     // following Fluent's registered migration order.
     app.migrations.add(AddConferenceIsPublished())
+    // accepted_formats must exist before the seed saves a Conference through the
+    // model, which now includes the optional `acceptedFormats` field.
+    app.migrations.add(AddConferenceAcceptedFormats())
     app.migrations.add(SeedTrySwiftTokyo2026())
     app.migrations.add(AddUserEmail())
     app.migrations.add(AddProposalSpeakerInfo())
