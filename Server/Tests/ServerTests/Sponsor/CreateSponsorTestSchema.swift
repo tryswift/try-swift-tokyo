@@ -24,6 +24,7 @@ struct CreateSponsorTestSchema: AsyncMigration {
       .field("is_published", .bool, .required, .sql(.default(true)))
       .field("deadline", .datetime).field("start_date", .datetime).field("end_date", .datetime)
       .field("location", .string).field("website_url", .string)
+      .field("accepted_formats", .json)
       .field("created_at", .datetime).field("updated_at", .datetime)
       .create()
 
