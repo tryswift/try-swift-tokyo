@@ -1,6 +1,7 @@
 import Fluent
 import FluentSQLiteDriver
 import JWT
+import SharedModels
 import Testing
 import Vapor
 import VaporTesting
@@ -43,6 +44,7 @@ private struct CreateConferenceAPITestSchema: AsyncMigration {
       .field("end_date", .datetime)
       .field("location", .string)
       .field("website_url", .string)
+      .field("accepted_formats", .json)
       .field("created_at", .datetime)
       .field("updated_at", .datetime)
       .create()
@@ -199,6 +201,133 @@ struct ConferenceAPITests {
         }
       ) { res in
         #expect(res.status == .forbidden)
+      }
+    }
+  }
+
+  @Test("POST /conferences round-trips accepted formats")
+  func createConferenceRoundTripsAcceptedFormats() async throws {
+    try await withTestApp { app in
+      let admin = User(githubID: 10, username: "organizer", role: .admin)
+      try await admin.save(on: app.db)
+      let token = try await makeToken(for: admin, on: app)
+
+      let payload = CreateConferenceRequestContent(
+        path: "with-formats",
+        displayName: "With Formats",
+        descriptionEn: nil,
+        descriptionJa: nil,
+        year: 2027,
+        isOpen: true,
+        isPublished: true,
+        deadline: nil,
+        startDate: nil,
+        endDate: nil,
+        location: nil,
+        websiteURL: nil,
+        acceptedFormats: [.regular, .workshop]
+      )
+
+      try await app.testing().test(
+        .POST, "api/v1/conferences",
+        beforeRequest: { req in
+          req.headers.bearerAuthorization = .init(token: token)
+          try req.content.encode(payload)
+        }
+      ) { res in
+        #expect(res.status == .ok)
+        let body = try res.content.decode(ConferenceDTOContent.self)
+        #expect(body.acceptedFormats == [.regular, .workshop])
+      }
+
+      // Confirm it persisted across a fresh fetch.
+      try await app.testing().test(.GET, "api/v1/conferences/with-formats") { res in
+        #expect(res.status == .ok)
+        let body = try res.content.decode(ConferenceDTOContent.self)
+        #expect(body.acceptedFormats == [.regular, .workshop])
+      }
+    }
+  }
+
+  @Test("POST /conferences defaults accepted formats to empty when omitted")
+  func createConferenceDefaultsAcceptedFormatsToEmpty() async throws {
+    try await withTestApp { app in
+      let admin = User(githubID: 11, username: "organizer", role: .admin)
+      try await admin.save(on: app.db)
+      let token = try await makeToken(for: admin, on: app)
+
+      let payload = CreateConferenceRequestContent(
+        path: "no-formats",
+        displayName: "No Formats",
+        descriptionEn: nil,
+        descriptionJa: nil,
+        year: 2027,
+        isOpen: true,
+        isPublished: true,
+        deadline: nil,
+        startDate: nil,
+        endDate: nil,
+        location: nil,
+        websiteURL: nil,
+        acceptedFormats: nil
+      )
+
+      try await app.testing().test(
+        .POST, "api/v1/conferences",
+        beforeRequest: { req in
+          req.headers.bearerAuthorization = .init(token: token)
+          try req.content.encode(payload)
+        }
+      ) { res in
+        #expect(res.status == .ok)
+        let body = try res.content.decode(ConferenceDTOContent.self)
+        #expect(body.acceptedFormats.isEmpty)
+      }
+    }
+  }
+
+  @Test("PUT /conferences/:path updates accepted formats")
+  func updateConferenceUpdatesAcceptedFormats() async throws {
+    try await withTestApp { app in
+      let admin = User(githubID: 12, username: "organizer", role: .admin)
+      try await admin.save(on: app.db)
+      let token = try await makeToken(for: admin, on: app)
+
+      try await Conference(
+        path: "editable",
+        displayName: "Editable",
+        year: 2027,
+        isOpen: true,
+        isPublished: true,
+        acceptedFormats: [.regular]
+      ).save(on: app.db)
+
+      let payload = CreateConferenceRequestContent(
+        path: "editable",
+        displayName: "Editable",
+        descriptionEn: nil,
+        descriptionJa: nil,
+        year: 2027,
+        isOpen: true,
+        isPublished: true,
+        deadline: nil,
+        startDate: nil,
+        endDate: nil,
+        location: nil,
+        websiteURL: nil,
+        acceptedFormats: [.lightning, .workshop]
+      )
+
+      try await app.testing().test(
+        .PUT, "api/v1/conferences/editable",
+        beforeRequest: { req in
+          req.headers.bearerAuthorization = .init(token: token)
+          try req.content.encode(payload)
+        }
+      ) { res in
+        #expect(res.status == .ok)
+        let body = try res.content.decode(ConferenceDTOContent.self)
+        #expect(body.acceptedFormats == [.lightning, .workshop])
       }
     }
   }

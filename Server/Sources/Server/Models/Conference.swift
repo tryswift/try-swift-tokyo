@@ -63,6 +63,12 @@ final class Conference: Model, Content, @unchecked Sendable {
   @OptionalField(key: "website_url")
   var websiteURL: String?
 
+  /// Talk formats this conference accepts via CfP. Stored as a single JSONB
+  /// value (see `AcceptedFormatList+Postgres`). `nil` means "unset", surfaced
+  /// as an empty array in the DTO.
+  @OptionalField(key: "accepted_formats")
+  var acceptedFormats: AcceptedFormatList?
+
   /// Proposals for this conference
   @Children(for: \.$conference)
   var proposals: [Proposal]
@@ -94,7 +100,8 @@ final class Conference: Model, Content, @unchecked Sendable {
     startDate: Date? = nil,
     endDate: Date? = nil,
     location: String? = nil,
-    websiteURL: String? = nil
+    websiteURL: String? = nil,
+    acceptedFormats: [TalkDuration]? = nil
   ) {
     self.id = id
     self.path = path
@@ -110,6 +117,7 @@ final class Conference: Model, Content, @unchecked Sendable {
     self.endDate = endDate
     self.location = location
     self.websiteURL = websiteURL
+    self.acceptedFormats = acceptedFormats.map(AcceptedFormatList.init)
   }
 
   /// Get localized description
@@ -144,6 +152,7 @@ final class Conference: Model, Content, @unchecked Sendable {
       endDate: endDate,
       location: location,
       websiteURL: websiteURL,
+      acceptedFormats: acceptedFormats?.items ?? [],
       createdAt: createdAt,
       updatedAt: updatedAt
     )

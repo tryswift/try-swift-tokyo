@@ -184,6 +184,31 @@ private struct OrganizerConferenceFormCard: HTML, Sendable {
           }
         }
 
+        div(.class("form-field submit-form-full organizer-conference-formats")) {
+          span(.class("field-label")) {
+            HTMLText(language == .ja ? "受付Format" : "Accepted Formats")
+          }
+          p(.class("field-hint")) {
+            HTMLText(
+              language == .ja
+                ? "この CfP で受け付けるトーク形式を選択します（複数選択可）。"
+                : "Choose which talk formats this CfP accepts (multiple allowed)."
+            )
+          }
+          label(.class("organizer-checkbox-row")) {
+            input(.type(.checkbox), .name("acceptedFormats"), .value("20min"))
+            span { HTMLText(language == .ja ? "20分トーク (20min)" : "20 min talk") }
+          }
+          label(.class("organizer-checkbox-row")) {
+            input(.type(.checkbox), .name("acceptedFormats"), .value("LT"))
+            span { HTMLText(language == .ja ? "ライトニングトーク (LT)" : "Lightning talk (LT)") }
+          }
+          label(.class("organizer-checkbox-row")) {
+            input(.type(.checkbox), .name("acceptedFormats"), .value("workshop"))
+            span { HTMLText(language == .ja ? "ワークショップ" : "Workshop") }
+          }
+        }
+
         label(.class("form-field submit-form-full")) {
           span(.class("field-label")) {
             HTMLText(language == .ja ? "説明 (英語, Markdown)" : "Description (English, Markdown)")
