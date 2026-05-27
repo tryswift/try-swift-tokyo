@@ -14,7 +14,7 @@ let package = Package(
     .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.10.0"),
     .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: "4.7.0"),
     .package(url: "https://github.com/vapor/jwt.git", from: "5.1.0"),
-    .package(url: "https://github.com/apple/swift-crypto.git", from: "3.0.0"),
+    .package(url: "https://github.com/apple/swift-crypto.git", from: "4.5.0"),
     .package(name: "SharedModels", path: "../SharedModels"),
     .package(name: "DataClient", path: "../DataClient"),
     .package(name: "Web", path: "../Web"),
