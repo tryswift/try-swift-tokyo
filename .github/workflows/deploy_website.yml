@@ -1,4 +1,4 @@
-name: Deploy website to GitHub Pages
+name: Deploy website to Cloudflare Pages
 
 on:
   push:
@@ -19,18 +19,14 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: website-deploy
+  cancel-in-progress: true
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    name: Build & Deploy Website
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -54,34 +50,9 @@ jobs:
           cd Web
           swift run WebConference
 
-      - name: Disable Jekyll processing
-        run: touch Web/Build/.nojekyll
-
-      - name: Create CfP redirect to Fly.io SSR
-        run: |
-          mkdir -p Web/Build/cfp
-          cat > Web/Build/cfp/index.html << 'EOF'
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="refresh" content="0; url=https://cfp.tryswift.jp/">
-            <title>Redirecting to CfP...</title>
-          </head>
-          <body>
-            <p>Redirecting to <a href="https://cfp.tryswift.jp/">try! Swift Tokyo CfP</a>...</p>
-          </body>
-          </html>
-          EOF
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v6
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v4
         with:
-          path: "./Web/Build"
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy Web/Build --project-name=tryswift
