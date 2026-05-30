@@ -10,7 +10,7 @@ After the April 2026 conference, archive the current conference homepage (now se
 ## Scope
 
 - Target codebase: `Web/Sources/WebConference` (the live Ignite static site deployed to GitHub Pages via `.github/workflows/deploy_website.yml`).
-- Root `/` only is swapped. All other pages keep working: `/2026`, past years (`/2025`, `/2024`, ...), `/faq`, `/code-of-conduct`, `/privacy-policy`, `/booth-map`, and their `/en` variants.
+- Root `/` only is swapped. All other pages keep working: `/2026` (English at `/2026/en`), past years (`/2025`, `/2024`, ...), and the shared pages `/faq`, `/code-of-conduct`, `/privacy-policy`, `/booth-map` (whose English variants use the `_en` suffix, e.g. `/faq_en`, `/code-of-conduct_en`, `/privacy-policy_en`).
 - The legacy top-level `Website/` directory is out of scope and left untouched.
 
 ## Decisions (from brainstorming)

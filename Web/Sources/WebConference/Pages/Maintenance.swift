@@ -6,6 +6,9 @@ import Ignite
 struct Maintenance: StaticPage {
   var title = ""
   var path = "/"
+  // Override the site-level description so root metadata reflects the
+  // maintenance state instead of stale 2026 conference details.
+  var description = "try! Swift Tokyo will be back soon."
 
   var body: some HTML {
     Section {
