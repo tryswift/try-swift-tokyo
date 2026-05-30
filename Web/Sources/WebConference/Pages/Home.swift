@@ -38,10 +38,9 @@ struct Home: StaticPage {
   }
 
   static func generatePath(for year: ConferenceYear, language: SupportedLanguage) -> String {
-    var pathComponents = [String]()
-    if year != .latest {
-      pathComponents.append(String(year.rawValue))
-    }
+    // Every year, including the latest, lives under its own `/YYYY` path so that
+    // root `/` is free for the maintenance landing page.
+    var pathComponents = [String(year.rawValue)]
     if language != .ja {
       pathComponents.append(language.rawValue)
     }

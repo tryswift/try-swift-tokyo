@@ -1,4 +1,5 @@
 import Ignite
+import SharedModels
 
 struct MainLayout: Layout {
   @Environment(\.page) private var currentPage
@@ -28,9 +29,10 @@ struct MainLayout: Layout {
       MetaTag(.twitterImage, content: ogpLink)
 
       if currentPage.url.pathComponents.last == "_en" {
-        let redirectUrl = URL(
-          string: currentPage.url.absoluteString.replacingOccurrences(of: "_", with: ""))!
-        MetaTag(httpEquivalent: "refresh", content: "0;url=\(redirectUrl.absoluteString)")
+        // The latest English home moved from `/en` to `/2026/en`; keep the legacy
+        // `/_en` shim pointing at whatever the current English home path is.
+        let redirectPath = Home.generatePath(for: .latest, language: .en)
+        MetaTag(httpEquivalent: "refresh", content: "0;url=\(redirectPath)")
       }
     }
 
