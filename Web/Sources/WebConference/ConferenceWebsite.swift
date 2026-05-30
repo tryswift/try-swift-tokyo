@@ -116,7 +116,7 @@ struct ConferenceSite2025: Site {
   )
   var language: Language = .japanese
   var url = URL(string: "https://tryswift.jp")!
-  var homePage = Home(year: .latest, language: .ja)
+  var homePage = Maintenance()
   var layout = MainLayout(title: "try! Swift Tokyo", ogpLink: "https://tryswift.jp/images/ogp.jpg")
   var darkTheme: (any Theme)? = nil
   var favicon = URL(string: "/images/favicon.png")
